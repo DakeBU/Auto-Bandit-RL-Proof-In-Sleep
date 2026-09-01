@@ -6,7 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
-from collections import Counter
+from collections import Counter, defaultdict
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
@@ -920,6 +920,9 @@ def main() -> int:
         if collector is None:
             continue
         relative = chapter_page.relative_to(output)
+        page_source = chapter_page.read_text(encoding="utf-8")
+        if page_source.count('class="chapter-pager"') != 1:
+            errors.append(f"{relative}: expected one Book Map sequence pager")
         if collector.chapter_compass_count != 1:
             errors.append(f"{relative}: expected one source-and-Lean chapter compass")
         if collector.source_guide_count != 1:
@@ -934,6 +937,8 @@ def main() -> int:
             errors.append(
                 f"{relative}: every mathematical statement needs one readable fallback and one escaped MathJax source"
             )
+        if page_source.count('class="overflow-hint"') != collector.math_statement_count:
+            errors.append(f"{relative}: every mathematical statement needs one mobile overflow hint")
         if collector.nested_math_errors:
             errors.append(f"{relative}: a mathematical statement swallowed teaching or Lean content")
         if collector.theorem_panel_count != collector.teaching_grid_count:
@@ -964,6 +969,9 @@ def main() -> int:
         if collector is None:
             continue
         relative = spine_page.relative_to(output)
+        page_source = spine_page.read_text(encoding="utf-8")
+        if page_source.count('class="chapter-pager"') != 1:
+            errors.append(f"{relative}: expected one Part IV sequence pager")
         if collector.algorithm_flow_count != 1:
             errors.append(f"{relative}: expected one maintainable proof or algorithm flow")
         if collector.math_statement_count < 1:
@@ -972,9 +980,10 @@ def main() -> int:
             errors.append(
                 f"{relative}: every spine mathematical statement needs one fallback and one MathJax source"
             )
+        if page_source.count('class="overflow-hint"') != collector.math_statement_count:
+            errors.append(f"{relative}: every spine mathematical statement needs one mobile overflow hint")
         if collector.nested_math_errors:
             errors.append(f"{relative}: a spine mathematical statement swallowed Lean or teaching content")
-        page_source = spine_page.read_text(encoding="utf-8")
         for required in (PRIMARY_TEXTBOOK_TITLE, PRIMARY_TEXTBOOK_URL, "10.1017/9781108571401"):
             if required not in page_source:
                 errors.append(f"{relative}: missing canonical textbook metadata {required}")
@@ -997,6 +1006,82 @@ def main() -> int:
         collector = pages.get(target.resolve())
         if collector is None or split.fragment not in collector.ids:
             errors.append(f"search index points to missing declaration anchor: {target_value}")
+
+    catalog_data_path = output / "catalog-data.json"
+    catalog_data = {}
+    if not catalog_data_path.exists():
+        errors.append("missing catalog-data.json")
+    else:
+        try:
+            catalog_data = json.loads(catalog_data_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as error:
+            errors.append(f"catalog-data.json: invalid JSON: {error}")
+    catalog_items = catalog_data.get("items", []) if isinstance(catalog_data, dict) else []
+    catalog_page_size = catalog_data.get("page_size") if isinstance(catalog_data, dict) else None
+    if catalog_page_size != 100:
+        errors.append("catalog-data.json: page_size must remain 100")
+    if len(catalog_items) != manifest.get("declaration_count"):
+        errors.append(
+            f"catalog-data count {len(catalog_items)} != declaration_count {manifest.get('declaration_count')}"
+        )
+    required_catalog_fields = {
+        "name", "kind", "kind_label", "module", "module_url", "chapter",
+        "chapter_title", "status", "status_label", "url", "source_url",
+        "source_label", "search",
+    }
+    for item in catalog_items:
+        if not isinstance(item, dict) or not required_catalog_fields.issubset(item):
+            errors.append("catalog-data.json: declaration item is missing required fields")
+            break
+    catalog_names = [item.get("name") for item in catalog_items if isinstance(item, dict)]
+    if len(catalog_names) != len(set(catalog_names)):
+        errors.append("catalog-data.json: declaration names must be unique")
+    search_urls_by_name = {
+        item.get("name"): item.get("url") for item in search_items if isinstance(item, dict)
+    }
+    catalog_page_path = output / "declarations" / "index.html"
+    for item in catalog_items:
+        if not isinstance(item, dict):
+            continue
+        catalog_split = urlsplit(str(item.get("url", "")))
+        search_split = urlsplit(str(search_urls_by_name.get(item.get("name"), "")))
+        catalog_target = (catalog_page_path.parent / catalog_split.path).resolve()
+        search_target = (output / search_split.path).resolve()
+        if catalog_target != search_target or catalog_split.fragment != search_split.fragment:
+            errors.append(
+                f"catalog-data.json: declaration URL disagrees with search-index for {item.get('name')}"
+            )
+            break
+    if catalog_page_path.exists():
+        catalog_page_source = catalog_page_path.read_text(encoding="utf-8")
+        initial_catalog_rows = catalog_page_source.count("data-catalog-row")
+        expected_initial_rows = min(catalog_page_size or 0, manifest.get("declaration_count", 0))
+        if initial_catalog_rows != expected_initial_rows:
+            errors.append(
+                f"declarations/index.html: expected {expected_initial_rows} initial catalog rows, found {initial_catalog_rows}"
+            )
+        for required in (
+            "data-catalog-body", "data-catalog-more", 'aria-live="polite"',
+            'aria-label="Lean declaration catalog"', "data-catalog-more hidden",
+            'href="../catalog-data.json"', 'href="../implementation-map/index.html"',
+        ):
+            if required not in catalog_page_source:
+                errors.append(f"declarations/index.html: missing progressive catalog support {required}")
+
+    highlight_payload = json.loads(
+        (SITE_DIR / "content" / "highlights.json").read_text(encoding="utf-8")
+    )
+    highlights_by_chapter: dict[str, list[dict]] = defaultdict(list)
+    for highlight in highlight_payload.get("highlights", []):
+        highlights_by_chapter[highlight.get("chapter", "")].append(highlight)
+    for chapter, chapter_highlights in highlights_by_chapter.items():
+        if len(chapter_highlights) <= 6:
+            continue
+        featured = [item for item in chapter_highlights if item.get("featured") is True]
+        if not featured or len(featured) > 6:
+            errors.append(
+                f"highlights.json: {chapter} needs one to six explicit featured teaching notes"
+            )
 
     succinct_declaration = (
         "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem."
@@ -1161,9 +1246,34 @@ def main() -> int:
     ):
         if required not in site_js:
             errors.append(f"site.js is missing the maintainable flowchart-fit hook: {required}")
-    for required in ("data-toc-toggle", "setTocOpen", "math-fallback-active", "data-nav-group"):
+    for required in (
+        "data-toc-toggle",
+        "setTocOpen",
+        "math-fallback-active",
+        "data-nav-group",
+        'classList.toggle("is-scrollable"',
+    ):
         if required not in site_js:
             errors.append(f"site.js is missing responsive reading support: {required}")
+    for required in (
+        "catalog-data.json",
+        "catalogVisibleLimit",
+        "catalogLoadPromise",
+        "data-catalog-more",
+        "data-catalog-body",
+        'class="status ${escapeHtml(item.status)}"',
+    ):
+        if required not in site_js:
+            errors.append(f"site.js is missing progressive catalog support: {required}")
+    for required in (
+        "bringTargetIntoView",
+        "window.MathJax?.startup?.promise?.then(bringTargetIntoView)",
+        "regionOverflows || mathTargetOverflows",
+    ):
+        if required not in site_js:
+            errors.append(f"site.js is missing stabilized mobile deep-link or overflow support: {required}")
+    if "status-badge status-" in site_js:
+        errors.append("site.js uses a status class that disagrees with the generated status badge contract")
     workflow_source = (output / "workflow" / "index.html").read_text(encoding="utf-8")
     for required in ("master–worker", "do not yet justify", "harness-compare"):
         if required not in workflow_source:

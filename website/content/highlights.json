@@ -3,6 +3,7 @@
     {
       "full_name": "BanditRLProof.FiniteBanditModel",
       "chapter": "foundations",
+      "featured": true,
       "plain": "A finite bandit model packages a rational mean for every arm together with a distinguished best arm and a proof that this arm really has maximal mean.",
       "math": "\\(\\mathcal M=(\\mu,a^\\star,h_\\star)\\), where \\(\\mu:\\mathrm{Fin}(K)\\to\\mathbb Q\\) and \\(h_\\star:\\forall a,\\ \\mu(a)\\le\\mu(a^\\star)\\).",
       "intuition": "The structure prevents later regret proofs from silently choosing a nonoptimal comparator. The proof field is data, so every downstream gap theorem can reuse it.",
@@ -15,6 +16,7 @@
     {
       "full_name": "BanditRLProof.pullCount",
       "chapter": "foundations",
+      "featured": true,
       "plain": "The pull count of arm a before time n is the number of indices t<n at which the action trace selected a.",
       "math": "\\(N_a(n)=\\sum_{t=0}^{n-1}\\mathbf 1\\{A_t=a\\}.\\)",
       "intuition": "Most bandit analyses eventually ask how often a suboptimal arm was selected. This definition is the common bridge from an adaptive trace to finite combinatorics.",
@@ -27,6 +29,7 @@
     {
       "full_name": "BanditRLProof.pseudoRegret_eq_finset_sum_gap_mul_pullCount",
       "chapter": "foundations",
+      "featured": true,
       "plain": "Cumulative pseudo-regret can be regrouped by arm: every pull of arm a contributes exactly its fixed gap.",
       "math": "\\(\\bar R_n=\\sum_{t<n}\\Delta_{A_t}=\\sum_{a\\in\\mathrm{Fin}(K)}\\Delta_a N_a(n).\\)",
       "intuition": "The left side follows time; the right side follows arms. Algorithm-specific proofs normally bound the right side, one arm at a time.",
@@ -43,6 +46,7 @@
     {
       "full_name": "BanditRLProof.Policy.MeasurablePolicy",
       "chapter": "probability",
+      "featured": true,
       "plain": "A policy is an action-valued function of a state together with proof that this function is measurable.",
       "math": "\\(\\pi:S\\to A\\quad\\text{with}\\quad\\pi\\text{ measurable}.\\)",
       "intuition": "An algorithmic formula is not enough for a probability theorem: the selected action must be a legitimate random variable.",
@@ -55,6 +59,7 @@
     {
       "full_name": "BanditRLProof.Concentration.measure_iUnion_iUnion_fintype_le_delta_of_geometricConfidenceShare",
       "chapter": "probability",
+      "featured": true,
       "plain": "A geometric budget over all times can be shared equally across every member of one nonempty finite index type while preserving the total outer confidence budget.",
       "math": "\\(\\mu(\\bigcup_{n\\ge0}\\bigcup_{i\\in I}E_{n,i})\\le\\delta\\) when \\(\\mu(E_{n,i})\\le\\delta_n/|I|\\) and \\(\\sum_n\\delta_n=\\delta\\).",
       "intuition": "Use a finite union bound across arms or contexts at each time, then a summable geometric schedule across all times.",
@@ -70,6 +75,7 @@
     {
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_fintype_geometricAllTime_abs_tail_ennreal_delta_trajMeasure",
       "chapter": "probability",
+      "featured": true,
       "plain": "One canonical generated action/reward trajectory satisfies the existing random-pull-count empirical-mean confidence radius simultaneously for every finite arm and every positive successor horizon, outside one geometrically budgeted failure event.",
       "math": "\\(\\mu(\\bigcup_{n\\ge0}\\bigcup_{a\\in A}\\{N_a(n+1)>0,\\ r_{a,n+1}(\\delta_n/|A|)\\le |\\widehat\\mu_a(n+1)-\\mu_a|\\})\\le\\delta.\\)",
       "intuition": "The fixed-arm tail already adapts to the random number of pulls inside a fixed horizon. This theorem keeps the generated law fixed, shares each time budget across all arms, and then sums the geometric schedule over all horizons.",
@@ -85,6 +91,7 @@
     {
       "full_name": "BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_fintype_telescopingAllTime_abs_tail_ennreal_delta_trajMeasure",
       "chapter": "probability",
+      "featured": true,
       "plain": "One canonical generated action/reward trajectory satisfies the random-pull-count empirical-mean confidence radius for every finite arm and every positive successor horizon under a telescoping confidence schedule.",
       "math": "\\(\\mu(\\bigcup_{n\\ge0}\\bigcup_{a\\in A}\\{N_a(n+1)>0,\\ r_{a,n+1}(\\delta/(|A|(n+1)(n+2)))\\le|\\widehat\\mu_a-\\mu_a|\\})\\le\\delta.\\)",
       "intuition": "The shares telescope exactly to delta while their reciprocal grows only polynomially, so logarithmic radii retain logarithmic time growth instead of the linear growth caused by geometric shares.",
@@ -145,6 +152,7 @@
     {
       "full_name": "BanditRLProof.MartingaleDiff.martingale_partialSumsSucc_of_succMartingaleDifference",
       "chapter": "probability",
+      "featured": true,
       "plain": "The partial sums of an adapted integrable successor-indexed martingale-difference sequence form a martingale.",
       "math": "\\(\\mathbb E[X_{t+1}\\mid\\mathcal F_t]=0\\Longrightarrow S_n=\\sum_{i<n}X_{i+1}\\text{ is an }(\\mathcal F_n)\\text{-martingale}.\\)",
       "intuition": "Zero conditional drift is exactly the local condition needed for cumulative noise to have no predictable trend.",
@@ -157,6 +165,7 @@
     {
       "full_name": "BanditRLProof.ConditionalExpectationReward.historyStepKernelFamily_centeredReward_succ_hasCondSubgaussianMGF_trajMeasure",
       "chapter": "probability",
+      "featured": true,
       "plain": "On the canonical trajectory generated by a measurable history step-kernel family, the selected centered successor reward has the promised conditional sub-Gaussian MGF.",
       "math": "\\(\\mathbb E[\\exp(\\lambda(R_{t+1}-m_t))\\mid\\mathcal F_t]\\le\\exp(\\lambda^2v_t/2).\\)",
       "intuition": "The theorem closes the gap between a one-step kernel law and the random reward actually observed on the recursively generated path.",
@@ -227,6 +236,7 @@
     {
       "full_name": "BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_log",
       "chapter": "oful",
+      "featured": true,
       "plain": "The cumulative clipped inverse-Gram quadratic width is at most twice a dimension-scaled logarithmic growth term.",
       "math": "\\(\\sum_{t<T}\\min\\{1,\\|x_t\\|^2_{V_t^{-1}}\\}\\le2d\\log\\!\\left(1+\\frac{TL^2}{d\\lambda}\\right).\\)",
       "intuition": "Each new feature direction increases the determinant of the regularized Gram matrix; the determinant cannot grow too fast under a norm bound.",
@@ -239,6 +249,7 @@
     {
       "full_name": "BanditRLProof.OFUL.fixedDirectionCompensatedScore_hasMGFUpperBoundAt",
       "chapter": "oful",
+      "featured": true,
       "plain": "Every fixed predictable feature direction turns the centered reward noise into a compensated exponential supermartingale-style MGF bound.",
       "math": "\\(\\mathbb E\\exp\\!\\left(\\sum_{i<n}\\langle\\theta,x_i\\rangle\\varepsilon_i-\\tfrac12\\sigma_i^2\\langle\\theta,x_i\\rangle^2\\right)\\le1.\\)",
       "intuition": "The direction is known from the past, so conditional sub-Gaussian control survives multiplication by that predictable coefficient.",
@@ -275,6 +286,7 @@
     {
       "full_name": "BanditRLProof.OFUL.measure_telescopingCanonicalHistoryTrajectory_allTimeConfidenceFailureSet_le_of_linearSubgaussianEnvironment",
       "chapter": "oful",
+      "featured": true,
       "plain": "On the trajectory generated by the horizon-free telescoping OFUL policy, the union of ridge-confidence failures over all finite times has measure at most the outer confidence budget.",
       "math": "\\(\\Pr\\{\\exists n,\\;\\theta_\\star\\notin\\mathcal C_n(\\delta_n)\\}\\le\\delta.\\)",
       "intuition": "The confidence shares telescope, so countably many fixed-time ellipsoid failures fit inside one budget without changing the policy later.",
@@ -287,6 +299,7 @@
     {
       "full_name": "BanditRLProof.OFUL.telescopingCanonicalStandardHighProbabilityPseudoRegret_nonneg_and_allHorizon_tail_le_explicitBound_of_linearSubgaussianEnvironment_of_featureBound_le_regularization",
       "chapter": "oful",
+      "featured": true,
       "plain": "One failure event on the canonical horizon-free OFUL trajectory controls the explicit nonnegative pseudo-regret bound at every finite horizon.",
       "math": "\\(\\Pr\\{\\exists T,\\;R_T> B_T(\\delta)\\}\\le\\delta.\\)",
       "intuition": "Outside the all-time confidence failure set, optimism bounds every instantaneous gap by a selected confidence width; elliptical potential sums those widths for any prefix.",
@@ -299,6 +312,7 @@
     {
       "full_name": "BanditRLProof.OFUL.integral_stoppedValue_canonicalStandardHighProbabilityPseudoRegret_nonneg_and_le_quadraticCoefficient_mul_stoppingTimeRoundSecondMoment_add_initialGap_mul_sqrt_stoppingTimeRoundSecondMoment_mul_sqrt_delta_and_stoppedViolation_measure_le_of_squareIntegrableFiniteStoppingTime",
       "chapter": "oful",
+      "featured": true,
       "plain": "For a finite canonical stopping time whose round count has a finite second moment, the stopped OFUL pseudo-regret is integrable and its expectation is controlled by that second moment plus an explicit bad-event term.",
       "math": "\\(0\\le\\mathbb E R_\\tau\\le C\\,\\mathbb E(\\tau+1)^2+G\\sqrt{\\mathbb E(\\tau+1)^2}\\sqrt\\delta,\\quad\\Pr(B_\\tau)\\le\\delta.\\)",
       "intuition": "The pathwise all-horizon budget can be evaluated at a random time; Cauchy-Schwarz controls the rare bad-event contribution using square integrability.",
@@ -311,6 +325,7 @@
     {
       "full_name": "BanditRLProof.PosteriorKernel.canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq",
       "chapter": "thompson",
+      "featured": true,
       "plain": "If an environment and observed history have the canonical prior-likelihood joint law, then the canonical posterior kernel equals the conditional law of the environment given that history almost everywhere.",
       "math": "\\(\\Pi(\\cdot\\mid H)=\\mathcal L(E\\mid H)\\quad\\text{a.e.}\\)",
       "intuition": "A posterior is a measurable kernel from histories to environments; the theorem identifies that constructed kernel with the measure-theoretic conditional distribution.",
@@ -323,6 +338,7 @@
     {
       "full_name": "BanditRLProof.Thompson.canonicalSampler_condDistrib_action_ae_eq_bestAction",
       "chapter": "thompson",
+      "featured": true,
       "plain": "For the canonical one-step sampler, the sampled action conditioned on history has the same law as the best action of the latent environment conditioned on that history.",
       "math": "\\(\\mathcal L(A\\mid H)=\\mathcal L(a^\\star(E)\\mid H).\\)",
       "intuition": "Draw an environment from the posterior and act optimally for that draw; pushing the posterior through bestAction is exactly the posterior optimal-action law.",
@@ -347,6 +363,7 @@
     {
       "full_name": "BanditRLProof.Thompson.integral_trajectoryBayesMeanRegret_eq_add_historyScore",
       "chapter": "thompson",
+      "featured": true,
       "plain": "Expected comparator-relative mean regret on the generated trajectory splits exactly into a selector-score gap and a selected-action score gap for any integrable finite-history score; the Bayesian-regret reading additionally requires a mean-optimal selector.",
       "math": "\\(\\mathbb E R_n^{\\mathrm{Bayes}}=\\mathbb E\\sum_{t<n}(\\mu_{a^\\star}-U_t(a^\\star))+\\mathbb E\\sum_{t<n}(U_t(A_t)-\\mu_{A_t}).\\)",
       "intuition": "Add and subtract the same score; probability matching makes the expected score of the sampled action equal the expected score of the latent best action.",
@@ -359,6 +376,7 @@
     {
       "full_name": "BanditRLProof.Thompson.integral_trajectoryBayesMeanRegret_eq_add_clippedUCB",
       "chapter": "thompson",
+      "featured": true,
       "plain": "Choosing the measurable bounded clipped-UCB history score specializes the comparator-relative decomposition to confidence terms suitable for stationary reward tails; optimality is imposed at the final Bayesian-regret terminal.",
       "math": "\\(\\mathbb E R_n^{\\mathrm{Bayes}}=\\mathbb E\\sum_{t<n}(\\mu_{a^\\star}-\\mathrm{clip}(U_t(a^\\star)))+\\mathbb E\\sum_{t<n}(\\mathrm{clip}(U_t(A_t))-\\mu_{A_t}).\\)",
       "intuition": "Clipping keeps scores inside the known mean range while empirical means plus widths retain optimism with high probability.",
@@ -371,6 +389,7 @@
     {
       "full_name": "BanditRLProof.Thompson.canonicalLatentArmStreamTrajectory_reward_eq_rewardFromArmStream_ae",
       "chapter": "thompson",
+      "featured": true,
       "plain": "For the canonical latent-stream environment, every generated reward coordinate agrees almost everywhere with the next unused reward coordinate of the selected arm's stationary stream.",
       "math": "\\(Y_t=Z_{A_t,N_{A_t}(t)}\\quad\\text{for all }t\\text{ a.e.}\\)",
       "intuition": "A latent infinite reward stream for each arm turns adaptive sampling into coordinate selection without changing the actual recursive policy.",
@@ -383,6 +402,7 @@
     {
       "full_name": "BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le",
       "chapter": "thompson",
+      "featured": true,
       "plain": "For the canonical stationary latent-arm-stream Thompson process, expected Bayesian mean regret is at most (2K+1)(u-l) plus 8 times the square root of sigma-squared K n log n.",
       "math": "\\(\\mathbb E[R_n^{\\mathrm{Bayes}}]\\le(2K+1)(u-l)+8\\sqrt{\\sigma^2Kn\\log n}.\\)",
       "intuition": "Posterior sampling matches the law of the optimal action, so a carefully chosen confidence decomposition can compare the sampled and optimal actions in expectation.",
@@ -400,6 +420,7 @@
     {
       "full_name": "BanditRLProof.Exp3.hedge_regret_le_log_card_div_add_eta_mul_mixedSquaredLoss_of_nonneg",
       "chapter": "exp3",
+      "featured": true,
       "plain": "For nonnegative estimated losses, exponential weights has pathwise regret at most a log-cardinality term divided by the learning rate plus the learning rate times the mixed squared loss.",
       "math": "\\(\\sum_t\\langle p_t,\\hat\\ell_t\\rangle-\\sum_t\\hat\\ell_t(a)\\le\\frac{\\log K}{\\eta}+\\eta\\sum_t\\langle p_t,\\hat\\ell_t^2\\rangle.\\)",
       "intuition": "The log potential can neither fall below the comparator weight nor rise faster than the second-order exponential bound permits.",
@@ -412,6 +433,7 @@
     {
       "full_name": "BanditRLProof.Exp3.sampledPredictable_expectedRegret_le_four_mul_sqrt",
       "chapter": "exp3",
+      "featured": true,
       "plain": "With the repository's tuned learning and exploration rates, the generated predictable EXP3 process has expected regret bounded by an explicit square-root expression.",
       "math": "\\(\\mathbb E R_T\\le4\\sqrt{KT\\log K}\\) in the theorem's normalized finite-arm setting.",
       "intuition": "The tuning balances the potential term, second-moment term, and the price of forced exploration.",
@@ -426,6 +448,7 @@
     {
       "full_name": "BanditRLProof.Exp3.sampledPredictable_allHorizonBernsteinSquareBestArmRealizedRegret_tail",
       "chapter": "exp3",
+      "featured": true,
       "plain": "At any supplied positive horizon, the generated EXP3 process with the theorem's Bernstein-square tuning has a realized-regret tail against the best supported arm obtained by a finite comparator union.",
       "math": "\\(\\Pr\\{R_T^{\\mathrm{real}}(a_T^\\star)\\ge b(K,T,\\delta)\\}\\le\\delta.\\)",
       "intuition": "First control regret to each supported comparator at confidence delta divided by the number of arms, then union the finite family and choose the best cumulative-loss arm.",
@@ -486,6 +509,7 @@
     {
       "full_name": "BanditRLProof.Exp3.measure_sampledPredictableRegretGeometricAllTimeFailureSet_le",
       "chapter": "exp3",
+      "featured": true,
       "plain": "For one fixed generated EXP3 process and one supported comparator, predictable regret satisfies its scheduled finite-prefix bound simultaneously at every positive prefix outside one geometrically budgeted failure event.",
       "math": "\\(\\mu(\\exists n\\ge0:\\ R^{\\mathrm{pred}}_{n+1}(a)\\ge B^{\\mathrm{pred}}_{n})\\le\\delta.\\)",
       "intuition": "Each finite-prefix potential-and-comparator proof already has a tail bound. Giving prefix n+1 a geometric share makes their countable union affordable without changing the underlying process or comparator.",
@@ -501,6 +525,7 @@
     {
       "full_name": "BanditRLProof.Exp3.measure_sampledRealizedRegretGeometricAllTimeFailureSet_le",
       "chapter": "exp3",
+      "featured": true,
       "plain": "For one generated EXP3 process and one supported comparator, realized selected-loss regret is below the sum of its predictable-regret and sampling-deviation budgets at every positive prefix, except on an event of outer mass at most delta.",
       "math": "\\(R^{\\mathrm{real}}_{n+1}(a)=R^{\\mathrm{pred}}_{n+1}(a)+D_{n+1},\\qquad \\mu(\\exists n:\\ R^{\\mathrm{real}}_{n+1}(a)\\ge B^{\\mathrm{pred}}_n+B^{\\mathrm{dev}}_n)\\le\\delta.\\)",
       "intuition": "Realized regret has two sources: the exponential-weights decision rule can lose against the comparator in predictable loss, and sampled actions can deviate from those predictable losses. If neither component fails, their sum cannot fail.",
@@ -517,6 +542,7 @@
     {
       "full_name": "BanditRLProof.Exp3.sampledPredictable_allHorizonDoubleVarianceProbabilisticSparseLossBestArmRealizedRegret_tail_of_sparsityFailure_le",
       "chapter": "exp3",
+      "featured": true,
       "plain": "Under predictable sparse losses, the probability that best-arm realized regret crosses the tuned all-horizon threshold is at most delta plus the supplied sparsity-failure probability.",
       "math": "\\(\\Pr\\{R_T^{\\mathrm{real}}\\ge b(K,S,T,\\delta)\\}\\le\\delta+\\varepsilon.\\)",
       "intuition": "A variance-sensitive martingale bound handles the regular sparse regime, while a separate event explicitly accounts for violations of the sparsity model.",
@@ -529,6 +555,7 @@
     {
       "full_name": "BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_allRateBound",
       "chapter": "tsallis",
+      "featured": true,
       "plain": "On the canonical scheduled half-Tsallis generated trajectory, expected predictable-environment regret to a supported arm is bounded by the integrated all-rate stability budget plus the exact time-varying potential penalty.",
       "math": "\\(\\mathbb E R_{0:n}(a^\\star)\\le\\mathbb E\\sum_{t=0}^{n}B_t^{\\mathrm{stab}}+\\Psi(p_0)/\\eta_n-1/\\eta_n.\\)",
       "intuition": "The deterministic FTRL decomposition already separates stability from regularizer drift; the generated conditional action law turns its importance-weighted scores into the true predictable loss regret.",
@@ -545,6 +572,7 @@
     {
       "full_name": "BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIIDRewardLawRegret_le_log",
       "chapter": "tsallis",
+      "featured": true,
       "plain": "For independent IID finite-arm reward laws with exact model means and positive non-best gaps, scheduled half-Tsallis FTRL has a logarithmic expected-regret bound in reciprocal gaps.",
       "math": "\\(\\mathbb E R_T\\le(1+\\log(T+1))\\left(1+25\\sum_{a\\ne a^\\star}\\Delta_a^{-1}\\right)+C.\\)",
       "intuition": "The stochastic gap law makes the algorithm's own action probabilities pay for regret, and the half-Tsallis schedule converts that self-bound into logarithmic growth.",
@@ -610,6 +638,7 @@
     {
       "full_name": "BanditRLProof.OFUL.canonicalStandardExpectedAveragePseudoRegret_tendsto_zero",
       "chapter": "oful",
+      "featured": true,
       "plain": "For the canonical finite-action scalar linear-bandit model, the compiled expected pseudo-regret bound divided by the number of rounds converges to zero.",
       "math": "\\(\\displaystyle \\frac{\\mathbb E R_T}{T+1}\\longrightarrow 0.\\)",
       "intuition": "The finite-horizon regret grows strictly slower than the horizon, so the expected cost per decision vanishes even though cumulative regret can still grow.",
@@ -634,6 +663,7 @@
     {
       "full_name": "BanditRLProof.FiniteHorizonRL.MDP",
       "chapter": "finite-horizon-rl",
+      "featured": true,
       "plain": "A finite-horizon Markov decision process packages a horizon, measurable finite state and action spaces, an initial-stage reward, and a stochastic transition kernel.",
       "math": "\\(\\mathcal M=(H,\\mathcal S,\\mathcal A,r,P),\\qquad P(\\cdot\\mid s,a)\\text{ is a probability kernel}.\\)",
       "intuition": "The structure is the common mathematical world in which policies, trajectories, Bellman operators, empirical models, and regret are interpreted.",
@@ -646,6 +676,7 @@
     {
       "full_name": "BanditRLProof.FiniteHorizonRL.MarkovPolicy.expectedRegret_eq_occupancyGapRemaining",
       "chapter": "finite-horizon-rl",
+      "featured": true,
       "plain": "A Markov policy's expected regret equals the sum, under its own state occupancies, of the stagewise gap between the optimal Bellman value and the policy's Bellman value.",
       "math": "\\(\\mathbb E R_H(\\pi)=\\sum_{h=0}^{H-1}\\mathbb E_{S_h\\sim d_h^\\pi}[V_h^\\star(S_h)-Q_h^\\star(S_h,\\pi_h(S_h))].\\)",
       "intuition": "Regret can be read either as a difference of total values or as local Bellman suboptimality accumulated along the states the policy actually visits.",
@@ -700,6 +731,7 @@
     {
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_policyAt_succ",
       "chapter": "finite-horizon-rl",
+      "featured": true,
       "plain": "At successor episode k+1, the canonical source selects exactly the measurable greedy policy produced by the previous-Q-clipped UCBVI recurrence from coordinates at most k.",
       "math": "\\(Q_{k,h}=\\min\\{Q_{k-1,h},H,r+\\widehat P_kV_{k,h+1}+7HL/\\sqrt{N_k}\\},\\quad \\pi_k=\\arg\\max_a Q_{k,h}.\\)",
       "intuition": "The algorithm never recomputes policy k from future data: its table is a deterministic measurable function of the strict history available before the next batch is generated.",
@@ -732,6 +764,7 @@
     {
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.recurrentQTableOfTrajectory_dominatesOptimal",
       "chapter": "finite-horizon-rl",
+      "featured": true,
       "plain": "Outside the same-source transition failure event, every recurrent generated Q table dominates the true finite-horizon optimal Q values at every stage, state, and action.",
       "math": "\\(G_P\\Rightarrow Q_{k,h}(x,a)\\ge Q_h^*(x,a)\\quad\\text{for all }k,h,x,a.\\)",
       "intuition": "The empirical backup plus bonus covers the true optimal tail; clipping preserves optimism because both the previous table and the horizon cap are already upper bounds.",
@@ -793,6 +826,7 @@
     {
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_cumulativeEpisodePseudoRegret_gt_canonicalRegretBound_le",
       "chapter": "finite-horizon-rl",
+      "featured": true,
       "plain": "For one recurrent generated known-reward UCBVI-CH process, raw policy-value pseudo-regret across exactly K episode coordinates exceeds the explicit 20/250 Hoeffding bound with probability at most delta.",
       "math": "\\(\\Pr\\{R_K>20H\\sqrt H\\,L\\sqrt{SAK}+250H^2S^2AL^2\\}\\le\\delta.\\)",
       "intuition": "Every ingredient is read from one adaptive history: the policy uses only the strict past, confidence controls that trajectory's aggregate transition rows, and the actual visited counts pay for the bonus.",
@@ -810,6 +844,7 @@
     {
       "full_name": "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.integral_cumulativeEpisodePseudoRegret_recurrentSource_le_canonicalRegretBound_add_failure",
       "chapter": "finite-horizon-rl",
+      "featured": true,
       "plain": "The same recurrent UCBVI-CH pseudo-regret is integrable, and its expectation is at most the frozen high-probability bound plus the explicit K H delta failure contribution.",
       "math": "\\(\\mathbb E R_K\\le B_{\\mathrm{CH}}(H,S,A,K,\\delta)+KH\\delta.\\)",
       "intuition": "On the good event use the compiled UCBVI bound; on its measurable hull use only the deterministic fact that K episodes can lose at most K H.",
@@ -836,6 +871,7 @@
     {
       "full_name": "BanditRLProof.HarnessTask",
       "chapter": "frontier",
+      "featured": true,
       "plain": "A harness task records the target, task kind, status, source and scenario cards, profile, required artifacts, and acceptance gates used by the automation system.",
       "math": "\\(\\text{task}=\\text{target}+\\text{evidence}+\\text{status}+\\text{artifacts}+\\text{gates}.\\)",
       "intuition": "Proof automation is safer when completion criteria are data that can be inspected, rather than an informal instruction that can drift across runs.",
@@ -1186,6 +1222,7 @@
     {
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.sourceQ_supportCombination_eq",
       "chapter": "frontier",
+      "featured": true,
       "plain": "On a succinct support, the paper's Q quantity of a finite support combination is exactly the largest absolute coefficient.",
       "math": "\\(Q(\\sum_i a_i E_i)=\\max_i |a_i|\\).",
       "intuition": "The support contract makes the chosen support atoms orthogonal. Every atom in the source atom set correlates with the combination by at most the largest coefficient, while a signed maximizing support atom reaches that value.",
@@ -1202,6 +1239,7 @@
     {
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.succinctSize_ge_strictSize",
       "chapter": "frontier",
+      "featured": true,
       "plain": "If one representation of X uses s succinct atoms and another is strictly z-succinct, then z is at most s.",
       "math": "\\(X\\text{ is }s\\text{-succinct and strictly }z\\text{-succinct}\\Longrightarrow z\\le s.\\)",
       "intuition": "Strict nonzero coefficients prevent any direction in the second support from being hidden. Equality of the local R values forces unit correlations with one signed support combination, and finite Bessel bounds how many orthonormal strict-support atoms can all attain correlation one.",
@@ -1361,6 +1399,7 @@
     {
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDDirac_theoremOne",
       "chapter": "frontier",
+      "featured": true,
       "plain": "For the source's bounded two-arm fixed-IID SGB process, the expected pseudo-regret of the actual sampled actions satisfies the exact Theorem-1 logarithmic term plus its finite failure-regret term.",
       "math": "\\(R_T^{\\mathrm{SGB}}\\le \\frac{\\log(1+4\\eta\\Delta T)}{2\\eta}+\\frac{\\Delta}{2\\eta(\\Delta-\\eta C_\\eta)}.\\)",
       "intuition": "The generated Equation-(5) drift turns cumulative regret into one expected best-coordinate parameter plus squared failure probability. The forward exponential potential controls the parameter through Jensen and log, while the inverse potential telescopes the failure squares.",
@@ -1377,6 +1416,7 @@
     {
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDDirac_corollaryOne",
       "chapter": "frontier",
+      "featured": true,
       "plain": "For every horizon at least two, the generated zero-initialized two-arm fixed-IID SGB trajectory with learning rate sqrt(log T / T) has expected sampled pseudo-regret at most an explicit absolute constant times sqrt(T log T).",
       "math": "\\(\\mathbb E R_T^{\\mathrm{SGB}}\\le\\left(2+\\frac1{\\log 2}+2e^2\\right)\\sqrt{T\\log T},\\qquad T\\ge2.\\)",
       "intuition": "When the learning rate is small relative to the gap, the compiled Theorem-1 bound supplies the rate. On the complementary branch, failure of that margin makes the trivial pathwise Delta T bound no larger than the same square-root scale.",
@@ -1573,6 +1613,7 @@
     {
       "full_name": "BanditRLProof.StochasticGradientBandit.theoremFourStepFour_survivalMass_pos",
       "chapter": "frontier",
+      "featured": true,
       "plain": "For positive p-prime and c below one half, a buffered event with mass at least p-prime and conditional joint-survival mass at least one minus twice c yields strictly positive unconditional survival mass.",
       "math": "0<p',\\;c<\\tfrac12,\\;P(B)\\ge p',\\;P(B\\cap S)\\ge(1-2c)P(B),\\;P(B\\cap S)\\le P(S)\\;\\Longrightarrow\\;P(S)\\ge p'(1-2c)>0.",
       "intuition": "The finite argument is ordinary total-probability bookkeeping: first enter a strict buffer with positive mass, then retain a positive fraction of that mass on the survival event.",

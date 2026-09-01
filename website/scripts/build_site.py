@@ -41,7 +41,9 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20260901a"
+ASSET_VERSION = "20260901c"
+CATALOG_PAGE_SIZE = 100
+TEACHING_PREVIEW_COUNT = 6
 SOURCE_BRANCH = "main"
 PUBLIC_BASE_URL = ""
 PUBLIC_SNAPSHOT_BASE_URL = ""
@@ -198,6 +200,7 @@ def render_math_statement(label: str, source: str, fallback: str) -> str:
         '<span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span>'
         f'<span class="math-fallback">{html.escape(fallback)}</span>'
         f'<span class="math-tex" aria-hidden="true">{html.escape(normalized)}</span>'
+        '<span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span>'
         "</div>"
     )
 
@@ -804,8 +807,8 @@ def render_book_map(
             if count
         )
         scope_line = (
-            f'<span class="book-scope">Canonical scope {STATUS_LABELS.get(chapter["status"], chapter["status"]).lower()}'
-            + (f" · {html.escape(milestone_line)}" if milestone_line else "")
+            '<span class="book-scope">Extension and milestone ledger'
+            + (f" · {html.escape(milestone_line)}" if milestone_line else " · no registered milestones")
             + "</span>"
         )
         audience = (
@@ -818,7 +821,7 @@ def render_book_map(
 <a class="book-chapter-card" href="{href_from(page_path, f"chapters/{chapter['slug']}/index.html")}">
   <span class="book-chapter-number" aria-hidden="true">{index:02d}</span>
   <div class="book-chapter-copy">
-    <span class="book-chapter-meta">{status_badge(chapter['status'])}</span>
+    <span class="book-chapter-meta"><span>Canonical chapter core</span>{status_badge(chapter['status'])}</span>
     <strong>{html.escape(chapter['title'])}</strong>
     {scope_line}
     {source_line}
@@ -976,7 +979,8 @@ def build_textbook_spine(
         ),
     )
 
-    for chapter in spine["chapters"]:
+    spine_chapters = spine["chapters"]
+    for chapter_index, chapter in enumerate(spine_chapters):
         page_path = f"textbook-spine/{chapter['slug']}/index.html"
         chapter_source_html = ""
         if chapter.get("chapter_doi_url") and chapter.get("chapter_doi"):
@@ -1100,6 +1104,23 @@ def build_textbook_spine(
             f'{status_badge(effective_evidence_status(node["status"], verified))}</article>'
             for node in chapter["dependency_nodes"]
         )
+        previous_chapter = spine_chapters[chapter_index - 1] if chapter_index else None
+        next_chapter = spine_chapters[chapter_index + 1] if chapter_index + 1 < len(spine_chapters) else None
+        chapter_pager = render_sequence_pager(
+            page_path,
+            sequence_label="Bandit Algorithms · Part IV",
+            index=chapter_index,
+            total=len(spine_chapters),
+            landing_path="textbook-spine/index.html",
+            previous=(
+                f"textbook-spine/{previous_chapter['slug']}/index.html",
+                f"Chapter {previous_chapter['number']}: {previous_chapter['title']}",
+            ) if previous_chapter else None,
+            next_item=(
+                f"textbook-spine/{next_chapter['slug']}/index.html",
+                f"Chapter {next_chapter['number']}: {next_chapter['title']}",
+            ) if next_chapter else None,
+        )
         body = f"""
 <section class="hero spine-chapter-hero" id="chapter">
   <p class="eyebrow">{html.escape(source['part'])}</p>
@@ -1136,6 +1157,8 @@ def build_textbook_spine(
 <section id="reading"><h2>Reading path</h2>{render_list(chapter['reading_path'])}</section>
 
 <section id="gaps"><h2>Strict status and remaining gaps</h2>{render_list(chapter['gaps'])}</section>
+
+{chapter_pager}
 """
         toc = [
             ("chapter", f"Chapter {chapter['number']}"), ("source", "Source map"),
@@ -1143,6 +1166,7 @@ def build_textbook_spine(
             ("flow", "Proof flow"), ("source-theorem", "Source theorem"),
             ("lean", "Lean correspondence"), ("dependencies", "Dependencies"),
             ("reading", "Reading path"), ("gaps", "Status and gaps"),
+            ("continue-reading", "Continue reading"),
         ]
         write_page(
             output,
@@ -1226,6 +1250,43 @@ def render_chapter_compass(page_path: str, chapter: dict[str, Any], reading: dic
   <a href="#orientation"><span class="chapter-compass-step">01 · Orient</span><strong>What you need</strong><small>{len(chapter['learning_goals'])} learning goals and the intended reader.</small></a>
   <a href="#source-guide"><span class="chapter-compass-step">02 · Learn</span><strong>{html.escape(algorithm['title'])}</strong><small>{html.escape(primary['sections'])} · {html.escape(primary['pages'])}. {html.escape(theorem_note)}</small></a>
   <a href="#teaching-notes"><span class="chapter-compass-step">03 · Verify</span><strong>Mathematics ↔ Lean</strong><small>Read intuition and proof structure, then open the exact compiled declaration.</small></a>
+</nav>"""
+
+
+def render_sequence_pager(
+    page_path: str,
+    *,
+    sequence_label: str,
+    index: int,
+    total: int,
+    landing_path: str,
+    previous: tuple[str, str] | None,
+    next_item: tuple[str, str] | None,
+) -> str:
+    """Render a compact, keyboard-friendly previous/index/next reading route."""
+
+    def adjacent_link(item: tuple[str, str] | None, direction: str) -> str:
+        if item is None:
+            return '<span class="chapter-pager-spacer" aria-hidden="true"></span>'
+        target, title = item
+        if direction == "previous":
+            direction_label = '<span aria-hidden="true">←</span> Previous'
+        else:
+            direction_label = 'Next <span aria-hidden="true">→</span>'
+        return (
+            f'<a class="chapter-pager-link {direction}" href="{href_from(page_path, target)}">'
+            f'<span class="chapter-pager-direction">{direction_label}</span>'
+            f'<strong>{html.escape(title)}</strong></a>'
+        )
+
+    return f"""
+<nav class="chapter-pager" id="continue-reading" aria-label="{html.escape(sequence_label)} reading sequence">
+  <div class="chapter-pager-heading"><span class="eyebrow">Continue reading</span><strong>{html.escape(sequence_label)}</strong></div>
+  <div class="chapter-pager-links">
+    {adjacent_link(previous, 'previous')}
+    <a class="chapter-pager-index" href="{href_from(page_path, landing_path)}"><span>All chapters</span><strong>{index + 1} of {total}</strong></a>
+    {adjacent_link(next_item, 'next')}
+  </div>
 </nav>"""
 
 
@@ -1672,27 +1733,58 @@ def build_catalog(
     page_path = "declarations/index.html"
     kinds = sorted({decl["kind"] for decl in declarations})
     rows = []
+    catalog_items = []
     for decl in declarations:
         status = (
             "stated"
             if decl["placeholder"] or decl["kind"] == "axiom"
             else ("compiled" if verified else "source")
         )
-        search = html.escape(
-            f"{decl['full_name']} {decl['kind']} {decl['module']} {decl['file']} {decl['chapter_title']}".lower(),
-            quote=True,
+        search_text = (
+            f"{decl['full_name']} {decl['kind']} {decl['module']} {decl['file']} {decl['chapter_title']}".lower()
         )
+        search = html.escape(search_text, quote=True)
+        declaration_url = declaration_href(page_path, decl)
+        declaration_module_url = module_href(page_path, {"slug": decl["module_slug"]})
+        declaration_source_url = source_url(decl["file"], decl["line"])
+        catalog_items.append(
+            {
+                "name": decl["full_name"],
+                "kind": decl["kind"],
+                "kind_label": KIND_LABELS.get(decl["kind"], decl["kind"]),
+                "module": decl["module"],
+                "module_url": declaration_module_url,
+                "chapter": decl["chapter"],
+                "chapter_title": decl["chapter_title"],
+                "status": status,
+                "status_label": STATUS_LABELS[status],
+                "url": declaration_url,
+                "source_url": declaration_source_url,
+                "source_label": f"{decl['file']}:{decl['line']}",
+                "search": search_text,
+            }
+        )
+        if len(rows) >= CATALOG_PAGE_SIZE:
+            continue
         rows.append(
             f"""
 <tr data-catalog-row data-search="{search}" data-kind="{decl['kind']}" data-status="{status}" data-chapter="{decl['chapter']}">
-  <td><a href="{declaration_href(page_path, decl)}"><code>{html.escape(decl['full_name'])}</code></a></td>
+  <td><a href="{declaration_url}"><code>{html.escape(decl['full_name'])}</code></a></td>
   <td>{html.escape(KIND_LABELS.get(decl['kind'], decl['kind']))}</td>
   <td>{html.escape(decl['chapter_title'])}</td>
-  <td><a href="{module_href(page_path, {'slug': decl['module_slug']})}"><code>{html.escape(decl['module'])}</code></a></td>
+  <td><a href="{declaration_module_url}"><code>{html.escape(decl['module'])}</code></a></td>
   <td>{status_badge(status)}</td>
-  <td><a href="{source_url(decl['file'], decl['line'])}">{html.escape(decl['file'])}:{decl['line']}</a></td>
+  <td><a href="{declaration_source_url}">{html.escape(decl['file'])}:{decl['line']}</a></td>
 </tr>"""
         )
+    write_text_lf(
+        output / "catalog-data.json",
+        json.dumps(
+            {"page_size": CATALOG_PAGE_SIZE, "items": catalog_items},
+            ensure_ascii=False,
+            separators=(",", ":"),
+        ),
+    )
     kind_options = "".join(
         f'<option value="{kind}">{html.escape(KIND_LABELS.get(kind, kind))}</option>' for kind in kinds
     )
@@ -1721,16 +1813,18 @@ def build_catalog(
     <div class="filter-field"><label for="catalog-status">Status</label><select id="catalog-status" data-catalog-status><option value="">All statuses</option><option value="compiled">Compiled</option><option value="stated">Stated/incomplete</option><option value="source">Source indexed</option></select></div>
     <div class="filter-field"><label for="catalog-chapter">Chapter</label><select id="catalog-chapter" data-catalog-chapter><option value="">All chapters</option>{chapter_options}</select></div>
   </div>
-  <p class="result-count" data-catalog-count></p>
+  <p class="result-count" id="catalog-count" data-catalog-count aria-live="polite">Showing the first {min(CATALOG_PAGE_SIZE, len(declarations)):,} of {len(declarations):,} declarations.</p>
 </section>
 
 <section id="declaration-table">
-  <div class="table-wrap" data-catalog>
+  <div class="table-wrap" data-catalog tabindex="0" role="region" aria-label="Lean declaration catalog" aria-describedby="catalog-count">
     <table>
       <thead><tr><th>Declaration</th><th>Kind</th><th>Chapter</th><th>Module</th><th>Status</th><th>Source</th></tr></thead>
-      <tbody>{''.join(rows)}</tbody>
+      <tbody data-catalog-body>{''.join(rows)}</tbody>
     </table>
   </div>
+  <div class="catalog-actions"><button class="button compact" type="button" data-catalog-more hidden>Show {min(CATALOG_PAGE_SIZE, max(0, len(declarations) - CATALOG_PAGE_SIZE)):,} more declarations</button></div>
+  <noscript><p class="callout warning"><strong>JavaScript is off.</strong> The first {min(CATALOG_PAGE_SIZE, len(declarations)):,} declarations are shown here. Open the <a href="{href_from(page_path, 'catalog-data.json')}">complete JSON catalog</a> or browse the <a href="{href_from(page_path, 'implementation-map/index.html')}">module-level implementation map</a>.</p></noscript>
 </section>
 """
     toc = [
@@ -1766,7 +1860,7 @@ def build_chapters(
     for result in results:
         results_by_chapter[result["chapter"]].append(result)
 
-    for chapter in chapters:
+    for chapter_index, chapter in enumerate(chapters):
         page_path = f"chapters/{chapter['slug']}/index.html"
         goals = render_list(chapter["learning_goals"])
         reading = SITE_READINGS[chapter["slug"]]
@@ -1784,10 +1878,39 @@ def build_chapters(
   </div></details>
 </section>
 """
+        chapter_highlights = highlights_by_chapter[chapter["slug"]]
+        if len(chapter_highlights) > TEACHING_PREVIEW_COUNT:
+            featured_highlights = [item for item in chapter_highlights if item.get("featured") is True]
+            if not featured_highlights or len(featured_highlights) > TEACHING_PREVIEW_COUNT:
+                raise SystemExit(
+                    f"chapter {chapter['slug']} needs between one and {TEACHING_PREVIEW_COUNT} "
+                    "explicit featured highlights before extended notes can be collapsed"
+                )
+        else:
+            featured_highlights = chapter_highlights
+        extended_highlights = [
+            item for item in chapter_highlights if item not in featured_highlights
+        ]
         teaching = "".join(
             render_highlight(page_path, item, decl_by_name[item["full_name"]], verified)
-            for item in highlights_by_chapter[chapter["slug"]]
+            for item in featured_highlights
         )
+        teaching_scope = ""
+        if extended_highlights:
+            remaining_teaching = "".join(
+                render_highlight(page_path, item, decl_by_name[item["full_name"]], verified)
+                for item in extended_highlights
+            )
+            remaining_count = len(extended_highlights)
+            teaching_scope = (
+                '<p class="section-intro">A curated route through definitions, key bridges, and canonical terminals stays visible. '
+                f'{remaining_count} additional dependency, extension, or research-frontier notes are grouped below.</p>'
+            )
+            teaching += (
+                '<details class="inventory-disclosure teaching-disclosure">'
+                f'<summary>Explore {remaining_count} additional Lean teaching notes</summary>'
+                f'<div>{remaining_teaching}</div></details>'
+            )
         if not teaching:
             teaching = '<p class="empty">No extended teaching note is registered for this chapter yet; the full module catalog remains available below.</p>'
         result_rows = []
@@ -1824,6 +1947,23 @@ def build_chapters(
             f"<td>{status_badge('stated' if module['placeholder_count'] else ('compiled' if verified else 'source'))}</td></tr>"
             for module in modules_by_chapter[chapter["slug"]]
         )
+        previous_chapter = chapters[chapter_index - 1] if chapter_index else None
+        next_chapter = chapters[chapter_index + 1] if chapter_index + 1 < len(chapters) else None
+        chapter_pager = render_sequence_pager(
+            page_path,
+            sequence_label="BanditRLlib Book Map",
+            index=chapter_index,
+            total=len(chapters),
+            landing_path="learning/index.html",
+            previous=(
+                f"chapters/{previous_chapter['slug']}/index.html",
+                previous_chapter["title"],
+            ) if previous_chapter else None,
+            next_item=(
+                f"chapters/{next_chapter['slug']}/index.html",
+                next_chapter["title"],
+            ) if next_chapter else None,
+        )
         body = f"""
 <section class="hero" id="chapter">
   <p class="eyebrow">Teaching chapter · canonical scope {status_badge(chapter['status'])}</p>
@@ -1845,6 +1985,7 @@ def build_chapters(
 <section id="teaching-notes">
   <h2>Natural-language and Lean side by side</h2>
   <p>The mathematical readings are explanatory summaries. The exact generated Lean statement and its source link remain authoritative for hypotheses, types, constants, and indexing.</p>
+  {teaching_scope}
   {teaching}
 </section>
 
@@ -1865,6 +2006,8 @@ def build_chapters(
   <h2>All Lean modules in this chapter</h2>
   <details class="inventory-disclosure"><summary>Open the complete module list ({len(modules_by_chapter[chapter['slug']]):,} modules)</summary><div class="table-wrap" tabindex="0" role="region" aria-label="Lean modules in this chapter"><table><thead><tr><th>Module</th><th>Declarations</th><th>Project imports</th><th>Status</th></tr></thead><tbody>{module_rows}</tbody></table></div></details>
 </section>
+
+{chapter_pager}
 """
         toc = [
             ("chapter", "Chapter"),
@@ -1878,6 +2021,7 @@ def build_chapters(
             ("milestones", "Status"),
             ("open-gaps", "Open boundaries"),
             ("module-list", "Modules"),
+            ("continue-reading", "Continue reading"),
         ])
         write_page(
             output,
@@ -2232,7 +2376,7 @@ def build_community(output: Path, verified: bool, generated_at: str) -> None:
       <ul><li>stable contribution ID and mathematical domain;</li><li>source paper, book, or original-result provenance;</li><li>plain-English and LaTeX statements;</li><li>Lean imports, declaration text, and named dependencies;</li><li>verification status and compiler evidence;</li><li>contributor identity, preferred credit, and license agreement.</li></ul>
       <p><a href="{href_from(page_path, 'community/contribution.schema.json')}">Open the JSON Schema</a> · <a href="{href_from(page_path, 'community/registry.json')}">Open the machine-readable registry</a></p>
     </div>
-    <pre class="contract-example"><code>{{
+    <pre class="contract-example" tabindex="0" role="region" aria-label="Example lemma packet JSON"><code>{{
   "schema_version": "1.1",
   "id": "domain-short-lemma-name",
   "status": "proposed",
