@@ -1,17 +1,11 @@
-sequenceDiagram
-  participant U as Upper director
-  participant M as Middle planner
-  participant L as Lean worker
-  participant R as Reviewer
-  participant G as Deterministic gate
-
-  U->>M: Select one theorem route and preserve the target
-  M->>M: Search Mathlib, local declarations, and theorem cards
-  M->>L: Issue one exact leaf with hypotheses and failure policy
-  L->>G: Compile focused module and Tests.Basic
-  G-->>L: Errors or compiled certificate
-  L->>M: Proof term or precise blocker
-  M->>R: Synchronized Lean, prose, route, and memory
-  R->>G: Run tools/bandit.py check
-  G-->>R: Repository-wide verdict
-  R-->>U: Accept, refine, or reopen the statement audit
+flowchart TB
+    Target["Frozen theorem target<br/>assumptions + source packet + budget"] --> Scheduler{"Evidence-aware scheduler"}
+    Scheduler -->|default| H["Hierarchical route<br/>director → planner → Lean worker"]
+    Scheduler -. "bounded parallel trial" .-> P["Master–worker route<br/>independent workers + master synthesis"]
+    H --> Review["Common reviewer<br/>target fidelity + evidence audit"]
+    P --> Review
+    Review --> Gate{"Deterministic gate<br/>focused compile + repository check"}
+    Gate -->|accepted| Library["BanditRLlib declaration<br/>and synchronized explanation"]
+    Gate -->|diagnostic| Log["Matched trial log<br/>certificate · blocker · reuse · cost"]
+    Log --> Scheduler
+    Library --> Memory["Reviewer-gated retrieval memory"]

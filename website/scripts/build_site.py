@@ -41,7 +41,7 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20260827b"
+ASSET_VERSION = "20260901a"
 SOURCE_BRANCH = "main"
 PUBLIC_BASE_URL = ""
 PUBLIC_SNAPSHOT_BASE_URL = ""
@@ -195,6 +195,7 @@ def render_math_statement(label: str, source: str, fallback: str) -> str:
         '<div class="math-statement" data-math-statement tabindex="0" '
         f'role="region" aria-label="{html.escape(label)}">'
         f'<strong>{html.escape(label)}.</strong> '
+        '<span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span>'
         f'<span class="math-fallback">{html.escape(fallback)}</span>'
         f'<span class="math-tex" aria-hidden="true">{html.escape(normalized)}</span>'
         "</div>"
@@ -633,21 +634,67 @@ def layout(
     spine_nav = nav_links(
         [("textbook-spine", "Part IV overview", "textbook-spine/index.html")]
     ) + "".join(spine_link(chapter) for chapter in SITE_TEXTBOOK_SPINE.get("chapters", []))
+
+    def nav_group(key: str, label: str, links: str, active: bool = False) -> str:
+        active_class = " active" if active else ""
+        active_data = "true" if active else "false"
+        return (
+            f'<details class="nav-group{active_class}" data-nav-group="{html.escape(key)}" '
+            f'data-nav-group-active="{active_data}" open>'
+            f'<summary class="nav-group-title"><span>{html.escape(label)}</span>'
+            '<span class="nav-group-chevron" aria-hidden="true">⌄</span></summary>'
+            f'<div class="nav-group-links">{links}</div></details>'
+        )
+
+    chapter_keys = {chapter["slug"] for chapter in SITE_CHAPTERS}
+    sidebar_groups = "".join(
+        [
+            nav_group("start", "Start", start_nav, current in {"overview", "installation"}),
+            nav_group("book-map", "Learn · Book map", book_nav, current == "learning" or current in chapter_keys),
+            nav_group("textbook-spine", "Textbook spine · Part IV", spine_nav, current == "textbook-spine"),
+            nav_group(
+                "research",
+                "Research atlas",
+                research_nav,
+                current in {"banditrlwiki", "banditrlwiki-frontier", "banditrlwiki-papers", "banditrlwiki-progress"},
+            ),
+            nav_group("library", "Library", library_nav, current in {"catalog", "map", "lean-graph", "proof-lab"}),
+            nav_group("formalize", "Formalize", formalize_nav, current in {"ide", "workflow"}),
+            nav_group(
+                "community",
+                "Community",
+                community_nav,
+                current in {"community", "contributors", "roadmap", "attribution"},
+            ),
+        ]
+    )
     toc_html = (
-        '<aside class="side-nav" aria-label="On this page"><strong>On this page</strong>'
+        '<aside class="side-nav" data-page-toc aria-label="On this page">'
+        '<button class="side-nav-toggle" type="button" data-toc-toggle '
+        'aria-controls="page-toc-links" aria-expanded="false">'
+        '<span class="side-nav-toggle-label">On this page</span>'
+        f'<span class="side-nav-current" data-toc-current>{html.escape(toc[0][1])}</span>'
+        '<span class="side-nav-chevron" aria-hidden="true">⌄</span></button>'
+        '<strong class="side-nav-label">On this page</strong>'
+        '<nav class="side-nav-links" id="page-toc-links">'
         + "".join(
             f'<a data-toc-link href="#{html.escape(anchor)}">{html.escape(label)}</a>'
             for anchor, label in toc
         )
-        + "</aside>"
+        + "</nav></aside>"
         if toc
         else ""
     )
     verification_class = "" if verified else " unverified"
-    verification = (
+    verification_long = (
         "Lean gate passed before this site build; local proof declarations are shown as compiled."
         if verified
         else "Preview build: run the Lean gate and rebuild with --lean-verified before treating local declarations as compiled."
+    )
+    verification_short = (
+        "Lean-verified build · exact declarations linked."
+        if verified
+        else "Preview build · not Lean-verified."
     )
     mathjax = ""
     if has_math:
@@ -669,7 +716,7 @@ def layout(
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the ABRL hierarchical autoformalization harness.">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
   <meta name="citation_title" content="{html.escape(PAPER_TITLE)}">
   <title>{html.escape(title)} · BanditRLlib</title>
   <link rel="icon" href="{root}/static/favicon.svg" type="image/svg+xml">
@@ -696,13 +743,7 @@ def layout(
       <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
     </div>
     <nav class="sidebar-nav" aria-label="Primary">
-      <div class="nav-group"><strong class="nav-group-title">Start</strong>{start_nav}</div>
-      <div class="nav-group book-map-nav"><strong class="nav-group-title">Learn · Book map</strong>{book_nav}</div>
-      <div class="nav-group textbook-spine-nav"><strong class="nav-group-title">Textbook spine · Part IV</strong>{spine_nav}</div>
-      <div class="nav-group"><strong class="nav-group-title">Research atlas</strong>{research_nav}</div>
-      <div class="nav-group"><strong class="nav-group-title">Library</strong>{library_nav}</div>
-      <div class="nav-group"><strong class="nav-group-title">Formalize</strong>{formalize_nav}</div>
-      <div class="nav-group"><strong class="nav-group-title">Community</strong>{community_nav}</div>
+      {sidebar_groups}
     </nav>
     <div class="sidebar-footer">
       <a href="{GITHUB_REPO}">GitHub repository <span aria-hidden="true">↗</span></a>
@@ -715,7 +756,7 @@ def layout(
   </aside>
   <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
   <div class="site-content">
-    <div class="verification-strip{verification_class}">{html.escape(verification)}</div>
+    <div class="verification-strip{verification_class}"><span class="verification-long">{html.escape(verification_long)}</span><span class="verification-short">{html.escape(verification_short)}</span></div>
     <div class="{page_shell_class}">
       <main class="page-main" id="main-content">{body}</main>
       {toc_html}
@@ -788,6 +829,29 @@ def render_book_map(
 </a>"""
         )
     return '<div class="book-map-grid">' + "".join(cards) + "</div>"
+
+
+def render_learning_routes(page_path: str) -> str:
+    routes = [
+        ("Stochastic finite arms", "Start with bookkeeping, add concentration, then compare ETC and optimism.", ["foundations", "probability", "etc", "ucb"]),
+        ("Linear and contextual", "Build the probability interface before moving from optimism to confidence ellipsoids.", ["probability", "ucb", "oful"]),
+        ("Bayesian", "Use the common probability layer, then follow posterior sampling and its information route.", ["probability", "thompson"]),
+        ("Adversarial and OCO", "Move from importance weighting in EXP3 to regularized FTRL and Tsallis geometry.", ["probability", "exp3", "tsallis"]),
+        ("Finite-horizon RL", "Reuse probability and optimism interfaces before entering Bellman recursion and UCBVI.", ["probability", "ucb", "finite-horizon-rl"]),
+    ]
+    chapter_by_slug = {chapter["slug"]: chapter for chapter in SITE_CHAPTERS}
+    cards = []
+    for title, description, slugs in routes:
+        steps = "".join(
+            f'<li><a href="{href_from(page_path, f"chapters/{slug}/index.html")}">'
+            f'<span>{index:02d}</span>{html.escape(chapter_by_slug[slug]["title"])}</a></li>'
+            for index, slug in enumerate(slugs, start=1)
+        )
+        cards.append(
+            f'<article class="learning-route-card" data-learning-route><h3>{html.escape(title)}</h3>'
+            f'<p>{html.escape(description)}</p><ol>{steps}</ol></article>'
+        )
+    return '<div class="learning-route-grid">' + "".join(cards) + "</div>"
 
 
 def effective_evidence_status(status: str, verified: bool) -> str:
@@ -1148,6 +1212,23 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
 </section>"""
 
 
+def render_chapter_compass(page_path: str, chapter: dict[str, Any], reading: dict[str, Any]) -> str:
+    primary = reading["primary"]
+    algorithm = reading["algorithm"]
+    theorem_count = int(bool(reading.get("source_theorem"))) + len(reading.get("source_theorems", []))
+    theorem_note = (
+        f"{theorem_count} source theorem restatement{'s' if theorem_count != 1 else ''}, with assumptions and original links."
+        if theorem_count
+        else "The source boundary is explicit because no single theorem represents this chapter."
+    )
+    return f"""
+<nav class="chapter-compass" data-chapter-compass aria-label="Chapter reading order">
+  <a href="#orientation"><span class="chapter-compass-step">01 · Orient</span><strong>What you need</strong><small>{len(chapter['learning_goals'])} learning goals and the intended reader.</small></a>
+  <a href="#source-guide"><span class="chapter-compass-step">02 · Learn</span><strong>{html.escape(algorithm['title'])}</strong><small>{html.escape(primary['sections'])} · {html.escape(primary['pages'])}. {html.escape(theorem_note)}</small></a>
+  <a href="#teaching-notes"><span class="chapter-compass-step">03 · Verify</span><strong>Mathematics ↔ Lean</strong><small>Read intuition and proof structure, then open the exact compiled declaration.</small></a>
+</nav>"""
+
+
 def render_contributor_cards(
     page_path: str,
     contributors: list[dict[str, Any]],
@@ -1256,6 +1337,7 @@ def build_index(
     status_counts = Counter(result["status"] for result in results)
     placeholder_count = sum(1 for decl in declarations if decl["placeholder"])
     book_map = render_book_map(page_path, chapters)
+    learning_routes = render_learning_routes(page_path)
     textbook_spine_map = render_textbook_spine_map(page_path, SITE_TEXTBOOK_SPINE, verified)
     contributor_cards = render_contributor_cards(page_path, authors, include_invitation=False)
     primary_textbook = render_primary_textbook_banner()
@@ -1284,7 +1366,7 @@ def build_index(
   <p class="eyebrow">Powered by two connected systems</p>
   <h2>One engine produces verified mathematics; one library makes it reusable.</h2>
   <div class="two-system-grid">
-    <article class="info-card system-card"><span class="level-label">Research system</span><h3>ABRL Hierarchical Harness</h3><p>Fixed mathematical target → route planning → source grounding → formal proof-DAG decomposition → one-leaf proving → Lean compiler → reviewer-gated memory.</p><a href="{href_from(page_path, 'workflow/index.html')}">Inspect the ABRL harness →</a></article>
+    <article class="info-card system-card"><span class="level-label">Research system</span><h3>ABRL Adaptive Harness</h3><p>A fixed mathematical target enters an evidence-aware scheduler. The hierarchical route remains the default; bounded master–worker trials are compared on substantive proof progress before both routes meet the same Lean and reviewer gate.</p><a href="{href_from(page_path, 'workflow/index.html')}">Inspect the ABRL harness →</a></article>
     <article class="info-card system-card"><span class="level-label">User-facing library</span><h3>BanditRLlib</h3><p>Compiled Lean declarations → searchable reusable library → textbook-aligned learning → LaTeX↔Lean formalization → community lemma intake.</p><a href="{href_from(page_path, 'declarations/index.html')}">Browse BanditRLlib →</a></article>
   </div>
   {render_diagram(page_path, 'system-architecture.mmd', 'A research target enters ABRL and returns as reusable, reviewer-gated BanditRLlib mathematics')}
@@ -1398,9 +1480,10 @@ python3 tools/bandit.py check</code></pre></article>
 </section>
 
 <section id="reading-order">
-  <h2>Recommended reading order</h2>
-  <p>Students can take a short stochastic route through Foundations → Probability → ETC → UCB, a linear route through UCB → OFUL, an adversarial route through EXP3 → Tsallis-FTRL, or continue from Probability and OFUL stopping-time ideas into finite-horizon RL. Thompson sampling branches from posterior kernels.</p>
-  {render_diagram(page_path, 'learning-path.mmd', 'Recommended learning path through the formalization')}
+  <p class="eyebrow">Choose a mathematical route</p>
+  <h2>Five reading paths through the same library</h2>
+  <p>Each route reuses the common foundations but emphasizes a different proof technology. These are pedagogical paths, not additional completion claims.</p>
+  {learning_routes}
 </section>
 
 <section id="research-workspace">
@@ -1686,7 +1769,9 @@ def build_chapters(
     for chapter in chapters:
         page_path = f"chapters/{chapter['slug']}/index.html"
         goals = render_list(chapter["learning_goals"])
-        reading_guide = render_reading_guide(page_path, chapter, SITE_READINGS[chapter["slug"]])
+        reading = SITE_READINGS[chapter["slug"]]
+        chapter_compass = render_chapter_compass(page_path, chapter, reading)
+        reading_guide = render_reading_guide(page_path, chapter, reading)
         completion_contract = ""
         if chapter.get("completion_definition"):
             completion_contract = f"""
@@ -1745,6 +1830,8 @@ def build_chapters(
   <h1 class="page-title">{html.escape(chapter['title'])}</h1>
   <p class="lede">{html.escape(chapter['summary'])}</p>
 </section>
+
+{chapter_compass}
 
 <section id="orientation">
   <h2>Orientation</h2>
@@ -1913,6 +2000,7 @@ def build_learning(
 ) -> None:
     page_path = "learning/index.html"
     cards = render_book_map(page_path, chapters, detailed=True)
+    learning_routes = render_learning_routes(page_path)
     textbook_spine_map = render_textbook_spine_map(page_path, SITE_TEXTBOOK_SPINE, verified)
     primary_textbook = render_primary_textbook_banner()
     body = f"""
@@ -1924,8 +2012,9 @@ def build_learning(
 </section>
 
 <section id="path">
-  <h2>Recommended path</h2>
-  {render_diagram(page_path, 'learning-path.mmd', 'Recommended learning path through the chapters')}
+  <h2>Choose a route before choosing a chapter</h2>
+  <p class="section-intro">The same finite-sum and probability leaves recur across algorithms. Pick a question, follow its short dependency route, and return to the complete map when you need a neighboring technique.</p>
+  {learning_routes}
   <div class="callout"><strong>Reading rule.</strong> Read the plain-English statement first, then the mathematical reading, then the exact Lean signature. Save tactic details for the second pass.</div>
 </section>
 
@@ -3635,13 +3724,17 @@ def build_workflow(output: Path, verified: bool, generated_at: str) -> None:
 </section>
 
 <section id="roles">
-  <h2>Hierarchical loop</h2>
-  {render_diagram(page_path, 'automation-workflow.mmd', 'Upper, middle, Lean worker, reviewer, and deterministic-gate sequence')}
+  <p class="eyebrow">Adaptive orchestration, one evidence standard</p>
+  <h2>Compare proof routes by mathematical progress</h2>
+  <p>The scheduler can run the established hierarchical director–planner–worker loop or a bounded master–worker trial in which several workers explore independent proof routes. Both receive the same frozen target, budget, source packet, and deterministic gates.</p>
+  <p><strong>Current decision.</strong> Existing matched logs do not yet justify declaring either harness universally better, so the hierarchical loop remains the default. The master–worker route is experimental and is enabled only when parallel alternatives are genuinely independent. A trial wins only by delivering a stronger checked certificate, a smaller named blocker, or a reusable lemma—not by producing more messages or attempts.</p>
+  {render_diagram(page_path, 'automation-workflow.mmd', 'Evidence-aware scheduler comparing a hierarchical loop and a bounded master-worker trial before a common Lean and reviewer gate')}
 </section>
 
 <section id="commands">
   <h2>Reproducible gates</h2>
   <pre class="lean-code"><code>python3 tools/bandit.py blueprint-refresh &lt;task-id&gt;
+python3 tools/bandit.py harness-compare --task &lt;task-id&gt;
 python3 tools/bandit.py reference-index
 python3 tools/bandit.py unfinished
 python3 tools/bandit.py check

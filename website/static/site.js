@@ -25,7 +25,7 @@
   const sidebarMedia = window.matchMedia("(max-width: 960px)");
   let sidebarTrigger = null;
   const sidebarFocusable = () =>
-    [...(sidebar?.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])') || [])]
+    [...(sidebar?.querySelectorAll('a[href], button:not([disabled]), summary, input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])') || [])]
       .filter((element) => !element.hidden && element.getClientRects().length);
   const syncSidebarAccessibility = (open) => {
     const sidebarUnavailable = sidebarMedia.matches && !open;
@@ -96,6 +96,15 @@
   });
   syncSidebarAccessibility(false);
 
+  const navGroups = [...document.querySelectorAll("[data-nav-group]")];
+  const syncNavGroups = () => {
+    navGroups.forEach((group) => {
+      group.open = !sidebarMedia.matches || group.dataset.navGroup === "start" || group.dataset.navGroupActive === "true";
+    });
+  };
+  syncNavGroups();
+  sidebarMedia.addEventListener?.("change", syncNavGroups);
+
   const openDeclarationTarget = () => {
     if (!window.location.hash) return;
     const target = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
@@ -108,6 +117,26 @@
   window.addEventListener("hashchange", openDeclarationTarget);
 
   const tocLinks = [...document.querySelectorAll("[data-toc-link]")];
+  const pageToc = document.querySelector("[data-page-toc]");
+  const tocToggle = document.querySelector("[data-toc-toggle]");
+  const tocCurrent = document.querySelector("[data-toc-current]");
+  const setTocOpen = (open) => {
+    pageToc?.classList.toggle("toc-open", open);
+    tocToggle?.setAttribute("aria-expanded", String(open));
+  };
+  tocToggle?.addEventListener("click", () => setTocOpen(!pageToc?.classList.contains("toc-open")));
+  tocLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      if (window.matchMedia("(max-width: 760px)").matches) setTocOpen(false);
+    });
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && pageToc?.classList.contains("toc-open")) {
+      event.preventDefault();
+      setTocOpen(false);
+      tocToggle?.focus();
+    }
+  });
   const tocTargets = tocLinks
     .map((link) => ({ link, target: document.getElementById(decodeURIComponent(link.hash.slice(1))) }))
     .filter((item) => item.target);
@@ -119,7 +148,9 @@
           .sort((left, right) => left.boundingClientRect.top - right.boundingClientRect.top)[0];
         if (!visible) return;
         tocLinks.forEach((link) => link.removeAttribute("aria-current"));
-        tocTargets.find((item) => item.target === visible.target)?.link.setAttribute("aria-current", "location");
+        const currentLink = tocTargets.find((item) => item.target === visible.target)?.link;
+        currentLink?.setAttribute("aria-current", "location");
+        if (tocCurrent && currentLink) tocCurrent.textContent = currentLink.textContent;
       },
       { rootMargin: "-15% 0px -70% 0px", threshold: 0 },
     );
@@ -286,10 +317,11 @@
     noun: "modules",
   });
 
-  const revealRenderedMath = () => {
+  const revealRenderedMath = (markFallback = false) => {
     document.querySelectorAll("[data-math-statement]").forEach((statement) => {
       const rendered = Boolean(statement.querySelector("mjx-container"));
       statement.classList.toggle("math-rendered", rendered);
+      statement.classList.toggle("math-fallback-active", markFallback && !rendered);
       const tex = statement.querySelector(".math-tex");
       if (tex) tex.setAttribute("aria-hidden", String(!rendered));
       const fallback = statement.querySelector(".math-fallback");
@@ -297,7 +329,8 @@
     });
   };
   window.addEventListener("load", revealRenderedMath);
-  [300, 1200, 3000].forEach((delay) => window.setTimeout(revealRenderedMath, delay));
+  [300, 1200].forEach((delay) => window.setTimeout(revealRenderedMath, delay));
+  window.setTimeout(() => revealRenderedMath(true), 3200);
 
   const labelOverflowRegions = () => {
     document.querySelectorAll(".diagram, .table-wrap, .lean-code, .math-statement").forEach((region) => {
