@@ -1,6 +1,6 @@
 # 🧭 Auto-Bandit-RL-Proof-In-Sleep
 
-## 🧠 A Hierarchical Automated Theorem Proving System for Bandit and Reinforcement Learning Theory
+## 🧠 A Target-Faithful Automated Theorem Proving System for Bandit and Reinforcement Learning Theory
 
 **Paper:** *ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory*
 
@@ -15,12 +15,23 @@
 
 This repository has two connected contributions:
 
-1. **ABRL**, a target-faithful hierarchical harness that organizes a mathematical target, retrieval evidence, proof obligations, Lean construction, compiler diagnostics, reviewer feedback, and deterministic acceptance gates.
+1. **ABRL**, a target-faithful adaptive harness that organizes a mathematical target, retrieval evidence, proof obligations, Lean construction, compiler diagnostics, reviewer feedback, and deterministic acceptance gates; its hierarchical default can now be compared with a bounded master–worker experiment.
 2. **BanditRLlib**, the reusable Lean 4 library and literate website produced by accepted ABRL work for bandit and reinforcement-learning theory.
 
 `BanditRLProof` remains the mature internal Lean namespace. **BanditRLlib** is the public library and website name; renaming the namespace would unnecessarily break existing code.
 
 ## 📰 News
+
+- **2026-09 — Harness self-comparison.** ABRL now logs matched hierarchical and master–worker trials, draws their attempt graph, and asks GPT to interpret only reviewer-validated mathematical progress; existing logs are insufficient to declare a winner.
+- **2026-09 — SGB Appendix-C probability split.** The finite latent phase/missing-pull decomposition compiles, while the starvation, future/no-return, ballot, asymptotic, and Theorem-2 bridges remain open.
+- **2026-08 — Textbook formalization.** The ten-chapter Book Map and the Part-IV Chapters 13–17 spine expose compiled, partial, blocked, and planned results separately.
+- **2026-08 — Lean graph.** BanditRLwiki now maps settings, declarations, dependencies, proof routes, and explicit frontier leaves.
+- **2026-08 — Live workspace.** The local experimental formalization adapter retrieves current declarations, checks candidates, and exports review packets without claiming a public online prover.
+- **2026-08 — BanditRLlib.** The public Lean library and Blueprint-style teaching/community website were established from accepted ABRL work.
+- **2026-08 — Canonical publication line.** This repository's `main` branch and GitHub Pages workflow are the single maintained public source.
+
+<details>
+<summary>Detailed milestone archive</summary>
 
 - **2026-09 — SGB Appendix-C probability dichotomy.** Ten new declarations split the pure latent `S0/S1` probability exactly into the source-generated all-pulls-present phase event plus an explicit measurable missing-pull event. Membership in the latter exposes an actual `WithTop.top` pull-time coordinate. This closes the finite probability decomposition without asserting selected IID; the missing branch still needs a bridge to fixed-cutoff starvation, while future/no-return, ballot probability, asymptotic assembly, and Theorem 2 remain open.
 - **2026-09 — SGB Appendix-C phase-event transport.** Fourteen declarations formalize the finite `S0/S1` reward pattern, including the unlucky all-`-1` start, exact recovery terminal sum, and every nonpositive recovery prefix. Separate measurable events keep the all-pulls-present boundary explicit and transport the source generated-process event to the corresponding latent event. The latent event still intersects the adaptive occurrence event, so no product law or occurrence-conditioned IID claim is made; the downstream probability dichotomy now compiles, while its starvation connection, future/no-return, ballot probability, asymptotic assembly, and Theorem 2 remain open.
@@ -45,20 +56,26 @@ This repository has two connected contributions:
 - **2026-08 — Live Formalization preview.** A provider-independent, retrieval-grounded local adapter can turn LaTeX or natural language into an explicitly unverified Lean candidate, compile it in a temporary file, and export a review packet. Semantic fidelity, compilation, proof completion, and library integration remain separate statuses.
 - **2026-08 — Canonical publication line.** This repository's `main` branch and GitHub Pages workflow are the single maintained public source.
 
+</details>
+
 ## 🔗 ABRL and BanditRLlib
 
 ```mermaid
 flowchart LR
-    T["Mathematical target"] --> U["ABRL upper layer<br/>plan + statement fence"]
-    U --> M["middle layer<br/>route + obligations"]
-    M --> L["lower layer<br/>Lean construction"]
-    L --> C["Lean 4 compiler"]
-    C --> R["reviewer + full gate"]
-    R -. "diagnostics" .-> M
+    T["Frozen mathematical target"] --> A{"Evidence-aware scheduler"}
+    A -->|default| H["hierarchical<br/>upper → middle → lower"]
+    A -->|matched experiment| M["light master"]
+    M --> W1["worker route A"]
+    M --> W2["worker route B"]
+    W1 --> S["master synthesis"]
+    W2 --> S
+    H --> R["reviewer + Lean gate"]
+    S --> R
+    R -. "structured logs" .-> A
     R -->|accepted| B["BanditRLlib"]
 ```
 
-The upper layer protects the intended theorem. The middle layer chooses reusable routes and explicit proof leaves. The lower layer changes Lean code. The reviewer compares the compiled declaration with the fenced target and recorded evidence. A result enters BanditRLlib only after the full gate passes.
+The hierarchy protects the intended theorem and decomposes proof leaves. The experimental master–worker arm explores only disjoint, frozen routes in parallel. The reviewer compares declarations with the target and evidence; a result enters BanditRLlib only after the full gate. Current historical logs cannot establish which arm is better, so the default has not been changed.
 
 ```mermaid
 flowchart LR
@@ -79,6 +96,9 @@ The website is therefore not only API documentation. It serves three audiences:
 - contributors proposing new lemmas through a reviewable, machine-readable route.
 
 ## 🌐 BanditRLlib website
+
+<details>
+<summary>Website features and local build</summary>
 
 The public site provides:
 
@@ -104,7 +124,12 @@ python -m http.server 8000 --directory website/_site
 
 Then open `http://localhost:8000/`.
 
+</details>
+
 ## 🧪 Live Formalization
+
+<details>
+<summary>Local experimental workspace and status boundaries</summary>
 
 The static page previews LaTeX, navigates reviewed mappings, draws dependency trees, and exports draft packets. Local compilation and candidate generation use a loopback-only companion:
 
@@ -131,7 +156,12 @@ A candidate can have four independent statuses:
 
 Compilation alone never means that LaTeX and Lean have the same mathematical meaning.
 
+</details>
+
 ## 🚀 Quick start
+
+<details>
+<summary>Installation, checks, commands, and repository map</summary>
 
 Prerequisites: Git, Python 3, and [Elan](https://lean-lang.org/install/). The repository pins the Lean toolchain and Mathlib revision.
 
@@ -286,6 +316,8 @@ Core paths:
 - `website/` — literate static site, BanditRLwiki, progressive chapter → module → declaration Lean Graph, local compiler service, and integrity checker;
 - `tools/bandit.py` — deterministic harness CLI.
 - [`docs/proof_graph_laboratory.md`](docs/proof_graph_laboratory.md) — compiled-environment dependency export, proof-cost/ZDD/hypergraph prototypes, and the proof-structural novelty audit boundary.
+
+</details>
 
 ## 🤝 Contributing
 

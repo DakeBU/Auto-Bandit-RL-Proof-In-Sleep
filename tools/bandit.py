@@ -8,6 +8,7 @@ command surface for agents; it is not itself an AI agent.
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import csv
 import datetime as _dt
 import json
@@ -17,8 +18,10 @@ import shlex
 import shutil
 import subprocess
 import sys
+import threading
 import time
 from pathlib import Path
+from typing import Any
 
 
 TOOLS_DIR = Path(__file__).resolve().parent
@@ -26,6 +29,7 @@ if str(TOOLS_DIR) not in sys.path:
     sys.path.insert(0, str(TOOLS_DIR))
 
 import abrl_lifecycle as lifecycle
+import harness_compare
 
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -39,6 +43,7 @@ STATE_FILE = STATE_DIR / "state.json"
 MANIFEST = ROOT / "MANIFEST.md"
 TRIAL_LOG = ROOT / "runs" / "trials.jsonl"
 TRIAL_SUMMARY = ROOT / "runs" / "trials_summary.csv"
+HARNESS_COMPARISON_DIR = ROOT / "runs" / "harness-comparison"
 BLUEPRINT_DIR = ROOT / "proof-blueprints"
 RETRIEVAL_INDEX_DIR = ROOT / "research-wiki" / "retrieval-index"
 PROBLEM_EXPORT_DIR = ROOT / "paper-notes" / "problem-exports"
@@ -110,9 +115,11 @@ def default_review_response_output() -> Path:
         / f"{DEFAULT_REVIEW_RESPONSE_STEM}_{today}.md"
     )
 
-AGENT_ROLES = ("upper", "middle", "lower", "reviewer")
+AGENT_ROLES = ("upper", "middle", "lower", "reviewer", "master", "worker")
 TRIAL_KINDS = ("plan", "attempt", "build", "review", "proposal", "compression", "handoff", "export")
-TRIAL_STATUSES = ("queued", "running", "blocked", "failed", "compiled", "accepted", "rejected")
+TRIAL_STATUSES = ("queued", "running", "executed", "blocked", "failed", "compiled", "accepted", "rejected")
+HARNESS_MODES = harness_compare.HARNESS_MODES + ("adaptive",)
+TRIAL_LOG_LOCK = threading.Lock()
 
 WORK_DIRS = [
     "tasks",
@@ -26494,8 +26501,10 @@ def append_line(path: Path, line: str) -> None:
 
 def append_jsonl(path: Path, record: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("a", encoding="utf-8") as handle:
-        handle.write(json.dumps(record, sort_keys=True, ensure_ascii=False) + "\n")
+    with TRIAL_LOG_LOCK:
+        with path.open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps(record, sort_keys=True, ensure_ascii=False) + "\n")
+            handle.flush()
 
 
 def load_jsonl(path: Path) -> list[dict]:
@@ -27126,6 +27135,194 @@ Verify that Mathlib-candidate leaves are small, general, and recorded in
     return prompts
 
 
+def load_parallel_routes(value: str, lower_count: int) -> list[dict[str, Any]]:
+    if not value:
+        raise SystemExit(
+            "parallel dispatch requires --parallel-route-json with distinct routes, "
+            "disjoint owned_files, and expected_information_gain"
+        )
+    route_path = Path(value)
+    if not route_path.is_absolute():
+        route_path = ROOT / route_path
+    route_payload = json.loads(read_text(route_path))
+    routes = route_payload.get("routes", route_payload) if isinstance(route_payload, dict) else route_payload
+    if not isinstance(routes, list):
+        raise SystemExit("parallel route proposal must be a list or an object with a routes list")
+    decision = lifecycle.validate_parallel_lower_routes(routes)
+    if not decision["allowed"]:
+        raise SystemExit(f"parallel lower dispatch rejected: {decision['reason']}")
+    if len(routes) < lower_count:
+        raise SystemExit("parallel route proposal has fewer routes than --lower-count")
+    return [dict(route) for route in routes[:lower_count]]
+
+
+def make_master_worker_prompt_deck(
+    run_dir: Path,
+    task_id: str,
+    cycle: int,
+    routes: list[dict[str, Any]],
+    experiment_id: str,
+    target_fingerprint: str,
+) -> list[Path]:
+    """Create a compact master/parallel-worker/synthesis/reviewer prompt deck."""
+    task_text = read_optional(task_file(task_id), 12000)
+    conversion_text = read_optional(ROOT / "conversion-windows" / f"{task_id}.md", 10000)
+    obligations_text = read_optional(ROOT / "proof-obligations" / f"{task_id}.md", 12000)
+    frontier_text = read_optional(ROOT / "runs" / "active_frontier.json", 10000)
+    recent_trials = [row for row in load_jsonl(TRIAL_LOG) if row.get("task") == task_id][-12:]
+    context = f"""# Master–Worker Context
+
+Task id: `{task_id}`
+Cycle: `{cycle}`
+Harness: `master-worker`
+Experiment id: `{experiment_id}`
+Target fingerprint: `{target_fingerprint}`
+Lean gate: `lake build && lake build Tests`
+
+This is one arm of a harness comparison.  Worker count, prose volume, and a
+zero exit code are not mathematical progress.  The reviewer must classify each
+attempt as unreviewed, no-progress, diagnostic, retrieval-reuse,
+statement-repair, compiled-leaf, closed-frontier, or terminal.
+
+## Task
+
+{task_text or "_No task file found._"}
+
+## Conversion window
+
+{conversion_text or "_No conversion window found._"}
+
+## Proof obligations
+
+{obligations_text or "_No proof obligation ledger found._"}
+
+## Active frontier
+
+```json
+{frontier_text or "{}"}
+```
+
+## Approved disjoint routes
+
+```json
+{json.dumps(routes, indent=2, ensure_ascii=False)}
+```
+
+## Recent task trials
+
+```json
+{json.dumps(recent_trials, indent=2, ensure_ascii=False)}
+```
+"""
+    write_text(run_dir / "00_context.md", context)
+    write_text(
+        run_dir / "harness.json",
+        json.dumps(
+            {
+                "schema_version": 1,
+                "harness": "master-worker",
+                "experiment_id": experiment_id,
+                "task": task_id,
+                "cycle": cycle,
+                "target_fingerprint": target_fingerprint,
+                "routes": routes,
+                "schedule": ["master-plan", "parallel-workers", "master-synthesis", "reviewer"],
+            },
+            indent=2,
+            ensure_ascii=False,
+        )
+        + "\n",
+    )
+    write_text(
+        run_dir / "dialogue.md",
+        f"# Dialogue\n\nRun: `{run_dir.name}`\nTask: `{task_id}`\nHarness: `master-worker`\n",
+    )
+    write_text(
+        run_dir / "todo.md",
+        "- [ ] Master freezes one exact deliverable per route.\n"
+        "- [ ] Workers attempt disjoint owned files in parallel.\n"
+        "- [ ] Master compares results without hiding failures.\n"
+        "- [ ] Reviewer validates progress classes and runs the gate.\n"
+        "- [ ] Harness comparison artifacts are refreshed.\n",
+    )
+
+    prompts: list[Path] = []
+    master_plan = prompt_header(task_id, cycle, "master") + f"""You are the light planning master.
+
+Read `{rel(run_dir / '00_context.md')}`.  Do not edit Lean.  For every approved
+route, freeze one exact mathematical deliverable, target fingerprint, owned-file
+set, expected information gain, and failure interpretation.  Reject duplicate
+work or a route that merely produces commentary.  Keep each worker independent
+and small enough to finish in one context.  Write the plan to
+`{rel(run_dir / 'master_plan.md')}`.
+"""
+    master_plan_path = run_dir / "10_master_plan.md"
+    write_text(master_plan_path, master_plan)
+    prompts.append(master_plan_path)
+
+    for index, route in enumerate(routes, 1):
+        summary_path = run_dir / f"worker_{index}_summary.md"
+        worker = prompt_header(task_id, cycle, f"worker-{index}") + f"""You are ordinary worker {index} in a matched harness experiment.
+
+Read `{rel(run_dir / '00_context.md')}` and `{rel(run_dir / 'master_plan.md')}`.
+Your assigned route is:
+
+```json
+{json.dumps(route, indent=2, ensure_ascii=False)}
+```
+
+Work only on this route and its declared `owned_files`; do not run Git commands
+or edit another worker's files.  Deliver one substantive result: a compiled
+leaf, a reusable retrieval result, a statement repair, or a precise blocker
+that removes a route.  A generic summary is `no-progress`.  Use focused Lean
+checks during the parallel phase; the reviewer owns the full repository gate.
+Write a concise evidence summary to `{rel(summary_path)}` naming changed files,
+new/reused declarations, obligations before/after, exact error signature when
+blocked, elapsed/check time, and the proposed progress class.  Do not call an
+unreviewed command exit a compiled result.
+"""
+        worker_path = run_dir / f"30_worker_{index}.md"
+        write_text(worker_path, worker)
+        prompts.append(worker_path)
+
+    synthesis = prompt_header(task_id, cycle, "master") + f"""You are the synthesis master after all workers have joined.
+
+Read `{rel(run_dir / 'master_plan.md')}`, every `worker_*_summary.md`, and the
+per-prompt logs under `{rel(run_dir / 'logs')}`.  Compare mathematical progress,
+duplicate effort, contradictions, context waste, and file ownership.  Select
+only mergeable evidence, preserve every failed route, and propose the next
+single frontier.  Do not strengthen a theorem or label work compiled before the
+reviewer gate.  Write `{rel(run_dir / 'master_synthesis.md')}`.
+"""
+    synthesis_path = run_dir / "40_master_synthesis.md"
+    write_text(synthesis_path, synthesis)
+    prompts.append(synthesis_path)
+
+    reviewer = prompt_header(task_id, cycle, "reviewer") + f"""You are the independent reviewer/build gate.
+
+Read the frozen target, master plan, worker summaries, synthesis, and logs.
+Check file ownership, target fidelity, assumptions, declaration statements,
+placeholders, and focused/full Lean evidence.  Run the required gate after the
+workers have joined.  For each attempt, append one structured `trial-log` row
+with `--harness master-worker`, `--experiment-id {experiment_id}`,
+`--attempt-id`, `--progress-class`, obligations before/after, declaration reuse,
+timing/context fields, and verifier evidence.  Set `--reviewer-validated` only
+when the evidence supports it.  Then run:
+
+```text
+python3 tools/bandit.py harness-compare --task {task_id}
+```
+
+GPT may interpret the generated review packet, but it may not override the
+deterministic evidence boundary or promote unreviewed work.
+"""
+    reviewer_path = run_dir / "50_reviewer.md"
+    write_text(reviewer_path, reviewer)
+    prompts.append(reviewer_path)
+    write_text(run_dir / "90_handoff.md", "# Handoff\n\nPending master-worker closeout.\n")
+    return prompts
+
+
 def format_agent_command(template: str, prompt: Path, run_dir: Path, task_id: str, cycle: int) -> str:
     return template.format(
         root=shlex.quote(str(ROOT)),
@@ -27136,21 +27333,58 @@ def format_agent_command(template: str, prompt: Path, run_dir: Path, task_id: st
     )
 
 
-def execute_prompt(template: str, prompt: Path, run_dir: Path, task_id: str, cycle: int) -> int:
+def execute_prompt(
+    template: str,
+    prompt: Path,
+    run_dir: Path,
+    task_id: str,
+    cycle: int,
+    *,
+    harness: str = "hierarchical",
+    experiment_id: str = "",
+    target_fingerprint: str = "",
+    capture_log: bool = False,
+) -> int:
     command = format_agent_command(template, prompt, run_dir, task_id, cycle)
     print("$ " + command)
     start = time.perf_counter()
-    completed = subprocess.run(command, shell=True, cwd=ROOT)
+    log_path = run_dir / "logs" / f"{prompt.stem}.log"
+    if capture_log:
+        log_path.parent.mkdir(parents=True, exist_ok=True)
+        with log_path.open("w", encoding="utf-8") as handle:
+            completed = subprocess.run(
+                command,
+                shell=True,
+                cwd=ROOT,
+                stdout=handle,
+                stderr=subprocess.STDOUT,
+                text=True,
+            )
+    else:
+        completed = subprocess.run(command, shell=True, cwd=ROOT)
     elapsed = time.perf_counter() - start
     append_jsonl(TRIAL_LOG, {
         "time": now_iso(),
         "task": task_id,
-        "role": "agent",
+        "role": role_for_prompt(prompt),
         "kind": "attempt",
-        "status": "compiled" if completed.returncode == 0 else "failed",
-        "notes": f"executed {rel(prompt)} in {elapsed:.1f}s",
+        "status": "executed" if completed.returncode == 0 else "failed",
+        "notes": (
+            f"agent command completed for {rel(prompt)} in {elapsed:.1f}s; "
+            "Lean/reviewer evidence is still required"
+        ),
         "run_id": run_dir.name,
         "prompt": rel(prompt),
+        "prompt_chars": len(read_text(prompt)),
+        "harness": harness,
+        "experiment_id": experiment_id,
+        "target_fingerprint": target_fingerprint,
+        "attempt_id": f"{run_dir.name}:{prompt.stem}",
+        "worker_id": prompt.stem,
+        "progress_class": "unreviewed",
+        "reviewer_validated": False,
+        "elapsed_seconds": round(elapsed, 3),
+        "log_path": rel(log_path) if capture_log else "",
         "exit_code": completed.returncode,
     })
     return completed.returncode
@@ -27187,6 +27421,12 @@ def load_agent_profile(value: str) -> dict[str, str]:
 
 def role_for_prompt(prompt: Path) -> str:
     name = prompt.name
+    if name.startswith("10_master") or name.startswith("40_master"):
+        return "master"
+    if name.startswith("30_worker"):
+        return "worker"
+    if name.startswith("50_reviewer"):
+        return "reviewer"
     if name.startswith("10_"):
         return "upper"
     if name.startswith("20_"):
@@ -27207,6 +27447,81 @@ def command_for_prompt(prompt: Path, fallback: str, profile: dict[str, str]) -> 
     if fallback:
         return fallback
     raise SystemExit(f"no agent command for {rel(prompt)}; role={role}")
+
+
+def execute_master_worker_prompt_deck(
+    prompts: list[Path],
+    *,
+    fallback: str,
+    profile: dict[str, str],
+    run_dir: Path,
+    task_id: str,
+    cycle: int,
+    experiment_id: str,
+    target_fingerprint: str,
+    stop_on_error: bool,
+) -> int:
+    plan_prompts = [prompt for prompt in prompts if prompt.name.startswith("10_master")]
+    worker_prompts = [prompt for prompt in prompts if prompt.name.startswith("30_worker")]
+    final_prompts = [
+        prompt
+        for prompt in prompts
+        if prompt.name.startswith("40_master") or prompt.name.startswith("50_reviewer")
+    ]
+
+    for prompt in plan_prompts:
+        code = execute_prompt(
+            command_for_prompt(prompt, fallback, profile),
+            prompt,
+            run_dir,
+            task_id,
+            cycle,
+            harness="master-worker",
+            experiment_id=experiment_id,
+            target_fingerprint=target_fingerprint,
+            capture_log=True,
+        )
+        if code != 0 and stop_on_error:
+            return code
+
+    worker_codes: list[int] = []
+
+    def run_worker(prompt: Path) -> int:
+        return execute_prompt(
+            command_for_prompt(prompt, fallback, profile),
+            prompt,
+            run_dir,
+            task_id,
+            cycle,
+            harness="master-worker",
+            experiment_id=experiment_id,
+            target_fingerprint=target_fingerprint,
+            capture_log=True,
+        )
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max(1, len(worker_prompts))) as executor:
+        futures = [executor.submit(run_worker, prompt) for prompt in worker_prompts]
+        for future in futures:
+            worker_codes.append(future.result())
+    if stop_on_error and any(code != 0 for code in worker_codes):
+        return next(code for code in worker_codes if code != 0)
+
+    final_code = 0
+    for prompt in final_prompts:
+        final_code = execute_prompt(
+            command_for_prompt(prompt, fallback, profile),
+            prompt,
+            run_dir,
+            task_id,
+            cycle,
+            harness="master-worker",
+            experiment_id=experiment_id,
+            target_fingerprint=target_fingerprint,
+            capture_log=True,
+        )
+        if final_code != 0 and stop_on_error:
+            return final_code
+    return final_code or next((code for code in worker_codes if code != 0), 0)
 
 
 def cmd_init(_args: argparse.Namespace) -> int:
@@ -27272,6 +27587,15 @@ def cmd_trial_log(args: argparse.Namespace) -> int:
         raise SystemExit(f"--kind must be one of {TRIAL_KINDS}")
     if args.status not in TRIAL_STATUSES:
         raise SystemExit(f"--status must be one of {TRIAL_STATUSES}")
+    harness = getattr(args, "harness", "")
+    if harness and harness not in harness_compare.HARNESS_MODES:
+        raise SystemExit(f"--harness must be one of {harness_compare.HARNESS_MODES}")
+    progress_class = getattr(args, "progress_class", "unreviewed")
+    if progress_class not in harness_compare.PROGRESS_CLASSES:
+        raise SystemExit(f"--progress-class must be one of {harness_compare.PROGRESS_CLASSES}")
+    reviewer_validated = bool(getattr(args, "reviewer_validated", False))
+    if reviewer_validated and args.status not in {"compiled", "accepted", "blocked", "rejected"}:
+        raise SystemExit("--reviewer-validated requires a reviewer-classified terminal attempt status")
     record = {
         "time": now_iso(),
         "task": args.task,
@@ -27287,6 +27611,25 @@ def cmd_trial_log(args: argparse.Namespace) -> int:
         "parent_id": args.parent_id,
         "route_fingerprint": args.route_fingerprint,
         "verifier_evidence": args.verifier_evidence,
+        "harness": harness,
+        "experiment_id": getattr(args, "experiment_id", ""),
+        "target_fingerprint": getattr(args, "target_fingerprint", ""),
+        "attempt_id": getattr(args, "attempt_id", ""),
+        "worker_id": getattr(args, "worker_id", ""),
+        "progress_class": progress_class,
+        "reviewer_validated": reviewer_validated,
+        "obligations_before": getattr(args, "obligations_before", 0),
+        "obligations_after": getattr(args, "obligations_after", 0),
+        "new_declarations": getattr(args, "new_declaration", []),
+        "reused_declarations": getattr(args, "reused_declaration", []),
+        "dag_nodes": getattr(args, "dag_nodes", 0),
+        "dag_depth": getattr(args, "dag_depth", 0),
+        "elapsed_seconds": getattr(args, "elapsed_seconds", 0.0),
+        "lean_check_seconds": getattr(args, "lean_check_seconds", 0.0),
+        "prompt_chars": getattr(args, "prompt_chars", 0),
+        "input_tokens": getattr(args, "input_tokens", 0),
+        "output_tokens": getattr(args, "output_tokens", 0),
+        "error_signature": getattr(args, "error_signature", ""),
     }
     append_jsonl(TRIAL_LOG, record)
     print(json.dumps(record, indent=2, ensure_ascii=False))
@@ -27298,7 +27641,12 @@ def cmd_trial_summary(_args: argparse.Namespace) -> int:
     fields = [
         "time", "task", "role", "kind", "status", "lean", "source", "run_id",
         "changed_files", "statement_hash", "parent_id", "route_fingerprint",
-        "verifier_evidence", "notes",
+        "verifier_evidence", "harness", "experiment_id", "target_fingerprint",
+        "attempt_id", "worker_id", "progress_class", "reviewer_validated",
+        "obligations_before", "obligations_after", "new_declarations",
+        "reused_declarations", "dag_nodes", "dag_depth", "elapsed_seconds",
+        "lean_check_seconds", "prompt_chars", "input_tokens", "output_tokens",
+        "error_signature", "notes",
     ]
     TRIAL_SUMMARY.parent.mkdir(parents=True, exist_ok=True)
     with TRIAL_SUMMARY.open("w", newline="", encoding="utf-8") as handle:
@@ -27308,12 +27656,101 @@ def cmd_trial_summary(_args: argparse.Namespace) -> int:
             writer.writerow({
                 field: (
                     json.dumps(row.get(field, []), ensure_ascii=False)
-                    if field in {"changed_files", "verifier_evidence"}
+                    if field in {
+                        "changed_files", "verifier_evidence", "new_declarations",
+                        "reused_declarations",
+                    }
                     else row.get(field, "")
                 )
                 for field in fields
             })
     print(f"wrote {rel(TRIAL_SUMMARY)} with {len(rows)} rows")
+    return 0
+
+
+def cmd_harness_compare(args: argparse.Namespace) -> int:
+    rows: list[dict[str, Any]] = []
+    trial_values = args.trials or ["runs/trials.jsonl"]
+    for value in trial_values:
+        trials_path = Path(value)
+        if not trials_path.is_absolute():
+            trials_path = ROOT / trials_path
+        rows.extend(load_jsonl(trials_path))
+    analysis = harness_compare.analyze_trials(
+        rows,
+        task=args.task,
+        experiment=args.experiment,
+        min_matched_experiments=args.min_matched_experiments,
+    )
+    prefix = Path(args.output_prefix)
+    if not prefix.is_absolute():
+        prefix = ROOT / prefix
+    prefix.parent.mkdir(parents=True, exist_ok=True)
+    json_path = prefix.with_suffix(".json")
+    markdown_path = prefix.with_suffix(".md")
+    mermaid_path = prefix.with_suffix(".mmd")
+    prompt_path = prefix.with_name(prefix.name + ".prompt.md")
+    write_text(json_path, json.dumps(analysis, indent=2, ensure_ascii=False) + "\n")
+    write_text(markdown_path, harness_compare.render_markdown(analysis))
+    write_text(mermaid_path, harness_compare.render_mermaid(rows, analysis))
+    write_text(prompt_path, harness_compare.render_review_prompt(rows, analysis))
+
+    if args.execute_review:
+        profile = load_agent_profile(args.agent_profile) if args.agent_profile else {}
+        template = args.agent_cmd or profile.get("master") or profile.get("default", "")
+        if not template:
+            raise SystemExit("--execute-review requires --agent-cmd or a master/default agent profile")
+        command = format_agent_command(
+            template,
+            prompt_path,
+            prefix.parent,
+            args.task or "HARNESS-COMPARISON",
+            0,
+        )
+        start = time.perf_counter()
+        completed = subprocess.run(
+            command,
+            shell=True,
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+        elapsed = time.perf_counter() - start
+        review_path = prefix.with_name(prefix.name + ".gpt-review.md")
+        review_text = completed.stdout
+        if completed.stderr:
+            review_text += "\n\n## Standard error\n\n```text\n" + completed.stderr + "\n```\n"
+        write_text(review_path, review_text)
+        append_jsonl(TRIAL_LOG, {
+            "time": now_iso(),
+            "task": args.task or "HARNESS-COMPARISON",
+            "role": "master",
+            "kind": "review",
+            "status": "executed" if completed.returncode == 0 else "failed",
+            "notes": "GPT compared deterministic harness metrics; recommendation remains advisory",
+            "run_id": prefix.name,
+            "prompt": rel(prompt_path),
+            "prompt_chars": len(read_text(prompt_path)),
+            "harness": "master-worker",
+            "experiment_id": args.experiment,
+            "attempt_id": f"{prefix.name}:gpt-review",
+            "progress_class": "unreviewed",
+            "reviewer_validated": False,
+            "elapsed_seconds": round(elapsed, 3),
+            "exit_code": completed.returncode,
+        })
+        if completed.returncode != 0:
+            return completed.returncode
+
+    add_manifest(
+        "bandit.py harness-compare",
+        markdown_path,
+        "harness-comparison",
+        analysis["decision"]["status"],
+    )
+    print(json.dumps(analysis["decision"], indent=2, ensure_ascii=False))
     return 0
 
 
@@ -27821,47 +28258,115 @@ def cmd_run_cycle(args: argparse.Namespace) -> int:
         ))
         if code != 0:
             return code
-    if args.lower_count > 1:
-        route_path = getattr(args, "parallel_route_json", "")
-        if not route_path:
-            raise SystemExit(
-                "parallel lower dispatch requires --parallel-route-json with distinct routes, "
-                "disjoint owned_files, and expected_information_gain"
-            )
-        route_payload = json.loads(read_text(lifecycle_path(route_path)))
-        routes = route_payload.get("routes", route_payload) if isinstance(route_payload, dict) else route_payload
-        if not isinstance(routes, list):
-            raise SystemExit("parallel route proposal must be a list or an object with a routes list")
-        decision = lifecycle.validate_parallel_lower_routes(routes)
-        if not decision["allowed"]:
-            raise SystemExit(f"parallel lower dispatch rejected: {decision['reason']}")
-        if len(routes) < args.lower_count:
-            raise SystemExit("parallel route proposal has fewer routes than --lower-count")
-    run_dir = ROOT / "runs" / f"{stamp()}-{args.id}-cycle{args.cycle:02d}"
+    requested_harness = getattr(args, "harness", "hierarchical")
+    if requested_harness not in HARNESS_MODES:
+        raise SystemExit(f"--harness must be one of {HARNESS_MODES}")
+    harness = requested_harness
+    if requested_harness == "adaptive":
+        adaptive_analysis = harness_compare.analyze_trials(load_jsonl(TRIAL_LOG), task=args.id)
+        harness = adaptive_analysis["decision"]["next_experiment_harness"]
+        print(
+            "adaptive harness selected "
+            f"{harness}: {adaptive_analysis['decision']['reason']}"
+        )
+
+    routes: list[dict[str, Any]] = []
+    if harness == "master-worker":
+        if args.lower_count < 2:
+            raise SystemExit("master-worker harness requires --lower-count at least 2")
+        routes = load_parallel_routes(getattr(args, "parallel_route_json", ""), args.lower_count)
+    elif args.lower_count > 1:
+        routes = load_parallel_routes(getattr(args, "parallel_route_json", ""), args.lower_count)
+
+    run_stamp = stamp()
+    experiment_id = getattr(args, "experiment_id", "") or (
+        f"unpaired-{args.id}-{run_stamp}-{harness}"
+    )
+    target_fingerprint = getattr(args, "target_fingerprint", "") or lifecycle.content_hash(
+        read_optional(task_file(args.id), 1_000_000)
+    )
+    run_dir = ROOT / "runs" / (
+        f"{run_stamp}-{args.id}-{harness}-cycle{args.cycle:02d}"
+    )
     run_dir.mkdir(parents=True, exist_ok=False)
-    prompts = make_prompt_deck(run_dir, args.id, args.cycle, args.lower_count)
+    if harness == "master-worker":
+        prompts = make_master_worker_prompt_deck(
+            run_dir,
+            args.id,
+            args.cycle,
+            routes,
+            experiment_id,
+            target_fingerprint,
+        )
+    else:
+        prompts = make_prompt_deck(run_dir, args.id, args.cycle, args.lower_count)
+        write_text(
+            run_dir / "harness.json",
+            json.dumps(
+                {
+                    "schema_version": 1,
+                    "harness": "hierarchical",
+                    "experiment_id": experiment_id,
+                    "task": args.id,
+                    "cycle": args.cycle,
+                    "target_fingerprint": target_fingerprint,
+                    "routes": routes,
+                    "schedule": ["upper", "middle", "lower-sequential", "reviewer"],
+                },
+                indent=2,
+                ensure_ascii=False,
+            )
+            + "\n",
+        )
     append_jsonl(TRIAL_LOG, {
         "time": now_iso(),
         "task": args.id,
-        "role": "upper",
+        "role": "master" if harness == "master-worker" else "upper",
         "kind": "plan",
         "status": "queued",
-        "notes": f"created hierarchical prompt deck with {args.lower_count} lower prompts",
+        "notes": f"created {harness} prompt deck with {args.lower_count} worker prompts",
         "run_id": run_dir.name,
         "changed_files": [],
         "statement_hash": "",
         "parent_id": "",
         "route_fingerprint": "",
         "verifier_evidence": [],
+        "harness": harness,
+        "experiment_id": experiment_id,
+        "target_fingerprint": target_fingerprint,
+        "progress_class": "unreviewed",
+        "reviewer_validated": False,
     })
     if args.execute:
         profile = load_agent_profile(args.agent_profile)
         if not args.agent_cmd and not profile:
             raise SystemExit("--execute requires --agent-cmd or --agent-profile")
+        if harness == "master-worker":
+            return execute_master_worker_prompt_deck(
+                prompts,
+                fallback=args.agent_cmd,
+                profile=profile,
+                run_dir=run_dir,
+                task_id=args.id,
+                cycle=args.cycle,
+                experiment_id=experiment_id,
+                target_fingerprint=target_fingerprint,
+                stop_on_error=args.stop_on_error,
+            )
         code = 0
         for prompt in prompts:
             command = command_for_prompt(prompt, args.agent_cmd, profile)
-            code = execute_prompt(command, prompt, run_dir, args.id, args.cycle)
+            code = execute_prompt(
+                command,
+                prompt,
+                run_dir,
+                args.id,
+                args.cycle,
+                harness=harness,
+                experiment_id=experiment_id,
+                target_fingerprint=target_fingerprint,
+                capture_log=True,
+            )
             if code != 0 and args.stop_on_error:
                 break
         return code
@@ -27883,6 +28388,13 @@ def cmd_sleep_run(args: argparse.Namespace) -> int:
             require_review_response=args.require_review_response,
             require_review_direction=getattr(args, "require_review_direction", False),
             parallel_route_json=getattr(args, "parallel_route_json", ""),
+            harness=getattr(args, "harness", "hierarchical"),
+            experiment_id=(
+                f"{args.experiment_id}-cycle{cycle:02d}"
+                if getattr(args, "experiment_id", "")
+                else ""
+            ),
+            target_fingerprint=getattr(args, "target_fingerprint", ""),
         )
         code = cmd_run_cycle(ns)
         if code != 0 and args.stop_on_error:
@@ -29425,10 +29937,52 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--parent-id", default="")
     p.add_argument("--route-fingerprint", default="")
     p.add_argument("--verifier-evidence", action="append", default=[])
+    p.add_argument("--harness", choices=harness_compare.HARNESS_MODES, default="")
+    p.add_argument("--experiment-id", default="")
+    p.add_argument("--target-fingerprint", default="")
+    p.add_argument("--attempt-id", default="")
+    p.add_argument("--worker-id", default="")
+    p.add_argument(
+        "--progress-class",
+        choices=harness_compare.PROGRESS_CLASSES,
+        default="unreviewed",
+    )
+    p.add_argument("--reviewer-validated", action="store_true")
+    p.add_argument("--obligations-before", type=int, default=0)
+    p.add_argument("--obligations-after", type=int, default=0)
+    p.add_argument("--new-declaration", action="append", default=[])
+    p.add_argument("--reused-declaration", action="append", default=[])
+    p.add_argument("--dag-nodes", type=int, default=0)
+    p.add_argument("--dag-depth", type=int, default=0)
+    p.add_argument("--elapsed-seconds", type=float, default=0.0)
+    p.add_argument("--lean-check-seconds", type=float, default=0.0)
+    p.add_argument("--prompt-chars", type=int, default=0)
+    p.add_argument("--input-tokens", type=int, default=0)
+    p.add_argument("--output-tokens", type=int, default=0)
+    p.add_argument("--error-signature", default="")
     p.set_defaults(func=cmd_trial_log)
 
     p = sub.add_parser("trial-summary", help="rewrite trial summary CSV")
     p.set_defaults(func=cmd_trial_summary)
+
+    p = sub.add_parser(
+        "harness-compare",
+        help="compare matched hierarchical and master-worker trial evidence",
+    )
+    p.add_argument(
+        "--trials",
+        action="append",
+        default=[],
+        help="JSONL log to include; repeat for isolated harness arms",
+    )
+    p.add_argument("--task", default="")
+    p.add_argument("--experiment", default="")
+    p.add_argument("--min-matched-experiments", type=int, default=2)
+    p.add_argument("--output-prefix", default="runs/harness-comparison/latest")
+    p.add_argument("--execute-review", action="store_true")
+    p.add_argument("--agent-cmd", default="")
+    p.add_argument("--agent-profile", default="")
+    p.set_defaults(func=cmd_harness_compare)
 
     p = sub.add_parser("agent-note", help="append a role note to run dialogue")
     p.add_argument("run_id")
@@ -29594,10 +30148,13 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--title", required=True)
     p.set_defaults(func=cmd_export_proof)
 
-    p = sub.add_parser("run-cycle", help="create or execute one hierarchical prompt deck")
+    p = sub.add_parser("run-cycle", help="create or execute one evidence-tracked prompt deck")
     p.add_argument("id")
     p.add_argument("--cycle", type=int, default=1)
     p.add_argument("--lower-count", type=int, default=1)
+    p.add_argument("--harness", choices=HARNESS_MODES, default="hierarchical")
+    p.add_argument("--experiment-id", default="")
+    p.add_argument("--target-fingerprint", default="")
     p.add_argument("--parallel-route-json", default="")
     p.add_argument("--execute", action="store_true")
     p.add_argument("--agent-cmd", default="")
@@ -29615,10 +30172,13 @@ def build_parser() -> argparse.ArgumentParser:
     )
     p.set_defaults(func=cmd_run_cycle)
 
-    p = sub.add_parser("sleep-run", help="create or execute repeated hierarchical cycles")
+    p = sub.add_parser("sleep-run", help="create or execute repeated evidence-tracked cycles")
     p.add_argument("id")
     p.add_argument("--cycles", type=int, default=1)
     p.add_argument("--lower-count", type=int, default=1)
+    p.add_argument("--harness", choices=HARNESS_MODES, default="hierarchical")
+    p.add_argument("--experiment-id", default="")
+    p.add_argument("--target-fingerprint", default="")
     p.add_argument("--parallel-route-json", default="")
     p.add_argument("--execute", action="store_true")
     p.add_argument("--agent-cmd", default="")

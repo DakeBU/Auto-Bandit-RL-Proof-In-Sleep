@@ -9,6 +9,14 @@ ABRL has two target workflows:
 This design keeps proof weapons as planning inspiration while keeping compiled
 Lean and imported theorem cards as the only reusable proof material.
 
+The execution architecture is itself evidence-gated. The established
+hierarchical route and the experimental master–worker route can be run on the
+same frozen target and compared with `harness-compare`. The comparison gives
+priority to reviewer-validated mathematical progress, not worker count or
+command success; GPT receives the deterministic report and structured logs as
+an interpretation packet. Until at least two matched experiments exist, the
+current default is retained and `adaptive` only selects the next arm to sample.
+
 The deterministic lifecycle implementation is documented in
 `docs/lifecycle_and_proof_frontier_hardening.md`. Its
 `runs/active_frontier.json` record is authoritative for the current leaf,
@@ -170,6 +178,11 @@ The harness encodes the following proof-engineering lessons:
 - Treat persistent failure as mathematical signal.
 - Promote hidden regularity into reusable theorem contracts.
 - Do not frequently change the proof route without a recorded reason.
+- Every ordinary worker must deliver one substantive result: a compiled leaf,
+  reusable retrieval, statement repair, or precise route-eliminating blocker.
+- Parallel workers must own disjoint files; the master plans and synthesizes but
+  does not silently repair their proofs or relabel their evidence.
+- Measure the master bottleneck through critical-path time and context volume.
 
 Reviewer should reject any cycle that violates these rules even if the text
 looks plausible.

@@ -1,6 +1,6 @@
 # Proof Blueprint: PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE
 
-Generated: `2026-09-01T01:20:36+00:00`
+Generated: `2026-09-01T02:49:14+00:00`
 
 ## Source Task
 
