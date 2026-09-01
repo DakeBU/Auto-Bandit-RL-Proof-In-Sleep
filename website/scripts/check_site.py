@@ -58,6 +58,7 @@ class LinkCollector(HTMLParser):
         self.teaching_grid_count = 0
         self.lean_code_count = 0
         self.source_guide_count = 0
+        self.notation_primer_count = 0
         self.algorithm_flow_count = 0
         self.source_theorem_card_count = 0
         self.source_boundary_count = 0
@@ -101,6 +102,8 @@ class LinkCollector(HTMLParser):
             self.lean_code_count += 1
         if "source-guide" in classes:
             self.source_guide_count += 1
+        if "notation-primer" in classes:
+            self.notation_primer_count += 1
         if "algorithm-flow" in classes:
             self.algorithm_flow_count += 1
         if "source-theorem-card" in classes:
@@ -803,9 +806,30 @@ def main() -> int:
             if boundary not in attribution_source:
                 errors.append(f"attribution/index.html: missing Samplinglib boundary {boundary!r}")
 
-    expected_chapter_count = len(
-        json.loads((SITE_DIR / "content" / "chapters.json").read_text(encoding="utf-8"))["chapters"]
-    )
+    chapter_source = json.loads(
+        (SITE_DIR / "content" / "chapters.json").read_text(encoding="utf-8")
+    )["chapters"]
+    expected_chapter_count = len(chapter_source)
+    readings_source = json.loads(
+        (SITE_DIR / "content" / "readings.json").read_text(encoding="utf-8")
+    ).get("readings", [])
+    chapter_slugs = {chapter.get("slug") for chapter in chapter_source}
+    reading_slugs = {reading.get("slug") for reading in readings_source}
+    if reading_slugs != chapter_slugs:
+        errors.append("readings.json must contain exactly one crosswalk for every Book Map chapter")
+    for reading in readings_source:
+        notation = reading.get("notation")
+        if not isinstance(notation, list) or len(notation) != 3:
+            errors.append(
+                f"readings.json: {reading.get('slug')} needs exactly three notation-primer entries"
+            )
+            continue
+        if any(
+            not isinstance(item, dict) or not str(item.get("term", "")).strip()
+            or not str(item.get("meaning", "")).strip()
+            for item in notation
+        ):
+            errors.append(f"readings.json: {reading.get('slug')} has an incomplete notation entry")
     textbook_spine = json.loads(
         (SITE_DIR / "content" / "textbook_spine.json").read_text(encoding="utf-8")
     )
@@ -826,6 +850,10 @@ def main() -> int:
                 f"{page.relative_to(output)}: expected seven collapsible navigation groups, "
                 f"found {collector.nav_group_count}"
             )
+        if 'aria-keyshortcuts="/"' not in page_source:
+            errors.append(f"{page.relative_to(output)}: global search is missing its keyboard shortcut")
+        if 'data-nav-group-active="false" open' in page_source:
+            errors.append(f"{page.relative_to(output)}: inactive sidebar groups must default to collapsed")
         if collector.side_nav_count != collector.side_nav_toggle_count:
             errors.append(f"{page.relative_to(output)}: page TOC is missing its accessible mobile toggle")
         if collector.math_statement_count != collector.math_fallback_note_count:
@@ -927,6 +955,8 @@ def main() -> int:
             errors.append(f"{relative}: expected one source-and-Lean chapter compass")
         if collector.source_guide_count != 1:
             errors.append(f"{relative}: expected one textbook source guide")
+        if collector.notation_primer_count != 1:
+            errors.append(f"{relative}: expected one three-term notation primer")
         if collector.source_theorem_card_count < 1 and collector.source_boundary_count != 1:
             errors.append(f"{relative}: expected at least one source theorem or one explicit source boundary")
         if collector.source_theorem_card_count and collector.source_boundary_count:
@@ -1251,6 +1281,8 @@ def main() -> int:
         "setTocOpen",
         "math-fallback-active",
         "data-nav-group",
+        "abrl-nav-groups-v2",
+        'event.key !== "/"',
         'classList.toggle("is-scrollable"',
     ):
         if required not in site_js:

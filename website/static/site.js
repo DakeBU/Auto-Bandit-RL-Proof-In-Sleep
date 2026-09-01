@@ -97,11 +97,36 @@
   syncSidebarAccessibility(false);
 
   const navGroups = [...document.querySelectorAll("[data-nav-group]")];
+  const navStateKey = "abrl-nav-groups-v2";
+  let navGroupState = {};
+  try {
+    navGroupState = JSON.parse(localStorage.getItem(navStateKey) || "{}") || {};
+  } catch (_error) {
+    navGroupState = {};
+  }
+  let syncingNavGroups = false;
   const syncNavGroups = () => {
+    syncingNavGroups = true;
     navGroups.forEach((group) => {
-      group.open = !sidebarMedia.matches || group.dataset.navGroup === "start" || group.dataset.navGroupActive === "true";
+      const key = group.dataset.navGroup;
+      const saved = typeof navGroupState[key] === "boolean" ? navGroupState[key] : null;
+      const active = group.dataset.navGroupActive === "true";
+      const defaultOpen = sidebarMedia.matches && key === "start";
+      group.open = active || (saved ?? defaultOpen);
     });
+    syncingNavGroups = false;
   };
+  navGroups.forEach((group) => {
+    group.addEventListener("toggle", () => {
+      if (syncingNavGroups) return;
+      navGroupState[group.dataset.navGroup] = group.open;
+      try {
+        localStorage.setItem(navStateKey, JSON.stringify(navGroupState));
+      } catch (_error) {
+        // The native details interaction remains usable when storage is unavailable.
+      }
+    });
+  });
   syncNavGroups();
   sidebarMedia.addEventListener?.("change", syncNavGroups);
 
@@ -113,13 +138,10 @@
     let disclosure = target instanceof HTMLDetailsElement
       ? target
       : target.parentElement?.closest("details");
-    let openedDisclosure = false;
     while (disclosure) {
       disclosure.open = true;
-      openedDisclosure = true;
       disclosure = disclosure.parentElement?.closest("details");
     }
-    if (!openedDisclosure) return;
     const bringTargetIntoView = () => {
       if (window.location.hash !== expectedHash) return;
       const rect = target.getBoundingClientRect();
@@ -182,6 +204,22 @@
   const globalSearch = document.querySelector("[data-global-search]");
   const globalResults = document.querySelector("[data-global-results]");
   let searchIndex = null;
+
+  document.addEventListener("keydown", (event) => {
+    const target = event.target;
+    const isTyping = target instanceof HTMLElement && (
+      target.isContentEditable || target.matches("input, textarea, select")
+    );
+    if (
+      event.key !== "/" || event.altKey || event.ctrlKey || event.metaKey ||
+      event.shiftKey || isTyping
+    ) return;
+    event.preventDefault();
+    if (sidebarMedia.matches) {
+      setSidebarOpen(true, document.querySelector(".sidebar-toggle"));
+    }
+    window.requestAnimationFrame(() => globalSearch?.focus());
+  });
 
   const hideGlobalResults = () => {
     if (globalResults) {

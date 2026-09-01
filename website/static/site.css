@@ -432,6 +432,21 @@ code {
   font-size: 0.86rem;
 }
 
+.sidebar-search kbd {
+  display: inline-grid;
+  min-width: 1.45rem;
+  min-height: 1.45rem;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-bottom-color: color-mix(in srgb, var(--line) 55%, var(--ink));
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0;
+}
+
 .sidebar-search .search-results {
   right: 1.15rem;
   left: 1.15rem;
@@ -1469,6 +1484,11 @@ tbody tr:hover {
   scroll-margin-top: 5rem;
 }
 
+.notation-primer,
+.algorithm-panel {
+  scroll-margin-top: 5rem;
+}
+
 .chapter-compass {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1671,17 +1691,69 @@ tbody tr:hover {
   overflow-wrap: anywhere;
 }
 
+.notation-primer {
+  display: grid;
+  grid-template-columns: minmax(11rem, 0.62fr) minmax(0, 1.8fr);
+  gap: 1rem 1.4rem;
+  align-items: start;
+  margin: 1.4rem 0;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--accent-soft) 40%, var(--surface));
+}
+
+.notation-primer h3 {
+  margin: 0.35rem 0 0;
+}
+
+.notation-primer dl {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin: 0;
+}
+
+.notation-primer dl > div {
+  min-width: 0;
+  padding: 0.75rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--line) 74%, transparent);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.notation-primer dt code {
+  color: var(--accent-strong);
+  font-size: 0.83rem;
+  overflow-wrap: anywhere;
+}
+
+.notation-primer dd {
+  margin: 0.38rem 0 0;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.48;
+}
+
 .algorithm-panel {
   margin: 1.5rem 0;
   padding: clamp(1rem, 2.5vw, 1.5rem);
   overflow: visible;
 }
 
+.algorithm-intro {
+  max-width: 64rem;
+  margin: -0.15rem 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
 .algorithm-flow {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
-  gap: 0.75rem;
-  max-width: none !important;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  max-width: 64rem !important;
   margin: 1.2rem 0 0;
   padding: 0;
   list-style: none;
@@ -1690,18 +1762,28 @@ tbody tr:hover {
 .algorithm-flow li {
   position: relative;
   display: grid;
-  grid-template-columns: 2rem minmax(0, 1fr);
-  gap: 0.7rem;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  gap: 0.85rem;
   min-width: 0;
-  min-height: 9rem;
-  padding: 0.95rem;
-  border: 1px solid var(--line);
-  border-radius: 9px;
-  background: color-mix(in srgb, var(--accent-soft) 30%, var(--surface));
+  min-height: 0;
+  padding: 0.25rem 0 0.8rem;
+  border: 0;
+  background: transparent;
 }
 
 .algorithm-flow li + li {
-  border-left: 1px solid var(--line);
+  border-left: 0;
+}
+
+.algorithm-flow li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 2.5rem;
+  bottom: -0.2rem;
+  left: 1.08rem;
+  width: 2px;
+  background: color-mix(in srgb, var(--accent) 38%, var(--line));
 }
 
 .algorithm-flow li > div,
@@ -1711,11 +1793,20 @@ tbody tr:hover {
   overflow-wrap: anywhere;
 }
 
+.algorithm-flow li > div {
+  padding: 0.8rem 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--accent-soft) 30%, var(--surface));
+}
+
 .algorithm-step-number {
   display: grid;
-  width: 2rem;
-  height: 2rem;
+  z-index: 1;
+  width: 2.25rem;
+  height: 2.25rem;
   place-items: center;
+  border: 3px solid var(--surface);
   border-radius: 50%;
   background: var(--accent);
   color: var(--surface);
@@ -3130,8 +3221,16 @@ tbody tr:hover {
   }
 
   .algorithm-flow li + li {
-    border-left: 1px solid var(--line);
-    border-top: 1px solid var(--line);
+    border-left: 0;
+    border-top: 0;
+  }
+
+  .notation-primer {
+    grid-template-columns: 1fr;
+  }
+
+  .notation-primer dl {
+    grid-template-columns: 1fr;
   }
 
   .source-card dl > div,
