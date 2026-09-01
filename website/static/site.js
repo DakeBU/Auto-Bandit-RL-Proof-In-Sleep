@@ -107,13 +107,34 @@
 
   const openDeclarationTarget = () => {
     if (!window.location.hash) return;
-    const target = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
-    if (target instanceof HTMLDetailsElement) {
-      target.open = true;
+    const expectedHash = window.location.hash;
+    const target = document.getElementById(decodeURIComponent(expectedHash.slice(1)));
+    if (!target) return;
+    let disclosure = target instanceof HTMLDetailsElement
+      ? target
+      : target.parentElement?.closest("details");
+    let openedDisclosure = false;
+    while (disclosure) {
+      disclosure.open = true;
+      openedDisclosure = true;
+      disclosure = disclosure.parentElement?.closest("details");
     }
+    if (!openedDisclosure) return;
+    const bringTargetIntoView = () => {
+      if (window.location.hash !== expectedHash) return;
+      const rect = target.getBoundingClientRect();
+      const headerClearance = 96;
+      const alreadyVisible = rect.top >= headerClearance && rect.top <= window.innerHeight * 0.55;
+      if (!alreadyVisible) target.scrollIntoView({ block: "start" });
+    };
+    window.requestAnimationFrame(() => window.requestAnimationFrame(bringTargetIntoView));
+    [180, 700, 1800, 3600].forEach((delay) => window.setTimeout(bringTargetIntoView, delay));
+    document.fonts?.ready.then(bringTargetIntoView);
+    window.MathJax?.startup?.promise?.then(bringTargetIntoView);
   };
 
   openDeclarationTarget();
+  window.addEventListener("load", openDeclarationTarget);
   window.addEventListener("hashchange", openDeclarationTarget);
 
   const tocLinks = [...document.querySelectorAll("[data-toc-link]")];
@@ -241,34 +262,93 @@
     const kindSelect = document.querySelector("[data-catalog-kind]");
     const statusSelect = document.querySelector("[data-catalog-status]");
     const chapterSelect = document.querySelector("[data-catalog-chapter]");
-    const rows = [...catalog.querySelectorAll("[data-catalog-row]")];
+    const catalogBody = catalog.querySelector("[data-catalog-body]");
     const count = document.querySelector("[data-catalog-count]");
+    const moreButton = document.querySelector("[data-catalog-more]");
+    let catalogItems = null;
+    let catalogLoadPromise = null;
+    let catalogPageSize = 100;
+    let catalogVisibleLimit = catalogPageSize;
 
-    const filterRows = () => {
+    const catalogRow = (item) =>
+      `<tr data-catalog-row>` +
+      `<td><a href="${escapeHtml(item.url)}"><code>${escapeHtml(item.name)}</code></a></td>` +
+      `<td>${escapeHtml(item.kind_label)}</td>` +
+      `<td>${escapeHtml(item.chapter_title)}</td>` +
+      `<td><a href="${escapeHtml(item.module_url)}"><code>${escapeHtml(item.module)}</code></a></td>` +
+      `<td><span class="status ${escapeHtml(item.status)}">${escapeHtml(item.status_label)}</span></td>` +
+      `<td><a href="${escapeHtml(item.source_url)}">${escapeHtml(item.source_label)}</a></td>` +
+      `</tr>`;
+
+    const renderCatalog = () => {
+      if (!catalogItems || !catalogBody) return;
       const query = (queryInput?.value || "").trim().toLowerCase();
       const terms = query.split(/\s+/).filter(Boolean);
       const kind = kindSelect?.value || "";
       const status = statusSelect?.value || "";
       const chapter = chapterSelect?.value || "";
-      let visible = 0;
-      rows.forEach((row) => {
-        const haystack = row.dataset.search || "";
-        const show =
-          terms.every((term) => haystack.includes(term)) &&
-          (!kind || row.dataset.kind === kind) &&
-          (!status || row.dataset.status === status) &&
-          (!chapter || row.dataset.chapter === chapter);
-        row.hidden = !show;
-        if (show) visible += 1;
+      const matches = catalogItems.filter(
+        (item) =>
+          terms.every((term) => item.search.includes(term)) &&
+          (!kind || item.kind === kind) &&
+          (!status || item.status === status) &&
+          (!chapter || item.chapter === chapter),
+      );
+      const visibleItems = matches.slice(0, catalogVisibleLimit);
+      catalogBody.innerHTML = visibleItems.length
+        ? visibleItems.map(catalogRow).join("")
+        : '<tr><td colspan="6" class="empty">No matching declaration.</td></tr>';
+      if (count) {
+        count.textContent = matches.length
+          ? `Showing ${visibleItems.length.toLocaleString()} of ${matches.length.toLocaleString()} matching declarations`
+          : "No matching declarations";
+      }
+      if (moreButton) {
+        const remaining = Math.max(0, matches.length - visibleItems.length);
+        moreButton.hidden = remaining === 0;
+        moreButton.textContent = remaining
+          ? `Show ${Math.min(catalogPageSize, remaining).toLocaleString()} more declarations`
+          : "All matching declarations shown";
+      }
+    };
+
+    const loadCatalog = () => {
+      if (catalogItems) return Promise.resolve();
+      if (catalogLoadPromise) return catalogLoadPromise;
+      catalog.setAttribute("aria-busy", "true");
+      catalogLoadPromise = fetch(`${root}/catalog-data.json`)
+        .then((response) => {
+          if (!response.ok) throw new Error(`Catalog request failed with ${response.status}`);
+          return response.json();
+        })
+        .then((payload) => {
+          catalogItems = Array.isArray(payload.items) ? payload.items : [];
+          catalogPageSize = Number.isInteger(payload.page_size) ? payload.page_size : 100;
+        })
+        .finally(() => catalog.setAttribute("aria-busy", "false"));
+      return catalogLoadPromise;
+    };
+
+    const resetAndRenderCatalog = () => {
+      catalogVisibleLimit = catalogPageSize;
+      loadCatalog().then(renderCatalog).catch(() => {
+        if (count) count.textContent = "Full catalog could not load; showing the initial declarations.";
+        if (moreButton) moreButton.hidden = true;
       });
-      if (count) count.textContent = `${visible.toLocaleString()} matching declarations`;
     };
 
     [queryInput, kindSelect, statusSelect, chapterSelect].forEach((control) => {
-      control?.addEventListener("input", filterRows);
-      control?.addEventListener("change", filterRows);
+      control?.addEventListener("input", resetAndRenderCatalog);
+      control?.addEventListener("change", resetAndRenderCatalog);
     });
-    filterRows();
+    moreButton?.addEventListener("click", () => {
+      catalogVisibleLimit += catalogPageSize;
+      loadCatalog().then(renderCatalog).catch(() => {
+        if (count) count.textContent = "Full catalog could not load; showing the initial declarations.";
+        moreButton.hidden = true;
+      });
+    });
+    if (moreButton) moreButton.hidden = false;
   }
 
   const installTableFilter = ({ listSelector, rowSelector, querySelector, countSelector, statusSelector, chapterSelector, noun }) => {
@@ -334,7 +414,16 @@
 
   const labelOverflowRegions = () => {
     document.querySelectorAll(".diagram, .table-wrap, .lean-code, .math-statement").forEach((region) => {
-      if (region.scrollWidth <= region.clientWidth + 2) return;
+      const mathTarget = region.matches(".math-statement")
+        ? region.querySelector("mjx-container")
+        : null;
+      const regionOverflows = region.scrollWidth > region.clientWidth + 2;
+      const mathTargetOverflows = Boolean(
+        mathTarget && mathTarget.scrollWidth > mathTarget.clientWidth + 2,
+      );
+      const isScrollable = regionOverflows || mathTargetOverflows;
+      region.classList.toggle("is-scrollable", isScrollable);
+      if (!isScrollable) return;
       if (!region.hasAttribute("tabindex")) region.tabIndex = 0;
       if (!region.hasAttribute("role")) region.setAttribute("role", "region");
       if (!region.hasAttribute("aria-label")) {
@@ -344,6 +433,8 @@
   };
   window.addEventListener("load", labelOverflowRegions);
   window.addEventListener("resize", labelOverflowRegions);
+  [300, 1200, 3200].forEach((delay) => window.setTimeout(labelOverflowRegions, delay));
+  window.MathJax?.startup?.promise?.then(labelOverflowRegions);
 
   const mermaidBlocks = [...document.querySelectorAll(".mermaid")];
   if (mermaidBlocks.length) {

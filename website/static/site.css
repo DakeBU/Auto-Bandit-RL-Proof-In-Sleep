@@ -239,6 +239,7 @@ code {
 
 .global-search {
   width: 100%;
+  min-height: 2.75rem;
   border: 1px solid var(--line);
   border-radius: 999px;
   padding: 0.48rem 0.8rem;
@@ -524,7 +525,7 @@ code {
   align-items: start;
   gap: 0.2rem;
   font-family: var(--sans);
-  font-size: 0.78rem;
+  font-size: 0.85rem;
 }
 
 .book-nav-link span,
@@ -923,6 +924,18 @@ h3 {
 
 .book-chapter-copy {
   min-width: 0;
+}
+
+.book-chapter-meta {
+  display: flex;
+  gap: 0.45rem;
+  align-items: center;
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .book-chapter-copy > strong {
@@ -1502,6 +1515,87 @@ tbody tr:hover {
   overflow-wrap: anywhere;
 }
 
+.chapter-pager {
+  display: grid;
+  gap: 0.9rem;
+  margin: clamp(2.5rem, 6vw, 5rem) 0 0;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--line);
+  scroll-margin-top: 5rem;
+}
+
+.chapter-pager-heading {
+  display: flex;
+  gap: 0.8rem;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.chapter-pager-heading .eyebrow {
+  margin: 0;
+}
+
+.chapter-pager-heading > strong {
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 650;
+}
+
+.chapter-pager-links {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(8rem, auto) minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: stretch;
+}
+
+.chapter-pager-link,
+.chapter-pager-index {
+  display: grid;
+  gap: 0.28rem;
+  min-width: 0;
+  min-height: 4.75rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  text-decoration: none;
+  box-shadow: var(--shadow);
+}
+
+.chapter-pager-link:hover,
+.chapter-pager-index:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.chapter-pager-link.next {
+  text-align: right;
+}
+
+.chapter-pager-link strong {
+  overflow-wrap: anywhere;
+}
+
+.chapter-pager-direction,
+.chapter-pager-index span {
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.chapter-pager-index {
+  place-content: center;
+  text-align: center;
+}
+
+.chapter-pager-spacer {
+  min-height: 1px;
+}
+
 .source-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
@@ -1793,6 +1887,10 @@ tbody tr:hover {
   display: none;
   color: var(--muted);
   font-size: 0.82rem;
+}
+
+.overflow-hint {
+  display: none;
 }
 
 .math-statement.math-fallback-active .math-fallback-note {
@@ -2597,14 +2695,73 @@ tbody tr:hover {
     position: static;
     grid-row: 1;
     max-height: none;
-    padding: 0.8rem 1rem;
+    display: block;
+    max-width: 100%;
+    padding: 0;
+    overflow: hidden;
     border: 1px solid var(--line);
     border-radius: var(--radius);
   }
 
+  .side-nav-label {
+    display: none;
+  }
+
+  .side-nav-toggle {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    width: 100%;
+    min-height: 3.1rem;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.65rem 0.8rem;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .side-nav-toggle-label {
+    color: var(--accent-strong);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .side-nav-current {
+    min-width: 0;
+    overflow: hidden;
+    color: var(--muted);
+    font-size: 0.82rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .side-nav-chevron {
+    transition: transform 140ms ease;
+  }
+
+  .side-nav.toc-open .side-nav-chevron {
+    transform: rotate(180deg);
+  }
+
   .side-nav-links {
+    display: none;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
     gap: 0.1rem 1rem;
+    padding: 0 0.55rem 0.65rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .side-nav.toc-open .side-nav-links {
+    display: grid;
+  }
+
+  .side-nav a {
+    min-height: 2.75rem;
+    padding: 0.65rem 0.45rem;
   }
 }
 
@@ -2864,6 +3021,40 @@ tbody tr:hover {
   .chapter-compass a + a {
     border-top: 1px solid var(--line);
     border-left: 0;
+  }
+
+  .chapter-pager-heading {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .chapter-pager-links {
+    grid-template-columns: 1fr;
+  }
+
+  .chapter-pager-spacer {
+    display: none;
+  }
+
+  .chapter-pager-link.next {
+    text-align: left;
+  }
+
+  .chapter-pager-index {
+    grid-row: 3;
+    min-height: 3.25rem;
+  }
+
+  .math-statement.is-scrollable .overflow-hint {
+    display: flex;
+    gap: 0.4rem;
+    justify-content: flex-end;
+    margin-top: 0.45rem;
+    color: var(--muted);
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
   }
 
   .learning-route-card > p {
