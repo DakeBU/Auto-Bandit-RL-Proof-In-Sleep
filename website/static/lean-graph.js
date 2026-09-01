@@ -15,6 +15,7 @@
   const viewButtons = [...app.querySelectorAll("[data-graph-view]")];
   const fitButton = app.querySelector("[data-graph-fit]");
   const resetButton = app.querySelector("[data-graph-reset]");
+  const mobileOpenButton = app.querySelector("[data-graph-mobile-open]");
 
   const statusLabels = {
     compiled: "Compiled",
@@ -58,6 +59,16 @@
   let graphBounds = { x: 0, y: 0, width: 1, height: 1 };
   let transform = { x: 0, y: 0, scale: 1 };
   let dragging = null;
+  let fullDataLoaded = false;
+  let fullDataPromise = null;
+
+  const setMobileCanvasOpen = (open = true) => {
+    app.classList.toggle("mobile-canvas-open", open);
+    if (!mobileOpenButton) return;
+    mobileOpenButton.setAttribute("aria-expanded", String(open));
+    mobileOpenButton.textContent = open ? "Close interactive canvas" : "Open interactive canvas";
+    if (open) requestAnimationFrame(fitGraph);
+  };
 
   const create = (tag, className = "", text = "") => {
     const element = document.createElement(tag);
@@ -173,6 +184,7 @@
 
   const revealSearchResult = (nodeId) => {
     if (!nodes.has(nodeId)) return;
+    setMobileCanvasOpen(true);
     currentView = "search";
     setViewButtonState("");
     visible = new Set();
@@ -432,7 +444,13 @@
       if (childTotal) appendText(group, `${childTotal} children`, nodeWidth - 12, 58, "lean-graph-node-count", 18);
       const activate = (event) => {
         event.stopPropagation();
-        selectNode(nodeId, true);
+        if (fullDataLoaded) {
+          selectNode(nodeId, true);
+          return;
+        }
+        ensureFullData().then((loaded) => {
+          if (loaded) selectNode(nodeId, true);
+        });
       };
       group.addEventListener("click", activate);
       group.addEventListener("keydown", (event) => {
@@ -536,15 +554,73 @@
     setView("overview");
   };
 
+  const showLoadError = (error) => {
+    count.textContent = "Graph data unavailable";
+    empty.hidden = false;
+    empty.textContent = "The generated Lean Graph could not be loaded. Use the declaration catalog while the static artifact is rebuilt.";
+    app.removeAttribute("aria-busy");
+    console.error(error);
+  };
+
+  const fetchGraph = (source) =>
+    fetch(source).then((response) => {
+      if (!response.ok) throw new Error(`Graph data returned ${response.status}`);
+      return response.json();
+    });
+
+  const ensureFullData = () => {
+    if (fullDataLoaded) return Promise.resolve(true);
+    if (!fullDataPromise) {
+      count.textContent = "Loading the searchable graph…";
+      app.setAttribute("aria-busy", "true");
+      fullDataPromise = fetchGraph(app.dataset.graphSource)
+        .then((payload) => {
+          fullDataLoaded = true;
+          initialize(payload);
+          app.removeAttribute("aria-busy");
+          return true;
+        })
+        .catch((error) => {
+          fullDataPromise = null;
+          showLoadError(error);
+          return false;
+        });
+    }
+    return fullDataPromise;
+  };
+
   viewButtons.forEach((button) => {
-    button.addEventListener("click", () => setView(button.dataset.graphView));
+    button.addEventListener("click", () => {
+      const view = button.dataset.graphView;
+      if (view === "overview" && data) {
+        setView(view);
+        return;
+      }
+      ensureFullData().then((loaded) => {
+        if (loaded) {
+          setMobileCanvasOpen(true);
+          setView(view);
+        }
+      });
+    });
+  });
+  mobileOpenButton?.addEventListener("click", () => {
+    setMobileCanvasOpen(!app.classList.contains("mobile-canvas-open"));
   });
   branchSizeSelect?.addEventListener("change", () => {
     branchSize = Number(branchSizeSelect.value || 12);
   });
   fitButton?.addEventListener("click", fitGraph);
   resetButton?.addEventListener("click", () => setView(currentView === "search" ? "overview" : currentView));
-  search?.addEventListener("input", updateSuggestions);
+  search?.addEventListener("input", () => {
+    if (search.value.trim().length < 2 || fullDataLoaded) {
+      updateSuggestions();
+      return;
+    }
+    ensureFullData().then((loaded) => {
+      if (loaded) updateSuggestions();
+    });
+  });
   search?.addEventListener("keydown", (event) => {
     if (event.key === "Escape") hideSuggestions();
     if (event.key === "Enter") {
@@ -620,16 +696,9 @@
     if (!app.contains(event.target)) hideSuggestions();
   });
 
-  fetch(app.dataset.graphSource)
-    .then((response) => {
-      if (!response.ok) throw new Error(`Graph data returned ${response.status}`);
-      return response.json();
+  fetchGraph(app.dataset.graphOverviewSource)
+    .then((payload) => {
+      if (!fullDataLoaded) initialize(payload);
     })
-    .then(initialize)
-    .catch((error) => {
-      count.textContent = "Graph data unavailable";
-      empty.hidden = false;
-      empty.textContent = "The generated Lean Graph could not be loaded. Use the declaration catalog while the static artifact is rebuilt.";
-      console.error(error);
-    });
+    .catch(showLoadError);
 })();

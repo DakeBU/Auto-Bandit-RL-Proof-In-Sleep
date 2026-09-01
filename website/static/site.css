@@ -315,6 +315,8 @@ code {
 
 .page-main {
   min-width: 0;
+  container-name: page-main;
+  container-type: inline-size;
 }
 
 .side-nav {
@@ -2130,6 +2132,100 @@ tbody tr:hover {
   line-height: 1.5;
 }
 
+.proof-bridge {
+  margin: 1.5rem 0;
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--accent-soft) 30%, var(--surface));
+  box-shadow: var(--shadow);
+}
+
+.proof-bridge-heading {
+  max-width: 64rem;
+}
+
+.proof-bridge-heading h3 {
+  margin: 0.4rem 0 0.45rem;
+}
+
+.proof-bridge-heading p,
+.proof-bridge-step p,
+.proof-bridge-boundary {
+  color: var(--muted);
+}
+
+.proof-bridge-heading p {
+  margin: 0;
+}
+
+.proof-bridge-flow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin: 1.1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.proof-bridge-step {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  gap: 0.75rem;
+  min-width: 0;
+  padding: 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--line) 82%, transparent);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.proof-bridge-copy,
+.proof-bridge-step strong,
+.proof-bridge-step p {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.proof-bridge-number {
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent-strong);
+  color: var(--surface);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.proof-bridge-step p {
+  margin: 0.35rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.proof-bridge-step .math-statement {
+  grid-column: 1 / -1;
+  margin: 0.75rem 0 0;
+  padding: 0.65rem 0.75rem;
+  border-left-width: 3px;
+  background: color-mix(in srgb, var(--accent-soft) 42%, var(--surface));
+  font-size: 0.88rem;
+}
+
+.proof-bridge-boundary {
+  margin: 1rem 0 0;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.84rem;
+}
+
+.proof-bridge-boundary strong {
+  color: var(--ink);
+}
+
 .source-theorem-card {
   margin: 1.5rem 0;
   padding: clamp(1rem, 2.5vw, 1.5rem);
@@ -3414,7 +3510,13 @@ tbody tr:hover {
   overflow: auto;
 }
 
-@media (max-width: 1320px) {
+@container page-main (max-width: 70rem) {
+  .evidence-snapshot-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1640px) {
   .page-shell:not(.wide-page) {
     grid-template-columns: minmax(0, 1fr);
     max-width: 72rem;
@@ -3970,6 +4072,14 @@ tbody tr:hover {
     border-top: 0;
   }
 
+  .proof-bridge-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .proof-bridge-step {
+    padding: 0.8rem;
+  }
+
   .notation-primer {
     grid-template-columns: 1fr;
   }
@@ -4298,6 +4408,10 @@ tbody tr:hover {
   display: grid;
   grid-template-columns: minmax(0, 1.85fr) minmax(20rem, 0.9fr);
   min-height: 43rem;
+}
+
+.lean-graph-mobile-start {
+  display: none;
 }
 
 .lean-graph-canvas {
@@ -4760,6 +4874,63 @@ tbody tr:hover {
 
   .lean-graph-detail {
     padding: 1rem;
+  }
+
+  .lean-graph-mobile-start {
+    display: grid;
+    gap: 0.75rem;
+    padding: 1rem;
+    border-bottom: 1px solid var(--line);
+    background: color-mix(in srgb, var(--accent-soft) 28%, var(--surface));
+  }
+
+  .lean-graph-mobile-start h2,
+  .lean-graph-mobile-start p {
+    margin: 0;
+  }
+
+  .lean-graph-mobile-start p,
+  .lean-graph-mobile-links span {
+    color: var(--muted);
+  }
+
+  .lean-graph-mobile-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+  }
+
+  .lean-graph-mobile-links a {
+    display: grid;
+    min-height: 4.5rem;
+    gap: 0.15rem;
+    align-content: center;
+    padding: 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .lean-graph-mobile-links a:hover,
+  .lean-graph-mobile-links a:focus-visible {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  .lean-graph-mobile-links span {
+    font-size: 0.78rem;
+    line-height: 1.35;
+  }
+
+  .lean-graph-mobile-start > .button {
+    justify-self: stretch;
+    min-height: 2.75rem;
+  }
+
+  .lean-graph-app:not(.mobile-canvas-open) .lean-graph-stage {
+    display: none;
   }
 
   .lean-graph-meta {

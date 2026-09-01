@@ -187,6 +187,37 @@
           {"title": "Read the proof", "detail": "On the good event, choosing a suboptimal arm forces its count to still be small; sum gap times count to obtain regret."}
         ]
       },
+      "proof_bridge": {
+        "title": "Why an optimistic choice becomes a regret bound",
+        "summary": "The source proof and the local Lean route use the same four conceptual joints. Read this bridge before comparing constants or implementation details.",
+        "steps": [
+          {
+            "title": "Control every empirical mean",
+            "detail": "Work on a confidence event where each empirical mean stays within its declared radius of the true arm mean.",
+            "math": "|\\widehat\\mu_a(t)-\\mu_a|\\le r_a(t).",
+            "fallback": "For every relevant arm and round, the empirical mean error is at most its confidence radius."
+          },
+          {
+            "title": "Use optimism at the selected arm",
+            "detail": "If a suboptimal arm is chosen on that event, its upper-confidence score must still compete with the optimal arm's mean.",
+            "math": "A_t=a\\ne a^\\star\\Longrightarrow \\Delta_a\\le 2r_a(t).",
+            "fallback": "Selecting a suboptimal arm on the confidence event forces its gap to be no larger than twice its current radius."
+          },
+          {
+            "title": "Turn the radius into a count threshold",
+            "detail": "Because the radius shrinks with the number of samples, the preceding inequality can hold only while the arm has been pulled comparatively few times.",
+            "math": "N_a(T)\\lesssim \\frac{\\log(T/\\delta_a)}{\\Delta_a^2}.",
+            "fallback": "The pull count of a suboptimal arm is controlled by a logarithmic term divided by the squared arm gap."
+          },
+          {
+            "title": "Charge every pull by its gap",
+            "detail": "Apply the pathwise gap-sum identity, then account explicitly for the confidence-event failure probability under the generated trajectory law.",
+            "math": "\\mathbb E\\bar R_T\\le\\sum_{a:\\Delta_a>0}\\Delta_a\\bigl(B_a(T)+T\\delta_a\\bigr).",
+            "fallback": "Expected pseudo-regret is at most the sum of each positive gap times its pull-count bound plus its explicit failure-event charge."
+          }
+        ],
+        "boundary": "This is a reading aid for the shared proof shape. The source theorem card and exact Lean statement below remain authoritative for the model, constants, horizon convention, and confidence schedule."
+      },
       "source_theorem": {
         "label": "Theorem 7.2 (finite-time UCB regret)",
         "pages": "online p. 108",

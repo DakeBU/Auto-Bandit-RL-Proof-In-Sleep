@@ -1069,7 +1069,7 @@
       "full_name": "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum",
       "chapter": "foundations",
       "plain": "For one common randomized policy in two finite-arm environments, the directed KL between their canonical finite history laws equals the sum of first-environment expected pull counts times the directed KL of each arm law.",
-      "math": "D(\u2119_{\u03bd,\u03c0}^{(n)}\\Vert\u2119_{\u03bd',\u03c0}^{(n)})=\u2211_a \u1d53_{\u03bd,\u03c0}[T_a(n)]D(P_a\\Vert P'_a).",
+      "math": "D(\\mathbb P_{\u03bd,\u03c0}^{(n)}\\Vert\\mathbb P_{\u03bd',\u03c0}^{(n)})=\\sum_a \\mathbb E_{\u03bd,\u03c0}[T_a(n)]D(P_a\\Vert P'_a).",
       "intuition": "At every round the same policy cancels from the likelihood ratio; an arm pays information only when the policy selects it, so repeated conditional costs regroup into expected pull counts.",
       "why": "This is the compiled Chapter 15 change-of-environment identity used by minimax, instance-dependent, and high-probability lower-bound routes.",
       "position": "It is the local source-facing counterpart of Lattimore\u2013Szepesv\u00e1ri Lemma 15.1. The compiled Theorem 15.2 consumes it; later Chapter 16\u201317 terminals remain separate.",
@@ -1146,7 +1146,7 @@
     {
       "full_name": "BanditRLProof.LowerBounds.IsConsistentRegret",
       "chapter": "foundations",
-      "plain": "A regret sequence is consistent when it divided by n to the p converges to zero for every positive real exponent p.",
+      "plain": "A regret sequence is consistent when its ratio to n to the power p converges to zero for every positive real exponent p.",
       "math": "\\forall p>0:\\quad R_n/n^p\\to 0.",
       "intuition": "Consistency excludes a policy that pays polynomial regret on the instance, while still allowing logarithmic and other subpolynomial behavior.",
       "why": "Definition 16.1 quantifies over every environment and every positive real exponent; the scalar predicate freezes the inner analytic contract exactly.",
