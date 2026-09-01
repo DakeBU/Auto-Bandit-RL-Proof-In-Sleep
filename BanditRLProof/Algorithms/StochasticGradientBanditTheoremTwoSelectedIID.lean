@@ -585,6 +585,199 @@ theorem twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent
         (twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal) := by
       rw [twoArmLatentMaskedOptimalPullBlock_preimage_appendixCObservedPhaseEvent]
 
+/-! ## Missing-pull/all-present probability split -/
+
+/-- The pure latent Appendix-C reward pattern, before intersecting it with the
+adaptive event that all requested optimal-arm pulls occur. -/
+def twoArmAppendixCPureLatentRewardEvent (n0 n1 : Nat)
+    (phaseOneTotal : Real) : Set
+      (UCB.ArmRewardStream 2 × ((t : Nat) -> Fin 2 × Real)) :=
+  (fun sample : UCB.ArmRewardStream 2 ×
+      ((t : Nat) -> Fin 2 × Real) =>
+    fun i : Fin (n0 + n1) => sample.1 (i : Nat) 0) ⁻¹'
+    twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal
+
+theorem measurableSet_twoArmAppendixCPureLatentRewardEvent
+    (n0 n1 : Nat) (phaseOneTotal : Real) :
+    MeasurableSet
+      (twoArmAppendixCPureLatentRewardEvent n0 n1 phaseOneTotal) :=
+  (measurableSet_twoArmAppendixCRewardPhaseEvent
+    n0 n1 phaseOneTotal).preimage
+      (measurable_pi_lambda _ fun i =>
+        (measurable_pi_apply 0).comp
+          ((measurable_pi_apply (i : Nat)).comp measurable_fst))
+
+/-- The pure latent reward pattern together with failure of at least one
+requested optimal-arm pull to occur.  This is the complementary branch to the
+existing all-present latent phase event, not yet a fixed-cutoff starvation
+event. -/
+def twoArmAppendixCMissingPullLatentPhaseEvent (n0 n1 : Nat)
+    (phaseOneTotal : Real) : Set
+      (UCB.ArmRewardStream 2 × ((t : Nat) -> Fin 2 × Real)) :=
+  ((twoArmLatentMaskedOptimalPullBlock (n0 + n1)) ⁻¹'
+      twoArmAppendixCAllPullsPresent (n0 + n1))ᶜ ∩
+    twoArmAppendixCPureLatentRewardEvent n0 n1 phaseOneTotal
+
+theorem measurableSet_twoArmAppendixCMissingPullLatentPhaseEvent
+    (n0 n1 : Nat) (phaseOneTotal : Real) :
+    MeasurableSet
+      (twoArmAppendixCMissingPullLatentPhaseEvent
+        n0 n1 phaseOneTotal) :=
+  (((measurableSet_twoArmAppendixCAllPullsPresent
+    (n0 + n1)).preimage
+      (measurable_twoArmLatentMaskedOptimalPullBlock
+        (n0 + n1))).compl).inter
+    (measurableSet_twoArmAppendixCPureLatentRewardEvent
+      n0 n1 phaseOneTotal)
+
+/-- Membership in the missing branch exposes an actual `WithTop.top` pull-time
+coordinate while retaining the pure latent reward pattern. -/
+theorem mem_twoArmAppendixCMissingPullLatentPhaseEvent_iff
+    (n0 n1 : Nat) (phaseOneTotal : Real)
+    (sample : UCB.ArmRewardStream 2 × ((t : Nat) -> Fin 2 × Real)) :
+    sample ∈ twoArmAppendixCMissingPullLatentPhaseEvent
+        n0 n1 phaseOneTotal ↔
+      (fun i : Fin (n0 + n1) => sample.1 (i : Nat) 0) ∈
+          twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal ∧
+        ∃ i : Fin (n0 + n1),
+          twoArmNthOptimalPullTime (Env := Unit) (i : Nat) ((), sample.2) =
+            (⊤ : WithTop Nat) := by
+  classical
+  simp [twoArmAppendixCMissingPullLatentPhaseEvent,
+    twoArmAppendixCPureLatentRewardEvent,
+    twoArmAppendixCAllPullsPresent,
+    twoArmLatentMaskedOptimalPullBlock,
+    and_comm]
+
+/-- The unconditional latent reward event is exactly the union of the
+all-present phase and the missing-pull phase. -/
+theorem twoArmAppendixCPureLatentRewardEvent_eq_union_phase_missing
+    (n0 n1 : Nat) (phaseOneTotal : Real) :
+    twoArmAppendixCPureLatentRewardEvent n0 n1 phaseOneTotal =
+      twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal ∪
+        twoArmAppendixCMissingPullLatentPhaseEvent
+          n0 n1 phaseOneTotal := by
+  ext sample
+  by_cases hpresent :
+      twoArmLatentMaskedOptimalPullBlock (n0 + n1) sample ∈
+        twoArmAppendixCAllPullsPresent (n0 + n1)
+  · simp [twoArmAppendixCPureLatentRewardEvent,
+      twoArmAppendixCLatentPhaseEvent,
+      twoArmAppendixCMissingPullLatentPhaseEvent, hpresent]
+  · simp [twoArmAppendixCPureLatentRewardEvent,
+      twoArmAppendixCLatentPhaseEvent,
+      twoArmAppendixCMissingPullLatentPhaseEvent, hpresent]
+
+theorem disjoint_twoArmAppendixCLatentPhaseEvent_missing
+    (n0 n1 : Nat) (phaseOneTotal : Real) :
+    Disjoint
+      (twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal)
+      (twoArmAppendixCMissingPullLatentPhaseEvent
+        n0 n1 phaseOneTotal) := by
+  rw [Set.disjoint_left]
+  intro sample hphase hmissing
+  exact hmissing.1 hphase.1
+
+/-- The pure latent phase probability is evaluated under the already compiled
+finite arm-0 product law. -/
+theorem twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_pi
+    (armLaw : Fin 2 -> Measure Real)
+    (hprob : forall arm, IsProbabilityMeasure (armLaw arm))
+    (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) :
+    (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta)
+        (twoArmAppendixCPureLatentRewardEvent n0 n1 phaseOneTotal) =
+      (Measure.pi (fun _ : Fin (n0 + n1) => armLaw 0) :
+          Measure (Fin (n0 + n1) -> Real))
+        (twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal) := by
+  let latentPrefix := fun sample : UCB.ArmRewardStream 2 ×
+      ((t : Nat) -> Fin 2 × Real) =>
+    fun i : Fin (n0 + n1) => sample.1 (i : Nat) 0
+  have hprefix : Measurable latentPrefix :=
+    measurable_pi_lambda _ fun i =>
+      (measurable_pi_apply 0).comp
+        ((measurable_pi_apply (i : Nat)).comp measurable_fst)
+  have hevent : MeasurableSet
+      (twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal) :=
+    measurableSet_twoArmAppendixCRewardPhaseEvent
+      n0 n1 phaseOneTotal
+  calc
+    (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta)
+        (twoArmAppendixCPureLatentRewardEvent n0 n1 phaseOneTotal) =
+        Measure.map latentPrefix
+          (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta)
+          (twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal) := by
+      rw [Measure.map_apply hprefix hevent]
+      rfl
+    _ = (Measure.pi (fun _ : Fin (n0 + n1) => armLaw 0) :
+            Measure (Fin (n0 + n1) -> Real))
+          (twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal) := by
+      rw [twoArmFixedIIDLatentTrajectoryMeasure_map_optimalPrefix_eq_pi]
+
+/-- Probability additivity for the disjoint all-present and missing-pull
+branches of the pure latent phase event. -/
+theorem twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_phase_add_missing
+    (armLaw : Fin 2 -> Measure Real)
+    (hprob : forall arm, IsProbabilityMeasure (armLaw arm))
+    (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) :
+    (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta)
+        (twoArmAppendixCPureLatentRewardEvent n0 n1 phaseOneTotal) =
+      (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta)
+          (twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal) +
+        (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta)
+          (twoArmAppendixCMissingPullLatentPhaseEvent
+            n0 n1 phaseOneTotal) := by
+  rw [twoArmAppendixCPureLatentRewardEvent_eq_union_phase_missing]
+  exact measure_union
+    (disjoint_twoArmAppendixCLatentPhaseEvent_missing
+      n0 n1 phaseOneTotal)
+    (measurableSet_twoArmAppendixCMissingPullLatentPhaseEvent
+      n0 n1 phaseOneTotal)
+
+/-- Source-facing missing-pull/all-present dichotomy.
+
+The unconditional product-law probability of the pure finite reward phase is
+the sum of the generated all-present phase probability and the latent
+missing-pull branch probability.  This theorem does not identify the missing
+branch with a fixed-cutoff starvation event, condition rewards on occurrence,
+or prove a positive phase bound, future no-return, ballot asymptotics, or
+Theorem 2. -/
+theorem twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing
+    (armLaw : Fin 2 -> Measure Real)
+    (hprob : forall arm, IsProbabilityMeasure (armLaw arm))
+    (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) :
+    (Measure.pi (fun _ : Fin (n0 + n1) => armLaw 0) :
+        Measure (Fin (n0 + n1) -> Real))
+        (twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal) =
+      (twoArmTrajectoryMeasure (Measure.dirac ()) eta
+          (twoArmFixedIIDEnvironment armLaw hprob))
+          (twoArmAppendixCGeneratedPhaseEvent n0 n1 phaseOneTotal) +
+        (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta)
+          (twoArmAppendixCMissingPullLatentPhaseEvent
+            n0 n1 phaseOneTotal) := by
+  calc
+    (Measure.pi (fun _ : Fin (n0 + n1) => armLaw 0) :
+        Measure (Fin (n0 + n1) -> Real))
+        (twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal) =
+        (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta)
+          (twoArmAppendixCPureLatentRewardEvent
+            n0 n1 phaseOneTotal) :=
+      (twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_pi
+        armLaw hprob eta n0 n1 phaseOneTotal).symm
+    _ = (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta)
+          (twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal) +
+        (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta)
+          (twoArmAppendixCMissingPullLatentPhaseEvent
+            n0 n1 phaseOneTotal) :=
+      twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_phase_add_missing
+        armLaw hprob eta n0 n1 phaseOneTotal
+    _ = (twoArmTrajectoryMeasure (Measure.dirac ()) eta
+          (twoArmFixedIIDEnvironment armLaw hprob))
+          (twoArmAppendixCGeneratedPhaseEvent n0 n1 phaseOneTotal) +
+        (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta)
+          (twoArmAppendixCMissingPullLatentPhaseEvent
+            n0 n1 phaseOneTotal) := by
+      rw [twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent]
+
 end StochasticGradientBandit
 end
 end BanditRLProof

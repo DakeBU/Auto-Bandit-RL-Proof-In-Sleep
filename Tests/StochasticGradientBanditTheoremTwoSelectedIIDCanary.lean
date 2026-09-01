@@ -28,6 +28,16 @@ open scoped ProbabilityTheory
 #check twoArmAppendixCGeneratedPhaseEvent
 #check measurableSet_twoArmAppendixCGeneratedPhaseEvent
 #check twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent
+#check twoArmAppendixCPureLatentRewardEvent
+#check measurableSet_twoArmAppendixCPureLatentRewardEvent
+#check twoArmAppendixCMissingPullLatentPhaseEvent
+#check measurableSet_twoArmAppendixCMissingPullLatentPhaseEvent
+#check mem_twoArmAppendixCMissingPullLatentPhaseEvent_iff
+#check twoArmAppendixCPureLatentRewardEvent_eq_union_phase_missing
+#check disjoint_twoArmAppendixCLatentPhaseEvent_missing
+#check twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_pi
+#check twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_phase_add_missing
+#check twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing
 
 /-- The source-facing theorem retains the missing-pull time coordinate and
 does not replace its masked right-hand side by the unmasked product law. -/
@@ -49,6 +59,7 @@ example
 #print axioms twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary
 #print axioms twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked
 #print axioms twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent
+#print axioms twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing
 
 end StochasticGradientBandit
 end BanditRLProof

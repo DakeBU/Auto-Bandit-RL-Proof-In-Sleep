@@ -129,12 +129,17 @@ evidence states:
    `S0/S1` reward event, keep the all-pulls-present boundary as an explicit
    intersection in latent space, and transport its probability to the source
    generated process without conditioning away adaptive occurrence dependence.
-10. **Blocked future/no-return producer:** if the optimal-arm probability after its `n`th
+10. **Compiled phase dichotomy:** split the pure latent `S0/S1` probability
+   exactly into the generated all-pulls-present event and a measurable
+   missing-pull event.  The latter exposes an actual `WithTop.top` pull-time
+   coordinate; it is not yet identified with the fixed-cutoff starvation
+   event and does not create an occurrence-conditioned IID law.
+11. **Blocked future/no-return producer:** if the optimal-arm probability after its `n`th
    pull is at most `1/(2*T)`, the conditional probability of no further
    optimal-arm pull over the remaining horizon is at least `1/2`, yielding
    the exact starvation regret charge.  The fixed-cutoff deterministic consumer
    already compiles; the stopped-prefix probability producer does not.
-11. Build the `S0`/`S1` phase producer: latent IID reward-block law plus its
+12. Build the `S0`/`S1` phase producer: latent IID reward-block law plus its
    native-process transport, Rademacher anti-concentration, ballot-prefix
    constraint, and the
    deterministic implication into the starvation event.
@@ -255,8 +260,15 @@ evidence that the polynomial lower-bound route is complete.
   adaptive occurrence boundary.  The source-facing terminal
   `twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent`
   transports exact event probability without conditioning the latent prefix.
-- A pull-ordered selected-IID theorem, the missing-pull/all-present probability
-  dichotomy, conditional no-return probability
+- Ten further declarations define the pure latent reward event and the missing-
+  pull phase event, prove their measurable disjoint-union decomposition, identify
+  the pure event probability with the finite arm-0 product law, and compile
+  `twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing`.  This is an
+  exact probability identity: the source-generated all-present phase plus the
+  latent missing-pull phase equals the pure product event.  It does not yet
+  turn the missing branch into the fixed-cutoff starvation event.
+- A pull-ordered selected-IID theorem, the missing-branch-to-starvation bridge,
+  conditional no-return probability
   `>= 1/2`, the Rademacher/ballot phase producer, asymptotic
   assembly, and the frozen Theorem-2 terminal remain uncompiled.  The central
   target therefore remains blocked; the compiled latent product/readout,

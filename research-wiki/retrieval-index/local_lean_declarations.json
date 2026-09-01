@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-31T22:55:43+00:00",
+  "generated": "2026-09-01T00:45:55+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -4888,6 +4888,86 @@
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
       "line": 550,
       "statement": "theorem twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) : (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) (twoArmAppendixCGeneratedPhaseEvent n0 n1 phaseOneTotal) = (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal)"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmAppendixCPureLatentRewardEvent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCPureLatentRewardEvent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 592,
+      "statement": "def twoArmAppendixCPureLatentRewardEvent (n0 n1 : Nat) (phaseOneTotal : Real) : Set (UCB.ArmRewardStream 2 \u00d7 ((t : Nat) -> Fin 2 \u00d7 Real))"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurableSet_twoArmAppendixCPureLatentRewardEvent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCPureLatentRewardEvent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 600,
+      "statement": "theorem measurableSet_twoArmAppendixCPureLatentRewardEvent (n0 n1 : Nat) (phaseOneTotal : Real) : MeasurableSet (twoArmAppendixCPureLatentRewardEvent n0 n1 phaseOneTotal)"
+    },
+    {
+      "kind": "def",
+      "name": "twoArmAppendixCMissingPullLatentPhaseEvent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCMissingPullLatentPhaseEvent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 614,
+      "statement": "def twoArmAppendixCMissingPullLatentPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : Set (UCB.ArmRewardStream 2 \u00d7 ((t : Nat) -> Fin 2 \u00d7 Real))"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurableSet_twoArmAppendixCMissingPullLatentPhaseEvent",
+      "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCMissingPullLatentPhaseEvent",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 621,
+      "statement": "theorem measurableSet_twoArmAppendixCMissingPullLatentPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : MeasurableSet (twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal)"
+    },
+    {
+      "kind": "theorem",
+      "name": "mem_twoArmAppendixCMissingPullLatentPhaseEvent_iff",
+      "full_name": "BanditRLProof.StochasticGradientBandit.mem_twoArmAppendixCMissingPullLatentPhaseEvent_iff",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 635,
+      "statement": "theorem mem_twoArmAppendixCMissingPullLatentPhaseEvent_iff (n0 n1 : Nat) (phaseOneTotal : Real) (sample : UCB.ArmRewardStream 2 \u00d7 ((t : Nat) -> Fin 2 \u00d7 Real)) : sample \u2208 twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal \u2194 (fun i : Fin (n0 + n1) => sample.1 (i : Nat) 0) \u2208 twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal \u2227 \u2203 i : Fin (n0 + n1), twoArmNthOptimalPullTime (Env := Unit) (i : Nat) ((), sample.2) = (\u22a4 : WithTop Nat)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmAppendixCPureLatentRewardEvent_eq_union_phase_missing",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCPureLatentRewardEvent_eq_union_phase_missing",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 654,
+      "statement": "theorem twoArmAppendixCPureLatentRewardEvent_eq_union_phase_missing (n0 n1 : Nat) (phaseOneTotal : Real) : twoArmAppendixCPureLatentRewardEvent n0 n1 phaseOneTotal = twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal \u222a twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal"
+    },
+    {
+      "kind": "theorem",
+      "name": "disjoint_twoArmAppendixCLatentPhaseEvent_missing",
+      "full_name": "BanditRLProof.StochasticGradientBandit.disjoint_twoArmAppendixCLatentPhaseEvent_missing",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 671,
+      "statement": "theorem disjoint_twoArmAppendixCLatentPhaseEvent_missing (n0 n1 : Nat) (phaseOneTotal : Real) : Disjoint (twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal) (twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_pi",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_pi",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 683,
+      "statement": "theorem twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_pi (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) : (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCPureLatentRewardEvent n0 n1 phaseOneTotal) = (Measure.pi (fun _ : Fin (n0 + n1) => armLaw 0) : Measure (Fin (n0 + n1) -> Real)) (twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_phase_add_missing",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_phase_add_missing",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 718,
+      "statement": "theorem twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_phase_add_missing (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) : (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCPureLatentRewardEvent n0 n1 phaseOneTotal) = (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal) + (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing",
+      "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing",
+      "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "line": 744,
+      "statement": "theorem twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) : (Measure.pi (fun _ : Fin (n0 + n1) => armLaw 0) : Measure (Fin (n0 + n1) -> Real)) (twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal) = (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) (twoArmAppendixCGeneratedPhaseEvent n0 n1 phaseOneTotal) + (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal)"
     },
     {
       "kind": "def",
