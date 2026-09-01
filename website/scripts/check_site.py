@@ -41,6 +41,9 @@ class LinkCollector(HTMLParser):
         self.source_link_count = 0
         self.source_links: list[str] = []
         self.site_sidebar_count = 0
+        self.nav_group_count = 0
+        self.side_nav_count = 0
+        self.side_nav_toggle_count = 0
         self.book_nav_link_count = 0
         self.book_chapter_card_count = 0
         self.spine_nav_link_count = 0
@@ -50,6 +53,7 @@ class LinkCollector(HTMLParser):
         self.theorem_panel_count = 0
         self.math_statement_count = 0
         self.math_fallback_count = 0
+        self.math_fallback_note_count = 0
         self.math_tex_count = 0
         self.teaching_grid_count = 0
         self.lean_code_count = 0
@@ -57,6 +61,8 @@ class LinkCollector(HTMLParser):
         self.algorithm_flow_count = 0
         self.source_theorem_card_count = 0
         self.source_boundary_count = 0
+        self.chapter_compass_count = 0
+        self.learning_route_count = 0
         self.wiki_case_count = 0
         self.wiki_family_card_count = 0
         self.wiki_paper_card_count = 0
@@ -82,6 +88,8 @@ class LinkCollector(HTMLParser):
             self.math_statement_count += 1
         if "math-fallback" in classes:
             self.math_fallback_count += 1
+        if "math-fallback-note" in classes:
+            self.math_fallback_note_count += 1
         if "math-tex" in classes:
             self.math_tex_count += 1
             self.math_tex_sources.append("")
@@ -99,6 +107,10 @@ class LinkCollector(HTMLParser):
             self.source_theorem_card_count += 1
         if "source-boundary" in classes:
             self.source_boundary_count += 1
+        if "data-chapter-compass" in values:
+            self.chapter_compass_count += 1
+        if "data-learning-route" in values:
+            self.learning_route_count += 1
         if "wiki-case-card" in classes:
             self.wiki_case_count += 1
         if "wiki-family-card" in classes:
@@ -136,6 +148,12 @@ class LinkCollector(HTMLParser):
                 self.accessible_command_block_count += 1
         if "site-sidebar" in classes:
             self.site_sidebar_count += 1
+        if "data-nav-group" in values:
+            self.nav_group_count += 1
+        if "data-page-toc" in values:
+            self.side_nav_count += 1
+        if "data-toc-toggle" in values:
+            self.side_nav_toggle_count += 1
         if "book-nav-link" in classes:
             self.book_nav_link_count += 1
         if "book-chapter-card" in classes:
@@ -797,8 +815,23 @@ def main() -> int:
     if not (output / "static" / "favicon.svg").exists():
         errors.append("missing generated SVG favicon")
     for page, collector in pages.items():
-        if 'rel="icon"' not in page.read_text(encoding="utf-8"):
+        page_source = page.read_text(encoding="utf-8")
+        if 'rel="icon"' not in page_source:
             errors.append(f"{page.relative_to(output)}: missing favicon link")
+        for mojibake in ("�", "Ã", "Â", "â€", "ï»¿"):
+            if mojibake in page_source:
+                errors.append(f"{page.relative_to(output)}: contains likely mojibake marker {mojibake!r}")
+        if collector.nav_group_count != 7:
+            errors.append(
+                f"{page.relative_to(output)}: expected seven collapsible navigation groups, "
+                f"found {collector.nav_group_count}"
+            )
+        if collector.side_nav_count != collector.side_nav_toggle_count:
+            errors.append(f"{page.relative_to(output)}: page TOC is missing its accessible mobile toggle")
+        if collector.math_statement_count != collector.math_fallback_note_count:
+            errors.append(
+                f"{page.relative_to(output)}: every mathematical statement needs one renderer-failure note"
+            )
         if collector.site_sidebar_count != 1:
             errors.append(
                 f"{page.relative_to(output)}: expected one site sidebar, found {collector.site_sidebar_count}"
@@ -833,6 +866,10 @@ def main() -> int:
             errors.append(
                 f"{relative}: textbook spine has {collector.spine_chapter_card_count} chapter cards, "
                 f"expected {expected_spine_count}"
+            )
+        if collector and collector.learning_route_count != 5:
+            errors.append(
+                f"{relative}: expected five mathematical learning routes, found {collector.learning_route_count}"
             )
 
     command_block_expectations = {
@@ -883,6 +920,8 @@ def main() -> int:
         if collector is None:
             continue
         relative = chapter_page.relative_to(output)
+        if collector.chapter_compass_count != 1:
+            errors.append(f"{relative}: expected one source-and-Lean chapter compass")
         if collector.source_guide_count != 1:
             errors.append(f"{relative}: expected one textbook source guide")
         if collector.source_theorem_card_count < 1 and collector.source_boundary_count != 1:
@@ -1122,6 +1161,13 @@ def main() -> int:
     ):
         if required not in site_js:
             errors.append(f"site.js is missing the maintainable flowchart-fit hook: {required}")
+    for required in ("data-toc-toggle", "setTocOpen", "math-fallback-active", "data-nav-group"):
+        if required not in site_js:
+            errors.append(f"site.js is missing responsive reading support: {required}")
+    workflow_source = (output / "workflow" / "index.html").read_text(encoding="utf-8")
+    for required in ("master–worker", "do not yet justify", "harness-compare"):
+        if required not in workflow_source:
+            errors.append(f"workflow page is missing adaptive-harness boundary {required!r}")
     learning_path = (SITE_DIR / "diagrams" / "learning-path.mmd").read_text(encoding="utf-8")
     if re.search(r'\["[0-9]+\.', learning_path):
         errors.append(

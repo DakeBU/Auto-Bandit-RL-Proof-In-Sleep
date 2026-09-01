@@ -1,16 +1,16 @@
 flowchart LR
-    Target["Mathematical target<br/>paper, textbook, or proposal"] --> Upper["ABRL upper layer<br/>planning and target fence"]
-    subgraph Harness["ABRL · hierarchical autoformalization harness"]
-        Upper --> Middle["middle layer<br/>route and obligation design"]
-        Middle --> Lower["lower layer<br/>Lean proof construction"]
-        Lower --> Compiler["Lean 4 compiler<br/>lake + Mathlib"]
-        Compiler --> Reviewer["reviewer and full gate<br/>statement + evidence audit"]
-        Reviewer -. "diagnostics and refinement" .-> Middle
+    Target["Frozen mathematical target<br/>paper, textbook, or proposal"] --> Scheduler["Evidence-aware scheduler<br/>same target, budget, and source packet"]
+    subgraph Harness["ABRL · adaptive autoformalization harness"]
+        Scheduler --> Hierarchy["Hierarchical default<br/>director → planner → one Lean leaf"]
+        Scheduler -. "bounded experiment" .-> Parallel["Master–worker trial<br/>independent proof routes"]
+        Hierarchy --> Gate["Common Lean + reviewer gate<br/>certificate, blocker, reuse"]
+        Parallel --> Gate
+        Gate -. "matched log and diagnostics" .-> Scheduler
     end
-    Reviewer -->|accepted declarations| Library["BanditRLlib<br/>verified Lean library"]
-    Library --> Learn["Learn<br/>ten-chapter book map"]
-    Library --> Reuse["Reuse<br/>declaration catalogue"]
-    Library --> Formalize["Formalize<br/>retrieval-grounded candidates"]
+    Gate -->|accepted declarations| Library["BanditRLlib<br/>verified Lean library"]
+    Library --> Learn["Learn<br/>source-mapped Book Map"]
+    Library --> Reuse["Reuse<br/>declarations + proof graph"]
+    Library --> Formalize["Formalize<br/>local experimental workspace"]
     Library --> Contribute["Contribute<br/>reviewed lemma packets"]
-    Formalize -. "candidate packet" .-> Upper
-    Contribute -. "proposal packet" .-> Upper
+    Formalize -. "candidate packet" .-> Target
+    Contribute -. "proposal packet" .-> Target
