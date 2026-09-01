@@ -1,7 +1,10 @@
 # Hierarchical Harness
 
-ABRL uses one default profile: a hierarchical upper/middle/lower/reviewer
-harness.  It is adapted to bandit/RL proof work rather than circuit synthesis.
+ABRL currently retains the hierarchical upper/middle/lower/reviewer harness as
+its default. A master–worker arm is now available for matched experiments with
+disjoint routes, and `adaptive` chooses the least-sampled arm until sufficient
+reviewed evidence exists. This is an experiment, not a claim that parallelism
+is already better. See `docs/harness_self_comparison.md`.
 
 ## Roles
 
@@ -54,11 +57,25 @@ that map before lower proof work.
 The adaptive workflow and memory-card boundaries are documented in
 `docs/adaptive_harness_design.md`.
 
-Use:
+Use the current default:
 
 ```bash
 python3 tools/bandit.py run-cycle TASK_ID --lower-count 3
 python3 tools/bandit.py memory-refresh TASK_ID --run-id latest
+```
+
+Use `--lower-count 1` unless multiple lower routes have distinct route
+fingerprints, disjoint owned files, and explicit expected information gain.
+For a matched master–worker arm, provide the same experiment id and target
+fingerprint used by the hierarchical arm:
+
+```bash
+python3 tools/bandit.py run-cycle TASK_ID \
+  --harness master-worker \
+  --experiment-id AB-001 \
+  --target-fingerprint SHA256_OF_FROZEN_TARGET \
+  --lower-count 3 \
+  --parallel-route-json run-presets/harness-comparison-routes.example.json
 ```
 
 To execute prompts with an external CLI wrapper:

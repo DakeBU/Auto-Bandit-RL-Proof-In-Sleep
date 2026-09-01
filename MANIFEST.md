@@ -14244,3 +14244,5 @@ here during local harness runs.
 - `2026-09-01T00:46:00+00:00` `bandit.py reference-index` `retrieval-index` `research-wiki/retrieval-index/local_lean_declarations.json` - refreshed local_lean_declarations.json
 - `2026-09-01T01:19:45+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE.md` - PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE
 - `2026-09-01T01:20:40+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE.md` - PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE
+- `2026-09-01T02:49:19+00:00` `bandit.py blueprint-refresh` `proof-blueprint` `proof-blueprints/PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE.md` - PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE
+- `2026-09-01T03:04:46+00:00` `bandit.py harness-compare` `harness-comparison` `runs/harness-comparison/latest.md` - insufficient-evidence
