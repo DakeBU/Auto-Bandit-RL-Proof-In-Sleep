@@ -324,6 +324,69 @@ theorem integrable_twoArmSampledPseudoRegret_of_finiteMeasure
   by_cases hzero : (sample.2 t).1 = 0 <;>
     simp [twoArmActionGap, hzero]
 
+/-- Fewer than `m` optimal-arm pulls at `horizon` force at least the uniform
+`Delta * (horizon - m)` sampled-pseudo-regret charge.  This is the
+finite-horizon consumer for a below-count event; it does not provide any
+positive-mass lower bound for that event.  The measure need only be finite;
+probability and expectation terminology is reserved for probability-measure
+wrappers such as the fixed-IID consumer below. -/
+theorem twoArmOptimalPullCountBelowEvent_charge_mul_probability_le_integral
+    {Env : Type v} [MeasurableSpace Env]
+    (mu : Measure (Env × ((k : Nat) → Fin 2 × Real)))
+    [IsFiniteMeasure mu]
+    (Delta : Real) (hDelta : 0 ≤ Delta) (m horizon : Nat) :
+    Delta * ((horizon - m : Nat) : Real) *
+        mu.real
+          (twoArmOptimalPullCountBelowEvent
+            (Env := Env) m horizon) ≤
+      integral mu
+        (twoArmSampledPseudoRegret (Env := Env) Delta horizon) := by
+  let event := twoArmOptimalPullCountBelowEvent (Env := Env) m horizon
+  let charge : Real := Delta * ((horizon - m : Nat) : Real)
+  have hevent : MeasurableSet event :=
+    measurableSet_twoArmOptimalPullCountBelowEvent
+      (Env := Env) m horizon
+  have hregret : Integrable
+      (twoArmSampledPseudoRegret (Env := Env) Delta horizon) mu :=
+    integrable_twoArmSampledPseudoRegret_of_finiteMeasure mu Delta horizon
+  have hindicator : Integrable
+      (event.indicator (fun _sample => charge)) mu :=
+    (integrable_const charge).indicator hevent
+  have hpointwise : ∀ sample : Env × ((k : Nat) → Fin 2 × Real),
+      event.indicator (fun _sample => charge) sample ≤
+        twoArmSampledPseudoRegret Delta horizon sample := by
+    intro sample
+    by_cases hsample : sample ∈ event
+    · rw [Set.indicator_of_mem hsample]
+      have hcount_le : twoArmOptimalPullCount horizon sample ≤ m :=
+        Nat.le_of_lt hsample
+      have hsub : horizon - m ≤
+          horizon - twoArmOptimalPullCount horizon sample :=
+        Nat.sub_le_sub_left hcount_le horizon
+      calc
+        charge ≤ Delta *
+            ((horizon - twoArmOptimalPullCount horizon sample : Nat) : Real) := by
+          dsimp [charge]
+          gcongr
+        _ = twoArmSampledPseudoRegret Delta horizon sample :=
+          (twoArmSampledPseudoRegret_eq_gap_mul_horizon_sub_of_optimalPullCount_eq
+            Delta (twoArmOptimalPullCount horizon sample) horizon sample rfl).symm
+    · simp only [Set.indicator, if_neg hsample]
+      exact twoArmSampledPseudoRegret_nonneg Delta hDelta horizon sample
+  have hintegral :
+      integral mu (event.indicator (fun _sample => charge)) ≤
+        integral mu
+          (twoArmSampledPseudoRegret (Env := Env) Delta horizon) :=
+    integral_mono hindicator hregret hpointwise
+  have hindicatorIntegral :
+      integral mu (event.indicator (fun _sample => charge)) =
+        charge * mu.real event := by
+    rw [integral_indicator hevent]
+    rw [integral_const]
+    simp [Measure.real, mul_comm]
+  rw [hindicatorIntegral] at hintegral
+  simpa [event, charge, mul_assoc] using hintegral
+
 /--
 Expectation-level deterministic Step-1 consumer.  It lower-bounds expected
 sampled regret by the exact starvation charge times the probability of the

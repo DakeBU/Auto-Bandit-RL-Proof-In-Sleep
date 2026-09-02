@@ -266,7 +266,7 @@ SGB_HISTORICAL_DECLARATION_COUNT = (
     + SGB_THEOREM_FOUR_CONTRACT_AUDIT_DECLARATION_COUNT
 )
 SGB_COROLLARY_ONE_DECLARATION_COUNT = 23
-SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT = 24
+SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT = 25
 SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT = 26
 SGB_THEOREM_TWO_LATENT_REWARD_DECLARATION_COUNT = 7
 SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT = 8
@@ -326,9 +326,12 @@ SGB_THEOREM_TWO_PHASE_DICHOTOMY_INDEXED_DECLARATIONS = frozenset({
     "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_phase_add_missing",
     "BanditRLProof.StochasticGradientBandit.twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing",
 })
-SGB_THEOREM_TWO_MISSING_PULL_TERMINAL_COUNT_SOURCE_DECLARATION_COUNT = 1
+SGB_THEOREM_TWO_MISSING_PULL_TERMINAL_COUNT_SOURCE_DECLARATION_COUNT = 4
 SGB_THEOREM_TWO_MISSING_PULL_TERMINAL_COUNT_INDEXED_DECLARATIONS = frozenset({
     "BanditRLProof.StochasticGradientBandit.twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow",
+    "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_map_visible_eq_generated",
+    "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDMissingPullLatentPhase_probability_le_countBelow",
+    "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDMissingPullLatentPhase_charge_mul_probability_le_integral",
 })
 SGB_TOTAL_DECLARATION_COUNT = (
     SGB_HISTORICAL_DECLARATION_COUNT
@@ -2356,9 +2359,9 @@ def validate_sgb_count(records, index):
     ):
         raise ValueError(
             "stochastic-gradient-bandit audit must remain partial with exactly "
-            "360 declarations: historical 223 = frozen 215-declaration "
+            "361 declarations: historical 223 = frozen 215-declaration "
             "Theorem-1 stack + 8 Theorem-4 contract-audit leaves, followed by "
-            "23 Corollary-1 companion declarations + 24 deterministic "
+            "23 Corollary-1 companion declarations + 25 deterministic "
             "Theorem-2 starvation/terminal-count declarations + 26 chronological "
             "nth-pull declarations + 7 latent fixed-arm product/readout "
             "declarations + 8 deferred-decisions prefix-factorization "
@@ -2774,9 +2777,13 @@ def validate_theorem_audit_comparison(records, index, comparison=None,
                 not in row.get("scope_boundary", "")
                 or "ten more declarations split its pure latent probability"
                 not in row.get("scope_boundary", "")
-                or "one declaration proves that the missing-pull branch lies inside"
+                or "four declarations prove that the missing-pull branch lies inside"
                 not in row.get("scope_boundary", "")
                 or "neither supply a product law nor make totalized or occurrence-conditioned rewards IID"
+                not in row.get("scope_boundary", "")
+                or "transport the missing-pull probability to the generated terminal-count-below event"
+                not in row.get("scope_boundary", "")
+                or "finite-horizon expected sampled pseudo-regret consumer"
                 not in row.get("scope_boundary", "")
                 or "terminal-count-below event is not yet connected to a fixed-cutoff starvation trigger"
                 not in row.get("scope_boundary", "")
@@ -2942,10 +2949,10 @@ def build_claim_ledger(proof_report):
                 "status": "partial",
                 "source_record_ids": [SGB_AUDIT_ID, SGB_FOLLOW_ON_ID],
                 "boundary": (
-                    "360 declarations preserve the frozen counted audit slice through deterministic-time one-step selected-reward freshness, terminal-count events, and nth-pull-to-count bridges. "
-                    "A separate ten-declaration native-law module proves the complete visible/native trajectory-law identity. In the selected-block module, eight declarations transport every finite pull-time/reward block to an exact missing-pull-aware masked latent law on both native and source-shaped generated trajectories, fourteen declarations transport the exact finite Appendix-C S0/S1 event while retaining the adaptive all-pulls-present intersection, ten declarations split the pure latent phase probability exactly into the generated all-present event plus an explicit missing-pull event, and one declaration maps the missing-pull branch into a measurable finite-horizon terminal-count-below event. "
+                    "361 declarations preserve the frozen counted audit slice through deterministic-time one-step selected-reward freshness, terminal-count events, nth-pull-to-count bridges, and the generic nonnegative-gap terminal-count-below regret consumer. "
+                    "A separate ten-declaration native-law module proves the complete visible/native trajectory-law identity. In the selected-block module, eight declarations transport every finite pull-time/reward block to an exact missing-pull-aware masked latent law on both native and source-shaped generated trajectories, fourteen declarations transport the exact finite Appendix-C S0/S1 event while retaining the adaptive all-pulls-present intersection, ten declarations split the pure latent phase probability exactly into the generated all-present event plus an explicit missing-pull event, and four declarations map the missing-pull branch into a measurable finite-horizon terminal-count-below event, identify the exact latent-visible/generated-source marginal, transport the missing-pull probability to that generated event, and consume the resulting nonnegative-gap charge into expected sampled pseudo-regret. "
                     "The mask and occurrence-intersected event do not make totalized or occurrence-conditioned stopped rewards IID, and neither is a stopped or pull-ordered selected IID theorem. "
-                    "The terminal-count-below event is not yet connected to a fixed-cutoff starvation trigger; the stopped-prefix future-cylinder, conditional no-return probability >= 1/2, Rademacher/binomial ballot probability lower bound, asymptotic terminal, and the frozen K = 2 Theorem-2 endpoint remain blocked. "
+                    "The missing-pull probability is transported to the generated terminal-count-below event and a finite-horizon expected sampled pseudo-regret consumer, but the terminal-count-below event is not yet connected to a fixed-cutoff starvation trigger and no positive missing-pull probability is proved; the stopped-prefix future-cylinder, conditional no-return probability >= 1/2, Rademacher/binomial ballot probability lower bound, asymptotic terminal, and the frozen K = 2 Theorem-2 endpoint remain blocked. "
                     "Theorem 4 also remains open. Dirac refers only to the Unit environment prior, not to the arm reward laws."
                 ),
             },

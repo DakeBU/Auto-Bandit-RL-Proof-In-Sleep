@@ -269,6 +269,66 @@ theorem twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary
       rw [henvironment]
     _ = Thompson.nativeStationaryTrajectoryMeasure algorithm nu := rfl
 
+/-- The latent coupling and the source-generated fixed-IID trajectory have
+exactly the same visible `Unit`-environment marginal.  This is a full
+trajectory-law transport; it does not identify selected rewards as IID or
+condition on occurrence of any pull. -/
+theorem twoArmFixedIIDLatentTrajectoryMeasure_map_visible_eq_generated
+    (armLaw : Fin 2 -> Measure Real)
+    (hprob : forall arm, IsProbabilityMeasure (armLaw arm))
+    (eta : Real) :
+    Measure.map
+        (fun sample : UCB.ArmRewardStream 2 ×
+            ((t : Nat) -> Fin 2 × Real) => ((), sample.2))
+        (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) =
+      twoArmTrajectoryMeasure (Measure.dirac ()) eta
+        (twoArmFixedIIDEnvironment armLaw hprob) := by
+  letI : IsMarkovKernel (UCB.finiteArmRealRewardKernel armLaw) :=
+    UCB.finiteArmRealRewardKernel_isMarkov armLaw hprob
+  let algorithm := historyAlgorithm (fun _ : Fin 2 => 0) eta
+  let nu := UCB.finiteArmRealRewardKernel armLaw
+  let coupling := twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta
+  let sourceMeasure := twoArmTrajectoryMeasure (Measure.dirac ()) eta
+    (twoArmFixedIIDEnvironment armLaw hprob)
+  let attachUnit := fun trajectory : (t : Nat) -> Fin 2 × Real =>
+    ((), trajectory)
+  let visible := fun sample : UCB.ArmRewardStream 2 ×
+      ((t : Nat) -> Fin 2 × Real) => attachUnit sample.2
+  have hattach : Measurable attachUnit :=
+    measurable_const.prodMk measurable_id
+  have hcoupling : coupling.map Prod.snd =
+      Thompson.nativeStationaryTrajectoryMeasure algorithm nu := by
+    simpa [coupling, algorithm, nu,
+      twoArmFixedIIDLatentTrajectoryMeasure] using
+      (Thompson.latentArmStreamVisibleTrajectoryMeasure_eq_native
+        algorithm () nu)
+  have hsource : sourceMeasure.map Prod.snd =
+      Thompson.nativeStationaryTrajectoryMeasure algorithm nu := by
+    simpa [sourceMeasure, algorithm, nu] using
+      (twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary
+        armLaw hprob eta)
+  calc
+    Measure.map visible coupling =
+        Measure.map attachUnit (coupling.map Prod.snd) := by
+      rw [Measure.map_map hattach measurable_snd]
+      rfl
+    _ = Measure.map attachUnit
+          (Thompson.nativeStationaryTrajectoryMeasure algorithm nu) := by
+      rw [hcoupling]
+    _ = Measure.map attachUnit (sourceMeasure.map Prod.snd) := by
+      rw [hsource]
+    _ = Measure.map (attachUnit ∘ Prod.snd) sourceMeasure := by
+      rw [Measure.map_map hattach measurable_snd]
+    _ = sourceMeasure := by
+      have hidentity : attachUnit ∘ Prod.snd =
+          (id : Unit × ((t : Nat) -> Fin 2 × Real) ->
+            Unit × ((t : Nat) -> Fin 2 × Real)) := by
+        funext sample
+        rcases sample with ⟨envUnit, trajectory⟩
+        cases envUnit
+        rfl
+      rw [hidentity, Measure.map_id]
+
 /-- Source-facing finite selected-block transport on the actual generated
 two-arm trajectory measure.  Missing pulls remain visible in the `WithTop`
 time coordinates; the theorem does not promote the masked block to IID. -/
@@ -669,6 +729,106 @@ theorem twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow
   exact
     twoArmOptimalPullCount_lt_of_fin_nthOptimalPullTime_eq_top
       (n0 + n1) horizon i ((), sample.2) htop
+
+/-- The latent missing-pull phase mass is bounded by the probability of the
+visible generated trajectory having fewer than the requested block of
+optimal-arm pulls.  The inequality transports existing mass only; it does
+not prove that the missing branch has positive probability. -/
+theorem twoArmFixedIIDMissingPullLatentPhase_probability_le_countBelow
+    (armLaw : Fin 2 -> Measure Real)
+    (hprob : forall arm, IsProbabilityMeasure (armLaw arm))
+    (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) (horizon : Nat) :
+    (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta).real
+        (twoArmAppendixCMissingPullLatentPhaseEvent
+          n0 n1 phaseOneTotal) ≤
+      (twoArmTrajectoryMeasure (Measure.dirac ()) eta
+        (twoArmFixedIIDEnvironment armLaw hprob)).real
+        (twoArmOptimalPullCountBelowEvent
+          (Env := Unit) (n0 + n1) horizon) := by
+  let coupling := twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta
+  let sourceMeasure := twoArmTrajectoryMeasure (Measure.dirac ()) eta
+    (twoArmFixedIIDEnvironment armLaw hprob)
+  let visible := fun sample : UCB.ArmRewardStream 2 ×
+      ((t : Nat) -> Fin 2 × Real) => ((), sample.2)
+  let event := twoArmOptimalPullCountBelowEvent
+    (Env := Unit) (n0 + n1) horizon
+  have hvisible : Measurable visible :=
+    measurable_const.prodMk measurable_snd
+  have hevent : MeasurableSet event :=
+    measurableSet_twoArmOptimalPullCountBelowEvent
+      (Env := Unit) (n0 + n1) horizon
+  have hsubset :
+      twoArmAppendixCMissingPullLatentPhaseEvent
+          n0 n1 phaseOneTotal ⊆ visible ⁻¹' event := by
+    simpa [visible, event] using
+      (twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow
+        n0 n1 phaseOneTotal horizon)
+  have hmap : Measure.map visible coupling = sourceMeasure := by
+    simpa [visible, coupling, sourceMeasure] using
+      (twoArmFixedIIDLatentTrajectoryMeasure_map_visible_eq_generated
+        armLaw hprob eta)
+  change
+    (coupling
+      (twoArmAppendixCMissingPullLatentPhaseEvent
+        n0 n1 phaseOneTotal)).toReal ≤
+      (sourceMeasure event).toReal
+  apply ENNReal.toReal_mono (measure_ne_top sourceMeasure event)
+  calc
+    coupling
+        (twoArmAppendixCMissingPullLatentPhaseEvent
+          n0 n1 phaseOneTotal) ≤
+        coupling (visible ⁻¹' event) := measure_mono hsubset
+    _ = Measure.map visible coupling event :=
+      (Measure.map_apply hvisible hevent).symm
+    _ = sourceMeasure event := by rw [hmap]
+
+/-- Finite-horizon expected-regret consumer for the latent missing-pull
+branch.  Nonnegative gap times the horizon-minus-block-size charge times the
+existing missing-branch probability is bounded by expected sampled
+pseudo-regret on the actual generated trajectory.  This theorem supplies no
+lower bound on that probability and no source trigger, selected-IID,
+future/no-return, ballot, asymptotic, or Theorem-2 conclusion. -/
+theorem twoArmFixedIIDMissingPullLatentPhase_charge_mul_probability_le_integral
+    (armLaw : Fin 2 -> Measure Real)
+    (hprob : forall arm, IsProbabilityMeasure (armLaw arm))
+    (eta Delta : Real) (hDelta : 0 ≤ Delta)
+    (n0 n1 : Nat) (phaseOneTotal : Real) (horizon : Nat) :
+    Delta * ((horizon - (n0 + n1) : Nat) : Real) *
+        (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta).real
+          (twoArmAppendixCMissingPullLatentPhaseEvent
+            n0 n1 phaseOneTotal) ≤
+      integral
+        (twoArmTrajectoryMeasure (Measure.dirac ()) eta
+          (twoArmFixedIIDEnvironment armLaw hprob))
+        (twoArmSampledPseudoRegret
+          (Env := Unit) Delta horizon) := by
+  let charge : Real :=
+    Delta * ((horizon - (n0 + n1) : Nat) : Real)
+  have hcharge : 0 ≤ charge := by
+    exact mul_nonneg hDelta (Nat.cast_nonneg _)
+  have hprobability :=
+    twoArmFixedIIDMissingPullLatentPhase_probability_le_countBelow
+      armLaw hprob eta n0 n1 phaseOneTotal horizon
+  calc
+    charge *
+        (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta).real
+          (twoArmAppendixCMissingPullLatentPhaseEvent
+            n0 n1 phaseOneTotal) ≤
+        charge *
+          (twoArmTrajectoryMeasure (Measure.dirac ()) eta
+            (twoArmFixedIIDEnvironment armLaw hprob)).real
+            (twoArmOptimalPullCountBelowEvent
+              (Env := Unit) (n0 + n1) horizon) :=
+      mul_le_mul_of_nonneg_left hprobability hcharge
+    _ ≤ integral
+          (twoArmTrajectoryMeasure (Measure.dirac ()) eta
+            (twoArmFixedIIDEnvironment armLaw hprob))
+          (twoArmSampledPseudoRegret
+            (Env := Unit) Delta horizon) :=
+      twoArmOptimalPullCountBelowEvent_charge_mul_probability_le_integral
+        (twoArmTrajectoryMeasure (Measure.dirac ()) eta
+          (twoArmFixedIIDEnvironment armLaw hprob))
+        Delta hDelta (n0 + n1) horizon
 
 /-- The unconditional latent reward event is exactly the union of the
 all-present phase and the missing-pull phase. -/

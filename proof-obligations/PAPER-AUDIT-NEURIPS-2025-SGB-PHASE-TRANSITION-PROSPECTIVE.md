@@ -20,9 +20,10 @@ Task id: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 | `SGB-T2-PHASE-EVENT-TRANSPORT` | exact finite Appendix-C `S0/S1` reward event with an explicit all-pulls-present boundary | compiled | fourteen new declarations define the unlucky `-1` block, exact terminal recovery sum, all nonpositive recovery prefixes, measurable occurrence/observed/latent events, and `twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent`; the latent event retains its intersection with adaptive pull occurrence, so no product/IID claim follows |
 | `SGB-T2-PHASE-DICHOTOMY` | exact probability split between the all-present observed phase and an explicit missing-pull phase | compiled | ten declarations prove a measurable disjoint union and `twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing`; membership exposes an actual `WithTop.top` coordinate |
 | `SGB-T2-MISSING-PULL-TERMINAL-COUNT` | missing requested pull implies every finite-horizon optimal-arm count is below the requested block size | compiled | `twoArmOptimalPullCount_lt_of_fin_nthOptimalPullTime_eq_top` and `twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow`; measurable terminal-count fibers carry exact sampled pseudo-regret, but no fixed-cutoff trigger or probability lower bound follows |
+| `SGB-T2-MISSING-PULL-REGRET-CONSUMER` | transport latent missing-pull mass to the generated low-count event and consume it in finite-horizon expected regret | compiled | `twoArmFixedIIDLatentTrajectoryMeasure_map_visible_eq_generated`, `twoArmFixedIIDMissingPullLatentPhase_probability_le_countBelow`, and `twoArmFixedIIDMissingPullLatentPhase_charge_mul_probability_le_integral`; the result is `Delta * (T - (n0+n1)) * P(missing) <= E[regret]` for nonnegative `Delta`, with no positive missing-mass producer |
 | `SGB-T2-SELECTED-IID` | target-faithful transfer of the source pull-ordered reward blocks to the native phase event | partial | latent product/readout, finite-prefix mixture, action/readout, branch locality, one-step freshness, full native-law equality, the masked block law, exact phase-event transport, and the probability dichotomy compile; no occurrence-conditioned IID theorem is claimed, and the remaining route proceeds branchwise |
 | `SGB-T2-FUTURE-CYLINDER` | conditional probability of no later optimal-arm pull after the random nth-pull prefix | blocked | one-step action kernels at fixed histories do not by themselves supply a stopped-prefix future law |
-| `SGB-T2-STARVATION` | Appendix-C Step-1 event-to-regret lower bound | partial | measurable fixed-cutoff and terminal-count events plus their exact-regret consumers compile; the terminal-count-below event still needs a fixed-cutoff trigger/consumer bridge, and conditional probability `>= 1/2` remains unproved |
+| `SGB-T2-STARVATION` | Appendix-C Step-1 event-to-regret lower bound | partial | measurable fixed-cutoff, exact-count, below-count, and latent-missing events now have compiled finite-horizon expected-regret consumers; the generated all-present phase still needs the source recurrence-to-trigger implication, and conditional no-return probability `>= 1/2` remains unproved |
 | `SGB-T2-PHASE-PROBABILITY` | `S0/S1` probability via Rademacher/binomial/ballot route | partial | the exact measurable path event and exact missing/all-present probability split compile; the rounded Rademacher terminal count, pure product-law probability, and ballot lower bound remain open |
 | `SGB-T2-POLYLOG-OMEGA` | frozen K=2 Theorem-2 terminal | blocked | depends on all preceding producers |
 | `SGB-PHASE-CANARY` | exact imports, checks, and representative axiom prints | compiled | companion, deterministic-consumer, terminal-count, nth-pull, latent-reward, finite-prefix-mixture, safe-fiber measure bridge, count-cap induction, branch-locality, freshness, native-law, selected-block, phase-event, and dichotomy canaries use baseline axioms only |
@@ -64,6 +65,40 @@ Task id: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 - Nonclaims: no trigger inequality, probability lower bound, selected IID,
   future/no-return law, ballot bound, asymptotic assembly, or Theorem 2 follows
   from this leaf.
+
+## Round-33 route record: missing-pull expected-regret consumer
+
+- Closed leaf: `SGB-T2-MISSING-PULL-REGRET-CONSUMER`.
+- Exact target: under a nonnegative gap, transport the compiled latent
+  missing-pull subset through the complete visible-trajectory marginal and
+  prove only
+  `Delta * (T - (n0+n1)) * P_latent(missing) <= E_generated[regret]`.
+- Reused local APIs:
+  `twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow`,
+  `twoArmSampledPseudoRegret_eq_gap_mul_horizon_sub_of_optimalPullCount_eq`,
+  `Thompson.latentArmStreamVisibleTrajectoryMeasure_eq_native`, and
+  `twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary`.
+- Compiled interfaces:
+  `twoArmOptimalPullCountBelowEvent_charge_mul_probability_le_integral`,
+  `twoArmFixedIIDLatentTrajectoryMeasure_map_visible_eq_generated`,
+  `twoArmFixedIIDMissingPullLatentPhase_probability_le_countBelow`, and
+  `twoArmFixedIIDMissingPullLatentPhase_charge_mul_probability_le_integral`.
+- Proof route: compare the uniform below-count charge pointwise with exact
+  sampled pseudo-regret, integrate its indicator, identify both latent and
+  source visible marginals with the native fixed-IID trajectory law, and use
+  measure monotonicity on the compiled missing-event subset.
+- Classification: the generic below-count theorem is a project-local
+  finite-measure mass/integral consumer; only the fixed-IID probability-measure
+  wrapper is a probability/expectation consumer.  The Mathlib measure/integral
+  card supplied route evidence; no new Mathlib candidate or external dependency
+  was introduced.
+- Exact next leaf: `SGB-T2-APPENDIX-C-PHASE-TRIGGER`, the deterministic source
+  recurrence implication from a generated all-present `S0/S1` phase to a
+  finite last requested pull time whose next optimal-arm probability is at
+  most `1/(2*T)`, under the frozen numeric assumptions.
+- Nonclaims: the missing branch may still have zero probability; no source
+  trigger, stopped-prefix future/no-return probability, selected IID,
+  Rademacher/ballot lower bound, asymptotic assembly, or Theorem 2 is proved.
 
 ## Failure policy
 

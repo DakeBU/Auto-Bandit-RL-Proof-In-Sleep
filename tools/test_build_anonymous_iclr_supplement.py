@@ -673,7 +673,7 @@ class AnonymousSupplementTests(unittest.TestCase):
             [BUILDER.SGB_AUDIT_ID, BUILDER.SGB_FOLLOW_ON_ID],
         )
         self.assertEqual(
-            ledger["stochastic_gradient_bandit"]["declaration_count"], 360
+            ledger["stochastic_gradient_bandit"]["declaration_count"], 361
         )
         self.assertEqual(
             ledger["stochastic_gradient_bandit"][
@@ -703,7 +703,7 @@ class AnonymousSupplementTests(unittest.TestCase):
             ledger["stochastic_gradient_bandit"][
                 "theorem_two_deterministic_starvation_consumer_declaration_count"
             ],
-            24,
+            25,
         )
         self.assertEqual(
             ledger["stochastic_gradient_bandit"][
@@ -840,7 +840,10 @@ class AnonymousSupplementTests(unittest.TestCase):
             "ten declarations split the pure latent phase probability",
             "missing-pull-aware masked latent law",
             "stopped or pull-ordered selected IID",
-            "one declaration maps the missing-pull branch",
+            "four declarations map the missing-pull branch",
+            "exact latent-visible/generated-source marginal",
+            "finite-horizon expected sampled pseudo-regret consumer",
+            "no positive missing-pull probability is proved",
             "terminal-count-below event is not yet connected to a fixed-cutoff starvation trigger",
             "stopped-prefix future-cylinder",
             "conditional no-return probability >= 1/2",
@@ -896,7 +899,7 @@ class AnonymousSupplementTests(unittest.TestCase):
             ledger["stochastic_gradient_bandit"][
                 "separate_compiled_missing_pull_terminal_count_declaration_count"
             ],
-            1,
+            4,
         )
         self.assertTrue(
             ledger["stochastic_gradient_bandit"][
@@ -1009,7 +1012,7 @@ class AnonymousSupplementTests(unittest.TestCase):
         succinct = rows["succinct-lower-bound-source-frozen-audit"]
         self.assertEqual(succinct["compiled_declaration_count"], 54)
         sgb = rows["stochastic-gradient-bandit-source-frozen-audit"]
-        self.assertEqual(sgb["compiled_declaration_count"], 360)
+        self.assertEqual(sgb["compiled_declaration_count"], 361)
         self.assertEqual(
             sgb["evidence_record_ids"],
             [BUILDER.SGB_AUDIT_ID, BUILDER.SGB_FOLLOW_ON_ID],
@@ -1031,7 +1034,7 @@ class AnonymousSupplementTests(unittest.TestCase):
                 "source_theorem_one_terminal": 32,
                 "source_theorem_four_contract_audit": 8,
                 "source_corollary_one_companion": 23,
-                "source_theorem_two_deterministic_starvation_consumer": 24,
+                "source_theorem_two_deterministic_starvation_consumer": 25,
                 "source_theorem_two_nth_pull_bridge": 26,
                 "source_theorem_two_latent_reward_product_readout": 7,
                 "source_theorem_two_deferred_decisions_prefix_factorization": 8,
@@ -1075,7 +1078,7 @@ class AnonymousSupplementTests(unittest.TestCase):
             sgb[
                 "separate_compiled_missing_pull_terminal_count_declaration_count"
             ],
-            1,
+            4,
         )
         self.assertTrue(
             sgb["separate_module_theorem_two_selected_block_transport_compiled"]
@@ -1287,7 +1290,7 @@ class AnonymousSupplementTests(unittest.TestCase):
                 row["full_name"] = replacement
                 with self.assertRaisesRegex(
                     ValueError,
-                    "360 declarations: historical 223",
+                    "361 declarations: historical 223",
                 ):
                     BUILDER.validate_sgb_count(records, index)
 

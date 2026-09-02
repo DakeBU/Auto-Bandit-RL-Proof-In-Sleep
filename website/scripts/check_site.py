@@ -1641,7 +1641,7 @@ def main() -> int:
         "physical PDF p. 5",
         "Theorem 2 (two-arm SGB phase transition)",
         "physical PDF p. 6; Appendix C pp. 31–40",
-        "360 = 223 + 23 + 24 + 26 + 7 + 8 + 13 + 28 + 8",
+        "361 = 223 + 23 + 25 + 26 + 7 + 8 + 13 + 28 + 8",
         "LatentArmStreamVisiblePrefixNextActionBranchLocality",
         sgb_action_declaration,
         sgb_branch_declaration,
@@ -1649,7 +1649,7 @@ def main() -> int:
         "identifies every inclusive finite prefix",
         "proves equality of the complete visible/native trajectory measures",
         "twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow",
-        "terminal-count-below event still needs an expected-regret consumer",
+        "twoArmFixedIIDMissingPullLatentPhase_charge_mul_probability_le_integral",
         "Pull-ordered or stopped selected-reward IID",
         (
             "stopped-prefix future-cylinder law needed to prove conditional "
@@ -1659,6 +1659,10 @@ def main() -> int:
     ):
         if required not in frontier_source:
             errors.append(f"Frontier reading guide is missing source or status metadata: {required}")
+    if "(Env := Unit) Delta horizon)" not in frontier_source:
+        errors.append(
+            "Frontier exact Lean statement is truncated at the named Env argument"
+        )
 
     ide_data_path = output / "ide-data.json"
     ide_items = json.loads(ide_data_path.read_text(encoding="utf-8")).get("items", []) if ide_data_path.exists() else []

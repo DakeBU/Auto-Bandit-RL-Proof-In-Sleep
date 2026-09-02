@@ -1,6 +1,6 @@
 # Proof Blueprint: PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE
 
-Generated: `2026-09-01T22:10:32+00:00`
+Generated: `2026-09-02T06:31:32+00:00`
 
 ## Source Task
 
@@ -144,19 +144,9 @@ evidence states:
    pull is at most `1/(2*T)`, the conditional probability of no further
    optimal-arm pull over the remaining horizon is at least `1/2`, yielding
 
-<!-- 3571 characters omitted from the middle of this snapshot. -->
+<!-- 4337 characters omitted from the middle of this snapshot. -->
 
-selected action, and makes the stopped reward and post-pull success
-  probability measurable.  It assumes no selected-reward IID law.
-- A separate seven-declaration latent-reward layer now proves the fixed-arm
-  finite product law, lifts it through the coupling's exact stream marginal,
-  specializes it to the optimal arm, and proves that every finite nth pull
-  reads its corresponding latent coordinate almost surely.  It also compiles
-  two normalization leaves for the future native-process adapter.
-- A separate eight-declaration deferred-decisions layer now proves the exact
-  finite stream-box product law, that the latent generated trajectory prefix
-  depends only on that stream box, a Markov visible-prefix kernel, and the
-  exact joint finite stream-box/visible-prefix mixture law.  This compiles a
+exact joint finite stream-box/visible-prefix mixture law.  This compiles a
   finite-prefix factorization; it does not identify the visible marginal of
   that mixture with the native fixed-IID SGB prefix law.
 - A separate 13-declaration interface/scaffold layer proves next-action
@@ -179,7 +169,7 @@ selected action, and makes the stopped reward and post-pull success
   This is deterministic-time conditional freshness given the visible history
   and next action; it is not a pull-ordered selected-IID theorem.
 - A separate ten-declaration native-law module is compiled and indexed outside
-  the counted 352-declaration audit ledger.  Its finite-prefix induction ends
+  the counted 361-declaration audit ledger.  Its finite-prefix induction ends
   at `latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native`; the
   new `latentArmStreamVisibleTrajectoryMeasure_eq_native` then selects every
   arbitrary finite coordinate set inside an inclusive prefix and applies
@@ -216,7 +206,19 @@ selected action, and makes the stopped reward and post-pull success
   the finite union of exact terminal-count fibers; each fiber carries the
   existing exact sampled-pseudo-regret charge.  This is a terminal-count
   interface, not the source trigger or a positive probability result.
-- A pull-ordered selected-IID theorem, the fixed-cutoff trigger/consumer bridge,
+- The missing-pull expected-regret consumer now compiles.  The latent coupling
+  and the source-generated fixed-IID law have the same complete visible
+  `Unit`-trajectory marginal; consequently the latent missing branch is
+  bounded by the generated below-count event, and
+  `twoArmFixedIIDMissingPullLatentPhase_charge_mul_probability_le_integral`
+  proves `Delta * (T - (n0+n1)) * P(missing) <= E[regret]` for nonnegative
+  `Delta`.  It transports existing missing mass and does not prove that mass
+  positive.
+- The next exact leaf is the deterministic Appendix-C generated-phase trigger:
+  derive the source `1/(2*T)` next-action threshold at the finite last requested
+  optimal-arm pull from the all-present `S0/S1` recurrence and frozen numeric
+  assumptions.
+- A pull-ordered selected-IID theorem, the generated-phase trigger producer,
   conditional no-return probability
   `>= 1/2`, the Rademacher/ballot phase producer, asymptotic
   assembly, and the frozen Theorem-2 terminal remain uncompiled.  The central
@@ -254,7 +256,7 @@ milestones only; their existence does not promote the frozen terminal.
 
 Task: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 
-Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull, latent-product/readout, deferred-decisions finite-prefix factorization, action/readout interface, count-capped branch locality, one-step selected-reward freshness, native-prefix identification, full native visible-law equality, missing-pull-aware selected-block transport, exact phase-event transport, and deterministic-starvation milestones`
+Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull, latent-product/readout, deferred-decisions finite-prefix factorization, action/readout interface, count-capped branch locality, one-step selected-reward freshness, native-prefix identification, full native visible-law equality, missing-pull-aware selected-block transport, exact phase-event transport, and deterministic missing-pull expected-regret consumption`
 
 ## Source-to-Lean fence
 
@@ -369,32 +371,9 @@ that may be assumed by the terminal.
   `KernelTrajectoryPrefix.trajMeasure_map_frestrictLe_congr`,
   `Thompson.canonicalMeasurableEnvironmentTrajectoryKernel_apply_eq_canonical`,
 
-<!-- 9298 characters omitted from the middle of this snapshot. -->
+<!-- 10689 characters omitted from the middle of this snapshot. -->
 
-`latentArmStreamVisibleTrajectoryMeasure_eq_native`.
-- Compiled observable: `twoArmOptimalPullTimeRewardBlock m` records, for every
-  `i : Fin m`, both the `WithTop Nat` time of the `i`th optimal-arm pull and
-  the stopped reward readout.
-- Compiled comparison law: `twoArmLatentMaskedOptimalPullBlock m` replaces the
-  reward by latent arm-`0` coordinate `i` only when the pull time is finite; at
-  `top` it retains the stopped-value fallback.  The source and native generated
-  block laws equal the pushforward of this masked coupling.
-- Endpoint:
-  `twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked`.
-  Its statement fence preserves the probability-law and finite-block
-  assumptions, and its canary reports only the baseline axioms `propext`,
-  `Classical.choice`, and `Quot.sound`.
-- Boundary: the separately compiled unmasked latent prefix has a product law,
-  but this masked selected block is not claimed product-distributed or IID.
-  The next producer must formulate the exact Appendix-C phase event together
-  with the all-pulls-present occurrence boundary; it may not condition away
-  dependence created by adaptive selection.
-
-## Round-24 retrieval packet: exact phase event and occurrence boundary
-
-- Source window: Appendix C, physical PDF pp. 31--34.  `S0` is the first
-  `n0` optimal-arm rewards all equal to `-1`; `S1` contains only `{-1,1}`
-  rewards, has the source-selected exact terminal sum, and keeps the number of
+rewards, has the source-selected exact terminal sum, and keeps the number of
   `+1` rewards no larger than the number of `-1` rewards at every recovery
   prefix, equivalently every recovery prefix sum is nonpositive.
 - Fourteen new public declarations extend the selected-block module from eight
@@ -469,6 +448,29 @@ that may be assumed by the terminal.
   bound on either branch probability, a ballot estimate, asymptotic assembly,
   or Theorem 2.
 
+## Round-33 conversion window: latent missing mass to expected regret
+
+- Frozen statement: for nonnegative `Delta`, latent missing-pull phase mass is
+  transported through the exact visible `Unit`-trajectory marginal and charged
+  only by `Delta * (horizon - (n0+n1))` in the generated expected sampled
+  pseudo-regret.
+- Source semantics retained: the left side uses the actual latent missing
+  branch from the compiled dichotomy; the right side uses
+  `twoArmTrajectoryMeasure` and `twoArmSampledPseudoRegret`.  No surrogate
+  action schedule or occurrence-conditioned reward law is introduced.
+- Local route: the latent visible marginal and source `Prod.snd` marginal are
+  both the compiled native stationary trajectory law; the missing event is a
+  subset of the generated below-count event; an indicator integral consumes
+  its uniform finite-horizon charge.
+- Boundary: the theorem transports and consumes whatever missing probability
+  already exists.  It does not prove that probability positive, derive the
+  generated all-present phase's source trigger inequality, construct a stopped
+  future/no-return law, prove selected IID, establish a ballot lower bound, or
+  assemble Theorem 2.
+- Next window: `SGB-T2-APPENDIX-C-PHASE-TRIGGER`, restricted to the
+  deterministic recurrence implication from the generated all-present
+  `S0/S1` phase to the source `1/(2*T)` next-action threshold.
+
 ## Pivot rules
 
 - Do not replace the nth-pull law with an IID premise on the selected reward
@@ -481,7 +483,7 @@ that may be assumed by the terminal.
   unconditional branch-product law, one-step selected-reward freshness,
   native-prefix identification, full native visible-law equality,
   missing-pull-aware selected-block transport, exact phase-event transport, and
-  deterministic-starvation milestones do not compile the
+  deterministic missing-pull expected-regret consumers do not compile the
   frozen Theorem 2 terminal; that terminal remains `blocked`.
 
 
@@ -509,9 +511,10 @@ Task id: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 | `SGB-T2-PHASE-EVENT-TRANSPORT` | exact finite Appendix-C `S0/S1` reward event with an explicit all-pulls-present boundary | compiled | fourteen new declarations define the unlucky `-1` block, exact terminal recovery sum, all nonpositive recovery prefixes, measurable occurrence/observed/latent events, and `twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent`; the latent event retains its intersection with adaptive pull occurrence, so no product/IID claim follows |
 | `SGB-T2-PHASE-DICHOTOMY` | exact probability split between the all-present observed phase and an explicit missing-pull phase | compiled | ten declarations prove a measurable disjoint union and `twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing`; membership exposes an actual `WithTop.top` coordinate |
 | `SGB-T2-MISSING-PULL-TERMINAL-COUNT` | missing requested pull implies every finite-horizon optimal-arm count is below the requested block size | compiled | `twoArmOptimalPullCount_lt_of_fin_nthOptimalPullTime_eq_top` and `twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow`; measurable terminal-count fibers carry exact sampled pseudo-regret, but no fixed-cutoff trigger or probability lower bound follows |
+| `SGB-T2-MISSING-PULL-REGRET-CONSUMER` | transport latent missing-pull mass to the generated low-count event and consume it in finite-horizon expected regret | compiled | `twoArmFixedIIDLatentTrajectoryMeasure_map_visible_eq_generated`, `twoArmFixedIIDMissingPullLatentPhase_probability_le_countBelow`, and `twoArmFixedIIDMissingPullLatentPhase_charge_mul_probability_le_integral`; the result is `Delta * (T - (n0+n1)) * P(missing) <= E[regret]` for nonnegative `Delta`, with no positive missing-mass producer |
 | `SGB-T2-SELECTED-IID` | target-faithful transfer of the source pull-ordered reward blocks to the native phase event | partial | latent product/readout, finite-prefix mixture, action/readout, branch locality, one-step freshness, full native-law equality, the masked block law, exact phase-event transport, and the probability dichotomy compile; no occurrence-conditioned IID theorem is claimed, and the remaining route proceeds branchwise |
 | `SGB-T2-FUTURE-CYLINDER` | conditional probability of no later optimal-arm pull after the random nth-pull prefix | blocked | one-step action kernels at fixed histories do not by themselves supply a stopped-prefix future law |
-| `SGB-T2-STARVATION` | Appendix-C Step-1 event-to-regret lower bound | partial | measurable fixed-cutoff and terminal-count events plus their exact-regret consumers compile; the terminal-count-below event still needs a fixed-cutoff trigger/consumer bridge, and conditional probability `>= 1/2` remains unproved |
+| `SGB-T2-STARVATION` | Appendix-C Step-1 event-to-regret lower bound | partial | measurable fixed-cutoff, exact-count, below-count, and latent-missing events now have compiled finite-horizon expected-regret consumers; the generated all-present phase still needs the source recurrence-to-trigger implication, and conditional no-return probability `>= 1/2` remains unproved |
 | `SGB-T2-PHASE-PROBABILITY` | `S0/S1` probability via Rademacher/binomial/ballot route | partial | the exact measurable path event and exact missing/all-present probability split compile; the rounded Rademacher terminal count, pure product-law probability, and ballot lower bound remain open |
 | `SGB-T2-POLYLOG-OMEGA` | frozen K=2 Theorem-2 terminal | blocked | depends on all preceding producers |
 | `SGB-PHASE-CANARY` | exact imports, checks, and representative axiom prints | compiled | companion, deterministic-consumer, terminal-count, nth-pull, latent-reward, finite-prefix-mixture, safe-fiber measure bridge, count-cap induction, branch-locality, freshness, native-law, selected-block, phase-event, and dichotomy canaries use baseline axioms only |
@@ -553,6 +556,40 @@ Task id: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 - Nonclaims: no trigger inequality, probability lower bound, selected IID,
   future/no-return law, ballot bound, asymptotic assembly, or Theorem 2 follows
   from this leaf.
+
+## Round-33 route record: missing-pull expected-regret consumer
+
+- Closed leaf: `SGB-T2-MISSING-PULL-REGRET-CONSUMER`.
+- Exact target: under a nonnegative gap, transport the compiled latent
+  missing-pull subset through the complete visible-trajectory marginal and
+  prove only
+  `Delta * (T - (n0+n1)) * P_latent(missing) <= E_generated[regret]`.
+- Reused local APIs:
+  `twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow`,
+  `twoArmSampledPseudoRegret_eq_gap_mul_horizon_sub_of_optimalPullCount_eq`,
+  `Thompson.latentArmStreamVisibleTrajectoryMeasure_eq_native`, and
+  `twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary`.
+- Compiled interfaces:
+  `twoArmOptimalPullCountBelowEvent_charge_mul_probability_le_integral`,
+  `twoArmFixedIIDLatentTrajectoryMeasure_map_visible_eq_generated`,
+  `twoArmFixedIIDMissingPullLatentPhase_probability_le_countBelow`, and
+  `twoArmFixedIIDMissingPullLatentPhase_charge_mul_probability_le_integral`.
+- Proof route: compare the uniform below-count charge pointwise with exact
+  sampled pseudo-regret, integrate its indicator, identify both latent and
+  source visible marginals with the native fixed-IID trajectory law, and use
+  measure monotonicity on the compiled missing-event subset.
+- Classification: the generic below-count theorem is a project-local
+  finite-measure mass/integral consumer; only the fixed-IID probability-measure
+  wrapper is a probability/expectation consumer.  The Mathlib measure/integral
+  card supplied route evidence; no new Mathlib candidate or external dependency
+  was introduced.
+- Exact next leaf: `SGB-T2-APPENDIX-C-PHASE-TRIGGER`, the deterministic source
+  recurrence implication from a generated all-present `S0/S1` phase to a
+  finite last requested pull time whose next optimal-arm probability is at
+  most `1/(2*T)`, under the frozen numeric assumptions.
+- Nonclaims: the missing branch may still have zero probability; no source
+  trigger, stopped-prefix future/no-return probability, selected IID,
+  Rademacher/ballot lower bound, asymptotic assembly, or Theorem 2 is proved.
 
 ## Failure policy
 
@@ -34930,10 +34967,18 @@ These cards are planning inspiration only.  They do not certify any theorem.
   },
   {
     "kind": "theorem",
+    "name": "twoArmFixedIIDLatentTrajectoryMeasure_map_visible_eq_generated",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_map_visible_eq_generated",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+    "line": 276,
+    "statement": "theorem twoArmFixedIIDLatentTrajectoryMeasure_map_visible_eq_generated (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) : Measure.map (fun sample : UCB.ArmRewardStream 2 \u00d7 ((t : Nat) -> Fin 2 \u00d7 Real) => ((), sample.2)) (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) = twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)"
+  },
+  {
+    "kind": "theorem",
     "name": "twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 275,
+    "line": 335,
     "statement": "theorem twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (m : Nat) : Measure.map (twoArmOptimalPullTimeRewardBlock (Env := Unit) m) (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) = Measure.map (twoArmLatentMaskedOptimalPullBlock m) (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta)"
   },
   {
@@ -34941,7 +34986,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmAppendixCPhaseOnePrefixSum",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCPhaseOnePrefixSum",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 323,
+    "line": 383,
     "statement": "def twoArmAppendixCPhaseOnePrefixSum (n0 n1 : Nat) (rewardBlock : Fin (n0 + n1) -> Real) (k : Fin (n1 + 1)) : Real"
   },
   {
@@ -34949,7 +34994,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measurable_twoArmAppendixCPhaseOnePrefixSum",
     "full_name": "BanditRLProof.StochasticGradientBandit.measurable_twoArmAppendixCPhaseOnePrefixSum",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 328,
+    "line": 388,
     "statement": "theorem measurable_twoArmAppendixCPhaseOnePrefixSum (n0 n1 : Nat) (k : Fin (n1 + 1)) : Measurable (fun rewardBlock : Fin (n0 + n1) -> Real => twoArmAppendixCPhaseOnePrefixSum n0 n1 rewardBlock k)"
   },
   {
@@ -34957,7 +35002,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmAppendixCRewardPhaseEvent",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCRewardPhaseEvent",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 343,
+    "line": 403,
     "statement": "def twoArmAppendixCRewardPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : Set (Fin (n0 + n1) -> Real)"
   },
   {
@@ -34965,7 +35010,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measurableSet_twoArmAppendixCRewardPhaseEvent",
     "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCRewardPhaseEvent",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 356,
+    "line": 416,
     "statement": "theorem measurableSet_twoArmAppendixCRewardPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : MeasurableSet (twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal)"
   },
   {
@@ -34973,7 +35018,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmAppendixCAllPullsPresent",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCAllPullsPresent",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 404,
+    "line": 464,
     "statement": "def twoArmAppendixCAllPullsPresent (m : Nat) : Set ((i : Fin m) -> WithTop Nat \u00d7 Real)"
   },
   {
@@ -34981,7 +35026,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measurableSet_twoArmAppendixCAllPullsPresent",
     "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCAllPullsPresent",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 408,
+    "line": 468,
     "statement": "theorem measurableSet_twoArmAppendixCAllPullsPresent (m : Nat) : MeasurableSet (twoArmAppendixCAllPullsPresent m)"
   },
   {
@@ -34989,7 +35034,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmAppendixCObservedPhaseEvent",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCObservedPhaseEvent",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 423,
+    "line": 483,
     "statement": "def twoArmAppendixCObservedPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : Set ((i : Fin (n0 + n1)) -> WithTop Nat \u00d7 Real)"
   },
   {
@@ -34997,7 +35042,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measurableSet_twoArmAppendixCObservedPhaseEvent",
     "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCObservedPhaseEvent",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 430,
+    "line": 490,
     "statement": "theorem measurableSet_twoArmAppendixCObservedPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : MeasurableSet (twoArmAppendixCObservedPhaseEvent n0 n1 phaseOneTotal)"
   },
   {
@@ -35005,7 +35050,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmAppendixCLatentPhaseEvent",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCLatentPhaseEvent",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 446,
+    "line": 506,
     "statement": "def twoArmAppendixCLatentPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : Set (UCB.ArmRewardStream 2 \u00d7 ((t : Nat) -> Fin 2 \u00d7 Real))"
   },
   {
@@ -35013,7 +35058,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measurableSet_twoArmAppendixCLatentPhaseEvent",
     "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCLatentPhaseEvent",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 456,
+    "line": 516,
     "statement": "theorem measurableSet_twoArmAppendixCLatentPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : MeasurableSet (twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal)"
   },
   {
@@ -35021,7 +35066,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmLatentMaskedOptimalPullBlock_preimage_appendixCObservedPhaseEvent",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmLatentMaskedOptimalPullBlock_preimage_appendixCObservedPhaseEvent",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 471,
+    "line": 531,
     "statement": "theorem twoArmLatentMaskedOptimalPullBlock_preimage_appendixCObservedPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : (twoArmLatentMaskedOptimalPullBlock (n0 + n1)) \u207b\u00b9' twoArmAppendixCObservedPhaseEvent n0 n1 phaseOneTotal = twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal"
   },
   {
@@ -35029,7 +35074,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmAppendixCGeneratedPhaseEvent",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCGeneratedPhaseEvent",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 529,
+    "line": 589,
     "statement": "def twoArmAppendixCGeneratedPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : Set (Unit \u00d7 ((t : Nat) -> Fin 2 \u00d7 Real))"
   },
   {
@@ -35037,7 +35082,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measurableSet_twoArmAppendixCGeneratedPhaseEvent",
     "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCGeneratedPhaseEvent",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 535,
+    "line": 595,
     "statement": "theorem measurableSet_twoArmAppendixCGeneratedPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : MeasurableSet (twoArmAppendixCGeneratedPhaseEvent n0 n1 phaseOneTotal)"
   },
   {
@@ -35045,7 +35090,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 550,
+    "line": 610,
     "statement": "theorem twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) : (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) (twoArmAppendixCGeneratedPhaseEvent n0 n1 phaseOneTotal) = (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal)"
   },
   {
@@ -35053,7 +35098,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmAppendixCPureLatentRewardEvent",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCPureLatentRewardEvent",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 592,
+    "line": 652,
     "statement": "def twoArmAppendixCPureLatentRewardEvent (n0 n1 : Nat) (phaseOneTotal : Real) : Set (UCB.ArmRewardStream 2 \u00d7 ((t : Nat) -> Fin 2 \u00d7 Real))"
   },
   {
@@ -35061,7 +35106,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measurableSet_twoArmAppendixCPureLatentRewardEvent",
     "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCPureLatentRewardEvent",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 600,
+    "line": 660,
     "statement": "theorem measurableSet_twoArmAppendixCPureLatentRewardEvent (n0 n1 : Nat) (phaseOneTotal : Real) : MeasurableSet (twoArmAppendixCPureLatentRewardEvent n0 n1 phaseOneTotal)"
   },
   {
@@ -35069,7 +35114,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmAppendixCMissingPullLatentPhaseEvent",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCMissingPullLatentPhaseEvent",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 614,
+    "line": 674,
     "statement": "def twoArmAppendixCMissingPullLatentPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : Set (UCB.ArmRewardStream 2 \u00d7 ((t : Nat) -> Fin 2 \u00d7 Real))"
   },
   {
@@ -35077,7 +35122,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measurableSet_twoArmAppendixCMissingPullLatentPhaseEvent",
     "full_name": "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCMissingPullLatentPhaseEvent",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 621,
+    "line": 681,
     "statement": "theorem measurableSet_twoArmAppendixCMissingPullLatentPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : MeasurableSet (twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal)"
   },
   {
@@ -35085,7 +35130,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "mem_twoArmAppendixCMissingPullLatentPhaseEvent_iff",
     "full_name": "BanditRLProof.StochasticGradientBandit.mem_twoArmAppendixCMissingPullLatentPhaseEvent_iff",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 635,
+    "line": 695,
     "statement": "theorem mem_twoArmAppendixCMissingPullLatentPhaseEvent_iff (n0 n1 : Nat) (phaseOneTotal : Real) (sample : UCB.ArmRewardStream 2 \u00d7 ((t : Nat) -> Fin 2 \u00d7 Real)) : sample \u2208 twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal \u2194 (fun i : Fin (n0 + n1) => sample.1 (i : Nat) 0) \u2208 twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal \u2227 \u2203 i : Fin (n0 + n1), twoArmNthOptimalPullTime (Env := Unit) (i : Nat) ((), sample.2) = (\u22a4 : WithTop Nat)"
   },
   {
@@ -35093,15 +35138,31 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 656,
+    "line": 716,
     "statement": "theorem twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow (n0 n1 : Nat) (phaseOneTotal : Real) (horizon : Nat) : twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal \u2286 (fun sample : UCB.ArmRewardStream 2 \u00d7 ((t : Nat) -> Fin 2 \u00d7 Real) => ((), sample.2)) \u207b\u00b9' twoArmOptimalPullCountBelowEvent (Env := Unit) (n0 + n1) horizon"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmFixedIIDMissingPullLatentPhase_probability_le_countBelow",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDMissingPullLatentPhase_probability_le_countBelow",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+    "line": 737,
+    "statement": "theorem twoArmFixedIIDMissingPullLatentPhase_probability_le_countBelow (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) (horizon : Nat) : (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta).real (twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal) \u2264 (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)).real (twoArmOptimalPullCountBelowEvent (Env := Unit) (n0 + n1) horizon)"
+  },
+  {
+    "kind": "theorem",
+    "name": "twoArmFixedIIDMissingPullLatentPhase_charge_mul_probability_le_integral",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDMissingPullLatentPhase_charge_mul_probability_le_integral",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+    "line": 791,
+    "statement": "theorem twoArmFixedIIDMissingPullLatentPhase_charge_mul_probability_le_integral (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta Delta : Real) (hDelta : 0 \u2264 Delta) (n0 n1 : Nat) (phaseOneTotal : Real) (horizon : Nat) : Delta * ((horizon - (n0 + n1) : Nat) : Real) * (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta).real (twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal) \u2264 integral (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) (twoArmSampledPseudoRegret (Env := Unit) Delta horizon)"
   },
   {
     "kind": "theorem",
     "name": "twoArmAppendixCPureLatentRewardEvent_eq_union_phase_missing",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCPureLatentRewardEvent_eq_union_phase_missing",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 675,
+    "line": 835,
     "statement": "theorem twoArmAppendixCPureLatentRewardEvent_eq_union_phase_missing (n0 n1 : Nat) (phaseOneTotal : Real) : twoArmAppendixCPureLatentRewardEvent n0 n1 phaseOneTotal = twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal \u222a twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal"
   },
   {
@@ -35109,7 +35170,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "disjoint_twoArmAppendixCLatentPhaseEvent_missing",
     "full_name": "BanditRLProof.StochasticGradientBandit.disjoint_twoArmAppendixCLatentPhaseEvent_missing",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 692,
+    "line": 852,
     "statement": "theorem disjoint_twoArmAppendixCLatentPhaseEvent_missing (n0 n1 : Nat) (phaseOneTotal : Real) : Disjoint (twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal) (twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal)"
   },
   {
@@ -35117,7 +35178,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_pi",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_pi",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 704,
+    "line": 864,
     "statement": "theorem twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_pi (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) : (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCPureLatentRewardEvent n0 n1 phaseOneTotal) = (Measure.pi (fun _ : Fin (n0 + n1) => armLaw 0) : Measure (Fin (n0 + n1) -> Real)) (twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal)"
   },
   {
@@ -35125,7 +35186,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_phase_add_missing",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_phase_add_missing",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 739,
+    "line": 899,
     "statement": "theorem twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_phase_add_missing (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) : (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCPureLatentRewardEvent n0 n1 phaseOneTotal) = (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal) + (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal)"
   },
   {
@@ -35133,7 +35194,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "line": 765,
+    "line": 925,
     "statement": "theorem twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) : (Measure.pi (fun _ : Fin (n0 + n1) => armLaw 0) : Measure (Fin (n0 + n1) -> Real)) (twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal) = (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) (twoArmAppendixCGeneratedPhaseEvent n0 n1 phaseOneTotal) + (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal)"
   },
   {
@@ -35314,10 +35375,18 @@ These cards are planning inspiration only.  They do not certify any theorem.
   },
   {
     "kind": "theorem",
+    "name": "twoArmOptimalPullCountBelowEvent_charge_mul_probability_le_integral",
+    "full_name": "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCountBelowEvent_charge_mul_probability_le_integral",
+    "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+    "line": 331,
+    "statement": "theorem twoArmOptimalPullCountBelowEvent_charge_mul_probability_le_integral {Env : Type v} [MeasurableSpace Env] (mu : Measure (Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real))) [IsFiniteMeasure mu] (Delta : Real) (hDelta : 0 \u2264 Delta) (m horizon : Nat) : Delta * ((horizon - m : Nat) : Real) * mu.real (twoArmOptimalPullCountBelowEvent (Env := Env) m horizon) \u2264 integral mu (twoArmSampledPseudoRegret (Env := Env) Delta horizon)"
+  },
+  {
+    "kind": "theorem",
     "name": "twoArmStepOneStarvationEvent_charge_mul_probability_le_integral",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_charge_mul_probability_le_integral",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-    "line": 333,
+    "line": 394,
     "statement": "theorem twoArmStepOneStarvationEvent_charge_mul_probability_le_integral {Env : Type v} [MeasurableSpace Env] (mu : Measure (Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real))) [IsFiniteMeasure mu] (eta Delta : Real) (hDelta : 0 \u2264 Delta) (cutoff n horizon : Nat) : Delta * ((horizon - n : Nat) : Real) * mu.real (twoArmStepOneStarvationEvent (Env := Env) eta cutoff n horizon) \u2264 integral mu (twoArmSampledPseudoRegret (Env := Env) Delta horizon)"
   },
   {
@@ -35325,7 +35394,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral",
     "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-    "line": 388,
+    "line": 449,
     "statement": "theorem twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta Delta : Real) (hDelta : 0 <= Delta) (cutoff n horizon : Nat) : Delta * ((horizon - n : Nat) : Real) * (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)).real (twoArmStepOneStarvationEvent (Env := Unit) eta cutoff n horizon) <= integral (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) (twoArmSampledPseudoRegret (Env := Unit) Delta horizon)"
   },
   {
@@ -95384,6 +95453,163 @@ These cards are planning inspiration only.  They do not certify any theorem.
       "statement fence safe-verify true; refreshed declaration index records all 32 module declarations",
       "full repository gate passed: 8852 library jobs, 8894 test jobs, 381 Python tests with 7 skipped; website check passed"
     ]
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [
+      "BanditRLProof/LeafLemmas.lean",
+      "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+      "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "Tests/StochasticGradientBanditTheoremTwoStarvationCanary.lean",
+      "Tests/StochasticGradientBanditTheoremTwoNthPullCanary.lean",
+      "Tests/StochasticGradientBanditTheoremTwoSelectedIIDCanary.lean"
+    ],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "build",
+    "lean": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [
+      "BanditRLProof.pullCount_lt_of_forall_succ_ne",
+      "BanditRLProof.StochasticGradientBandit.twoArmTerminalOptimalPullCountEvent",
+      "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmTerminalOptimalPullCountEvent",
+      "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCountBelowEvent",
+      "BanditRLProof.StochasticGradientBandit.measurableSet_twoArmOptimalPullCountBelowEvent",
+      "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCountBelowEvent_eq_iUnion_terminalCount",
+      "BanditRLProof.StochasticGradientBandit.twoArmTerminalOptimalPullCountEvent_sampledPseudoRegret_eq",
+      "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCount_lt_succ_of_nthOptimalPullTime_eq_top",
+      "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCount_lt_of_fin_nthOptimalPullTime_eq_top",
+      "BanditRLProof.StochasticGradientBandit.twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow"
+    ],
+    "notes": "Compiled the deterministic missing-pull-to-terminal-count bridge. WithTop.top for one requested optimal-arm pull implies every finite-horizon optimal-arm count is below the requested block size; the measurable below-count event is the finite union of exact count fibers, each with the exact sampled-pseudo-regret identity. No source trigger, probability lower bound, selected IID, future/no-return, ballot/asymptotic, or Theorem 2 is claimed.",
+    "obligations_after": 0,
+    "obligations_before": 1,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "compiled-leaf",
+    "prompt_chars": 0,
+    "reused_declarations": [
+      "BanditRLProof.pullCount_succ_le_succ",
+      "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_eq_top_iff",
+      "BanditRLProof.StochasticGradientBandit.mem_twoArmAppendixCMissingPullLatentPhaseEvent_iff",
+      "BanditRLProof.StochasticGradientBandit.twoArmSampledPseudoRegret_eq_gap_mul_horizon_sub_of_optimalPullCount_eq"
+    ],
+    "reviewer_validated": false,
+    "role": "lower",
+    "route_fingerprint": "",
+    "run_id": "sgb-theorem2-missing-pull-terminal-count-round26-2026-09-02",
+    "source": "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB",
+    "statement_hash": "105fa4f7cf174346ac479f4c917d02c6416a5d6e19df62266de349e3b717acde",
+    "status": "compiled",
+    "target_fingerprint": "",
+    "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
+    "time": "2026-09-01T22:15:27+00:00",
+    "verifier_evidence": [
+      "focused source/canary gate passed 3645 jobs; full repository gate passed 8894 jobs and 387 Python tests with 7 skipped",
+      "SafeVerify passed at statement hash 105fa4f7cf174346ac479f4c917d02c6416a5d6e19df62266de349e3b717acde; audited endpoints use only propext, Classical.choice, and Quot.sound"
+    ],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "proposal",
+    "lean": "",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [],
+    "notes": "Frozen route: first prove a project-local below-count event consumer by indicator/integral monotonicity, using the compiled exact terminal-count regret identity and nonnegative gap; then prove exact Unit-visible marginal transport from the latent coupling to the source generated trajectory using Thompson.latentArmStreamVisibleTrajectoryMeasure_eq_native, twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary, Measure.map_map, and measurable map_apply; finally combine the compiled latent missing-event subset with measure_mono. Searches for the exact consumer returned no typed-memory or local declaration hit; existing MLIB probability/integration cards provide only route evidence. No positive missing probability, trigger, selected IID, future/no-return, ballot/asymptotic, or Theorem 2 claim.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "diagnostic",
+    "prompt_chars": 0,
+    "reused_declarations": [
+      "BanditRLProof.StochasticGradientBandit.twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow",
+      "BanditRLProof.StochasticGradientBandit.twoArmTerminalOptimalPullCountEvent_sampledPseudoRegret_eq",
+      "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_eq_native",
+      "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary"
+    ],
+    "reviewer_validated": false,
+    "role": "lower",
+    "route_fingerprint": "",
+    "run_id": "sgb-theorem2-missing-pull-regret-consumer-round33-2026-09-02",
+    "source": "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB",
+    "statement_hash": "",
+    "status": "queued",
+    "target_fingerprint": "",
+    "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
+    "time": "2026-09-02T05:18:16+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "sgb-t2-round33-worker-consumer",
+    "changed_files": [
+      "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+      "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+      "Tests/StochasticGradientBanditTheoremTwoStarvationCanary.lean",
+      "Tests/StochasticGradientBanditTheoremTwoSelectedIIDCanary.lean"
+    ],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "sgb-t2-round33-master-worker",
+    "harness": "master-worker",
+    "input_tokens": 0,
+    "kind": "build",
+    "lean": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDMissingPullLatentPhase_charge_mul_probability_le_integral",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [
+      "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCountBelowEvent_charge_mul_probability_le_integral",
+      "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_map_visible_eq_generated",
+      "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDMissingPullLatentPhase_probability_le_countBelow",
+      "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDMissingPullLatentPhase_charge_mul_probability_le_integral"
+    ],
+    "notes": "Compiled the frozen finite-horizon missing-pull regret consumer. The latent missing-pull event is mapped through an exact latent-visible/generated-source marginal to the generated terminal-count-below event; its nonnegative-gap horizon-minus-block-size charge is bounded by expected sampled pseudo-regret. This proves neither positive missing-branch probability nor a source trigger, selected IID, future/no-return, ballot/asymptotic assembly, or Theorem 2.",
+    "obligations_after": 0,
+    "obligations_before": 1,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "compiled-leaf",
+    "prompt_chars": 0,
+    "reused_declarations": [
+      "BanditRLProof.StochasticGradientBandit.twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow",
+      "BanditRLProof.StochasticGradientBandit.twoArmTerminalOptimalPullCountEvent_sampledPseudoRegret_eq",
+      "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_eq_native",
+      "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary",
+      "Measure.measure_mono"
+    ],
+    "reviewer_validated": false,
+    "role": "lower",
+    "route_fingerprint": "",
+    "run_id": "sgb-theorem2-missing-pull-regret-consumer-round33-2026-09-02",
+    "source": "PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB",
+    "statement_hash": "e0b6df5dcf07b860cdd4b02695c1621609030bb03ed06c502748691242ab7dc9",
+    "status": "compiled",
+    "target_fingerprint": "e0b6df5dcf07b860cdd4b02695c1621609030bb03ed06c502748691242ab7dc9",
+    "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
+    "time": "2026-09-02T06:26:53+00:00",
+    "verifier_evidence": [
+      "focused source build passed 3642 jobs; focused typed-canary build passed 3644 jobs; audited endpoints use only propext, Classical.choice, and Quot.sound",
+      "SafeVerify passed with statement hash e0b6df5dcf07b860cdd4b02695c1621609030bb03ed06c502748691242ab7dc9 and all source-assumption tokens preserved",
+      "full repository gate passed using C:\\Users\\admin\\anaconda3\\python.exe: 8852 library jobs, 8894 test jobs, 387 Python tests with 7 skipped; anonymous supplement tests passed"
+    ],
+    "worker_id": "/root/sgb_t2_consumer"
   }
 ]
 ```

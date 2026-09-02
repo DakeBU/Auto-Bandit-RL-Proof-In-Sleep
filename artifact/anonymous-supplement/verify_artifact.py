@@ -55,7 +55,7 @@ SGB_HISTORICAL_DECLARATION_COUNT = (
     + SGB_THEOREM_FOUR_CONTRACT_AUDIT_DECLARATION_COUNT
 )
 SGB_COROLLARY_ONE_DECLARATION_COUNT = 23
-SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT = 24
+SGB_THEOREM_TWO_STARVATION_DECLARATION_COUNT = 25
 SGB_THEOREM_TWO_NTH_PULL_DECLARATION_COUNT = 26
 SGB_THEOREM_TWO_LATENT_REWARD_DECLARATION_COUNT = 7
 SGB_THEOREM_TWO_PREFIX_FACTORIZATION_DECLARATION_COUNT = 8
@@ -585,8 +585,8 @@ def verify_claim_ledger():
         or sgb.get("declaration_count") != SGB_TOTAL_DECLARATION_COUNT
     ):
         fail(
-            "SGB source audit must contain exactly 360 unique declarations "
-            "with historical 223 and separate 23+24+26+7+8+13+28+8 follow-on"
+            "SGB source audit must contain exactly 361 unique declarations "
+            "with historical 223 and separate 23+25+26+7+8+13+28+8 follow-on"
         )
     if (
         sgb.get("historical_declaration_count")
@@ -827,7 +827,7 @@ def verify_claim_ledger():
         or sgb.get("separate_compiled_phase_dichotomy_declaration_count") != 10
         or sgb.get(
             "separate_compiled_missing_pull_terminal_count_declaration_count"
-        ) != 1
+        ) != 4
         or sgb.get(
             "separate_module_theorem_two_native_prefix_identification_compiled"
         ) is not True
@@ -864,7 +864,10 @@ def verify_claim_ledger():
         "ten declarations split the pure latent phase probability",
         "missing-pull-aware masked latent law",
         "stopped or pull-ordered selected IID",
-        "one declaration maps the missing-pull branch",
+        "four declarations map the missing-pull branch",
+        "exact latent-visible/generated-source marginal",
+        "finite-horizon expected sampled pseudo-regret consumer",
+        "no positive missing-pull probability is proved",
         "terminal-count-below event is not yet connected to a fixed-cutoff starvation trigger",
         "stopped-prefix future-cylinder",
         "conditional no-return probability >= 1/2",
@@ -999,7 +1002,7 @@ def verify_theorem_audit_comparison():
             "central_endpoint_record_id":
                 "NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT-MECHANISM-AUDIT",
             "promotion_status": "partial",
-            "compiled_declaration_count": 360,
+            "compiled_declaration_count": 361,
             "theorem_one_endpoint_verified": True,
             "corollary_one_endpoint_verified": True,
             "theorem_two_endpoint_verified": False,
@@ -1020,7 +1023,7 @@ def verify_theorem_audit_comparison():
             "separate_compiled_selected_block_declaration_count": 8,
             "separate_compiled_phase_event_declaration_count": 14,
             "separate_compiled_phase_dichotomy_declaration_count": 10,
-            "separate_compiled_missing_pull_terminal_count_declaration_count": 1,
+            "separate_compiled_missing_pull_terminal_count_declaration_count": 4,
             "separate_module_theorem_two_native_prefix_identification_compiled":
                 True,
             "separate_module_theorem_two_native_trajectory_compiled": True,
@@ -1046,7 +1049,7 @@ def verify_theorem_audit_comparison():
                 "source_theorem_one_terminal": 32,
                 "source_theorem_four_contract_audit": 8,
                 "source_corollary_one_companion": 23,
-                "source_theorem_two_deterministic_starvation_consumer": 24,
+                "source_theorem_two_deterministic_starvation_consumer": 25,
                 "source_theorem_two_nth_pull_bridge": 26,
                 "source_theorem_two_latent_reward_product_readout": 7,
                 "source_theorem_two_deferred_decisions_prefix_factorization": 8,
@@ -1110,6 +1113,7 @@ def verify_theorem_audit_comparison():
                 "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullTimeRewardBlock_eq_latentMasked_ae",
                 "BanditRLProof.StochasticGradientBandit.twoArmNativeOptimalPullTimeRewardBlock_map_eq_latentMasked",
                 "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary",
+                "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_map_visible_eq_generated",
                 "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked",
                 "BanditRLProof.StochasticGradientBandit.twoArmAppendixCPhaseOnePrefixSum",
                 "BanditRLProof.StochasticGradientBandit.measurable_twoArmAppendixCPhaseOnePrefixSum",
@@ -1136,6 +1140,8 @@ def verify_theorem_audit_comparison():
                 "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_phase_add_missing",
                 "BanditRLProof.StochasticGradientBandit.twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing",
                 "BanditRLProof.StochasticGradientBandit.twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow",
+                "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDMissingPullLatentPhase_probability_le_countBelow",
+                "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDMissingPullLatentPhase_charge_mul_probability_le_integral",
             }
             if selected_block_names != expected_selected_block_names:
                 fail("separate SGB selected-block declaration inventory drift")
@@ -1171,9 +1177,13 @@ def verify_theorem_audit_comparison():
                 not in row.get("scope_boundary", "")
                 or "ten more declarations split its pure latent probability"
                 not in row.get("scope_boundary", "")
-                or "one declaration proves that the missing-pull branch lies inside"
+                or "four declarations prove that the missing-pull branch lies inside"
                 not in row.get("scope_boundary", "")
                 or "neither supply a product law nor make totalized or occurrence-conditioned rewards IID"
+                not in row.get("scope_boundary", "")
+                or "transport the missing-pull probability to the generated terminal-count-below event"
+                not in row.get("scope_boundary", "")
+                or "finite-horizon expected sampled pseudo-regret consumer"
                 not in row.get("scope_boundary", "")
                 or "terminal-count-below event is not yet connected to a fixed-cutoff starvation trigger"
                 not in row.get("scope_boundary", "")
