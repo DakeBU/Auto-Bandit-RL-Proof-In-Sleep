@@ -341,8 +341,11 @@ def check_current_evidence_surfaces(
     """Verify that public progress surfaces remain generated from current ledgers."""
     errors: list[str] = []
     comparison_path = ROOT / "runs" / "harness-comparison" / "latest.json"
+    comparison_diagram_path = ROOT / "runs" / "harness-comparison" / "latest.mmd"
     if not comparison_path.exists():
         return ["missing runs/harness-comparison/latest.json"]
+    if not comparison_diagram_path.exists():
+        return ["missing runs/harness-comparison/latest.mmd"]
     comparison = json.loads(comparison_path.read_text(encoding="utf-8"))
     decision = comparison.get("decision", {})
     matched_count = len(comparison.get("matched_experiments", []))
@@ -373,8 +376,11 @@ def check_current_evidence_surfaces(
         "hierarchical",
         "master-worker",
         "latest.json",
+        "latest.mmd",
         "latest.prompt.md",
         "harness_self_comparison.md",
+        "What the harness has actually tried",
+        "no eligible experiment has been recorded",
     ):
         if required not in workflow_source:
             errors.append(f"workflow comparison ledger is missing {required!r}")
@@ -383,6 +389,7 @@ def check_current_evidence_surfaces(
     for required in (
         ".current-snapshot",
         ".comparison-decision",
+        ".harness-attempt-panel",
         ".status.prototype",
         ".declaration-content .lean-code",
         ".code-toolbar",
@@ -625,10 +632,22 @@ def main() -> int:
     lean_graph_path = output / "lean-graph" / "index.html"
     lean_graph_data_path = output / "lean-graph" / "graph.json"
     lean_graph_overview_path = output / "lean-graph" / "overview.json"
+    lean_graph_search_path = output / "lean-graph" / "search-index.json"
+    lean_graph_views_path = output / "lean-graph" / "views"
+    lean_graph_modules_path = output / "lean-graph" / "modules"
     lean_graph_script_path = output / "static" / "lean-graph.js"
-    for required_path in (lean_graph_data_path, lean_graph_overview_path, lean_graph_script_path):
+    for required_path in (
+        lean_graph_data_path,
+        lean_graph_overview_path,
+        lean_graph_search_path,
+        lean_graph_views_path / "book.json",
+        lean_graph_views_path / "spine.json",
+        lean_graph_views_path / "milestones.json",
+        lean_graph_script_path,
+    ):
         if not required_path.exists():
             errors.append(f"missing Lean Graph artifact: {required_path.relative_to(output)}")
+    search_node_ids: set[str] = set()
     if lean_graph_path.exists():
         lean_graph_html = lean_graph_path.read_text(encoding="utf-8")
         for required_text in (
@@ -639,12 +658,36 @@ def main() -> int:
             "Choose a readable branch first",
             "Open interactive canvas",
             "JavaScript is optional for reading",
+            "never fetched automatically",
             "Auto-Sampling-Theory-In-Sleep/lean-foundations.html",
         ):
             if required_text not in lean_graph_html:
                 errors.append(f"lean-graph/index.html: missing graph boundary {required_text!r}")
         if 'data-graph-overview-source="overview.json"' not in lean_graph_html:
             errors.append("lean-graph/index.html: missing the lightweight overview graph source")
+        if 'data-graph-search-source="search-index.json"' not in lean_graph_html:
+            errors.append("lean-graph/index.html: missing the compact search-index source")
+        if 'data-graph-source="graph.json"' in lean_graph_html:
+            errors.append("lean-graph/index.html: full graph must not be an automatic browser source")
+        for required_source in (
+            'data-graph-view-source="views/book.json"',
+            'data-graph-view-source="views/spine.json"',
+            'data-graph-view-source="views/milestones.json"',
+        ):
+            if required_source not in lean_graph_html:
+                errors.append(f"lean-graph/index.html: missing sliced view source {required_source}")
+    if lean_graph_script_path.exists():
+        lean_graph_script = lean_graph_script_path.read_text(encoding="utf-8")
+        for required_script in (
+            "loadGraphSlice",
+            "ensureSearchData",
+            "graphSearchSource",
+            "graphViewSource",
+        ):
+            if required_script not in lean_graph_script:
+                errors.append(f"static/lean-graph.js: missing sliced-loading support {required_script}")
+        if "dataset.graphSource" in lean_graph_script:
+            errors.append("static/lean-graph.js must not fetch the full graph automatically")
     if lean_graph_overview_path.exists():
         try:
             lean_graph_overview = json.loads(lean_graph_overview_path.read_text(encoding="utf-8"))
@@ -668,6 +711,68 @@ def main() -> int:
             if edge.get("source") not in overview_ids or edge.get("target") not in overview_ids:
                 errors.append("lean-graph/overview.json: edge references a deferred node")
                 break
+    graph_shard_paths = [lean_graph_overview_path]
+    if lean_graph_views_path.exists():
+        graph_shard_paths.extend(sorted(lean_graph_views_path.glob("*.json")))
+    if lean_graph_modules_path.exists():
+        graph_shard_paths.extend(sorted(lean_graph_modules_path.glob("*.json")))
+    graph_shard_paths = [path for path in graph_shard_paths if path.exists()]
+    if manifest.get("lean_graph_shard_count") != len(graph_shard_paths):
+        errors.append("manifest lean_graph_shard_count does not match generated graph slices")
+    actual_max_shard_bytes = max((path.stat().st_size for path in graph_shard_paths), default=0)
+    if actual_max_shard_bytes > 1_200_000:
+        errors.append("Lean Graph branch slices must remain at or below 1.2 MB uncompressed")
+    if manifest.get("lean_graph_max_shard_bytes") != actual_max_shard_bytes:
+        errors.append("manifest lean_graph_max_shard_bytes does not match generated graph slices")
+    graph_shard_node_ids = {}
+    for shard_path in graph_shard_paths:
+        try:
+            shard = json.loads(shard_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as error:
+            errors.append(f"{shard_path.relative_to(output)}: invalid JSON: {error}")
+            continue
+        shard_node_ids = {
+            node.get("id") for node in shard.get("nodes", []) if isinstance(node, dict)
+        }
+        graph_shard_node_ids[shard_path.relative_to(output / "lean-graph").as_posix()] = shard_node_ids
+        for view, view_ids in shard.get("views", {}).items():
+            if not set(view_ids).issubset(shard_node_ids):
+                errors.append(
+                    f"{shard_path.relative_to(output)}: view {view} references a missing node"
+                )
+        for edge in shard.get("edges", []):
+            if edge.get("source") not in shard_node_ids or edge.get("target") not in shard_node_ids:
+                errors.append(f"{shard_path.relative_to(output)}: edge references a missing node")
+                break
+    if lean_graph_search_path.exists():
+        try:
+            lean_graph_search = json.loads(lean_graph_search_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as error:
+            errors.append(f"lean-graph/search-index.json: invalid JSON: {error}")
+            lean_graph_search = {}
+        if lean_graph_search_path.stat().st_size > 1_500_000:
+            errors.append("lean-graph/search-index.json must remain below 1.5 MB uncompressed")
+        if manifest.get("lean_graph_search_index_bytes") != lean_graph_search_path.stat().st_size:
+            errors.append("manifest lean_graph_search_index_bytes does not match search-index.json")
+        search_shards = lean_graph_search.get("shards", [])
+        for shard in search_shards:
+            if not (output / "lean-graph" / shard).exists():
+                errors.append(f"lean-graph/search-index.json references missing shard {shard}")
+        for entry in lean_graph_search.get("entries", []):
+            if not isinstance(entry, list) or len(entry) != 6:
+                errors.append("lean-graph/search-index.json contains a malformed entry")
+                break
+            search_node_ids.add(entry[0])
+            if not isinstance(entry[3], int) or not 0 <= entry[3] < len(search_shards):
+                errors.append("lean-graph/search-index.json contains an invalid shard index")
+                break
+            indexed_shard = search_shards[entry[3]]
+            if entry[0] not in graph_shard_node_ids.get(indexed_shard, set()):
+                errors.append(
+                    "lean-graph/search-index.json maps "
+                    f"{entry[0]} to a shard that does not contain the node"
+                )
+                break
     if lean_graph_data_path.exists():
         try:
             lean_graph = json.loads(lean_graph_data_path.read_text(encoding="utf-8"))
@@ -680,6 +785,8 @@ def main() -> int:
         graph_node_id_set = set(graph_node_ids)
         if len(graph_node_ids) != len(graph_node_id_set):
             errors.append("lean-graph/graph.json: duplicate node ids")
+        if search_node_ids != graph_node_id_set:
+            errors.append("lean-graph/search-index.json does not cover the full graph node set")
         if lean_graph.get("root") not in graph_node_id_set:
             errors.append("lean-graph/graph.json: root does not name a graph node")
         for required_node in (

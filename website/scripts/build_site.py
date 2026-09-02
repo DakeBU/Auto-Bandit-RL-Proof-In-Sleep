@@ -29,6 +29,9 @@ PUBLIC_REPO_DIR = SITE_DIR / "public-repo"
 COMMUNITY_DIR = SITE_DIR / "community"
 DEFAULT_OUTPUT = SITE_DIR / "_site"
 HARNESS_COMPARISON_PATH = ROOT / "runs" / "harness-comparison" / "latest.json"
+HARNESS_COMPARISON_DIAGRAM_PATH = (
+    ROOT / "runs" / "harness-comparison" / "latest.mmd"
+)
 
 GITHUB_REPO = "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep"
 PUBLIC_SITE_REPO = GITHUB_REPO
@@ -42,7 +45,7 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20260902g"
+ASSET_VERSION = "20260902i"
 CATALOG_PAGE_SIZE = 100
 MILESTONE_PAGE_SIZE = 20
 MODULE_PAGE_SIZE = 30
@@ -560,6 +563,29 @@ def render_diagram(
         f'<pre class="mermaid" aria-label="{html.escape(caption)}">{html.escape(source)}</pre>'
         f"<figcaption>{html.escape(caption)} · "
         f'<a href="{source_href}">editable Mermaid source</a></figcaption>'
+        "</figure>"
+    )
+
+
+def render_harness_attempt_graph() -> str:
+    """Render the CLI-produced matched-attempt graph without duplicating it."""
+    if not HARNESS_COMPARISON_DIAGRAM_PATH.exists():
+        raise SystemExit(
+            "missing runs/harness-comparison/latest.mmd; run "
+            "`python3 tools/bandit.py harness-compare` before building the site"
+        )
+    source = HARNESS_COMPARISON_DIAGRAM_PATH.read_text(encoding="utf-8")
+    source_href = source_url("runs/harness-comparison/latest.mmd")
+    caption = (
+        "Attempt graph generated from the same matched harness ledger; empty arms "
+        "mean that no eligible experiment has been recorded"
+    )
+    return (
+        '<figure class="diagram harness-attempt-graph" tabindex="0" role="region" '
+        f'aria-label="{html.escape(caption, quote=True)}">'
+        f'<pre class="mermaid" aria-label="{html.escape(caption)}">{html.escape(source)}</pre>'
+        f"<figcaption>{html.escape(caption)} · "
+        f'<a href="{source_href}">generated Mermaid source</a></figcaption>'
         "</figure>"
     )
 
@@ -3962,6 +3988,42 @@ def build_lean_graph(
         if declaration_node:
             add_edge(declaration_node, laboratory_group, "audited in")
 
+    module_shards = {
+        module["name"]: f"modules/{module['slug']}.json" for module in modules
+    }
+    node_shards: dict[str, str] = {
+        root_id: "overview.json",
+        book_group: "views/book.json",
+        spine_group: "views/spine.json",
+        milestone_group: "views/milestones.json",
+        laboratory_group: "overview.json",
+    }
+    node_shards.update(
+        {node_id: "views/book.json" for node_id in chapter_ids.values()}
+    )
+    node_shards.update(
+        {node_id: "views/spine.json" for node_id in spine_ids.values()}
+    )
+    node_shards.update(
+        {node_id: "views/milestones.json" for node_id in result_ids.values()}
+    )
+    for module in modules:
+        node_shards[module_ids[module["name"]]] = module_shards[module["name"]]
+    for declaration in declarations:
+        node_shards[declaration_ids[declaration["full_name"]]] = module_shards[
+            declaration["module"]
+        ]
+    for node_id, shard in node_shards.items():
+        nodes[node_id]["shard"] = shard
+
+    graph_views = {
+        "overview": [root_id, book_group, spine_group, milestone_group, laboratory_group],
+        "book": [root_id, book_group]
+        + [chapter_ids[item["slug"]] for item in chapters],
+        "spine": [root_id, spine_group]
+        + [spine_ids[item["slug"]] for item in spine_chapters],
+        "milestones": [root_id, milestone_group],
+    }
     payload = {
         "schema_version": 1,
         "generated_at": generated_at,
@@ -3971,13 +4033,7 @@ def build_lean_graph(
             "milestone evidence, and textbook mappings. It is not a kernel trace or the frozen exact environment graph."
         ),
         "root": root_id,
-        "views": {
-            "overview": [root_id, book_group, spine_group, milestone_group, laboratory_group],
-            "book": [root_id, book_group] + [chapter_ids[item["slug"]] for item in chapters],
-            "spine": [root_id, spine_group] + [spine_ids[item["slug"]] for item in spine_chapters],
-            "milestones": [root_id, milestone_group],
-            "modules": [root_id, book_group] + [chapter_ids[item["slug"]] for item in chapters],
-        },
+        "views": graph_views,
         "nodes": list(nodes.values()),
         "edges": edges,
     }
@@ -3987,21 +4043,178 @@ def build_lean_graph(
         graph_dir / "graph.json",
         json.dumps(payload, ensure_ascii=False, separators=(",", ":")),
     )
-    overview_ids = set(payload["views"]["overview"])
-    overview_payload = {
-        **{key: value for key, value in payload.items() if key not in {"views", "nodes", "edges"}},
-        "views": {"overview": payload["views"]["overview"]},
-        "nodes": [node for node in payload["nodes"] if node["id"] in overview_ids],
-        "edges": [
-            edge
-            for edge in payload["edges"]
-            if edge["source"] in overview_ids and edge["target"] in overview_ids
-        ],
+
+    graph_meta = {
+        key: value
+        for key, value in payload.items()
+        if key not in {"views", "nodes", "edges"}
     }
-    write_text_lf(
-        graph_dir / "overview.json",
-        json.dumps(overview_payload, ensure_ascii=False, separators=(",", ":")),
+
+    def with_ancestors(node_ids: set[str]) -> set[str]:
+        expanded = set(node_ids)
+        for node_id in list(node_ids):
+            cursor = nodes.get(node_id)
+            seen: set[str] = set()
+            while cursor and cursor.get("parent") and cursor["parent"] not in seen:
+                parent = cursor["parent"]
+                seen.add(parent)
+                expanded.add(parent)
+                cursor = nodes.get(parent)
+        return expanded
+
+    def compact_graph_node(node: dict[str, Any]) -> dict[str, Any]:
+        return {
+            key: value
+            for key, value in node.items()
+            if key
+            in {
+                "id",
+                "label",
+                "kind",
+                "status",
+                "subtitle",
+                "url",
+                "parent",
+                "order",
+                "shard",
+            }
+        }
+
+    shard_paths: list[Path] = []
+
+    def write_graph_slice(
+        relative_path: str,
+        views: dict[str, list[str]],
+        included_ids: set[str],
+        full_ids: set[str],
+    ) -> None:
+        included_ids = with_ancestors(included_ids)
+        sliced_edges = [
+            edge
+            for edge in edges
+            if edge["source"] in included_ids and edge["target"] in included_ids
+        ]
+        sliced_nodes = [
+            nodes[node_id]
+            if node_id in full_ids
+            else compact_graph_node(nodes[node_id])
+            for node_id in nodes
+            if node_id in included_ids
+        ]
+        target = graph_dir / relative_path
+        write_text_lf(
+            target,
+            json.dumps(
+                {
+                    **graph_meta,
+                    "views": views,
+                    "nodes": sliced_nodes,
+                    "edges": sliced_edges,
+                },
+                ensure_ascii=False,
+                separators=(",", ":"),
+            ),
+        )
+        shard_paths.append(target)
+
+    overview_ids = set(graph_views["overview"])
+    write_graph_slice(
+        "overview.json",
+        {"overview": graph_views["overview"]},
+        overview_ids,
+        overview_ids,
     )
+
+    book_full_ids = set(graph_views["book"])
+    book_ids = book_full_ids | set(module_ids.values())
+    write_graph_slice(
+        "views/book.json",
+        {"book": graph_views["book"]},
+        book_ids,
+        book_full_ids,
+    )
+
+    spine_full_ids = set(graph_views["spine"])
+    spine_ids_with_neighbors = set(spine_full_ids)
+    for edge in edges:
+        if edge["source"] in spine_full_ids or edge["target"] in spine_full_ids:
+            spine_ids_with_neighbors.update((edge["source"], edge["target"]))
+    write_graph_slice(
+        "views/spine.json",
+        {"spine": graph_views["spine"]},
+        spine_ids_with_neighbors,
+        spine_full_ids,
+    )
+
+    milestone_full_ids = {root_id, milestone_group} | set(result_ids.values())
+    milestone_ids_with_neighbors = set(milestone_full_ids)
+    for edge in edges:
+        if edge["source"] in milestone_full_ids or edge["target"] in milestone_full_ids:
+            milestone_ids_with_neighbors.update((edge["source"], edge["target"]))
+    write_graph_slice(
+        "views/milestones.json",
+        {"milestones": graph_views["milestones"]},
+        milestone_ids_with_neighbors,
+        milestone_full_ids,
+    )
+
+    declaration_ids_by_module: defaultdict[str, list[str]] = defaultdict(list)
+    for declaration in declarations:
+        declaration_ids_by_module[declaration["module"]].append(
+            declaration_ids[declaration["full_name"]]
+        )
+    for module in modules:
+        module_id = module_ids[module["name"]]
+        chapter_id = chapter_ids[module["chapter"]]
+        module_core_ids = {
+            root_id,
+            book_group,
+            chapter_id,
+            module_id,
+            *declaration_ids_by_module[module["name"]],
+        }
+        module_ids_with_neighbors = set(module_core_ids)
+        for edge in edges:
+            if edge["source"] in module_core_ids or edge["target"] in module_core_ids:
+                module_ids_with_neighbors.update((edge["source"], edge["target"]))
+        write_graph_slice(
+            module_shards[module["name"]],
+            {"focus": [root_id, book_group, chapter_id, module_id]},
+            module_ids_with_neighbors,
+            module_core_ids,
+        )
+
+    search_shards = sorted(set(node_shards.values()))
+    search_shard_ids = {shard: index for index, shard in enumerate(search_shards)}
+    search_entries: list[list[Any]] = []
+    for node in nodes.values():
+        derived_label = node["id"].startswith(("declaration:", "module:"))
+        search_entries.append(
+            [
+                node["id"],
+                node["kind"],
+                node["status"],
+                search_shard_ids[node["shard"]],
+                "" if derived_label else node["label"],
+                "" if derived_label else node["subtitle"],
+            ]
+        )
+    search_index_path = graph_dir / "search-index.json"
+    write_text_lf(
+        search_index_path,
+        json.dumps(
+            {
+                "schema_version": 1,
+                "generated_at": generated_at,
+                "shards": search_shards,
+                "entries": search_entries,
+            },
+            ensure_ascii=False,
+            separators=(",", ":"),
+        ),
+    )
+    max_shard_bytes = max(path.stat().st_size for path in shard_paths)
+    search_index_bytes = search_index_path.stat().st_size
 
     body = f"""
 <section class="hero lean-graph-hero" id="lean-graph">
@@ -4018,14 +4231,13 @@ def build_lean_graph(
 </section>
 
 <section id="explorer">
-  <div class="lean-graph-app" data-lean-graph data-graph-overview-source="overview.json" data-graph-source="graph.json">
+  <div class="lean-graph-app" data-lean-graph data-graph-overview-source="overview.json" data-graph-search-source="search-index.json">
     <header class="lean-graph-toolbar">
       <div class="lean-graph-views" role="group" aria-label="Lean Graph view">
-        <button type="button" data-graph-view="overview" aria-pressed="true">Overview</button>
-        <button type="button" data-graph-view="book" aria-pressed="false">Book Map</button>
-        <button type="button" data-graph-view="spine" aria-pressed="false">Part IV</button>
-        <button type="button" data-graph-view="milestones" aria-pressed="false">Milestones</button>
-        <button type="button" data-graph-view="modules" aria-pressed="false">Lean branches</button>
+        <button type="button" data-graph-view="overview" data-graph-view-source="overview.json" aria-pressed="true">Overview</button>
+        <button type="button" data-graph-view="book" data-graph-view-source="views/book.json" aria-pressed="false">Book Map</button>
+        <button type="button" data-graph-view="spine" data-graph-view-source="views/spine.json" aria-pressed="false">Part IV</button>
+        <button type="button" data-graph-view="milestones" data-graph-view-source="views/milestones.json" aria-pressed="false">Milestones</button>
       </div>
       <div class="lean-graph-search-shell">
         <label for="lean-graph-search">Search theorem, module, milestone, or chapter</label>
@@ -4073,6 +4285,7 @@ def build_lean_graph(
     <article class="info-card"><span class="level-label">Reuse</span><h3>Lean library topology</h3><p>Module-import and reviewed teaching edges expose reusable prerequisites. Search reveals an exact declaration together with its parent module and recorded neighbors.</p></article>
     <article class="info-card"><span class="level-label">Audit</span><h3>Proof-structure evidence</h3><p>The <a href="../proof-graph-laboratory/index.html">Proof Graph Laboratory</a> separately reports the frozen compiled-environment observation and experimental support-compression metrics.</p></article>
   </div>
+  <div class="callout"><strong>Progressive-loading boundary.</strong> Views, searches, and module branches load independent generated JSON slices. The complete {len(nodes):,}-node export is never fetched automatically; researchers can <a href="graph.json">download the full graph artifact</a> explicitly.</div>
   <div class="callout warning"><strong>Evidence boundary.</strong> The browser graph is a generated navigation index, not a kernel trace, elaborator trace, or proof certificate. Exact Lean statements and the verified build gate remain authoritative.</div>
 </section>
 
@@ -4103,7 +4316,13 @@ def build_lean_graph(
             wide=True,
         ),
     )
-    return {"node_count": len(nodes), "edge_count": len(edges)}
+    return {
+        "node_count": len(nodes),
+        "edge_count": len(edges),
+        "shard_count": len(shard_paths),
+        "max_shard_bytes": max_shard_bytes,
+        "search_index_bytes": search_index_bytes,
+    }
 
 
 def build_proof_graph_laboratory(
@@ -4310,6 +4529,10 @@ def render_harness_comparison_ledger(page_path: str, comparison: dict[str, Any])
       <li>Compare reviewer-validated obligations closed, reusable declarations, critical path, context cost, and failure diagnosis.</li>
     </ol>
   </aside>
+  <div class="harness-attempt-panel">
+    <div><span class="level-label">Generated attempt graph</span><h3>What the harness has actually tried</h3><p>The graph below is regenerated by <code>harness-compare</code> from eligible structured rows. It is intentionally sparse while the ledger contains no matched trials; future reviewer-validated attempts will appear as nodes rather than being summarized from memory.</p></div>
+    {render_harness_attempt_graph()}
+  </div>
   <div class="source-links"><a href="{source_href}">Open the deterministic JSON</a><a href="{prompt_href}">Open the GPT review packet</a><a href="{method_href}">Read the comparison method</a></div>
 </section>
 """
@@ -4878,6 +5101,9 @@ def main() -> int:
         "source_dirty": source_dirty,
         "lean_graph_node_count": lean_graph_counts["node_count"],
         "lean_graph_edge_count": lean_graph_counts["edge_count"],
+        "lean_graph_shard_count": lean_graph_counts["shard_count"],
+        "lean_graph_max_shard_bytes": lean_graph_counts["max_shard_bytes"],
+        "lean_graph_search_index_bytes": lean_graph_counts["search_index_bytes"],
         "proof_graph_benchmark_status": proof_graph_report["status"],
         "proof_graph_root_count": proof_graph_report["benchmark_contract"]["root_count"],
         "cng_candidate_status": novelty_audit["cng_candidate"]["status"],

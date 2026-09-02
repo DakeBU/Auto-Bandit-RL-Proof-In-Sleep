@@ -56,18 +56,21 @@
   let currentView = "overview";
   let branchSize = Number(branchSizeSelect?.value || 12);
   let viewport = null;
+  let nodePositions = new Map();
   let graphBounds = { x: 0, y: 0, width: 1, height: 1 };
   let transform = { x: 0, y: 0, scale: 1 };
   let dragging = null;
-  let fullDataLoaded = false;
-  let fullDataPromise = null;
+  let currentSource = "";
+  let searchNodes = [];
+  let searchDataPromise = null;
+  let graphLoadPromise = null;
 
   const setMobileCanvasOpen = (open = true) => {
     app.classList.toggle("mobile-canvas-open", open);
     if (!mobileOpenButton) return;
     mobileOpenButton.setAttribute("aria-expanded", String(open));
     mobileOpenButton.textContent = open ? "Close interactive canvas" : "Open interactive canvas";
-    if (open) requestAnimationFrame(fitGraph);
+    if (open) requestAnimationFrame(() => fitGraph(selectedId));
   };
 
   const create = (tag, className = "", text = "") => {
@@ -155,12 +158,13 @@
   };
 
   const setView = (view) => {
-    currentView = data.views[view] ? view : "overview";
+    const fallbackView = Object.keys(data.views || {})[0] || "overview";
+    currentView = data.views[view] ? view : fallbackView;
     visible = new Set(data.views[currentView]);
     baseVisible = new Set(visible);
     expandedCounts = new Map();
     selectedId =
-      currentView === "book" || currentView === "modules"
+      currentView === "book"
         ? "group:book-map"
         : currentView === "spine"
           ? "group:textbook-spine"
@@ -176,10 +180,12 @@
     if (!nodes.has(nodeId)) return;
     selectedId = nodeId;
     addAncestors(nodeId);
+    let expanded = false;
     if (expand && (children.get(nodeId) || []).length && !expandedCounts.has(nodeId)) {
       addChildren(nodeId);
+      expanded = true;
     }
-    render({ fit: false, focusId: nodeId });
+    render({ fit: expanded, focusId: nodeId });
   };
 
   const revealSearchResult = (nodeId) => {
@@ -202,6 +208,24 @@
     selectedId = nodeId;
     hideSuggestions();
     render({ fit: true, focusId: nodeId });
+  };
+
+  const activateNode = (nodeId, { expand = true, searchMode = false, shard = "" } = {}) => {
+    const targetShard = shard || nodes.get(nodeId)?.shard || "";
+    const finish = () => {
+      if (searchMode) revealSearchResult(nodeId);
+      else selectNode(nodeId, expand);
+    };
+    if (targetShard && targetShard !== currentSource) {
+      loadGraphSlice(targetShard, "focus").then((loaded) => {
+        if (loaded) {
+          setMobileCanvasOpen(true);
+          finish();
+        }
+      });
+      return;
+    }
+    finish();
   };
 
   const edgeIsVisible = (edge) => visible.has(edge.source) && visible.has(edge.target);
@@ -254,20 +278,37 @@
     );
   };
 
-  const fitGraph = () => {
+  const fitGraph = (focusId = null) => {
     if (!canvas || !viewport) return;
     const width = Math.max(320, canvas.clientWidth);
     const height = Math.max(420, canvas.clientHeight - 26);
-    const scale = Math.min(
+    const naturalScale = Math.min(
       1.15,
-      Math.max(0.18, (width - 42) / graphBounds.width),
-      Math.max(0.18, (height - 42) / graphBounds.height),
+      (width - 42) / graphBounds.width,
+      (height - 42) / graphBounds.height,
     );
+    const minimumScale = width < 720 ? 46 / nodeHeight : 0.18;
+    const scale = Math.min(1.15, Math.max(minimumScale, naturalScale));
     transform = {
       scale,
       x: (width - graphBounds.width * scale) / 2,
       y: (height - graphBounds.height * scale) / 2,
     };
+    if (naturalScale < minimumScale && focusId && nodePositions.has(focusId)) {
+      const selected = nodePositions.get(focusId);
+      const firstChildId = (children.get(focusId) || []).find(
+        (childId) => visible.has(childId) && nodePositions.has(childId),
+      );
+      const firstChild = firstChildId ? nodePositions.get(firstChildId) : null;
+      const horizontalCenter = firstChild
+        ? (selected.x + firstChild.x + nodeWidth) / 2
+        : selected.x + nodeWidth / 2;
+      const verticalCenter = firstChild
+        ? (selected.y + firstChild.y + nodeHeight) / 2
+        : selected.y + nodeHeight / 2;
+      transform.x = width / 2 - horizontalCenter * scale;
+      transform.y = height / 2 - verticalCenter * scale;
+    }
     updateTransform();
   };
 
@@ -308,7 +349,10 @@
 
     const header = create("header", "lean-graph-detail-header");
     const headingWrap = create("div");
-    headingWrap.append(create("span", "lean-graph-kind", node.kind), create("h2", "", node.label));
+    const detailHeading = create("h2", "", node.label);
+    detailHeading.tabIndex = -1;
+    detailHeading.dataset.graphDetailHeading = node.id;
+    headingWrap.append(create("span", "lean-graph-kind", node.kind), detailHeading);
     const status = create("span", `status ${node.status}`, statusLabels[node.status] || node.status);
     header.append(headingWrap, status);
     detail.append(header);
@@ -380,6 +424,7 @@
 
   const render = ({ fit = false, focusId = null } = {}) => {
     const positions = computeLayout();
+    nodePositions = positions;
     const defs = createSvg("defs");
     const marker = createSvg("marker", {
       id: "lean-graph-arrow",
@@ -432,6 +477,7 @@
         class: `lean-graph-node status-${relationClass(node.status)} kind-${relationClass(node.kind)}${nodeId === selectedId ? " is-selected" : ""}`,
         transform: `translate(${position.x} ${position.y})`,
         tabindex: "0",
+        focusable: "true",
         role: "button",
         "data-node-id": nodeId,
         "aria-label": `${node.kind}: ${node.label}. ${statusLabels[node.status] || node.status}`,
@@ -444,13 +490,7 @@
       if (childTotal) appendText(group, `${childTotal} children`, nodeWidth - 12, 58, "lean-graph-node-count", 18);
       const activate = (event) => {
         event.stopPropagation();
-        if (fullDataLoaded) {
-          selectNode(nodeId, true);
-          return;
-        }
-        ensureFullData().then((loaded) => {
-          if (loaded) selectNode(nodeId, true);
-        });
+        activateNode(nodeId, { expand: true });
       };
       group.addEventListener("click", activate);
       group.addEventListener("keydown", (event) => {
@@ -471,12 +511,19 @@
     updateTransform();
 
     requestAnimationFrame(() => {
-      if (fit) fitGraph();
+      if (fit) fitGraph(focusId || selectedId);
       if (focusId) {
         const target = [...svg.querySelectorAll("[data-node-id]")].find(
           (element) => element.dataset.nodeId === focusId,
         );
-        target?.focus({ preventScroll: true });
+        target?.focus?.({ preventScroll: true });
+        requestAnimationFrame(() => {
+          if (document.activeElement !== target) {
+            [...detail.querySelectorAll("[data-graph-detail-heading]")]
+              .find((element) => element.dataset.graphDetailHeading === focusId)
+              ?.focus({ preventScroll: true });
+          }
+        });
       }
     });
   };
@@ -503,10 +550,13 @@
       hideSuggestions();
       return;
     }
-    const matches = [...nodes.values()]
+    const matches = searchNodes
       .map((node) => ({ node, score: searchScore(node, query) }))
       .filter((item) => item.score < 99)
-      .sort((left, right) => left.score - right.score || sortNodes(left.node.id, right.node.id))
+      .sort(
+        (left, right) =>
+          left.score - right.score || left.node.label.localeCompare(right.node.label),
+      )
       .slice(0, 10);
     suggestions.replaceChildren();
     matches.forEach(({ node }) => {
@@ -515,6 +565,7 @@
       const button = create("button");
       button.type = "button";
       button.dataset.graphSuggestion = node.id;
+      button.dataset.graphShard = node.shard;
       button.append(
         create("strong", "", node.label),
         create("span", "", `${node.kind} · ${statusLabels[node.status] || node.status}`),
@@ -532,7 +583,7 @@
     search.setAttribute("aria-expanded", "true");
   };
 
-  const initialize = (payload) => {
+  const initialize = (payload, view = "overview") => {
     data = payload;
     nodes = new Map(data.nodes.map((node) => [node.id, node]));
     children = new Map();
@@ -551,7 +602,7 @@
       if (incoming.has(edge.target)) incoming.get(edge.target).push(edge);
       if (outgoing.has(edge.source)) outgoing.get(edge.source).push(edge);
     });
-    setView("overview");
+    setView(view);
   };
 
   const showLoadError = (error) => {
@@ -568,38 +619,87 @@
       return response.json();
     });
 
-  const ensureFullData = () => {
-    if (fullDataLoaded) return Promise.resolve(true);
-    if (!fullDataPromise) {
-      count.textContent = "Loading the searchable graph…";
-      app.setAttribute("aria-busy", "true");
-      fullDataPromise = fetchGraph(app.dataset.graphSource)
+  const loadGraphSlice = (source, view) => {
+    if (source === currentSource && data?.views?.[view]) {
+      setView(view);
+      return Promise.resolve(true);
+    }
+    if (graphLoadPromise?.source === source) return graphLoadPromise.promise;
+    count.textContent = "Loading this graph branch…";
+    app.setAttribute("aria-busy", "true");
+    const promise = fetchGraph(source)
+      .then((payload) => {
+        currentSource = source;
+        initialize(payload, view);
+        app.removeAttribute("aria-busy");
+        return true;
+      })
+      .catch((error) => {
+        showLoadError(error);
+        return false;
+      })
+      .finally(() => {
+        if (graphLoadPromise?.source === source) graphLoadPromise = null;
+      });
+    graphLoadPromise = { source, promise };
+    return promise;
+  };
+
+  const searchNodeFromEntry = (entry, shards) => {
+    const [id, kind, status, shardIndex, storedLabel, storedSubtitle] = entry;
+    const identity = id.slice(id.indexOf(":") + 1);
+    const isDeclaration = id.startsWith("declaration:");
+    const isModule = id.startsWith("module:");
+    const subtitle = storedSubtitle || (isDeclaration || isModule ? identity : storedLabel || identity);
+    const label =
+      storedLabel ||
+      (isDeclaration
+        ? identity.split(".").at(-1)
+        : isModule
+          ? identity.replace(/^BanditRLProof\./, "")
+          : identity);
+    return {
+      id,
+      kind,
+      status,
+      shard: shards[shardIndex] || "",
+      label,
+      subtitle,
+      search: `${id} ${label} ${subtitle} ${kind} ${status}`.toLowerCase(),
+    };
+  };
+
+  const ensureSearchData = () => {
+    if (searchNodes.length) return Promise.resolve(true);
+    if (!searchDataPromise) {
+      search.setAttribute("aria-busy", "true");
+      searchDataPromise = fetchGraph(app.dataset.graphSearchSource)
         .then((payload) => {
-          fullDataLoaded = true;
-          initialize(payload);
-          app.removeAttribute("aria-busy");
+          searchNodes = payload.entries.map((entry) => searchNodeFromEntry(entry, payload.shards));
+          search.removeAttribute("aria-busy");
           return true;
         })
         .catch((error) => {
-          fullDataPromise = null;
-          showLoadError(error);
+          searchDataPromise = null;
+          search.removeAttribute("aria-busy");
+          console.error(error);
           return false;
         });
     }
-    return fullDataPromise;
+    return searchDataPromise;
   };
 
   viewButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const view = button.dataset.graphView;
-      if (view === "overview" && data) {
+      const source = button.dataset.graphViewSource;
+      if (source === currentSource && data?.views?.[view]) {
         setView(view);
         return;
       }
-      ensureFullData().then((loaded) => {
+      loadGraphSlice(source, view).then((loaded) => {
         if (loaded) {
           setMobileCanvasOpen(true);
-          setView(view);
         }
       });
     });
@@ -611,13 +711,19 @@
     branchSize = Number(branchSizeSelect.value || 12);
   });
   fitButton?.addEventListener("click", fitGraph);
-  resetButton?.addEventListener("click", () => setView(currentView === "search" ? "overview" : currentView));
+  resetButton?.addEventListener("click", () => {
+    if (currentView === "search" || currentView === "focus") {
+      loadGraphSlice(app.dataset.graphOverviewSource, "overview");
+      return;
+    }
+    setView(currentView);
+  });
   search?.addEventListener("input", () => {
-    if (search.value.trim().length < 2 || fullDataLoaded) {
+    if (search.value.trim().length < 2) {
       updateSuggestions();
       return;
     }
-    ensureFullData().then((loaded) => {
+    ensureSearchData().then((loaded) => {
       if (loaded) updateSuggestions();
     });
   });
@@ -627,17 +733,25 @@
       const first = suggestions.querySelector("[data-graph-suggestion]");
       if (first) {
         event.preventDefault();
-        revealSearchResult(first.dataset.graphSuggestion);
+        activateNode(first.dataset.graphSuggestion, {
+          searchMode: true,
+          shard: first.dataset.graphShard,
+        });
       }
     }
   });
   suggestions?.addEventListener("click", (event) => {
     const button = event.target.closest("[data-graph-suggestion]");
-    if (button) revealSearchResult(button.dataset.graphSuggestion);
+    if (button) {
+      activateNode(button.dataset.graphSuggestion, {
+        searchMode: true,
+        shard: button.dataset.graphShard,
+      });
+    }
   });
   detail?.addEventListener("click", (event) => {
     const neighbor = event.target.closest("[data-graph-neighbor]");
-    if (neighbor) selectNode(neighbor.dataset.graphNeighbor, false);
+    if (neighbor) activateNode(neighbor.dataset.graphNeighbor, { expand: false });
     const more = event.target.closest("[data-graph-more]");
     if (more) {
       addChildren(more.dataset.graphMore, true);
@@ -696,9 +810,5 @@
     if (!app.contains(event.target)) hideSuggestions();
   });
 
-  fetchGraph(app.dataset.graphOverviewSource)
-    .then((payload) => {
-      if (!fullDataLoaded) initialize(payload);
-    })
-    .catch(showLoadError);
+  loadGraphSlice(app.dataset.graphOverviewSource, "overview");
 })();
