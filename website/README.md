@@ -41,6 +41,9 @@ The build:
 - generates a landing-page evidence snapshot from the Lean index, teaching
   crosswalks, implementation ledger, and harness-comparison log instead of
   hand-entered completion percentages;
+- puts the student, researcher, and contributor entry points before the
+  textbook-coverage and evidence ledgers, so readers can choose a route before
+  meeting project-scale detail;
 - renders the latest deterministic hierarchical-versus-master-worker comparison
   as an evidence pipeline, generated attempt graph, candidate hybrid operating
   pattern, and next matched experiment on the Workflow page while refusing to

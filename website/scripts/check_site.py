@@ -365,9 +365,18 @@ def check_current_evidence_surfaces(
         if required not in index_source:
             errors.append(f"homepage current-evidence snapshot is missing {required!r}")
     audience_index = index_source.find('id="three-roles"')
+    textbook_index = index_source.find('id="primary-textbook"')
     snapshot_index = index_source.find('id="current-snapshot"')
-    if audience_index < 0 or snapshot_index < 0 or audience_index > snapshot_index:
-        errors.append("homepage must expose the three audience paths before the evidence snapshot")
+    if (
+        audience_index < 0
+        or textbook_index < 0
+        or snapshot_index < 0
+        or not audience_index < textbook_index < snapshot_index
+    ):
+        errors.append(
+            "homepage must expose audience paths, then the primary textbook, "
+            "before the evidence snapshot"
+        )
 
     workflow_path = output / "workflow" / "index.html"
     workflow_source = workflow_path.read_text(encoding="utf-8") if workflow_path.exists() else ""

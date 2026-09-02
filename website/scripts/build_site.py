@@ -45,7 +45,7 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20260902i"
+ASSET_VERSION = "20260902j"
 CATALOG_PAGE_SIZE = 100
 MILESTONE_PAGE_SIZE = 20
 MODULE_PAGE_SIZE = 30
@@ -1738,7 +1738,6 @@ def build_index(
     <a class="button" href="{href_from(page_path, 'declarations/index.html')}">Search Declarations</a>
     <a class="button" href="{href_from(page_path, 'community/index.html')}">Contribute a Lemma</a>
   </div>
-  {primary_textbook}
   <p class="paper-title"><strong>Paper.</strong> {html.escape(PAPER_TITLE)}</p>
   <p class="hero-secondary-links"><a href="{GITHUB_REPO}">GitHub repository ↗</a><span aria-hidden="true">·</span><a href="{href_from(page_path, 'banditrlwiki/index.html')}">Compare minimax frontiers</a><span aria-hidden="true">·</span><a href="{href_from(page_path, 'ide/index.html')}">Local experimental workspace</a></p>
 </section>
@@ -1752,6 +1751,10 @@ def build_index(
     <a class="audience-path-card contribute-role" href="{href_from(page_path, 'community/index.html')}"><span>03 · Contributor</span><strong>Contribute one lemma</strong><small>Follow the contribution contract →</small></a>
   </div>
 </section>
+
+<div class="homepage-textbook-stage">
+  {primary_textbook}
+</div>
 
 {current_snapshot}
 
@@ -1879,10 +1882,10 @@ python3 tools/bandit.py check</code></pre></article>
 """
     toc = [
         ("overview", "Overview"),
+        ("three-roles", "Three ways to use BanditRLlib"),
         ("primary-textbook", "Primary textbook"),
         ("current-snapshot", "Current evidence"),
         ("two-systems", "ABRL + BanditRLlib"),
-        ("three-roles", "Three ways to use BanditRLlib"),
         ("live-inventory", "Live inventory"),
         ("purpose", "Project purpose"),
         ("banditrlwiki", "BanditRLwiki"),
