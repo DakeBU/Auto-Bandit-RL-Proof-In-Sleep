@@ -16,9 +16,11 @@ routes. Therefore ABRL measures it instead of adopting it by intuition.
 ## Evidence Contract
 
 Only experiments with both arms, the same explicit `experiment_id`, the same
-explicit `target_fingerprint`, and reviewer-classified attempts are matched.
+explicit `target_fingerprint`, the same ordered `route_packet_hash`, and a
+separate reviewer verdict for each lower/worker execution are matched.
 Historical rows that lack these fields remain useful debugging history but do
-not select a winner.
+not select a winner. A worker cannot validate its own `compiled` label: only a
+`role=reviewer` row with the same `attempt_id` may set `reviewer_validated`.
 
 Each attempt records:
 
@@ -28,6 +30,12 @@ Each attempt records:
 - proof-DAG size and depth when available;
 - wall time, Lean-check time, prompt characters, and token counts;
 - exact error signature and verifier evidence.
+
+Execution measurements and reviewer verdicts are separate rows joined by
+`(experiment_id, harness, run_id, attempt_id)`. This preserves worker timing and
+token evidence while preventing a later verdict from overwriting those fields.
+The route-packet hash prevents an apparent A/B comparison from quietly giving
+the two harnesses different mathematical leaves.
 
 Progress classes are `unreviewed`, `no-progress`, `diagnostic`,
 `retrieval-reuse`, `statement-repair`, `compiled-leaf`, `closed-frontier`, and
@@ -44,6 +52,22 @@ unreviewed work or change the target.
 At least two matched experiments are required before the tool recommends a new
 default. With less evidence, `adaptive` retains the hierarchical default and
 selects the less-sampled arm for the next experiment.
+
+Create both arms from the exact same route file, experiment id, and target hash:
+
+```bash
+python3 tools/bandit.py run-cycle TASK_ID --harness hierarchical \
+  --experiment-id AB-001 --target-fingerprint SHA256_OF_FROZEN_TARGET \
+  --lower-count 2 --parallel-route-json routes.json
+python3 tools/bandit.py run-cycle TASK_ID --harness master-worker \
+  --experiment-id AB-001 --target-fingerprint SHA256_OF_FROZEN_TARGET \
+  --lower-count 2 --parallel-route-json routes.json
+```
+
+The hierarchical arm receives the same route packets but executes its lower
+prompts sequentially. The master–worker arm runs those packets concurrently
+after planning. This keeps execution pattern—not problem selection—as the main
+experimental difference.
 
 ```bash
 python3 tools/bandit.py harness-compare --task TASK_ID

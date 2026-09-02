@@ -3,8 +3,10 @@
 ABRL currently retains the hierarchical upper/middle/lower/reviewer harness as
 its default. A master–worker arm is now available for matched experiments with
 disjoint routes, and `adaptive` chooses the least-sampled arm until sufficient
-reviewed evidence exists. This is an experiment, not a claim that parallelism
-is already better. See `docs/harness_self_comparison.md`.
+reviewed evidence exists. Both arms must receive the same hashed route packet,
+and only a separate reviewer row can validate an attempt. This is an experiment,
+not a claim that parallelism is already better. See
+`docs/harness_self_comparison.md`.
 
 ## Roles
 

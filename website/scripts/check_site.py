@@ -365,6 +365,17 @@ def check_current_evidence_surfaces(
     decision = comparison.get("decision", {})
     matched_count = len(comparison.get("matched_experiments", []))
     minimum_count = comparison.get("minimum_matched_experiments")
+    matching_contract = comparison.get("metric_policy", {}).get(
+        "matching_contract", []
+    )
+    for required in (
+        "same frozen route-packet hash",
+        "separate reviewer-owned verdict for each execution attempt",
+    ):
+        if required not in matching_contract:
+            errors.append(
+                f"harness comparison matching contract is missing {required!r}"
+            )
 
     index_path = (output / "index.html").resolve()
     index_source = index_path.read_text(encoding="utf-8") if index_path.exists() else ""
@@ -409,6 +420,8 @@ def check_current_evidence_surfaces(
         "harness_self_comparison.md",
         "What the harness has actually tried",
         "no eligible experiment has been recorded",
+        "hashed route packet",
+        "reviewer-owned verdict",
     ):
         if required not in workflow_source:
             errors.append(f"workflow comparison ledger is missing {required!r}")
@@ -1166,7 +1179,7 @@ def main() -> int:
         page_source = page.read_text(encoding="utf-8")
         if 'rel="icon"' not in page_source:
             errors.append(f"{page.relative_to(output)}: missing favicon link")
-        for mojibake in ("�", "Ã", "Â", "â€", "ï»¿", "ᵓ"):
+        for mojibake in ("�", "Ã", "Â", "â€", " â ", "ï»¿", "ᵓ"):
             if mojibake in page_source:
                 errors.append(f"{page.relative_to(output)}: contains likely mojibake marker {mojibake!r}")
         if collector.nav_group_count != 7:
