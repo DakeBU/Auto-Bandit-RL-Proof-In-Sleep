@@ -1288,6 +1288,19 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
         f'<div><strong>{html.escape(step["title"])}</strong><p>{html.escape(step["detail"])}</p></div></li>'
         for index, step in enumerate(algorithm["steps"], start=1)
     )
+    pseudocode = algorithm.get("pseudocode")
+    pseudocode_html = ""
+    if pseudocode:
+        pseudocode_lines = "\n".join(
+            html.escape(line) for line in pseudocode["lines"]
+        )
+        pseudocode_html = f"""
+    <aside class="algorithm-pseudocode" aria-labelledby="algorithm-pseudocode-title">
+      <div><span class="panel-kicker">Textbook-aligned algorithm · explicit conventions</span><h4 id="algorithm-pseudocode-title">{html.escape(pseudocode['title'])}</h4><p>{html.escape(pseudocode['intro'])}</p></div>
+      {render_math_statement(pseudocode['formula_label'], pseudocode['math'], pseudocode['fallback'])}
+      <pre tabindex="0" role="region" aria-label="{html.escape(pseudocode['title'], quote=True)}"><code>{pseudocode_lines}</code></pre>
+      <p class="algorithm-pseudocode-boundary"><strong>Source/Lean boundary.</strong> {html.escape(pseudocode['relationship'])}</p>
+    </aside>"""
     proof_bridge = reading.get("proof_bridge")
     proof_bridge_html = ""
     if proof_bridge:
@@ -1373,6 +1386,7 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
   <div class="algorithm-panel" id="algorithm">
     <div><span class="panel-kicker">{html.escape(algorithm['kind'])} · ordered flow</span><h3>{html.escape(algorithm['title'])}</h3><p class="algorithm-intro">Read top to bottom: each step supplies the state or proof fact used by the next one.</p></div>
     <ol class="algorithm-flow">{steps}</ol>
+    {pseudocode_html}
   </div>
   {proof_bridge_html}
   {theorem_html}
@@ -1729,6 +1743,16 @@ def build_index(
   <p class="hero-secondary-links"><a href="{GITHUB_REPO}">GitHub repository ↗</a><span aria-hidden="true">·</span><a href="{href_from(page_path, 'banditrlwiki/index.html')}">Compare minimax frontiers</a><span aria-hidden="true">·</span><a href="{href_from(page_path, 'ide/index.html')}">Local experimental workspace</a></p>
 </section>
 
+<section id="three-roles" class="audience-paths" aria-labelledby="three-roles-title">
+  <p class="eyebrow">Choose your path</p>
+  <h2 id="three-roles-title">BanditRLlib, three ways to use it</h2>
+  <div class="audience-path-grid">
+    <a class="audience-path-card learn-role" href="{href_from(page_path, 'learning/index.html')}"><span>01 · Student</span><strong>Learn math beside Lean</strong><small>Start with the ten-chapter Book Map →</small></a>
+    <a class="audience-path-card browse-role" href="{href_from(page_path, 'declarations/index.html')}"><span>02 · Researcher</span><strong>Find exact proofs</strong><small>Search {len(declarations):,} indexed declarations →</small></a>
+    <a class="audience-path-card contribute-role" href="{href_from(page_path, 'community/index.html')}"><span>03 · Contributor</span><strong>Contribute one lemma</strong><small>Follow the contribution contract →</small></a>
+  </div>
+</section>
+
 {current_snapshot}
 
 <section id="two-systems">
@@ -1739,30 +1763,6 @@ def build_index(
     <article class="info-card system-card"><span class="level-label">User-facing library</span><h3>BanditRLlib</h3><p>Compiled Lean declarations → searchable reusable library → textbook-aligned learning → LaTeX↔Lean formalization → community lemma intake.</p><a href="{href_from(page_path, 'declarations/index.html')}">Browse BanditRLlib →</a></article>
   </div>
   {render_diagram(page_path, 'system-architecture.mmd', 'A research target enters ABRL and returns as reusable, reviewer-gated BanditRLlib mathematics')}
-</section>
-
-<section id="three-roles">
-  <h2>BanditRLlib, three ways to use it</h2>
-  <div class="role-grid">
-    <article class="role-card learn-role">
-      <span class="role-number">01</span><p class="eyebrow">For students</p>
-      <h3>Learn from a Lean-aligned textbook</h3>
-      <p>Follow ten chapters from finite bandit bookkeeping through concentration, stochastic and adversarial algorithms, stopping times, and finite-horizon RL. Read intuition and mathematics before opening the exact type.</p>
-      <a href="{href_from(page_path, 'learning/index.html')}">Follow the teaching path →</a>
-    </article>
-    <article class="role-card browse-role">
-      <span class="role-number">02</span><p class="eyebrow">For library users</p>
-      <h3>Find the exact lemma you need</h3>
-      <p>Search all {len(declarations):,} indexed declarations, filter by chapter and kind, inspect module imports, and distinguish compiled endpoints from broader routes that remain partial or blocked.</p>
-      <a href="{href_from(page_path, 'declarations/index.html')}">Search the declaration catalog →</a>
-    </article>
-    <article class="role-card contribute-role">
-      <span class="role-number">03</span><p class="eyebrow">For contributors</p>
-      <h3>Add knowledge from another field</h3>
-      <p>Submit a structured lemma packet with the source theorem, natural-language statement, LaTeX, Lean draft, dependencies, and honest verification status. Live Formalization already exports the same machine-readable format for ABRL review.</p>
-      <a href="{href_from(page_path, 'community/index.html')}">Read the contribution guide →</a>
-    </article>
-  </div>
 </section>
 
 <details class="homepage-details">
@@ -2194,6 +2194,7 @@ def build_catalog(
     </table>
   </div>
   <div class="catalog-actions"><button class="button compact" type="button" data-catalog-more hidden>Show {min(CATALOG_PAGE_SIZE, max(0, len(declarations) - CATALOG_PAGE_SIZE)):,} more declarations</button></div>
+  <button class="catalog-return button compact" type="button" data-catalog-return aria-controls="filters" hidden>↑ Back to filters</button>
   <noscript><p class="callout warning"><strong>JavaScript is off.</strong> The first {min(CATALOG_PAGE_SIZE, len(declarations)):,} declarations are shown here. Open the <a href="{href_from(page_path, 'catalog-data.json')}">complete JSON catalog</a> or browse the <a href="{href_from(page_path, 'implementation-map/index.html')}">module-level implementation map</a>.</p></noscript>
 </section>
 """
@@ -2916,7 +2917,7 @@ def build_research_ide(
 <section class="hero" id="research-ide">
   <p class="eyebrow">BanditRLlib Live Formalization</p>
   <h1 class="page-title">LaTeX, retrieval, candidate Lean, and the compiler in one workspace.</h1>
-  <p class="lede">Study reviewed mappings or enter a new bandit/RL claim. Local verified mode retrieves compiled BanditRLlib declarations and Mathlib/LML cards before an optional server-side model generates candidate Lean, then sends the exact candidate to the pinned compiler.</p>
+  <p class="lede">Study reviewed mappings or enter a new bandit/RL claim. GitHub Pages runs neither arbitrary code nor a model API. In local verified mode, a loopback-only service retrieves compiled BanditRLlib declarations and Mathlib/LML cards; an optional model API behind that local service may generate candidate Lean before the exact candidate is sent to the pinned compiler.</p>
   <div class="hero-actions">
     <a class="button primary" href="#workspace">Open the workspace</a>
     <a class="button" href="{href_from(page_path, 'workflow/index.html')}">Read the verification workflow</a>
@@ -4739,6 +4740,19 @@ def validate_readings(chapters: list[dict[str, Any]], readings: list[dict[str, A
             raise SystemExit(f"reading {reading['slug']} has a companion without a valid PDF page")
         if not reading.get("algorithm", {}).get("steps"):
             raise SystemExit(f"reading {reading['slug']} lacks an algorithm or proof flow")
+        pseudocode = reading.get("algorithm", {}).get("pseudocode")
+        if pseudocode:
+            required_pseudocode = (
+                "title", "intro", "formula_label", "math", "fallback", "lines", "relationship"
+            )
+            if any(not pseudocode.get(key) for key in required_pseudocode):
+                raise SystemExit(f"reading {reading['slug']} has incomplete algorithm pseudocode")
+            if (
+                not isinstance(pseudocode["lines"], list)
+                or len(pseudocode["lines"]) < 4
+                or any(not isinstance(line, str) or not line.strip() for line in pseudocode["lines"])
+            ):
+                raise SystemExit(f"reading {reading['slug']} pseudocode needs at least four nonempty lines")
         proof_bridge = reading.get("proof_bridge")
         if proof_bridge:
             bridge_steps = proof_bridge.get("steps", [])

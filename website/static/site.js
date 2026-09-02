@@ -362,6 +362,8 @@
     const catalogBody = catalog.querySelector("[data-catalog-body]");
     const count = document.querySelector("[data-catalog-count]");
     const moreButton = document.querySelector("[data-catalog-more]");
+    const filters = document.querySelector("#filters");
+    const returnButton = document.querySelector("[data-catalog-return]");
     let catalogItems = null;
     let catalogLoadPromise = null;
     let catalogPageSize = 100;
@@ -467,6 +469,21 @@
         moreButton.hidden = true;
       });
     });
+    const updateCatalogReturn = () => {
+      if (!returnButton || !filters) return;
+      const mobile = window.matchMedia("(max-width: 760px)").matches;
+      const filtersAboveViewport = filters.getBoundingClientRect().bottom < 0;
+      returnButton.hidden = !(mobile && filtersAboveViewport);
+    };
+    returnButton?.addEventListener("click", () => {
+      const targetTop = filters ? filters.getBoundingClientRect().top + window.scrollY - 16 : 0;
+      returnButton.hidden = true;
+      window.scrollTo({ top: Math.max(0, targetTop), behavior: "instant" });
+      queryInput?.focus({ preventScroll: true });
+    });
+    window.addEventListener("scroll", updateCatalogReturn, { passive: true });
+    window.addEventListener("resize", updateCatalogReturn, { passive: true });
+    updateCatalogReturn();
     if (moreButton) moreButton.hidden = false;
   }
 
