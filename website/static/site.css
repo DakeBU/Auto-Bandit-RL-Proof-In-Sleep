@@ -1280,6 +1280,19 @@ h3 {
   box-shadow: 0 18px 42px color-mix(in srgb, var(--ink) 12%, transparent);
 }
 
+.compact-book-map .book-chapter-card {
+  min-height: 8.25rem;
+  padding: 0.9rem 1rem;
+}
+
+.compact-book-map .book-chapter-copy > strong {
+  margin-bottom: 0.25rem;
+}
+
+.compact-book-map .book-source {
+  margin-top: 0.25rem;
+}
+
 .book-chapter-number {
   color: color-mix(in srgb, var(--accent) 76%, var(--muted));
   font-family: var(--serif);
@@ -3283,7 +3296,7 @@ tbody tr:hover {
 
 .roadmap-status-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.7rem;
 }
 
@@ -3350,6 +3363,19 @@ tbody tr:hover {
   font-size: 0.88rem;
 }
 
+.roadmap-focus-card .roadmap-evidence {
+  display: flex;
+  gap: 0.4rem;
+  align-items: baseline;
+  color: var(--muted);
+}
+
+.roadmap-focus-card .roadmap-evidence strong {
+  color: var(--accent-strong);
+  font-family: var(--serif);
+  font-size: 1.35rem;
+}
+
 .roadmap-focus-card .roadmap-next {
   padding-top: 0.65rem;
   border-top: 1px solid var(--line);
@@ -3357,6 +3383,39 @@ tbody tr:hover {
 
 .roadmap-focus-card .roadmap-next strong {
   color: var(--ink);
+}
+
+.roadmap-route-notes {
+  border: 1px solid var(--line);
+  border-radius: calc(var(--radius) * 0.72);
+  background: color-mix(in srgb, var(--surface) 84%, var(--accent-soft));
+}
+
+.roadmap-route-notes > summary {
+  min-height: 2.75rem;
+  padding: 0.7rem 0.8rem;
+  color: var(--accent-strong);
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.roadmap-route-notes > summary:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.roadmap-route-notes > div {
+  padding: 0 0.8rem 0.8rem;
+  border-top: 1px solid var(--line);
+}
+
+.roadmap-route-notes h4 {
+  margin: 0.85rem 0 0.3rem;
+}
+
+.roadmap-evidence-link {
+  align-self: end;
+  font-weight: 750;
 }
 
 .site-footer {
@@ -4439,6 +4498,12 @@ tbody tr:hover {
   .book-chapter-card {
     grid-template-columns: 2.5rem minmax(0, 1fr);
     min-height: 0;
+  }
+
+  .compact-book-map .book-chapter-card {
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    min-height: 0;
+    padding: 0.8rem 0.85rem;
   }
 
   .book-chapter-arrow {
@@ -6108,10 +6173,6 @@ tbody tr:hover {
 
   .roadmap-status-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .roadmap-status-grid article:last-child {
-    grid-column: 1 / -1;
   }
 
   .roadmap-focus-card > div {

@@ -45,9 +45,9 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20260903a"
-CATALOG_PAGE_SIZE = 40
-MILESTONE_PAGE_SIZE = 20
+ASSET_VERSION = "20260903c"
+CATALOG_PAGE_SIZE = 20
+MILESTONE_PAGE_SIZE = 12
 MODULE_PAGE_SIZE = 30
 TEACHING_PREVIEW_COUNT = 4
 PSEUDOCODE_CHAPTERS = {
@@ -561,8 +561,8 @@ def paged_source_url(source: dict[str, Any]) -> str:
     return f"{url.split('#', 1)[0]}#page={pdf_page}"
 
 
-def status_badge(status: str) -> str:
-    label = STATUS_LABELS.get(status, status.replace("-", " ").title())
+def status_badge(status: str, label: str | None = None) -> str:
+    label = label or STATUS_LABELS.get(status, status.replace("-", " ").title())
     return f'<span class="status {html.escape(status)}">{html.escape(label)}</span>'
 
 
@@ -706,9 +706,9 @@ def layout(
     def nav_links(items: list[tuple[str, str, str]]) -> str:
         return "".join(
             f'<a href="{href_from(page_path, target)}"'
-            + (' aria-current="page"' if key == current or target == page_path else "")
+            + (' aria-current="page"' if target == page_path else "")
             + f">{html.escape(label)}</a>"
-            for key, label, target in items
+            for _key, label, target in items
         )
 
     start_nav = nav_links(start_items)
@@ -908,6 +908,7 @@ def render_book_map(
     chapters: list[dict[str, Any]],
     *,
     detailed: bool = False,
+    compact: bool = False,
 ) -> str:
     cards = []
     for index, chapter in enumerate(chapters, start=1):
@@ -929,6 +930,11 @@ def render_book_map(
             '<span class="book-scope">Extension and milestone ledger'
             + (f" · {html.escape(milestone_line)}" if milestone_line else " · no registered milestones")
             + "</span>"
+        ) if not compact else ""
+        summary = (
+            f'<span class="book-summary">{html.escape(chapter["summary"])}</span>'
+            if not compact
+            else ""
         )
         audience = (
             f'<p class="book-audience"><strong>Reader.</strong> {html.escape(chapter["audience"])}</p>'
@@ -940,17 +946,18 @@ def render_book_map(
 <a class="book-chapter-card" href="{href_from(page_path, f"chapters/{chapter['slug']}/index.html")}">
   <span class="book-chapter-number" aria-hidden="true">{index:02d}</span>
   <div class="book-chapter-copy">
-    <span class="book-chapter-meta"><span>Canonical chapter core</span>{status_badge(chapter['status'])}</span>
+    <span class="book-chapter-meta"><span>Teaching chapter</span>{status_badge(chapter['status'], f"Canonical route {STATUS_LABELS.get(chapter['status'], chapter['status']).lower()}")}</span>
     <strong>{html.escape(chapter['title'])}</strong>
     {scope_line}
     {source_line}
-    <span class="book-summary">{html.escape(chapter['summary'])}</span>
+    {summary}
     {audience}
   </div>
   <span class="book-chapter-arrow" aria-hidden="true">→</span>
 </a>"""
         )
-    return '<div class="book-map-grid">' + "".join(cards) + "</div>"
+    classes = "book-map-grid compact-book-map" if compact else "book-map-grid"
+    return f'<div class="{classes}">' + "".join(cards) + "</div>"
 
 
 def render_learning_routes(page_path: str) -> str:
@@ -1809,7 +1816,7 @@ def build_index(
     counts = Counter(decl["kind"] for decl in declarations)
     status_counts = Counter(result["status"] for result in results)
     placeholder_count = sum(1 for decl in declarations if decl["placeholder"])
-    book_map = render_book_map(page_path, chapters)
+    book_map = render_book_map(page_path, chapters, compact=True)
     learning_routes = render_learning_routes(page_path)
     textbook_spine_map = render_textbook_spine_map(page_path, SITE_TEXTBOOK_SPINE, verified)
     contributor_cards = render_contributor_cards(page_path, authors, include_invitation=False)
@@ -2014,6 +2021,14 @@ def build_implementation_map(
     generated_at: str,
 ) -> None:
     page_path = "implementation-map/index.html"
+
+    def compact_milestone_prose(value: str, limit: int = 260) -> str:
+        normalized = re.sub(r"\s+", " ", value).strip()
+        if len(normalized) <= limit:
+            return normalized
+        clipped = normalized[:limit].rsplit(" ", 1)[0].rstrip(" ,:;")
+        return f"{clipped}…"
+
     result_rows = []
     result_items = []
     for result in results:
@@ -2053,7 +2068,7 @@ def build_implementation_map(
   <td data-label="Milestone"><a href="#{slugify(result['id'])}">{html.escape(result['title'])}</a><br><code>{html.escape(result['id'])}</code></td>
   <td data-label="Chapter">{chapter_cell}</td>
   <td data-label="Status">{status_badge(result['status'])}</td>
-  <td data-label="Meaning and evidence" class="milestone-evidence"><p>{html.escape(result['informal'])}</p><details><summary data-milestone-evidence-summary aria-label="Lean evidence and boundary for {html.escape(result['title'], quote=True)}">Lean evidence and boundary</summary><dl><div><dt>Declarations</dt><dd>{"<br>".join(declaration_links) if declaration_links else "No local declaration yet"}</dd></div><div><dt>Depends on</dt><dd>{dependencies}</dd></div><div><dt>Remaining gap</dt><dd>{missing}</dd></div></dl></details></td>
+  <td data-label="Meaning and evidence" class="milestone-evidence"><p>{html.escape(compact_milestone_prose(result['informal']))}</p><details><summary data-milestone-evidence-summary aria-label="Lean evidence and boundary for {html.escape(result['title'], quote=True)}">Lean evidence and boundary</summary><dl><div><dt>Full route description</dt><dd>{html.escape(result['informal'])}</dd></div><div><dt>Declarations</dt><dd>{"<br>".join(declaration_links) if declaration_links else "No local declaration yet"}</dd></div><div><dt>Depends on</dt><dd>{dependencies}</dd></div><div><dt>Remaining gap</dt><dd>{missing}</dd></div></dl></details></td>
 </tr>"""
         result_rows.append(row_html)
         result_items.append(
@@ -2147,15 +2162,17 @@ def build_implementation_map(
 
 <section id="dependencies">
   <h2>Major theorem dependencies</h2>
-  <p>The overview names the shared core; five focused, editable diagrams preserve readable labels for each algorithm family. Module pages list the exact import dependencies for every Lean source file.</p>
-  {render_diagram(page_path, 'theorem-dependencies.mmd', 'Overview of the five theorem-dependency routes', extra_class='dependency-diagram dependency-overview')}
-  <div class="dependency-atlas">
-    {render_diagram(page_path, 'theorem-dependencies-stochastic.mmd', 'Finite stochastic bandit, ETC, and UCB dependencies', extra_class='dependency-diagram')}
-    {render_diagram(page_path, 'theorem-dependencies-oful.mmd', 'OFUL confidence, regret, and stopping dependencies', extra_class='dependency-diagram')}
-    {render_diagram(page_path, 'theorem-dependencies-thompson.mmd', 'Thompson sampling and Bayesian-regret dependencies', extra_class='dependency-diagram')}
-    {render_diagram(page_path, 'theorem-dependencies-adversarial.mmd', 'EXP3 and Tsallis-FTRL dependencies', extra_class='dependency-diagram')}
-    {render_diagram(page_path, 'theorem-dependencies-rl.mmd', 'Finite-horizon RL and UCBVI dependencies', extra_class='dependency-diagram')}
-  </div>
+  <p>The overview names the shared core; five focused, editable diagrams preserve readable labels for each algorithm family. They stay collapsed until requested so the milestone search remains the primary reading path. Module pages list exact import dependencies.</p>
+  <details class="inventory-disclosure dependency-disclosure"><summary>Open six editable theorem-dependency maps</summary><div>
+    {render_diagram(page_path, 'theorem-dependencies.mmd', 'Overview of the five theorem-dependency routes', extra_class='dependency-diagram dependency-overview')}
+    <div class="dependency-atlas">
+      {render_diagram(page_path, 'theorem-dependencies-stochastic.mmd', 'Finite stochastic bandit, ETC, and UCB dependencies', extra_class='dependency-diagram')}
+      {render_diagram(page_path, 'theorem-dependencies-oful.mmd', 'OFUL confidence, regret, and stopping dependencies', extra_class='dependency-diagram')}
+      {render_diagram(page_path, 'theorem-dependencies-thompson.mmd', 'Thompson sampling and Bayesian-regret dependencies', extra_class='dependency-diagram')}
+      {render_diagram(page_path, 'theorem-dependencies-adversarial.mmd', 'EXP3 and Tsallis-FTRL dependencies', extra_class='dependency-diagram')}
+      {render_diagram(page_path, 'theorem-dependencies-rl.mmd', 'Finite-horizon RL and UCBVI dependencies', extra_class='dependency-diagram')}
+    </div>
+  </div></details>
 </section>
 
 <section id="modules">
@@ -2284,7 +2301,7 @@ def build_catalog(
 </section>
 
 <section id="declaration-table">
-  <div class="table-wrap" data-catalog tabindex="0" role="region" aria-label="Lean declaration catalog" aria-describedby="catalog-count">
+  <div class="table-wrap" data-catalog data-catalog-page-size="{CATALOG_PAGE_SIZE}" tabindex="0" role="region" aria-label="Lean declaration catalog" aria-describedby="catalog-count">
     <table>
       <thead><tr><th>Declaration</th><th>Kind</th><th>Chapter</th><th>Module</th><th>Status</th><th>Source</th></tr></thead>
       <tbody data-catalog-body>{''.join(rows)}</tbody>
@@ -3708,11 +3725,24 @@ def build_roadmap(
 ) -> None:
     page_path = "roadmap/index.html"
     status_counts = Counter(result["status"] for result in results)
+    visible_statuses = [
+        status
+        for status in ("compiled", "partial", "blocked", "planned", "stated")
+        if status_counts.get(status, 0)
+    ]
     status_summary = "".join(
         f'<article><strong>{status_counts.get(status, 0)}</strong>'
         f'<span>{html.escape(STATUS_LABELS.get(status, status.title()))}</span></article>'
-        for status in ("compiled", "partial", "blocked", "planned", "stated")
+        for status in visible_statuses
     )
+
+    def compact_boundary(value: str, limit: int = 220) -> str:
+        normalized = re.sub(r"\s+", " ", value).strip()
+        if len(normalized) <= limit:
+            return normalized
+        clipped = normalized[:limit].rsplit(" ", 1)[0].rstrip(" ,:;")
+        return f"{clipped}…"
+
     focus_results = [
         result
         for result in results
@@ -3723,9 +3753,14 @@ def build_roadmap(
 <article class="roadmap-focus-card">
   <div>{status_badge(result['status'])}<code>{html.escape(result['id'])}</code></div>
   <h3>{html.escape(result['title'])}</h3>
-  <p>{html.escape(result['informal'])}</p>
-  <p class="roadmap-next"><strong>Next named boundary.</strong> {html.escape(result['missing'][0]) if result['missing'] else 'No remaining gap is recorded.'}</p>
-  <a href="{href_from(page_path, f'implementation-map/index.html#{slugify(result["id"])}')}">Open full evidence in the Implementation Map →</a>
+  <p class="roadmap-evidence"><strong>{len(result['declarations'])}</strong> indexed declaration{'' if len(result['declarations']) == 1 else 's'} support this route.</p>
+  <p class="roadmap-next"><strong>Next named boundary.</strong> {html.escape(compact_boundary(result['missing'][0])) if result['missing'] else 'No remaining gap is recorded.'}</p>
+  <details class="roadmap-route-notes"><summary>Route context and full boundary</summary><div>
+    <p>{html.escape(result['informal'])}</p>
+    <h4>Full next boundary</h4>
+    <p>{html.escape(result['missing'][0]) if result['missing'] else 'No remaining gap is recorded.'}</p>
+  </div></details>
+  <a class="roadmap-evidence-link" href="{href_from(page_path, f'implementation-map/index.html#{slugify(result["id"])}')}">Open declarations, dependencies, and gaps →</a>
 </article>"""
         for result in focus_results
     )
@@ -3749,7 +3784,7 @@ def build_roadmap(
 
 <section id="progress">
   <h2>Current evidence at a glance</h2>
-  <div class="roadmap-status-grid" aria-label="Counts of explicitly mapped theorem-route milestones">{status_summary}</div>
+  <div class="roadmap-status-grid" aria-label="Counts of nonempty explicitly mapped theorem-route statuses">{status_summary}</div>
   <p>The counts come from <code>website/content/results.json</code>. They describe only explicitly mapped milestones, not a percentage of the textbook or the field.</p>
 </section>
 

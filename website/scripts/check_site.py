@@ -664,6 +664,10 @@ def main() -> int:
         roadmap_source = roadmap_path.read_text(encoding="utf-8")
         if roadmap_source.count('class="roadmap-focus-card"') != 6:
             errors.append("roadmap/index.html: expected six compact current-frontier cards")
+        if roadmap_source.count('class="roadmap-route-notes"') != 6:
+            errors.append("roadmap/index.html: every current-frontier card must collapse its full route narrative")
+        if roadmap_source.count('class="roadmap-evidence-link"') != 6:
+            errors.append("roadmap/index.html: every current-frontier card must link to canonical evidence")
         if 'class="status-ledger"' in roadmap_source:
             errors.append("roadmap/index.html: must not duplicate the complete milestone ledger")
         if '<details class="inventory-disclosure" open' in roadmap_source:
@@ -671,11 +675,21 @@ def main() -> int:
         if f"Search all {manifest.get('milestone_count')} milestones" not in roadmap_source:
             errors.append("roadmap/index.html: missing the canonical Implementation Map handoff")
 
+    implementation_path = output / "implementation-map" / "index.html"
+    if implementation_path.exists():
+        implementation_source = implementation_path.read_text(encoding="utf-8")
+        if '<details class="inventory-disclosure dependency-disclosure" open' in implementation_source:
+            errors.append("implementation-map/index.html: dependency atlas must be collapsed initially")
+        if "Open six editable theorem-dependency maps" not in implementation_source:
+            errors.append("implementation-map/index.html: missing the progressive dependency-atlas disclosure")
+
     catalog_path = output / "declarations" / "index.html"
     if catalog_path.exists():
         catalog_source = catalog_path.read_text(encoding="utf-8")
         if catalog_source.find('id="filters"') > catalog_source.find('id="catalog-map"'):
             errors.append("declarations/index.html: search controls must precede the explanatory diagram")
+        if 'data-catalog-page-size="20"' not in catalog_source:
+            errors.append("declarations/index.html: missing the generated 20-row catalog page-size contract")
         for label in ("Declaration", "Kind", "Chapter", "Module", "Status", "Source"):
             if f'data-label="{label}"' not in catalog_source:
                 errors.append(f"declarations/index.html: mobile catalog cards lack {label!r} labels")
@@ -1623,8 +1637,8 @@ def main() -> int:
     catalog_page_size = catalog_data.get("page_size") if isinstance(catalog_data, dict) else None
     if catalog_data.get("schema_version") != 2:
         errors.append("catalog-data.json: schema_version must be 2")
-    if catalog_page_size != 40:
-        errors.append("catalog-data.json: page_size must remain 40 for the narrow-screen card budget")
+    if catalog_page_size != 20:
+        errors.append("catalog-data.json: page_size must remain 20 for the narrow-screen card budget")
     if len(catalog_items) != manifest.get("declaration_count"):
         errors.append(
             f"catalog-data count {len(catalog_items)} != declaration_count {manifest.get('declaration_count')}"
@@ -1884,6 +1898,8 @@ def main() -> int:
         "data-catalog-return",
         "updateCatalogReturn",
         "window.scrollTo",
+        "catalog.dataset.catalogPageSize",
+        'data-label="Declaration"',
         'class="status ${escapeHtml(item.status)}"',
         "payload.kind_labels",
         "payload.source_base",

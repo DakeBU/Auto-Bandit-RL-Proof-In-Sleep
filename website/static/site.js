@@ -366,17 +366,17 @@
     const returnButton = document.querySelector("[data-catalog-return]");
     let catalogItems = null;
     let catalogLoadPromise = null;
-    let catalogPageSize = 100;
+    let catalogPageSize = Number.parseInt(catalog.dataset.catalogPageSize || "", 10) || 20;
     let catalogVisibleLimit = catalogPageSize;
 
     const catalogRow = (item) =>
       `<tr data-catalog-row>` +
-      `<td><a href="${escapeHtml(item.url)}"><code>${escapeHtml(item.name)}</code></a></td>` +
-      `<td>${escapeHtml(item.kind_label)}</td>` +
-      `<td>${escapeHtml(item.chapter_title)}</td>` +
-      `<td><a href="${escapeHtml(item.module_url)}"><code>${escapeHtml(item.module)}</code></a></td>` +
-      `<td><span class="status ${escapeHtml(item.status)}">${escapeHtml(item.status_label)}</span></td>` +
-      `<td><a href="${escapeHtml(item.source_url)}">${escapeHtml(item.source_label)}</a></td>` +
+      `<td data-label="Declaration"><a href="${escapeHtml(item.url)}"><code>${escapeHtml(item.name)}</code></a></td>` +
+      `<td data-label="Kind">${escapeHtml(item.kind_label)}</td>` +
+      `<td data-label="Chapter">${escapeHtml(item.chapter_title)}</td>` +
+      `<td data-label="Module"><a href="${escapeHtml(item.module_url)}"><code>${escapeHtml(item.module)}</code></a></td>` +
+      `<td data-label="Status"><span class="status ${escapeHtml(item.status)}">${escapeHtml(item.status_label)}</span></td>` +
+      `<td data-label="Source"><a href="${escapeHtml(item.source_url)}">${escapeHtml(item.source_label)}</a></td>` +
       `</tr>`;
 
     const renderCatalog = () => {
@@ -444,7 +444,7 @@
                 };
               })
             : [];
-          catalogPageSize = Number.isInteger(payload.page_size) ? payload.page_size : 100;
+          catalogPageSize = Number.isInteger(payload.page_size) ? payload.page_size : catalogPageSize;
         })
         .finally(() => catalog.setAttribute("aria-busy", "false"));
       return catalogLoadPromise;
