@@ -171,6 +171,12 @@ THEOREM_AUDIT_COMPARISON_SOURCE = (
     "research-wiki/papers/theorem-audit-comparison.json"
 )
 THEOREM_AUDIT_COMPARISON_DESTINATION = "evidence/theorem-audit-comparison.json"
+SGB_INTERFACE_FRONTIER_TRACE_SOURCE = (
+    "research-wiki/papers/sgb-theorem2-interface-frontier-trace.json"
+)
+SGB_INTERFACE_FRONTIER_TRACE_DESTINATION = (
+    "evidence/sgb-theorem2-interface-frontier-trace.json"
+)
 THEOREM_AUDIT_ROW_IDS = (
     "textbook-chapter-15-scoped-positive-control",
     "delayed-bobw-source-frozen-audit",
@@ -866,6 +872,8 @@ EXPLICIT_COPIES = {
 EVIDENCE_JSON = {
     THEOREM_AUDIT_COMPARISON_SOURCE:
         THEOREM_AUDIT_COMPARISON_DESTINATION,
+    SGB_INTERFACE_FRONTIER_TRACE_SOURCE:
+        SGB_INTERFACE_FRONTIER_TRACE_DESTINATION,
     "research-wiki/papers/prospective-audit-2025-freeze.json":
         "evidence/source-freeze.json",
     "research-wiki/proof-graph/benchmark_measurements.json":

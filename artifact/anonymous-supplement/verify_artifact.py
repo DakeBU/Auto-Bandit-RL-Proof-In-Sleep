@@ -1218,6 +1218,74 @@ def verify_theorem_audit_comparison():
             fail("missing theorem-audit proof-obligation ledger: " + rel)
 
 
+def verify_sgb_interface_frontier_trace():
+    trace = load_json(
+        ROOT / "evidence" / "sgb-theorem2-interface-frontier-trace.json"
+    )
+    summary = trace.get("frontier_summary")
+    target = trace.get("target_freeze")
+    states = trace.get("states")
+    transitions = trace.get("transitions")
+    if (
+        trace.get("schema_version") != 1
+        or trace.get("record_id") != "sgb-theorem2-frozen-frontier-trace-v1"
+        or trace.get("evidence_type")
+        != "post-hoc-machine-auditable-single-route-interface-progress"
+        or not isinstance(summary, dict)
+        or not isinstance(target, dict)
+        or not isinstance(states, list)
+        or not isinstance(transitions, list)
+    ):
+        fail("SGB interface-frontier trace schema drift")
+    expected_summary = {
+        "state_count": 8,
+        "dependency_ordered_closure_count": 7,
+        "initial_interface": "SGB-T2-NATIVE-PREFIX-IDENTIFICATION",
+        "current_interface": "SGB-T2-APPENDIX-C-PHASE-TRIGGER",
+        "theorem_two_endpoint_verified": False,
+        "statement_fence_count": 6,
+    }
+    for key, value in expected_summary.items():
+        if summary.get(key) != value:
+            fail("SGB interface-frontier summary drift: " + key)
+    if (
+        target.get("sha256")
+        != "26833d037458820fee79bf9be9e2d1f35771db06c69f80aeeeacc60070ac5c22"
+        or target.get("history_revision_count") != 8
+    ):
+        fail("SGB frozen-target projection drift")
+    if len(states) != 8 or len(transitions) != 7:
+        fail("SGB interface-frontier row-count drift")
+    if (
+        states[0].get("next_interface") != expected_summary["initial_interface"]
+        or states[-1].get("next_interface") != expected_summary["current_interface"]
+    ):
+        fail("SGB interface-frontier endpoint drift")
+    declarations = load_json(ROOT / "evidence" / "local_lean_declarations.json")
+    names = {
+        row.get("full_name") for row in declarations.get("declarations", [])
+    }
+    fence_count = 0
+    for ordinal, row in enumerate(transitions, 1):
+        if row.get("ordinal") != ordinal:
+            fail("SGB interface-frontier transition order drift")
+        if row.get("compiled_declaration") not in names:
+            fail("SGB interface-frontier declaration missing from index")
+        if row.get("statement_fence") is not None:
+            fence_count += 1
+        if row.get("frozen_source_snapshot") != "<anonymous-source-snapshot>":
+            fail("SGB interface-frontier commit was not anonymized")
+        if "git_commit" in row:
+            fail("SGB interface-frontier exposes an authoring commit")
+    for row in states:
+        if row.get("frozen_source_snapshot") != "<anonymous-source-snapshot>":
+            fail("SGB interface-frontier state was not anonymized")
+        if "git_commit" in row:
+            fail("SGB interface-frontier state exposes an authoring commit")
+    if fence_count != expected_summary["statement_fence_count"]:
+        fail("SGB interface-frontier statement-fence count drift")
+
+
 def verify_source_freeze():
     freeze = load_json(ROOT / "evidence" / "source-freeze.json")
     papers = freeze.get("papers", [])
@@ -1283,6 +1351,7 @@ def main():
     verify_claim_ledger()
     verify_source_freeze()
     verify_theorem_audit_comparison()
+    verify_sgb_interface_frontier_trace()
     verify_anonymous_base(manifest)
     verify_proof_graph(manifest)
     print(json.dumps({
