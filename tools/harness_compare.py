@@ -2,8 +2,9 @@
 """Evidence-bounded comparison for ABRL harness executions.
 
 The module deliberately separates deterministic measurements from GPT review.
-Only matched experiments carrying an explicit harness mode, experiment id, and
-reviewed progress class can support a default-harness recommendation.
+Only matched experiments carrying an explicit harness mode, experiment id,
+identical frozen route packet, and reviewer-owned progress verdict can support
+a default-harness recommendation.
 """
 
 from __future__ import annotations
@@ -36,6 +37,7 @@ PROGRESS_WEIGHTS = {
     "terminal": 8.0,
 }
 VERIFIED_STATUSES = {"compiled", "accepted"}
+REVIEWED_STATUSES = VERIFIED_STATUSES | {"blocked", "rejected"}
 ATTEMPT_ROLES = {"lower", "worker"}
 
 
@@ -84,14 +86,18 @@ def _eligible_rows(
 
 
 def _is_attempt(row: dict[str, Any]) -> bool:
-    return bool(row.get("attempt_id")) or row.get("role") in ATTEMPT_ROLES
+    return row.get("role") in ATTEMPT_ROLES or (
+        row.get("role") == "reviewer"
+        and bool(row.get("attempt_id"))
+        and row.get("reviewer_validated") is True
+    )
 
 
 def _is_reviewed(row: dict[str, Any]) -> bool:
-    if row.get("reviewer_validated") is True:
-        return True
     return (
-        row.get("status") in VERIFIED_STATUSES
+        row.get("reviewer_role") == "reviewer"
+        and row.get("reviewer_validated") is True
+        and row.get("status") in REVIEWED_STATUSES
         and bool(_as_list(row.get("verifier_evidence")))
         and row.get("progress_class") in PROGRESS_WEIGHTS
         and row.get("progress_class") != "unreviewed"
@@ -104,26 +110,87 @@ def _substantive_weight(row: dict[str, Any]) -> float:
     return PROGRESS_WEIGHTS.get(str(row.get("progress_class", "unreviewed")), 0.0)
 
 
-def _deduplicated_attempts(rows: Sequence[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Prefer the reviewer-classified row for each logged execution attempt."""
-    attempts: dict[str, dict[str, Any]] = {}
+def _attempt_join_key(row: dict[str, Any]) -> tuple[str, str, str, str]:
+    return (
+        str(row.get("experiment_id") or ""),
+        str(row.get("harness") or ""),
+        str(row.get("run_id") or ""),
+        str(row.get("attempt_id") or ""),
+    )
+
+
+def _merged_attempts(rows: Sequence[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Join worker execution measurements to a separate reviewer verdict.
+
+    A worker cannot make its own result count as reviewed.  Review rows use the
+    same attempt id and contribute classification/evidence fields, while the
+    worker row remains the source of elapsed time and token measurements.
+    """
+    executions: dict[tuple[str, str, str, str], dict[str, Any]] = {}
+    reviews: dict[tuple[str, str, str, str], dict[str, Any]] = {}
     anonymous = 0
     for row in rows:
-        if not _is_attempt(row):
+        role = row.get("role")
+        if role not in ATTEMPT_ROLES and role != "reviewer":
             continue
         attempt_id = str(row.get("attempt_id") or "")
         if not attempt_id:
+            if role not in ATTEMPT_ROLES:
+                continue
             anonymous += 1
             attempt_id = f"anonymous-{anonymous}"
-        current = attempts.get(attempt_id)
-        if current is None or (_is_reviewed(row) and not _is_reviewed(current)):
-            attempts[attempt_id] = row
-    return list(attempts.values())
+            key = (*_attempt_join_key(row)[:3], attempt_id)
+        else:
+            key = _attempt_join_key(row)
+        if role in ATTEMPT_ROLES:
+            executions.setdefault(key, dict(row))
+        elif row.get("reviewer_validated") is True:
+            reviews[key] = dict(row)
+
+    merged: list[dict[str, Any]] = []
+    review_fields = (
+        "status",
+        "progress_class",
+        "reviewer_validated",
+        "verifier_evidence",
+        "notes",
+        "obligations_before",
+        "obligations_after",
+        "new_declarations",
+        "reused_declarations",
+        "dag_nodes",
+        "dag_depth",
+        "lean_check_seconds",
+        "error_signature",
+        "changed_files",
+        "route_fingerprint",
+        "route_packet_hash",
+        "target_fingerprint",
+    )
+    for key, execution in executions.items():
+        combined = dict(execution)
+        review = reviews.get(key)
+        if review is not None:
+            if any(
+                review.get(field) != execution.get(field)
+                for field in ("target_fingerprint", "route_packet_hash")
+            ):
+                review = None
+        if review is not None:
+            for field in review_fields:
+                value = review.get(field)
+                if value not in (None, "", [], False):
+                    combined[field] = value
+            combined["reviewer_validated"] = True
+            combined["reviewer_role"] = "reviewer"
+            combined["review_time"] = review.get("time", "")
+        merged.append(combined)
+    return merged
 
 
 def _critical_path_seconds(rows: Sequence[dict[str, Any]], harness: str) -> float:
     measurement_rows = [row for row in rows if not _is_attempt(row)]
-    measurement_rows.extend(_deduplicated_attempts(rows))
+    measurement_rows.extend(_merged_attempts(rows))
     by_run: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in measurement_rows:
         by_run[str(row.get("run_id") or row.get("experiment_id") or "unknown")].append(row)
@@ -148,7 +215,7 @@ def _critical_path_seconds(rows: Sequence[dict[str, Any]], harness: str) -> floa
 
 def summarize_arm(rows: Sequence[dict[str, Any]], harness: str) -> dict[str, Any]:
     arm_rows = [row for row in rows if row.get("harness") == harness]
-    attempts = _deduplicated_attempts(arm_rows)
+    attempts = _merged_attempts(arm_rows)
     reviewed = [row for row in attempts if _is_reviewed(row)]
     substantive = [row for row in reviewed if _substantive_weight(row) > 0]
     run_ids = {str(row.get("run_id")) for row in arm_rows if row.get("run_id")}
@@ -227,9 +294,27 @@ def _matched_experiment_rows(
         if len(target_keys) != 1:
             exclusions[experiment_id] = "arms do not share one target fingerprint"
             continue
+        execution_rows = [
+            row for row in experiment_rows if row.get("role") in ATTEMPT_ROLES
+        ]
+        if not execution_rows:
+            exclusions[experiment_id] = "no lower/worker execution attempts are present"
+            continue
+        route_packet_hashes = {
+            str(row.get("route_packet_hash"))
+            for row in execution_rows
+            if row.get("route_packet_hash")
+        }
+        if len(route_packet_hashes) != 1 or any(
+            not row.get("route_packet_hash") for row in execution_rows
+        ):
+            exclusions[experiment_id] = (
+                "arms do not share one explicit frozen route-packet hash"
+            )
+            continue
         reviewed_modes = {
             str(row.get("harness"))
-            for row in _deduplicated_attempts(experiment_rows)
+            for row in _merged_attempts(experiment_rows)
             if _is_reviewed(row)
         }
         if reviewed_modes != set(HARNESS_MODES):
@@ -311,6 +396,12 @@ def analyze_trials(
                 "critical-path time",
                 "prompt and token volume",
             ],
+            "matching_contract": [
+                "same experiment id",
+                "same target fingerprint",
+                "same frozen route-packet hash",
+                "separate reviewer-owned verdict for each execution attempt",
+            ],
             "excluded_as_primary": [
                 "raw worker count",
                 "raw node count",
@@ -341,14 +432,18 @@ def render_mermaid(rows: Sequence[dict[str, Any]], analysis: dict[str, Any]) -> 
         "  ROOT --> H",
         "  ROOT --> M",
     ]
-    for index, row in enumerate(eligible):
+    for index, row in enumerate(_merged_attempts(eligible)):
         harness = str(row.get("harness"))
         parent = "H" if harness == "hierarchical" else "M"
         attempt = str(row.get("attempt_id") or row.get("run_id") or f"row-{index}")
         node_id = f"A{index}_{_mermaid_id(attempt)[:32]}"
         progress = str(row.get("progress_class") or "unreviewed")
         status = str(row.get("status") or "unknown")
-        label = f"{attempt}\\n{progress} · {status}".replace('"', "'")
+        if _is_reviewed(row):
+            evidence_label = f"reviewed {progress} · {status}"
+        else:
+            evidence_label = f"unreviewed · reported {progress}/{status}"
+        label = f"{attempt}\\n{evidence_label}".replace('"', "'")
         lines.append(f'  {node_id}["{label}"]')
         lines.append(f"  {parent} --> {node_id}")
         if _substantive_weight(row) > 0:
@@ -400,8 +495,9 @@ def render_markdown(analysis: dict[str, Any]) -> str:
 - Next matched arm to collect: **{decision['next_experiment_harness']}**
 
 Historical trials without an explicit harness mode, experiment id, frozen target
-fingerprint, reviewed progress class, and verifier evidence are excluded from the
-causal comparison.  A successful agent command is not a compiled Lean result.
+fingerprint, identical route-packet hash, reviewer-owned progress verdict, and
+verifier evidence are excluded from the causal comparison.  A successful agent
+command or worker self-report is not a compiled Lean result.
 
 ## Matched evidence
 
@@ -444,6 +540,7 @@ def render_review_prompt(
                 "task",
                 "experiment_id",
                 "harness",
+                "route_packet_hash",
                 "run_id",
                 "attempt_id",
                 "role",
@@ -469,7 +566,8 @@ def render_review_prompt(
     ]
     return f"""# GPT Harness Review Packet
 
-You are reviewing two ABRL proof harnesses on matched, frozen theorem targets:
+You are reviewing two ABRL proof harnesses on matched, frozen theorem targets
+and identical route packets:
 
 1. `hierarchical`: upper → middle → one or more lower roles → reviewer;
 2. `master-worker`: a light master plans, ordinary workers explore disjoint

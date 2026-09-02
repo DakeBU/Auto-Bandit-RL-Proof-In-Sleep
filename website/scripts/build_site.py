@@ -1454,7 +1454,7 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
 <section id="source-guide" class="source-guide">
   <p class="eyebrow">Textbook crosswalk</p>
   <h2>Read the mathematics before the Lean interface</h2>
-  <p class="section-intro">The Book Map is a curated formalization curriculum anchored in <em>Bandit Algorithms</em>, not a chapter-for-chapter reproduction of one book. Page numbers below use its free online edition; companion papers cover algorithm-specific results.</p>
+  <p class="section-intro">The Book Map is a curated formalization curriculum anchored in <em>Bandit Algorithms</em>, not a chapter-for-chapter reproduction of one book. Visible page labels use the numbered pages of its free online edition; source buttons use the PDF viewer's physical page index, which includes front matter and can therefore be larger. Companion papers cover algorithm-specific results.</p>
   <div class="source-grid source-grid-{len(standard_companions) + 1}">{sources}</div>
   {advanced_sources_html}
   {notation_html}
@@ -1839,7 +1839,7 @@ def build_index(
   <p class="eyebrow">Powered by two connected systems</p>
   <h2>One engine produces verified mathematics; one library makes it reusable.</h2>
   <div class="two-system-grid">
-    <article class="info-card system-card"><span class="level-label">Research system</span><h3>ABRL Adaptive Harness</h3><p>A fixed mathematical target enters an evidence-aware scheduler. The hierarchical route remains the default; bounded master–worker trials are compared on substantive proof progress before both routes meet the same Lean and reviewer gate.</p><a href="{href_from(page_path, 'workflow/index.html')}">Inspect the ABRL harness →</a></article>
+    <article class="info-card system-card"><span class="level-label">Research system</span><h3>ABRL Adaptive Harness</h3><p>A fixed mathematical target enters an evidence-aware scheduler. The hierarchical route remains the default; bounded master–worker trials use the same hashed route packet, and only separate reviewer verdicts can enter the comparison.</p><a href="{href_from(page_path, 'workflow/index.html')}">Inspect the ABRL harness →</a></article>
     <article class="info-card system-card"><span class="level-label">User-facing library</span><h3>BanditRLlib</h3><p>Compiled Lean declarations → searchable reusable library → textbook-aligned learning → LaTeX↔Lean formalization → community lemma intake.</p><a href="{href_from(page_path, 'declarations/index.html')}">Browse BanditRLlib →</a></article>
   </div>
   {render_diagram(page_path, 'system-architecture.mmd', 'A research target enters ABRL and returns as reusable, reviewer-gated BanditRLlib mathematics')}
@@ -4585,7 +4585,7 @@ def render_harness_comparison_ledger(page_path: str, comparison: dict[str, Any])
     return f"""
 <section id="comparison-evidence">
   <p class="eyebrow">Generated from structured run logs</p>
-  <div class="snapshot-heading"><div><h2>Current harness-comparison evidence</h2><p class="section-intro">The table reports only matched, reviewer-classified attempts on the same frozen target. Historical activity without the comparison contract is excluded.</p></div>{status_badge('prototype')}</div>
+  <div class="snapshot-heading"><div><h2>Current harness-comparison evidence</h2><p class="section-intro">The table reports only lower/worker executions that share one frozen target and one hashed route packet, then receive a separate reviewer-owned verdict. Historical activity without that comparison contract is excluded.</p></div>{status_badge('prototype')}</div>
   <div class="comparison-decision" role="status" aria-label="Current harness comparison decision">
     <div><span class="level-label">Decision status</span><strong>{html.escape(status.title())}</strong></div>
     <div><span class="level-label">Matched evidence</span><strong>{matched_count} of {minimum_count} required</strong></div>
@@ -4593,7 +4593,7 @@ def render_harness_comparison_ledger(page_path: str, comparison: dict[str, Any])
     <div><span class="level-label">Next matched arm</span><strong>{html.escape(next_harness)}</strong></div>
   </div>
   <div class="harness-evidence-pipeline" aria-label="Harness evidence and decision pipeline">
-    <article><span class="pipeline-step">01</span><div><span class="level-label">Deterministic matcher</span><strong>Active</strong><p>Keep only equal-target, equal-budget trials with reviewer-classified outcomes and verifier evidence.</p></div></article>
+    <article><span class="pipeline-step">01</span><div><span class="level-label">Deterministic matcher</span><strong>Active</strong><p>Keep only equal-target, equal-route-packet trials with reviewer-owned outcomes and verifier evidence.</p></div></article>
     <article><span class="pipeline-step">02</span><div><span class="level-label">Bounded GPT review</span><strong>{html.escape(review_state)}</strong><p>The review packet can explain bottlenecks, duplication, and context cost; it cannot relabel an attempt or invent a winner.</p></div></article>
     <article><span class="pipeline-step">03</span><div><span class="level-label">Promotion gate</span><strong>{html.escape(promotion_state)}</strong><p>A default changes only after enough matched experiments and the same independent Lean-and-target review.</p></div></article>
   </div>
@@ -4607,9 +4607,9 @@ def render_harness_comparison_ledger(page_path: str, comparison: dict[str, Any])
   <aside class="next-experiment-contract" aria-labelledby="next-experiment-title">
     <div><span class="level-label">Next valid comparison</span><h3 id="next-experiment-title">One target, two execution arms, one acceptance rule</h3></div>
     <ol>
-      <li>Freeze one theorem statement, target fingerprint, source packet, route budget, and stopping rule.</li>
+      <li>Freeze one theorem statement, target fingerprint, ordered route packet, source packet, budget, and stopping rule.</li>
       <li>Run the hierarchical and master–worker arms in isolated worktrees with disjoint ownership.</li>
-      <li>Compare reviewer-validated obligations closed, reusable declarations, critical path, context cost, and failure diagnosis.</li>
+      <li>Join each execution to a separate reviewer verdict, then compare obligations closed, reusable declarations, critical path, context cost, and failure diagnosis.</li>
     </ol>
   </aside>
   <div class="harness-attempt-panel">
@@ -4658,7 +4658,7 @@ def build_workflow(output: Path, verified: bool, generated_at: str) -> None:
 <section id="roles">
   <p class="eyebrow">Adaptive orchestration, one evidence standard</p>
   <h2>A hybrid candidate—not a measured winner</h2>
-  <p>The scheduler can run the established hierarchical director–planner–worker loop or a bounded master–worker trial in which several workers explore independent proof routes. Both receive the same frozen target, budget, source packet, and deterministic gates.</p>
+  <p>The scheduler can run the established hierarchical director–planner–worker loop or a bounded master–worker trial in which several workers explore independent proof routes. Both receive the same frozen target, ordered route packet, budget, source packet, and deterministic gates; the route-packet hash makes that equality checkable.</p>
   <p><strong>Current decision.</strong> {html.escape(current_decision)} The master–worker route is experimental and is enabled only when parallel alternatives are genuinely independent. A trial wins only by delivering a stronger checked certificate, a smaller named blocker, or a reusable lemma—not by producing more messages or attempts.</p>
   <div class="harness-operating-grid">
     <article><span class="level-label">Target governor</span><h3>Hierarchy owns the theorem</h3><p>One authority freezes the statement, assumptions, source interpretation, proof frontier, and acceptance contract.</p></article>
@@ -4673,7 +4673,10 @@ def build_workflow(output: Path, verified: bool, generated_at: str) -> None:
 
 <section id="commands">
   <h2>Reproducible gates</h2>
-  <pre class="lean-code"><code>python3 tools/bandit.py blueprint-refresh &lt;task-id&gt;
+  <p>For a real A/B pilot, create both arms from the same route file, experiment id, and target fingerprint. The hierarchical arm executes the packets sequentially; the master–worker arm executes the same packets concurrently.</p>
+  <pre class="lean-code"><code>python3 tools/bandit.py run-cycle &lt;task-id&gt; --harness hierarchical --experiment-id AB-001 --target-fingerprint &lt;sha256&gt; --lower-count 2 --parallel-route-json routes.json
+python3 tools/bandit.py run-cycle &lt;task-id&gt; --harness master-worker --experiment-id AB-001 --target-fingerprint &lt;sha256&gt; --lower-count 2 --parallel-route-json routes.json
+python3 tools/bandit.py blueprint-refresh &lt;task-id&gt;
 python3 tools/bandit.py harness-compare --task &lt;task-id&gt;
 python3 tools/bandit.py reference-index
 python3 tools/bandit.py unfinished

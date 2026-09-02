@@ -1,5 +1,5 @@
 {
-  "edition_note": "Page numbers refer to the free online edition of Lattimore and Szepesvári's Bandit Algorithms. The authors note that its pagination differs from the print edition. Algorithm and theorem text on this site is independently restated; use the source link for the original wording and complete assumptions.",
+  "edition_note": "Visible page numbers refer to the numbered pages of the free online edition of Lattimore and Szepesvári's Bandit Algorithms. Source buttons use the PDF viewer's physical page index, which includes front matter and can therefore be larger. The authors also note that the online and print editions have different pagination. Algorithm and theorem text on this site is independently restated; use the source link for the original wording and complete assumptions.",
   "readings": [
     {
       "slug": "foundations",
@@ -148,8 +148,8 @@
             "input: k arms, horizon n, exploration count m with 1 ≤ m ≤ n/k",
             "for s = 1,…,m: for a = 1,…,k: pull arm a and record X_{a,s}",
             "compute μ̂_a = (1/m) sum_s X_{a,s} for every arm a",
-            "set â to the least-encoded empirical-mean maximizer",
-            "for every remaining round: pull â and record its reward"
+            "set a_hat to the least-encoded empirical-mean maximizer",
+            "for every remaining round: pull a_hat and record its reward"
           ],
           "relationship": "The textbook permits any fixed empirical-mean tie rule. BanditRLlib's canonical generated ETC route fixes round-robin exploration and an explicit first-occurrence/least-encoded commit rule, then proves measurability and expected regret under its bounded or sub-Gaussian arm-law contracts."
         }
@@ -393,7 +393,7 @@
       },
       "source_theorem": {
         "label": "Theorem 36.1 (Bayesian regret of Thompson sampling)",
-        "pages": "online Ch. 36, pp. 460–475",
+        "pages": "online p. 461 (Chapter 36, §36.1)",
         "pdf_page": 470,
         "url": "https://tor-lattimore.com/downloads/book/book.pdf",
         "math": "BR_n\\le C\\sqrt{kn\\log n}\\quad\\text{for the theorem's Bayesian finite-armed model and universal }C.",

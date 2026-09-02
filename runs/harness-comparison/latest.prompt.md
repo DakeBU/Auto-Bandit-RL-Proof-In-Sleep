@@ -1,6 +1,7 @@
 # GPT Harness Review Packet
 
-You are reviewing two ABRL proof harnesses on matched, frozen theorem targets:
+You are reviewing two ABRL proof harnesses on matched, frozen theorem targets
+and identical route packets:
 
 1. `hierarchical`: upper → middle → one or more lower roles → reviewer;
 2. `master-worker`: a light master plans, ordinary workers explore disjoint
@@ -32,9 +33,11 @@ Return:
   "schema_version": 1,
   "task_filter": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
   "experiment_filter": "",
-  "eligible_rows": 0,
+  "eligible_rows": 1,
   "matched_experiments": [],
-  "excluded_experiments": {},
+  "excluded_experiments": {
+    "sgb-t2-round33-master-worker": "both harness arms are not present"
+  },
   "minimum_matched_experiments": 2,
   "all_evidence": {
     "hierarchical": {
@@ -59,13 +62,13 @@ Return:
     },
     "master-worker": {
       "harness": "master-worker",
-      "experiments": 0,
-      "runs": 0,
-      "attempts": 0,
+      "experiments": 1,
+      "runs": 1,
+      "attempts": 1,
       "reviewed_attempts": 0,
       "substantive_attempts": 0,
       "failed_or_rejected_attempts": 0,
-      "unreviewed_attempts": 0,
+      "unreviewed_attempts": 1,
       "substantive_score": 0,
       "obligations_closed": 0,
       "new_declarations": [],
@@ -123,7 +126,7 @@ Return:
   "decision": {
     "status": "insufficient-evidence",
     "recommended_default": "retain-current-default",
-    "next_experiment_harness": "master-worker",
+    "next_experiment_harness": "hierarchical",
     "reason": "need at least 2 matched experiments; found 0"
   },
   "metric_policy": {
@@ -133,6 +136,12 @@ Return:
       "new and reused declarations",
       "critical-path time",
       "prompt and token volume"
+    ],
+    "matching_contract": [
+      "same experiment id",
+      "same target fingerprint",
+      "same frozen route-packet hash",
+      "separate reviewer-owned verdict for each execution attempt"
     ],
     "excluded_as_primary": [
       "raw worker count",
@@ -157,5 +166,37 @@ Return:
 ## Eligible recent log rows
 
 ```json
-[]
+[
+  {
+    "time": "2026-09-02T06:26:53+00:00",
+    "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
+    "experiment_id": "sgb-t2-round33-master-worker",
+    "harness": "master-worker",
+    "run_id": "sgb-theorem2-missing-pull-regret-consumer-round33-2026-09-02",
+    "attempt_id": "sgb-t2-round33-worker-consumer",
+    "role": "lower",
+    "progress_class": "compiled-leaf",
+    "status": "compiled",
+    "obligations_before": 1,
+    "new_declarations": [
+      "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCountBelowEvent_charge_mul_probability_le_integral",
+      "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_map_visible_eq_generated",
+      "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDMissingPullLatentPhase_probability_le_countBelow",
+      "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDMissingPullLatentPhase_charge_mul_probability_le_integral"
+    ],
+    "reused_declarations": [
+      "BanditRLProof.StochasticGradientBandit.twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow",
+      "BanditRLProof.StochasticGradientBandit.twoArmTerminalOptimalPullCountEvent_sampledPseudoRegret_eq",
+      "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_eq_native",
+      "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary",
+      "Measure.measure_mono"
+    ],
+    "notes": "Compiled the frozen finite-horizon missing-pull regret consumer. The latent missing-pull event is mapped through an exact latent-visible/generated-source marginal to the generated terminal-count-below event; its nonnegative-gap horizon-minus-block-size charge is bounded by expected sampled pseudo-regret. This proves neither positive missing-branch probability nor a source trigger, selected IID, future/no-return, ballot/asymptotic assembly, or Theorem 2.",
+    "verifier_evidence": [
+      "focused source build passed 3642 jobs; focused typed-canary build passed 3644 jobs; audited endpoints use only propext, Classical.choice, and Quot.sound",
+      "SafeVerify passed with statement hash e0b6df5dcf07b860cdd4b02695c1621609030bb03ed06c502748691242ab7dc9 and all source-assumption tokens preserved",
+      "full repository gate passed using C:\\Users\\admin\\anaconda3\\python.exe: 8852 library jobs, 8894 test jobs, 387 Python tests with 7 skipped; anonymous supplement tests passed"
+    ]
+  }
+]
 ```

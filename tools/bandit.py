@@ -26970,7 +26970,18 @@ Use exactly one:
 """
 
 
-def make_prompt_deck(run_dir: Path, task_id: str, cycle: int, lower_count: int) -> list[Path]:
+def make_prompt_deck(
+    run_dir: Path,
+    task_id: str,
+    cycle: int,
+    lower_count: int,
+    *,
+    routes: list[dict[str, Any]] | None = None,
+    experiment_id: str = "",
+    target_fingerprint: str = "",
+    route_packet_hash: str = "",
+) -> list[Path]:
+    routes = list(routes or [])
     task_text = read_optional(task_file(task_id), 12000)
     conversion_text = read_optional(ROOT / "conversion-windows" / f"{task_id}.md", 12000)
     obligations_text = read_optional(ROOT / "proof-obligations" / f"{task_id}.md", 12000)
@@ -26985,10 +26996,28 @@ def make_prompt_deck(run_dir: Path, task_id: str, cycle: int, lower_count: int) 
     weapon_text = read_optional(RETRIEVAL_INDEX_DIR / "proof_weapon_cards.json", 10000)
     local_leaf_text = read_optional(RETRIEVAL_INDEX_DIR / "local_leaf_cards.json", 6000)
     local_decl_text = read_optional(RETRIEVAL_INDEX_DIR / "local_lean_declarations.json", 10000)
+    matched_route_context = ""
+    if routes:
+        matched_route_context = f"""
+## Frozen matched route packet
+
+Experiment id: `{experiment_id}`
+Target fingerprint: `{target_fingerprint}`
+Route-packet hash: `{route_packet_hash}`
+
+The hierarchical and master–worker arms must receive these exact routes.  The
+hierarchical arm executes them sequentially; it may not silently replace or
+repartition them.
+
+```json
+{json.dumps(routes, indent=2, ensure_ascii=False)}
+```
+"""
     context = f"""# Context
 
 Task file exists: `{task_exists(task_id)}`
 Lean gate: `lake build && lake build Tests`
+{matched_route_context}
 
 ## Task
 
@@ -27106,8 +27135,23 @@ is useful only when it sharpens the Lean statement, assumptions, or route.
 
     for i in range(1, lower_count + 1):
         lower_kind = ["proof architect", "Lean worker", "retrieval/search worker"][(i - 1) % 3]
+        assigned_route = routes[i - 1] if i <= len(routes) else None
+        route_instruction = ""
+        if assigned_route is not None:
+            route_instruction = f"""
+This is a matched harness experiment.  Work on the following frozen route
+packet exactly as supplied; do not substitute a different leaf:
+
+```json
+{json.dumps(assigned_route, indent=2, ensure_ascii=False)}
+```
+
+Stay inside its declared `owned_files` and report its route fingerprint in the
+attempt summary.
+"""
         body = prompt_header(task_id, cycle, f"lower-{i}") + f"""You are a lower {lower_kind}.
 
+{route_instruction}
 Work on exactly one assigned leaf.  If the leaf is under-specified, write the
 missing assumption or source mapping into the appropriate memory file instead
 of changing the theorem.  Do not frequently change the proof route; persistent
@@ -27120,13 +27164,23 @@ Mathlib-ready lemmas unless they are truly ABRL-specific wrappers.
         write_text(path, body)
         prompts.append(path)
 
-    reviewer = prompt_header(task_id, cycle, "reviewer") + """You are the reviewer/build gate.
+    reviewer_contract = ""
+    if routes:
+        reviewer_contract = f"""
+For every lower execution, append a separate `trial-log` verdict with
+`--role reviewer`, the same `--attempt-id`, `--harness hierarchical`,
+`--experiment-id {experiment_id}`, `--target-fingerprint {target_fingerprint}`,
+and `--route-packet-hash {route_packet_hash}`.  Only the reviewer may set
+`--reviewer-validated`; a worker self-report is never reviewed evidence.
+"""
+    reviewer = prompt_header(task_id, cycle, "reviewer") + f"""You are the reviewer/build gate.
 
 Check target fidelity, hidden assumptions, stale leaves, and Lean status.  Run
 or request `python3 tools/bandit.py check`.  Record whether new work is:
 compiled, blocked, rejected, stale, or only theorem-card memory.
 Verify that Mathlib-candidate leaves are small, general, and recorded in
 `research-wiki/mathlib-candidates/` when appropriate.
+{reviewer_contract}
 """
     write_text(run_dir / "40_reviewer.md", reviewer)
     prompts.append(run_dir / "40_reviewer.md")
@@ -27156,6 +27210,19 @@ def load_parallel_routes(value: str, lower_count: int) -> list[dict[str, Any]]:
     return [dict(route) for route in routes[:lower_count]]
 
 
+def frozen_route_packet_hash(routes: list[dict[str, Any]]) -> str:
+    """Hash the exact ordered route packet shared by both experiment arms."""
+    if not routes:
+        return ""
+    canonical = json.dumps(
+        routes,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+    return lifecycle.content_hash(canonical)
+
+
 def make_master_worker_prompt_deck(
     run_dir: Path,
     task_id: str,
@@ -27165,6 +27232,7 @@ def make_master_worker_prompt_deck(
     target_fingerprint: str,
 ) -> list[Path]:
     """Create a compact master/parallel-worker/synthesis/reviewer prompt deck."""
+    route_packet_hash = frozen_route_packet_hash(routes)
     task_text = read_optional(task_file(task_id), 12000)
     conversion_text = read_optional(ROOT / "conversion-windows" / f"{task_id}.md", 10000)
     obligations_text = read_optional(ROOT / "proof-obligations" / f"{task_id}.md", 12000)
@@ -27177,6 +27245,7 @@ Cycle: `{cycle}`
 Harness: `master-worker`
 Experiment id: `{experiment_id}`
 Target fingerprint: `{target_fingerprint}`
+Route-packet hash: `{route_packet_hash}`
 Lean gate: `lake build && lake build Tests`
 
 This is one arm of a harness comparison.  Worker count, prose volume, and a
@@ -27225,6 +27294,7 @@ statement-repair, compiled-leaf, closed-frontier, or terminal.
                 "task": task_id,
                 "cycle": cycle,
                 "target_fingerprint": target_fingerprint,
+                "route_packet_hash": route_packet_hash,
                 "routes": routes,
                 "schedule": ["master-plan", "parallel-workers", "master-synthesis", "reviewer"],
             },
@@ -27305,9 +27375,11 @@ Check file ownership, target fidelity, assumptions, declaration statements,
 placeholders, and focused/full Lean evidence.  Run the required gate after the
 workers have joined.  For each attempt, append one structured `trial-log` row
 with `--harness master-worker`, `--experiment-id {experiment_id}`,
-`--attempt-id`, `--progress-class`, obligations before/after, declaration reuse,
-timing/context fields, and verifier evidence.  Set `--reviewer-validated` only
-when the evidence supports it.  Then run:
+`--target-fingerprint {target_fingerprint}`,
+`--route-packet-hash {route_packet_hash}`, `--attempt-id`, `--progress-class`,
+obligations before/after, declaration reuse, timing/context fields, and verifier
+evidence.  The verdict row must use `--role reviewer`; only that separate row
+may set `--reviewer-validated`.  Then run:
 
 ```text
 python3 tools/bandit.py harness-compare --task {task_id}
@@ -27343,6 +27415,7 @@ def execute_prompt(
     harness: str = "hierarchical",
     experiment_id: str = "",
     target_fingerprint: str = "",
+    route_packet_hash: str = "",
     capture_log: bool = False,
 ) -> int:
     command = format_agent_command(template, prompt, run_dir, task_id, cycle)
@@ -27379,6 +27452,7 @@ def execute_prompt(
         "harness": harness,
         "experiment_id": experiment_id,
         "target_fingerprint": target_fingerprint,
+        "route_packet_hash": route_packet_hash,
         "attempt_id": f"{run_dir.name}:{prompt.stem}",
         "worker_id": prompt.stem,
         "progress_class": "unreviewed",
@@ -27459,6 +27533,7 @@ def execute_master_worker_prompt_deck(
     cycle: int,
     experiment_id: str,
     target_fingerprint: str,
+    route_packet_hash: str,
     stop_on_error: bool,
 ) -> int:
     plan_prompts = [prompt for prompt in prompts if prompt.name.startswith("10_master")]
@@ -27479,6 +27554,7 @@ def execute_master_worker_prompt_deck(
             harness="master-worker",
             experiment_id=experiment_id,
             target_fingerprint=target_fingerprint,
+            route_packet_hash=route_packet_hash,
             capture_log=True,
         )
         if code != 0 and stop_on_error:
@@ -27496,6 +27572,7 @@ def execute_master_worker_prompt_deck(
             harness="master-worker",
             experiment_id=experiment_id,
             target_fingerprint=target_fingerprint,
+            route_packet_hash=route_packet_hash,
             capture_log=True,
         )
 
@@ -27517,6 +27594,7 @@ def execute_master_worker_prompt_deck(
             harness="master-worker",
             experiment_id=experiment_id,
             target_fingerprint=target_fingerprint,
+            route_packet_hash=route_packet_hash,
             capture_log=True,
         )
         if final_code != 0 and stop_on_error:
@@ -27596,6 +27674,12 @@ def cmd_trial_log(args: argparse.Namespace) -> int:
     reviewer_validated = bool(getattr(args, "reviewer_validated", False))
     if reviewer_validated and args.status not in {"compiled", "accepted", "blocked", "rejected"}:
         raise SystemExit("--reviewer-validated requires a reviewer-classified terminal attempt status")
+    if reviewer_validated and args.role != "reviewer":
+        raise SystemExit("--reviewer-validated may be set only by --role reviewer")
+    if reviewer_validated and not getattr(args, "attempt_id", ""):
+        raise SystemExit("--reviewer-validated requires the reviewed --attempt-id")
+    if reviewer_validated and not args.verifier_evidence:
+        raise SystemExit("--reviewer-validated requires at least one --verifier-evidence")
     record = {
         "time": now_iso(),
         "task": args.task,
@@ -27614,6 +27698,7 @@ def cmd_trial_log(args: argparse.Namespace) -> int:
         "harness": harness,
         "experiment_id": getattr(args, "experiment_id", ""),
         "target_fingerprint": getattr(args, "target_fingerprint", ""),
+        "route_packet_hash": getattr(args, "route_packet_hash", ""),
         "attempt_id": getattr(args, "attempt_id", ""),
         "worker_id": getattr(args, "worker_id", ""),
         "progress_class": progress_class,
@@ -27642,6 +27727,7 @@ def cmd_trial_summary(_args: argparse.Namespace) -> int:
         "time", "task", "role", "kind", "status", "lean", "source", "run_id",
         "changed_files", "statement_hash", "parent_id", "route_fingerprint",
         "verifier_evidence", "harness", "experiment_id", "target_fingerprint",
+        "route_packet_hash",
         "attempt_id", "worker_id", "progress_class", "reviewer_validated",
         "obligations_before", "obligations_after", "new_declarations",
         "reused_declarations", "dag_nodes", "dag_depth", "elapsed_seconds",
@@ -28285,6 +28371,7 @@ def cmd_run_cycle(args: argparse.Namespace) -> int:
     target_fingerprint = getattr(args, "target_fingerprint", "") or lifecycle.content_hash(
         read_optional(task_file(args.id), 1_000_000)
     )
+    route_packet_hash = frozen_route_packet_hash(routes)
     run_dir = ROOT / "runs" / (
         f"{run_stamp}-{args.id}-{harness}-cycle{args.cycle:02d}"
     )
@@ -28299,7 +28386,16 @@ def cmd_run_cycle(args: argparse.Namespace) -> int:
             target_fingerprint,
         )
     else:
-        prompts = make_prompt_deck(run_dir, args.id, args.cycle, args.lower_count)
+        prompts = make_prompt_deck(
+            run_dir,
+            args.id,
+            args.cycle,
+            args.lower_count,
+            routes=routes,
+            experiment_id=experiment_id,
+            target_fingerprint=target_fingerprint,
+            route_packet_hash=route_packet_hash,
+        )
         write_text(
             run_dir / "harness.json",
             json.dumps(
@@ -28310,6 +28406,7 @@ def cmd_run_cycle(args: argparse.Namespace) -> int:
                     "task": args.id,
                     "cycle": args.cycle,
                     "target_fingerprint": target_fingerprint,
+                    "route_packet_hash": route_packet_hash,
                     "routes": routes,
                     "schedule": ["upper", "middle", "lower-sequential", "reviewer"],
                 },
@@ -28334,6 +28431,7 @@ def cmd_run_cycle(args: argparse.Namespace) -> int:
         "harness": harness,
         "experiment_id": experiment_id,
         "target_fingerprint": target_fingerprint,
+        "route_packet_hash": route_packet_hash,
         "progress_class": "unreviewed",
         "reviewer_validated": False,
     })
@@ -28351,6 +28449,7 @@ def cmd_run_cycle(args: argparse.Namespace) -> int:
                 cycle=args.cycle,
                 experiment_id=experiment_id,
                 target_fingerprint=target_fingerprint,
+                route_packet_hash=route_packet_hash,
                 stop_on_error=args.stop_on_error,
             )
         code = 0
@@ -28365,6 +28464,7 @@ def cmd_run_cycle(args: argparse.Namespace) -> int:
                 harness=harness,
                 experiment_id=experiment_id,
                 target_fingerprint=target_fingerprint,
+                route_packet_hash=route_packet_hash,
                 capture_log=True,
             )
             if code != 0 and args.stop_on_error:
@@ -29940,6 +30040,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--harness", choices=harness_compare.HARNESS_MODES, default="")
     p.add_argument("--experiment-id", default="")
     p.add_argument("--target-fingerprint", default="")
+    p.add_argument("--route-packet-hash", default="")
     p.add_argument("--attempt-id", default="")
     p.add_argument("--worker-id", default="")
     p.add_argument(

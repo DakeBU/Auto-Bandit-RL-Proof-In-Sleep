@@ -2,16 +2,17 @@
 
 ## Evidence boundary
 
-- Eligible structured rows: 0
+- Eligible structured rows: 1
 - Matched experiments: none
 - Minimum matched experiments for a recommendation: 2
 - Decision status: **insufficient-evidence**
 - Recommended default: **retain-current-default**
-- Next matched arm to collect: **master-worker**
+- Next matched arm to collect: **hierarchical**
 
 Historical trials without an explicit harness mode, experiment id, frozen target
-fingerprint, reviewed progress class, and verifier evidence are excluded from the
-causal comparison.  A successful agent command is not a compiled Lean result.
+fingerprint, identical route-packet hash, reviewer-owned progress verdict, and
+verifier evidence are excluded from the causal comparison.  A successful agent
+command or worker self-report is not a compiled Lean result.
 
 ## Matched evidence
 
@@ -26,7 +27,7 @@ terminal counts most.  Raw worker/node count is not a success metric.
 
 ## Excluded or unmatched experiments
 
-- none
+- `sgb-t2-round33-master-worker`: both harness arms are not present
 
 ## Deterministic conclusion
 

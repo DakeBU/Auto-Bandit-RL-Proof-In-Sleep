@@ -2,9 +2,11 @@
   "schema_version": 1,
   "task_filter": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
   "experiment_filter": "",
-  "eligible_rows": 0,
+  "eligible_rows": 1,
   "matched_experiments": [],
-  "excluded_experiments": {},
+  "excluded_experiments": {
+    "sgb-t2-round33-master-worker": "both harness arms are not present"
+  },
   "minimum_matched_experiments": 2,
   "all_evidence": {
     "hierarchical": {
@@ -29,13 +31,13 @@
     },
     "master-worker": {
       "harness": "master-worker",
-      "experiments": 0,
-      "runs": 0,
-      "attempts": 0,
+      "experiments": 1,
+      "runs": 1,
+      "attempts": 1,
       "reviewed_attempts": 0,
       "substantive_attempts": 0,
       "failed_or_rejected_attempts": 0,
-      "unreviewed_attempts": 0,
+      "unreviewed_attempts": 1,
       "substantive_score": 0,
       "obligations_closed": 0,
       "new_declarations": [],
@@ -93,7 +95,7 @@
   "decision": {
     "status": "insufficient-evidence",
     "recommended_default": "retain-current-default",
-    "next_experiment_harness": "master-worker",
+    "next_experiment_harness": "hierarchical",
     "reason": "need at least 2 matched experiments; found 0"
   },
   "metric_policy": {
@@ -103,6 +105,12 @@
       "new and reused declarations",
       "critical-path time",
       "prompt and token volume"
+    ],
+    "matching_contract": [
+      "same experiment id",
+      "same target fingerprint",
+      "same frozen route-packet hash",
+      "separate reviewer-owned verdict for each execution attempt"
     ],
     "excluded_as_primary": [
       "raw worker count",

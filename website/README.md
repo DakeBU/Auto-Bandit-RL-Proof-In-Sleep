@@ -51,8 +51,9 @@ The build:
   meeting project-scale detail;
 - renders the latest deterministic hierarchical-versus-master-worker comparison
   as an evidence pipeline, generated attempt graph, candidate hybrid operating
-  pattern, and next matched experiment on the Workflow page while refusing to
-  display a winner before the matched evidence threshold is met;
+  pattern, and next matched experiment on the Workflow page; both arms must use
+  one hashed route packet, execution rows need separate reviewer verdicts, and
+  the page refuses to display a winner before the evidence threshold is met;
 - generates BanditRLwiki from `content/banditrlwiki.json`: an
   assumption-indexed upper/lower-bound atlas with primary-paper theorem links,
   independent literature/source-audit/Lean status, stable case pages, a paper

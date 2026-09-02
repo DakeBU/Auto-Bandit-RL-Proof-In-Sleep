@@ -22,7 +22,7 @@ This repository has two connected contributions:
 
 ## 📰 News
 
-- **2026-09 — Harness self-comparison.** ABRL now logs matched hierarchical and master–worker trials, draws their attempt graph, and can ask GPT to interpret only reviewer-validated mathematical progress; existing logs are insufficient to declare a winner.
+- **2026-09 — Harness self-comparison.** ABRL can run hierarchical and master–worker arms on one hashed route packet, join executions to separate reviewer verdicts, draw the attempt graph, and ask GPT for an advisory diagnosis; the current ledger still has no valid matched pair and declares no winner.
 - **2026-09 — Textbook and theorem ports.** The ten-chapter Book Map, Part-IV Chapters 13–17 spine, and source-frozen paper audits expose compiled endpoints and named open bridges without relabeling partial work as complete.
 - **2026-09 — SGB missing-pull regret consumer.** The finite phase split now feeds compiled missing-pull-to-terminal-count, probability-transport, and finite-horizon expected-regret theorems; the source phase trigger, positive missing mass, future/no-return law, ballot bound, asymptotic assembly, and Theorem 2 remain open.
 - **2026-08 — Lean graph.** BanditRLwiki now maps settings, declarations, dependencies, proof routes, and explicit frontier leaves.
@@ -74,7 +74,7 @@ flowchart LR
     R -->|accepted| B["BanditRLlib"]
 ```
 
-The hierarchy protects the intended theorem and decomposes proof leaves. The experimental master–worker arm explores only disjoint, frozen routes in parallel. The reviewer compares declarations with the target and evidence; a result enters BanditRLlib only after the full gate. Current historical logs cannot establish which arm is better, so the default has not been changed.
+The hierarchy protects the intended theorem and decomposes proof leaves. The experimental master–worker arm explores only disjoint, frozen routes in parallel. A matched comparison gives both arms the same hashed route packet, and only a separate reviewer verdict can classify an execution as evidence. A result enters BanditRLlib only after the full gate. Current historical logs cannot establish which arm is better, so the default has not been changed.
 
 ```mermaid
 flowchart LR
