@@ -45,8 +45,8 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20260902n"
-CATALOG_PAGE_SIZE = 100
+ASSET_VERSION = "20260903a"
+CATALOG_PAGE_SIZE = 40
 MILESTONE_PAGE_SIZE = 20
 MODULE_PAGE_SIZE = 30
 TEACHING_PREVIEW_COUNT = 4
@@ -693,7 +693,7 @@ def layout(
         ("banditrlwiki-progress", "Audit progress", "banditrlwiki/progress/index.html"),
     ]
     formalize_items = [
-        ("ide", "Live Formalization", "ide/index.html"),
+        ("ide", "Local Formalization Lab", "ide/index.html"),
         ("workflow", "ABRL Harness", "workflow/index.html"),
     ]
     community_items = [
@@ -737,7 +737,7 @@ def layout(
         )
 
     spine_nav = nav_links(
-        [("textbook-spine", "Part IV overview", "textbook-spine/index.html")]
+        [("textbook-spine-overview", "Part IV overview", "textbook-spine/index.html")]
     ) + "".join(spine_link(chapter) for chapter in SITE_TEXTBOOK_SPINE.get("chapters", []))
 
     def nav_group(key: str, label: str, links: str, active: bool = False) -> str:
@@ -1395,6 +1395,27 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
     <ol class="proof-bridge-flow">{proof_steps}</ol>
     <p class="proof-bridge-boundary"><strong>Reading boundary.</strong> {html.escape(proof_bridge['boundary'])}</p>
   </aside>"""
+    worked_example = reading.get("worked_example")
+    worked_example_html = ""
+    if worked_example:
+        example_steps = "".join(
+            '<li class="worked-example-step">'
+            f'<span class="worked-example-number" aria-hidden="true">{index:02d}</span>'
+            '<div class="worked-example-copy">'
+            f'<strong>{html.escape(step["title"])}</strong>'
+            f'<p>{html.escape(step["detail"])}</p>'
+            '</div>'
+            f'{render_math_statement(f"Worked example step {index}", step["math"], step["fallback"])}'
+            '</li>'
+            for index, step in enumerate(worked_example["steps"], start=1)
+        )
+        worked_example_html = f"""
+  <aside class="worked-example" id="worked-example" aria-labelledby="worked-example-title">
+    <div class="worked-example-heading"><span class="panel-kicker">Worked example · follow one decision</span><h3 id="worked-example-title">{html.escape(worked_example['title'])}</h3><p>{html.escape(worked_example['intro'])}</p></div>
+    <ol class="worked-example-flow">{example_steps}</ol>
+    <p class="worked-example-takeaway"><strong>Takeaway.</strong> {html.escape(worked_example['takeaway'])}</p>
+    <p class="worked-example-boundary"><strong>Scope.</strong> {html.escape(worked_example['boundary'])}</p>
+  </aside>"""
     theorems = ([reading["source_theorem"]] if reading.get("source_theorem") else []) + reading.get("source_theorems", [])
     if theorems:
         theorem_cards = []
@@ -1463,6 +1484,7 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
     <ol class="algorithm-flow">{steps}</ol>
     {pseudocode_html}
   </div>
+  {worked_example_html}
   {proof_bridge_html}
   {theorem_html}
 </section>"""
@@ -2028,10 +2050,10 @@ def build_implementation_map(
         )
         row_html = f"""
 <tr id="{slugify(result['id'])}" data-milestone-row data-search="{search}" data-status="{html.escape(result['status'])}" data-chapter="{html.escape(result['chapter'])}">
-  <td><a href="#{slugify(result['id'])}">{html.escape(result['title'])}</a><br><code>{html.escape(result['id'])}</code></td>
-  <td>{chapter_cell}</td>
-  <td>{status_badge(result['status'])}</td>
-  <td class="milestone-evidence"><p>{html.escape(result['informal'])}</p><details><summary data-milestone-evidence-summary aria-label="Lean evidence and boundary for {html.escape(result['title'], quote=True)}">Lean evidence and boundary</summary><dl><div><dt>Declarations</dt><dd>{"<br>".join(declaration_links) if declaration_links else "No local declaration yet"}</dd></div><div><dt>Depends on</dt><dd>{dependencies}</dd></div><div><dt>Remaining gap</dt><dd>{missing}</dd></div></dl></details></td>
+  <td data-label="Milestone"><a href="#{slugify(result['id'])}">{html.escape(result['title'])}</a><br><code>{html.escape(result['id'])}</code></td>
+  <td data-label="Chapter">{chapter_cell}</td>
+  <td data-label="Status">{status_badge(result['status'])}</td>
+  <td data-label="Meaning and evidence" class="milestone-evidence"><p>{html.escape(result['informal'])}</p><details><summary data-milestone-evidence-summary aria-label="Lean evidence and boundary for {html.escape(result['title'], quote=True)}">Lean evidence and boundary</summary><dl><div><dt>Declarations</dt><dd>{"<br>".join(declaration_links) if declaration_links else "No local declaration yet"}</dd></div><div><dt>Depends on</dt><dd>{dependencies}</dd></div><div><dt>Remaining gap</dt><dd>{missing}</dd></div></dl></details></td>
 </tr>"""
         result_rows.append(row_html)
         result_items.append(
@@ -2091,18 +2113,6 @@ def build_implementation_map(
   <p class="lede">A theorem-route milestone can be locally compiled, partial, stated without a finished proof, planned, or blocked. The declaration catalog below is generated from source; the milestone ledger records the mathematical boundary.</p>
 </section>
 
-<section id="status-key">
-  <h2>Status vocabulary</h2>
-  <div class="card-grid">
-    <div class="info-card">{status_badge('compiled')}<p>The named declaration exists and the publishing gate compiled the Lean project.</p></div>
-    <div class="info-card">{status_badge('partial')}<p>Useful declarations compile, but the stated route still has named missing steps.</p></div>
-    <div class="info-card">{status_badge('stated')}<p>A target or Lean declaration is stated but its proof is incomplete. None is promoted to compiled.</p></div>
-    <div class="info-card">{status_badge('planned')}<p>The result is part of the roadmap but has no claimed local endpoint.</p></div>
-    <div class="info-card">{status_badge('blocked')}<p>Progress requires a specific missing law transport, algorithm construction, or mathematical interface.</p></div>
-  </div>
-  {render_diagram(page_path, 'formalization-map.mmd', 'How informal mathematics and Lean declarations cross-link')}
-</section>
-
 <section id="milestones">
   <h2>Mathematical milestone map</h2>
   <p class="section-intro">Start with the mathematical claim and status. Open a row's evidence only when you need exact declarations, dependencies, and the remaining boundary.</p>
@@ -2120,6 +2130,19 @@ def build_implementation_map(
   </div>
   <div class="catalog-actions"><button class="button compact" type="button" data-milestone-more hidden>Show {min(MILESTONE_PAGE_SIZE, max(0, len(result_rows) - MILESTONE_PAGE_SIZE))} more milestones</button></div>
   <noscript><p class="callout warning"><strong>JavaScript is off.</strong> The first {min(MILESTONE_PAGE_SIZE, len(result_rows))} milestones are shown here. Open the <a href="milestone-data.json">complete generated milestone ledger</a> for all {len(result_rows)} records.</p></noscript>
+</section>
+
+<section id="status-key">
+  <details class="inventory-disclosure status-vocabulary"><summary>How to read compiled, partial, stated, planned, and blocked</summary><div>
+    <div class="card-grid">
+      <div class="info-card">{status_badge('compiled')}<p>The named declaration exists and the publishing gate compiled the Lean project.</p></div>
+      <div class="info-card">{status_badge('partial')}<p>Useful declarations compile, but the stated route still has named missing steps.</p></div>
+      <div class="info-card">{status_badge('stated')}<p>A target or Lean declaration is stated but its proof is incomplete. None is promoted to compiled.</p></div>
+      <div class="info-card">{status_badge('planned')}<p>The result is part of the roadmap but has no claimed local endpoint.</p></div>
+      <div class="info-card">{status_badge('blocked')}<p>Progress requires a specific missing law transport, algorithm construction, or mathematical interface.</p></div>
+    </div>
+    {render_diagram(page_path, 'formalization-map.mmd', 'How informal mathematics and Lean declarations cross-link')}
+  </div></details>
 </section>
 
 <section id="dependencies">
@@ -2154,8 +2177,8 @@ def build_implementation_map(
 """
     toc = [
         ("map", "Implementation map"),
-        ("status-key", "Status vocabulary"),
         ("milestones", "Milestones"),
+        ("status-key", "Status vocabulary"),
         ("dependencies", "Dependencies"),
         ("modules", "Modules"),
     ]
@@ -2209,12 +2232,12 @@ def build_catalog(
         rows.append(
             f"""
 <tr data-catalog-row data-search="{search}" data-kind="{decl['kind']}" data-status="{status}" data-chapter="{decl['chapter']}">
-  <td><a href="{declaration_url}"><code>{html.escape(decl['full_name'])}</code></a></td>
-  <td>{html.escape(KIND_LABELS.get(decl['kind'], decl['kind']))}</td>
-  <td>{html.escape(decl['chapter_title'])}</td>
-  <td><a href="{declaration_module_url}"><code>{html.escape(decl['module'])}</code></a></td>
-  <td>{status_badge(status)}</td>
-  <td><a href="{declaration_source_url}">{html.escape(decl['file'])}:{decl['line']}</a></td>
+  <td data-label="Declaration"><a href="{declaration_url}"><code>{html.escape(decl['full_name'])}</code></a></td>
+  <td data-label="Kind">{html.escape(KIND_LABELS.get(decl['kind'], decl['kind']))}</td>
+  <td data-label="Chapter">{html.escape(decl['chapter_title'])}</td>
+  <td data-label="Module"><a href="{declaration_module_url}"><code>{html.escape(decl['module'])}</code></a></td>
+  <td data-label="Status">{status_badge(status)}</td>
+  <td data-label="Source"><a href="{declaration_source_url}">{html.escape(decl['file'])}:{decl['line']}</a></td>
 </tr>"""
         )
     write_text_lf(
@@ -2249,12 +2272,6 @@ def build_catalog(
   <p class="lede">{len(declarations):,} indexed public and private declarations. The catalog is exhaustive for the supported declaration kinds; teaching chapters add detailed explanations to the major mathematical interfaces.</p>
 </section>
 
-<section id="catalog-map">
-  <h2>From a concept to reusable Lean</h2>
-  <p>Every search result links to its exact statement, source location, module context, chapter explanation, and recorded dependency neighborhood.</p>
-  {render_diagram(page_path, 'library-query.mmd', 'How a BanditRLlib concept search leads to source, dependencies, consumers, and teaching context')}
-</section>
-
 <section id="filters">
   <h2>Search and filter</h2>
   <div class="filter-bar">
@@ -2277,12 +2294,19 @@ def build_catalog(
   <button class="catalog-return button compact" type="button" data-catalog-return aria-controls="filters" hidden>↑ Back to filters</button>
   <noscript><p class="callout warning"><strong>JavaScript is off.</strong> The first {min(CATALOG_PAGE_SIZE, len(declarations)):,} declarations are shown here. Open the <a href="{href_from(page_path, 'catalog-data.json')}">complete JSON catalog</a> or browse the <a href="{href_from(page_path, 'implementation-map/index.html')}">module-level implementation map</a>.</p></noscript>
 </section>
+
+<section id="catalog-map">
+  <details class="inventory-disclosure"><summary>How a concept search connects to reusable Lean</summary><div>
+    <p>Every search result links to its exact statement, source location, module context, chapter explanation, and recorded dependency neighborhood.</p>
+    {render_diagram(page_path, 'library-query.mmd', 'How a BanditRLlib concept search leads to source, dependencies, consumers, and teaching context')}
+  </div></details>
+</section>
 """
     toc = [
         ("catalog", "Declaration catalog"),
-        ("catalog-map", "How to read it"),
         ("filters", "Search and filter"),
         ("declaration-table", "All declarations"),
+        ("catalog-map", "How to read it"),
     ]
     write_page(
         output,
@@ -2443,11 +2467,19 @@ def build_chapters(
             kicker="Next stop",
             aria_label="Chapter navigation at end",
         )
+        chapter_scope_label = STATUS_LABELS.get(
+            chapter["status"], chapter["status"].replace("-", " ").title()
+        ).lower()
+        chapter_scope_badge = (
+            f'<span class="status {html.escape(chapter["status"], quote=True)}">'
+            f'Canonical route {html.escape(chapter_scope_label)}</span>'
+        )
         body = f"""
 <section class="hero" id="chapter">
-  <p class="eyebrow">Teaching chapter {chapter_index + 1:02d} of {len(chapters):02d} · canonical scope {status_badge(chapter['status'])}</p>
+  <p class="eyebrow">Teaching chapter {chapter_index + 1:02d} of {len(chapters):02d} · {chapter_scope_badge}</p>
   <h1 class="page-title">{html.escape(chapter['title'])}</h1>
   <p class="lede">{html.escape(chapter['summary'])}</p>
+  <p class="chapter-scope-note"><strong>How to read the status.</strong> It describes this page's canonical local Lean route, not completion of the cited textbook chapter or every extension listed below.</p>
 </section>
 
 {chapter_compass}
@@ -2499,6 +2531,8 @@ def build_chapters(
         ]
         if reading.get("proof_bridge"):
             toc.append(("proof-bridge", "Why the proof works"))
+        if reading.get("worked_example"):
+            toc.insert(5, ("worked-example", "Worked example"))
         toc.append(("teaching-notes", "Lean teaching notes"))
         if completion_contract:
             toc.append(("completion-contract", "Maintainer contract"))
@@ -3674,24 +3708,27 @@ def build_roadmap(
 ) -> None:
     page_path = "roadmap/index.html"
     status_counts = Counter(result["status"] for result in results)
-    ledger = []
-    for status in ("compiled", "partial", "stated", "planned", "blocked"):
-        for result in (item for item in results if item["status"] == status):
-            links = [
-                f'<a href="{declaration_href(page_path, decl_by_name[name])}"><code>{html.escape(name)}</code></a>'
-                for name in result["declarations"]
-            ]
-            ledger.append(
-                f"""
-<article class="status-entry {status}" id="{slugify(result['id'])}">
-  {status_badge(status)}
+    status_summary = "".join(
+        f'<article><strong>{status_counts.get(status, 0)}</strong>'
+        f'<span>{html.escape(STATUS_LABELS.get(status, status.title()))}</span></article>'
+        for status in ("compiled", "partial", "blocked", "planned", "stated")
+    )
+    focus_results = [
+        result
+        for result in results
+        if result["chapter"] == "frontier" and result["status"] in {"partial", "planned"}
+    ][-6:]
+    focus_cards = "".join(
+        f"""
+<article class="roadmap-focus-card">
+  <div>{status_badge(result['status'])}<code>{html.escape(result['id'])}</code></div>
   <h3>{html.escape(result['title'])}</h3>
   <p>{html.escape(result['informal'])}</p>
-  <p><strong>Lean:</strong> {' · '.join(links) if links else 'No local declaration yet.'}</p>
-  <p><strong>Remaining:</strong> {html.escape(' '.join(result['missing'])) if result['missing'] else 'No missing step recorded for this milestone.'}</p>
-  <p><strong>Evidence:</strong> <code>{html.escape(result['evidence'])}</code></p>
+  <p class="roadmap-next"><strong>Next named boundary.</strong> {html.escape(result['missing'][0]) if result['missing'] else 'No remaining gap is recorded.'}</p>
+  <a href="{href_from(page_path, f'implementation-map/index.html#{slugify(result["id"])}')}">Open full evidence in the Implementation Map →</a>
 </article>"""
-            )
+        for result in focus_results
+    )
     route_rows = []
     for route in roadmap.get("routes", []):
         route_rows.append(
@@ -3711,23 +3748,28 @@ def build_roadmap(
 </section>
 
 <section id="progress">
-  <h2>Mapped milestone status</h2>
-  {render_diagram(page_path, 'progress.mmd', 'Status counts for the explicit website milestones', status_counts)}
-  <p>The count is auditable in <code>website/content/results.json</code>. It is not an estimate of the percentage of the field completed.</p>
+  <h2>Current evidence at a glance</h2>
+  <div class="roadmap-status-grid" aria-label="Counts of explicitly mapped theorem-route milestones">{status_summary}</div>
+  <p>The counts come from <code>website/content/results.json</code>. They describe only explicitly mapped milestones, not a percentage of the textbook or the field.</p>
 </section>
 
-<section id="ledger">
-  <h2>Milestone ledger</h2>
-  <div class="status-ledger">{''.join(ledger)}</div>
+<section id="focus">
+  <p class="eyebrow">Six current non-terminal routes</p>
+  <h2>What the project is trying to unlock next</h2>
+  <p class="section-intro">These are the partial or planned Frontier milestones at the end of the maintained ledger. Each card names one immediate mathematical boundary; compiled declarations remain evidence for the route, not proof of its terminal theorem.</p>
+  <div class="roadmap-focus-grid">{focus_cards}</div>
+  <div class="hero-actions"><a class="button primary" href="{href_from(page_path, 'implementation-map/index.html#milestones')}">Search all {len(results)} milestones</a><a class="button" href="{href_from(page_path, 'banditrlwiki/frontier/index.html')}">Browse theorem frontier leaves</a></div>
 </section>
 
 <section id="route-registry">
-  <h2>Machine route registry</h2>
-  <div class="callout warning"><strong>Historical planning layer.</strong> The machine route registry is displayed as planning evidence. Some narrative <em>compiled_local_core</em> fields lag newer Lean files; the generated declaration catalog and milestone ledger above take precedence for current local code.</div>
-  <div class="table-wrap"><table><thead><tr><th>Route</th><th>Priority</th><th>Registry's compiled core summary</th><th>Next registered leaves</th></tr></thead><tbody>{''.join(route_rows)}</tbody></table></div>
+  <h2>Historical machine route registry</h2>
+  <details class="inventory-disclosure"><summary>Open the technical planning registry ({len(route_rows)} routes)</summary><div>
+    <div class="callout warning"><strong>Historical planning layer.</strong> Some narrative <em>compiled_local_core</em> fields lag newer Lean files. The generated declaration catalog and Implementation Map take precedence for current local code.</div>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Historical machine route registry"><table><thead><tr><th>Route</th><th>Priority</th><th>Registry's compiled core summary</th><th>Next registered leaves</th></tr></thead><tbody>{''.join(route_rows)}</tbody></table></div>
+  </div></details>
 </section>
 """
-    toc = [("roadmap", "Roadmap"), ("progress", "Progress"), ("ledger", "Milestone ledger"), ("route-registry", "Route registry")]
+    toc = [("roadmap", "Roadmap"), ("progress", "Evidence snapshot"), ("focus", "Active routes"), ("route-registry", "Historical registry")]
     write_page(
         output,
         page_path,

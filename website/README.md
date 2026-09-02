@@ -14,8 +14,9 @@ The build:
 - adds reviewed teaching notes from `content/highlights.json`;
 - gives every Book Map source theorem a five-field model/assumption/parameter/
   regret/guarantee contract and links directly to the cited PDF page;
-- gives UCB readers a source-to-Lean proof bridge from confidence validity to
-  suboptimal selection, pull-count control, and the final gap-sum bound;
+- gives UCB readers a numerical two-arm decision that shows why optimism can
+  override the current empirical-mean ranking, and adds source-to-Lean proof
+  bridges for UCB, OFUL, Thompson sampling, EXP3, Tsallis-INF, and UCBVI-CH;
 - gives ETC, UCB, OFUL, Thompson sampling, EXP3, Tsallis-FTRL, UCBVI-CH, and
   Frontier readers explicit, copyable pseudocode with source/Lean boundaries;
 - keeps advanced Part IV source material available from Foundations without
@@ -49,6 +50,10 @@ The build:
 - puts the student, researcher, and contributor entry points before the
   textbook-coverage and evidence ledgers, so readers can choose a route before
   meeting project-scale detail;
+- keeps the declaration and milestone searches ahead of explanatory diagrams,
+  renders their initial results as labelled cards on narrow screens, and reduces
+  the Roadmap to six current non-terminal routes while linking the exhaustive
+  ledger back to the Implementation Map;
 - renders the latest deterministic hierarchical-versus-master-worker comparison
   as an evidence pipeline, generated attempt graph, candidate hybrid operating
   pattern, and next matched experiment on the Workflow page; both arms must use
