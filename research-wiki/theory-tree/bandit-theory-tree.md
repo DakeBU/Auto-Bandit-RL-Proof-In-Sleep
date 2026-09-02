@@ -275,7 +275,7 @@ constants, and literal LML declaration identity remain separate.
 | Thompson sampling | compiled stationary posterior kernel, actual recursive probability matching, comparator decomposition plus explicit mean-optimality contract, clipped confidence, latent-stream support, generated Bayesian regret; broader model/toolchain ports remain open | `TXT-SLIVKINS-2019-2024`, `PPR-AGRAWAL-GOYAL-2011-TS`, LML cards `Bandits.TS.hasCondDistrib_action`, `Bandits.integral_regret_le` |
 | EXP3/adversarial | canonical generated route compiled through potential/Hedge, importance-weighted conditional moments, measurable recursive sampling, exploration bias, tuned expected regret, per-horizon best-arm realized tails, a distinct fixed-process all-positive-prefix realized-regret terminal, and an explicit sparse-loss extension; horizon-free tuned EXP3, best-arm aggregation on that one fixed process, and EXP3.P remain extensions | `TXT-BUBECK-CESABIANCHI-2012`, `TXT-LATTIMORE-SZEPESVARI-2020`, `PPR-AUER-CFS-2002-EXP3` |
 | Tsallis-INF/FTRL | canonical generated half-Tsallis route compiled through minimizer regularity, scheduled conditional action law, score alignment, expected stability/penalty, fixed-gap self-bounding, square-root schedule, and a finite-arm IID bounded reward-law logarithmic terminal; corruption, dynamic, and population-oracle restart results compile as labelled extensions, while the strict `Fin 2` refined-average obstruction and paper-sharp complete Tsallis-INF remain visible | `LOCAL-LEAF-TSALLIS-FINITE-BANDIT-MEAN-LOSS`, `LOCAL-LEAF-TSALLIS-SQRT-SCHEDULE-LOG-FIXED-GAP`, `LOCAL-LEAF-TSALLIS-SCHEDULED-FIXED-GAP-SELF-BOUNDING`, `LOCAL-LEAF-TSALLIS-SCHEDULED-EXPECTED-REGRET`, `LOCAL-LEAF-TSALLIS-SCHEDULED-ALL-RATE-EXPECTED-STABILITY`, `PPR-ZIMMERT-SELDIN-2018-TSALLIS-INF`, `PPR-MASOUDIAN-SELDIN-2021-TSALLIS-INF`, `PPR-ADAPTIVE-LR-FTRL-2024` |
-| Stochastic-gradient bandit | 352 counted audit-slice declarations comprise the historical 223-declaration Theorem-1/Appendix-E audit plus the eight follow-on layers through selected-reward aggregation. A separate ten-declaration native-law module proves equality of the complete visible/native probability measures. The selected-block module now has 32 declarations: eight transport finite pull-time/reward blocks to a missing-pull-aware masked latent law, fourteen define and transport the exact finite Appendix-C `S0/S1` event, and ten split the pure latent phase probability into disjoint generated all-present and missing-pull branches. The exact fixed-IID/Dirac two-arm Theorem 1 and its direct bounded companion compile. No product or occurrence-conditioned selected-IID law follows; the missing branch still needs a fixed-cutoff starvation bridge, while future/no-return, ballot probability, asymptotic assembly, and Theorem 2 remain blocked. Theorems 3--4 and general-`K` regimes remain open | `PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB`, `PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT`, `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE` |
+| Stochastic-gradient bandit | 361 counted audit-slice declarations comprise the historical 223-declaration Theorem-1/Appendix-E audit plus the follow-on layers through the generic finite-measure terminal-count-below regret consumer and selected-reward aggregation. A separate ten-declaration native-law module proves equality of the complete visible/native probability measures. The selected-block follow-on transports finite pull-time/reward blocks to a missing-pull-aware masked latent law, defines and transports the exact finite Appendix-C `S0/S1` event, splits pure latent phase probability into disjoint generated all-present and missing-pull branches, and now consumes any existing latent missing probability in finite-horizon generated expected regret. The exact fixed-IID/Dirac two-arm Theorem 1 and its direct bounded companion compile. No positive missing probability or occurrence-conditioned selected-IID law follows; the generated all-present phase still needs the deterministic recurrence-to-trigger implication, while future/no-return, ballot probability, asymptotic assembly, and Theorem 2 remain blocked. Theorems 3--4 and general-`K` regimes remain open | `PPR-BAUDRY-JOHNSON-VARY-PIKEBURKE-REBESCHINI-2025-SGB`, `PAPER-AUDIT-NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT`, `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE` |
 | Linear/OFUL | compiled finite-action scalar route from Gram/determinant and confidence ellipsoid to a horizon-free all-time/all-horizon/stopping policy; horizon-indexed expectation/consistency is separate; contextual/dynamic/Hilbert extensions remain open | `TXT-LATTIMORE-SZEPESVARI-2020`, `PPR-ABBASI-YADKORI-2011-SELF-NORMALIZED`, `PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB` |
 | Pure exploration | confidence event, stopping rule, sample complexity, lower-bound change-of-measure | `TXT-LATTIMORE-SZEPESVARI-2020`, `TXT-SLIVKINS-2019-2024` |
 | BwK/resource constraints | budget stopping time, resource consumption, primal-dual comparison | `TXT-SLIVKINS-2019-2024`, `PPR-BADANIDIYURU-KLEINBERG-SLIVKINS-2013-BWK` |
@@ -493,14 +493,18 @@ finite optimal-arm pull time together with its reward, keeps missing pulls
 explicit in `WithTop Nat`, and transports that block to an exact masked latent
 law on both native and source-shaped generated trajectories.  The mask retains
 the stopped-value fallback at missing pulls, so it is not a product or IID law.
-Fourteen additional declarations now define the exact finite `S0/S1` reward
-pattern, its measurable all-pulls-present boundary, and transport its probability
-to a latent event that retains the adaptive occurrence intersection.  These
-layers are not yet composed with the fixed-cutoff consumer.  The missing-pull/
-all-present probability dichotomy, a selected-IID law, stopped-prefix future-cylinder
-probability, conditional no-return lower bound, Rademacher/ballot phase, and
-the polynomial-regret terminal remain open.  The frozen `K = 2` Theorem 2
-therefore remains blocked.
+Fourteen additional declarations define the exact finite `S0/S1` reward
+pattern, its measurable all-pulls-present boundary, and transport its
+probability to a latent event that retains the adaptive occurrence
+intersection.  The pure phase now splits exactly into generated all-present
+and latent missing-pull branches.  A complete visible-law transport and
+below-count indicator consumer prove that any existing missing-branch mass
+contributes at least its finite-horizon `Delta * (T-m)` charge to generated
+expected sampled regret.  This does not prove that mass positive.  The
+all-present phase's deterministic recurrence-to-trigger implication, a
+selected-IID law, stopped-prefix future-cylinder probability, conditional
+no-return lower bound, Rademacher/ballot phase, and the polynomial-regret
+terminal remain open.  The frozen `K = 2` Theorem 2 therefore remains blocked.
 
 The machine-readable route atlas is `lean-route-roadmap.json`.  It is the
 handoff contract between upper planning agents and lower Lean agents: each

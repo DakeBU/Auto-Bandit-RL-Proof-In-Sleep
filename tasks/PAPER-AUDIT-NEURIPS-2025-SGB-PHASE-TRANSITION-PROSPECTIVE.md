@@ -178,14 +178,14 @@ evidence that the polynomial lower-bound route is complete.
 
 ## Current verified outcome (2026-09-01)
 
-- The source-audit inventory is now 352 named declarations:
-  `223 + 23 + 18 + 24 + 7 + 8 + 13 + 28 + 8` for the historical audit, Corollary-1
-  companion, fixed-cutoff consumer, nth-pull bridge, latent product/readout,
+- The source-audit inventory is now 361 named declarations:
+  `223 + 23 + 25 + 26 + 7 + 8 + 13 + 28 + 8` for the historical audit, Corollary-1
+  companion, deterministic fixed-cutoff/terminal-count consumers, nth-pull bridge, latent product/readout,
   deferred-decisions finite-prefix factorization, and the action/readout plus
   branch-locality interface/count-cap scaffold, the branch-locality producer,
   and the one-step freshness aggregation layer respectively.  The 28-declaration
   layer comprises two reusable measure bridges and 26 route-specific
-  declarations; this audit-slice count must not be read as 352 source-paper
+  declarations; this audit-slice count must not be read as 361 source-paper
   theorems.
 - `twoArmFixedIIDDirac_corollaryOne_piecewise` and
   `twoArmFixedIIDDirac_corollaryOne` compile for the generated fixed-IID
@@ -199,7 +199,7 @@ evidence that the polynomial lower-bound route is complete.
   `twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral`
   instantiates `charge * P(event) <= expected sampled regret` on the canonical
   generated fixed-IID trajectory measure.
-- A separate 24-declaration producer now compiles the zero-based arm-0 nth-pull
+- A separate 26-declaration producer now compiles the zero-based arm-0 nth-pull
   time as a `WithTop Nat`, with `top` as the explicit missing-pull value.  It
   proves the stopping-time and ambient measurability boundary, identifies the
   finite chronological coordinate by exact before/after pull counts and the
@@ -236,7 +236,7 @@ evidence that the polynomial lower-bound route is complete.
   This is deterministic-time conditional freshness given the visible history
   and next action; it is not a pull-ordered selected-IID theorem.
 - A separate ten-declaration native-law module is compiled and indexed outside
-  the counted 352-declaration audit ledger.  Its finite-prefix induction ends
+  the counted 361-declaration audit ledger.  Its finite-prefix induction ends
   at `latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native`; the
   new `latentArmStreamVisibleTrajectoryMeasure_eq_native` then selects every
   arbitrary finite coordinate set inside an inclusive prefix and applies
@@ -273,7 +273,19 @@ evidence that the polynomial lower-bound route is complete.
   the finite union of exact terminal-count fibers; each fiber carries the
   existing exact sampled-pseudo-regret charge.  This is a terminal-count
   interface, not the source trigger or a positive probability result.
-- A pull-ordered selected-IID theorem, the fixed-cutoff trigger/consumer bridge,
+- The missing-pull expected-regret consumer now compiles.  The latent coupling
+  and the source-generated fixed-IID law have the same complete visible
+  `Unit`-trajectory marginal; consequently the latent missing branch is
+  bounded by the generated below-count event, and
+  `twoArmFixedIIDMissingPullLatentPhase_charge_mul_probability_le_integral`
+  proves `Delta * (T - (n0+n1)) * P(missing) <= E[regret]` for nonnegative
+  `Delta`.  It transports existing missing mass and does not prove that mass
+  positive.
+- The next exact leaf is the deterministic Appendix-C generated-phase trigger:
+  derive the source `1/(2*T)` next-action threshold at the finite last requested
+  optimal-arm pull from the all-present `S0/S1` recurrence and frozen numeric
+  assumptions.
+- A pull-ordered selected-IID theorem, the generated-phase trigger producer,
   conditional no-return probability
   `>= 1/2`, the Rademacher/ballot phase producer, asymptotic
   assembly, and the frozen Theorem-2 terminal remain uncompiled.  The central

@@ -2,7 +2,7 @@
 
 Task: `PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE`
 
-Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull, latent-product/readout, deferred-decisions finite-prefix factorization, action/readout interface, count-capped branch locality, one-step selected-reward freshness, native-prefix identification, full native visible-law equality, missing-pull-aware selected-block transport, exact phase-event transport, and deterministic-starvation milestones`
+Status: `target-frozen; Corollary 1 compiled; Theorem 2 blocked after compiled nth-pull, latent-product/readout, deferred-decisions finite-prefix factorization, action/readout interface, count-capped branch locality, one-step selected-reward freshness, native-prefix identification, full native visible-law equality, missing-pull-aware selected-block transport, exact phase-event transport, and deterministic missing-pull expected-regret consumption`
 
 ## Source-to-Lean fence
 
@@ -369,6 +369,29 @@ obligation is discharged by the Round-19 packet below.
   bound on either branch probability, a ballot estimate, asymptotic assembly,
   or Theorem 2.
 
+## Round-33 conversion window: latent missing mass to expected regret
+
+- Frozen statement: for nonnegative `Delta`, latent missing-pull phase mass is
+  transported through the exact visible `Unit`-trajectory marginal and charged
+  only by `Delta * (horizon - (n0+n1))` in the generated expected sampled
+  pseudo-regret.
+- Source semantics retained: the left side uses the actual latent missing
+  branch from the compiled dichotomy; the right side uses
+  `twoArmTrajectoryMeasure` and `twoArmSampledPseudoRegret`.  No surrogate
+  action schedule or occurrence-conditioned reward law is introduced.
+- Local route: the latent visible marginal and source `Prod.snd` marginal are
+  both the compiled native stationary trajectory law; the missing event is a
+  subset of the generated below-count event; an indicator integral consumes
+  its uniform finite-horizon charge.
+- Boundary: the theorem transports and consumes whatever missing probability
+  already exists.  It does not prove that probability positive, derive the
+  generated all-present phase's source trigger inequality, construct a stopped
+  future/no-return law, prove selected IID, establish a ballot lower bound, or
+  assemble Theorem 2.
+- Next window: `SGB-T2-APPENDIX-C-PHASE-TRIGGER`, restricted to the
+  deterministic recurrence implication from the generated all-present
+  `S0/S1` phase to the source `1/(2*T)` next-action threshold.
+
 ## Pivot rules
 
 - Do not replace the nth-pull law with an IID premise on the selected reward
@@ -381,5 +404,5 @@ obligation is discharged by the Round-19 packet below.
   unconditional branch-product law, one-step selected-reward freshness,
   native-prefix identification, full native visible-law equality,
   missing-pull-aware selected-block transport, exact phase-event transport, and
-  deterministic-starvation milestones do not compile the
+  deterministic missing-pull expected-regret consumers do not compile the
   frozen Theorem 2 terminal; that terminal remains `blocked`.

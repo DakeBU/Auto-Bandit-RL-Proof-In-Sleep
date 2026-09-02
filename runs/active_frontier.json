@@ -1,36 +1,36 @@
 {
   "schema_version": 1,
-  "record_id": "frontier-f93c2687b6ab6ba6",
-  "updated_at": "2026-09-01T22:16:30+00:00",
+  "record_id": "frontier-938c4e5251f43ba5",
+  "updated_at": "2026-09-02T06:29:07+00:00",
   "root_objective": "Compile the exact K=2 SGB Theorem 2 route without weakening the frozen source contract, then synchronize only verified evidence into the ICLR and arXiv papers.",
   "current_leaf": {
-    "id": "SGB-T2-MISSING-PULL-REGRET-CONSUMER",
+    "id": "SGB-T2-APPENDIX-C-PHASE-TRIGGER",
     "kind": "lean",
     "status": "ready",
-    "statement": "Transport the compiled latent missing-pull subset through the exact generated-trajectory marginal, and prove only the finite-horizon expected-regret consumer: nonnegative gap times the horizon-minus-block-size charge times missing-pull probability is bounded by expected sampled pseudo-regret. Do not assume or prove a positive missing-branch probability, the source trigger inequality, selected IID, future/no-return, ballot/asymptotic assembly, or Theorem 2.",
-    "statement_hash": "d1322386dc5ea3e8f233921adda888503fea7d2ef50715b77cf23655492e7e3f",
+    "statement": "On an actual generated fixed-IID trajectory in the compiled all-present Appendix-C S0/S1 phase, expose the finite chronological time of the last requested optimal-arm pull and prove, under the frozen source numeric assumptions, that the next optimal-arm success probability at that cutoff is at most 1/(2*T). Do not prove the phase probability, positive missing mass, selected IID, a stopped-prefix future/no-return law, the conditional 1/2 bound, ballot/asymptotic assembly, or Theorem 2.",
+    "statement_hash": "1ba890a0e34e947f2fa9f4f5af437793dd60be2e25610484bd802e172f5ed49b",
     "declaration": "",
     "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
-    "source_status": "Round 26 compiles the pathwise missing-pull-to-terminal-count bridge and finite exact-count partition. The next interface must transport latent missing-branch mass to the generated low-count event and consume it in expected regret; no lower bound on that mass is available.",
+    "source_status": "Round 33 compiles exact latent-visible/generated-source marginal transport and the finite-horizon missing-pull expected-regret consumer. The generated all-present phase still lacks the deterministic source recurrence-to-fixed-cutoff trigger; no positive missing mass or Theorem 2 endpoint is available.",
     "dependencies": [
       {
         "kind": "lean",
-        "name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow",
+        "name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCGeneratedPhaseEvent",
         "status": "compiled"
       },
       {
         "kind": "lean",
-        "name": "Thompson.latentArmStreamVisibleTrajectoryMeasure_eq_native",
+        "name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCPhaseOnePrefixSum",
         "status": "compiled"
       },
       {
         "kind": "lean",
-        "name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary",
+        "name": "BanditRLProof.StochasticGradientBandit.twoArmSuccessProbability",
         "status": "compiled"
       },
       {
         "kind": "lean",
-        "name": "BanditRLProof.StochasticGradientBandit.twoArmTerminalOptimalPullCountEvent_sampledPseudoRegret_eq",
+        "name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDMissingPullLatentPhase_charge_mul_probability_le_integral",
         "status": "compiled"
       }
     ]
@@ -38,28 +38,28 @@
   "dag": {
     "nodes": [
       {
-        "id": "SGB-T2-MISSING-PULL-REGRET-CONSUMER",
+        "id": "SGB-T2-APPENDIX-C-PHASE-TRIGGER",
         "kind": "lean",
         "status": "ready",
         "dependencies": [
           {
             "kind": "lean",
-            "name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow",
+            "name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCGeneratedPhaseEvent",
             "status": "compiled"
           },
           {
             "kind": "lean",
-            "name": "Thompson.latentArmStreamVisibleTrajectoryMeasure_eq_native",
+            "name": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCPhaseOnePrefixSum",
             "status": "compiled"
           },
           {
             "kind": "lean",
-            "name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary",
+            "name": "BanditRLProof.StochasticGradientBandit.twoArmSuccessProbability",
             "status": "compiled"
           },
           {
             "kind": "lean",
-            "name": "BanditRLProof.StochasticGradientBandit.twoArmTerminalOptimalPullCountEvent_sampledPseudoRegret_eq",
+            "name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDMissingPullLatentPhase_charge_mul_probability_le_integral",
             "status": "compiled"
           }
         ],
@@ -68,26 +68,26 @@
     ]
   },
   "last_accepted_verifier": {
-    "trial_index": 339,
-    "time": "2026-09-01T22:15:27+00:00",
+    "trial_index": 341,
+    "time": "2026-09-02T06:26:53+00:00",
     "task": "PAPER-AUDIT-NEURIPS-2025-SGB-PHASE-TRANSITION-PROSPECTIVE",
     "role": "lower",
     "kind": "build",
     "status": "compiled",
-    "lean": "BanditRLProof.StochasticGradientBandit.twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow",
-    "notes": "Compiled the deterministic missing-pull-to-terminal-count bridge. WithTop.top for one requested optimal-arm pull implies every finite-horizon optimal-arm count is below the requested block size; the measurable below-count event is the finite union of exact count fibers, each with the exact sampled-pseudo-regret identity. No source trigger, probability lower bound, selected IID, future/no-return, ballot/asymptotic, or Theorem 2 is claimed.",
-    "run_id": "sgb-theorem2-missing-pull-terminal-count-round26-2026-09-02"
+    "lean": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDMissingPullLatentPhase_charge_mul_probability_le_integral",
+    "notes": "Compiled the frozen finite-horizon missing-pull regret consumer. The latent missing-pull event is mapped through an exact latent-visible/generated-source marginal to the generated terminal-count-below event; its nonnegative-gap horizon-minus-block-size charge is bounded by expected sampled pseudo-regret. This proves neither positive missing-branch probability nor a source trigger, selected IID, future/no-return, ballot/asymptotic assembly, or Theorem 2.",
+    "run_id": "sgb-theorem2-missing-pull-regret-consumer-round33-2026-09-02"
   },
   "memory_policy": {
     "recent_role_relevant_limit": 5,
     "explicit_verified_lemma_ids": [
-      "mem-d6907b9f2b3bc2bc"
+      "mem-90e727142eab7a0f"
     ],
     "whole_history_default": false
   },
   "shadow_gate": {
     "status": "passed",
-    "analyzed_trial_rows": 340,
+    "analyzed_trial_rows": 342,
     "mismatches": [],
     "replay_transitions": 3
   },
