@@ -250,6 +250,32 @@
         ],
         "boundary": "This is a reading aid for the shared proof shape. The source theorem card and exact Lean statement below remain authoritative for the model, constants, horizon convention, and confidence schedule."
       },
+      "worked_example": {
+        "title": "Why UCB may deliberately choose the arm with the lower empirical mean",
+        "intro": "Take a two-arm UCB(δ) decision near the end of a horizon n = 20, so δ = 1/n² = 1/400. Before round 20, arm 1 has been sampled 15 times and arm 2 only 4 times.",
+        "steps": [
+          {
+            "title": "Start from the observed history",
+            "detail": "Arm 1 currently looks better, but arm 2 is much less explored.",
+            "math": "N_1=15,\\quad \\widehat\\mu_1=0.60,\\qquad N_2=4,\\quad \\widehat\\mu_2=0.30.",
+            "fallback": "Arm 1 has count 15 and empirical mean 0.60; arm 2 has count 4 and empirical mean 0.30."
+          },
+          {
+            "title": "Add uncertainty, not just reward",
+            "detail": "With 2 log(400) approximately 11.98, the under-sampled arm receives the wider confidence bonus.",
+            "math": "U_1\\approx0.60+\\sqrt{11.98/15}=1.49,\\qquad U_2\\approx0.30+\\sqrt{11.98/4}=2.03.",
+            "fallback": "The two upper-confidence scores are approximately 1.49 for arm 1 and 2.03 for arm 2."
+          },
+          {
+            "title": "Choose optimism and shrink it with data",
+            "detail": "UCB selects arm 2 even though its empirical mean is lower. Each additional pull increases N₂, narrows its bonus, and makes persistent suboptimal selection harder to justify.",
+            "math": "A_{20}=2\\quad\\text{because}\\quad U_2>U_1;\\qquad \\sqrt{2\\log(1/\\delta)/N_2}\\downarrow\\text{ as }N_2\\uparrow.",
+            "fallback": "At round 20 the policy chooses arm 2 because its upper-confidence score is larger; its bonus decreases as its sample count increases."
+          }
+        ],
+        "takeaway": "UCB is not greedily choosing the largest empirical mean. It chooses the largest plausible mean, so uncertainty creates exploration and the count-dependent radius eventually limits repeated pulls of a genuinely suboptimal arm.",
+        "boundary": "The numbers illustrate one UCB(δ) decision; they are not a simulated regret result or a new Lean theorem. The source card and compiled declarations below control the exact assumptions and constants."
+      },
       "source_theorem": {
         "label": "Theorem 7.2 (finite-time UCB regret)",
         "pages": "online p. 108",
@@ -325,6 +351,37 @@
           "relationship": "The source algorithm permits time-varying feasible sets. BanditRLlib's canonical route is a finite-action measurable construction with explicit confidence, all-horizon, expectation, and stopping-time interfaces; the exact Lean statements determine the feature, regularity, and scheduling contracts."
         }
       },
+      "proof_bridge": {
+        "title": "How confidence geometry pays for linear-bandit regret",
+        "summary": "OFUL replaces one confidence interval per arm by one ellipsoid for the unknown parameter. The same inverse-Gram norm measures both uncertainty and the cost charged to the trajectory.",
+        "steps": [
+          {
+            "title": "Put the parameter in an ellipsoid",
+            "detail": "A self-normalized concentration result bounds the ridge-estimation error in the geometry accumulated from earlier features.",
+            "math": "\\lVert\\widehat\\theta_t-\\theta_\\star\\rVert_{V_t}\\le\\beta_t.",
+            "fallback": "The true parameter lies within beta t of the ridge estimate in the Gram-matrix norm."
+          },
+          {
+            "title": "Convert optimism into one width",
+            "detail": "Maximizing over the confidence set makes the instantaneous regret no larger than a constant multiple of the selected feature's inverse-Gram width.",
+            "math": "r_t\\le 2\\beta_t\\lVert x_t\\rVert_{V_t^{-1}}.",
+            "fallback": "One-step regret is controlled by twice the confidence radius times the selected feature's inverse-Gram norm."
+          },
+          {
+            "title": "Sum widths through determinant growth",
+            "detail": "The elliptical-potential lemma says that repeatedly visiting a direction increases the Gram determinant and prevents that direction from remaining wide forever.",
+            "math": "\\sum_{t=1}^{n}\\min\\{1,\\lVert x_t\\rVert_{V_t^{-1}}^2\\}\\le 2\\log\\frac{\\det V_{n+1}}{\\det V_1}.",
+            "fallback": "The sum of clipped squared confidence widths is at most twice the logarithmic growth of the Gram determinant."
+          },
+          {
+            "title": "Finish with Cauchy-Schwarz",
+            "detail": "Combining the confidence radius with the potential bound yields the familiar dimension-times-square-root-horizon scale, with the source assumptions determining the logarithms and constants.",
+            "math": "R_n\\lesssim\\beta_n\\sqrt{n\\log\\frac{\\det V_{n+1}}{\\det V_1}}=\\widetilde O(d\\sqrt n).",
+            "fallback": "Cumulative regret is controlled by the final confidence radius times the square root of horizon and determinant growth, giving dimension times square-root horizon up to logs."
+          }
+        ],
+        "boundary": "This bridge identifies the source proof joints and their local counterparts; it is not a claim that the finite-action Lean route reproduces every OFUL variant or the paper's sharp constants verbatim."
+      },
       "source_theorem": {
         "label": "Abbasi-Yadkori–Pál–Szepesvári, Theorem 3",
         "pages": "paper pp. 4–5",
@@ -390,6 +447,37 @@
           ],
           "relationship": "BanditRLlib constructs a canonical posterior kernel and a recursive stationary latent-arm-stream trajectory. Its selector carries an explicit pointwise mean-optimality contract, and its compiled endpoint is Bayesian rather than a universal frequentist theorem for every Thompson variant."
         }
+      },
+      "proof_bridge": {
+        "title": "Why posterior sampling can be analyzed through probability matching",
+        "summary": "The analysis uses the fact that the action selected from a posterior sample and the truly optimal action have the same conditional distribution given the visible history.",
+        "steps": [
+          {
+            "title": "Condition on the observed history",
+            "detail": "Given the current history, both the unknown environment and the fresh posterior sample are distributed according to the same posterior kernel.",
+            "math": "\\mathcal L(\\widetilde\\theta_t\\mid H_{t-1})=\\mathcal L(\\theta_\\star\\mid H_{t-1})=\\Pi_t.",
+            "fallback": "Conditionally on the previous history, the sampled and true latent environments share the current posterior law."
+          },
+          {
+            "title": "Match the optimal-action law",
+            "detail": "Applying the same documented optimal-arm selector to those two latent environments gives equal conditional laws for the chosen arm and the optimal arm.",
+            "math": "\\mathbb P(A_t=a\\mid H_{t-1})=\\mathbb P(A^\\star=a\\mid H_{t-1}).",
+            "fallback": "For each arm, its conditional chance of being selected equals its conditional chance of being optimal."
+          },
+          {
+            "title": "Rewrite Bayesian regret",
+            "detail": "Probability matching permits a clipped upper-confidence decomposition in which uncertainty and failure terms are separated before expectations are summed.",
+            "math": "\\mathbb E_t[\\mu(A^\\star)-\\mu(A_t)]\\le\\mathbb E_t[U_t(A_t)-\\mu(A_t)]+\\mathbb E_t[\\mu(A^\\star)-U_t(A^\\star)].",
+            "fallback": "Conditional Bayesian regret is bounded by an uncertainty term for the selected arm plus an upper-confidence failure term for the optimal arm."
+          },
+          {
+            "title": "Sum uncertainty under the model contract",
+            "detail": "The bounded-reward, variance, and posterior assumptions then control the accumulated widths and failure charge, producing the source theorem's Bayesian rate.",
+            "math": "BR_n\\le C\\sqrt{kn\\log n}.",
+            "fallback": "Under the stated Bayesian finite-arm assumptions, the accumulated terms yield a constant times square root of k n log n."
+          }
+        ],
+        "boundary": "This is a conceptual map of the Bayesian route. The exact compiled terminal has its own boundedness and variance terms and does not establish a frequentist guarantee for arbitrary Thompson-sampling implementations."
       },
       "source_theorem": {
         "label": "Theorem 36.1 (Bayesian regret of Thompson sampling)",
@@ -457,6 +545,37 @@
           ],
           "relationship": "The displayed equations are the textbook core. BanditRLlib's generated predictable route makes positive support and any exploration mixture explicit, and its expected, fixed-window, all-prefix, realized, and sparse-loss guarantees remain separate theorems with separate confidence contracts."
         }
+      },
+      "proof_bridge": {
+        "title": "How one bandit observation becomes an adversarial regret guarantee",
+        "summary": "EXP3 couples an unbiased importance-weighted estimator with the exponential-weights potential. The proof must pay explicitly for the estimator's second moment.",
+        "steps": [
+          {
+            "title": "Recover every coordinate in expectation",
+            "detail": "Although only the selected loss is observed, positive sampling probability makes the importance-weighted estimate conditionally unbiased.",
+            "math": "\\mathbb E_t[\\widehat\\ell_t(a)]=\\ell_t(a).",
+            "fallback": "Given the past, the importance-weighted estimated loss of each arm has expectation equal to that arm's actual loss."
+          },
+          {
+            "title": "Compare exponential potentials",
+            "detail": "The log change of total weight compares the algorithm's estimated loss with any fixed arm, leaving a learning-rate times second-moment penalty.",
+            "math": "\\sum_t\\langle p_t,\\widehat\\ell_t\\rangle-\\sum_t\\widehat\\ell_t(a)\\le\\frac{\\log k}{\\eta}+\\frac{\\eta}{2}\\sum_t\\langle p_t,\\widehat\\ell_t^2\\rangle.",
+            "fallback": "Estimated regret is at most log k over eta plus eta over two times the accumulated estimated-loss second moment."
+          },
+          {
+            "title": "Pay for bandit noise",
+            "detail": "Importance weighting inflates individual observations, but averaging under the sampling law bounds the conditional second-moment contribution by the number of arms.",
+            "math": "\\mathbb E_t\\langle p_t,\\widehat\\ell_t^2\\rangle\\le k.",
+            "fallback": "The conditional expected weighted squared estimate is at most the number of arms."
+          },
+          {
+            "title": "Balance the two costs",
+            "detail": "Choosing the learning rate so that the initial-complexity and variance terms match yields the square-root expected-regret rate.",
+            "math": "\\eta=\\sqrt{\\frac{2\\log k}{nk}}\\quad\\Longrightarrow\\quad R_n\\le\\sqrt{2nk\\log k}.",
+            "fallback": "With the balanced learning rate, expected regret is at most the square root of two n k log k."
+          }
+        ],
+        "boundary": "The bridge follows the textbook expected-regret argument. BanditRLlib's fixed-window, all-prefix, realized, and sparse-loss extensions have additional hypotheses and are intentionally not collapsed into this one card."
       },
       "source_theorem": {
         "label": "Theorem 11.2 (EXP3 expected regret)",
@@ -529,6 +648,37 @@
           ],
           "relationship": "The source paper distinguishes importance-weighted and reduced-variance estimators. BanditRLlib compiles a scheduled half-Tsallis route plus IID, corrupted, drifting, and oracle-restart consumers; these source-aligned local theorems do not claim every paper-sharp regime verbatim."
         }
+      },
+      "proof_bridge": {
+        "title": "Where curvature, estimator noise, and stochastic gaps meet",
+        "summary": "Tsallis-INF is useful as a reading lens because its guarantee is assembled from three interacting ingredients rather than from the regularizer alone.",
+        "steps": [
+          {
+            "title": "Let curvature control stability",
+            "detail": "Schematically, the FTRL regularizer determines how much the chosen distribution can move when one more estimated loss vector is added.",
+            "math": "\\operatorname{stab}_t\\lesssim\\left\\langle\\widehat\\ell_t,(\\nabla^2\\Psi_t)^{-1}\\widehat\\ell_t\\right\\rangle.",
+            "fallback": "One-step FTRL stability is controlled by the regularizer's local inverse curvature."
+          },
+          {
+            "title": "Match curvature to bandit noise",
+            "detail": "The estimator contributes probability-dependent variance, so the useful curvature is the one that absorbs the same rare-arm geometry.",
+            "math": "\\mathbb E_t[\\widehat\\ell_t(a)^2]\\asymp\\frac{\\ell_t(a)^2}{p_t(a)}.",
+            "fallback": "The estimated loss second moment grows like the squared loss divided by the arm's sampling probability."
+          },
+          {
+            "title": "Add stochastic self-bounding when available",
+            "detail": "In an IID gap model, expected regret also lower-bounds the probability mass assigned to suboptimal arms; this can repay part of the stability cost.",
+            "math": "Reg_T=\\sum_{t=1}^{T}\\sum_{a\\ne a^\\star}\\Delta_a\\,\\mathbb E[p_t(a)].",
+            "fallback": "Stochastic regret equals the sum over rounds and suboptimal arms of gap times expected sampling probability."
+          },
+          {
+            "title": "Choose the regime-specific consumer",
+            "detail": "The adversarial analysis keeps the stability charge, while stochastic, corrupted, drifting, and restart results add distinct assumptions to sharpen or reorganize it.",
+            "math": "\\begin{gathered}\\mathcal C+\\mathcal V-\\mathcal G\\Longrightarrow Reg_T\\text{ bound},\\\\ \\mathcal C=\\text{curvature},\\quad\\mathcal V=\\text{noise},\\quad\\mathcal G=\\text{gap credit}.\\end{gathered}",
+            "fallback": "Curvature, estimator noise, and a stated self-bounding or drift contract combine only within a particular regret theorem."
+          }
+        ],
+        "boundary": "This motif is a teaching organization of existing proof routes, not a compiled general curvature-noise-gap calculus. The source theorem cards and each Lean declaration remain authoritative for which coupling has actually been proved."
       },
       "source_theorem": {
         "label": "Zimmert–Seldin, Theorem 1 (adversarial regime)",
@@ -604,6 +754,37 @@
           ],
           "relationship": "The source paper contains both CH and Bernstein variants. BanditRLlib's compiled canonical endpoint is the known-deterministic-reward Hoeffding UCBVI-CH route on one recurrent generated process, with strict-prefix counts, a documented tie rule, the frozen 20/250 bound, and a separate expected consumer."
         }
+      },
+      "proof_bridge": {
+        "title": "How local transition confidence becomes episodic regret",
+        "summary": "UCBVI repeats the optimism pattern inside dynamic programming. Concentration is local to state-action-stage counts, while the final regret statement is global across a generated sequence of episodes.",
+        "steps": [
+          {
+            "title": "Control empirical transitions",
+            "detail": "For every visited state-action-stage tuple, a confidence event bounds the error of applying the empirical transition kernel to a bounded next-value function.",
+            "math": "|(\\widehat P_k-P)V_{k,h+1}(s,a)|\\le b_{k,h}(s,a).",
+            "fallback": "The empirical-transition prediction error for the next value is no larger than its exploration bonus."
+          },
+          {
+            "title": "Propagate optimism backward",
+            "detail": "Backward induction shows that adding the bonus and clipping at the remaining horizon keeps the recurrent Q table above the optimal value on the good event.",
+            "math": "Q_{k,h}(s,a)\\ge Q_h^\\star(s,a)\\quad\\text{on the confidence event}.",
+            "fallback": "On the confidence event, the optimistic episode-k Q value dominates the optimal Q value at every stage."
+          },
+          {
+            "title": "Decompose one episode",
+            "detail": "Optimism turns policy-value regret into a sum of bonuses, transition-estimation errors, and a martingale innovation along the executed trajectory.",
+            "math": "V_1^\\star-V_1^{\\pi_k}\\le\\sum_{h=1}^{H}(\\text{bonus}_{k,h}+\\text{transition error}_{k,h}+\\text{innovation}_{k,h}).",
+            "fallback": "The regret of one episode is bounded by the sum of its confidence bonuses, transition errors, and martingale innovations."
+          },
+          {
+            "title": "Charge visits on the same process",
+            "detail": "Strict-prefix counts control how often large bonuses occur; concentration controls the innovation sum, producing the frozen high-probability CH bound.",
+            "math": "Regret(K)\\le20H^{3/2}L\\sqrt{SAK}+250H^2S^2AL^2.",
+            "fallback": "The cumulative regret is bounded by the explicit 20 times square-root term plus the 250 times lower-order term."
+          }
+        ],
+        "boundary": "This bridge is for the known-reward Hoeffding UCBVI-CH route. It does not silently import the Bernstein variant, unknown-reward extensions, or a different trajectory process."
       },
       "source_theorem": {
         "label": "Azar–Osband–Munos, Theorem 1 (UCBVI-CH)",

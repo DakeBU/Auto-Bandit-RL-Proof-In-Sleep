@@ -1913,6 +1913,21 @@ tbody tr:hover {
   overflow-wrap: anywhere;
 }
 
+.chapter-scope-note {
+  max-width: 68ch;
+  margin: 1rem 0 0;
+  padding: 0.7rem 0.85rem;
+  border-left: 3px solid var(--accent);
+  background: color-mix(in srgb, var(--accent-soft) 46%, transparent);
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.chapter-scope-note strong {
+  color: var(--ink);
+}
+
 .chapter-pager {
   display: grid;
   gap: 0.9rem;
@@ -2403,6 +2418,103 @@ tbody tr:hover {
 }
 
 .proof-bridge-boundary strong {
+  color: var(--ink);
+}
+
+.worked-example {
+  margin: 1.5rem 0;
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--planned);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--planned-bg) 34%, var(--surface));
+  box-shadow: var(--shadow);
+  scroll-margin-top: 5rem;
+}
+
+.worked-example-heading {
+  max-width: 64rem;
+}
+
+.worked-example-heading h3 {
+  margin: 0.4rem 0 0.45rem;
+}
+
+.worked-example-heading p,
+.worked-example-step p,
+.worked-example-boundary {
+  color: var(--muted);
+}
+
+.worked-example-heading p {
+  margin: 0;
+}
+
+.worked-example-flow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.8rem;
+  margin: 1.1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.worked-example-step {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 0.85fr) minmax(0, 1.15fr);
+  align-content: start;
+  gap: 0.75rem;
+  min-width: 0;
+  padding: 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--line) 82%, transparent);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.worked-example-copy,
+.worked-example-step strong,
+.worked-example-step p {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.worked-example-number {
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--planned);
+  color: var(--surface);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.worked-example-step p {
+  margin: 0.35rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.worked-example-step .math-statement {
+  grid-column: 3;
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+  border-left-width: 3px;
+  font-size: 0.86rem;
+}
+
+.worked-example-takeaway,
+.worked-example-boundary {
+  margin: 1rem 0 0;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.84rem;
+}
+
+.worked-example-takeaway strong,
+.worked-example-boundary strong {
   color: var(--ink);
 }
 
@@ -3169,6 +3281,84 @@ tbody tr:hover {
   margin: 0.4rem 0;
 }
 
+.roadmap-status-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.roadmap-status-grid article {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+  padding: 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  text-align: center;
+}
+
+.roadmap-status-grid strong {
+  color: var(--accent-strong);
+  font-family: var(--serif);
+  font-size: 1.9rem;
+}
+
+.roadmap-status-grid span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.roadmap-focus-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.roadmap-focus-card {
+  display: grid;
+  align-content: start;
+  gap: 0.65rem;
+  min-width: 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--warning);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.roadmap-focus-card > div {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.roadmap-focus-card code,
+.roadmap-focus-card a {
+  overflow-wrap: anywhere;
+}
+
+.roadmap-focus-card h3,
+.roadmap-focus-card p {
+  margin: 0;
+}
+
+.roadmap-focus-card p {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.roadmap-focus-card .roadmap-next {
+  padding-top: 0.65rem;
+  border-top: 1px solid var(--line);
+}
+
+.roadmap-focus-card .roadmap-next strong {
+  color: var(--ink);
+}
+
 .site-footer {
   border-top: 1px solid var(--line);
   background: var(--surface);
@@ -3922,6 +4112,14 @@ tbody tr:hover {
 
   .theorem-panel {
     scroll-margin-top: 8rem;
+  }
+
+  .source-guide,
+  .notation-primer,
+  .algorithm-panel,
+  .worked-example,
+  .proof-bridge {
+    scroll-margin-top: 10rem;
   }
 
   .sidebar-scrim {
@@ -5892,6 +6090,119 @@ tbody tr:hover {
     overflow-x: visible;
     white-space: pre-wrap;
     overflow-wrap: anywhere;
+  }
+
+  .worked-example-flow,
+  .roadmap-focus-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .worked-example-step {
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+  }
+
+  .worked-example-step .math-statement {
+    grid-column: 1 / -1;
+    margin-top: 0.25rem;
+  }
+
+  .roadmap-status-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .roadmap-status-grid article:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .roadmap-focus-card > div {
+    display: grid;
+    justify-items: start;
+  }
+
+  [data-catalog],
+  [data-milestone-list] {
+    overflow: visible;
+    border: 0;
+    background: transparent;
+  }
+
+  [data-catalog] table,
+  [data-milestone-list] table,
+  [data-catalog] tbody,
+  [data-milestone-list] tbody {
+    display: block;
+    min-width: 0;
+    width: 100%;
+  }
+
+  [data-catalog] thead,
+  [data-milestone-list] thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  [data-catalog] tbody,
+  [data-milestone-list] tbody {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  [data-catalog] tr,
+  [data-milestone-list] tr {
+    display: grid;
+    min-width: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  [data-catalog] td,
+  [data-milestone-list] td {
+    display: grid;
+    grid-template-columns: minmax(6.6rem, 34%) minmax(0, 1fr);
+    gap: 0.55rem;
+    min-width: 0;
+    padding: 0.65rem 0.75rem;
+    border: 0;
+    border-top: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
+    overflow-wrap: anywhere;
+  }
+
+  [data-catalog] td:first-child,
+  [data-milestone-list] td:first-child {
+    grid-template-columns: 1fr;
+    border-top: 0;
+    background: color-mix(in srgb, var(--accent-soft) 32%, var(--surface));
+  }
+
+  [data-catalog] td::before,
+  [data-milestone-list] td::before {
+    content: attr(data-label);
+    color: var(--accent-strong);
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  [data-catalog] td code,
+  [data-milestone-list] td code,
+  [data-catalog] td a,
+  [data-milestone-list] td a {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  [data-milestone-list] .milestone-evidence > p {
+    margin-top: 0;
   }
 
   .catalog-return {

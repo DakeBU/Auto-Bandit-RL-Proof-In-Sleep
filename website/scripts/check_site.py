@@ -62,6 +62,8 @@ class LinkCollector(HTMLParser):
         self.notation_primer_count = 0
         self.algorithm_flow_count = 0
         self.algorithm_pseudocode_count = 0
+        self.proof_bridge_count = 0
+        self.worked_example_count = 0
         self.source_extension_count = 0
         self.diagram_scroll_hint_count = 0
         self.table_scroll_hint_count = 0
@@ -119,6 +121,10 @@ class LinkCollector(HTMLParser):
             self.algorithm_flow_count += 1
         if "algorithm-pseudocode" in classes:
             self.algorithm_pseudocode_count += 1
+        if "proof-bridge" in classes:
+            self.proof_bridge_count += 1
+        if "worked-example" in classes:
+            self.worked_example_count += 1
         if "source-extension" in classes:
             self.source_extension_count += 1
         if "data-diagram-scroll-hint" in values:
@@ -653,6 +659,27 @@ def main() -> int:
         if not expected.exists():
             errors.append(f"missing required page: {expected.relative_to(output)}")
 
+    roadmap_path = output / "roadmap" / "index.html"
+    if roadmap_path.exists():
+        roadmap_source = roadmap_path.read_text(encoding="utf-8")
+        if roadmap_source.count('class="roadmap-focus-card"') != 6:
+            errors.append("roadmap/index.html: expected six compact current-frontier cards")
+        if 'class="status-ledger"' in roadmap_source:
+            errors.append("roadmap/index.html: must not duplicate the complete milestone ledger")
+        if '<details class="inventory-disclosure" open' in roadmap_source:
+            errors.append("roadmap/index.html: historical route registry must be collapsed initially")
+        if f"Search all {manifest.get('milestone_count')} milestones" not in roadmap_source:
+            errors.append("roadmap/index.html: missing the canonical Implementation Map handoff")
+
+    catalog_path = output / "declarations" / "index.html"
+    if catalog_path.exists():
+        catalog_source = catalog_path.read_text(encoding="utf-8")
+        if catalog_source.find('id="filters"') > catalog_source.find('id="catalog-map"'):
+            errors.append("declarations/index.html: search controls must precede the explanatory diagram")
+        for label in ("Declaration", "Kind", "Chapter", "Module", "Status", "Source"):
+            if f'data-label="{label}"' not in catalog_source:
+                errors.append(f"declarations/index.html: mobile catalog cards lack {label!r} labels")
+
     proof_lab_path = output / "proof-graph-laboratory" / "index.html"
     if proof_lab_path.exists():
         proof_lab = proof_lab_path.read_text(encoding="utf-8")
@@ -1167,6 +1194,20 @@ def main() -> int:
             for item in notation
         ):
             errors.append(f"readings.json: {reading.get('slug')} has an incomplete notation entry")
+        worked_example = reading.get("worked_example")
+        if worked_example:
+            steps = worked_example.get("steps")
+            if (
+                not all(str(worked_example.get(key, "")).strip() for key in ("title", "intro", "takeaway", "boundary"))
+                or not isinstance(steps, list)
+                or not 2 <= len(steps) <= 4
+                or any(
+                    not isinstance(step, dict)
+                    or not all(str(step.get(key, "")).strip() for key in ("title", "detail", "math", "fallback"))
+                    for step in steps
+                )
+            ):
+                errors.append(f"readings.json: {reading.get('slug')} has an incomplete worked example")
     textbook_spine = json.loads(
         (SITE_DIR / "content" / "textbook_spine.json").read_text(encoding="utf-8")
     )
@@ -1343,6 +1384,8 @@ def main() -> int:
             errors.append(f"{relative}: expected one progressive chapter status ledger")
         if collector.chapter_compass_count != 1:
             errors.append(f"{relative}: expected one source-and-Lean chapter compass")
+        if page_source.count('class="chapter-scope-note"') != 1 or "How to read the status" not in page_source:
+            errors.append(f"{relative}: chapter status needs one canonical-route scope explanation")
         if collector.source_guide_count != 1:
             errors.append(f"{relative}: expected one textbook source guide")
         if collector.notation_primer_count != 1:
@@ -1367,6 +1410,22 @@ def main() -> int:
             )
         if page_source.count('id="algorithm-pseudocode"') != expected_pseudocode:
             errors.append(f"{relative}: explicit pseudocode needs one stable deep-link target")
+        expected_proof_bridge = 1 if readings_by_slug.get(chapter_slug, {}).get("proof_bridge") else 0
+        if collector.proof_bridge_count != expected_proof_bridge:
+            errors.append(
+                f"{relative}: found {collector.proof_bridge_count} proof bridges, "
+                f"expected {expected_proof_bridge}"
+            )
+        if page_source.count('id="proof-bridge"') != expected_proof_bridge:
+            errors.append(f"{relative}: proof bridge needs one stable deep-link target")
+        expected_worked_example = 1 if readings_by_slug.get(chapter_slug, {}).get("worked_example") else 0
+        if collector.worked_example_count != expected_worked_example:
+            errors.append(
+                f"{relative}: found {collector.worked_example_count} worked examples, "
+                f"expected {expected_worked_example}"
+            )
+        if page_source.count('id="worked-example"') != expected_worked_example:
+            errors.append(f"{relative}: worked example needs one stable deep-link target")
         if chapter_slug == "foundations":
             if collector.source_extension_count != 1:
                 errors.append(f"{relative}: expected one collapsed advanced source extension")
@@ -1423,11 +1482,17 @@ def main() -> int:
             "Textbook Algorithm 3: UCB(δ)",
             "least-encoded arm in argmax",
             "Source/Lean boundary",
+            "Why UCB may deliberately choose the arm with the lower empirical mean",
+            "The numbers illustrate one UCB(δ) decision",
         ):
             if required not in ucb_source:
                 errors.append(f"chapters/ucb/index.html: missing source-to-Lean guide {required!r}")
         if ucb_source.count('class="proof-bridge-step"') != 4:
             errors.append("chapters/ucb/index.html: expected four source-to-Lean proof-bridge steps")
+        if ucb_source.count('class="worked-example-step"') != 3:
+            errors.append("chapters/ucb/index.html: expected three worked-example steps")
+        if 'href="#worked-example"' not in ucb_source:
+            errors.append("chapters/ucb/index.html: worked example is missing from the page table of contents")
         if 'href="#proof-bridge"' not in ucb_source:
             errors.append("chapters/ucb/index.html: proof bridge is missing from the page table of contents")
         closest_name = (
@@ -1467,6 +1532,11 @@ def main() -> int:
         for required in ("data-milestone-more", "milestone-data.json"):
             if required not in implementation_source:
                 errors.append(f"Implementation Map lacks progressive milestone support: {required}")
+        if implementation_source.find('id="milestones"') > implementation_source.find('id="status-key"'):
+            errors.append("Implementation Map search must precede the status vocabulary")
+        for label in ("Milestone", "Chapter", "Status", "Meaning and evidence"):
+            if f'data-label="{label}"' not in implementation_source:
+                errors.append(f"Implementation Map mobile cards lack {label!r} labels")
     else:
         errors.append("Implementation Map progressive milestone ledger is missing")
     if module_data_path.exists() and implementation_path.exists():
@@ -1518,6 +1588,8 @@ def main() -> int:
         for required in (PRIMARY_TEXTBOOK_TITLE, PRIMARY_TEXTBOOK_URL, "10.1017/9781108571401"):
             if required not in page_source:
                 errors.append(f"{relative}: missing canonical textbook metadata {required}")
+        if page_source.count('aria-current="page"') != 1:
+            errors.append(f"{relative}: Part IV navigation must expose exactly one current page")
     if manifest.get("max_module_slug_length", 10_000) > 96:
         errors.append("generated module URL exceeds the 96-character slug contract")
 
@@ -1551,8 +1623,8 @@ def main() -> int:
     catalog_page_size = catalog_data.get("page_size") if isinstance(catalog_data, dict) else None
     if catalog_data.get("schema_version") != 2:
         errors.append("catalog-data.json: schema_version must be 2")
-    if catalog_page_size != 100:
-        errors.append("catalog-data.json: page_size must remain 100")
+    if catalog_page_size != 40:
+        errors.append("catalog-data.json: page_size must remain 40 for the narrow-screen card budget")
     if len(catalog_items) != manifest.get("declaration_count"):
         errors.append(
             f"catalog-data count {len(catalog_items)} != declaration_count {manifest.get('declaration_count')}"
