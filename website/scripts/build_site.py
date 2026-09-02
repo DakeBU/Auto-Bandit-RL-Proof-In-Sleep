@@ -45,11 +45,21 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20260902j"
+ASSET_VERSION = "20260902m"
 CATALOG_PAGE_SIZE = 100
 MILESTONE_PAGE_SIZE = 20
 MODULE_PAGE_SIZE = 30
 TEACHING_PREVIEW_COUNT = 4
+PSEUDOCODE_CHAPTERS = {
+    "etc",
+    "ucb",
+    "oful",
+    "thompson",
+    "exp3",
+    "tsallis",
+    "finite-horizon-rl",
+    "frontier",
+}
 SOURCE_BRANCH = "main"
 PUBLIC_BASE_URL = ""
 PUBLIC_SNAPSHOT_BASE_URL = ""
@@ -602,6 +612,9 @@ def render_diagram(
         f'<pre class="mermaid" aria-label="{html.escape(caption)}">{html.escape(source)}</pre>'
         f"<figcaption>{html.escape(caption)} · "
         f'<a href="{source_href}">editable Mermaid source</a></figcaption>'
+        '<span class="diagram-scroll-hint" data-diagram-scroll-hint hidden>'
+        'Swipe horizontally or use the left and right arrow keys to read the full diagram '
+        '<span aria-hidden="true">↔</span></span>'
         "</figure>"
     )
 
@@ -625,6 +638,9 @@ def render_harness_attempt_graph() -> str:
         f'<pre class="mermaid" aria-label="{html.escape(caption)}">{html.escape(source)}</pre>'
         f"<figcaption>{html.escape(caption)} · "
         f'<a href="{source_href}">generated Mermaid source</a></figcaption>'
+        '<span class="diagram-scroll-hint" data-diagram-scroll-hint hidden>'
+        'Swipe horizontally or use the left and right arrow keys to read the full diagram '
+        '<span aria-hidden="true">↔</span></span>'
         "</figure>"
     )
 
@@ -1303,9 +1319,28 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
   <a class="button compact" href="{html.escape(paged_source_url(source), quote=True)}">Open at the cited pages <span aria-hidden="true">↗</span></a>
 </article>"""
 
+    standard_companions = [
+        source for source in companions if source.get("presentation") != "advanced"
+    ]
+    advanced_companions = [
+        source for source in companions if source.get("presentation") == "advanced"
+    ]
     sources = source_card(primary, f"Primary spine · {primary['edition']}")
-    for companion_source in companions:
+    for companion_source in standard_companions:
         sources += source_card(companion_source, "Algorithm-specific companion")
+    advanced_sources_html = ""
+    if advanced_companions:
+        advanced_cards = "".join(
+            source_card(source, "Advanced source map") for source in advanced_companions
+        )
+        advanced_sources_html = f"""
+  <details class="source-extension">
+    <summary><span><span class="panel-kicker">Optional source route</span><strong>Advanced lower-bound extension</strong></span><span>Part IV page map <span aria-hidden="true">＋</span></span></summary>
+    <div class="source-extension-body">
+      <p>Open this crosswalk after the finite-bandit bookkeeping route. It preserves the Chapter 14–17 page map without interrupting the beginner sequence.</p>
+      <div class="source-grid source-grid-{len(advanced_companions)}">{advanced_cards}</div>
+    </div>
+  </details>"""
 
     notation_items = "".join(
         '<div><dt><code>'
@@ -1334,8 +1369,8 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
             html.escape(line) for line in pseudocode["lines"]
         )
         pseudocode_html = f"""
-    <aside class="algorithm-pseudocode" aria-labelledby="algorithm-pseudocode-title">
-      <div><span class="panel-kicker">Textbook-aligned algorithm · explicit conventions</span><h4 id="algorithm-pseudocode-title">{html.escape(pseudocode['title'])}</h4><p>{html.escape(pseudocode['intro'])}</p></div>
+    <aside class="algorithm-pseudocode" id="algorithm-pseudocode" aria-labelledby="algorithm-pseudocode-title">
+      <div><span class="panel-kicker">Algorithm · explicit conventions</span><h4 id="algorithm-pseudocode-title">{html.escape(pseudocode['title'])}</h4><p>{html.escape(pseudocode['intro'])}</p></div>
       {render_math_statement(pseudocode['formula_label'], pseudocode['math'], pseudocode['fallback'])}
       <pre tabindex="0" role="region" aria-label="{html.escape(pseudocode['title'], quote=True)}"><code>{pseudocode_lines}</code></pre>
       <p class="algorithm-pseudocode-boundary"><strong>Source/Lean boundary.</strong> {html.escape(pseudocode['relationship'])}</p>
@@ -1420,7 +1455,8 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
   <p class="eyebrow">Textbook crosswalk</p>
   <h2>Read the mathematics before the Lean interface</h2>
   <p class="section-intro">The Book Map is a curated formalization curriculum anchored in <em>Bandit Algorithms</em>, not a chapter-for-chapter reproduction of one book. Page numbers below use its free online edition; companion papers cover algorithm-specific results.</p>
-  <div class="source-grid source-grid-{len(companions) + 1}">{sources}</div>
+  <div class="source-grid source-grid-{len(standard_companions) + 1}">{sources}</div>
+  {advanced_sources_html}
   {notation_html}
   <div class="algorithm-panel" id="algorithm">
     <div><span class="panel-kicker">{html.escape(algorithm['kind'])} · ordered flow</span><h3>{html.escape(algorithm['title'])}</h3><p class="algorithm-intro">Read top to bottom: each step supplies the state or proof fact used by the next one.</p></div>
@@ -4780,9 +4816,13 @@ def validate_readings(chapters: list[dict[str, Any]], readings: list[dict[str, A
             raise SystemExit(f"reading {reading['slug']} has a companion without a source URL")
         if any(not isinstance(source.get("pdf_page"), int) or source["pdf_page"] < 1 for source in companions):
             raise SystemExit(f"reading {reading['slug']} has a companion without a valid PDF page")
+        if any(source.get("presentation") not in (None, "advanced") for source in companions):
+            raise SystemExit(f"reading {reading['slug']} has an unknown companion presentation")
         if not reading.get("algorithm", {}).get("steps"):
             raise SystemExit(f"reading {reading['slug']} lacks an algorithm or proof flow")
         pseudocode = reading.get("algorithm", {}).get("pseudocode")
+        if reading["slug"] in PSEUDOCODE_CHAPTERS and not pseudocode:
+            raise SystemExit(f"algorithm reading {reading['slug']} requires explicit pseudocode")
         if pseudocode:
             required_pseudocode = (
                 "title", "intro", "formula_label", "math", "fallback", "lines", "relationship"
@@ -4795,6 +4835,9 @@ def validate_readings(chapters: list[dict[str, Any]], readings: list[dict[str, A
                 or any(not isinstance(line, str) or not line.strip() for line in pseudocode["lines"])
             ):
                 raise SystemExit(f"reading {reading['slug']} pseudocode needs at least four nonempty lines")
+            normalized = normalize_math_source(pseudocode["math"])
+            if normalized.count(r"\(") != normalized.count(r"\)") or normalized.count(r"\[") != normalized.count(r"\]"):
+                raise SystemExit(f"reading {reading['slug']} pseudocode has unbalanced mathematical delimiters")
         proof_bridge = reading.get("proof_bridge")
         if proof_bridge:
             bridge_steps = proof_bridge.get("steps", [])

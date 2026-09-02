@@ -20,6 +20,7 @@
       "companion": {
         "title": "Bandit Algorithms — Part IV, Chapters 14–17",
         "authors": "Tor Lattimore and Csaba Szepesvári",
+        "presentation": "advanced",
         "sections": "§14.2, Theorems 14.1–14.2, Exercise 14.10, §15.1 Lemma 15.1, §15.2 Theorem 15.2, §16.1 Definition 16.1 and Theorem 16.2, §16.2 Lemma 16.3 and Theorem 16.4, §17.1 Theorem 17.1 and Corollaries 17.2–17.3, and §17.2 Theorem 17.4 and Claims 17.5–17.7",
         "pages": "CUP §14.2 starts p. 162, §14.5 starts p. 167, §15.1–15.2 span pp. 170–173, §16.1–16.2 span pp. 177–180, and §17.1–17.2 span pp. 186–190; author-online pp. 188–191, 195–196, 198–201, 207–210, and 216–220; physical PDF pp. 197–200, 204–205, 207–210, 216–219, and 225–229",
         "pdf_page": 197,
@@ -136,7 +137,22 @@
           {"title": "Estimate", "detail": "Compute each arm's empirical mean from its exploration samples."},
           {"title": "Commit", "detail": "Choose an empirical maximizer using a documented tie rule."},
           {"title": "Exploit", "detail": "Pull that chosen arm for every remaining round."}
-        ]
+        ],
+        "pseudocode": {
+          "title": "Textbook Explore-Then-Commit",
+          "intro": "This version makes the exploration budget, commit time, empirical means, and tie convention explicit before the regret theorem is read.",
+          "formula_label": "Empirical winner after exploration",
+          "math": "\\widehat\\mu_a=\\frac1m\\sum_{s=1}^{m}X_{a,s},\\qquad \\widehat a=\\min\\operatorname*{arg\\,max}_{a\\in[k]}\\widehat\\mu_a.",
+          "fallback": "Average the first m samples of each arm and commit to the least-encoded arm with the largest empirical mean.",
+          "lines": [
+            "input: k arms, horizon n, exploration count m with 1 ≤ m ≤ n/k",
+            "for s = 1,…,m: for a = 1,…,k: pull arm a and record X_{a,s}",
+            "compute μ̂_a = (1/m) sum_s X_{a,s} for every arm a",
+            "set â to the least-encoded empirical-mean maximizer",
+            "for every remaining round: pull â and record its reward"
+          ],
+          "relationship": "The textbook permits any fixed empirical-mean tie rule. BanditRLlib's canonical generated ETC route fixes round-robin exploration and an explicit first-occurrence/least-encoded commit rule, then proves measurability and expected regret under its bounded or sub-Gaussian arm-law contracts."
+        }
       },
       "source_theorem": {
         "label": "Theorem 6.1 (ETC regret bound)",
@@ -291,7 +307,23 @@
           {"title": "Build confidence", "detail": "Place plausible parameters in an ellipsoid around the estimate."},
           {"title": "Act optimistically", "detail": "Choose the action and plausible parameter pair with the largest predicted reward."},
           {"title": "Charge widths", "detail": "Bound regret by confidence widths and use the elliptical-potential sum."}
-        ]
+        ],
+        "pseudocode": {
+          "title": "OFUL optimistic ridge loop",
+          "intro": "The compact loop separates the state carried between rounds from the confidence maximization performed at the current round.",
+          "formula_label": "Ridge estimate and optimistic score",
+          "math": "V_t=\\lambda I+\\sum_{s<t}x_sx_s^\\top,\\quad \\widehat\\theta_t=V_t^{-1}\\sum_{s<t}x_sy_s,\\quad x_t\\in\\operatorname*{arg\\,max}_{x\\in\\mathcal D_t}\\left(\\langle\\widehat\\theta_t,x\\rangle+\\beta_t\\lVert x\\rVert_{V_t^{-1}}\\right).",
+          "fallback": "Form the regularized Gram matrix and ridge estimate, then choose the feasible action with the largest estimated reward plus its confidence width.",
+          "lines": [
+            "input: regularization λ > 0, confidence δ, feasible action sets D_t",
+            "initialize V_1 = λ I and b_1 = 0",
+            "for t = 1,…,n:",
+            "    set θ̂_t = V_t^{-1} b_t and compute confidence radius β_t",
+            "    choose a documented maximizer of <θ̂_t,x> + β_t ||x||_{V_t^{-1}}",
+            "    observe y_t; update V_{t+1} = V_t + x_t x_t^T and b_{t+1} = b_t + x_t y_t"
+          ],
+          "relationship": "The source algorithm permits time-varying feasible sets. BanditRLlib's canonical route is a finite-action measurable construction with explicit confidence, all-horizon, expectation, and stopping-time interfaces; the exact Lean statements determine the feature, regularity, and scheduling contracts."
+        }
       },
       "source_theorem": {
         "label": "Abbasi-Yadkori–Pál–Szepesvári, Theorem 3",
@@ -341,7 +373,23 @@
           {"title": "Sample a model", "detail": "Draw one plausible environment from that posterior."},
           {"title": "Optimize the sample", "detail": "Choose an arm that is best in the sampled environment."},
           {"title": "Observe and update", "detail": "Record the reward and condition the posterior on the enlarged history."}
-        ]
+        ],
+        "pseudocode": {
+          "title": "Posterior-sampling loop",
+          "intro": "This form makes probability matching visible: sample one environment from the current posterior, then act optimally for that sampled environment.",
+          "formula_label": "Posterior sample and selected arm",
+          "math": "\\widetilde\\theta_t\\sim\\Pi_t(\\cdot\\mid H_{t-1}),\\qquad A_t=\\min\\operatorname*{arg\\,max}_{a\\in[k]}\\mu_a(\\widetilde\\theta_t).",
+          "fallback": "Sample a latent environment from the posterior given the previous history, then choose the least-encoded arm with maximal mean in that sampled environment.",
+          "lines": [
+            "input: prior Q, likelihood/reward kernel, horizon n, fixed optimal-arm tie rule",
+            "initialize posterior Π_1 = Q",
+            "for t = 1,…,n:",
+            "    sample θ̃_t from Π_t given the visible history H_{t-1}",
+            "    choose A_t as the documented mean-optimal arm for θ̃_t",
+            "    observe reward X_t and update Π_{t+1} by conditioning on (A_t,X_t)"
+          ],
+          "relationship": "BanditRLlib constructs a canonical posterior kernel and a recursive stationary latent-arm-stream trajectory. Its selector carries an explicit pointwise mean-optimality contract, and its compiled endpoint is Bayesian rather than a universal frequentist theorem for every Thompson variant."
+        }
       },
       "source_theorem": {
         "label": "Theorem 36.1 (Bayesian regret of Thompson sampling)",
@@ -387,12 +435,28 @@
         "title": "EXP3 with importance-weighted losses",
         "kind": "algorithm",
         "steps": [
-          {"title": "Turn weights into probabilities", "detail": "Normalize positive arm weights, with the prescribed exploration or support rule."},
+          {"title": "Turn weights into probabilities", "detail": "Normalize positive arm weights into the current sampling law."},
           {"title": "Sample an arm", "detail": "Draw the current action from that probability vector."},
           {"title": "Estimate all losses", "detail": "Use the observed loss divided by its sampling probability for the selected arm; use zero for the others."},
           {"title": "Update exponentially", "detail": "Downweight arms according to their estimated cumulative losses."},
           {"title": "Separate guarantees", "detail": "Expected, fixed-horizon tail, all-time, and sparse-loss results use distinct concentration interfaces."}
-        ]
+        ],
+        "pseudocode": {
+          "title": "EXP3 importance-weighted update",
+          "intro": "The loop names the sampling law, the one-coordinate unbiased loss estimate, and the exponential update used by the potential argument.",
+          "formula_label": "Sampling, estimation, and weight update",
+          "math": "p_t(a)=\\frac{w_t(a)}{\\sum_b w_t(b)},\\qquad \\widehat\\ell_t(a)=\\frac{\\ell_t(A_t)\\mathbf 1\\{A_t=a\\}}{p_t(a)},\\qquad w_{t+1}(a)=w_t(a)e^{-\\eta\\widehat\\ell_t(a)}.",
+          "fallback": "Normalize positive weights, sample an arm, divide the observed loss by that arm's probability, and exponentially downweight each arm by its estimated loss.",
+          "lines": [
+            "input: k arms, horizon n, learning rate η; initialize w_1(a) = 1",
+            "for t = 1,…,n:",
+            "    normalize weights into the sampling law p_t",
+            "    sample A_t ~ p_t and observe only loss ℓ_t(A_t)",
+            "    set ℓ̂_t(a) = ℓ_t(A_t) 1{A_t=a} / p_t(a) for every arm",
+            "    update w_{t+1}(a) = w_t(a) exp(-η ℓ̂_t(a))"
+          ],
+          "relationship": "The displayed equations are the textbook core. BanditRLlib's generated predictable route makes positive support and any exploration mixture explicit, and its expected, fixed-window, all-prefix, realized, and sparse-loss guarantees remain separate theorems with separate confidence contracts."
+        }
       },
       "source_theorem": {
         "label": "Theorem 11.2 (EXP3 expected regret)",
@@ -448,7 +512,23 @@
           {"title": "Accumulate the estimate", "detail": "Add the new estimate to the running loss vector."},
           {"title": "Regularize with half-Tsallis entropy", "detail": "Choose the next distribution by minimizing estimated loss plus the scheduled Tsallis potential."},
           {"title": "Sample and adapt", "detail": "Draw the next arm and update the learning-rate schedule; specialized theorems then add self-bounding, corruption, drift, or restart assumptions."}
-        ]
+        ],
+        "pseudocode": {
+          "title": "Half-Tsallis FTRL / Tsallis-INF core",
+          "intro": "This compact route shows where the regularizer, loss estimator, and round-dependent learning rate meet; estimator-specific corrections remain explicit.",
+          "formula_label": "Regularized decision and bandit estimate",
+          "math": "p_t\\in\\operatorname*{arg\\,min}_{p\\in\\Delta_K}\\left\\{\\langle\\widehat L_{t-1},p\\rangle+\\Psi_t(p)\\right\\},\\qquad \\widehat\\ell_t(a)=\\frac{\\ell_t(A_t)\\mathbf 1\\{A_t=a\\}}{p_t(a)}.",
+          "fallback": "Choose the simplex distribution minimizing cumulative estimated loss plus the scheduled half-Tsallis regularizer, then form the stated bandit loss estimate from the sampled arm.",
+          "lines": [
+            "input: K arms, half-Tsallis regularizer Ψ_t, schedule η_t, estimator variant",
+            "initialize cumulative estimated loss L̂_0 = 0",
+            "for t = 1,…,T:",
+            "    choose p_t by the regularized FTRL minimization over the simplex",
+            "    sample A_t ~ p_t; observe the selected loss and form the declared estimator ℓ̂_t",
+            "    set L̂_t = L̂_{t-1} + ℓ̂_t and advance the learning-rate schedule"
+          ],
+          "relationship": "The source paper distinguishes importance-weighted and reduced-variance estimators. BanditRLlib compiles a scheduled half-Tsallis route plus IID, corrupted, drifting, and oracle-restart consumers; these source-aligned local theorems do not claim every paper-sharp regime verbatim."
+        }
       },
       "source_theorem": {
         "label": "Zimmert–Seldin, Theorem 1 (adversarial regime)",
@@ -507,7 +587,23 @@
           {"title": "Plan backward optimistically", "detail": "Add a Hoeffding bonus, clip against the horizon and previous Q table, and run backward dynamic programming."},
           {"title": "Execute the greedy policy", "detail": "Generate the next episode with the measurable greedy policy from that recurrent table."},
           {"title": "Assemble regret", "detail": "Combine confidence and optimism with charge, Bellman-innovation, and low-count bounds on the same process."}
-        ]
+        ],
+        "pseudocode": {
+          "title": "Known-reward UCBVI-CH episode loop",
+          "intro": "The episode-level pseudocode fixes strict-prefix counts, backward stage order, previous-Q clipping, the greedy policy, and the generated-trajectory update.",
+          "formula_label": "Optimistic backward update",
+          "math": "Q_{k,h}(s,a)=\\min\\left\\{H-h+1,\\,Q_{k-1,h}(s,a),\\,r_h(s,a)+\\widehat P_kV_{k,h+1}(s,a)+b_{k,h}(s,a)\\right\\},\\quad V_{k,h}(s)=\\max_a Q_{k,h}(s,a).",
+          "fallback": "At each stage of episode k, clip the reward plus empirical next value plus bonus by the remaining horizon and the previous Q table, then take the maximum over actions.",
+          "lines": [
+            "input: finite MDP, known rewards, horizon H, episodes K, confidence δ",
+            "initialize optimistic Q_{0,h}; keep zero-count transition and tie rules explicit",
+            "for episode k = 1,…,K: aggregate visits/transitions from episodes < k",
+            "    set V_{k,H+1} = 0; for h = H,…,1 compute every clipped Q_{k,h}(s,a)",
+            "    set π_{k,h}(s) to the documented maximizer of Q_{k,h}(s,·)",
+            "    execute π_k for one episode; append states and actions to the recurrent history"
+          ],
+          "relationship": "The source paper contains both CH and Bernstein variants. BanditRLlib's compiled canonical endpoint is the known-deterministic-reward Hoeffding UCBVI-CH route on one recurrent generated process, with strict-prefix counts, a documented tie rule, the frozen 20/250 bound, and a separate expected consumer."
+        }
       },
       "source_theorem": {
         "label": "Azar–Osband–Munos, Theorem 1 (UCBVI-CH)",
@@ -556,7 +652,7 @@
         {
           "title": "Does Stochastic Gradient really succeed for Bandits?",
           "authors": "Dorian Baudry, Emmeran Johnson, Simon Vary, Ciara Pike-Burke, and Patrick Rebeschini",
-          "sections": "Section 1.2, Algorithm 1, Theorem 1, Corollary 1, Theorem 2, Equations (3)--(11), Appendix A.1, Appendix C, Theorem 4, and Appendix E Steps 1--4",
+          "sections": "Section 1.2, Algorithm 1, Theorem 1, Corollary 1, Theorem 2, Equations (3)–(11), Appendix A.1, Appendix C, Theorem 4, and Appendix E Steps 1–4",
           "pages": "physical PDF pp. 2–6, 22, 31–40, and 47–49",
           "pdf_page": 2,
           "url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/a4e683f0ce6b91e7fbdae9d32642d88f-Paper-Conference.pdf"
@@ -576,7 +672,22 @@
           {"title": "Sample reward", "detail": "Draw Aₜ from pₜ and observe the selected arm's reward rₜ."},
           {"title": "Update θ", "detail": "Add η rₜ(1{Aₜ = k} − pₖ,ₜ) to every coordinate."},
           {"title": "Split regret", "detail": "Expected gap increments plus failure mass yield the finite-horizon bound."}
-        ]
+        ],
+        "pseudocode": {
+          "title": "Source Algorithm 1: stochastic-gradient bandit",
+          "intro": "The source-frozen loop makes the zero initialization, softmax action law, selected reward, and simultaneous coordinate update explicit.",
+          "formula_label": "Softmax probability and parameter update",
+          "math": "p_{k,t}=\\frac{e^{\\theta_{k,t}}}{\\sum_j e^{\\theta_{j,t}}},\\qquad \\theta_{k,t+1}=\\theta_{k,t}+\\eta r_t\\left(\\mathbf 1\\{A_t=k\\}-p_{k,t}\\right).",
+          "fallback": "Sample from the softmax of theta, observe the selected reward, and add eta times reward times selected-indicator minus probability to every arm coordinate.",
+          "lines": [
+            "input: K arms, constant learning rate η, horizon T; set θ_{k,1} = 0",
+            "for t = 1,…,T:",
+            "    compute p_{k,t} = exp(θ_{k,t}) / sum_j exp(θ_{j,t})",
+            "    sample A_t from p_t and observe reward r_t from the selected arm",
+            "    for every k: θ_{k,t+1} = θ_{k,t} + η r_t (1{A_t=k} - p_{k,t})"
+          ],
+          "relationship": "BanditRLlib compiles the source Theorem-1 endpoint for its bounded two-arm fixed-IID trajectory and a direct Corollary-1 consumer. Theorem 2's phase trigger/no-return/ballot assembly and Theorems 3–4 remain open; this pseudocode does not promote those terminals."
+        }
       },
       "source_theorem": {
         "label": "Definitions 3.1–3.3 and Lemmas 3.1–3.4 (succinct-support geometry)",
@@ -649,7 +760,7 @@
         },
         {
           "label": "Theorem 4 / Appendix E source-contract window",
-          "pages": "physical PDF pp. 47--49",
+          "pages": "physical PDF pp. 47–49",
           "pdf_page": 47,
           "url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/a4e683f0ce6b91e7fbdae9d32642d88f-Paper-Conference.pdf",
           "math": "\\[\\begin{gathered}\\eta C_\\eta < \\frac{2\\Delta}{K+2},\\\\ 2\\Delta-\\eta C_\\eta(K+2)>0,\\\\ 0<p',\\quad c<\\tfrac12,\\\\ P(B)\\ge p',\\\\ P(B\\cap S)\\ge(1-2c)P(B),\\\\ P(B\\cap S)\\le P(S),\\\\ \\Longrightarrow P(S)\\ge p'(1-2c)>0.\\end{gathered}\\]",
