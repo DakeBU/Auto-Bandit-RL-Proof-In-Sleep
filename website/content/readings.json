@@ -185,7 +185,23 @@
           {"title": "Choose optimistically", "detail": "Pull an arm with maximal upper-confidence score."},
           {"title": "Update and repeat", "detail": "Update that arm's count and empirical mean, then recompute scores next round."},
           {"title": "Read the proof", "detail": "On the good event, choosing a suboptimal arm forces its count to still be small; sum gap times count to obtain regret."}
-        ]
+        ],
+        "pseudocode": {
+          "title": "Textbook Algorithm 3: UCB(δ)",
+          "intro": "This compact form fixes the horizon convention, confidence index, maximizing rule, and update order used in the textbook route.",
+          "formula_label": "UCB score after initialization",
+          "math": "U_a(t)=\\widehat\\mu_a(t-1)+\\sqrt{\\frac{2\\log(1/\\delta)}{N_a(t-1)}},\\qquad A_t=\\min\\operatorname*{arg\\,max}_{a\\in[k]}U_a(t).",
+          "fallback": "At round t, score arm a by its empirical mean before t plus square root of 2 log(1/delta) divided by its previous pull count; choose the least-encoded maximizing arm.",
+          "lines": [
+            "input: k arms, horizon n, confidence δ = 1/n²",
+            "for t = 1,…,k: pull arm t; observe X_t; update N_t and μ̂_t",
+            "for t = k+1,…,n:",
+            "    compute every U_a(t) from rewards observed before round t",
+            "    choose the least-encoded arm in argmax_a U_a(t)",
+            "    observe its reward; update only that arm's count and empirical mean"
+          ],
+          "relationship": "The textbook also describes an unpulled arm as having infinite index; the explicit round-robin prefix realizes the same initialization requirement. BanditRLlib's canonical generated route uses round-robin initialization and a least-encoded maximizer, but its native score is parameterized as √(2c log(t+1)/N_a(t)); the source theorem card and exact Lean declarations remain authoritative for constants and indexing."
+        }
       },
       "proof_bridge": {
         "title": "Why an optimistic choice becomes a regret bound",

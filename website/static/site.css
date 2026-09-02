@@ -1056,58 +1056,67 @@ h3 {
   margin: 1.4rem 0;
 }
 
-.role-grid {
+.audience-paths {
+  padding: clamp(1.25rem, 3vw, 2rem) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.audience-paths :is(.eyebrow, h2) {
+  margin-bottom: 0;
+}
+
+.audience-path-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-  margin: 1.4rem 0;
+  gap: 0.75rem;
+  margin: 1rem 0 0;
 }
 
-.role-card {
-  position: relative;
-  min-height: 21rem;
-  padding: clamp(1.2rem, 2.5vw, 1.8rem);
-  overflow: hidden;
+.audience-path-card {
+  display: grid;
+  min-width: 0;
+  gap: 0.28rem;
+  padding: 0.9rem 1rem;
   border: 1px solid var(--line);
-  border-top: 5px solid var(--accent);
+  border-left: 4px solid var(--accent);
   border-radius: var(--radius);
   background: var(--surface);
+  color: var(--ink);
   box-shadow: var(--shadow);
+  text-decoration: none;
 }
 
-.role-card h3 {
-  max-width: 18ch;
-  margin-top: 0.5rem;
-  font-size: clamp(1.35rem, 2.2vw, 1.8rem);
+.audience-path-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 62%, var(--line));
+  background: color-mix(in srgb, var(--accent-soft) 40%, var(--surface));
 }
 
-.role-card p:not(.eyebrow) {
-  color: var(--muted);
-}
-
-.role-card > a {
-  display: inline-block;
-  margin-top: 0.65rem;
-  font-weight: 700;
-}
-
-.role-number {
-  position: absolute;
-  right: 0.8rem;
-  top: -0.75rem;
-  color: color-mix(in srgb, var(--accent) 14%, transparent);
-  font-family: var(--serif);
-  font-size: 6.6rem;
+.audience-path-card > span {
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 0.69rem;
   font-weight: 800;
-  line-height: 1;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.audience-path-card > strong {
+  font-family: var(--serif);
+  font-size: 1.04rem;
+  line-height: 1.2;
+}
+
+.audience-path-card > small {
+  color: var(--muted);
+  font-size: 0.77rem;
 }
 
 .browse-role {
-  border-top-color: var(--planned);
+  border-left-color: var(--planned);
 }
 
 .contribute-role {
-  border-top-color: var(--success);
+  border-left-color: var(--success);
 }
 
 .stat,
@@ -2170,6 +2179,51 @@ tbody tr:hover {
   color: var(--muted);
   font-size: 0.85rem;
   line-height: 1.5;
+}
+
+.algorithm-pseudocode {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.9fr);
+  gap: 0.9rem 1rem;
+  margin-top: 1.25rem;
+  padding: clamp(0.9rem, 2vw, 1.2rem);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--planned);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--planned-bg) 44%, var(--surface));
+}
+
+.algorithm-pseudocode > div > :is(h4, p) {
+  margin-bottom: 0;
+}
+
+.algorithm-pseudocode > .math-block,
+.algorithm-pseudocode > .math-statement {
+  align-self: start;
+  margin: 0;
+}
+
+.algorithm-pseudocode pre {
+  grid-column: 1 / -1;
+  max-width: 100%;
+  margin: 0;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.algorithm-pseudocode-boundary {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.catalog-return {
+  display: none;
+}
+
+.catalog-return[hidden] {
+  display: none;
 }
 
 .proof-bridge {
@@ -3692,7 +3746,7 @@ tbody tr:hover {
     grid-template-columns: 1fr;
   }
 
-  .role-grid,
+  .audience-path-grid,
   .contract-grid {
     grid-template-columns: 1fr;
   }
@@ -5673,6 +5727,64 @@ tbody tr:hover {
 }
 
 @media (max-width: 760px) {
+  .audience-paths {
+    padding-block: 1rem;
+  }
+
+  .audience-path-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.35rem;
+    margin-top: 0.75rem;
+  }
+
+  .audience-path-card {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.28rem;
+    min-height: 0;
+    align-content: start;
+    padding: 0.45rem 0.7rem;
+  }
+
+  .audience-path-card > span {
+    grid-column: 1;
+    font-size: 0.6rem;
+    letter-spacing: 0.035em;
+  }
+
+  .audience-path-card > strong {
+    grid-column: 1;
+    font-size: 0.82rem;
+  }
+
+  .audience-path-card > small {
+    display: none;
+  }
+
+  .algorithm-pseudocode {
+    grid-template-columns: 1fr;
+  }
+
+  .algorithm-pseudocode > .math-block,
+  .algorithm-pseudocode > .math-statement {
+    grid-column: 1;
+  }
+
+  .catalog-return {
+    position: fixed;
+    z-index: 45;
+    right: max(0.75rem, env(safe-area-inset-right));
+    bottom: max(0.75rem, env(safe-area-inset-bottom));
+    display: inline-flex;
+    min-width: 8.8rem;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--surface);
+    box-shadow: 0 0.6rem 1.5rem rgba(18, 31, 42, 0.24);
+  }
+
   .hero-actions {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -364,6 +364,10 @@ def check_current_evidence_surfaces(
     ):
         if required not in index_source:
             errors.append(f"homepage current-evidence snapshot is missing {required!r}")
+    audience_index = index_source.find('id="three-roles"')
+    snapshot_index = index_source.find('id="current-snapshot"')
+    if audience_index < 0 or snapshot_index < 0 or audience_index > snapshot_index:
+        errors.append("homepage must expose the three audience paths before the evidence snapshot")
 
     workflow_path = output / "workflow" / "index.html"
     workflow_source = workflow_path.read_text(encoding="utf-8") if workflow_path.exists() else ""
@@ -500,6 +504,8 @@ def check_branding_and_formalizer(output: Path, manifest: dict[str, object]) -> 
         errors.append("static IDE JavaScript appears to contain a provider credential interface")
     if "data-ide-formalize" not in combined or "data-candidate-obligations" not in combined:
         errors.append("Live Formalization candidate UI is incomplete")
+    if "optional model API behind that local service" not in combined:
+        errors.append("Live Formalization hero does not state the loopback-only model boundary")
     return errors
 
 
@@ -1335,6 +1341,9 @@ def main() -> int:
             "Compiled extension",
             "Why an optimistic choice becomes a regret bound",
             "Reading boundary",
+            "Textbook Algorithm 3: UCB(δ)",
+            "least-encoded arm in argmax",
+            "Source/Lean boundary",
         ):
             if required not in ucb_source:
                 errors.append(f"chapters/ucb/index.html: missing source-to-Lean guide {required!r}")
@@ -1494,6 +1503,7 @@ def main() -> int:
             "data-catalog-body", "data-catalog-more", 'aria-live="polite"',
             'aria-label="Lean declaration catalog"', "data-catalog-more hidden",
             'href="../catalog-data.json"', 'href="../implementation-map/index.html"',
+            "data-catalog-return", 'aria-controls="filters"',
         ):
             if required not in catalog_page_source:
                 errors.append(f"declarations/index.html: missing progressive catalog support {required}")
@@ -1697,6 +1707,9 @@ def main() -> int:
         "catalogLoadPromise",
         "data-catalog-more",
         "data-catalog-body",
+        "data-catalog-return",
+        "updateCatalogReturn",
+        "window.scrollTo",
         'class="status ${escapeHtml(item.status)}"',
         "payload.kind_labels",
         "payload.source_base",
