@@ -64,6 +64,8 @@ class LinkCollector(HTMLParser):
         self.algorithm_pseudocode_count = 0
         self.source_extension_count = 0
         self.diagram_scroll_hint_count = 0
+        self.table_scroll_hint_count = 0
+        self.milestone_evidence_summary_labels: list[str] = []
         self.source_theorem_card_count = 0
         self.source_boundary_count = 0
         self.chapter_compass_count = 0
@@ -121,6 +123,10 @@ class LinkCollector(HTMLParser):
             self.source_extension_count += 1
         if "data-diagram-scroll-hint" in values:
             self.diagram_scroll_hint_count += 1
+        if "data-table-scroll-hint" in values:
+            self.table_scroll_hint_count += 1
+        if "data-milestone-evidence-summary" in values:
+            self.milestone_evidence_summary_labels.append(values.get("aria-label", ""))
         if "source-theorem-card" in classes:
             self.source_theorem_card_count += 1
         if "source-boundary" in classes:
@@ -417,6 +423,9 @@ def check_current_evidence_surfaces(
         ".code-toolbar",
         ".lean-code.wrap-lines",
         ".lean-code.scroll-lines",
+        ".table-scroll-hint",
+        ".command-scroll-hint",
+        ".command-toolbar",
     ):
         if required not in site_css:
             errors.append(f"site.css is missing evidence/overflow support: {required}")
@@ -1244,6 +1253,14 @@ def main() -> int:
         if collector and collector.accessible_command_block_count != collector.command_block_count:
             errors.append(f"{relative}: every command block must be a labelled keyboard-scroll region")
 
+    implementation_page = pages.get((output / "implementation-map" / "index.html").resolve())
+    if implementation_page:
+        labels = implementation_page.milestone_evidence_summary_labels
+        if not labels or any(not label for label in labels) or len(set(labels)) != len(labels):
+            errors.append(
+                "implementation-map/index.html: visible milestone evidence summaries need distinct accessible names"
+            )
+
     contributor_page = pages.get((output / "contributors" / "index.html").resolve())
     expected_contributors = manifest.get("contributor_count", 0)
     if contributor_page and contributor_page.contributor_card_count != expected_contributors + 1:
@@ -1305,6 +1322,10 @@ def main() -> int:
             errors.append(f"{relative}: expected one primary Book Map sequence pager")
         if page_source.count('class="chapter-pager chapter-pager-secondary"') != 1:
             errors.append(f"{relative}: expected one secondary Book Map sequence pager")
+        if page_source.count('aria-label="Continue after the teaching route"') != 1:
+            errors.append(f"{relative}: primary chapter navigation lacks its teaching-route label")
+        if page_source.count('aria-label="Chapter navigation at end"') != 1:
+            errors.append(f"{relative}: secondary chapter navigation lacks its end-of-page label")
         if page_source.count('class="chapter-ledger-disclosure"') != 1:
             errors.append(f"{relative}: expected one progressive chapter status ledger")
         if collector.chapter_compass_count != 1:
@@ -1417,6 +1438,19 @@ def main() -> int:
         page_size = milestone_payload.get("page_size")
         if initial_rows != min(page_size, len(milestone_items)):
             errors.append("Implementation Map initial milestone DOM does not match its page size")
+        milestone_labels = []
+        for item in milestone_items:
+            match = re.search(
+                r'data-milestone-evidence-summary aria-label="([^"]+)"',
+                str(item.get("html", "")),
+            )
+            milestone_labels.append(match.group(1) if match else "")
+        if (
+            len(milestone_labels) != len(milestone_items)
+            or any(not label for label in milestone_labels)
+            or len(set(milestone_labels)) != len(milestone_labels)
+        ):
+            errors.append("milestone-data.json: every milestone evidence summary needs a distinct accessible name")
         for required in ("data-milestone-more", "milestone-data.json"):
             if required not in implementation_source:
                 errors.append(f"Implementation Map lacks progressive milestone support: {required}")
@@ -1778,9 +1812,24 @@ def main() -> int:
         "navigator.clipboard.writeText",
         'classList.toggle("wrap-lines"',
         'classList.toggle("scroll-lines"',
+        'textContent = "Wrap long lines"',
+        "enhanceCommandBlocks",
+        "data-command-copy",
     ):
         if required not in site_js:
             errors.append(f"site.js is missing Lean code display controls: {required}")
+    if "Use horizontal scroll" in site_js:
+        errors.append("site.js exposes an action label that contradicts the pressed wrap state")
+    for required in (
+        "data-table-scroll-hint",
+        "table-scroll-hint",
+        "reveal hidden columns",
+        "data-command-scroll-hint",
+        "command-scroll-hint",
+        "read every command",
+    ):
+        if required not in site_js:
+            errors.append(f"site.js is missing overflow guidance: {required}")
     for required in (
         "milestone-data.json",
         "milestoneLoadPromise",
