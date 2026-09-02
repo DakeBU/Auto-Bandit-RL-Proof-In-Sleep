@@ -258,14 +258,53 @@ def strip_lean_comments(line: str, block_depth: int) -> tuple[str, int]:
 
 def compact_statement(lines: list[str], start: int) -> str:
     parts: list[str] = []
+    delimiter_depth = 0
+    block_comment_depth = 0
+    in_string = False
     for raw in lines[start : min(len(lines), start + 90)]:
         stripped = raw.strip()
         if not stripped:
             continue
         compact = re.sub(r"\s+", " ", stripped)
         is_result_let = stripped.startswith("let ")
-        if ":=" in stripped and not is_result_let:
-            before = compact.split(":=", 1)[0].rstrip()
+        assignment_index: int | None = None
+        index = 0
+        while index < len(raw):
+            if block_comment_depth:
+                if raw.startswith("/-", index):
+                    block_comment_depth += 1
+                    index += 2
+                    continue
+                if raw.startswith("-/", index):
+                    block_comment_depth -= 1
+                    index += 2
+                    continue
+                index += 1
+                continue
+            if in_string:
+                if raw[index] == '"' and (index == 0 or raw[index - 1] != "\\"):
+                    in_string = False
+                index += 1
+                continue
+            if raw.startswith("--", index):
+                break
+            if raw.startswith("/-", index):
+                block_comment_depth += 1
+                index += 2
+                continue
+            char = raw[index]
+            if char == '"':
+                in_string = True
+            elif char in "([{":
+                delimiter_depth += 1
+            elif char in ")]}":
+                delimiter_depth = max(0, delimiter_depth - 1)
+            elif raw.startswith(":=", index) and delimiter_depth == 0 and not is_result_let:
+                assignment_index = index
+                break
+            index += 1
+        if assignment_index is not None:
+            before = re.sub(r"\s+", " ", raw[:assignment_index].strip()).rstrip()
             if before:
                 parts.append(before)
             break
