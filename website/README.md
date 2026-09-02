@@ -35,15 +35,16 @@ The build:
 - generates an interactive Lean Graph over all current modules and declarations,
   with progressive chapter/module/declaration expansion, search, status-aware
   branch inspection, and reviewed prerequisite/consumer edges; its lightweight
-  overview loads first, while the full searchable graph is deferred until the
-  reader searches, changes view, or opens a branch;
+  overview, compact search index, view slices, and per-module shards load on
+  demand, while the full graph remains an explicit research download and is
+  never fetched automatically;
 - generates a landing-page evidence snapshot from the Lean index, teaching
   crosswalks, implementation ledger, and harness-comparison log instead of
   hand-entered completion percentages;
 - renders the latest deterministic hierarchical-versus-master-worker comparison
-  as an evidence pipeline, candidate hybrid operating pattern, and next matched
-  experiment on the Workflow page while refusing to display a winner before the
-  matched evidence threshold is met;
+  as an evidence pipeline, generated attempt graph, candidate hybrid operating
+  pattern, and next matched experiment on the Workflow page while refusing to
+  display a winner before the matched evidence threshold is met;
 - generates BanditRLwiki from `content/banditrlwiki.json`: an
   assumption-indexed upper/lower-bound atlas with primary-paper theorem links,
   independent literature/source-audit/Lean status, stable case pages, a paper

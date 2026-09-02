@@ -943,6 +943,46 @@ h3 {
   margin-top: 0.45rem;
 }
 
+.harness-attempt-panel {
+  display: grid;
+  grid-template-columns: minmax(15rem, 0.7fr) minmax(0, 1.3fr);
+  gap: 1rem 1.5rem;
+  align-items: center;
+  margin: 1.35rem 0;
+  padding: 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--surface) 88%, var(--accent-soft));
+}
+
+.harness-attempt-panel h3 {
+  margin: 0.25rem 0 0;
+  font-size: 1.2rem;
+}
+
+.harness-attempt-panel p {
+  color: var(--muted);
+}
+
+.harness-attempt-panel .diagram {
+  margin: 0;
+}
+
+.harness-attempt-panel .mermaid {
+  min-height: 14rem;
+}
+
+.harness-attempt-graph .mermaid {
+  width: 100%;
+  min-width: 0;
+}
+
+.harness-attempt-graph .mermaid svg {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto;
+}
+
 [data-milestone-row] {
   scroll-margin-top: 8rem;
 }
@@ -3671,6 +3711,14 @@ tbody tr:hover {
 
   .next-experiment-contract {
     grid-template-columns: 1fr;
+  }
+
+  .harness-attempt-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .harness-attempt-panel .mermaid {
+    min-height: 0;
   }
 }
 
