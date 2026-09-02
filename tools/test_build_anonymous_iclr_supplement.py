@@ -186,6 +186,10 @@ class AnonymousSupplementTests(unittest.TestCase):
         )
         self.assertIn(prefix + "evidence/claim-ledger.json", names)
         self.assertIn(prefix + "evidence/theorem-audit-comparison.json", names)
+        self.assertIn(
+            prefix + "evidence/sgb-theorem2-interface-frontier-trace.json",
+            names,
+        )
         self.assertIn(prefix + "evidence/delayed-feedback-proof-obligations.md", names)
         self.assertIn(prefix + "evidence/succinct-lower-bound-proof-obligations.md", names)
         self.assertIn(

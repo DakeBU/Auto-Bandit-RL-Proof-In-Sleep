@@ -1,0 +1,80 @@
+name: Build anonymous ICLR Lean artifact
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: anonymous-iclr-lean-artifact-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build and verify the detached Lean supplement
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Lean and fetch the Mathlib cache
+        uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          use-github-cache: true
+          use-mathlib-cache: true
+
+      - name: Test the positive-allowlist builder
+        run: python3 -m unittest tools/test_build_anonymous_iclr_supplement.py -v
+
+      - name: Run the full Lean and repository gate
+        run: python3 tools/bandit.py check
+
+      - name: Export and validate the current proof graph
+        run: |
+          lake exe proof_graph_export --compact "$RUNNER_TEMP/current-proof-graph.json"
+          python3 tools/proof_graph_lab.py validate-export \
+            --graph "$RUNNER_TEMP/current-proof-graph.json"
+
+      - name: Recompute the fixed-root proof-graph benchmark
+        run: |
+          python3 tools/proof_graph_lab.py benchmark \
+            --graph "$RUNNER_TEMP/current-proof-graph.json" \
+            --config research-wiki/proof-graph/benchmark_roots.json \
+            --output "$RUNNER_TEMP/current-benchmark-report.json"
+
+      - name: Build the anonymous Lean/code ZIP
+        run: |
+          mkdir -p "$RUNNER_TEMP/anonymous-iclr-release"
+          python3 tools/build_anonymous_iclr_supplement.py \
+            --output-dir "$RUNNER_TEMP/anonymous-iclr-release" \
+            --proof-graph "$RUNNER_TEMP/current-proof-graph.json" \
+            --proof-graph-report "$RUNNER_TEMP/current-benchmark-report.json" \
+            | tee "$RUNNER_TEMP/anonymous-iclr-release/BUILDER_RESULT.json"
+          sha256sum \
+            "$RUNNER_TEMP/anonymous-iclr-release/ABRL-ICLR-2027-anonymous-lean-code.zip" \
+            > "$RUNNER_TEMP/anonymous-iclr-release/PRODUCER_SHA256.txt"
+
+      - name: Verify the detached archive after extraction
+        run: |
+          mkdir -p "$RUNNER_TEMP/anonymous-iclr-verification"
+          unzip -q \
+            "$RUNNER_TEMP/anonymous-iclr-release/ABRL-ICLR-2027-anonymous-lean-code.zip" \
+            -d "$RUNNER_TEMP/anonymous-iclr-verification"
+          python3 \
+            "$RUNNER_TEMP/anonymous-iclr-verification/abrl-anonymous-artifact/artifact/verify_artifact.py"
+
+      - name: Upload the detached submission artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: anonymous-iclr-lean-artifact-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/anonymous-iclr-release/ABRL-ICLR-2027-anonymous-lean-code.zip
+            ${{ runner.temp }}/anonymous-iclr-release/BUILDER_RESULT.json
+            ${{ runner.temp }}/anonymous-iclr-release/PRODUCER_SHA256.txt
+          if-no-files-found: error
+          retention-days: 30

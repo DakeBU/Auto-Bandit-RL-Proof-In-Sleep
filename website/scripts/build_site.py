@@ -32,6 +32,10 @@ HARNESS_COMPARISON_PATH = ROOT / "runs" / "harness-comparison" / "latest.json"
 HARNESS_COMPARISON_DIAGRAM_PATH = (
     ROOT / "runs" / "harness-comparison" / "latest.mmd"
 )
+SGB_INTERFACE_FRONTIER_TRACE_PATH = (
+    ROOT / "research-wiki" / "papers" /
+    "sgb-theorem2-interface-frontier-trace.json"
+)
 
 GITHUB_REPO = "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep"
 PUBLIC_SITE_REPO = GITHUB_REPO
@@ -1719,6 +1723,28 @@ def load_harness_comparison() -> dict[str, Any]:
         raise SystemExit(
             "runs/harness-comparison/latest.json must report hierarchical and master-worker arms"
         )
+    return payload
+
+
+def load_sgb_interface_frontier_trace() -> dict[str, Any]:
+    """Load the versioned frozen-target longitudinal trace."""
+    if not SGB_INTERFACE_FRONTIER_TRACE_PATH.exists():
+        raise SystemExit(
+            "missing SGB interface-frontier trace; run "
+            "`python3 tools/build_sgb_interface_frontier_trace.py`"
+        )
+    payload = load_json(SGB_INTERFACE_FRONTIER_TRACE_PATH)
+    summary = payload.get("frontier_summary", {})
+    expected = {
+        "state_count": 8,
+        "dependency_ordered_closure_count": 7,
+        "statement_fence_count": 6,
+        "theorem_two_endpoint_verified": False,
+    }
+    if any(summary.get(key) != value for key, value in expected.items()):
+        raise SystemExit("SGB interface-frontier trace summary is stale")
+    if len(payload.get("transitions", [])) != expected["dependency_ordered_closure_count"]:
+        raise SystemExit("SGB interface-frontier transition inventory is stale")
     return payload
 
 
@@ -4698,10 +4724,55 @@ def render_harness_comparison_ledger(page_path: str, comparison: dict[str, Any])
 """
 
 
+def render_sgb_interface_frontier_trace(page_path: str, trace: dict[str, Any]) -> str:
+    summary = trace["frontier_summary"]
+    target = trace["target_freeze"]
+    transitions = []
+    for row in trace["transitions"]:
+        fence = "statement fence recorded" if row.get("statement_fence") else "index + typed canary; no separate fence"
+        transitions.append(
+            "<li>"
+            f"<strong>{html.escape(str(row['closed_interface']))}</strong>"
+            f"<span><code>{html.escape(str(row['compiled_declaration']))}</code> "
+            f"closes the interface; next: <code>{html.escape(str(row['next_interface']))}</code>. "
+            f"Evidence: {html.escape(fence)}.</span>"
+            "</li>"
+        )
+    json_href = source_url(
+        "research-wiki/papers/sgb-theorem2-interface-frontier-trace.json"
+    )
+    csv_href = source_url(
+        "research-wiki/papers/sgb-theorem2-interface-frontier-trace.csv"
+    )
+    digest = str(target["sha256"])
+    return f"""
+<section id="frozen-frontier-trace">
+  <p class="eyebrow">Machine-auditable longitudinal evidence</p>
+  <div class="snapshot-heading"><div><h2>One frozen target, seven interface closures</h2><p class="section-intro">This route trace asks whether the first unresolved source-shaped interface moved while the mathematical target stayed fixed. It does not compare schedulers or measure speed.</p></div>{status_badge('partial')}</div>
+  <div class="comparison-decision" role="group" aria-label="Frozen SGB Theorem 2 frontier summary">
+    <div><span class="level-label">Recorded states</span><strong>{int(summary['state_count'])}</strong></div>
+    <div><span class="level-label">Ordered closures</span><strong>{int(summary['dependency_ordered_closure_count'])}</strong></div>
+    <div><span class="level-label">Separate fences</span><strong>{int(summary['statement_fence_count'])} of {int(summary['dependency_ordered_closure_count'])}</strong></div>
+    <div><span class="level-label">Theorem 2 terminal</span><strong>Open</strong></div>
+  </div>
+  <p>The seven-field target projection keeps SHA-256 <code>{html.escape(digest[:16])}…</code> across {int(target['history_revision_count'])} freeze-record revisions. The frontier moves from <code>{html.escape(str(summary['initial_interface']))}</code> to <code>{html.escape(str(summary['current_interface']))}</code>; <strong>Theorem 2 remains open</strong>.</p>
+  <details class="frontier-case-card">
+    <summary>Inspect all seven dependency-ordered closures</summary>
+    <div><ol class="contribution-steps">{''.join(transitions)}</ol></div>
+  </details>
+  <div class="callout warning"><strong>Interpretation boundary.</strong> This is one post-hoc route trace. It is evidence that named dependencies closed without changing the frozen target projection; it is not evidence of harness superiority, proof-search acceleration, or a causal effect.</div>
+  <div class="source-links"><a href="{json_href}">Open deterministic JSON</a><a href="{csv_href}">Open compact CSV</a></div>
+</section>
+"""
+
+
 def build_workflow(output: Path, verified: bool, generated_at: str) -> None:
     page_path = "workflow/index.html"
     comparison = load_harness_comparison()
     comparison_ledger = render_harness_comparison_ledger(page_path, comparison)
+    frontier_trace = render_sgb_interface_frontier_trace(
+        page_path, load_sgb_interface_frontier_trace()
+    )
     decision = comparison["decision"]
     decision_status = str(decision.get("status", "unrecorded"))
     if decision_status == "insufficient-evidence":
@@ -4748,6 +4819,8 @@ def build_workflow(output: Path, verified: bool, generated_at: str) -> None:
 
 {comparison_ledger}
 
+{frontier_trace}
+
 <section id="commands">
   <h2>Reproducible gates</h2>
   <p>For a real A/B pilot, create both arms from the same route file, experiment id, and target fingerprint. The hierarchical arm executes the packets sequentially; the master–worker arm executes the same packets concurrently.</p>
@@ -4774,7 +4847,7 @@ python3 website/scripts/ide_server.py</code></pre>
   </ul>
 </section>
 """
-    toc = [("workflow", "Workflow"), ("contract", "Contract"), ("roles", "Candidate architecture"), ("comparison-evidence", "Comparison evidence"), ("commands", "Gates"), ("failure-policy", "Failure policy")]
+    toc = [("workflow", "Workflow"), ("contract", "Contract"), ("roles", "Candidate architecture"), ("comparison-evidence", "Comparison evidence"), ("frozen-frontier-trace", "Frozen frontier"), ("commands", "Gates"), ("failure-policy", "Failure policy")]
     write_page(
         output,
         page_path,

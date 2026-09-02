@@ -1959,7 +1959,15 @@ def main() -> int:
     if "status-badge status-" in site_js:
         errors.append("site.js uses a status class that disagrees with the generated status badge contract")
     workflow_source = (output / "workflow" / "index.html").read_text(encoding="utf-8")
-    for required in ("master–worker", "does not yet justify", "harness-compare"):
+    for required in (
+        "master–worker",
+        "does not yet justify",
+        "harness-compare",
+        "One frozen target, seven interface closures",
+        "Theorem 2 remains open",
+        "not evidence of harness superiority",
+        "sgb-theorem2-interface-frontier-trace.json",
+    ):
         if required not in workflow_source:
             errors.append(f"workflow page is missing adaptive-harness boundary {required!r}")
     learning_path = (SITE_DIR / "diagrams" / "learning-path.mmd").read_text(encoding="utf-8")

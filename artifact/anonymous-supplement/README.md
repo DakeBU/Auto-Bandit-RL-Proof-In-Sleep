@@ -29,6 +29,11 @@ were screened.
   matrix for the scoped Chapter 15 positive control and the three source-frozen
   external audits.  It separates contract stress, strongest compiled bridge,
   blocking obligations, and promotion status.
+- `evidence/sgb-theorem2-interface-frontier-trace.json` records one post-hoc,
+  machine-auditable longitudinal route: the frozen SGB Theorem-2 target
+  projection remains unchanged while seven dependency-ordered interfaces close
+  and the first unresolved interface advances.  The terminal remains unproved;
+  this trace is not evidence of harness superiority or proof-search speedup.
 - `evidence/local_lean_declarations.json` is the packaged declaration index.
 - `evidence/source-freeze.json` records the three-paper portfolio, official
   URLs, SHA-256 digests, page counts, theorem windows, and case-specific
