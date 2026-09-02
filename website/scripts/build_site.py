@@ -45,7 +45,7 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20260902m"
+ASSET_VERSION = "20260902n"
 CATALOG_PAGE_SIZE = 100
 MILESTONE_PAGE_SIZE = 20
 MODULE_PAGE_SIZE = 30
@@ -1497,6 +1497,7 @@ def render_sequence_pager(
     nav_id: str = "continue-reading",
     modifier: str = "",
     kicker: str = "Continue reading",
+    aria_label: str | None = None,
 ) -> str:
     """Render a compact, keyboard-friendly previous/index/next reading route."""
 
@@ -1515,8 +1516,9 @@ def render_sequence_pager(
         )
 
     class_name = "chapter-pager" + (f" {modifier}" if modifier else "")
+    accessible_label = aria_label or f"{sequence_label} reading sequence"
     return f"""
-<nav class="{class_name}" id="{html.escape(nav_id, quote=True)}" aria-label="{html.escape(sequence_label)} reading sequence">
+<nav class="{class_name}" id="{html.escape(nav_id, quote=True)}" aria-label="{html.escape(accessible_label, quote=True)}">
   <div class="chapter-pager-heading"><span class="eyebrow">{html.escape(kicker)}</span><strong>{html.escape(sequence_label)}</strong></div>
   <div class="chapter-pager-links">
     {adjacent_link(previous, 'previous')}
@@ -2029,7 +2031,7 @@ def build_implementation_map(
   <td><a href="#{slugify(result['id'])}">{html.escape(result['title'])}</a><br><code>{html.escape(result['id'])}</code></td>
   <td>{chapter_cell}</td>
   <td>{status_badge(result['status'])}</td>
-  <td class="milestone-evidence"><p>{html.escape(result['informal'])}</p><details><summary>Lean evidence and boundary</summary><dl><div><dt>Declarations</dt><dd>{"<br>".join(declaration_links) if declaration_links else "No local declaration yet"}</dd></div><div><dt>Depends on</dt><dd>{dependencies}</dd></div><div><dt>Remaining gap</dt><dd>{missing}</dd></div></dl></details></td>
+  <td class="milestone-evidence"><p>{html.escape(result['informal'])}</p><details><summary data-milestone-evidence-summary aria-label="Lean evidence and boundary for {html.escape(result['title'], quote=True)}">Lean evidence and boundary</summary><dl><div><dt>Declarations</dt><dd>{"<br>".join(declaration_links) if declaration_links else "No local declaration yet"}</dd></div><div><dt>Depends on</dt><dd>{dependencies}</dd></div><div><dt>Remaining gap</dt><dd>{missing}</dd></div></dl></details></td>
 </tr>"""
         result_rows.append(row_html)
         result_items.append(
@@ -2432,12 +2434,14 @@ def build_chapters(
         primary_chapter_pager = render_sequence_pager(
             **pager_arguments,
             modifier="chapter-pager-primary",
+            aria_label="Continue after the teaching route",
         )
         secondary_chapter_pager = render_sequence_pager(
             **pager_arguments,
             nav_id="continue-reading-again",
             modifier="chapter-pager-secondary",
             kicker="Next stop",
+            aria_label="Chapter navigation at end",
         )
         body = f"""
 <section class="hero" id="chapter">

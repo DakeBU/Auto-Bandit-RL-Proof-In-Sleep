@@ -1456,6 +1456,24 @@ h3 {
   overscroll-behavior-inline: contain;
 }
 
+.command-toolbar {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 1rem;
+  padding: 0.38rem 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--code-ink) 18%, transparent);
+  border-bottom: 0;
+  border-radius: 9px 9px 0 0;
+  background: color-mix(in srgb, var(--code-bg) 92%, var(--surface));
+}
+
+.command-toolbar + .command-block {
+  margin-top: 0;
+  border-radius: 0 0 9px 9px;
+}
+
 .command-block code {
   overflow-wrap: normal;
   word-break: normal;
@@ -4153,7 +4171,9 @@ tbody tr:hover {
     letter-spacing: 0.02em;
   }
 
-  .diagram-scroll-hint:not([hidden]) {
+  .diagram-scroll-hint:not([hidden]),
+  .table-scroll-hint:not([hidden]),
+  .command-scroll-hint:not([hidden]) {
     position: sticky;
     left: 0.4rem;
     display: flex;
@@ -4172,6 +4192,16 @@ tbody tr:hover {
     font-weight: 700;
     line-height: 1.35;
     text-align: left;
+  }
+
+  .table-scroll-hint:not([hidden]) {
+    z-index: 1;
+    margin: 0.7rem;
+  }
+
+  .command-scroll-hint:not([hidden]) {
+    position: static;
+    margin: -0.55rem auto 1rem;
   }
 
   .learning-route-card > p {

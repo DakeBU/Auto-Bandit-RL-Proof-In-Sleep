@@ -670,7 +670,20 @@
   window.setTimeout(() => revealRenderedMath(true), 3200);
 
   const labelOverflowRegions = () => {
-    document.querySelectorAll(".diagram, .table-wrap, .lean-code, .math-statement").forEach((region, index) => {
+    document.querySelectorAll(".diagram, .table-wrap, .command-block, .lean-code, .math-statement").forEach((region, index) => {
+      let tableHint = region.querySelector("[data-table-scroll-hint]");
+      if (region.matches(".table-wrap") && !tableHint) {
+        tableHint = document.createElement("span");
+        tableHint.className = "table-scroll-hint";
+        tableHint.dataset.tableScrollHint = "";
+        tableHint.hidden = true;
+        tableHint.innerHTML = 'Swipe horizontally or use the left and right arrow keys to reveal hidden columns <span aria-hidden="true">↔</span>';
+        region.prepend(tableHint);
+      }
+      const commandHint = region.matches(".command-block")
+        && region.nextElementSibling?.matches("[data-command-scroll-hint]")
+          ? region.nextElementSibling
+          : null;
       const regionOverflows = region.scrollWidth > region.clientWidth + 2;
       const isScrollable = regionOverflows;
       region.classList.toggle("is-scrollable", isScrollable);
@@ -684,6 +697,26 @@
         } else if (region.getAttribute("aria-describedby") === diagramHint.id) {
           region.removeAttribute("aria-describedby");
         }
+      }
+      if (tableHint) {
+        const showHint = isScrollable && window.matchMedia("(max-width: 760px)").matches;
+        if (!tableHint.id) tableHint.id = `table-scroll-hint-${index}`;
+        tableHint.hidden = !showHint;
+        const descriptions = new Set((region.getAttribute("aria-describedby") || "").split(/\s+/).filter(Boolean));
+        if (showHint) descriptions.add(tableHint.id);
+        else descriptions.delete(tableHint.id);
+        if (descriptions.size) region.setAttribute("aria-describedby", [...descriptions].join(" "));
+        else region.removeAttribute("aria-describedby");
+      }
+      if (commandHint) {
+        const showHint = isScrollable && window.matchMedia("(max-width: 760px)").matches;
+        if (!commandHint.id) commandHint.id = `command-scroll-hint-${index}`;
+        commandHint.hidden = !showHint;
+        const descriptions = new Set((region.getAttribute("aria-describedby") || "").split(/\s+/).filter(Boolean));
+        if (showHint) descriptions.add(commandHint.id);
+        else descriptions.delete(commandHint.id);
+        if (descriptions.size) region.setAttribute("aria-describedby", [...descriptions].join(" "));
+        else region.removeAttribute("aria-describedby");
       }
       if (!isScrollable) return;
       if (!region.hasAttribute("tabindex")) region.tabIndex = 0;
@@ -707,7 +740,7 @@
       toolbar.setAttribute("role", "group");
       toolbar.setAttribute("aria-label", "Lean statement display options");
       toolbar.innerHTML =
-        '<button type="button" class="code-tool" data-code-wrap aria-pressed="false">Wrap lines</button>' +
+        '<button type="button" class="code-tool" data-code-wrap aria-pressed="false">Wrap long lines</button>' +
         '<button type="button" class="code-tool" data-code-copy>Copy statement</button>' +
         `<span class="code-tool-status" data-code-status aria-live="polite" id="code-status-${index}"></span>`;
       block.before(toolbar);
@@ -718,7 +751,7 @@
       const syncWrapButton = () => {
         const wrapped = getComputedStyle(block).whiteSpace !== "pre";
         wrapButton?.setAttribute("aria-pressed", String(wrapped));
-        if (wrapButton) wrapButton.textContent = wrapped ? "Use horizontal scroll" : "Wrap lines";
+        if (wrapButton) wrapButton.textContent = "Wrap long lines";
       };
       syncWrapButton();
 
@@ -749,9 +782,45 @@
       if (!button) return;
       const wrapped = getComputedStyle(block).whiteSpace !== "pre";
       button.setAttribute("aria-pressed", String(wrapped));
-      button.textContent = wrapped ? "Use horizontal scroll" : "Wrap lines";
+      button.textContent = "Wrap long lines";
     });
   });
+
+  const enhanceCommandBlocks = () => {
+    document.querySelectorAll("pre.command-block").forEach((block, index) => {
+      if (block.dataset.commandEnhanced === "true") return;
+      block.dataset.commandEnhanced = "true";
+      const toolbar = document.createElement("div");
+      toolbar.className = "command-toolbar";
+      toolbar.setAttribute("role", "group");
+      toolbar.setAttribute("aria-label", "Command block actions");
+      toolbar.innerHTML =
+        '<button type="button" class="code-tool" data-command-copy>Copy commands</button>' +
+        `<span class="code-tool-status" data-command-status aria-live="polite" id="command-status-${index}"></span>`;
+      block.before(toolbar);
+      const overflowHint = document.createElement("span");
+      overflowHint.className = "command-scroll-hint";
+      overflowHint.dataset.commandScrollHint = "";
+      overflowHint.hidden = true;
+      overflowHint.innerHTML = 'Swipe horizontally or use the left and right arrow keys to read every command <span aria-hidden="true">↔</span>';
+      block.after(overflowHint);
+      const copyButton = toolbar.querySelector("[data-command-copy]");
+      const status = toolbar.querySelector("[data-command-status]");
+      copyButton?.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(block.innerText);
+          if (status) status.textContent = "Copied";
+        } catch (_error) {
+          if (status) status.textContent = "Copy unavailable; select the commands instead.";
+        }
+        window.setTimeout(() => {
+          if (status) status.textContent = "";
+        }, 2400);
+      });
+    });
+  };
+  enhanceCommandBlocks();
+  labelOverflowRegions();
 
   const mermaidBlocks = [...document.querySelectorAll(".mermaid")];
   if (mermaidBlocks.length) {
