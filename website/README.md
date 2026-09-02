@@ -16,6 +16,11 @@ The build:
   regret/guarantee contract and links directly to the cited PDF page;
 - gives UCB readers a source-to-Lean proof bridge from confidence validity to
   suboptimal selection, pull-count control, and the final gap-sum bound;
+- gives ETC, UCB, OFUL, Thompson sampling, EXP3, Tsallis-FTRL, UCBVI-CH, and
+  Frontier readers explicit, copyable pseudocode with source/Lean boundaries;
+- keeps advanced Part IV source material available from Foundations without
+  interrupting its beginner reading sequence, and labels horizontally
+  scrollable diagrams on narrow screens;
 - keeps a prominent textbook-coverage ledger: ten source-mapped teaching routes,
   nine compiled canonical cores, three compiled Part-IV source terminals, and no
   claim that the whole textbook is complete;
@@ -58,7 +63,7 @@ The build:
 - supplies a provider-independent local formalization adapter and a versioned
   lemma-packet handoff contract.
 
-Within the separate Part IV spine, Chapters 13--17 expose compiled semantic,
+Within the separate Part IV spine, Chapters 13–17 expose compiled semantic,
 information-theoretic, Gaussian-KL, consistency, and tail-event dependency
 slices while keeping their source terminal theorems blocked where the adaptive
 history-law or construction bridge is absent. The website also exposes a
@@ -79,18 +84,19 @@ reports zero `literature-open` cases until a scoped primary-source audit support
 such a claim; one case remains in the source-audit queue, while the 13
 formalization-open cases expose 39 stable named leaves. Two additional
 source-frozen ports—the 54-declaration succinct-lower-bound audit and the
-360-declaration stochastic-gradient-bandit audit—are displayed outside that
+361-declaration stochastic-gradient-bandit audit—are displayed outside that
 comparison ledger.  The exact counted inventory
-`360 = 223 + 23 + 24 + 26 + 7 + 8 + 13 + 28 + 8` now includes deterministic
+`361 = 223 + 23 + 25 + 26 + 7 + 8 + 13 + 28 + 8` now includes deterministic
 terminal-count consumers and nth-pull-to-count bridges.  A separate
 ten-declaration module proves equality of the complete visible/native trajectory
-measures.  The selected-block module now has 33 declarations: eight for
+measures.  The selected-block module now has 36 declarations: eight for
 missing-pull-aware block transport, fourteen for the exact finite Appendix-C
 `S0/S1` event, ten for the disjoint all-present/missing-pull probability split,
-and one mapping the missing branch into a measurable terminal-count-below event.
-These compiled layers are not a selected-IID theorem.  The missing mass still
-needs an expected-regret consumer and does not provide the source fixed-cutoff
-trigger; the stopped-prefix future-cylinder law, conditional no-return
+and four for missing-pull inclusion, probability transport, and finite-horizon
+expected-regret consumption. These compiled layers are not a selected-IID
+theorem.  The missing branch still does not provide a positive mass or the
+source fixed-cutoff trigger; the all-present fixed-cutoff phase trigger,
+stopped-prefix future-cylinder law, conditional no-return
 probability, Rademacher/ballot phase, asymptotic assembly, and frozen Theorem-2
 terminal remain open.  The SGB audit therefore remains partial, with Theorems
 2–4 open; the succinct-lower-bound port also has no compiled paper-level terminal.

@@ -670,16 +670,21 @@
   window.setTimeout(() => revealRenderedMath(true), 3200);
 
   const labelOverflowRegions = () => {
-    document.querySelectorAll(".diagram, .table-wrap, .lean-code, .math-statement").forEach((region) => {
-      const mathTarget = region.matches(".math-statement")
-        ? region.querySelector("mjx-container")
-        : null;
+    document.querySelectorAll(".diagram, .table-wrap, .lean-code, .math-statement").forEach((region, index) => {
       const regionOverflows = region.scrollWidth > region.clientWidth + 2;
-      const mathTargetOverflows = Boolean(
-        mathTarget && mathTarget.scrollWidth > mathTarget.clientWidth + 2,
-      );
-      const isScrollable = regionOverflows || mathTargetOverflows;
+      const isScrollable = regionOverflows;
       region.classList.toggle("is-scrollable", isScrollable);
+      const diagramHint = region.querySelector("[data-diagram-scroll-hint]");
+      if (diagramHint) {
+        const showHint = isScrollable && window.matchMedia("(max-width: 760px)").matches;
+        if (!diagramHint.id) diagramHint.id = `diagram-scroll-hint-${index}`;
+        diagramHint.hidden = !showHint;
+        if (showHint) {
+          region.setAttribute("aria-describedby", diagramHint.id);
+        } else if (region.getAttribute("aria-describedby") === diagramHint.id) {
+          region.removeAttribute("aria-describedby");
+        }
+      }
       if (!isScrollable) return;
       if (!region.hasAttribute("tabindex")) region.tabIndex = 0;
       if (!region.hasAttribute("role")) region.setAttribute("role", "region");

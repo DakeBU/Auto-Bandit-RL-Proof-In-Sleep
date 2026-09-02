@@ -61,6 +61,9 @@ class LinkCollector(HTMLParser):
         self.source_guide_count = 0
         self.notation_primer_count = 0
         self.algorithm_flow_count = 0
+        self.algorithm_pseudocode_count = 0
+        self.source_extension_count = 0
+        self.diagram_scroll_hint_count = 0
         self.source_theorem_card_count = 0
         self.source_boundary_count = 0
         self.chapter_compass_count = 0
@@ -112,6 +115,12 @@ class LinkCollector(HTMLParser):
             self.notation_primer_count += 1
         if "algorithm-flow" in classes:
             self.algorithm_flow_count += 1
+        if "algorithm-pseudocode" in classes:
+            self.algorithm_pseudocode_count += 1
+        if "source-extension" in classes:
+            self.source_extension_count += 1
+        if "data-diagram-scroll-hint" in values:
+            self.diagram_scroll_hint_count += 1
         if "source-theorem-card" in classes:
             self.source_theorem_card_count += 1
         if "source-boundary" in classes:
@@ -1265,6 +1274,16 @@ def main() -> int:
         errors.append("textbook-spine chapter-page count does not match textbook_spine.json")
     chapter_source_theorems = 0
     chapter_source_boundaries = 0
+    algorithm_pseudocode_chapters = {
+        "etc",
+        "ucb",
+        "oful",
+        "thompson",
+        "exp3",
+        "tsallis",
+        "finite-horizon-rl",
+        "frontier",
+    }
     readings_by_slug = {reading.get("slug"): reading for reading in readings_source}
     for chapter_page in chapter_pages:
         collector = pages.get(chapter_page.resolve())
@@ -1306,6 +1325,23 @@ def main() -> int:
             errors.append(f"{relative}: source guide links are not page-specific")
         if collector.algorithm_flow_count != 1:
             errors.append(f"{relative}: expected one algorithm or proof flow")
+        expected_pseudocode = 1 if chapter_slug in algorithm_pseudocode_chapters else 0
+        if collector.algorithm_pseudocode_count != expected_pseudocode:
+            errors.append(
+                f"{relative}: found {collector.algorithm_pseudocode_count} explicit pseudocode blocks, "
+                f"expected {expected_pseudocode}"
+            )
+        if page_source.count('id="algorithm-pseudocode"') != expected_pseudocode:
+            errors.append(f"{relative}: explicit pseudocode needs one stable deep-link target")
+        if chapter_slug == "foundations":
+            if collector.source_extension_count != 1:
+                errors.append(f"{relative}: expected one collapsed advanced source extension")
+            if '<details class="source-extension" open' in page_source:
+                errors.append(f"{relative}: advanced source extension must be collapsed initially")
+            if "Advanced lower-bound extension" not in page_source:
+                errors.append(f"{relative}: advanced source extension lacks a readable label")
+        elif collector.source_extension_count:
+            errors.append(f"{relative}: unexpected advanced source extension")
         if collector.math_statement_count != collector.math_fallback_count or collector.math_statement_count != collector.math_tex_count:
             errors.append(
                 f"{relative}: every mathematical statement needs one readable fallback and one escaped MathJax source"
@@ -1692,6 +1728,9 @@ def main() -> int:
         errors.append("every Mermaid block must be contained by one diagram region")
     if totals["accessible_diagram_regions"] != totals["diagram_regions"]:
         errors.append("every diagram must be a labelled keyboard-scroll region")
+    diagram_hint_total = sum(collector.diagram_scroll_hint_count for collector in pages.values())
+    if diagram_hint_total != totals["diagram_regions"]:
+        errors.append("every diagram must contain one responsive horizontal-scroll hint")
     site_js = (output / "static" / "site.js").read_text(encoding="utf-8")
     for required in (
         "fitFlowchartViewBoxes",
@@ -1711,6 +1750,9 @@ def main() -> int:
         "abrl-nav-groups-v2",
         'event.key !== "/"',
         'classList.toggle("is-scrollable"',
+        "data-diagram-scroll-hint",
+        'matchMedia("(max-width: 760px)")',
+        'setAttribute("aria-describedby"',
     ):
         if required not in site_js:
             errors.append(f"site.js is missing responsive reading support: {required}")
@@ -1759,7 +1801,7 @@ def main() -> int:
         "bringTargetIntoView",
         "collapsedTocHeight",
         "window.MathJax?.startup?.promise?.then(bringTargetIntoView)",
-        "regionOverflows || mathTargetOverflows",
+        "const isScrollable = regionOverflows",
         "focus({ preventScroll: true })",
     ):
         if required not in site_js:

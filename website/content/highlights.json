@@ -1208,7 +1208,7 @@
       "intuition": "If the policy almost never pulls the changed arm, the two history laws remain hard to distinguish, so the majority decision must fail in at least one environment.",
       "why": "This is the exact one-arm event-information layer reused by Lemma 16.3 and the asymptotic route.",
       "position": "The history KL and event inequality compile and now feed two canonical gap-pseudo-regret event charges; the finite arm-law mean-to-gap identification and source Lemma 16.3 terminal remain separate.",
-      "proof_idea": "Specialize Lemma 15.1 to environments equal off arm i, prove the pull-count majority event measurable, and apply Bretagnolle--Huber.",
+      "proof_idea": "Specialize Lemma 15.1 to environments equal off arm i, prove the pull-count majority event measurable, and apply Bretagnolle–Huber.",
       "lean_notes": "Both history measures use the same possibly randomized HistoryAlgorithm. Pull expectation and KL direction are under the first environment.",
       "dependencies": [
         "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_mul_of_only_arm_changed",
@@ -1224,7 +1224,7 @@
       "intuition": "The policy cannot simultaneously avoid the changed arm, keep both expected gap regrets small, and distinguish the two environments. The two event errors are each paid for by an actual gap-times-pull-count expectation.",
       "why": "This closes the common-policy information, exact half-horizon charges, factor-one-quarter assembly, and logarithmic algebra that sit immediately below Lemma 16.3.",
       "position": "It is a compiled conditional consumer for explicit gap vectors, not the source theorem: Lean still needs an environment contract proving that the vectors are induced by the finite arm-law means and certified optimal arms.",
-      "proof_idea": "Regroup canonical gap pseudo-regret by expected pulls, lower-bound it pathwise on the majority event and its complement, integrate both inequalities, combine with Bretagnolle--Huber, and rearrange the finite positive KL branch.",
+      "proof_idea": "Regroup canonical gap pseudo-regret by expected pulls, lower-bound it pathwise on the majority event and its complement, integrate both inequalities, combine with Bretagnolle–Huber, and rearrange the finite positive KL branch.",
       "lean_notes": "The theorem preserves one randomized HistoryAlgorithm, original-to-alternative KL, first-law expected pulls, the inclusive n=lastRound+1 convention, explicit KL finiteness/positivity, and nonnegative gaps.",
       "dependencies": [
         "BanditRLProof.LowerBounds.bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors",
@@ -1264,7 +1264,7 @@
       "plain": "On a succinct support, the paper's Q quantity of a finite support combination is exactly the largest absolute coefficient.",
       "math": "\\(Q(\\sum_i a_i E_i)=\\max_i |a_i|\\).",
       "intuition": "The support contract makes the chosen support atoms orthogonal. Every atom in the source atom set correlates with the combination by at most the largest coefficient, while a signed maximizing support atom reaches that value.",
-      "why": "This is Zeng--Honorio Lemma 3.1 and the reusable coefficient geometry needed before the paper's information--regret construction.",
+      "why": "This is Zeng–Honorio Lemma 3.1 and the reusable coefficient geometry needed before the paper's information–regret construction.",
       "position": "The identity is compiled. It does not imply that Q separates all ambient vectors or that the globally defined real-valued R is finite everywhere.",
       "proof_idea": "Use the support correlation-sum bound for the upper inequality, derive mutual orthogonality, choose an index attaining the finite maximum, and use the positive or negative maximizing atom as the lower-bound witness.",
       "lean_notes": "The atom set remains an arbitrary Set, the support size is finite and nonempty, and the literal real sSup contract is retained. A separate compiled diagnostic shows why global R needs additional regularity outside the succinct span.",
@@ -1282,8 +1282,8 @@
       "plain": "If one representation of X uses s succinct atoms and another is strictly z-succinct, then z is at most s.",
       "math": "\\(X\\text{ is }s\\text{-succinct and strictly }z\\text{-succinct}\\Longrightarrow z\\le s.\\)",
       "intuition": "Strict nonzero coefficients prevent any direction in the second support from being hidden. Equality of the local R values forces unit correlations with one signed support combination, and finite Bessel bounds how many orthonormal strict-support atoms can all attain correlation one.",
-      "why": "This is the compiled source-shaped content of Zeng--Honorio Lemma 3.3. Together with its two-direction consumer for Lemma 3.4, it makes strict succinct representation size intrinsic.",
-      "position": "Definitions 3.1--3.3 and Lemmas 3.1--3.4 now compile. The result does not repair the paper's globally real-valued R interface or prove Lemmas 3.5--3.6, Assumption 3.7, Theorem 3.8, or a regret bound.",
+      "why": "This is the compiled source-shaped content of Zeng–Honorio Lemma 3.3. Together with its two-direction consumer for Lemma 3.4, it makes strict succinct representation size intrinsic.",
+      "position": "Definitions 3.1–3.3 and Lemmas 3.1–3.4 now compile. The result does not repair the paper's globally real-valued R interface or prove Lemmas 3.5–3.6, Assumption 3.7, Theorem 3.8, or a regret bound.",
       "proof_idea": "Build the signed support combination for the first representation, identify its squared norm with s, show every strict-support basis vector has absolute inner product one, and apply the finite Bessel inequality to obtain z <= s.",
       "lean_notes": "The proof uses Mathlib's finite Orthonormal.sum_inner_products_le. It needs neither a spanning assumption nor an ambient dimension bound because the argument is confined to two finite representations.",
       "dependencies": [
@@ -1315,7 +1315,7 @@
       "math": "\\(\\int \\delta\\theta_k(a,r)\\,K_t(d a,d r\\mid e,h)=p_k(h)\\bigl(\\sum_a p_a(h)\\Delta_a-\\Delta_k\\bigr).\\)",
       "intuition": "The static finite sum from Equation (5) is now attached to the actual recursive policy state: the generated softmax law selects the arm, the explicit reward kernel supplies its mean, and the kernel integral performs the conditioning step.",
       "why": "This closes the main process boundary left by the first audit. It lets later rate arguments consume a generated-history Equation-(5) identity instead of assuming that a deterministic probability vector came from Algorithm 1.",
-      "position": "The recursive state, measurable policies, canonical trajectory, conditional laws, and pointwise Equation-(5) kernel calculation compile. Bounded support supplies update integrability. A downstream two-arm theorem layer now integrates this identity into the expected recursive best parameter and the exact Theorem-1 endpoint; Theorems 2--4 remain open.",
+      "position": "The recursive state, measurable policies, canonical trajectory, conditional laws, and pointwise Equation-(5) kernel calculation compile. Bounded support supplies update integrability. A downstream two-arm theorem layer now integrates this identity into the expected recursive best parameter and the exact Theorem-1 endpoint; Theorems 2–4 remain open.",
       "proof_idea": "Integrate the exact selected/nonselected update through the history-step comp-product kernel, rewrite each reward integral by the selected arm's explicit mean hypothesis, reduce the finite action measure to a softmax-weighted sum, and invoke the compiled gap-coordinate identity.",
       "lean_notes": "This generic theorem keeps coordinate-update integrability and arm-reward integral equalities explicit. Separate compiled contract wrappers derive the integrability premise from support in [-1,1], and the fixed-IID consumer supplies the source-law specialization.",
       "dependencies": [
@@ -1331,7 +1331,7 @@
       "math": "\\(\\int \\delta\\theta_k(a,r)\\,K_t(d a,d r\\mid h)=p_k(h)\\bigl(\\sum_a p_a(h)\\Delta_a-\\Delta_k\\bigr).\\)",
       "intuition": "The source assumes every reward lies in [-1,1]. The softmax update is no larger in absolute value than the observed reward, so no extra moment or independence assumption is needed to justify the conditional integral.",
       "why": "This removes an artificial caller-supplied regularity premise from the fixed-IID Equation-(5) route and records exactly where bounded support enters the formal proof.",
-      "position": "The fixed-IID one-step Equation-(5) interface compiles. The exact downstream Theorem-1 layer now specializes the whole trajectory to this fixed-IID model with a Dirac prior and assembles Equation (7); Theorems 2--4 remain separate open endpoints.",
+      "position": "The fixed-IID one-step Equation-(5) interface compiles. The exact downstream Theorem-1 layer now specializes the whole trajectory to this fixed-IID model with a Dirac prior and assembles Equation (7); Theorems 2–4 remain separate open endpoints.",
       "proof_idea": "Transport the armwise support contract through the action/reward comp-product kernel, dominate sourceIncrement by the unit reward envelope, derive Integrable sourceIncrement, and invoke the existing gap-coordinate kernel identity.",
       "lean_notes": "The theorem reuses the existing probability, bounded-support, integral-mean, and gap-coordinate hypotheses. It adds no positive-gap, learning-rate-sign, second-moment, or independence premise.",
       "dependencies": [
@@ -1396,7 +1396,7 @@
       "why": "This closes the fixed-horizon integrability and condexp boundary needed before a tower argument can iterate the recurrence.",
       "position": "Forward and inverse tower-ready one-step bounds compile. The unconditional and Theorem-1 layers now integrate them, perform finite iteration, prove the squared failure-mass bound, and consume the forward recurrence through Jensen/log in the exact two-arm fixed-IID endpoint.",
       "proof_idea": "Transport bounded rewards to every prefix, bound the history parameter by the accumulated reward magnitudes, prove exponential integrability, identify condexp with the conditional-distribution integral, and apply the a.e. recurrence transport.",
-      "lean_notes": "This theorem itself is fixed-time and one-step. The downstream Theorem-1 module supplies the finite-horizon Jensen/log consumer only for the exact two-arm fixed-IID/Dirac source contract; the learning-rate rates in Theorems 2--4 remain absent.",
+      "lean_notes": "This theorem itself is fixed-time and one-step. The downstream Theorem-1 module supplies the finite-horizon Jensen/log consumer only for the exact two-arm fixed-IID/Dirac source contract; the learning-rate rates in Theorems 2–4 remain absent.",
       "dependencies": [
         "BanditRLProof.StochasticGradientBandit.integrable_twoArmForwardTrajectorySuccessorPotential",
         "BanditRLProof.StochasticGradientBandit.twoArmForwardTrajectorySuccessor_condExp_ae_eq_integral_condDistrib",
@@ -1426,7 +1426,7 @@
       "math": "\\(R_T\\le \\frac{\\Delta_{\\max}}{\\eta\\Delta}\\,\\Theta_{1,T+1}+\\Delta_{\\max}\\sum_{t<T}(1-p_{1,t})^2.\\)",
       "intuition": "The identity 1-p = p(1-p)+(1-p)^2 separates rounds where the best coordinate can accumulate useful drift from trajectories that keep too much probability away from the best arm.",
       "why": "This is the deterministic mechanism behind Equation (7) and makes the paper's later learning-rate question visible as a separate failure-mass problem.",
-      "position": "The source-shaped finite decomposition compiles. The exact downstream two-arm trajectory theorem now identifies the expected best parameter, proves the forward Jensen/log and failure-mass bounds, aligns the source horizon, and closes Theorem 1. Theorems 2--4 remain uncompiled.",
+      "position": "The source-shaped finite decomposition compiles. The exact downstream two-arm trajectory theorem now identifies the expected best parameter, proves the forward Jensen/log and failure-mass bounds, aligns the source horizon, and closes Theorem 1. Theorems 2–4 remain uncompiled.",
       "proof_idea": "Upper-bound each instantaneous gap by DeltaMax times failure mass, lower-bound the best-coordinate increment using the minimum gap, split failure mass algebraically, and divide only after proving eta*Delta positive.",
       "lean_notes": "Theta is represented here by a finite sum of history-conditioned expected best-coordinate increments. The compiled Theorem-1 layer separately identifies the corresponding generated expected recursive parameter and then bridges generated regret to actual sampled-action regret.",
       "dependencies": [
@@ -1444,7 +1444,7 @@
       "math": "\\(R_T^{\\mathrm{SGB}}\\le \\frac{\\log(1+4\\eta\\Delta T)}{2\\eta}+\\frac{\\Delta}{2\\eta(\\Delta-\\eta C_\\eta)}.\\)",
       "intuition": "The generated Equation-(5) drift turns cumulative regret into one expected best-coordinate parameter plus squared failure probability. The forward exponential potential controls the parameter through Jensen and log, while the inverse potential telescopes the failure squares.",
       "why": "This is a dependency-closed external-paper endpoint rather than a theorem-shaped algebraic leaf: it joins the generated policy, reward laws, actual sampled actions, trajectory measure, expectation, horizon convention, and source constants.",
-      "position": "This compiles Baudry et al. Theorem 1 only for two bounded fixed-IID arm laws with a Dirac environment prior. Theorems 2--4, general-K rates, and non-Dirac environment mixtures remain outside this endpoint.",
+      "position": "This compiles Baudry et al. Theorem 1 only for two bounded fixed-IID arm laws with a Dirac environment prior. Theorems 2–4, general-K rates, and non-Dirac environment mixtures remain outside this endpoint.",
       "proof_idea": "Prove the conditional Equation-(5) source increment on the generated history, telescope its expectation into the best parameter, decompose failure mass into success-failure plus its square, bound the forward potential and apply Jensen/log, telescope the inverse potential, identify actual sampled-action regret with generated expected regret, and specialize the environment to fixed IID laws under a Dirac prior.",
       "lean_notes": "The assumptions retain eta > 0, 0 < Delta < 1, eta C_eta < Delta, rewards supported in [-1,1], exact arm means with mean(0)-mean(1)=Delta, and T = tailHorizon + 1. Lean arm 0 is the source's optimal arm 1; no online compilation service or unverified broader theorem is implied.",
       "dependencies": [
