@@ -155,6 +155,30 @@ externally validated attestation, or real public signer trust anchor.  Every
 corresponding evidence path in
 `execution-template.json` remains `UNSET`.
 
+The packet preparer can now materialize both the unchanged three-file machine
+packet and a deterministic role-separated dispatch kit:
+
+```text
+python tools/prepare_target_drift_human_contract_review.py \
+  --output ABSOLUTE-EMPTY-CORE-PACKET \
+  --dispatch-output ABSOLUTE-EMPTY-DISPATCH-KIT
+python tools/prepare_target_drift_human_contract_review.py \
+  --verify-dispatch ABSOLUTE-DISPATCH-KIT
+```
+
+Each reviewer directory contains only a human-readable guide, one unfilled
+response, the frozen review protocol, and a four-source HTTPS/SHA-256 index with
+all 30 exact locators.  It excludes the other reviewer, adjudication, operator
+material, model runs, grades, conditions, metrics, and outcomes.  The adjudicator
+starter is withheld until both reviewer responses have been frozen.  The operator
+directory carries the unchanged core packet plus result-free registry, receipt,
+and trust-anchor templates.  `--verify-dispatch` reconstructs the kit from the
+current frozen inputs and rejects any changed, missing, added, linked, or
+role-misrouted file.  Source PDFs are not redistributed; each reviewer must
+acquire the named public bytes independently and verify the frozen hash.  A
+successfully verified dispatch kit is preparation evidence only, never a
+completed review or a production-eligibility claim.
+
 The first layer machine-checks the self-attested review bundle against the exact
 frozen challenges and paired requirements.  Every production-eligible case must
 use exactly `match`, `source_critical_change`, and `exact`; reviewer disagreement
