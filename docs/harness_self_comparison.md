@@ -83,8 +83,9 @@ The deterministic outputs are written to
 `latest.gpt-review.md`; only a response containing exactly one fenced JSON
 advisory and one fenced Mermaid diagram is promoted to
 `latest.gpt-review.{json,mmd}`. The structured artifact stores the SHA-256 of
-the deterministic JSON input, and the website refuses to publish it after the
-ledger changes until the review is rerun.
+the deterministic JSON input after normalizing platform line endings, and the
+website refuses to publish it after the ledger changes until the review is
+rerun.
 
 When the two arms run in isolated worktrees, pass both immutable exported logs
 without merging or overwriting either source:

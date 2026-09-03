@@ -236,6 +236,18 @@ flowchart LR
         with self.assertRaisesRegex(ValueError, "exactly one fenced JSON"):
             harness_compare.parse_gpt_review_response("I prefer master-worker.")
 
+    def test_normalized_text_hash_is_platform_independent(self) -> None:
+        with tempfile.TemporaryDirectory() as raw_tmp:
+            tmp = Path(raw_tmp)
+            lf = tmp / "lf.json"
+            crlf = tmp / "crlf.json"
+            lf.write_bytes(b'{"status":"insufficient-evidence"}\n')
+            crlf.write_bytes(b'{"status":"insufficient-evidence"}\r\n')
+            self.assertEqual(
+                harness_compare.normalized_text_sha256(lf),
+                harness_compare.normalized_text_sha256(crlf),
+            )
+
     def test_agent_command_quotes_windows_paths_with_spaces(self) -> None:
         original_name = bandit.os.name
         original_root = bandit.ROOT

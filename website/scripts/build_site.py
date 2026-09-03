@@ -1757,6 +1757,12 @@ def load_harness_comparison() -> dict[str, Any]:
     return payload
 
 
+def normalized_text_sha256(path: Path) -> str:
+    """Hash source text without platform-specific Git line endings."""
+    payload = path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return hashlib.sha256(payload).hexdigest()
+
+
 def load_harness_gpt_review(comparison: dict[str, Any]) -> dict[str, Any] | None:
     """Load a GPT advisory only when it is bound to the current ledger bytes."""
     if not HARNESS_GPT_REVIEW_PATH.exists() and not HARNESS_GPT_REVIEW_DIAGRAM_PATH.exists():
@@ -1764,7 +1770,7 @@ def load_harness_gpt_review(comparison: dict[str, Any]) -> dict[str, Any] | None
     if not HARNESS_GPT_REVIEW_PATH.exists() or not HARNESS_GPT_REVIEW_DIAGRAM_PATH.exists():
         raise SystemExit("GPT harness review JSON and Mermaid artifacts must be published together")
     payload = load_json(HARNESS_GPT_REVIEW_PATH)
-    expected_digest = hashlib.sha256(HARNESS_COMPARISON_PATH.read_bytes()).hexdigest()
+    expected_digest = normalized_text_sha256(HARNESS_COMPARISON_PATH)
     if payload.get("analysis_sha256") != expected_digest:
         raise SystemExit(
             "stale GPT harness review: analysis_sha256 does not match latest.json"

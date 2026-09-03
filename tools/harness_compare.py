@@ -9,9 +9,11 @@ a default-harness recommendation.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 from collections import defaultdict
+from pathlib import Path
 from typing import Any, Sequence
 
 
@@ -36,6 +38,14 @@ PROGRESS_WEIGHTS = {
     "closed-frontier": 5.0,
     "terminal": 8.0,
 }
+
+
+def normalized_text_sha256(path: Path) -> str:
+    """Hash text content independently of Git's platform line endings."""
+    payload = path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return hashlib.sha256(payload).hexdigest()
+
+
 VERIFIED_STATUSES = {"compiled", "accepted"}
 REVIEWED_STATUSES = VERIFIED_STATUSES | {"blocked", "rejected"}
 ATTEMPT_ROLES = {"lower", "worker"}

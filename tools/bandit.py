@@ -11,7 +11,6 @@ import argparse
 import concurrent.futures
 import csv
 import datetime as _dt
-import hashlib
 import json
 import os
 import re
@@ -27823,7 +27822,7 @@ def cmd_harness_compare(args: argparse.Namespace) -> int:
             except ValueError as error:
                 print(f"invalid GPT harness review: {error}", file=sys.stderr)
                 return 2
-            analysis_sha256 = hashlib.sha256(json_path.read_bytes()).hexdigest()
+            analysis_sha256 = harness_compare.normalized_text_sha256(json_path)
             structured_review_path = prefix.with_name(prefix.name + ".gpt-review.json")
             review_diagram_path = prefix.with_name(prefix.name + ".gpt-review.mmd")
             write_text(

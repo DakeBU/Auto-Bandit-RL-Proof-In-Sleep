@@ -28,6 +28,12 @@ GITHUB_REPO = "https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep"
 PUBLIC_SITE_URL = "https://dakebu.github.io/Auto-Bandit-RL-Proof-In-Sleep"
 
 
+def normalized_text_sha256(path: Path) -> str:
+    """Hash source text without platform-specific Git line endings."""
+    payload = path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return hashlib.sha256(payload).hexdigest()
+
+
 class LinkCollector(HTMLParser):
     def __init__(self) -> None:
         super().__init__(convert_charrefs=True)
@@ -382,7 +388,7 @@ def check_current_evidence_surfaces(
         gpt_review = {}
     else:
         gpt_review = json.loads(gpt_review_path.read_text(encoding="utf-8"))
-        expected_digest = hashlib.sha256(comparison_path.read_bytes()).hexdigest()
+        expected_digest = normalized_text_sha256(comparison_path)
         if gpt_review.get("analysis_sha256") != expected_digest:
             errors.append("GPT harness advisory is stale relative to latest.json")
         review = gpt_review.get("review", {})
