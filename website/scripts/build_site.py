@@ -633,8 +633,8 @@ def render_harness_attempt_graph() -> str:
     source = HARNESS_COMPARISON_DIAGRAM_PATH.read_text(encoding="utf-8")
     source_href = source_url("runs/harness-comparison/latest.mmd")
     caption = (
-        "Attempt graph generated from the same matched harness ledger; empty arms "
-        "mean that no eligible experiment has been recorded"
+        "Attempt graph generated from the structured harness ledger; an unpaired arm "
+        "means that no matched experiment has entered the comparison table"
     )
     return (
         '<figure class="diagram harness-attempt-graph" tabindex="0" role="region" '
@@ -4702,7 +4702,9 @@ python tools/proof_graph_lab.py benchmark --graph proof-graph.json --config rese
 
 def render_harness_comparison_ledger(page_path: str, comparison: dict[str, Any]) -> str:
     matched = comparison["matched_evidence"]
+    observed = comparison["all_evidence"]
     rows = []
+    observed_cards = []
     for harness in ("hierarchical", "master-worker"):
         arm = matched[harness]
         rows.append(
@@ -4716,6 +4718,19 @@ def render_harness_comparison_ledger(page_path: str, comparison: dict[str, Any])
             f"<td>{html.escape(str(arm.get('critical_path_seconds', 0.0)))}</td>"
             "</tr>"
         )
+        observed_arm = observed[harness]
+        observed_cards.append(
+            '<article>'
+            f'<span class="level-label">{html.escape(harness)}</span>'
+            f'<h3>{int(observed_arm.get("attempts", 0))} observed attempt'
+            f'{"" if int(observed_arm.get("attempts", 0)) == 1 else "s"}</h3>'
+            f'<p>{int(observed_arm.get("reviewed_attempts", 0))} reviewer-joined · '
+            f'{int(observed_arm.get("unreviewed_attempts", 0))} unreviewed · '
+            f'{int(observed_arm.get("experiments", 0))} experiment id'
+            f'{"" if int(observed_arm.get("experiments", 0)) == 1 else "s"}. '
+            'These counts describe the log, not a causal comparison.</p>'
+            '</article>'
+        )
     decision = comparison["decision"]
     matched_count = len(comparison["matched_experiments"])
     minimum_count = int(comparison["minimum_matched_experiments"])
@@ -4726,6 +4741,11 @@ def render_harness_comparison_ledger(page_path: str, comparison: dict[str, Any])
     source_href = source_url("runs/harness-comparison/latest.json")
     prompt_href = source_url("runs/harness-comparison/latest.prompt.md")
     method_href = source_url("docs/harness_self_comparison.md")
+    exclusions = comparison.get("excluded_experiments", {})
+    exclusion_items = "".join(
+        f'<li><code>{html.escape(str(experiment))}</code>: {html.escape(str(exclusion_reason))}</li>'
+        for experiment, exclusion_reason in exclusions.items()
+    ) or '<li>No observed experiment is currently excluded.</li>'
     evidence_ready = matched_count >= minimum_count
     review_state = "Ready for interpretation" if evidence_ready else "Awaiting matched evidence"
     promotion_state = "Measured decision" if decision.get("status") == "measured" else "Default retained"
@@ -4739,6 +4759,12 @@ def render_harness_comparison_ledger(page_path: str, comparison: dict[str, Any])
     <div><span class="level-label">Recommended default</span><strong>{html.escape(recommended)}</strong></div>
     <div><span class="level-label">Next matched arm</span><strong>{html.escape(next_harness)}</strong></div>
   </div>
+  <h3 class="subsection-title">Observed log coverage</h3>
+  <div class="harness-observed-grid" aria-label="Observed harness rows before matching">{''.join(observed_cards)}</div>
+  <details class="inventory-disclosure harness-exclusions">
+    <summary>Why {len(exclusions)} observed experiment{'' if len(exclusions) == 1 else 's'} cannot enter the matched table</summary>
+    <div><ul>{exclusion_items}</ul><p>Every valid pair needs both execution arms, the same frozen target and route-packet hash, plus a separate reviewer verdict for each attempt. An unreviewed worker claim stays visible here but contributes zero substantive score.</p></div>
+  </details>
   <div class="harness-evidence-pipeline" aria-label="Harness evidence and decision pipeline">
     <article><span class="pipeline-step">01</span><div><span class="level-label">Deterministic matcher</span><strong>Active</strong><p>Keep only equal-target, equal-route-packet trials with reviewer-owned outcomes and verifier evidence.</p></div></article>
     <article><span class="pipeline-step">02</span><div><span class="level-label">Bounded GPT review</span><strong>{html.escape(review_state)}</strong><p>The review packet can explain bottlenecks, duplication, and context cost; it cannot relabel an attempt or invent a winner.</p></div></article>

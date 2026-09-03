@@ -14,10 +14,10 @@ The build:
 - adds reviewed teaching notes from `content/highlights.json`;
 - gives every Book Map source theorem a five-field model/assumption/parameter/
   regret/guarantee contract and links directly to the cited PDF page;
-- gives ETC, UCB, OFUL, EXP3, and UCBVI-CH readers three-step numerical
-  examples that expose one decision without presenting the arithmetic as a
-  simulation or theorem, and adds source-to-Lean proof bridges for UCB, OFUL,
-  Thompson sampling, EXP3, Tsallis-INF, and UCBVI-CH;
+- gives every Book Map chapter a three-step worked example that exposes one
+  decision, proof budget, or source-audit boundary without presenting the
+  arithmetic as a simulation or theorem, and adds source-to-Lean proof bridges
+  for UCB, OFUL, Thompson sampling, EXP3, Tsallis-INF, and UCBVI-CH;
 - gives ETC, UCB, OFUL, Thompson sampling, EXP3, Tsallis-FTRL, UCBVI-CH, and
   Frontier readers explicit, copyable pseudocode with source/Lean boundaries;
 - labels every Frontier source route at the disclosure title as a compiled
