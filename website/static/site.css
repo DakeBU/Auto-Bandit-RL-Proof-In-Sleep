@@ -1816,7 +1816,7 @@ tr:last-child td {
 }
 
 .chapter-milestone-more summary {
-  min-height: 2.25rem;
+  min-height: 2.75rem;
   color: var(--accent);
   cursor: pointer;
   font-family: var(--sans);
@@ -1830,6 +1830,66 @@ tr:last-child td {
 
 tbody tr:hover {
   background: color-mix(in srgb, var(--accent-soft) 38%, transparent);
+}
+
+.milestone-status-overview {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 1.25rem 0 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.milestone-status-overview > div {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.9rem 1rem;
+}
+
+.milestone-status-overview > div + div {
+  border-left: 1px solid var(--line);
+}
+
+.milestone-status-overview dt,
+.milestone-status-overview dd {
+  margin: 0;
+}
+
+.milestone-status-overview dd {
+  display: flex;
+  gap: 0.35rem;
+  align-items: baseline;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.milestone-status-overview dd strong {
+  color: var(--ink);
+  font: 750 1.45rem/1 var(--serif);
+}
+
+.milestone-open-work {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.85rem 0 1.2rem;
+  padding: 0.85rem 1rem;
+  border-left: 4px solid var(--warning);
+  background: color-mix(in srgb, var(--warning-bg) 58%, var(--surface));
+}
+
+.milestone-open-work p {
+  margin: 0;
+}
+
+.milestone-open-work [data-milestone-open][aria-pressed="true"] {
+  background: var(--accent);
+  color: var(--surface);
 }
 
 .filter-bar {
@@ -1857,7 +1917,7 @@ tbody tr:hover {
 
 .filter-field input,
 .filter-field select {
-  min-height: 2.55rem;
+  min-height: 2.75rem;
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 0.45rem 0.65rem;
@@ -2618,9 +2678,9 @@ tbody tr:hover {
 
 .source-theorem-heading > a {
   display: inline-flex;
-  min-height: 2rem;
-  padding-inline: 0.25rem;
+  min-height: 2.75rem;
   align-items: center;
+  padding-inline: 0.25rem;
   flex: 0 0 auto;
   font-size: 0.86rem;
 }
@@ -3132,6 +3192,12 @@ tbody tr:hover {
   gap: 0.75rem;
   flex-wrap: wrap;
   font-size: 0.86rem;
+}
+
+.source-links a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
 }
 
 .exact-lean .lean-code {
@@ -4139,6 +4205,9 @@ tbody tr:hover {
   }
 
   .mobile-brand {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
     color: var(--ink);
     font-family: var(--serif);
     font-weight: 750;
@@ -4226,6 +4295,31 @@ tbody tr:hover {
 }
 
 @media (max-width: 760px) {
+  .button.compact {
+    min-height: 2.75rem;
+  }
+
+  .milestone-status-overview {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .milestone-status-overview > div + div {
+    border-left: 0;
+  }
+
+  .milestone-status-overview > div:nth-child(even) {
+    border-left: 1px solid var(--line);
+  }
+
+  .milestone-status-overview > div:nth-child(n + 3) {
+    border-top: 1px solid var(--line);
+  }
+
+  .milestone-open-work {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
   .snapshot-heading {
     display: grid;
     align-items: start;
@@ -4743,7 +4837,7 @@ tbody tr:hover {
 .lean-graph-views button,
 .lean-graph-actions button,
 .lean-graph-actions select {
-  min-height: 2.55rem;
+  min-height: 2.75rem;
   border: 1px solid var(--line);
   border-radius: 999px;
   background: var(--surface);
@@ -5176,7 +5270,7 @@ tbody tr:hover {
 }
 
 .lean-graph-detail-actions .button {
-  min-height: 2.55rem;
+  min-height: 2.75rem;
 }
 
 .lean-graph-neighbors {
@@ -5902,6 +5996,9 @@ tbody tr:hover {
 }
 
 .wiki-source-port-card details summary {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
   cursor: pointer;
   font-weight: 700;
 }
@@ -5912,6 +6009,14 @@ tbody tr:hover {
 
 .wiki-source-port-card > a {
   margin-top: auto;
+}
+
+.wiki-case-actions > a,
+.wiki-source-port-card > a,
+.wiki-paper-card > a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
 }
 
 .wiki-paper-card > a {

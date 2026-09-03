@@ -53,6 +53,8 @@ class LinkCollector(HTMLParser):
         self.contributor_card_count = 0
         self.theorem_panel_count = 0
         self.math_statement_count = 0
+        self.math_scroll_label_count = 0
+        self.math_static_focus_count = 0
         self.math_fallback_count = 0
         self.math_fallback_note_count = 0
         self.math_tex_count = 0
@@ -100,6 +102,10 @@ class LinkCollector(HTMLParser):
         classes = set(values.get("class", "").split())
         if "math-statement" in classes:
             self.math_statement_count += 1
+            if values.get("data-scroll-label"):
+                self.math_scroll_label_count += 1
+            if values.get("tabindex") or values.get("role") == "region":
+                self.math_static_focus_count += 1
         if "math-fallback" in classes:
             self.math_fallback_count += 1
         if "math-fallback-note" in classes:
@@ -1252,6 +1258,14 @@ def main() -> int:
             errors.append(
                 f"{page.relative_to(output)}: every mathematical statement needs one renderer-failure note"
             )
+        if collector.math_statement_count != collector.math_scroll_label_count:
+            errors.append(
+                f"{page.relative_to(output)}: every mathematical statement needs a contextual scroll label"
+            )
+        if collector.math_static_focus_count:
+            errors.append(
+                f"{page.relative_to(output)}: mathematical statements must become keyboard-scroll regions only when they overflow"
+            )
         if collector.site_sidebar_count != 1:
             errors.append(
                 f"{page.relative_to(output)}: expected one site sidebar, found {collector.site_sidebar_count}"
@@ -1517,6 +1531,17 @@ def main() -> int:
         if ucb_source.find(closest_name) > ucb_source.find(anytime_name):
             errors.append("chapters/ucb/index.html: closest textbook UCB route must precede extensions")
 
+    for chapter_slug, flow_label in (
+        ("foundations", "Bookkeeping flow"),
+        ("probability", "Proof flow"),
+        ("ucb", "Algorithm flow"),
+    ):
+        flow_page = output / "chapters" / chapter_slug / "index.html"
+        if flow_page.exists() and f'href="#algorithm">{flow_label}</a>' not in flow_page.read_text(encoding="utf-8"):
+            errors.append(
+                f"chapters/{chapter_slug}/index.html: page navigation must call its ordered flow {flow_label!r}"
+            )
+
     milestone_path = output / "implementation-map" / "milestone-data.json"
     module_data_path = output / "implementation-map" / "module-data.json"
     implementation_path = output / "implementation-map" / "index.html"
@@ -1546,6 +1571,17 @@ def main() -> int:
         for required in ("data-milestone-more", "milestone-data.json"):
             if required not in implementation_source:
                 errors.append(f"Implementation Map lacks progressive milestone support: {required}")
+        source_status_counts = Counter(
+            item.get("status") for item in milestone_source.get("results", [])
+        )
+        for status in ("compiled", "partial", "blocked", "planned"):
+            expected_total = f"<strong>{source_status_counts.get(status, 0)}</strong> routes"
+            if expected_total not in implementation_source:
+                errors.append(
+                    f"Implementation Map status overview is missing {status} total {expected_total!r}"
+                )
+        if 'data-milestone-open aria-pressed="false" hidden' not in implementation_source:
+            errors.append("Implementation Map is missing its progressive open-work filter")
         if implementation_source.find('id="milestones"') > implementation_source.find('id="status-key"'):
             errors.append("Implementation Map search must precede the status vocabulary")
         for label in ("Milestone", "Chapter", "Status", "Meaning and evidence"):
@@ -1880,9 +1916,12 @@ def main() -> int:
         'setAttribute("aria-current", "location")',
         "math-fallback-active",
         "data-nav-group",
-        "abrl-nav-groups-v2",
+        "abrl-nav-group-v3",
+        "sessionStorage.setItem(navStateKey, preferredNavGroup)",
         'event.key !== "/"',
         'classList.toggle("is-scrollable"',
+        "scrollFocusAuto",
+        "region.dataset.scrollLabel",
         "data-diagram-scroll-hint",
         'matchMedia("(max-width: 760px)")',
         'setAttribute("aria-describedby"',
@@ -1935,6 +1974,8 @@ def main() -> int:
         "milestone-data.json",
         "milestoneLoadPromise",
         "data-milestone-more",
+        "data-milestone-open",
+        "openStatuses",
         "revealMilestoneFragment",
     ):
         if required not in site_js:
