@@ -154,6 +154,32 @@
           "relationship": "The textbook permits any fixed empirical-mean tie rule. BanditRLlib's canonical generated ETC route fixes round-robin exploration and an explicit first-occurrence/least-encoded commit rule, then proves measurability and expected regret under its bounded or sub-Gaussian arm-law contracts."
         }
       },
+      "worked_example": {
+        "title": "Follow one two-arm explore–then–commit run",
+        "intro": "Take two arms, horizon n = 12, and m = 3 exploration pulls per arm. The six exploration rewards below are deliberately small enough to compute by hand.",
+        "steps": [
+          {
+            "title": "Explore both arms equally",
+            "detail": "Round-robin exploration gives each arm three observations before any commitment is made.",
+            "math": "X_{1,1:3}=(1,0,1),\\qquad X_{2,1:3}=(0,1,0).",
+            "fallback": "Arm 1 produces rewards 1, 0, 1; arm 2 produces rewards 0, 1, 0 during exploration."
+          },
+          {
+            "title": "Compare the empirical means",
+            "detail": "Arm 1 has the larger empirical mean, so the documented least-encoded tie rule is not needed in this run.",
+            "math": "\\widehat\\mu_1=\\frac23,\\qquad \\widehat\\mu_2=\\frac13,\\qquad \\widehat a=1.",
+            "fallback": "The empirical means are two thirds for arm 1 and one third for arm 2, so the committed arm is arm 1."
+          },
+          {
+            "title": "Commit for the remaining rounds",
+            "detail": "After six exploration pulls, the policy uses arm 1 for the final six rounds. If the true means are 0.6 and 0.4, the exploration of arm 2 has already paid three gap units; a wrong commit would instead repeat that gap throughout exploitation.",
+            "math": "n-km=6,\\qquad \\Delta_2=0.2,\\qquad m\\Delta_2=0.6.",
+            "fallback": "Six rounds remain; with a gap of 0.2, the three exploratory pulls of arm 2 contribute expected pseudo-regret 0.6."
+          }
+        ],
+        "takeaway": "ETC makes one irreversible decision. Increasing m raises the certain exploration cost but makes the empirical winner more reliable, which is exactly the two-term tradeoff in the theorem card.",
+        "boundary": "The displayed rewards are one illustrative history, not a simulation result. The regret sentence uses hypothetical true means only to explain gap accounting; the source theorem and exact Lean declarations below control the probabilistic assumptions."
+      },
       "source_theorem": {
         "label": "Theorem 6.1 (ETC regret bound)",
         "pages": "online pp. 92–93",
@@ -351,6 +377,32 @@
           "relationship": "The source algorithm permits time-varying feasible sets. BanditRLlib's canonical route is a finite-action measurable construction with explicit confidence, all-horizon, expectation, and stopping-time interfaces; the exact Lean statements determine the feature, regularity, and scheduling contracts."
         }
       },
+      "worked_example": {
+        "title": "Why an unexplored direction can beat a better estimate",
+        "intro": "Use two-dimensional features with actions e₁ and e₂, regularization λ = 1, and confidence radius β₂ = 0.5. After one modest reward from e₁, OFUL compares estimated reward and directional uncertainty.",
+        "steps": [
+          {
+            "title": "Record one observed direction",
+            "detail": "The first action is e₁ and its reward is 0.2, so only the first coordinate enters the data vector.",
+            "math": "x_1=e_1,\\qquad y_1=0.2,\\qquad b_2=x_1y_1=(0.2,0)^\\top.",
+            "fallback": "The policy observes reward 0.2 after choosing the first basis vector, so the data vector is (0.2, 0)."
+          },
+          {
+            "title": "See uncertainty in the Gram geometry",
+            "detail": "The observed direction receives an extra rank-one update; the untouched direction retains the larger inverse-Gram width.",
+            "math": "V_2=I+e_1e_1^\\top=\\operatorname{diag}(2,1),\\quad \\widehat\\theta_2=V_2^{-1}b_2=(0.1,0)^\\top,\\quad \\lVert e_1\\rVert_{V_2^{-1}}=\\frac1{\\sqrt2}<\\lVert e_2\\rVert_{V_2^{-1}}=1.",
+            "fallback": "The Gram matrix is diagonal with entries 2 and 1; the estimate is (0.1, 0), and the unexplored second direction has the wider confidence norm."
+          },
+          {
+            "title": "Let optimism choose information",
+            "detail": "The small estimated advantage of e₁ is outweighed by e₂'s wider confidence interval, so the optimistic score explores e₂.",
+            "math": "U_2(e_1)=0.1+\\frac{0.5}{\\sqrt2}\\approx0.454,\\qquad U_2(e_2)=0+0.5=0.5,\\qquad x_2=e_2.",
+            "fallback": "The optimistic scores are about 0.454 for the first direction and 0.5 for the unexplored second direction, so OFUL chooses the second direction."
+          }
+        ],
+        "takeaway": "OFUL explores directions, not named arms in isolation. The same inverse-Gram norm that makes e₂ attractive here is later summed by the elliptical-potential argument.",
+        "boundary": "This two-dimensional calculation illustrates one optimistic score comparison. It is not a trajectory benchmark and does not instantiate every boundedness, measurability, or confidence-radius hypothesis in the compiled theorem."
+      },
       "proof_bridge": {
         "title": "How confidence geometry pays for linear-bandit regret",
         "summary": "OFUL replaces one confidence interval per arm by one ellipsoid for the unknown parameter. The same inverse-Gram norm measures both uncertainty and the cost charged to the trajectory.",
@@ -545,6 +597,32 @@
           ],
           "relationship": "The displayed equations are the textbook core. BanditRLlib's generated predictable route makes positive support and any exploration mixture explicit, and its expected, fixed-window, all-prefix, realized, and sparse-loss guarantees remain separate theorems with separate confidence contracts."
         }
+      },
+      "worked_example": {
+        "title": "One EXP3 update from a single observed loss",
+        "intro": "Start with two equal weights, learning rate η = 0.25, and suppose the sampled second arm incurs loss 0.8. The update shows why dividing by the sampling probability is both necessary and noisy.",
+        "steps": [
+          {
+            "title": "Sample from equal weights",
+            "detail": "Both arms initially have the same probability; this particular history samples arm 2.",
+            "math": "w_1=(1,1),\\qquad p_1=\\left(\\frac12,\\frac12\\right),\\qquad A_1=2,\\quad \\ell_1(A_1)=0.8.",
+            "fallback": "Both initial weights are one, both probabilities are one half, and arm 2 is sampled with observed loss 0.8."
+          },
+          {
+            "title": "Reconstruct an unbiased loss coordinate",
+            "detail": "Only arm 2 is observed. Dividing by its probability produces a larger estimate whose conditional expectation equals the hidden loss coordinate.",
+            "math": "\\widehat\\ell_1(1)=0,\\qquad \\widehat\\ell_1(2)=\\frac{0.8}{1/2}=1.6.",
+            "fallback": "The estimated loss is zero for arm 1 and 1.6 for arm 2 because the observed 0.8 is divided by probability one half."
+          },
+          {
+            "title": "Downweight the observed loss",
+            "detail": "The exponential update lowers arm 2's weight, so arm 1 becomes more likely at the next round without assigning arm 2 zero probability.",
+            "math": "w_2=(1,e^{-0.4})\\approx(1,0.6703),\\qquad p_2(1)=\\frac1{1+e^{-0.4}}\\approx0.599.",
+            "fallback": "The next weights are approximately 1 and 0.6703, so arm 1 receives probability about 0.599."
+          }
+        ],
+        "takeaway": "Importance weighting repairs the missing feedback in expectation, while its enlarged squared magnitude creates the variance term that the EXP3 proof must pay for.",
+        "boundary": "This is one deterministic arithmetic trace conditional on a sampled action. It is not an adversarial-regret experiment and does not merge the expected, fixed-window, all-prefix, or realized-regret theorem contracts."
       },
       "proof_bridge": {
         "title": "How one bandit observation becomes an adversarial regret guarantee",
@@ -755,6 +833,32 @@
           "relationship": "The source paper contains both CH and Bernstein variants. BanditRLlib's compiled canonical endpoint is the known-deterministic-reward Hoeffding UCBVI-CH route on one recurrent generated process, with strict-prefix counts, a documented tie rule, the frozen 20/250 bound, and a separate expected consumer."
         }
       },
+      "worked_example": {
+        "title": "One optimistic Bellman backup in a tiny MDP",
+        "intro": "Consider stage h = 1 of a two-stage episode at state s. Two actions have empirical next-stage values 0.5 and 0.2; the second action has been visited only once, so its Hoeffding bonus is much larger.",
+        "steps": [
+          {
+            "title": "Read only earlier episodes",
+            "detail": "Strict-prefix counting prevents the current episode from leaking into its own policy. The rarely visited action carries less transition evidence.",
+            "math": "N_k(1,s,a_{\\mathrm{safe}})=10,\\qquad N_k(1,s,a_{\\mathrm{new}})=1.",
+            "fallback": "Before episode k, the safe action has ten visits and the new action has one visit at this state and stage."
+          },
+          {
+            "title": "Add the transition bonuses",
+            "detail": "With zero immediate reward and nonbinding clips, the optimistic backup can prefer the uncertain action even though its empirical next value is lower.",
+            "math": "Q_k(s,a_{\\mathrm{safe}})=0.5+0.1=0.6,\\qquad Q_k(s,a_{\\mathrm{new}})=0.2+0.6=0.8.",
+            "fallback": "The safe action's optimistic value is 0.6, while the under-sampled action's optimistic value is 0.8."
+          },
+          {
+            "title": "Execute, then narrow the next episode",
+            "detail": "The greedy policy tries the new action. If later data leave its empirical value near 0.2 while its bonus falls to 0.2, its score drops below the safe action's 0.6.",
+            "math": "\\pi_{k,1}(s)=a_{\\mathrm{new}},\\qquad 0.2+0.2=0.4<0.6.",
+            "fallback": "Episode k chooses the new action; after its bonus falls to 0.2, its illustrative score becomes 0.4 and no longer beats 0.6."
+          }
+        ],
+        "takeaway": "UCBVI performs UCB inside backward dynamic programming. Counts control local transition uncertainty, while the proof must propagate optimism and charge those bonuses along the same generated episodic trajectory.",
+        "boundary": "The values and bonuses are illustrative and keep clipping inactive for readability. They are not a simulation, do not specify a full transition kernel, and do not claim the Bernstein or unknown-reward variants."
+      },
       "proof_bridge": {
         "title": "How local transition confidence becomes episodic regret",
         "summary": "UCBVI repeats the optimism pattern inside dynamic programming. Concentration is local to state-action-stage counts, while the final regret statement is global across a generated sequence of episodes.",
@@ -872,6 +976,11 @@
       },
       "source_theorem": {
         "label": "Definitions 3.1–3.3 and Lemmas 3.1–3.4 (succinct-support geometry)",
+        "local_status": {
+          "status": "partial",
+          "label": "Partial source port",
+          "boundary": "54 local declarations compile, but the global source theorem and regret endpoints do not."
+        },
         "pages": "physical PDF pp. 4–5",
         "pdf_page": 4,
         "url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/26407588dfb08e48c459c074ab6adb7d-Paper-Conference.pdf",
@@ -890,6 +999,11 @@
       "source_theorems": [
         {
           "label": "Theorem 1 (two-arm SGB regret upper bound)",
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled local terminal",
+            "boundary": "The exact bounded two-arm fixed-IID theorem endpoint compiles under its recorded contract."
+          },
           "pages": "physical PDF pp. 3–4",
           "pdf_page": 3,
           "url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/a4e683f0ce6b91e7fbdae9d32642d88f-Paper-Conference.pdf",
@@ -907,6 +1021,11 @@
         },
         {
           "label": "Corollary 1 (horizon-indexed two-arm SGB rate)",
+          "local_status": {
+            "status": "compiled",
+            "label": "Compiled local terminal",
+            "boundary": "A direct horizon-indexed consumer of the compiled Theorem-1 route compiles."
+          },
           "pages": "physical PDF p. 5",
           "pdf_page": 5,
           "url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/a4e683f0ce6b91e7fbdae9d32642d88f-Paper-Conference.pdf",
@@ -924,6 +1043,11 @@
         },
         {
           "label": "Theorem 2 (two-arm SGB phase transition)",
+          "local_status": {
+            "status": "blocked",
+            "label": "Terminal blocked",
+            "boundary": "Compiled prerequisite layers exist; the fixed-cutoff trigger, no-return law, ballot assembly, and theorem endpoint remain open."
+          },
           "pages": "physical PDF p. 6; Appendix C pp. 31–40",
           "pdf_page": 6,
           "url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/a4e683f0ce6b91e7fbdae9d32642d88f-Paper-Conference.pdf",
@@ -941,6 +1065,11 @@
         },
         {
           "label": "Theorem 4 / Appendix E source-contract window",
+          "local_status": {
+            "status": "blocked",
+            "label": "Terminal blocked",
+            "boundary": "A finite contract gate compiles, but the generated general-K process and Theorem-4 endpoint remain open."
+          },
           "pages": "physical PDF pp. 47–49",
           "pdf_page": 47,
           "url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/a4e683f0ce6b91e7fbdae9d32642d88f-Paper-Conference.pdf",

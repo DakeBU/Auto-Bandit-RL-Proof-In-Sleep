@@ -1220,7 +1220,7 @@ def main() -> int:
             if (
                 not all(str(worked_example.get(key, "")).strip() for key in ("title", "intro", "takeaway", "boundary"))
                 or not isinstance(steps, list)
-                or not 2 <= len(steps) <= 4
+                or not 3 <= len(steps) <= 5
                 or any(
                     not isinstance(step, dict)
                     or not all(str(step.get(key, "")).strip() for key in ("title", "detail", "math", "fallback"))
@@ -1383,7 +1383,17 @@ def main() -> int:
         "finite-horizon-rl",
         "frontier",
     }
+    worked_example_chapters = {
+        "etc",
+        "ucb",
+        "oful",
+        "exp3",
+        "finite-horizon-rl",
+    }
     readings_by_slug = {reading.get("slug"): reading for reading in readings_source}
+    for chapter_slug in worked_example_chapters:
+        if not readings_by_slug.get(chapter_slug, {}).get("worked_example"):
+            errors.append(f"readings.json: {chapter_slug} requires a worked example")
     for chapter_page in chapter_pages:
         collector = pages.get(chapter_page.resolve())
         if collector is None:
@@ -1530,6 +1540,46 @@ def main() -> int:
         anytime_name = "lintegral_ofReal_pseudoRegret_selectedPolicySuccessorTelescoping_le_trajMeasure"
         if ucb_source.find(closest_name) > ucb_source.find(anytime_name):
             errors.append("chapters/ucb/index.html: closest textbook UCB route must precede extensions")
+
+    for chapter_slug, title in (
+        ("etc", "Follow one two-arm explore–then–commit run"),
+        ("oful", "Why an unexplored direction can beat a better estimate"),
+        ("exp3", "One EXP3 update from a single observed loss"),
+        ("finite-horizon-rl", "One optimistic Bellman backup in a tiny MDP"),
+    ):
+        example_page = output / "chapters" / chapter_slug / "index.html"
+        if not example_page.exists():
+            continue
+        example_source = example_page.read_text(encoding="utf-8")
+        if title not in example_source:
+            errors.append(f"chapters/{chapter_slug}/index.html: missing required worked example")
+        if example_source.count('class="worked-example-step"') != 3:
+            errors.append(f"chapters/{chapter_slug}/index.html: expected three worked-example steps")
+        if 'href="#worked-example"' not in example_source:
+            errors.append(f"chapters/{chapter_slug}/index.html: worked example is missing from the page table of contents")
+
+    frontier_chapter_page = output / "chapters" / "frontier" / "index.html"
+    if frontier_chapter_page.exists():
+        frontier_chapter_source = frontier_chapter_page.read_text(encoding="utf-8")
+        source_guide = frontier_chapter_source.split('<section id="source-guide"', 1)[-1].split(
+            '<section id="teaching-notes">', 1
+        )[0]
+        route_statuses = re.findall(
+            r'<summary>.*?<span class="status ([^"]+)">([^<]+)</span>.*?</summary>',
+            source_guide,
+            re.DOTALL,
+        )
+        expected_route_statuses = [
+            ("partial", "Partial source port"),
+            ("compiled", "Compiled local terminal"),
+            ("compiled", "Compiled local terminal"),
+            ("blocked", "Terminal blocked"),
+            ("blocked", "Terminal blocked"),
+        ]
+        if route_statuses != expected_route_statuses:
+            errors.append(
+                "chapters/frontier/index.html: source-route summaries must expose compiled, partial, and blocked terminal status"
+            )
 
     for chapter_slug, flow_label in (
         ("foundations", "Bookkeeping flow"),
