@@ -205,6 +205,56 @@ class HarnessComparisonTests(unittest.TestCase):
         self.assertIn("insufficient-evidence", packet)
         self.assertIn("Do not infer a winner", packet)
 
+    def test_gpt_review_parser_requires_structured_advisory_and_diagram(self) -> None:
+        response = """Evidence is insufficient, so no winner is selected.
+
+```mermaid
+flowchart LR
+  G[Target governor] --> I{Independent leaves?}
+  I --> R[Reviewer gate]
+```
+
+```json
+{
+  "recommended_default": "retain-current-default",
+  "confidence": "low",
+  "evidence": ["No matched experiment is available."],
+  "risks": ["The master bottleneck is unmeasured."],
+  "next_matched_experiment": {"target": "TASK", "arms": ["hierarchical", "master-worker"]},
+  "proposed_change": "Keep hierarchy as governor and test bounded parallel leaves."
+}
+```
+"""
+        parsed = harness_compare.parse_gpt_review_response(response)
+        self.assertEqual(
+            parsed["review"]["recommended_default"], "retain-current-default"
+        )
+        self.assertTrue(parsed["mermaid"].startswith("flowchart LR"))
+        self.assertEqual(parsed["review"]["next_matched_experiment"]["target"], "TASK")
+
+    def test_gpt_review_parser_rejects_unstructured_prose(self) -> None:
+        with self.assertRaisesRegex(ValueError, "exactly one fenced JSON"):
+            harness_compare.parse_gpt_review_response("I prefer master-worker.")
+
+    def test_agent_command_quotes_windows_paths_with_spaces(self) -> None:
+        original_name = bandit.os.name
+        original_root = bandit.ROOT
+        bandit.os.name = "nt"
+        bandit.ROOT = Path("E:/ABRL paper/repository")
+        try:
+            command = bandit.format_agent_command(
+                "codex exec --cd {root} - < {prompt}",
+                Path("E:/ABRL paper/input prompt.md"),
+                Path("E:/ABRL paper/run"),
+                "TASK WITH SPACE",
+                1,
+            )
+        finally:
+            bandit.os.name = original_name
+            bandit.ROOT = original_root
+        self.assertIn('"E:\\ABRL paper\\repository"', command)
+        self.assertIn('< "E:\\ABRL paper\\input prompt.md"', command)
+
     def test_hierarchical_deck_receives_the_same_frozen_route_packet(self) -> None:
         routes = [
             {

@@ -11,6 +11,7 @@ import argparse
 import concurrent.futures
 import csv
 import datetime as _dt
+import hashlib
 import json
 import os
 import re
@@ -27395,12 +27396,19 @@ deterministic evidence boundary or promote unreviewed work.
     return prompts
 
 
+def shell_quote(value: str) -> str:
+    """Quote one argument for the platform shell used by ``shell=True``."""
+    if os.name == "nt":
+        return subprocess.list2cmdline([value])
+    return shlex.quote(value)
+
+
 def format_agent_command(template: str, prompt: Path, run_dir: Path, task_id: str, cycle: int) -> str:
     return template.format(
-        root=shlex.quote(str(ROOT)),
-        prompt=shlex.quote(str(prompt)),
-        run=shlex.quote(str(run_dir)),
-        task=shlex.quote(task_id),
+        root=shell_quote(str(ROOT)),
+        prompt=shell_quote(str(prompt)),
+        run=shell_quote(str(run_dir)),
+        task=shell_quote(task_id),
         cycle=str(cycle),
     )
 
@@ -27809,6 +27817,31 @@ def cmd_harness_compare(args: argparse.Namespace) -> int:
         if completed.stderr:
             review_text += "\n\n## Standard error\n\n```text\n" + completed.stderr + "\n```\n"
         write_text(review_path, review_text)
+        if completed.returncode == 0:
+            try:
+                parsed_review = harness_compare.parse_gpt_review_response(review_text)
+            except ValueError as error:
+                print(f"invalid GPT harness review: {error}", file=sys.stderr)
+                return 2
+            analysis_sha256 = hashlib.sha256(json_path.read_bytes()).hexdigest()
+            structured_review_path = prefix.with_name(prefix.name + ".gpt-review.json")
+            review_diagram_path = prefix.with_name(prefix.name + ".gpt-review.mmd")
+            write_text(
+                structured_review_path,
+                json.dumps(
+                    {
+                        "schema_version": 1,
+                        "review_type": "advisory",
+                        "analysis_sha256": analysis_sha256,
+                        "generated_at": now_iso(),
+                        "review": parsed_review["review"],
+                    },
+                    indent=2,
+                    ensure_ascii=False,
+                )
+                + "\n",
+            )
+            write_text(review_diagram_path, parsed_review["mermaid"])
         append_jsonl(TRIAL_LOG, {
             "time": now_iso(),
             "task": args.task or "HARNESS-COMPARISON",

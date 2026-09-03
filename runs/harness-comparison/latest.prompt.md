@@ -22,9 +22,13 @@ Return:
    and failure diagnosis;
 2. the strongest internal harness pattern supported by the evidence;
 3. one matched next experiment using the same target and route packet;
-4. one Mermaid diagram of the proposed internal harness;
-5. exactly one JSON object with keys `recommended_default`, `confidence`,
+4. exactly one fenced `mermaid` block containing the proposed internal harness;
+5. exactly one fenced `json` object with keys `recommended_default`, `confidence`,
    `evidence`, `risks`, `next_matched_experiment`, and `proposed_change`.
+
+When the deterministic status is `insufficient-evidence`, set
+`recommended_default` to `retain-current-default`; a proposed hybrid remains a
+hypothesis for the next matched experiment, not an adopted scheduler.
 
 ## Deterministic analysis
 

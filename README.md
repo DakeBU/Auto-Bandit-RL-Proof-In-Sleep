@@ -74,7 +74,7 @@ flowchart LR
     R -->|accepted| B["BanditRLlib"]
 ```
 
-The hierarchy protects the intended theorem and decomposes proof leaves. The experimental master–worker arm explores only disjoint, frozen routes in parallel. A matched comparison gives both arms the same hashed route packet, and only a separate reviewer verdict can classify an execution as evidence. A result enters BanditRLlib only after the full gate. Current historical logs cannot establish which arm is better, so the default has not been changed.
+The hierarchy protects the intended theorem and decomposes proof leaves. The experimental master–worker arm explores only disjoint, frozen routes in parallel. A matched comparison gives both arms the same hashed route packet, and only a separate reviewer verdict can classify an execution as evidence. GPT may produce a hash-bound advisory and candidate Mermaid architecture from that ledger, but it cannot promote an attempt or select a winner against the deterministic gate. A result enters BanditRLlib only after the full gate. Current historical logs cannot establish which arm is better, so the default has not been changed.
 
 ```mermaid
 flowchart LR

@@ -76,8 +76,15 @@ python3 tools/bandit.py harness-compare --task TASK_ID \
   --execute-review --agent-profile codex-parallel.example.json
 ```
 
-Outputs are written to `runs/harness-comparison/latest.{json,md,mmd}` and
-`runs/harness-comparison/latest.prompt.md` by default.
+The deterministic outputs are written to
+`runs/harness-comparison/latest.{json,md,mmd}` and
+`runs/harness-comparison/latest.prompt.md` by default. With
+`--execute-review`, the raw model response is preserved as
+`latest.gpt-review.md`; only a response containing exactly one fenced JSON
+advisory and one fenced Mermaid diagram is promoted to
+`latest.gpt-review.{json,mmd}`. The structured artifact stores the SHA-256 of
+the deterministic JSON input, and the website refuses to publish it after the
+ledger changes until the review is rerun.
 
 When the two arms run in isolated worktrees, pass both immutable exported logs
 without merging or overwriting either source:

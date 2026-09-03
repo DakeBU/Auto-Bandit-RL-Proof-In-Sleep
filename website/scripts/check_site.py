@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 from collections import Counter, defaultdict
@@ -369,11 +370,27 @@ def check_current_evidence_surfaces(
     errors: list[str] = []
     comparison_path = ROOT / "runs" / "harness-comparison" / "latest.json"
     comparison_diagram_path = ROOT / "runs" / "harness-comparison" / "latest.mmd"
+    gpt_review_path = ROOT / "runs" / "harness-comparison" / "latest.gpt-review.json"
+    gpt_review_diagram_path = ROOT / "runs" / "harness-comparison" / "latest.gpt-review.mmd"
     if not comparison_path.exists():
         return ["missing runs/harness-comparison/latest.json"]
     if not comparison_diagram_path.exists():
         return ["missing runs/harness-comparison/latest.mmd"]
     comparison = json.loads(comparison_path.read_text(encoding="utf-8"))
+    if not gpt_review_path.exists() or not gpt_review_diagram_path.exists():
+        errors.append("current GPT harness advisory JSON and Mermaid artifacts are required")
+        gpt_review = {}
+    else:
+        gpt_review = json.loads(gpt_review_path.read_text(encoding="utf-8"))
+        expected_digest = hashlib.sha256(comparison_path.read_bytes()).hexdigest()
+        if gpt_review.get("analysis_sha256") != expected_digest:
+            errors.append("GPT harness advisory is stale relative to latest.json")
+        review = gpt_review.get("review", {})
+        if (
+            comparison.get("decision", {}).get("status") == "insufficient-evidence"
+            and review.get("recommended_default") != "retain-current-default"
+        ):
+            errors.append("GPT harness advisory selects a winner without matched evidence")
     decision = comparison.get("decision", {})
     matched_count = len(comparison.get("matched_experiments", []))
     minimum_count = comparison.get("minimum_matched_experiments")
@@ -436,6 +453,12 @@ def check_current_evidence_surfaces(
         "no matched experiment has entered the comparison table",
         "hashed route packet",
         "reviewer-owned verdict",
+        'id="gpt-diagnosis"',
+        "GPT diagnosis and candidate internal harness",
+        "Hypothesis only · not adopted",
+        "Open parsed advisory JSON",
+        "model-proposed Mermaid source",
+        'id="gpt-harness-diagram"',
     ):
         if required not in workflow_source:
             errors.append(f"workflow comparison ledger is missing {required!r}")
@@ -446,6 +469,9 @@ def check_current_evidence_surfaces(
         ".comparison-decision",
         ".harness-attempt-panel",
         ".harness-observed-grid",
+        ".gpt-review-grid",
+        ".gpt-review-actions",
+        ".gpt-harness-diagram",
         ".status.prototype",
         ".declaration-content .lean-code",
         ".code-toolbar",
