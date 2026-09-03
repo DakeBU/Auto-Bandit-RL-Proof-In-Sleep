@@ -261,6 +261,101 @@ class HumanContractReviewTest(unittest.TestCase):
             with self.assertRaises(validate.HumanReviewError):
                 self.validate_bundle(bundle)
 
+    def test_dispatch_kit_is_deterministic_role_separated_and_result_free(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            first = root / "dispatch-first"
+            second = root / "dispatch-second"
+            first_manifest = prepare.materialize_dispatch(first)
+            second_manifest = prepare.materialize_dispatch(second)
+
+            self.assertEqual(first_manifest, second_manifest)
+            self.assertEqual(
+                first_manifest["status"],
+                "result_free_role_separated_dispatch_ready",
+            )
+            self.assertFalse(first_manifest["evaluation_outcomes_observed"])
+            self.assertEqual(prepare.verify_dispatch(first), first_manifest)
+            self.assertEqual(prepare.verify_dispatch(second), second_manifest)
+
+            first_files = {
+                path.relative_to(first).as_posix(): path.read_bytes()
+                for path in first.rglob("*")
+                if path.is_file()
+            }
+            second_files = {
+                path.relative_to(second).as_posix(): path.read_bytes()
+                for path in second.rglob("*")
+                if path.is_file()
+            }
+            self.assertEqual(first_files, second_files)
+
+            for slot, other in (
+                ("reviewer-a", "reviewer-b"),
+                ("reviewer-b", "reviewer-a"),
+            ):
+                role_paths = set(first_manifest["role_allowlists"][slot])
+                self.assertEqual(
+                    role_paths,
+                    {
+                        f"{slot}/README.md",
+                        f"{slot}/review-protocol.json",
+                        f"{slot}/reviewer-response.json",
+                        f"{slot}/source-index.json",
+                    },
+                )
+                role_text = "\n".join(
+                    first_files[path].decode("utf-8") for path in sorted(role_paths)
+                ).casefold()
+                self.assertNotIn(f"{other}/", role_text)
+                self.assertNotIn("operator/", role_text)
+                self.assertNotIn("adjudication-response.json", role_text)
+
+                response = json.loads(
+                    first_files[f"{slot}/reviewer-response.json"]
+                )
+                self.assertEqual(response["reviewer_id"], "UNSET")
+                self.assertEqual(len(response["cases"]), 30)
+                self.assertTrue(
+                    all(
+                        case["review"]["faithful_contract"] == "UNSET"
+                        and case["review"]["injected_drift"] == "UNSET"
+                        for case in response["cases"]
+                    )
+                )
+
+            source_index = json.loads(
+                first_files["reviewer-a/source-index.json"]
+            )
+            self.assertEqual(source_index["source_count"], 4)
+            self.assertEqual(source_index["case_count"], 30)
+            self.assertTrue(
+                all(
+                    source["public_url"].startswith("https://")
+                    and source["sha256"] != "UNSET"
+                    and "local_path" not in source
+                    for source in source_index["sources"]
+                )
+            )
+
+    def test_dispatch_verifier_rejects_tampering_and_added_files(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            tampered = root / "tampered"
+            prepare.materialize_dispatch(tampered)
+            response = tampered / "reviewer-a/reviewer-response.json"
+            response.write_bytes(response.read_bytes() + b" ")
+            with self.assertRaises(prepare.ReviewPacketError):
+                prepare.verify_dispatch(tampered)
+
+            added = root / "added"
+            prepare.materialize_dispatch(added)
+            (added / "reviewer-a/unexpected.txt").write_text(
+                "untracked disclosure", encoding="utf-8"
+            )
+            with self.assertRaises(prepare.ReviewPacketError):
+                prepare.verify_dispatch(added)
+
 
 if __name__ == "__main__":
     unittest.main()
