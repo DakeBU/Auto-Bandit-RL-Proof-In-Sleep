@@ -32,6 +32,12 @@ HARNESS_COMPARISON_PATH = ROOT / "runs" / "harness-comparison" / "latest.json"
 HARNESS_COMPARISON_DIAGRAM_PATH = (
     ROOT / "runs" / "harness-comparison" / "latest.mmd"
 )
+HARNESS_GPT_REVIEW_PATH = (
+    ROOT / "runs" / "harness-comparison" / "latest.gpt-review.json"
+)
+HARNESS_GPT_REVIEW_DIAGRAM_PATH = (
+    ROOT / "runs" / "harness-comparison" / "latest.gpt-review.mmd"
+)
 SGB_INTERFACE_FRONTIER_TRACE_PATH = (
     ROOT / "research-wiki" / "papers" /
     "sgb-theorem2-interface-frontier-trace.json"
@@ -49,7 +55,7 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20260903e"
+ASSET_VERSION = "20260903f"
 CATALOG_PAGE_SIZE = 20
 MILESTONE_PAGE_SIZE = 12
 MODULE_PAGE_SIZE = 30
@@ -1748,6 +1754,65 @@ def load_harness_comparison() -> dict[str, Any]:
         raise SystemExit(
             "runs/harness-comparison/latest.json must report hierarchical and master-worker arms"
         )
+    return payload
+
+
+def normalized_text_sha256(path: Path) -> str:
+    """Hash source text without platform-specific Git line endings."""
+    payload = path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return hashlib.sha256(payload).hexdigest()
+
+
+def load_harness_gpt_review(comparison: dict[str, Any]) -> dict[str, Any] | None:
+    """Load a GPT advisory only when it is bound to the current ledger bytes."""
+    if not HARNESS_GPT_REVIEW_PATH.exists() and not HARNESS_GPT_REVIEW_DIAGRAM_PATH.exists():
+        return None
+    if not HARNESS_GPT_REVIEW_PATH.exists() or not HARNESS_GPT_REVIEW_DIAGRAM_PATH.exists():
+        raise SystemExit("GPT harness review JSON and Mermaid artifacts must be published together")
+    payload = load_json(HARNESS_GPT_REVIEW_PATH)
+    expected_digest = normalized_text_sha256(HARNESS_COMPARISON_PATH)
+    if payload.get("analysis_sha256") != expected_digest:
+        raise SystemExit(
+            "stale GPT harness review: analysis_sha256 does not match latest.json"
+        )
+    review = payload.get("review")
+    required = {
+        "recommended_default",
+        "confidence",
+        "evidence",
+        "risks",
+        "next_matched_experiment",
+        "proposed_change",
+    }
+    if not isinstance(review, dict) or required - set(review):
+        raise SystemExit("GPT harness review is missing its required advisory fields")
+    if any(
+        not isinstance(review.get(key), list)
+        or not review[key]
+        or not all(isinstance(item, str) and item.strip() for item in review[key])
+        for key in ("evidence", "risks")
+    ):
+        raise SystemExit("GPT harness review evidence and risks must be non-empty string lists")
+    if not isinstance(review.get("proposed_change"), str) or not review["proposed_change"].strip():
+        raise SystemExit("GPT harness review proposed change must be a non-empty string")
+    next_experiment = review.get("next_matched_experiment")
+    if not (
+        isinstance(next_experiment, str) and next_experiment.strip()
+    ) and not (
+        isinstance(next_experiment, dict) and bool(next_experiment)
+    ):
+        raise SystemExit("GPT harness next experiment must be a non-empty string or object")
+    if (
+        comparison.get("decision", {}).get("status") == "insufficient-evidence"
+        and review.get("recommended_default") != "retain-current-default"
+    ):
+        raise SystemExit(
+            "GPT harness review cannot choose a winner while matched evidence is insufficient"
+        )
+    diagram = HARNESS_GPT_REVIEW_DIAGRAM_PATH.read_text(encoding="utf-8").strip()
+    if not re.match(r"^(?:flowchart|graph)\s", diagram):
+        raise SystemExit("GPT harness review diagram must be Mermaid flowchart or graph source")
+    payload["diagram"] = diagram
     return payload
 
 
@@ -4794,6 +4859,80 @@ def render_harness_comparison_ledger(page_path: str, comparison: dict[str, Any])
 """
 
 
+def render_harness_gpt_review(
+    page_path: str,
+    comparison: dict[str, Any],
+    artifact: dict[str, Any] | None,
+) -> str:
+    """Render model interpretation separately from deterministic evidence."""
+    if artifact is None:
+        return """
+<section id="gpt-diagnosis">
+  <p class="eyebrow">Optional model interpretation</p>
+  <div class="snapshot-heading"><div><h2>GPT log review has not been generated</h2><p class="section-intro">The deterministic comparison above remains complete. Run the bounded review command only after inspecting the input ledger; no model response is required to keep the hierarchical default.</p></div><span class="status prototype">Awaiting review</span></div>
+</section>"""
+
+    review = artifact["review"]
+    evidence = "".join(f"<li>{html.escape(str(item))}</li>" for item in review["evidence"])
+    risks = "".join(f"<li>{html.escape(str(item))}</li>" for item in review["risks"])
+    next_experiment = review["next_matched_experiment"]
+    if isinstance(next_experiment, dict):
+        next_items = []
+        for key, value in next_experiment.items():
+            label = str(key).replace("_", " ").title()
+            if isinstance(value, list):
+                rendered_value = "<ul>" + "".join(
+                    f"<li>{html.escape(str(item))}</li>" for item in value
+                ) + "</ul>"
+            else:
+                rendered_value = html.escape(str(value))
+            next_items.append(
+                f"<div><dt>{html.escape(label)}</dt><dd>{rendered_value}</dd></div>"
+            )
+        next_experiment_html = (
+            '<dl class="gpt-next-experiment">' + "".join(next_items) + "</dl>"
+        )
+    else:
+        next_experiment_html = f"<p>{html.escape(str(next_experiment))}</p>"
+    decision = comparison["decision"]
+    measured = decision.get("status") == "measured"
+    adoption = "Eligible for human review" if measured else "Hypothesis only · not adopted"
+    caption = (
+        "GPT-proposed internal harness for the next matched experiment; "
+        "the diagram is advisory and does not report a measured winner"
+    )
+    raw_href = source_url("runs/harness-comparison/latest.gpt-review.md")
+    json_href = source_url("runs/harness-comparison/latest.gpt-review.json")
+    diagram_href = source_url("runs/harness-comparison/latest.gpt-review.mmd")
+    return f"""
+<section id="gpt-diagnosis" class="gpt-harness-review">
+  <p class="eyebrow">Model-assisted interpretation · hash-bound to the ledger above</p>
+  <div class="snapshot-heading"><div><h2>GPT diagnosis and candidate internal harness</h2><p class="section-intro">GPT read the deterministic metrics and eligible recent rows, then returned one machine-checked advisory plus an editable architecture diagram. It cannot validate attempts, change evidence labels, or select a winner against the deterministic gate.</p></div>{status_badge('prototype', 'Advisory')}</div>
+  <div class="comparison-decision" role="group" aria-label="GPT harness advisory">
+    <div><span class="level-label">Suggested default</span><strong>{html.escape(str(review['recommended_default']))}</strong></div>
+    <div><span class="level-label">Confidence</span><strong>{html.escape(str(review['confidence']))}</strong></div>
+    <div><span class="level-label">Evidence gate</span><strong>{html.escape(str(decision.get('status', 'unrecorded')).replace('-', ' ').title())}</strong></div>
+    <div><span class="level-label">Adoption status</span><strong>{html.escape(adoption)}</strong></div>
+  </div>
+  <div class="gpt-review-grid">
+    <article><span class="level-label">What the log supports</span><ul>{evidence}</ul></article>
+    <article><span class="level-label">Risks and unknowns</span><ul>{risks}</ul></article>
+  </div>
+  <div class="gpt-review-actions">
+    <article><span class="pipeline-step">A</span><div><span class="level-label">Candidate change</span><p>{html.escape(str(review['proposed_change']))}</p></div></article>
+    <article><span class="pipeline-step">B</span><div><span class="level-label">Next matched experiment</span>{next_experiment_html}</div></article>
+  </div>
+  <figure class="diagram gpt-harness-diagram" id="gpt-harness-diagram" tabindex="0" role="region" aria-label="{html.escape(caption, quote=True)}">
+    <pre class="mermaid" aria-label="{html.escape(caption, quote=True)}">{html.escape(artifact['diagram'])}</pre>
+    <figcaption>{html.escape(caption)} · <a href="{diagram_href}">model-proposed Mermaid source</a></figcaption>
+    <span class="diagram-scroll-hint" data-diagram-scroll-hint hidden>Swipe horizontally or use the left and right arrow keys to read the full diagram <span aria-hidden="true">↔</span></span>
+  </figure>
+  <div class="callout warning"><strong>Interpretation boundary.</strong> This advisory is bound to <code>latest.json</code> by SHA-256. With {len(comparison['matched_experiments'])} valid matched experiments, it retains the current default and proposes only what to test next.</div>
+  <div class="source-links"><a href="{raw_href}">Open GPT review</a><a href="{json_href}">Open parsed advisory JSON</a><a href="{diagram_href}">Open candidate architecture</a></div>
+</section>
+"""
+
+
 def render_sgb_interface_frontier_trace(page_path: str, trace: dict[str, Any]) -> str:
     summary = trace["frontier_summary"]
     target = trace["target_freeze"]
@@ -4840,6 +4979,9 @@ def build_workflow(output: Path, verified: bool, generated_at: str) -> None:
     page_path = "workflow/index.html"
     comparison = load_harness_comparison()
     comparison_ledger = render_harness_comparison_ledger(page_path, comparison)
+    gpt_review = render_harness_gpt_review(
+        page_path, comparison, load_harness_gpt_review(comparison)
+    )
     frontier_trace = render_sgb_interface_frontier_trace(
         page_path, load_sgb_interface_frontier_trace()
     )
@@ -4889,6 +5031,8 @@ def build_workflow(output: Path, verified: bool, generated_at: str) -> None:
 
 {comparison_ledger}
 
+{gpt_review}
+
 {frontier_trace}
 
 <section id="commands">
@@ -4917,7 +5061,7 @@ python3 website/scripts/ide_server.py</code></pre>
   </ul>
 </section>
 """
-    toc = [("workflow", "Workflow"), ("contract", "Contract"), ("roles", "Candidate architecture"), ("comparison-evidence", "Comparison evidence"), ("frozen-frontier-trace", "Frozen frontier"), ("commands", "Gates"), ("failure-policy", "Failure policy")]
+    toc = [("workflow", "Workflow"), ("contract", "Contract"), ("roles", "Candidate architecture"), ("comparison-evidence", "Comparison evidence"), ("gpt-diagnosis", "GPT diagnosis"), ("frozen-frontier-trace", "Frozen frontier"), ("commands", "Gates"), ("failure-policy", "Failure policy")]
     write_page(
         output,
         page_path,

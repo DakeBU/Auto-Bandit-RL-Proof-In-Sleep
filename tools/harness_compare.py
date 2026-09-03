@@ -9,9 +9,11 @@ a default-harness recommendation.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 from collections import defaultdict
+from pathlib import Path
 from typing import Any, Sequence
 
 
@@ -36,6 +38,14 @@ PROGRESS_WEIGHTS = {
     "closed-frontier": 5.0,
     "terminal": 8.0,
 }
+
+
+def normalized_text_sha256(path: Path) -> str:
+    """Hash text content independently of Git's platform line endings."""
+    payload = path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return hashlib.sha256(payload).hexdigest()
+
+
 VERIFIED_STATUSES = {"compiled", "accepted"}
 REVIEWED_STATUSES = VERIFIED_STATUSES | {"blocked", "rejected"}
 ATTEMPT_ROLES = {"lower", "worker"}
@@ -588,9 +598,13 @@ Return:
    and failure diagnosis;
 2. the strongest internal harness pattern supported by the evidence;
 3. one matched next experiment using the same target and route packet;
-4. one Mermaid diagram of the proposed internal harness;
-5. exactly one JSON object with keys `recommended_default`, `confidence`,
+4. exactly one fenced `mermaid` block containing the proposed internal harness;
+5. exactly one fenced `json` object with keys `recommended_default`, `confidence`,
    `evidence`, `risks`, `next_matched_experiment`, and `proposed_change`.
+
+When the deterministic status is `insufficient-evidence`, set
+`recommended_default` to `retain-current-default`; a proposed hybrid remains a
+hypothesis for the next matched experiment, not an adopted scheduler.
 
 ## Deterministic analysis
 
@@ -604,3 +618,67 @@ Return:
 {json.dumps(compact_rows, indent=2, ensure_ascii=False)}
 ```
 """
+
+
+def parse_gpt_review_response(text: str) -> dict[str, Any]:
+    """Extract the bounded JSON verdict and Mermaid proposal from GPT output.
+
+    The raw response remains the provenance artifact.  This parser deliberately
+    accepts only the two fenced, machine-readable blocks requested by the
+    prompt, so free-form prose cannot silently become a scheduler decision.
+    """
+
+    json_blocks = re.findall(r"```json\s*(\{.*?\})\s*```", text, flags=re.IGNORECASE | re.DOTALL)
+    mermaid_blocks = re.findall(
+        r"```mermaid\s*([^`]+?)\s*```", text, flags=re.IGNORECASE | re.DOTALL
+    )
+    if len(json_blocks) != 1:
+        raise ValueError("GPT harness review must contain exactly one fenced JSON object")
+    if len(mermaid_blocks) != 1:
+        raise ValueError("GPT harness review must contain exactly one fenced Mermaid diagram")
+
+    try:
+        review = json.loads(json_blocks[0])
+    except json.JSONDecodeError as error:
+        raise ValueError(f"GPT harness review JSON is invalid: {error}") from error
+    if not isinstance(review, dict):
+        raise ValueError("GPT harness review JSON must be an object")
+
+    required = {
+        "recommended_default",
+        "confidence",
+        "evidence",
+        "risks",
+        "next_matched_experiment",
+        "proposed_change",
+    }
+    missing = sorted(required - set(review))
+    if missing:
+        raise ValueError("GPT harness review JSON is missing: " + ", ".join(missing))
+    if review["recommended_default"] not in {
+        "hierarchical",
+        "master-worker",
+        "retain-current-default",
+    }:
+        raise ValueError("GPT harness review recommends an unknown harness")
+    for key in ("evidence", "risks"):
+        if not isinstance(review[key], list) or not all(
+            isinstance(item, str) and item.strip() for item in review[key]
+        ):
+            raise ValueError(f"GPT harness review field {key!r} must be a non-empty string list")
+    if not isinstance(review["proposed_change"], str) or not review["proposed_change"].strip():
+        raise ValueError("GPT harness review proposed_change must be a non-empty string")
+    next_experiment = review["next_matched_experiment"]
+    if not (
+        isinstance(next_experiment, str) and next_experiment.strip()
+    ) and not (
+        isinstance(next_experiment, dict) and bool(next_experiment)
+    ):
+        raise ValueError(
+            "GPT harness review next_matched_experiment must be a non-empty string or object"
+        )
+
+    mermaid = mermaid_blocks[0].strip()
+    if not re.match(r"^(?:flowchart|graph)\s", mermaid):
+        raise ValueError("GPT harness Mermaid proposal must start with flowchart or graph")
+    return {"review": review, "mermaid": mermaid + "\n"}

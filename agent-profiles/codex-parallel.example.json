@@ -1,8 +1,8 @@
 {
-  "master": "codex exec --cd {root} < {prompt}",
-  "worker": "codex exec --cd {root} < {prompt}",
-  "upper": "codex exec --cd {root} < {prompt}",
-  "middle": "codex exec --cd {root} < {prompt}",
-  "lower": "codex exec --cd {root} < {prompt}",
-  "reviewer": "codex exec --cd {root} < {prompt}"
+  "master": "codex exec --ignore-user-config --ephemeral --sandbox read-only --cd {root} - < {prompt}",
+  "worker": "codex exec --ignore-user-config --ephemeral --sandbox workspace-write --cd {root} - < {prompt}",
+  "upper": "codex exec --ignore-user-config --ephemeral --sandbox workspace-write --cd {root} - < {prompt}",
+  "middle": "codex exec --ignore-user-config --ephemeral --sandbox workspace-write --cd {root} - < {prompt}",
+  "lower": "codex exec --ignore-user-config --ephemeral --sandbox workspace-write --cd {root} - < {prompt}",
+  "reviewer": "codex exec --ignore-user-config --ephemeral --sandbox read-only --cd {root} - < {prompt}"
 }

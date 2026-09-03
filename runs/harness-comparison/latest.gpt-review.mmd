@@ -1,0 +1,12 @@
+flowchart TD
+    A["Frozen target + route packet"] --> B["Light planner"]
+    B --> C1["Worker: route A"]
+    B --> C2["Worker: route B"]
+    B --> C3["Worker: route C"]
+    C1 --> D["Evidence-only synthesis"]
+    C2 --> D
+    C3 --> D
+    D --> E["Independent reviewer gate"]
+    E --> F{"Lean + target fidelity"}
+    F -->|accepted| G["Record validated progress"]
+    F -->|rejected| H["Record diagnostics only"]
