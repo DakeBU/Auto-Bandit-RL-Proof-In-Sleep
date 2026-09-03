@@ -431,7 +431,9 @@ def check_current_evidence_surfaces(
         "latest.prompt.md",
         "harness_self_comparison.md",
         "What the harness has actually tried",
-        "no eligible experiment has been recorded",
+        "Observed log coverage",
+        "cannot enter the matched table",
+        "no matched experiment has entered the comparison table",
         "hashed route packet",
         "reviewer-owned verdict",
     ):
@@ -443,6 +445,7 @@ def check_current_evidence_surfaces(
         ".current-snapshot",
         ".comparison-decision",
         ".harness-attempt-panel",
+        ".harness-observed-grid",
         ".status.prototype",
         ".declaration-content .lean-code",
         ".code-toolbar",
@@ -1383,13 +1386,7 @@ def main() -> int:
         "finite-horizon-rl",
         "frontier",
     }
-    worked_example_chapters = {
-        "etc",
-        "ucb",
-        "oful",
-        "exp3",
-        "finite-horizon-rl",
-    }
+    worked_example_chapters = chapter_slugs
     readings_by_slug = {reading.get("slug"): reading for reading in readings_source}
     for chapter_slug in worked_example_chapters:
         if not readings_by_slug.get(chapter_slug, {}).get("worked_example"):
@@ -1542,10 +1539,15 @@ def main() -> int:
             errors.append("chapters/ucb/index.html: closest textbook UCB route must precede extensions")
 
     for chapter_slug, title in (
+        ("foundations", "Regroup one six-round action trace by arm"),
+        ("probability", "Spend one confidence budget across six events"),
         ("etc", "Follow one two-arm explore–then–commit run"),
         ("oful", "Why an unexplored direction can beat a better estimate"),
+        ("thompson", "Read one Thompson decision as probability matching"),
         ("exp3", "One EXP3 update from a single observed loss"),
+        ("tsallis", "See estimator noise and gap credit in one round"),
         ("finite-horizon-rl", "One optimistic Bellman backup in a tiny MDP"),
+        ("frontier", "Follow one theorem route without promoting an open terminal"),
     ):
         example_page = output / "chapters" / chapter_slug / "index.html"
         if not example_page.exists():

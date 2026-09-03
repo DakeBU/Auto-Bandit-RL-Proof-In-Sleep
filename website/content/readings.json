@@ -41,6 +41,32 @@
           {"title": "Regroup the sum", "detail": "Replace the sum over time by one gap-times-count term per arm."}
         ]
       },
+      "worked_example": {
+        "title": "Regroup one six-round action trace by arm",
+        "intro": "Take three arms with means 0.7, 0.5, and 0.6. Arm 1 is optimal. A short deterministic trace is enough to see the regret decomposition before any probability enters.",
+        "steps": [
+          {
+            "title": "Write the chronological actions",
+            "detail": "The order records what happened, but the pathwise pseudo-regret only needs how often each gap was paid.",
+            "math": "(A_1,\\ldots,A_6)=(1,3,2,3,3,1).",
+            "fallback": "Across six rounds the selected arms are 1, 3, 2, 3, 3, and 1."
+          },
+          {
+            "title": "Count each arm and compute its gap",
+            "detail": "Arm 1 is optimal, arm 2 is worse by 0.2, and arm 3 is worse by 0.1.",
+            "math": "(N_1,N_2,N_3)=(2,1,3),\\qquad (\\Delta_1,\\Delta_2,\\Delta_3)=(0,0.2,0.1).",
+            "fallback": "The pull counts are 2, 1, and 3, while the corresponding gaps are 0, 0.2, and 0.1."
+          },
+          {
+            "title": "Regroup time into gap times count",
+            "detail": "The two optimal-arm pulls cost zero; the single arm-2 pull and three arm-3 pulls contribute the entire value.",
+            "math": "\\bar R_6=2\\cdot0+1\\cdot0.2+3\\cdot0.1=0.5.",
+            "fallback": "The pathwise pseudo-regret is two times zero plus one times 0.2 plus three times 0.1, which equals 0.5."
+          }
+        ],
+        "takeaway": "The identity is deterministic bookkeeping: once an algorithm proof controls every suboptimal pull count, multiplying by gaps and summing gives pseudo-regret.",
+        "boundary": "This trace is an arithmetic illustration, not sampled data or an expected-regret experiment. The exact Lean theorem below uses rational model gaps and finite action traces."
+      },
       "source_theorem": {
         "label": "Lemma 4.5 (regret decomposition)",
         "pages": "online pp. 62–63",
@@ -90,6 +116,32 @@
           {"title": "Allocate confidence", "detail": "Assign a finite, geometric, or telescoping share δ_i to every arm and time."},
           {"title": "Join the events", "detail": "Use a union bound to obtain one good event consumed by an algorithm proof."}
         ]
+      },
+      "worked_example": {
+        "title": "Spend one confidence budget across six events",
+        "intro": "Suppose two arms are inspected at three checkpoints and the total allowed failure probability is delta = 0.05. The union-bound step is visible without hiding the accounting inside an algorithm.",
+        "steps": [
+          {
+            "title": "Name the six bad events",
+            "detail": "Each event says that one arm's empirical estimate misses its confidence radius at one checkpoint.",
+            "math": "E_{a,j}=\\{\\lvert\\widehat\\mu_{a,j}-\\mu_a\\rvert>r_{a,j}\\},\\qquad a\\in\\{1,2\\},\\ j\\in\\{1,2,3\\}.",
+            "fallback": "There is one deviation event for each of two arms at each of three checkpoints, for six events in total."
+          },
+          {
+            "title": "Give every event an explicit share",
+            "detail": "An equal schedule assigns delta divided by six to each fixed-index tail bound.",
+            "math": "\\delta_{a,j}=\\frac{0.05}{6}=\\frac1{120},\\qquad \\Pr(E_{a,j})\\le\\frac1{120}.",
+            "fallback": "Each event receives failure budget one over 120, and its fixed-index tail probability is bounded by that share."
+          },
+          {
+            "title": "Join the events once",
+            "detail": "No independence is needed for the union bound; adding the six shares preserves the declared total budget.",
+            "math": "\\Pr\\!\\left(\\bigcup_{a=1}^{2}\\bigcup_{j=1}^{3}E_{a,j}\\right)\\le\\sum_{a,j}\\Pr(E_{a,j})\\le6\\cdot\\frac1{120}=0.05.",
+            "fallback": "The chance that any of the six deviations occurs is at most the sum of their probabilities, which is 0.05."
+          }
+        ],
+        "takeaway": "A simultaneous good event is a budgeted collection of fixed-index facts. Finite, geometric, and telescoping schedules differ in how they distribute delta, not in the final union-bound logic.",
+        "boundary": "The event probabilities are illustrative inputs to the union bound. The compiled concentration declarations below specify the MGF, measurability, filtration, and index assumptions that justify each tail estimate."
       },
       "source_theorem": {
         "label": "Corollary 5.5 (sub-Gaussian tail)",
@@ -500,6 +552,32 @@
           "relationship": "BanditRLlib constructs a canonical posterior kernel and a recursive stationary latent-arm-stream trajectory. Its selector carries an explicit pointwise mean-optimality contract, and its compiled endpoint is Bayesian rather than a universal frequentist theorem for every Thompson variant."
         }
       },
+      "worked_example": {
+        "title": "Read one Thompson decision as probability matching",
+        "intro": "After the current history, suppose the posterior says arm 1 is optimal with probability 0.7 and arm 2 with probability 0.3. Thompson sampling turns that uncertainty directly into its next-action law.",
+        "steps": [
+          {
+            "title": "Start from posterior uncertainty",
+            "detail": "The probabilities describe uncertainty about the true optimal arm under the Bayesian model, not empirical-mean scores.",
+            "math": "\\Pr(A^\\star=1\\mid H_{t-1})=0.7,\\qquad \\Pr(A^\\star=2\\mid H_{t-1})=0.3.",
+            "fallback": "Given the previous history, the posterior probability that arm 1 is optimal is 0.7 and that arm 2 is optimal is 0.3."
+          },
+          {
+            "title": "Sample a plausible environment",
+            "detail": "If this posterior draw makes arm 2 optimal, the documented selector chooses arm 2 even though arm 1 is more likely to be truly optimal.",
+            "math": "\\widetilde\\theta_t\\sim\\Pi_t,\\qquad \\operatorname*{arg\\,max}_a\\mu_a(\\widetilde\\theta_t)=2\\Longrightarrow A_t=2.",
+            "fallback": "A sampled environment is drawn from the posterior; in this illustrative draw arm 2 is best, so arm 2 is selected."
+          },
+          {
+            "title": "Recover the action probabilities",
+            "detail": "Across posterior draws, applying the same optimal-arm rule reproduces the posterior law of the true optimal arm.",
+            "math": "\\Pr(A_t=1\\mid H_{t-1})=0.7,\\qquad \\Pr(A_t=2\\mid H_{t-1})=0.3.",
+            "fallback": "Conditioned on the history, Thompson sampling chooses arms 1 and 2 with probabilities 0.7 and 0.3."
+          }
+        ],
+        "takeaway": "Thompson sampling explores because posterior uncertainty remains: a 30 percent chance that arm 2 is optimal becomes a 30 percent chance of sampling it.",
+        "boundary": "The numbers specify one hypothetical posterior state and do not perform a Bayesian update. The exact compiled route below constructs the posterior kernel and proves probability matching under its stated latent-environment and tie-breaking contracts."
+      },
       "proof_bridge": {
         "title": "Why posterior sampling can be analyzed through probability matching",
         "summary": "The analysis uses the fact that the action selected from a posterior sample and the truly optimal action have the same conditional distribution given the visible history.",
@@ -726,6 +804,32 @@
           ],
           "relationship": "The source paper distinguishes importance-weighted and reduced-variance estimators. BanditRLlib compiles a scheduled half-Tsallis route plus IID, corrupted, drifting, and oracle-restart consumers; these source-aligned local theorems do not claim every paper-sharp regime verbatim."
         }
+      },
+      "worked_example": {
+        "title": "See estimator noise and gap credit in one round",
+        "intro": "At one two-arm round, suppose the FTRL distribution is p = (0.25, 0.75), arm 1 is sampled, and its observed loss is 0.5. The arithmetic exposes the two quantities that the regularizer must reconcile.",
+        "steps": [
+          {
+            "title": "Importance-weight the observed coordinate",
+            "detail": "Only arm 1 is observed, so its loss is divided by the probability with which it was sampled.",
+            "math": "A_t=1,\\quad \\ell_t(A_t)=0.5,\\qquad \\widehat\\ell_t=(0.5/0.25,0)=(2,0).",
+            "fallback": "Arm 1 is sampled with probability 0.25 and loss 0.5, producing estimated loss vector (2, 0)."
+          },
+          {
+            "title": "Notice the rare-arm variance cost",
+            "detail": "A small sampling probability makes the realized estimate large; its conditional second moment carries the inverse-probability geometry.",
+            "math": "\\mathbb E_t[\\widehat\\ell_t(1)^2]=\\frac{0.5^2}{0.25}=1.",
+            "fallback": "The conditional second moment of arm 1's importance-weighted estimate is 0.25 divided by 0.25, which equals 1."
+          },
+          {
+            "title": "Compare the stochastic gap credit",
+            "detail": "If arm 2 is optimal and arm 1 has mean-loss gap 0.2, the same probability mass contributes a smaller but structured self-bounding term.",
+            "math": "\\Delta_1p_t(1)=0.2\\cdot0.25=0.05.",
+            "fallback": "With gap 0.2, sampling arm 1 with probability 0.25 contributes instantaneous expected gap cost 0.05."
+          }
+        ],
+        "takeaway": "The estimator creates an inverse-probability noise charge, while stochastic gaps price suboptimal probability mass. Half-Tsallis curvature is useful because its stability geometry can connect these two scales.",
+        "boundary": "This is a one-round calculation, not a derivation of Tsallis-INF or a compiled general curvature-noise-gap calculus. The theorem cards below remain authoritative for schedules, estimators, constants, and regimes."
       },
       "proof_bridge": {
         "title": "Where curvature, estimator noise, and stochastic gaps meet",
@@ -973,6 +1077,32 @@
           ],
           "relationship": "BanditRLlib compiles the source Theorem-1 endpoint for its bounded two-arm fixed-IID trajectory and a direct Corollary-1 consumer. Theorem 2's phase trigger/no-return/ballot assembly and Theorems 3–4 remain open; this pseudocode does not promote those terminals."
         }
+      },
+      "worked_example": {
+        "title": "Follow one theorem route without promoting an open terminal",
+        "intro": "The SGB Theorem-2 audit is a useful example of how the Frontier page separates a paper target, compiled infrastructure, and the first genuinely missing mathematical bridge.",
+        "steps": [
+          {
+            "title": "Freeze the source target",
+            "detail": "The theorem concerns the supercritical two-arm regime and a polynomial regret lower bound, so a finite-horizon helper cannot replace the endpoint.",
+            "math": "\\eta>\\lambda_\\Delta\\quad\\Longrightarrow\\quad R_T^{\\mathrm{SGB}}=\\widetilde\\Omega\\!\\left(T^{1-(1+\\varepsilon)\\lambda_\\Delta/\\eta}\\right).",
+            "fallback": "Above the critical learning rate, the source target is a polynomial regret lower bound up to logarithmic factors."
+          },
+          {
+            "title": "Keep the compiled bridge at its real scope",
+            "detail": "Current Lean layers can transport a missing-pull phase into a terminal low-count event and charge any mass that already exists against finite-horizon expected pseudo-regret.",
+            "math": "E_{\\mathrm{missing}}\\subseteq\\{N_{a^\\star}(T)<m\\},\\qquad \\Delta(T-m)\\Pr(E_{\\mathrm{missing}})\\le\\mathbb E[\\bar R_T].",
+            "fallback": "A missing-pull event implies a low terminal optimal-arm count, and any probability mass of that event yields a finite-horizon regret charge."
+          },
+          {
+            "title": "Name what is still absent",
+            "detail": "The current route does not prove that the missing branch has positive mass, nor the all-present fixed-cutoff trigger, future no-return law, ballot probability, or asymptotic assembly.",
+            "math": "\\Pr(E_{\\mathrm{missing}})>0\\quad\\text{is not a compiled consequence of the current route.}",
+            "fallback": "Positive missing-event probability is not proved by the current compiled route."
+          }
+        ],
+        "takeaway": "A growing proof graph is scientific progress only when it closes a named interface without changing the target. Here the graph has advanced, but the source Theorem-2 terminal remains blocked.",
+        "boundary": "The middle inequality is a teaching-level summary of the compiled finite-horizon charge and omits its exact indexing and nonnegativity hypotheses. Use the linked Lean declarations and source-contract cards for the authoritative statement."
       },
       "source_theorem": {
         "label": "Definitions 3.1–3.3 and Lemmas 3.1–3.4 (succinct-support geometry)",

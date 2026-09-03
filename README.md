@@ -22,11 +22,11 @@ This repository has two connected contributions:
 
 ## 📰 News
 
-- **2026-09 — Harness self-comparison.** ABRL can run hierarchical and master–worker arms on one hashed route packet, join executions to separate reviewer verdicts, draw the attempt graph, and ask GPT for an advisory diagnosis; the current ledger still has no valid matched pair and declares no winner.
-- **2026-09 — Textbook and theorem ports.** The ten-chapter Book Map, Part-IV Chapters 13–17 spine, and source-frozen paper audits expose compiled endpoints and named open bridges without relabeling partial work as complete.
-- **2026-09 — SGB missing-pull regret consumer.** The finite phase split now feeds compiled missing-pull-to-terminal-count, probability-transport, and finite-horizon expected-regret theorems; the source phase trigger, positive missing mass, future/no-return law, ballot bound, asymptotic assembly, and Theorem 2 remain open.
-- **2026-08 — Lean graph.** BanditRLwiki now maps settings, declarations, dependencies, proof routes, and explicit frontier leaves.
-- **2026-08 — Live workspace.** The local experimental formalization adapter retrieves current declarations, checks candidates, and exports review packets without claiming a public online prover.
+- **2026-09 — Harness self-comparison.** Structured logs can compare hierarchical and master–worker runs and prepare a bounded GPT diagnosis; zero valid matched pairs means no winner is claimed.
+- **2026-09 — Textbook spine.** Ten teaching chapters and Part-IV Chapters 13–17 now link source pages, algorithms, theorem statements, Lean evidence, and named gaps.
+- **2026-09 — SGB frontier.** The finite missing-pull regret consumer compiles, while the source phase trigger and Theorem 2 terminal remain open.
+- **2026-08 — Lean graph.** The generated graph connects settings, declarations, dependencies, proof routes, and open frontier leaves.
+- **2026-08 — Live workspace.** The local experimental adapter retrieves declarations, checks candidates, and exports review packets; Pages is not an online prover.
 - **2026-08 — BanditRLlib.** The public Lean library and Blueprint-style teaching/community website were established from accepted ABRL work.
 
 <details>
