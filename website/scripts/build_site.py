@@ -49,7 +49,7 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20260903c"
+ASSET_VERSION = "20260903d"
 CATALOG_PAGE_SIZE = 20
 MILESTONE_PAGE_SIZE = 12
 MODULE_PAGE_SIZE = 30
@@ -214,8 +214,8 @@ def render_math_statement(label: str, source: str, fallback: str) -> str:
     """Render MathJax progressively and retain readable text if its CDN is unavailable."""
     normalized = normalize_math_source(source)
     return (
-        '<div class="math-statement" data-math-statement tabindex="0" '
-        f'role="region" aria-label="{html.escape(label)}">'
+        '<div class="math-statement" data-math-statement '
+        f'data-scroll-label="{html.escape(label, quote=True)}">'
         f'<strong>{html.escape(label)}.</strong> '
         '<span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span>'
         f'<span class="math-fallback">{html.escape(fallback)}</span>'
@@ -2147,6 +2147,17 @@ def build_implementation_map(
             separators=(",", ":"),
         ),
     )
+    milestone_status_counts = Counter(result["status"] for result in results)
+    open_milestone_statuses = ("partial", "blocked", "planned", "stated")
+    open_milestone_count = sum(
+        milestone_status_counts.get(status, 0) for status in open_milestone_statuses
+    )
+    milestone_status_overview = "".join(
+        '<div><dt>'
+        + status_badge(status)
+        + f'</dt><dd><strong>{milestone_status_counts.get(status, 0)}</strong> routes</dd></div>'
+        for status in ("compiled", "partial", "blocked", "planned")
+    )
     body = f"""
 <section class="hero" id="map">
   <p class="eyebrow">Mathematics ↔ prose ↔ Lean</p>
@@ -2157,6 +2168,8 @@ def build_implementation_map(
 <section id="milestones">
   <h2>Mathematical milestone map</h2>
   <p class="section-intro">Start with the mathematical claim and status. Open a row's evidence only when you need exact declarations, dependencies, and the remaining boundary.</p>
+  <dl class="milestone-status-overview" aria-label="Milestone status totals">{milestone_status_overview}</dl>
+  <div class="milestone-open-work"><p><strong>{open_milestone_count} routes are not terminal.</strong> {milestone_status_counts.get('partial', 0)} partial · {milestone_status_counts.get('blocked', 0)} blocked · {milestone_status_counts.get('planned', 0)} planned. These remain visible evidence, not completed results.</p><button class="button compact" type="button" data-milestone-open aria-pressed="false" hidden>Show open work</button></div>
   <div class="filter-bar" data-milestone-filters>
     <div class="filter-field grow"><label for="milestone-query">Milestone, concept, or chapter</label><input id="milestone-query" data-milestone-query type="search" placeholder="e.g. UCBVI, posterior, all-time"></div>
     <div class="filter-field"><label for="milestone-status">Status</label><select id="milestone-status" data-milestone-status><option value="">All statuses</option>{''.join(f'<option value="{status}">{STATUS_LABELS.get(status, status.title())}</option>' for status in ('compiled', 'partial', 'planned', 'blocked', 'stated'))}</select></div>
@@ -2565,12 +2578,18 @@ def build_chapters(
 
 {secondary_chapter_pager}
 """
+        flow_kind = str(reading.get("algorithm", {}).get("kind", "algorithm")).strip().lower()
+        flow_label = {
+            "bookkeeping flow": "Bookkeeping flow",
+            "proof flow": "Proof flow",
+            "algorithm": "Algorithm flow",
+        }.get(flow_kind, "Algorithm flow")
         toc = [
             ("chapter", "Chapter"),
             ("orientation", "Orientation"),
             ("source-guide", "Sources"),
             ("notation", "Notation"),
-            ("algorithm", "Algorithm flow"),
+            ("algorithm", flow_label),
         ]
         if reading.get("proof_bridge"):
             toc.append(("proof-bridge", "Why the proof works"))

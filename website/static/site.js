@@ -97,31 +97,41 @@
   syncSidebarAccessibility(false);
 
   const navGroups = [...document.querySelectorAll("[data-nav-group]")];
-  const navStateKey = "abrl-nav-groups-v2";
-  let navGroupState = {};
+  const navStateKey = `abrl-nav-group-v3:${window.location.pathname}`;
+  let preferredNavGroup = "";
   try {
-    navGroupState = JSON.parse(localStorage.getItem(navStateKey) || "{}") || {};
+    preferredNavGroup = sessionStorage.getItem(navStateKey) || "";
   } catch (_error) {
-    navGroupState = {};
+    preferredNavGroup = "";
   }
   let syncingNavGroups = false;
   const syncNavGroups = () => {
     syncingNavGroups = true;
+    const activeGroup = navGroups.find((group) => group.dataset.navGroupActive === "true");
+    const visibleGroup = navGroups.find((group) => group.dataset.navGroup === preferredNavGroup)
+      || activeGroup
+      || navGroups[0];
     navGroups.forEach((group) => {
-      const key = group.dataset.navGroup;
-      const saved = typeof navGroupState[key] === "boolean" ? navGroupState[key] : null;
-      const active = group.dataset.navGroupActive === "true";
-      const defaultOpen = sidebarMedia.matches && key === "start";
-      group.open = active || (saved ?? defaultOpen);
+      group.open = group === visibleGroup;
     });
     syncingNavGroups = false;
   };
   navGroups.forEach((group) => {
     group.addEventListener("toggle", () => {
       if (syncingNavGroups) return;
-      navGroupState[group.dataset.navGroup] = group.open;
+      if (group.open) {
+        syncingNavGroups = true;
+        navGroups.forEach((other) => {
+          if (other !== group) other.open = false;
+        });
+        syncingNavGroups = false;
+        preferredNavGroup = group.dataset.navGroup || "";
+      } else if (preferredNavGroup === group.dataset.navGroup) {
+        preferredNavGroup = "";
+      }
       try {
-        localStorage.setItem(navStateKey, JSON.stringify(navGroupState));
+        if (preferredNavGroup) sessionStorage.setItem(navStateKey, preferredNavGroup);
+        else sessionStorage.removeItem(navStateKey);
       } catch (_error) {
         // The native details interaction remains usable when storage is unavailable.
       }
@@ -493,6 +503,7 @@
     const milestoneQuery = document.querySelector("[data-milestone-query]");
     const milestoneStatus = document.querySelector("[data-milestone-status]");
     const milestoneChapter = document.querySelector("[data-milestone-chapter]");
+    const milestoneOpen = document.querySelector("[data-milestone-open]");
     const milestoneCount = document.querySelector("[data-milestone-count]");
     const milestoneMore = document.querySelector("[data-milestone-more]");
     const milestonePageSize = Number(milestoneList.dataset.milestonePageSize || 20);
@@ -523,9 +534,11 @@
       const terms = (milestoneQuery?.value || "").trim().toLowerCase().split(/\s+/).filter(Boolean);
       const status = milestoneStatus?.value || "";
       const chapter = milestoneChapter?.value || "";
+      const openOnly = milestoneOpen?.getAttribute("aria-pressed") === "true";
+      const openStatuses = new Set(["partial", "blocked", "planned", "stated"]);
       const filtered = milestoneItems.filter((item) =>
         terms.every((term) => (item.search || "").includes(term))
-        && (!status || item.status === status)
+        && (openOnly ? openStatuses.has(item.status) : (!status || item.status === status))
         && (!chapter || item.chapter === chapter)
       );
       const visible = filtered.slice(0, milestoneVisibleLimit);
@@ -553,6 +566,23 @@
       control?.addEventListener("input", resetAndRenderMilestones);
       control?.addEventListener("change", resetAndRenderMilestones);
     });
+    const disableOpenMilestoneFilter = () => {
+      if (milestoneOpen?.getAttribute("aria-pressed") === "true") {
+        milestoneOpen.setAttribute("aria-pressed", "false");
+        milestoneOpen.textContent = "Show open work";
+        resetAndRenderMilestones();
+      }
+    };
+    milestoneStatus?.addEventListener("input", disableOpenMilestoneFilter);
+    milestoneStatus?.addEventListener("change", disableOpenMilestoneFilter);
+    milestoneOpen?.addEventListener("click", () => {
+      const showOpen = milestoneOpen.getAttribute("aria-pressed") !== "true";
+      milestoneOpen.setAttribute("aria-pressed", String(showOpen));
+      milestoneOpen.textContent = showOpen ? "Show all routes" : "Show open work";
+      if (showOpen && milestoneStatus) milestoneStatus.value = "";
+      resetAndRenderMilestones();
+    });
+    if (milestoneOpen) milestoneOpen.hidden = false;
     milestoneMore?.addEventListener("click", () => {
       milestoneVisibleLimit += milestonePageSize;
       loadMilestones().then(renderMilestones).catch(() => {
@@ -566,6 +596,8 @@
       if (!fragmentId || document.getElementById(fragmentId)) return;
       loadMilestones().then((items) => {
         if (!items.some((item) => item.id === fragmentId)) return;
+        disableOpenMilestoneFilter();
+        if (milestoneStatus) milestoneStatus.value = "";
         milestoneVisibleLimit = items.length;
         renderMilestones();
         openDeclarationTarget();
@@ -718,11 +750,35 @@
         if (descriptions.size) region.setAttribute("aria-describedby", [...descriptions].join(" "));
         else region.removeAttribute("aria-describedby");
       }
-      if (!isScrollable) return;
-      if (!region.hasAttribute("tabindex")) region.tabIndex = 0;
-      if (!region.hasAttribute("role")) region.setAttribute("role", "region");
+      if (!isScrollable) {
+        if (region.dataset.scrollFocusAuto === "true") {
+          region.removeAttribute("tabindex");
+          delete region.dataset.scrollFocusAuto;
+        }
+        if (region.dataset.scrollRoleAuto === "true") {
+          region.removeAttribute("role");
+          delete region.dataset.scrollRoleAuto;
+        }
+        if (region.dataset.scrollAriaLabelAuto === "true") {
+          region.removeAttribute("aria-label");
+          delete region.dataset.scrollAriaLabelAuto;
+        }
+        return;
+      }
+      if (!region.hasAttribute("tabindex")) {
+        region.tabIndex = 0;
+        region.dataset.scrollFocusAuto = "true";
+      }
+      if (!region.hasAttribute("role")) {
+        region.setAttribute("role", "region");
+        region.dataset.scrollRoleAuto = "true";
+      }
       if (!region.hasAttribute("aria-label")) {
-        region.setAttribute("aria-label", "Horizontally scrollable content");
+        region.setAttribute(
+          "aria-label",
+          region.dataset.scrollLabel || "Horizontally scrollable content",
+        );
+        region.dataset.scrollAriaLabelAuto = "true";
       }
     });
   };
