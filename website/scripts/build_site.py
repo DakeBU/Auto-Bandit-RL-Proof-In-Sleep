@@ -49,7 +49,7 @@ PAPER_TITLE = (
 PRIMARY_TEXTBOOK_TITLE = "Bandit Algorithms"
 PRIMARY_TEXTBOOK_AUTHORS = "Tor Lattimore and Csaba Szepesvári"
 PRIMARY_TEXTBOOK_URL = "https://tor-lattimore.com/downloads/book/book.pdf"
-ASSET_VERSION = "20260903d"
+ASSET_VERSION = "20260903e"
 CATALOG_PAGE_SIZE = 20
 MILESTONE_PAGE_SIZE = 12
 MODULE_PAGE_SIZE = 30
@@ -1432,6 +1432,15 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
         theorem_cards = []
         for theorem in theorems:
             contract = theorem.get("contract", {})
+            local_status = theorem.get("local_status")
+            local_status_html = ""
+            if local_status:
+                local_status_html = (
+                    '<div class="source-route-status">'
+                    + status_badge(local_status["status"], local_status["label"])
+                    + f'<span>{html.escape(local_status["boundary"])}</span>'
+                    + "</div>"
+                )
             contract_html = ""
             if contract:
                 contract_order = (
@@ -1454,6 +1463,7 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
             theorem_card = f"""
 <article class="source-theorem-card">
   <div class="source-theorem-heading"><div><span class="panel-kicker">Source theorem · faithful restatement</span><h3>{html.escape(theorem['label'])}</h3></div><a href="{html.escape(paged_source_url(theorem), quote=True)}">Original at {html.escape(theorem['pages'])} ↗</a></div>
+  {local_status_html}
   <p>{html.escape(theorem['plain'])}</p>
   {contract_html}
   {render_math_statement('Source mathematical statement', theorem['math'], theorem['fallback'])}
@@ -1461,9 +1471,19 @@ def render_reading_guide(page_path: str, chapter: dict[str, Any], reading: dict[
   <p class="copyright-note">The mathematical content is restated in this site's notation; wording is ours. See {html.escape(theorem['pages'])} in the linked source for the original statement and full assumptions.</p>
 </article>"""
             if len(theorems) > 1:
+                summary_meta = (
+                    '<span class="source-route-summary-meta">'
+                    + (
+                        status_badge(local_status["status"], local_status["label"])
+                        if local_status
+                        else ""
+                    )
+                    + f'<span>{html.escape(theorem["pages"])}</span>'
+                    + '<span aria-hidden="true">＋</span></span>'
+                )
                 theorem_cards.append(f"""
 <details class="source-theorem-disclosure">
-  <summary><span><span class="panel-kicker">Source route</span><strong>{html.escape(theorem['label'])}</strong></span><span>{html.escape(theorem['pages'])} <span aria-hidden="true">＋</span></span></summary>
+  <summary><span><span class="panel-kicker">Source route</span><strong>{html.escape(theorem['label'])}</strong></span>{summary_meta}</summary>
   {theorem_card}
 </details>""")
             else:
@@ -1505,6 +1525,11 @@ def render_chapter_compass(page_path: str, chapter: dict[str, Any], reading: dic
     primary = reading["primary"]
     algorithm = reading["algorithm"]
     theorem_count = int(bool(reading.get("source_theorem"))) + len(reading.get("source_theorems", []))
+    example_note = (
+        " Includes a three-step worked example."
+        if reading.get("worked_example")
+        else ""
+    )
     theorem_note = (
         f"{theorem_count} source theorem restatement{'s' if theorem_count != 1 else ''}, with assumptions and original links."
         if theorem_count
@@ -1513,7 +1538,7 @@ def render_chapter_compass(page_path: str, chapter: dict[str, Any], reading: dic
     return f"""
 <nav class="chapter-compass" data-chapter-compass aria-label="Chapter reading order">
   <a href="#orientation"><span class="chapter-compass-step">01 · Orient</span><strong>What you need</strong><small>{len(chapter['learning_goals'])} learning goals and the intended reader.</small></a>
-  <a href="#source-guide"><span class="chapter-compass-step">02 · Learn</span><strong>{html.escape(algorithm['title'])}</strong><small>{html.escape(primary['sections'])} · {html.escape(primary['pages'])}. {html.escape(theorem_note)}</small></a>
+  <a href="#source-guide"><span class="chapter-compass-step">02 · Learn</span><strong>{html.escape(algorithm['title'])}</strong><small>{html.escape(primary['sections'])} · {html.escape(primary['pages'])}. {html.escape(theorem_note + example_note)}</small></a>
   <a href="#teaching-notes"><span class="chapter-compass-step">03 · Verify</span><strong>Mathematics ↔ Lean</strong><small>Read intuition and proof structure, then open the exact compiled declaration.</small></a>
 </nav>"""
 
@@ -5032,6 +5057,25 @@ def validate_readings(chapters: list[dict[str, Any]], readings: list[dict[str, A
                 normalized = normalize_math_source(step["math"])
                 if normalized.count(r"\(") != normalized.count(r"\)") or normalized.count(r"\[") != normalized.count(r"\]"):
                     raise SystemExit(f"reading {reading['slug']} proof bridge has unbalanced mathematical delimiters")
+        worked_example = reading.get("worked_example")
+        if worked_example:
+            example_steps = worked_example.get("steps", [])
+            if (
+                not str(worked_example.get("title", "")).strip()
+                or not str(worked_example.get("intro", "")).strip()
+                or not str(worked_example.get("takeaway", "")).strip()
+                or not str(worked_example.get("boundary", "")).strip()
+                or not isinstance(example_steps, list)
+                or not 3 <= len(example_steps) <= 5
+            ):
+                raise SystemExit(f"reading {reading['slug']} has an incomplete worked example")
+            for step in example_steps:
+                required = ("title", "detail", "math", "fallback")
+                if any(not str(step.get(key, "")).strip() for key in required):
+                    raise SystemExit(f"reading {reading['slug']} has an incomplete worked-example step")
+                normalized = normalize_math_source(step["math"])
+                if normalized.count(r"\(") != normalized.count(r"\)") or normalized.count(r"\[") != normalized.count(r"\]"):
+                    raise SystemExit(f"reading {reading['slug']} worked example has unbalanced mathematical delimiters")
         theorems = ([reading["source_theorem"]] if reading.get("source_theorem") else []) + reading.get("source_theorems", [])
         if theorems:
             for theorem in theorems:
@@ -5042,6 +5086,16 @@ def validate_readings(chapters: list[dict[str, Any]], readings: list[dict[str, A
                 if set(contract) != required_contract or any(not str(contract[key]).strip() for key in required_contract):
                     raise SystemExit(
                         f"reading {reading['slug']} theorem {theorem.get('label')} lacks the complete source contract"
+                    )
+                local_status = theorem.get("local_status")
+                if local_status and (
+                    set(local_status) != {"status", "label", "boundary"}
+                    or local_status.get("status") not in STATUS_LABELS
+                    or not str(local_status.get("label", "")).strip()
+                    or not str(local_status.get("boundary", "")).strip()
+                ):
+                    raise SystemExit(
+                        f"reading {reading['slug']} theorem {theorem.get('label')} has an invalid local status"
                     )
                 normalized = normalize_math_source(theorem.get("math", ""))
                 if normalized.count(r"\(") != normalized.count(r"\)") or normalized.count(r"\[") != normalized.count(r"\]"):

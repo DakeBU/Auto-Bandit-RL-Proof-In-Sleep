@@ -2597,6 +2597,22 @@ tbody tr:hover {
   border-top: 4px solid var(--success);
 }
 
+.source-route-status {
+  display: flex;
+  gap: 0.55rem 0.8rem;
+  align-items: center;
+  margin: 0.9rem 0;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--surface-2);
+}
+
+.source-route-status > span:last-child {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
 .source-route-intro {
   display: flex;
   gap: 0.45rem 1rem;
@@ -2644,8 +2660,14 @@ tbody tr:hover {
   min-width: 0;
 }
 
-.source-theorem-disclosure > summary > span:last-child {
+.source-route-summary-meta {
+  display: flex;
+  gap: 0.45rem;
+  align-items: center;
   flex: 0 0 auto;
+}
+
+.source-route-summary-meta > span:not(.status) {
   color: var(--accent);
   font-family: var(--mono);
   font-size: 0.75rem;
@@ -4477,6 +4499,12 @@ tbody tr:hover {
   .source-extension > summary,
   .chapter-ledger-disclosure > summary {
     display: grid;
+  }
+
+  .source-route-summary-meta,
+  .source-route-status {
+    align-items: flex-start;
+    flex-wrap: wrap;
   }
 
   .chapter-compass a {
