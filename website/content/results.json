@@ -717,17 +717,28 @@
     },
     {
       "id": "TEXTBOOK-PART-IV-CH14-INFORMATION-THEORY-LEAN-SPINE",
-      "title": "Chapter 14 relative-entropy and Bretagnolle–Huber spine",
+      "title": "Chapter 14 coding, KL data-processing, and Bretagnolle–Huber spine",
       "chapter": "foundations",
       "textbook_spine": "chapter-14-information-theory",
       "status": "compiled",
-      "informal": "The scoped §14.2 spine compiles extended-real measure relative entropy with explicit absolute-continuity, integrability, and singular branches; event-level Bernoulli data processing; binary endpoint analysis; and the unconditional Bretagnolle–Huber inequality in the exact D(P,Q) direction.",
+      "informal": "The Chapter 14 extension compiles finite prefix-code/entropy definitions and a Kraft adapter; extended-real relative entropy with explicit branches and separation; full arbitrary-sub-sigma-algebra plus event data processing; binary endpoint analysis; and unconditional Bretagnolle–Huber in the exact D(P,Q) direction. Whole-chapter coverage remains partial.",
       "declarations": [
+        "BanditRLProof.LowerBounds.BinaryPrefixCode",
+        "BanditRLProof.LowerBounds.BinaryPrefixCode.uniquelyDecodable_range",
+        "BanditRLProof.LowerBounds.BinaryPrefixCode.kraft_inequality",
+        "BanditRLProof.LowerBounds.discreteEntropy",
+        "BanditRLProof.LowerBounds.discreteEntropyBaseTwo",
+        "BanditRLProof.LowerBounds.discreteEntropyBaseTwo_eq_div_log_two",
+        "BanditRLProof.LowerBounds.discreteEntropy_nonneg",
+        "BanditRLProof.LowerBounds.expectedCodeLength",
+        "BanditRLProof.LowerBounds.expectedCodeLength_nonneg",
         "BanditRLProof.LowerBounds.relativeEntropy",
         "BanditRLProof.LowerBounds.relativeEntropy_of_absolutelyContinuous_of_integrable",
         "BanditRLProof.LowerBounds.relativeEntropy_of_probability_absolutelyContinuous_of_integrable",
         "BanditRLProof.LowerBounds.relativeEntropy_eq_top_of_not_absolutelyContinuous",
         "BanditRLProof.LowerBounds.relativeEntropy_ne_top_iff",
+        "BanditRLProof.LowerBounds.relativeEntropy_eq_zero_iff",
+        "BanditRLProof.LowerBounds.relativeEntropy_trim_le",
         "BanditRLProof.LowerBounds.bernoulliRelativeEntropy",
         "BanditRLProof.LowerBounds.rnDeriv_restrict_restrict",
         "BanditRLProof.LowerBounds.relativeEntropy_restrict_add_compl",
@@ -747,8 +758,9 @@
         "BanditRLProof.KLUCB.bernoulliKLCore"
       ],
       "missing": [
-        "Entropy, Huffman coding, and optimal source-coding results from §14.1 are pedagogically mapped but not formalized by this lower-bound gate.",
-        "The full arbitrary-sub-sigma-algebra data-processing result in Exercise 14.10 is not claimed; the event/binary specialization is compiled.",
+        "Huffman optimality, the one-bit entropy sandwich, and asymptotic source coding from §14.1 remain uncompiled.",
+        "Arbitrary finite-alphabet discrete KL beyond Bernoulli and the finite-discretisation supremum equivalence remain uncompiled.",
+        "The general common-density/measure-overlap route and general-variance Gaussian application remain uncompiled.",
         "The adaptive same-policy bandit-history divergence decomposition is a Chapter 15 target, not a Chapter 14 theorem."
       ],
       "evidence": "BanditRLProof/LowerBounds/InformationTheory.lean; Tests/TextbookPartIVChapter14Canary.lean"

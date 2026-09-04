@@ -9,19 +9,44 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 ## Source placement and status fence
 
 The canonical source is Lattimore--Szepesvári, *Bandit Algorithms*, CUP 2020,
-Part IV, Chapter 14, printed pp. 186--197 / PDF pp. 195--206. The formal target
-window is §14.2, printed pp. 188--191 / PDF pp. 197--200. Equation (14.4)
+Part IV, Chapter 14, author-version pp. 186--197 / physical PDF pp. 195--206
+(CUP edition pp. 160--169).  The whole-chapter body window is §14.1--§14.2,
+author-version pp. 186--191 / physical PDF pp. 195--200. Equation (14.4)
 defines discrete relative entropy, Eq. (14.5) gives the finite-discretisation
 definition on arbitrary measurable spaces, Theorem 14.1 gives the RN/log-
 likelihood representation, Eq. (14.6) gives the common-density formula, and
 Theorem 14.2/Eq. (14.7) is Bretagnolle--Huber.
 
-The entropy/coding discussion in §14.1 remains a pedagogical source mapping.
-The compiled lower-bound spine must not claim a formal Huffman or source-coding
-theorem. Exercise 14.10 is cited for data processing; the local event version
-is labelled as a dependency leaf.
+The previously accepted lower-bound spine formally targeted §14.2 only.  That
+scoped gate remains valid, but it is insufficient for whole-chapter completion.
+Section 14.1 coding definitions and Eqs. (14.1)--(14.3) are now required body
+rows.  Notes and exercises remain optional.  Exercise 14.10 is now compiled in
+its full arbitrary-sub-sigma-algebra form; the local event version remains a
+separate dependency leaf.
+
+## Whole-chapter status fence
+
+- Required body: opening motivation, §14.1, §14.2, and the displayed proof and
+  application claims through Eq. (14.9).
+- Optional: §14.3 Notes, §14.4 Bibliographic Remarks, §14.5 Exercises.
+- Promotion rule: every required mathematical definition and claim must map to
+  a compiled local declaration and typed canary.  A theorem card, imported API,
+  conditional lemma, or prose mapping alone cannot promote the chapter.
+- Current decision: `partial`.  The Section 14.1 Huffman/source-coding
+  terminals, arbitrary finite-alphabet Eq. (14.4) beyond Bernoulli,
+  Eq. (14.5)-to-RN equivalence, common-density formula, full measure-level
+  overlap proof nodes, and general-variance Gaussian/application surface are
+  not all locally compiled.
 
 ## Precise restatement
+
+For a finite source alphabet, a binary prefix code assigns distinct nonempty
+bit strings with no distinct codeword prefixing another.  Its expected length
+is the probability-weighted codeword length.  Natural entropy is
+`∑ₓ pₓ log(pₓ⁻¹)` and base-two entropy divides this by `log 2`.  The local
+surface proves the induced codebook uniquely decodable and hence its Kraft
+inequality, but does not yet prove Huffman optimality or the source-coding
+theorem.
 
 For probability measures `P,Q` on `(Ω,F)`, relative entropy is infinite when
 `P` is not absolutely continuous with respect to `Q`. In the finite regular
@@ -39,11 +64,17 @@ with `D(Q,P)` is also valid.
 
 | Source symbol | Meaning | Lean declaration | Type / role | Status |
 | --- | --- | --- | --- | --- |
+| finite binary prefix code | injective nonempty codewords with prefix freedom | `LowerBounds.BinaryPrefixCode` | typed source model | compiled |
+| Kraft inequality | codeword lengths satisfy the binary Kraft bound | `BinaryPrefixCode.kraft_inequality` | Mathlib uniquely-decodable adapter | compiled |
+| `H(P),H₂(P)` | finite natural/base-two entropy and unit conversion | `discreteEntropy`, `discreteEntropyBaseTwo`, `discreteEntropyBaseTwo_eq_div_log_two` | exact finite-sum definitions | compiled |
+| `E[ℓ(c(X))]` | expected codeword length objective | `expectedCodeLength` | exact finite-sum definition | compiled |
 | `D(P,Q)` | extended-real relative entropy | `LowerBounds.relativeEntropy P Q` | `ENNReal`, alias of `InformationTheory.klDiv` | target |
 | `log(dP/dQ)` | log likelihood ratio | `MeasureTheory.llr P Q` | measurable real function | imported |
 | Theorem 14.1 finite branch | RN/LLR integral formula | `relativeEntropy_of_absolutelyContinuous_of_integrable` | equality in `ENNReal` | target |
 | Theorem 14.1 singular branch | non-AC gives infinity | `relativeEntropy_eq_top_of_not_absolutelyContinuous` | endpoint equality | target |
 | finite KL contract | AC and LLR integrability | `relativeEntropy_ne_top_iff` | exact iff | target |
+| `D(P,Q)=0 ↔ P=Q` | separation for finite measures | `relativeEntropy_eq_zero_iff` | exact iff | compiled |
+| Exercise 14.10 | KL after restriction to arbitrary `m ≤ m₀` | `relativeEntropy_trim_le` | finite-measure data processing | compiled |
 | `d(p,q)` | Bernoulli relative entropy | `LowerBounds.bernoulliRelativeEntropy` reusing `KLUCB.bernoulliKL` | `ENNReal` with exact endpoints | target adapter |
 | Exercise 14.10 at event sigma-algebra | binary KL cannot exceed measure KL | `bernoulliRelativeEntropy_event_le` | dependency theorem | target leaf |
 | binary testing inequality | two-atom Bretagnolle--Huber | `binaryBretagnolleHuber` | real inequality | target leaf |
@@ -56,6 +87,7 @@ with `D(Q,P)` is also valid.
 | Assumption | Lean status | Purpose | Blocking? |
 | --- | --- | --- | --- |
 | one measurable space for `P,Q` | typed | source comparison domain | no |
+| nonempty codewords | field of `BinaryPrefixCode` | makes arbitrary repeated-message concatenations uniquely decodable | no; explicit model contract |
 | `IsProbabilityMeasure P,Q` | typeclass premise on event/data-processing/testing terminals | total masses are one and event probabilities lie in `[0,1]` | no |
 | `MeasurableSet A` | explicit | complements and restricted measures are valid events | no |
 | direction `P ≪ Q` | derived from finite KL or explicit on Theorem 14.1 branch | legitimizes RN derivative | no |
@@ -72,6 +104,8 @@ with `D(Q,P)` is also valid.
 | Leaf | Existing APIs/imports | Retrieval evidence | Intended route | Pivot rule |
 | --- | --- | --- | --- | --- |
 | KL definition/branches | `Mathlib.InformationTheory.KullbackLeibler.Basic` | installed Mathlib source | exact wrappers around `klDiv` branch lemmas | do not invent a second measure KL |
+| prefix coding | `InformationTheory.UniquelyDecodable`, `kraft_mcmillan_inequality` | installed Mathlib source | prove the finite range uniquely decodable from prefix freedom, then adapt Kraft | do not label Kraft as the missing Huffman/source-coding terminal |
+| arbitrary DPI | `Measure.trim`, `toReal_rnDeriv_trim`, `map_condExp_le`, `integral_condExp`, `integral_trim` | installed Mathlib source | finite/top split; conditional Jensen for the trimmed RN density | keep `m ≤ m₀` and finite-measure instances explicit |
 | Bernoulli KL | `KLUCB.bernoulliKL`, `bernoulliKLCore_eq_klFun`, endpoint lemmas | compiled local declarations | reuse the exact support convention | do not use totalized `Real.log 0` as a finite singular value |
 | event processing | f-divergence integral, restriction/RN uniqueness, convex `klFun` lower bound | installed Mathlib source; no ready-made map theorem found | decompose over `A,Aᶜ`, lower-bound each mass pair and add | if RN restriction identity blocks, extract it as a public/general helper rather than assume data processing |
 | binary BH | log concavity or weighted AM--GM, square-root overlap algebra | source proof, Mathlib real analysis | affinity is at least `exp(-d/2)`; overlap is at least affinity squared over two | separate `p=0,1` and `q=0,1`; never assume interior silently |
@@ -83,7 +117,9 @@ with `D(Q,P)` is also valid.
 | Node | Interface | Dependencies | Lean declaration | Mathlib status | Gate | Status |
 | --- | --- | --- | --- | --- | --- | --- |
 | `CH14-SOURCE-FENCE` | exact Theorems 14.1/14.2, equations and pages | official author PDF/CUP metadata | repository evidence | source evidence | source review | mapped |
+| `CH14-CODE-ENTROPY` | typed prefix code, expected length, entropy units, Kraft bound | Mathlib coding API and finite real sums | `BinaryPrefixCode`, `discreteEntropy`, `expectedCodeLength` and helpers | project definitions plus imported theorem adapter | focused Lean | compiled |
 | `CH14-KL-SURFACE` | extended-real KL and finite/singular branch adapters | Mathlib KL/LLR | `relativeEntropy` and branch lemmas | imported plus project wrappers | focused Lean | compiled |
+| `CH14-FULL-DPI` | arbitrary sub-sigma-algebra monotonicity | conditional RN identity and Jensen | `relativeEntropy_trim_le` | Mathlib-candidate project leaf | focused Lean | compiled |
 | `CH14-BERNOULLI-SURFACE` | exact two-atom endpoint convention | existing KLUCB module | `bernoulliRelativeEntropy` plus adapter lemmas | compiled dependency/project adapters | focused Lean | compiled |
 | `CH14-EVENT-DPI` | binary/event KL is at most measure KL | RN restriction and f-divergence convexity | `bernoulliRelativeEntropy_event_le` | Mathlib-candidate project leaf | focused Lean | compiled |
 | `CH14-BINARY-BH` | two-atom error lower bound | affinity and overlap algebra | `binaryBretagnolleHuber` | project-local | focused Lean | compiled |
@@ -93,11 +129,18 @@ with `D(Q,P)` is also valid.
 | `CH14-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | full check | verified locally |
 | `CH14-EVIDENCE-SITE` | task/DAG/export/index/site agreement | compiled chapter surface | repository artifacts | repository | lean-verified/site/browser | verified locally |
 | `CH14-REVIEW` | independent source/Lean/evidence audit | all local artifacts | review record | repository | independent review | verified |
-| `CH14-REMOTE` | PR, main Actions, Pages and live page | accepted local chapter | PR #11; run `31949303227`; Pages job `95172626370`; live desktop/mobile | repository | deployment | verified |
+| `CH14-REMOTE` | PR, main Actions, Pages and live page | accepted local chapter | PR #11; run `31949303227`; Pages job `95172626370`; live desktop/mobile | repository | deployment | verified for the historical §14.2 milestone; the 2026-09-04 extension awaits its own PR |
 
 ## Gaps
 
 - [x] Project-local RN restriction identity needed by event data processing.
 - [x] Binary affinity/Jensen proof with all endpoints.
 - [x] Exact unconditional measure-level Bretagnolle--Huber terminal.
+- [x] Exact finite code/entropy definitions and a prefix-code Kraft adapter.
+- [x] Full arbitrary-sub-sigma-algebra data processing (Exercise 14.10).
 - [x] Chapter 15 same-policy history-law construction and divergence decomposition (compiled in its own gate).
+- [ ] Huffman optimality and the one-bit entropy sandwich in Eq. (14.2).
+- [ ] Block/arithmetic source-coding achievability and converse.
+- [ ] Eq. (14.4) for an arbitrary finite alphabet beyond Bernoulli.
+- [ ] Eq. (14.5) finite-discretisation supremum equivalence to RN KL.
+- [ ] General common-density, Gaussian-variance/application, and measure-overlap proof nodes.
