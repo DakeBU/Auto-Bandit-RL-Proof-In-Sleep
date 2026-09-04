@@ -4,7 +4,7 @@ Task id: `TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE`
 
 Kind: `theoremFormalization`
 
-Status: `accepted`
+Status: `partial`
 
 Harness: `hierarchical`
 
@@ -13,11 +13,42 @@ Harness: `hierarchical`
 Formalize the source-faithful stochastic and adversarial high-probability
 lower-bound routes in Lattimore--Szepesvari, *Bandit Algorithms* (2020),
 Chapter 17. The exact source terminals are Theorem 17.1, Corollaries 17.2 and
-17.3, Theorem 17.4, and Claims 17.5--17.7. The compiled first slice freezes all
-three threshold surfaces, the tail-event direction, Claim 17.5's
-first-moment argument, the probability subtraction that combines Claims
-17.6--17.7, and the deterministic quarter-horizon algebra after Eq. (17.8).
-It must not be reported as any blocked source terminal.
+17.3, Theorem 17.4, and Claims 17.5--17.7. The current compiled slice closes
+Theorem 17.1, Corollary 17.2, Claim 17.5, and construction-level Eq. (17.8),
+including the correlated shared-noise clipped path. Corollary 17.3, Claims
+17.6--17.7, and Theorem 17.4 remain explicit blockers and must not be reported
+as compiled terminals.
+
+## Frozen chapter-completion contract (2026-09-04)
+
+Chapter completion is evaluated against every mathematical item in the
+chapter body, not against the presence of a threshold definition or a
+conditional consumer.  The following table is the source-faithful acceptance
+contract for this task.  A row may move to `compiled` only when the named
+local declaration exists, is root-imported, is exercised by the Chapter 17
+canary, and passes the repository gates.
+
+| Body item | Required local surface | Completion rule | Baseline status |
+| --- | --- | --- | --- |
+| opening definitions of adversarial random regret `Rhat_n` and expected regret `R_n` | bounded reward matrix, policy-generated action law, pathwise random regret, and its expectation | random regret and deterministic expectation remain different types/surfaces | blocked |
+| Section 17.1 random pseudo-regret `Rbar_n` | `gaussianRandomPseudoRegret` on the canonical finite history | must be the gap-times-random-pull-count variable, not its expectation | compiled |
+| Gaussian class `E^k` and Eq. (17.4) | unit-variance Gaussian arm laws, gap-at-most-one environment contract, and uniform expected-pseudo-regret premise for one policy | the unit-cube construction may witness the conclusion, but the premise must not be silently changed to an independent-arm or deterministic-policy model | compiled full source class; proof uses embedded unit-cube subfamily |
+| Theorem 17.1 | `gaussianRandomPseudoRegret_ge_theorem17_1` | exact outer `1/4`, minimum, `log(1/(4 delta))`, `>= delta`, original-to-alternative history KL, and original-law expected pulls | compiled |
+| Corollary 17.2 | `gaussianRandomPseudoRegret_ge_corollary17_2` | exact Eq. (17.6), factor `1/2` inside the square root in Eq. (17.7), and the same outer quarter | compiled |
+| Corollary 17.3 | `noUniformGaussianRandomPseudoRegretTail_corollary17_3` | one policy for every horizon/confidence/environment, real `p in (0,1)`, and strict `< delta` | blocked |
+| Section 17.2 policy/reward-matrix coupling and CDF `F_x` | same-policy interaction law conditional on a deterministic bounded matrix, pathwise adversarial random regret, and CDF/tail interface | cannot be replaced by stochastic pseudo-regret or an expected-regret statement | blocked |
+| Claim 17.5 | `exists_cdfTail_ge_of_integral_ge` | average hard-law tail yields one deterministic matrix; integrability remains explicit | compiled |
+| clipping map and hard laws `Q_i` | correlated-within-round / IID-across-time clipped-normal reward matrix with shared `eta_t` | armwise independence is forbidden; the exact `+Delta` and selected-arm `+2Delta` shifts must be preserved | path construction and IID centered-noise law compiled; policy-coupled pushed-forward `Q_i` law blocked |
+| Claim 17.6 | `clippedGaussian_pullCount_lt_half_claim17_6` | exact `Delta = sigma sqrt(((k-1)/(2n)) log(1/(8 delta)))` and probability `>= 2 delta` | blocked |
+| construction-level Eq. (17.8) | pathwise declaration over the clipped reward matrix and policy actions | must prove the comparison itself; `randomRegret_ge_quarter_of_clippingDecomposition` is only a downstream conditional consumer | compiled |
+| Claim 17.7 | `clippingCount_ge_quarter_le_claim17_7` | exact clipping event, `sigma=1/10`, `Delta<1/8`, `n>=32 log(1/delta)`, and probability `<=delta` | blocked |
+| Theorem 17.4 | `adversarialRandomRegret_ge_theorem17_4` | deterministic matrix witness, random-regret CDF tail, universal constants, and `n>=C k log(1/(2delta))` | blocked |
+
+Section 17.3 notes, Section 17.4 bibliographic remarks, and Exercise 17.1 are
+optional explanatory/export material.  They cannot compensate for an open
+body row above.  In particular, Exercise 17.1 is not a license to omit Claims
+17.5--17.7 from the chapter-completion gate because those claims occur in the
+body proof of Theorem 17.4.
 
 ## Source
 
@@ -178,6 +209,13 @@ Target file: `BanditRLProof/LowerBounds/HighProbability.lean`.
 Compiled public declarations:
 
 ```lean
+LowerBounds.gaussianRandomPseudoRegret
+LowerBounds.gaussianExpectedPseudoRegretReal
+LowerBounds.GapOneGaussianBanditEnvironment
+LowerBounds.gapOneGaussianExpectedPseudoRegretReal
+LowerBounds.gaussianRandomPseudoRegret_ge_theorem17_1
+LowerBounds.gaussianRandomPseudoRegret_ge_corollary17_2
+LowerBounds.integral_exp_neg_rpow_inv_le_one
 LowerBounds.tailAtLeast
 LowerBounds.stochasticHighProbabilityThreshold
 LowerBounds.stochasticMinimaxHighProbabilityThreshold
@@ -188,6 +226,13 @@ LowerBounds.measureReal_diff_ge_delta
 LowerBounds.adversarialRegretLowerExpression
 LowerBounds.adversarialRegretLowerExpression_ge_quarter
 LowerBounds.randomRegret_ge_quarter_of_clippingDecomposition
+LowerBounds.clipUnitReward
+LowerBounds.adversarialHardShift
+LowerBounds.adversarialClippedGaussianReward
+LowerBounds.adversarialCenteredNoiseLaw
+LowerBounds.adversarialClaim17_6Gap
+LowerBounds.adversarialRandomRegret
+LowerBounds.adversarialRandomRegret_ge_eq17_8
 ```
 
 `exists_cdfTail_ge_of_integral_ge` is the exact first-moment content of Claim
@@ -197,16 +242,16 @@ The threshold declarations and remaining theorems are dependency leaves.
 Reserved source terminals, with no declaration claimed:
 
 ```lean
-LowerBounds.gaussianRandomPseudoRegret_ge_theorem17_1
-LowerBounds.gaussianRandomPseudoRegret_ge_corollary17_2
 LowerBounds.noUniformGaussianRandomPseudoRegretTail_corollary17_3
 LowerBounds.adversarialRandomRegret_ge_theorem17_4
 LowerBounds.clippedGaussian_pullCount_lt_half_claim17_6
 LowerBounds.clippingCount_ge_quarter_le_claim17_7
 ```
 
-The chapter stays `partial`. Claim 17.5 is compiled; Theorem 17.1,
-Corollaries 17.2--17.3, Theorem 17.4, and Claims 17.6--17.7 are blocked.
+The chapter stays `partial`. Theorem 17.1, Corollary 17.2, Claim 17.5, the
+centered shared-noise form of the clipped hard family, and construction-level
+Eq. (17.8) compile. Corollary 17.3, Theorem 17.4, and Claims 17.6--17.7 remain
+blocked.
 
 ## Exact regularity contract
 
@@ -238,17 +283,17 @@ Corollaries 17.2--17.3, Theorem 17.4, and Claims 17.6--17.7 are blocked.
   the source conditional policy kernel.
 - Claim 17.7 needs the exact clipping map, Gaussian tails, a union/count
   argument, `sigma=1/10`, `Delta<1/8`, and `n>=32 log(1/delta)`.
-- Equation (17.8) is a pathwise construction-specific inequality. The
-  compiled quarter-horizon theorem assumes this missing lower comparison
-  rather than claiming it.
+- Equation (17.8) is proved pathwise for the clipped shared-noise construction
+  and the actual max-over-fixed-arms adversarial random regret. The older
+  quarter-horizon theorem remains a reusable downstream algebra lemma.
 
 ## Current semantic and analytic blockers
 
-Theorem 17.1 and its corollaries can now reuse the compiled same-policy
-adaptive-history divergence decomposition of Lemma 15.1. The remaining
-stochastic blocker is the Chapter 17-specific tail-event and regret consumer:
-instantiate the one-arm Gaussian change, preserve the original-law pull
-expectation, and assemble the exact threshold and constants.
+Theorem 17.1 now reuses the compiled same-policy adaptive-history divergence
+decomposition of Lemma 15.1 and preserves the original-law expected pull
+count. Corollary 17.2 is closed by its expectation contradiction. The sole
+stochastic body blocker is Corollary 17.3's layer-cake/Gamma integral with one
+policy quantified over all horizons and confidence levels.
 
 Theorem 17.4 is described only at a high level in the textbook and delegates
 details to Gerchinovitz--Lattimore (2016). A source-faithful proof needs the
@@ -276,23 +321,47 @@ pseudo-regret into expected regret, or weaken a probability/constant.
 - [x] The probability subtraction combining Claims 17.6--17.7 compiles.
 - [x] The quarter-horizon algebra following Eq. (17.8) compiles.
 - [x] Lemma 15.1's source-faithful stochastic-history information identity
-  compiles; the Chapter 17 tail-event consumer remains open.
-- [ ] Theorem 17.1 and Corollaries 17.2--17.3 compile.
-- [ ] The clipped-normal hard family, Claim 17.6, Eq. (17.8), Claim 17.7, and
-  Theorem 17.4 compile.
-- [x] Root import, focused module, expanded typed canary, axiom reports,
-  placeholder scan, exports, retrieval indexes, site build/check, desktop
-  browser, and independent read-only review pass locally.
-- [ ] Native Windows full `lake build` / `Tests` / harness pass. The current
-  local run is blocked only by MAX_PATH while creating an existing unrelated
-  long-named RL `.olean`; authoritative Linux PR CI is the required full gate.
-- [x] Authoritative Linux PR and main full Lean/Tests/harness gates pass.
-- [x] Actual 390px mobile browser review passes. Synthetic local viewport
-  injection was rejected by browser security policy, so this remains a
-  remote/live result rather than a claimed local pass.
-- [x] PR, authoritative-main Actions, Pages deployment, and live checks pass.
+  and the Chapter 17 tail-event consumer compile.
+- [x] Theorem 17.1 and Corollary 17.2 compile.
+- [ ] Corollary 17.3 compiles.
+- [x] The clipped shared-noise path construction, its IID Gaussian noise law,
+  exact Claim 17.6 gap tuning, and construction-level Eq. (17.8) compile.
+- [ ] Claims 17.6--17.7 and Theorem 17.4 compile.
+- [ ] Current-run root import, full Lean/Tests/harness gate, expanded typed
+  canary, axiom reports, placeholder scan, exports, retrieval indexes, site
+  build/check, browser QA, and read-only review are all recorded below.
+- [ ] Current PR CI, Pages deployment, and live checks pass. These remain
+  post-push gates and must not be inferred from the historical baseline.
 
-## Local verification evidence
+## Current local verification evidence (2026-09-04)
+
+- `lake build BanditRLProof.LowerBounds.HighProbability`: passed with 3588
+  jobs after the final stochastic and adversarial edits.
+- A focused external canary checks the six new public surfaces and prints
+  axioms for nine representative Chapter 17 declarations; every report is
+  exactly `propext`, `Classical.choice`, and `Quot.sound`.
+- The lean-verified site build passed with 604 modules, 8259 declarations,
+  zero placeholders, and 447 foundations. `check_site.py` passed with 658
+  pages, 113 highlights, 18 Mermaid blocks, 9026 Lean source links, and valid
+  internal links, README links, MathJax fallbacks, and Pages workflow.
+- Chrome desktop QA at 1280x900 renders the updated status, source map, and
+  navigation. A real 390x844 device-emulation pass reports equal document
+  client/scroll widths (`390/390`), seven rendered MathJax containers, zero
+  broken images, and compiled Theorem 17.1 / Eq. (17.8) correspondence rows.
+  The Codex in-app browser container separately timed out while attaching;
+  that environment issue is not represented as a site failure or pass.
+- Native `lake build`, `lake build Tests.TextbookPartIVChapter17Canary`, and
+  `python tools/bandit.py check` all reach the same pre-existing unrelated RL
+  module and then fail to create its 155-character basename `.olean` at a
+  258-character destination path. The focused Chapter 17 module has no failure;
+  authoritative Linux PR CI is the required full root/Tests/harness gate.
+- The current read-only review records no unresolved P0--P2 in the compiled
+  slice and preserves the exact four terminal blockers in
+  `reviews/2026-09-04-textbook-part-iv-chapter-17-high-probability-lower-bounds-closure.md`.
+- The proof-graph exporter compiles, and the complete Python harness suite
+  passes 400 tests with seven expected skips.
+
+## Historical baseline local verification evidence (2026-08-16/17)
 
 - `lake build BanditRLProof.LowerBounds.HighProbability`: passed, 2654 jobs.
 - The public `BanditRLProof` root and expanded Chapter 17 canary compile through
@@ -312,7 +381,7 @@ pseudo-regret into expected regret, or weaken a probability/constant.
   both were corrected, and re-review found no unresolved P0--P3. See
   `reviews/2026-08-17-textbook-part-iv-chapter-17-high-probability-lower-bounds-spine.md`.
 
-## Remote verification evidence
+## Historical baseline remote verification evidence (2026-08-17)
 
 - PR #17 passed `Lean and documentation / build` in run `31975031469`, job
   `95233089033` (23m13s), and was merged without a direct push to `main`.
@@ -326,15 +395,15 @@ pseudo-regret into expected regret, or weaken a probability/constant.
   `2026-08-16T22:44:25+00:00` build, overall `PARTIAL` chapter status, CUP
   print pp. 185--190 and physical-PDF pp. 224--230, all seven MathJax
   displays, the compiled Claim 17.5/threshold/event-subtraction/Eq. (17.8)
-  algebra slice, the blocked Theorem 17.1 / Corollaries 17.2--17.3 / Theorem
-  17.4 terminals, and zero broken images. Browser metrics found no
+  algebra slice, the then-blocked Theorem 17.1 / Corollaries 17.2--17.3 /
+  Theorem 17.4 terminals, and zero broken images. Browser metrics found no
   document-level horizontal overflow at 390x844 (`375/375` client/scroll
   width); the mobile TOC/sidebar and long MathJax displays retain intentional
   local horizontal scrolling.
 
-Remote acceptance applies only to the scoped dependency slice. The chapter
-remains `partial`; the stochastic history-information route and the
-clipped-normal adversarial construction retain their recorded blocked status.
+This remote acceptance is retained only as evidence for the earlier scoped
+dependency slice. It is not evidence for the declarations added on 2026-09-04.
+The current chapter remains `partial` for the exact blockers listed above.
 
 ## Mathlib-ready leaf contract
 
@@ -343,10 +412,10 @@ clipped-normal adversarial construction retain their recorded blocked status.
 | exact threshold surfaces | `Real.sqrt`, `Real.log`, `min`, natural casts | transcribe all constants and grouping before later tuning algebra | positivity remains terminal-side; `alternativeArms=k-1` at consumer | compiled project-local definitions |
 | Claim 17.5 | `MeasureTheory.exists_integral_le` | first-moment method on `x |-> 1-F_x(u)` | probability measure and integrability | compiled exact source claim |
 | good-event subtraction | `le_measureReal_diff`, real linear arithmetic | subtract the clipping-bad event from the pull-small event | finite measure; outer-measure sets need not be measurable | compiled project-local |
-| Eq. (17.8) quarter algebra | ordered-field multiplication | `T_i<=n/2` and clipping count `<=n/4` leave at least `n/4` rounds | nonnegative gap; Eq. (17.8) itself remains a premise | compiled project-local |
-| stochastic terminal | Chapter 14 BH plus Chapter 15 history KL | least-pulled arm, one-coordinate Gaussian change, exact tuning | same stochastic policy and original-law pulls | connected blocker |
-| Corollary 17.3 tail integration | layer-cake/tail integral and Gamma-type integral | integrate the proposed all-confidence tail, then contradict Theorem 17.1 | measurable/integrable random pseudo-regret; real `p in (0,1)` | open Mathlib/project leaf |
-| clipped-normal law | probability kernels, Gaussian map/clipping | construct the correlated-across-arm reward matrix and policy interaction law | Borel measurability; IID across time only | open project semantic interface |
+| Eq. (17.8) construction and quarter algebra | clipped monotonicity, finite sums, ordered-field multiplication | prove the distinguished-arm comparison pathwise, then use `T_i<=n/2` and clipping count `<=n/4` | nonnegative gap; shared noise across arms | compiled project-local |
+| stochastic terminal | Chapter 14 BH plus Chapter 15 history KL | least-pulled arm, one-coordinate Gaussian change, exact tuning | same stochastic policy and original-law pulls | compiled Theorem 17.1 and Corollary 17.2 |
+| Corollary 17.3 tail integration | `Integrable.integral_eq_integral_meas_le`, `integral_exp_neg_rpow_inv_le_one` | rescale the all-confidence tail and combine it with the compiled Gamma integral bound, then contradict Theorem 17.1 | measurable/integrable random pseudo-regret; real `p in (0,1)` | Gamma integral leaf compiled; tail rescaling and calibration open |
+| clipped-normal law | `Measure.pi`, Gaussian map/clipping | construct the correlated-across-arm reward matrix from one IID centered path; still connect it to policy interaction | Borel measurability; IID across time only | path law compiled; interaction law open |
 | Claim 17.6 | relative entropy and history law | least-pulled arm plus changed law and source entropy calculation | exact `Delta`, same policy, finite KL | connected blocker |
 | Claim 17.7 | Gaussian tail/concentration and finite unions | bound each clipping indicator and its count | `sigma=1/10`, `Delta<1/8`, exact horizon condition | open concentration leaf |
 | Theorem 17.4 | Claims 17.5--17.7 and Eq. (17.8) | combine good event, calibrate `Delta`, then first moment | deterministic witness matrix and CDF law | blocked source terminal |
@@ -374,8 +443,7 @@ clipped-normal adversarial construction retain their recorded blocked status.
 - A threshold definition is not a tail lower-bound theorem.
 - The compiled Claim 17.5 adapter does not construct the reward-matrix law,
   the policy interaction law, or its CDF.
-- Probability subtraction and quarter-horizon algebra do not prove Claims
-  17.6--17.7 or Eq. (17.8).
+- Probability subtraction and Eq. (17.8) do not prove Claims 17.6--17.7.
 - The stochastic random pseudo-regret is not adversarial random regret and is
   not deterministic expected regret.
 - Theorem cards, open-problem proposals, and the NeurIPS paper remain route

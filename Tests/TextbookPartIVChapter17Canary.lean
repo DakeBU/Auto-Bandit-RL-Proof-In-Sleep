@@ -3,9 +3,10 @@ import BanditRLProof
 /-!
 # Typed public canary for Part IV, Chapter 17
 
-The examples exercise only the compiled threshold, first-moment, probability,
-and deterministic-algebra slice.  They do not claim Theorem 17.1,
-Corollaries 17.2--17.3, Theorem 17.4, Claim 17.6, or Claim 17.7.
+The examples exercise the compiled Theorem 17.1 and Corollary 17.2 stochastic
+terminals, the first-moment and probability leaves, the shared-noise clipped
+construction, and construction-level Eq. (17.8).  Corollary 17.3, Theorem
+17.4, Claim 17.6, and Claim 17.7 remain unclaimed.
 -/
 
 namespace BanditRLProof
@@ -80,11 +81,22 @@ example (gap randomRegret : Real) (hGap : 0 <= gap)
   exact randomRegret_ge_quarter_of_clippingDecomposition
     8 4 2 gap randomRegret hGap (by norm_num) (by norm_num) hSource
 
+#check gaussianRandomPseudoRegret_ge_theorem17_1
+#check gaussianRandomPseudoRegret_ge_corollary17_2
+#check integral_exp_neg_rpow_inv_le_one
+#check adversarialCenteredNoiseLaw
+#check adversarialClaim17_6Gap
+#check adversarialRandomRegret_ge_eq17_8
+
+#print axioms LowerBounds.gaussianRandomPseudoRegret_ge_theorem17_1
+#print axioms LowerBounds.gaussianRandomPseudoRegret_ge_corollary17_2
+#print axioms LowerBounds.integral_exp_neg_rpow_inv_le_one
 #print axioms LowerBounds.exists_tailMass_ge_of_integral_ge
 #print axioms LowerBounds.exists_cdfTail_ge_of_integral_ge
 #print axioms LowerBounds.measureReal_diff_ge_delta
 #print axioms LowerBounds.adversarialRegretLowerExpression_ge_quarter
 #print axioms LowerBounds.randomRegret_ge_quarter_of_clippingDecomposition
+#print axioms LowerBounds.adversarialRandomRegret_ge_eq17_8
 
 end LowerBounds
 end BanditRLProof

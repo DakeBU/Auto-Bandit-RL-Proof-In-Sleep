@@ -948,11 +948,11 @@
     },
     {
       "id": "TEXTBOOK-PART-IV-CH17-FIRST-MOMENT-AND-TAIL-DEPENDENCY-SLICE",
-      "title": "Chapter 17 exact thresholds, Claim 17.5, and tail-event dependency slice",
+      "title": "Chapter 17 stochastic tail terminals and adversarial pathwise core",
       "chapter": "foundations",
       "textbook_spine": "chapter-17-high-probability",
       "status": "compiled",
-      "informal": "The project freezes the exact stochastic and adversarial Chapter 17 threshold surfaces, compiles Claim 17.5's first-moment deterministic-witness argument with integrability explicit, proves the 2delta-minus-delta event subtraction, and proves the deterministic quarter-horizon algebra following Eq. (17.8).",
+      "informal": "The project compiles Theorem 17.1 with its full gap-at-most-one Gaussian source-class premise and a unit-cube witness, Corollary 17.2 with exact constants, Claim 17.5's first-moment witness, the correlated clipped shared-noise path, construction-level Eq. (17.8), event subtraction, and quarter-horizon algebra.",
       "declarations": [
         "BanditRLProof.LowerBounds.tailAtLeast",
         "BanditRLProof.LowerBounds.stochasticHighProbabilityThreshold",
@@ -963,15 +963,20 @@
         "BanditRLProof.LowerBounds.measureReal_diff_ge_delta",
         "BanditRLProof.LowerBounds.adversarialRegretLowerExpression",
         "BanditRLProof.LowerBounds.adversarialRegretLowerExpression_ge_quarter",
-        "BanditRLProof.LowerBounds.randomRegret_ge_quarter_of_clippingDecomposition"
+        "BanditRLProof.LowerBounds.randomRegret_ge_quarter_of_clippingDecomposition",
+        "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_theorem17_1",
+        "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_corollary17_2",
+        "BanditRLProof.LowerBounds.adversarialClippedGaussianReward",
+        "BanditRLProof.LowerBounds.adversarialCenteredNoiseLaw",
+        "BanditRLProof.LowerBounds.adversarialRandomRegret_ge_eq17_8"
       ],
       "depends_on": [
         "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum"
       ],
       "missing": [
-        "The stochastic threshold definitions and compiled same-policy adaptive-history KL identity do not yet supply Theorem 17.1's tail-event consumer.",
-        "The event and deterministic algebra leaves do not construct the clipped-normal reward-matrix law or prove Claims 17.6–17.7 or Eq. (17.8).",
-        "Only Claim 17.5's first-moment content is a compiled source claim; all other Chapter 17 source terminals remain blocked."
+        "Corollary 17.3 still needs the exact layer-cake/Gamma tail integral with one policy across all horizons and confidence levels.",
+        "The path construction is not yet coupled to the adaptive policy law needed by Claim 17.6.",
+        "Claims 17.6–17.7 and Theorem 17.4 remain blocked."
       ],
       "evidence": "BanditRLProof/LowerBounds/HighProbability.lean; Tests/TextbookPartIVChapter17Canary.lean; tasks/TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE.md"
     },
@@ -981,8 +986,12 @@
       "chapter": "foundations",
       "textbook_spine": "chapter-17-high-probability",
       "status": "blocked",
-      "informal": "The source-frozen endpoints are Theorem 17.1, Corollaries 17.2–17.3, Theorem 17.4, Claims 17.6–17.7, and construction-level Eq. (17.8). No local declaration is presented as any of these terminals.",
-      "declarations": [],
+      "informal": "Theorem 17.1, Corollary 17.2, and construction-level Eq. (17.8) now compile. The remaining source-frozen endpoints are Corollary 17.3, Theorem 17.4, and Claims 17.6–17.7.",
+      "declarations": [
+        "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_theorem17_1",
+        "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_corollary17_2",
+        "BanditRLProof.LowerBounds.adversarialRandomRegret_ge_eq17_8"
+      ],
       "depends_on": [
         "BanditRLProof.LowerBounds.exists_leastExploredAlternative",
         "BanditRLProof.LowerBounds.bretagnolleHuber",
@@ -991,9 +1000,8 @@
         "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum"
       ],
       "missing": [
-        "The stochastic branch's tail-event and regret consumer of the compiled Lemma 15.1 history-KL decomposition.",
         "The exact Corollary 17.3 tail integral with its one-policy/all-horizon/all-confidence quantifiers.",
-        "The correlated clipped-normal reward-matrix law, Claim 17.6 information calculation, pathwise Eq. (17.8), Claim 17.7 concentration, and Theorem 17.4 assembly."
+        "The policy-coupled clipped-normal reward-matrix law, Claim 17.6 information calculation, Claim 17.7 concentration, and Theorem 17.4 assembly."
       ],
       "evidence": "tasks/TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE.md; proof-attempts/TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE/ConnectedBlockers.md"
     },

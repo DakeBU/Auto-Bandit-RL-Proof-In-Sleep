@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-02T06:31:27+00:00",
+  "generated": "2026-09-04T04:40:01+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -5198,7 +5198,7 @@
       "name": "twoArmOptimalPullCountBelowEvent_charge_mul_probability_le_integral",
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCountBelowEvent_charge_mul_probability_le_integral",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-      "line": 331,
+      "line": 333,
       "statement": "theorem twoArmOptimalPullCountBelowEvent_charge_mul_probability_le_integral {Env : Type v} [MeasurableSpace Env] (mu : Measure (Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real))) [IsFiniteMeasure mu] (Delta : Real) (hDelta : 0 \u2264 Delta) (m horizon : Nat) : Delta * ((horizon - m : Nat) : Real) * mu.real (twoArmOptimalPullCountBelowEvent (Env := Env) m horizon) \u2264 integral mu (twoArmSampledPseudoRegret (Env := Env) Delta horizon)"
     },
     {
@@ -5206,7 +5206,7 @@
       "name": "twoArmStepOneStarvationEvent_charge_mul_probability_le_integral",
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_charge_mul_probability_le_integral",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-      "line": 394,
+      "line": 396,
       "statement": "theorem twoArmStepOneStarvationEvent_charge_mul_probability_le_integral {Env : Type v} [MeasurableSpace Env] (mu : Measure (Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real))) [IsFiniteMeasure mu] (eta Delta : Real) (hDelta : 0 \u2264 Delta) (cutoff n horizon : Nat) : Delta * ((horizon - n : Nat) : Real) * mu.real (twoArmStepOneStarvationEvent (Env := Env) eta cutoff n horizon) \u2264 integral mu (twoArmSampledPseudoRegret (Env := Env) Delta horizon)"
     },
     {
@@ -5214,7 +5214,7 @@
       "name": "twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral",
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-      "line": 449,
+      "line": 451,
       "statement": "theorem twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta Delta : Real) (hDelta : 0 <= Delta) (cutoff n horizon : Nat) : Delta * ((horizon - n : Nat) : Real) * (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)).real (twoArmStepOneStarvationEvent (Env := Unit) eta cutoff n horizon) <= integral (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) (twoArmSampledPseudoRegret (Env := Unit) Delta horizon)"
     },
     {
@@ -28478,7 +28478,7 @@
       "name": "tailAtLeast",
       "full_name": "BanditRLProof.LowerBounds.tailAtLeast",
       "file": "BanditRLProof/LowerBounds/HighProbability.lean",
-      "line": 31,
+      "line": 32,
       "statement": "def tailAtLeast {Omega : Type*} (quantity : Omega -> Real) (threshold : Real) : Set Omega"
     },
     {
@@ -28486,7 +28486,7 @@
       "name": "stochasticHighProbabilityThreshold",
       "full_name": "BanditRLProof.LowerBounds.stochasticHighProbabilityThreshold",
       "file": "BanditRLProof/LowerBounds/HighProbability.lean",
-      "line": 37,
+      "line": 38,
       "statement": "def stochasticHighProbabilityThreshold (horizon alternativeArms : Nat) (B delta : Real) : Real"
     },
     {
@@ -28494,7 +28494,7 @@
       "name": "stochasticMinimaxHighProbabilityThreshold",
       "full_name": "BanditRLProof.LowerBounds.stochasticMinimaxHighProbabilityThreshold",
       "file": "BanditRLProof/LowerBounds/HighProbability.lean",
-      "line": 46,
+      "line": 47,
       "statement": "def stochasticMinimaxHighProbabilityThreshold (horizon alternativeArms : Nat) (delta : Real) : Real"
     },
     {
@@ -28502,15 +28502,239 @@
       "name": "adversarialHighProbabilityThreshold",
       "full_name": "BanditRLProof.LowerBounds.adversarialHighProbabilityThreshold",
       "file": "BanditRLProof/LowerBounds/HighProbability.lean",
-      "line": 56,
+      "line": 57,
       "statement": "def adversarialHighProbabilityThreshold (horizon arms : Nat) (c delta : Real) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianRandomPseudoRegret",
+      "full_name": "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 65,
+      "statement": "noncomputable def gaussianRandomPseudoRegret {K : Nat} (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Real lastRound) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianExpectedPseudoRegretReal",
+      "full_name": "BanditRLProof.LowerBounds.gaussianExpectedPseudoRegretReal",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 74,
+      "statement": "noncomputable def gaussianExpectedPseudoRegretReal {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) : Real"
+    },
+    {
+      "kind": "structure",
+      "name": "GapOneGaussianBanditEnvironment",
+      "full_name": "BanditRLProof.LowerBounds.GapOneGaussianBanditEnvironment",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 84,
+      "statement": "structure GapOneGaussianBanditEnvironment (K : Nat) where"
+    },
+    {
+      "kind": "def",
+      "name": "gapOneGaussianExpectedPseudoRegretReal",
+      "full_name": "BanditRLProof.LowerBounds.gapOneGaussianExpectedPseudoRegretReal",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 91,
+      "statement": "noncomputable def gapOneGaussianExpectedPseudoRegretReal {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : GapOneGaussianBanditEnvironment K) (lastRound : Nat) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "UnitGaussianBanditEnvironment.toGapOne",
+      "full_name": "BanditRLProof.LowerBounds.UnitGaussianBanditEnvironment.toGapOne",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 99,
+      "statement": "def UnitGaussianBanditEnvironment.toGapOne {K : Nat} (environment : UnitGaussianBanditEnvironment K) : GapOneGaussianBanditEnvironment K where"
+    },
+    {
+      "kind": "theorem",
+      "name": "gapOneGaussianExpectedPseudoRegretReal_toGapOne",
+      "full_name": "BanditRLProof.LowerBounds.gapOneGaussianExpectedPseudoRegretReal_toGapOne",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 112,
+      "statement": "theorem gapOneGaussianExpectedPseudoRegretReal_toGapOne {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) : gapOneGaussianExpectedPseudoRegretReal algorithm environment.toGapOne lastRound = gaussianExpectedPseudoRegretReal algorithm environment lastRound"
+    },
+    {
+      "kind": "def",
+      "name": "stochasticHighProbabilityGap",
+      "full_name": "BanditRLProof.LowerBounds.stochasticHighProbabilityGap",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 119,
+      "statement": "noncomputable def stochasticHighProbabilityGap (horizon alternativeArms : Nat) (B delta : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianRandomPseudoRegret_nonneg",
+      "full_name": "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_nonneg",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 126,
+      "statement": "theorem gaussianRandomPseudoRegret_nonneg {K : Nat} (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Real lastRound) : 0 <= gaussianRandomPseudoRegret environment lastRound history"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_gaussianRandomPseudoRegret",
+      "full_name": "BanditRLProof.LowerBounds.measurable_gaussianRandomPseudoRegret",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 133,
+      "statement": "theorem measurable_gaussianRandomPseudoRegret {K : Nat} (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) : Measurable (gaussianRandomPseudoRegret environment lastRound)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianRandomPseudoRegret_le_horizon",
+      "full_name": "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_le_horizon",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 142,
+      "statement": "theorem gaussianRandomPseudoRegret_le_horizon {K : Nat} (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Real lastRound) : gaussianRandomPseudoRegret environment lastRound history <= (lastRound + 1 : Nat)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integrable_gaussianRandomPseudoRegret",
+      "full_name": "BanditRLProof.LowerBounds.integrable_gaussianRandomPseudoRegret",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 168,
+      "statement": "theorem integrable_gaussianRandomPseudoRegret {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) : Integrable (gaussianRandomPseudoRegret environment lastRound) (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel environment.mean) lastRound)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianExpectedPseudoRegret_toReal_eq",
+      "full_name": "BanditRLProof.LowerBounds.gaussianExpectedPseudoRegret_toReal_eq",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 184,
+      "statement": "theorem gaussianExpectedPseudoRegret_toReal_eq {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) : (gaussianExpectedPseudoRegret algorithm environment lastRound).toReal = gaussianExpectedPseudoRegretReal algorithm environment lastRound"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_gaussianRandomPseudoRegret_eq_expected",
+      "full_name": "BanditRLProof.LowerBounds.integral_gaussianRandomPseudoRegret_eq_expected",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 206,
+      "statement": "theorem integral_gaussianRandomPseudoRegret_eq_expected {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) : \u222b history, gaussianRandomPseudoRegret environment lastRound history \u2202canonicalBanditHistoryMeasure algorithm (unitGaussianKernel environment.mean) lastRound = gaussianExpectedPseudoRegretReal algorithm environment lastRound"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_le_threshold_add_bound_mul_tailMass",
+      "full_name": "BanditRLProof.LowerBounds.integral_le_threshold_add_bound_mul_tailMass",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 244,
+      "statement": "theorem integral_le_threshold_add_bound_mul_tailMass {Omega : Type*} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (quantity : Omega -> Real) (threshold bound : Real) (hmeas : Measurable quantity) (hintegrable : Integrable quantity mu) (hthreshold : 0 <= threshold) (hbound : forall omega, quantity omega <= bound) : \u222b omega, quantity omega \u2202mu <= threshold + bound * mu.real (tailAtLeast quantity threshold)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianExpectedPseudoRegretReal_base_eq",
+      "full_name": "BanditRLProof.LowerBounds.gaussianExpectedPseudoRegretReal_base_eq",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 278,
+      "statement": "theorem gaussianExpectedPseudoRegretReal_base_eq {m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (gap : Real) (hgap : 0 <= gap) (hgap_le : gap <= 1 / 2) (lastRound : Nat) : gaussianExpectedPseudoRegretReal algorithm (gaussianMinimaxBaseEnvironment gap hgap hgap_le) lastRound = gap * \u2211 i : Fin m, gaussianExpectedPullCountReal algorithm (gaussianMinimaxBaseMean gap) lastRound i.succ"
+    },
+    {
+      "kind": "theorem",
+      "name": "horizon_mul_sqrt_div_eq_sqrt_mul",
+      "full_name": "BanditRLProof.LowerBounds.horizon_mul_sqrt_div_eq_sqrt_mul",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 296,
+      "statement": "theorem horizon_mul_sqrt_div_eq_sqrt_mul {horizon alternatives : Real} (hhorizon : 0 < horizon) (halternatives : 0 <= alternatives) : horizon * Real.sqrt (alternatives / horizon) = Real.sqrt (horizon * alternatives)"
+    },
+    {
+      "kind": "theorem",
+      "name": "sqrt_mul_mul_sqrt_div_eq_alternatives",
+      "full_name": "BanditRLProof.LowerBounds.sqrt_mul_mul_sqrt_div_eq_alternatives",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 317,
+      "statement": "theorem sqrt_mul_mul_sqrt_div_eq_alternatives {horizon alternatives : Real} (hhorizon : 0 < horizon) (halternatives : 0 <= alternatives) : Real.sqrt (alternatives * horizon) * Real.sqrt (alternatives / horizon) = alternatives"
+    },
+    {
+      "kind": "theorem",
+      "name": "horizon_mul_stochasticHighProbabilityGap_div_two",
+      "full_name": "BanditRLProof.LowerBounds.horizon_mul_stochasticHighProbabilityGap_div_two",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 341,
+      "statement": "theorem horizon_mul_stochasticHighProbabilityGap_div_two (horizon alternatives : Nat) (B delta : Real) (hhorizon : 0 < horizon) (hB : 0 < B) : (horizon : Real) * stochasticHighProbabilityGap horizon alternatives B delta / 2 = stochasticHighProbabilityThreshold horizon alternatives B delta"
+    },
+    {
+      "kind": "theorem",
+      "name": "stochasticHighProbability_informationExponent_le_log",
+      "full_name": "BanditRLProof.LowerBounds.stochasticHighProbability_informationExponent_le_log",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 384,
+      "statement": "theorem stochasticHighProbability_informationExponent_le_log (horizon alternatives : Nat) (B delta : Real) (hhorizon : 0 < horizon) (halternatives : 0 < alternatives) (hB : 0 < B) (hlog : 0 < Real.log (1 / (4 * delta))) : let gap := stochasticHighProbabilityGap horizon alternatives B delta (B * Real.sqrt ((alternatives : Real) * (horizon : Real)) / (gap * (alternatives : Real))) * (2 * gap ^ 2) <= Real.log (1 / (4 * delta))"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianRandomPseudoRegret_ge_theorem17_1_of_four_mul_delta_lt_one",
+      "full_name": "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_theorem17_1_of_four_mul_delta_lt_one",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 437,
+      "statement": "theorem gaussianRandomPseudoRegret_ge_theorem17_1_of_four_mul_delta_lt_one {alternatives horizon : Nat} (halternatives : 0 < alternatives) (hhorizon : 0 < horizon) (B delta : Real) (hB : 0 < B) (hdelta : 0 < delta) (hfourDelta : 4 * delta < 1) (algorithm : Thompson.HistoryAlgorithm (Fin (alternatives + 1)) Real) (hExpected : forall environment : UnitGaussianBanditEnvironment (alternatives + 1), gaussianExpectedPseudoRegretReal algorithm environment (horizon - 1) <= B * Real.sqrt ((alternatives : Real) * (horizon : Real))) : exists environment : UnitGaussianBanditEnvironment (alternatives + 1), delta <= (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel environment.mean) (horizon - 1)).real (tailAtLeast (gaussianRandomPseudoRegret environment (horizon - 1)) (stochasticHighProbabilityThreshold horizon alternatives B delta))"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianRandomPseudoRegret_ge_theorem17_1_unitCube",
+      "full_name": "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_theorem17_1_unitCube",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 654,
+      "statement": "theorem gaussianRandomPseudoRegret_ge_theorem17_1_unitCube {alternatives horizon : Nat} (halternatives : 0 < alternatives) (hhorizon : 0 < horizon) (B delta : Real) (hB : 0 < B) (hdelta : 0 < delta) (hdelta_one : delta < 1) (algorithm : Thompson.HistoryAlgorithm (Fin (alternatives + 1)) Real) (hExpected : forall environment : UnitGaussianBanditEnvironment (alternatives + 1), gaussianExpectedPseudoRegretReal algorithm environment (horizon - 1) <= B * Real.sqrt ((alternatives : Real) * (horizon : Real))) : exists environment : UnitGaussianBanditEnvironment (alternatives + 1), delta <= (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel environment.mean) (horizon - 1)).real (tailAtLeast (gaussianRandomPseudoRegret environment (horizon - 1)) (stochasticHighProbabilityThreshold horizon alternatives B delta))"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianRandomPseudoRegret_ge_theorem17_1",
+      "full_name": "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_theorem17_1",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 714,
+      "statement": "theorem gaussianRandomPseudoRegret_ge_theorem17_1 {alternatives horizon : Nat} (halternatives : 0 < alternatives) (hhorizon : 0 < horizon) (B delta : Real) (hB : 0 < B) (hdelta : 0 < delta) (hdelta_one : delta < 1) (algorithm : Thompson.HistoryAlgorithm (Fin (alternatives + 1)) Real) (hExpected : forall environment : GapOneGaussianBanditEnvironment (alternatives + 1), gapOneGaussianExpectedPseudoRegretReal algorithm environment (horizon - 1) <= B * Real.sqrt ((alternatives : Real) * (horizon : Real))) : exists environment : UnitGaussianBanditEnvironment (alternatives + 1), delta <= (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel environment.mean) (horizon - 1)).real (tailAtLeast (gaussianRandomPseudoRegret environment (horizon - 1)) (stochasticHighProbabilityThreshold horizon alternatives B delta))"
+    },
+    {
+      "kind": "theorem",
+      "name": "stochasticMinimax_sourceTerm_eq",
+      "full_name": "BanditRLProof.LowerBounds.stochasticMinimax_sourceTerm_eq",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 741,
+      "statement": "theorem stochasticMinimax_sourceTerm_eq {horizon alternatives : Nat} (delta : Real) (hlog : 0 < Real.log (1 / (4 * delta))) : (1 / Real.sqrt (2 * Real.log (1 / (4 * delta)))) * Real.sqrt ((alternatives : Real) * (horizon : Real)) * Real.log (1 / (4 * delta)) = Real.sqrt (((horizon : Real) * (alternatives : Real) / 2) * Real.log (1 / (4 * delta)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "stochasticHighProbabilityThreshold_at_minimax_scale",
+      "full_name": "BanditRLProof.LowerBounds.stochasticHighProbabilityThreshold_at_minimax_scale",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 767,
+      "statement": "theorem stochasticHighProbabilityThreshold_at_minimax_scale {horizon alternatives : Nat} (delta : Real) (hlog : 0 < Real.log (1 / (4 * delta))) : stochasticHighProbabilityThreshold horizon alternatives (Real.sqrt (2 * Real.log (1 / (4 * delta)))) delta = stochasticMinimaxHighProbabilityThreshold horizon alternatives delta"
+    },
+    {
+      "kind": "theorem",
+      "name": "stochasticMinimaxHighProbabilityThreshold_le_quarter_root",
+      "full_name": "BanditRLProof.LowerBounds.stochasticMinimaxHighProbabilityThreshold_le_quarter_root",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 777,
+      "statement": "theorem stochasticMinimaxHighProbabilityThreshold_le_quarter_root {horizon alternatives : Nat} (delta : Real) (hlog : 0 <= Real.log (1 / (4 * delta))) : stochasticMinimaxHighProbabilityThreshold horizon alternatives delta <= (1 / 4 : Real) * Real.sqrt ((horizon : Real) * (alternatives : Real) * Real.log (1 / (4 * delta)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "minimax_expected_scale_identity",
+      "full_name": "BanditRLProof.LowerBounds.minimax_expected_scale_identity",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 795,
+      "statement": "theorem minimax_expected_scale_identity {horizon alternatives : Nat} (delta : Real) (hlog : 0 <= Real.log (1 / (4 * delta))) : Real.sqrt (2 * Real.log (1 / (4 * delta))) * Real.sqrt ((alternatives : Real) * (horizon : Real)) = Real.sqrt 2 * Real.sqrt ((horizon : Real) * (alternatives : Real) * Real.log (1 / (4 * delta)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_exp_neg_rpow_inv_le_one",
+      "full_name": "BanditRLProof.LowerBounds.integral_exp_neg_rpow_inv_le_one",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 813,
+      "statement": "theorem integral_exp_neg_rpow_inv_le_one {p : Real} (hp : 0 < p) (hp_one : p < 1) : (\u222b x : Real in Set.Ioi 0, Real.exp (-(x ^ (1 / p)))) <= 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianRandomPseudoRegret_ge_corollary17_2",
+      "full_name": "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_corollary17_2",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 845,
+      "statement": "theorem gaussianRandomPseudoRegret_ge_corollary17_2 {alternatives horizon : Nat} (halternatives : 0 < alternatives) (hhorizon : 0 < horizon) (delta : Real) (hdelta : 0 < delta) (hdelta_one : delta < 1) (hside : (horizon : Real) * delta <= Real.sqrt ((horizon : Real) * (alternatives : Real) * Real.log (1 / (4 * delta)))) (algorithm : Thompson.HistoryAlgorithm (Fin (alternatives + 1)) Real) : exists environment : UnitGaussianBanditEnvironment (alternatives + 1), delta <= (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel environment.mean) (horizon - 1)).real (tailAtLeast (gaussianRandomPseudoRegret environment (horizon - 1)) (stochasticMinimaxHighProbabilityThreshold horizon alternatives delta))"
     },
     {
       "kind": "theorem",
       "name": "exists_tailMass_ge_of_integral_ge",
       "full_name": "BanditRLProof.LowerBounds.exists_tailMass_ge_of_integral_ge",
       "file": "BanditRLProof/LowerBounds/HighProbability.lean",
-      "line": 67,
+      "line": 966,
       "statement": "theorem exists_tailMass_ge_of_integral_ge {Instance : Type*} [MeasurableSpace Instance] (Q : Measure Instance) [IsProbabilityMeasure Q] (tailMass : Instance -> Real) (delta : Real) (hIntegrable : Integrable tailMass Q) (hAverage : delta <= \u222b x, tailMass x \u2202Q) : exists x, delta <= tailMass x"
     },
     {
@@ -28518,7 +28742,7 @@
       "name": "exists_cdfTail_ge_of_integral_ge",
       "full_name": "BanditRLProof.LowerBounds.exists_cdfTail_ge_of_integral_ge",
       "file": "BanditRLProof/LowerBounds/HighProbability.lean",
-      "line": 78,
+      "line": 977,
       "statement": "theorem exists_cdfTail_ge_of_integral_ge {Instance : Type*} [MeasurableSpace Instance] (Q : Measure Instance) [IsProbabilityMeasure Q] (cdf : Instance -> Real -> Real) (threshold delta : Real) (hIntegrable : Integrable (fun x => 1 - cdf x threshold) Q) (hAverage : delta <= \u222b x, 1 - cdf x threshold \u2202Q) : exists x, delta <= 1 - cdf x threshold"
     },
     {
@@ -28526,7 +28750,7 @@
       "name": "measureReal_diff_ge_delta",
       "full_name": "BanditRLProof.LowerBounds.measureReal_diff_ge_delta",
       "file": "BanditRLProof/LowerBounds/HighProbability.lean",
-      "line": 96,
+      "line": 995,
       "statement": "theorem measureReal_diff_ge_delta {Omega : Type*} [MeasurableSpace Omega] (P : Measure Omega) [IsFiniteMeasure P] (pullSmall clippingBad : Set Omega) (delta : Real) (hPullSmall : 2 * delta <= P.real pullSmall) (hClippingBad : P.real clippingBad <= delta) : delta <= P.real (pullSmall \\ clippingBad)"
     },
     {
@@ -28534,7 +28758,7 @@
       "name": "adversarialRegretLowerExpression",
       "full_name": "BanditRLProof.LowerBounds.adversarialRegretLowerExpression",
       "file": "BanditRLProof/LowerBounds/HighProbability.lean",
-      "line": 111,
+      "line": 1010,
       "statement": "def adversarialRegretLowerExpression (horizon pullCount clippingCount : Nat) (gap : Real) : Real"
     },
     {
@@ -28542,7 +28766,7 @@
       "name": "adversarialRegretLowerExpression_ge_quarter",
       "full_name": "BanditRLProof.LowerBounds.adversarialRegretLowerExpression_ge_quarter",
       "file": "BanditRLProof/LowerBounds/HighProbability.lean",
-      "line": 119,
+      "line": 1018,
       "statement": "theorem adversarialRegretLowerExpression_ge_quarter (horizon pullCount clippingCount : Nat) (gap : Real) (hGap : 0 <= gap) (hPull : (pullCount : Real) <= (horizon : Real) / 2) (hClipping : (clippingCount : Real) <= (horizon : Real) / 4) : gap * ((horizon : Real) / 4) <= adversarialRegretLowerExpression horizon pullCount clippingCount gap"
     },
     {
@@ -28550,8 +28774,168 @@
       "name": "randomRegret_ge_quarter_of_clippingDecomposition",
       "full_name": "BanditRLProof.LowerBounds.randomRegret_ge_quarter_of_clippingDecomposition",
       "file": "BanditRLProof/LowerBounds/HighProbability.lean",
-      "line": 133,
+      "line": 1032,
       "statement": "theorem randomRegret_ge_quarter_of_clippingDecomposition (horizon pullCount clippingCount : Nat) (gap randomRegret : Real) (hGap : 0 <= gap) (hPull : (pullCount : Real) <= (horizon : Real) / 2) (hClipping : (clippingCount : Real) <= (horizon : Real) / 4) (hSource : adversarialRegretLowerExpression horizon pullCount clippingCount gap <= randomRegret) : gap * ((horizon : Real) / 4) <= randomRegret"
+    },
+    {
+      "kind": "def",
+      "name": "clipUnitReward",
+      "full_name": "BanditRLProof.LowerBounds.clipUnitReward",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1047,
+      "statement": "def clipUnitReward (x : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "clipUnitReward_mono",
+      "full_name": "BanditRLProof.LowerBounds.clipUnitReward_mono",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1049,
+      "statement": "theorem clipUnitReward_mono {x y : Real} (hxy : x <= y) : clipUnitReward x <= clipUnitReward y"
+    },
+    {
+      "kind": "theorem",
+      "name": "clipUnitReward_eq_self",
+      "full_name": "BanditRLProof.LowerBounds.clipUnitReward_eq_self",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1054,
+      "statement": "theorem clipUnitReward_eq_self {x : Real} (hx0 : 0 <= x) (hx1 : x <= 1) : clipUnitReward x = x"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialHardShift",
+      "full_name": "BanditRLProof.LowerBounds.adversarialHardShift",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1060,
+      "statement": "def adversarialHardShift {alternatives : Nat} (gap : Real) (distinguished : Fin alternatives) (arm : Fin (alternatives + 1)) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialClippedGaussianReward",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClippedGaussianReward",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1069,
+      "statement": "def adversarialClippedGaussianReward {horizon alternatives : Nat} (eta : Fin horizon -> Real) (gap : Real) (distinguished : Fin alternatives) (t : Fin horizon) (arm : Fin (alternatives + 1)) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialCenteredNoiseLaw",
+      "full_name": "BanditRLProof.LowerBounds.adversarialCenteredNoiseLaw",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1080,
+      "statement": "noncomputable def adversarialCenteredNoiseLaw (horizon : Nat) (sigma : Real) : Measure (Fin horizon -> Real)"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialClaim17_6Gap",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClaim17_6Gap",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1087,
+      "statement": "noncomputable def adversarialClaim17_6Gap (horizon alternatives : Nat) (sigma delta : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialHardShift_distinguished",
+      "full_name": "BanditRLProof.LowerBounds.adversarialHardShift_distinguished",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1093,
+      "statement": "theorem adversarialHardShift_distinguished {alternatives : Nat} (gap : Real) (distinguished : Fin alternatives) : adversarialHardShift gap distinguished distinguished.succ = 2 * gap"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialHardShift_nonneg",
+      "full_name": "BanditRLProof.LowerBounds.adversarialHardShift_nonneg",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1098,
+      "statement": "theorem adversarialHardShift_nonneg {alternatives : Nat} (gap : Real) (hgap : 0 <= gap) (distinguished : Fin alternatives) (arm : Fin (alternatives + 1)) : 0 <= adversarialHardShift gap distinguished arm"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialHardShift_le_two_mul",
+      "full_name": "BanditRLProof.LowerBounds.adversarialHardShift_le_two_mul",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1108,
+      "statement": "theorem adversarialHardShift_le_two_mul {alternatives : Nat} (gap : Real) (hgap : 0 <= gap) (distinguished : Fin alternatives) (arm : Fin (alternatives + 1)) : adversarialHardShift gap distinguished arm <= 2 * gap"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialHardShift_le_gap_of_ne",
+      "full_name": "BanditRLProof.LowerBounds.adversarialHardShift_le_gap_of_ne",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1120,
+      "statement": "theorem adversarialHardShift_le_gap_of_ne {alternatives : Nat} (gap : Real) (hgap : 0 <= gap) (distinguished : Fin alternatives) (arm : Fin (alternatives + 1)) (hne : arm \u2260 distinguished.succ) : adversarialHardShift gap distinguished arm <= gap"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialClippedGaussianReward_distinguished_mono",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClippedGaussianReward_distinguished_mono",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1128,
+      "statement": "theorem adversarialClippedGaussianReward_distinguished_mono {horizon alternatives : Nat} (eta : Fin horizon -> Real) (gap : Real) (hgap : 0 <= gap) (distinguished : Fin alternatives) (t : Fin horizon) (arm : Fin (alternatives + 1)) : adversarialClippedGaussianReward eta gap distinguished t arm <= adversarialClippedGaussianReward eta gap distinguished t distinguished.succ"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialClippedGaussianReward_gap_of_not_clipped",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClippedGaussianReward_gap_of_not_clipped",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1143,
+      "statement": "theorem adversarialClippedGaussianReward_gap_of_not_clipped {horizon alternatives : Nat} (eta : Fin horizon -> Real) (gap : Real) (hgap : 0 <= gap) (distinguished : Fin alternatives) (t : Fin horizon) (arm : Fin (alternatives + 1)) (hne : arm \u2260 distinguished.succ) (hgood : |eta t| < 1 / 2 - 2 * gap) : gap <= adversarialClippedGaussianReward eta gap distinguished t distinguished.succ - adversarialClippedGaussianReward eta gap distinguished t arm"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialPullCountReal",
+      "full_name": "BanditRLProof.LowerBounds.adversarialPullCountReal",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1177,
+      "statement": "def adversarialPullCountReal {horizon alternatives : Nat} (actions : Fin horizon -> Fin (alternatives + 1)) (distinguished : Fin alternatives) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialClippingCountReal",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClippingCountReal",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1183,
+      "statement": "def adversarialClippingCountReal {horizon : Nat} (eta : Fin horizon -> Real) (gap : Real) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialComparatorRegret",
+      "full_name": "BanditRLProof.LowerBounds.adversarialComparatorRegret",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1187,
+      "statement": "def adversarialComparatorRegret {horizon alternatives : Nat} (reward : Fin horizon -> Fin (alternatives + 1) -> Real) (actions : Fin horizon -> Fin (alternatives + 1)) (comparator : Fin (alternatives + 1)) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialRandomRegret",
+      "full_name": "BanditRLProof.LowerBounds.adversarialRandomRegret",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1196,
+      "statement": "noncomputable def adversarialRandomRegret {horizon alternatives : Nat} (reward : Fin horizon -> Fin (alternatives + 1) -> Real) (actions : Fin horizon -> Fin (alternatives + 1)) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialComparatorRegret_le_randomRegret",
+      "full_name": "BanditRLProof.LowerBounds.adversarialComparatorRegret_le_randomRegret",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1204,
+      "statement": "theorem adversarialComparatorRegret_le_randomRegret {horizon alternatives : Nat} (reward : Fin horizon -> Fin (alternatives + 1) -> Real) (actions : Fin horizon -> Fin (alternatives + 1)) (comparator : Fin (alternatives + 1)) : adversarialComparatorRegret reward actions comparator <= adversarialRandomRegret reward actions"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialComparatorRegret_ge_eq17_8",
+      "full_name": "BanditRLProof.LowerBounds.adversarialComparatorRegret_ge_eq17_8",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1217,
+      "statement": "theorem adversarialComparatorRegret_ge_eq17_8 {horizon alternatives : Nat} (eta : Fin horizon -> Real) (gap : Real) (hgap : 0 <= gap) (distinguished : Fin alternatives) (actions : Fin horizon -> Fin (alternatives + 1)) : gap * ((horizon : Real) - adversarialPullCountReal actions distinguished - adversarialClippingCountReal eta gap) <= adversarialComparatorRegret (adversarialClippedGaussianReward eta gap distinguished) actions distinguished.succ"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialRandomRegret_ge_eq17_8",
+      "full_name": "BanditRLProof.LowerBounds.adversarialRandomRegret_ge_eq17_8",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1266,
+      "statement": "theorem adversarialRandomRegret_ge_eq17_8 {horizon alternatives : Nat} (eta : Fin horizon -> Real) (gap : Real) (hgap : 0 <= gap) (distinguished : Fin alternatives) (actions : Fin horizon -> Fin (alternatives + 1)) : gap * ((horizon : Real) - adversarialPullCountReal actions distinguished - adversarialClippingCountReal eta gap) <= adversarialRandomRegret (adversarialClippedGaussianReward eta gap distinguished) actions"
     },
     {
       "kind": "abbrev",

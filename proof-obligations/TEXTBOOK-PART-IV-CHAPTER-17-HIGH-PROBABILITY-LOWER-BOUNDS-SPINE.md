@@ -19,13 +19,13 @@ Scenario cards: `SCN-STOCHASTIC-FINITE`, `SCN-ADVERSARIAL-FINITE`
 | `CH17-EQ-17-8-EXPRESSION` | exact RHS count expression | natural casts/order | real arithmetic | `MLIB-ORDER-ALGEBRA` | define source lower expression | construction semantics separate | project-local | `adversarialRegretLowerExpression` | focused Lean | compiled |
 | `CH17-EQ-17-8-QUARTER` | count bounds leave `Delta n/4` | previous expression | ordered multiplication | `MLIB-ORDER-ALGEBRA` | subtract half and quarter, multiply by nonnegative gap | nonnegative gap | project-local | `adversarialRegretLowerExpression_ge_quarter` | focused Lean | compiled |
 | `CH17-EQ-17-8-TRANSFER` | source comparison implies random-regret threshold | previous leaf | order transitivity | textbook card | compose with explicit construction premise | Eq. (17.8) remains premise | project-local conditional | `randomRegret_ge_quarter_of_clippingDecomposition` | focused Lean | compiled |
-| `CH17-HISTORY` | original-law expected-pull/history information | compiled Ch15 Lemma 15.1 | compiled stochastic policy/history | Chapter 17 tail-event consumer | change one Gaussian arm and instantiate the history identity | same randomized policy; first-law pulls | connected blocker | none | focused Lean | blocked downstream consumer |
-| `CH17-THM-17-1` | exact stochastic tail lower bound | history, BH, least arm, tuning | Ch13--15 | source card | choose gap, one-arm change, sum two tail events | exact `n,k,B,delta` and class | source terminal | reserved | focused Lean | blocked |
-| `CH17-COR-17-2` | exact Eq. (17.7) | Theorem 17.1 | expectation/tail bound | source card | contradiction and choose source `B` | Eq. (17.6) exact | source terminal | reserved | focused Lean | blocked |
-| `CH17-COR-17-3` | no single all-confidence policy | Theorem 17.1 | layer-cake/tail integral | `MLIB-MEASURE-INTEGRAL` | integrate tail and contradict Theorem 17.1 | real `p in (0,1)`, strict `<delta` | source terminal/local analytic gap | reserved | focused Lean | blocked |
-| `CH17-CLIPPED-NORMAL` | reward-matrix hard family and interaction law | Gaussian/clipping/kernels | distribution maps | probability cards | preserve within-round dependence and across-time IID | Borel bounded matrix; same policy | semantic interface gap | none | focused Lean | blocked |
+| `CH17-HISTORY` | original-law expected-pull/history information | compiled Ch15 Lemma 15.1 | compiled stochastic policy/history | Chapter 17 tail-event consumer | change one Gaussian arm and instantiate the history identity | same randomized policy; first-law pulls | project-local consumer | theorem 17.1 proof route | focused Lean | compiled |
+| `CH17-THM-17-1` | exact stochastic tail lower bound | history, BH, least arm, tuning | Ch13--15 | source card | quantify the premise over the full gap-at-most-one class, restrict it to the unit-cube hard family, choose gap, one-arm change, sum two tail events | exact `n,k,B,delta` and full source class | source terminal | `gaussianRandomPseudoRegret_ge_theorem17_1` | focused Lean | compiled |
+| `CH17-COR-17-2` | exact Eq. (17.7) | Theorem 17.1 | expectation/tail bound | source card | contradiction and choose source `B=sqrt(2 log(1/(4delta)))` | Eq. (17.6) exact | source terminal | `gaussianRandomPseudoRegret_ge_corollary17_2` | focused Lean | compiled |
+| `CH17-COR-17-3` | no single all-confidence policy | Theorem 17.1 | layer-cake/tail integral and `integral_exp_neg_rpow_inv_le_one` | `MLIB-MEASURE-INTEGRAL`, Gamma convexity | rescale strict tail, integrate, and contradict Theorem 17.1 | real `p in (0,1)`, strict `<delta` | Gamma integral leaf compiled; rescaling/calibration gap | reserved terminal | focused Lean | blocked |
+| `CH17-CLIPPED-NORMAL` | reward-matrix hard family and interaction law | Gaussian/clipping/kernels | `Measure.pi`, clipping map | probability cards | preserve within-round dependence and across-time IID | bounded path compiled; policy coupling still open | partial semantic interface | `adversarialClippedGaussianReward`, `adversarialCenteredNoiseLaw` | focused Lean | partial |
 | `CH17-CLAIM-17-6` | `P_Qi(T_i<n/2)>=2delta` | hard family and history KL | Chapter 14--15 route | textbook/paper route | least arm plus entropy calculation | exact `Delta`; same policy | connected blocker | reserved | focused Lean | blocked |
-| `CH17-EQ-17-8` | construction-level pathwise regret comparison | clipped reward coordinates | finite sums/indicators | textbook/paper route | show chosen arm reward dominates except pull/clipping rounds | exact clipping map | source terminal | reserved | focused Lean | blocked |
+| `CH17-EQ-17-8` | construction-level pathwise regret comparison | clipped reward coordinates | finite sums/indicators and finite supremum | textbook/paper route | show chosen arm reward dominates except pull/clipping rounds | exact clipping map and shared centered noise | source terminal | `adversarialRandomRegret_ge_eq17_8` | focused Lean | compiled |
 | `CH17-CLAIM-17-7` | clipping count tail at most `delta` | clipped Gaussian tails | concentration/finite union | `MLIB-PROBABILITY-SUBGAUSSIAN` | tail each boundary hit and sum/count | exact constants and horizon condition | missing concentration result | reserved | focused Lean | blocked |
 | `CH17-THM-17-4` | deterministic reward-matrix witness | Claims 17.5--17.7 and Eq. (17.8) | first moment and tuning | source/paper route | good-event subtraction, calibrate `Delta`, extract witness | universal constants and CDF law | source terminal | reserved | focused Lean | blocked |
 | `CH17-CANARY` | root-import typed applications and axiom reports | compiled slice | `BanditRLProof` root | local declarations | instantiate nontrivial threshold and probability leaves | no placeholders | project-local | `Tests/TextbookPartIVChapter17Canary.lean` | Tests | verified on Linux PR/main |
@@ -34,14 +34,12 @@ Scenario cards: `SCN-STOCHASTIC-FINITE`, `SCN-ADVERSARIAL-FINITE`
 
 ## Failure classification
 
-The stochastic source-terminal failure is a `connected blocker`: Chapter 15's
-conditional kernel-KL integral, canonical stochastic-policy history law, and
-Lemma 15.1 identity now compile, but the Chapter 17 tail-event consumer is
-absent. Corollary 17.3 also has a `local Lean lemma gap` for its exact tail
-integral. The adversarial route has a `semantic interface gap` for the
-clipped-normal reward-matrix/history law and a `missing regularity contract`
-and concentration result for Claim 17.7. No theorem target is weakened in
-response.
+Theorem 17.1 and Corollary 17.2 now compile through Chapter 15's exact
+same-policy history KL identity. Corollary 17.3 retains a `local Lean lemma
+gap` for its exact layer-cake/Gamma integral. The adversarial path construction
+and Eq. (17.8) compile, while Claim 17.6 still needs the policy-coupled
+pushed-forward hard law and Claim 17.7 still needs its exact Gaussian
+clipping-count concentration. No theorem target is weakened in response.
 
 ## Reviewer notes
 
