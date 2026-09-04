@@ -1082,6 +1082,18 @@
       ]
     },
     {
+      "full_name": "BanditRLProof.LowerBounds.klDiv_map_le",
+      "chapter": "foundations",
+      "plain": "A measurable observation of two finite measures cannot have more relative entropy than the original laws.",
+      "math": "D(\\mu\\circ f^{-1}\\Vert\\nu\\circ f^{-1})\\le D(\\mu\\Vert\\nu).",
+      "intuition": "Coarsening the available information can only make two laws harder to distinguish.",
+      "why": "This is the reusable data-processing half of Chapter 15 Exercise 15.7 and also turns Lemma 15.1 into bounds for deterministic-history statistics.",
+      "position": "It is a generic finite-measure theorem and a dependency of the stopping-time exercise, not the stopped-history inequality itself.",
+      "proof_idea": "Split off infinite source KL. In the finite branch, express the pushed-forward Radon–Nikodym density as a conditional expectation, apply Jensen to the convex KL integrand, and compare the resulting integrals.",
+      "lean_notes": "The theorem needs only finite measures and a measurable map. It does not require injectivity, probability normalization, finite KL as a premise, a filtration, or a stopping time.",
+      "dependencies": []
+    },
+    {
       "full_name": "BanditRLProof.LowerBounds.llr_gaussianReal_one_ae",
       "chapter": "foundations",
       "plain": "Under the first unit-variance Gaussian law, the log Radon–Nikodym derivative toward a second unit-variance Gaussian is an affine function of the observation.",

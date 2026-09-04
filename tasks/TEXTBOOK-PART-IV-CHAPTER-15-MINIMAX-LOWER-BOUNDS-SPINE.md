@@ -85,6 +85,7 @@ Target files:
 
 - `BanditRLProof/LowerBounds/ConditionalKernelKL.lean`;
 - `BanditRLProof/LowerBounds/BanditHistoryKL.lean`;
+- `BanditRLProof/LowerBounds/BanditHistoryDataProcessing.lean`;
 - `BanditRLProof/LowerBounds/Minimax.lean`;
 - `BanditRLProof/LowerBounds/GaussianMinimax.lean`.
 
@@ -102,6 +103,8 @@ LowerBounds.klDiv_compProd_same_left_eq_lintegral_klDiv_of_measurable
 LowerBounds.canonicalBanditHistoryMeasure
 LowerBounds.canonicalRealizedExpectedPullCountThrough
 LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum
+LowerBounds.klDiv_map_le
+LowerBounds.klDiv_observedBanditHistory_le_expectedPulls_sum
 LowerBounds.UnitGaussianBanditEnvironment
 LowerBounds.gaussianExpectedPseudoRegret
 LowerBounds.exists_gaussianMinimax_historyKL_le_half
@@ -159,7 +162,48 @@ pull count.  The Gaussian endpoint then constructs the least-explored
 alternative, proves the base-event and changed-complement regret inequalities,
 bounds the base-to-changed history KL by `1/2`, and closes the exact `1/27`
 existence and minimax conclusions.  Optional chapter material and the distinct
-Chapter 16--17 consumers remain outside this scoped terminal.
+Chapter 16--17 consumers remain outside this scoped terminal. The new
+`BanditHistoryDataProcessing` module additionally proves generic measurable-
+map KL contraction and its deterministic-history Lemma 15.1 consumer. It does
+not yet construct the stopped-history information law required by Exercise
+15.7.
+
+## Chapter-completion contract (2026-09-04 audit)
+
+The official author PDF separates the chapter into two theorem-bearing body
+sections, two expository/reference sections, and one exercise section.  The
+completion labels therefore have two deliberately different meanings:
+
+- **Core theorem spine: compiled.**  The only numbered result in §15.1 is
+  Lemma 15.1 / Eq. (15.1), and the only numbered result in §15.2 is Theorem
+  15.2.  Both exact source terminals and the theorem's worst-case/minimax
+  consequences compile with the source direction, quantifiers, Gaussian
+  class, horizon condition, and constant unchanged.
+- **Whole chapter coverage: partial.**  §15.3 is an informal Notes discussion
+  whose Fisher-information Taylor argument explicitly assumes unspecified
+  differentiability/interchange regularity; §15.4 is bibliographic context;
+  and §15.5 contains Exercises 15.1--15.8.  These are mapped but are not
+  silently counted as proved by the main theorem spine.
+- **Optional extension priority: Exercise 15.7.**  The bounded stopping-time
+  divergence inequality is not required to call the two body sections
+  complete, but it is the most reusable omitted item for Chapters 16--17.  Its
+  route is split into (i) KL data processing for a measurable observation,
+  (ii) an exact stopped-history information identity/bound, and (iii) the
+  source-facing random-element consumer.  Each node must keep boundedness,
+  stopping-time measurability, first-law expectation, and the `nu -> nu'` KL
+  direction explicit.  A compiled data-processing leaf alone is progress,
+  not Exercise 15.7.
+- The first reusable Exercise 15.7 dependency now compiles as
+  `klDiv_map_le`, with the deterministic-history corollary
+  `klDiv_observedBanditHistory_le_expectedPulls_sum`.  The proof uses the
+  mapped Radon--Nikodym derivative as a conditional expectation and Jensen's
+  inequality for `klFun`; it does not assume finite source KL.  This closes
+  only node (i).  Nodes (ii)--(iii), the bounded stopped-history information
+  bound and factorization of an `F_tau`-measurable observation, remain planned.
+- Exercises 15.1--15.6 and 15.8 remain optional independent targets.  In
+  particular, the general-action-space identity in Exercise 15.8 cannot be
+  inferred from the compiled finite-action sum, and the small-horizon,
+  Bernoulli, MOSS, and ETC lower bounds are not Chapter 15 claims of this task.
 
 ## Proof obligations
 
@@ -178,6 +222,10 @@ Chapter 16--17 consumers remain outside this scoped terminal.
   bound compile as numeric dependency leaves.
 - [x] Regret/event identities connect the compiled tuning to Theorem 15.2.
 - [x] The minimax corollary compiles through the Chapter 13 semantic surface.
+- [x] Measurable-map KL data processing and the deterministic-history
+  observation corollary compile as the first Exercise 15.7 dependency.
+- [ ] The bounded stopped-history KL bound and final `F_tau`-measurable
+  random-element inequality for Exercise 15.7 remain open.
 - [x] Root import, focused canary, Tests, scans, full harness, export, evidence
   indexes, documentation, and website build/check pass for this extension.
 - [x] Local desktop/mobile checks pass for this extension snapshot.

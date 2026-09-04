@@ -25,6 +25,9 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH15-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | distinguish path/tool failures from proof failures | repository | n/a | full check | verified locally |
 | `CH15-EVIDENCE-SITE` | export/index/results/highlights/readings/map/README/site agree | compiled Lemma 15.1 and Theorem 15.2 terminals | harness/site scripts | repository | generated evidence plus maintained content | only gated declarations marked compiled | repository | n/a | site/browser | verified locally |
 | `CH15-REVIEW` | independent theorem/Lean audit | all artifacts | source, Lean, site | all above | check quantifiers, KL direction, singular fibres, policy consistency, indexing | no unresolved P0--P3 | repository | current review | independent review | verified |
+| `CH15-EX15-7-DATA-PROCESSING` | measurable observations cannot increase KL | measure KL and pushforward APIs | `InformationTheory.klDiv`; `Measure.map`; `toReal_rnDeriv_map`; conditional Jensen for `klFun` | `MLIB-MEASURE-INTEGRAL`; source Exercises 14.9--14.10 | identify the mapped RN derivative with a conditional expectation and apply Jensen; keep the infinite source-KL branch explicit | measurable observation; finite source laws; preserve `P -> Q` direction; no injectivity or finite-KL premise | Mathlib-candidate project leaf | `klDiv_map_le`; `klDiv_observedBanditHistory_le_expectedPulls_sum` | focused Lean/canary | compiled locally |
+| `CH15-EX15-7-STOPPED-HISTORY` | KL of the bounded stopped history is at most the first-law expected arm information accumulated through the stop | Lemma 15.1 plus stopped-prefix law | canonical trajectory/prefix maps; `IsStoppingTime`; finite sums/lintegrals | `MLIB-MARTINGALE-STOCHASTIC`; `MLIB-MEASURE-INTEGRAL`; source Exercise 15.7 | decompose the finite stopping fibres or construct the stopped history law, then reuse the same-policy one-step KL costs only through the realized stop | bounded positive stopping time; stopping filtration; common randomized policy; countably generated reward; first-law expectation; singular arms | project-local/source extension | reserved | focused Lean | planned |
+| `CH15-EX15-7-OBSERVATION` | source random-element inequality `D(P_nu^X,P_nu'^X) <= sum_i E_nu[T_i(tau)]D(P_i,P_i')` | preceding two nodes | stopped-history observation map | source Exercise 15.7 | factor any `F_tau`-measurable observation through the stopped history and apply data processing | countably generated observation target or explicit factorization; all stopped-history contracts above | source extension | reserved | canary/full gate | planned |
 | `CH15-REMOTE` | PR, main Actions, Pages, live Chapter 15 | accepted local partial chapter | GitHub workflow | repository | branch PR, never direct main push | new PR/run/deploy | repository | n/a | deployment | pending |
 
 ## Failure classification
@@ -47,7 +50,9 @@ dynamic leaf; connected blocker; Windows path-length/build-artifact failure.
   unit mean cube. It is not a theorem conditional on Eq. (15.1) as a premise.
 - The `1/27` constant, `sqrt((k-1)n)` order, `k>1`, and `n>=k-1` conditions are
   part of the target contract.
-- Exercise 15.7's stopping-time result is outside the terminal scope.
+- Exercise 15.7's full stopping-time result is outside the terminal scope. Its
+  measurable-observation data-processing leaf now compiles, but the stopped-
+  history information bound and `F_tau` factorization remain separate gaps.
 
 ## Failure policy
 

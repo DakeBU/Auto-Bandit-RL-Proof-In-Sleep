@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-02T06:31:27+00:00",
+  "generated": "2026-09-04T03:11:47+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -5198,7 +5198,7 @@
       "name": "twoArmOptimalPullCountBelowEvent_charge_mul_probability_le_integral",
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCountBelowEvent_charge_mul_probability_le_integral",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-      "line": 331,
+      "line": 333,
       "statement": "theorem twoArmOptimalPullCountBelowEvent_charge_mul_probability_le_integral {Env : Type v} [MeasurableSpace Env] (mu : Measure (Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real))) [IsFiniteMeasure mu] (Delta : Real) (hDelta : 0 \u2264 Delta) (m horizon : Nat) : Delta * ((horizon - m : Nat) : Real) * mu.real (twoArmOptimalPullCountBelowEvent (Env := Env) m horizon) \u2264 integral mu (twoArmSampledPseudoRegret (Env := Env) Delta horizon)"
     },
     {
@@ -5206,7 +5206,7 @@
       "name": "twoArmStepOneStarvationEvent_charge_mul_probability_le_integral",
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_charge_mul_probability_le_integral",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-      "line": 394,
+      "line": 396,
       "statement": "theorem twoArmStepOneStarvationEvent_charge_mul_probability_le_integral {Env : Type v} [MeasurableSpace Env] (mu : Measure (Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real))) [IsFiniteMeasure mu] (eta Delta : Real) (hDelta : 0 \u2264 Delta) (cutoff n horizon : Nat) : Delta * ((horizon - n : Nat) : Real) * mu.real (twoArmStepOneStarvationEvent (Env := Env) eta cutoff n horizon) \u2264 integral mu (twoArmSampledPseudoRegret (Env := Env) Delta horizon)"
     },
     {
@@ -5214,7 +5214,7 @@
       "name": "twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral",
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-      "line": 449,
+      "line": 451,
       "statement": "theorem twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta Delta : Real) (hDelta : 0 <= Delta) (cutoff n horizon : Nat) : Delta * ((horizon - n : Nat) : Real) * (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)).real (twoArmStepOneStarvationEvent (Env := Unit) eta cutoff n horizon) <= integral (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) (twoArmSampledPseudoRegret (Env := Unit) Delta horizon)"
     },
     {
@@ -27632,6 +27632,22 @@
       "file": "BanditRLProof/Literature.lean",
       "line": 31,
       "statement": "def lmlBanditDeclarationCards : List RegretBoundCard"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_map_le",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_map_le",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryDataProcessing.lean",
+      "line": 38,
+      "statement": "theorem klDiv_map_le {Source Target : Type*} [MeasurableSpace Source] [MeasurableSpace Target] (mu nu : Measure Source) [IsFiniteMeasure mu] [IsFiniteMeasure nu] (observe : Source -> Target) (hobserve : Measurable observe) : InformationTheory.klDiv (mu.map observe) (nu.map observe) <= InformationTheory.klDiv mu nu"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_observedBanditHistory_le_expectedPulls_sum",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_observedBanditHistory_le_expectedPulls_sum",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryDataProcessing.lean",
+      "line": 145,
+      "statement": "theorem klDiv_observedBanditHistory_le_expectedPulls_sum {K : Nat} {Reward : Type v} {Observation : Type w} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] [MeasurableSpace Observation] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (lastRound : Nat) (observe : History.FinitePairHistory (Fin K) Reward lastRound -> Observation) (hobserve : Measurable observe) : InformationTheory.klDiv ((canonicalBanditHistoryMeasure algorithm armLaw lastRound).map observe) ((canonicalBanditHistoryMeasure algorithm referenceArmLaw lastRound).map observe) <= \u2211 arm : Fin K, canonicalRealizedExpectedPullCountThrough algorithm armLaw lastRound arm * InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm)"
     },
     {
       "kind": "def",

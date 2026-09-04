@@ -1,13 +1,33 @@
 % Auto-generated proof export skeleton for TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE
-\section{Chapter 15 Gaussian KL and tuning slice with exact minimax blocker}
+\section{Chapter 15 Lemma 15.1, Theorem 15.2, and Exercise 15.7 data-processing leaf}
 
 \paragraph{Status.}
-This note is a synchronized natural-language export for task \texttt{TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE}.
-Only Lean declarations that pass \texttt{lake build \&\& lake build Tests} should be
-stated as proved.
+This note is synchronized from locally compiled declarations. Lemma~15.1 and
+Theorem~15.2 are compiled; Exercise~15.7 remains partial.
 
 \paragraph{Lean declarations.}
-Add theorem names here.
+\texttt{LowerBounds.banditHistoryRelativeEntropy\_eq\_expectedPulls\_sum},
+\texttt{LowerBounds.finiteArmedGaussianMinimaxLowerBound},
+\texttt{LowerBounds.unitGaussianMinimaxExpectedPseudoRegret\_ge},
+\texttt{LowerBounds.klDiv\_map\_le}, and
+\texttt{LowerBounds.klDiv\_observedBanditHistory\_le\_expectedPulls\_sum}.
 
 \paragraph{Proof map.}
-Translate the compiled Lean proof into paper-readable mathematics here.
+Expanding the canonical history law one round at a time cancels the common
+randomized policy kernel. The remaining conditional reward divergence is
+averaged under the first environment and regrouped by arm, proving Lemma~15.1
+with its directed KL and first-law expected pull counts.
+
+For Theorem~15.2, the least-explored alternative and the unit-Gaussian KL
+formula bound the base-to-changed history divergence by $1/2$ at the source
+gap. Bretagnolle--Huber applied to the source pull-count event forces one of
+the two expected pseudo-regrets above
+$\sqrt{(k-1)n}/27$. The Lean endpoint constructs the unit-cube witness for
+every randomized policy and proves the worst-case/minimax consequence.
+
+The generic data-processing leaf identifies the mapped Radon--Nikodym density
+with a conditional expectation and applies conditional Jensen to the convex
+KL integrand, with a separate infinite-KL branch. Its deterministic-history
+corollary follows from Lemma~15.1. It does not prove Exercise~15.7: the stopped-
+history information bound and factorization of an arbitrary
+$\mathcal F_\tau$-measurable random element remain planned.
