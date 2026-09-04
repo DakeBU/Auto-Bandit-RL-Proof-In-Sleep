@@ -113,30 +113,34 @@
       "slug": "chapter-14-information-theory",
       "title": "Foundations of Information Theory",
       "status": "partial",
-      "status_note": "The source-faithful §14.2 relative-entropy and Bretagnolle–Huber spine is compiled. Entropy/source coding in §14.1 and full sub-sigma-algebra data processing remain outside this scoped gate.",
+      "core_status": "compiled",
+      "core_status_label": "Compiled Chapter 14 leaves",
+      "chapter_status_label": "Whole chapter coverage",
+      "status_note": "Finite prefix-code and entropy definitions, the Kraft adapter, KL separation, full sub-sigma-algebra data processing, event data processing, and Bretagnolle–Huber compile. Whole-chapter coverage remains partial because the Huffman/source-coding terminals and several §14.2 body equivalences/examples are still open.",
       "print_pages": "160–169",
       "pdf_pages": "195–206",
       "pdf_page": 195,
       "sections": [
-        "§14.1 Entropy and Optimal Coding (CUP starts p. 160 / author-online pp. 186–188 / PDF pp. 195–197; pedagogical mapping only)",
-        "§14.2 Relative Entropy (CUP starts p. 162 / author-online pp. 188–191 / PDF pp. 197–200; formal target window)",
+        "§14.1 Entropy and Optimal Coding (CUP starts p. 160 / author-online pp. 186–188 / PDF pp. 195–197; definitions and Kraft bridge compiled, optimal-coding terminals open)",
+        "§14.2 Relative Entropy (CUP starts p. 162 / author-online pp. 188–191 / PDF pp. 197–200; main lower-bound-facing surface compiled, exact remaining gaps listed below)",
         "§14.3 Notes (CUP p. 165 / author-online pp. 191–194 / PDF pp. 200–203)",
         "§14.4 Bibliographic Remarks (CUP p. 167 / author-online p. 194 / PDF p. 203)",
         "§14.5 Exercises (CUP pp. 167–169 / author-online pp. 194–197 / PDF pp. 203–206)"
       ],
       "learning_goals": [
+        "Read finite binary prefix codes, expected length, entropy in bits and nats, and the exact boundary between Kraft and the missing coding terminals.",
         "Read relative entropy as an extended-real, direction-sensitive comparison of probability measures.",
         "Distinguish the absolutely-continuous log-likelihood branch from singular support mismatch.",
-        "Map a measurable event to Bernoulli probabilities without increasing KL.",
+        "Use conditional Jensen to see why restriction to any sub-sigma-algebra cannot increase KL, then specialize to an event.",
         "Derive the unconditional Bretagnolle–Huber testing bound, including the exp(-infinity)=0 branch.",
-        "Keep general coding theory and adaptive bandit-history decomposition outside the compiled §14.2 window."
+        "Keep Huffman/source-coding optimality and adaptive bandit-history decomposition outside the compiled claims."
       ],
       "definitions": [
         {
           "name": "Entropy and optimal coding",
           "math": "H(P)=-\\sum_x P(x)\\log P(x).",
-          "fallback": "Entropy is the expected information content of a discrete outcome and motivates the chapter's coding discussion.",
-          "status": "planned"
+          "fallback": "Finite entropy in bits and nats, binary prefix codes, expected code length, and a Kraft bound compile; Huffman optimality and the source-coding theorem do not.",
+          "status": "partial"
         },
         {
           "name": "Extended-real relative entropy",
@@ -162,7 +166,7 @@
         "kind": "proof pseudocode",
         "steps": [
           {"title": "Split the KL branches", "detail": "Use Mathlib's exact absolute-continuity and log-likelihood integrability characterization; retain infinity on support mismatch."},
-          {"title": "Coarsen to one event", "detail": "Restrict both measures to A and its complement and prove d(P(A),Q(A)) is at most D(P,Q)."},
+          {"title": "Coarsen observations", "detail": "Apply conditional Jensen to the Radon–Nikodym density after restriction to any sub-sigma-algebra; separately specialize to A and its complement."},
           {"title": "Prove the binary bound", "detail": "Lower-bound binary likelihood affinity by exp(-d/2), then compare squared affinity with the two testing errors."},
           {"title": "Restore all endpoints", "detail": "Handle Bernoulli zero/one support cases through the extended-real endpoint convention."},
           {"title": "Lift to measures", "detail": "Use antitonicity of the testing scale and Q(A complement)=1-Q(A) to obtain the source theorem in the P-to-Q KL direction."}
@@ -174,14 +178,20 @@
         "math": "P(A)+Q(A^{\\mathrm c})\\ge\\tfrac12\\exp\\{-D(P\\Vert Q)\\}",
         "fallback": "For two probability measures and any measurable event, the sum of the P error on A and the Q error on its complement is at least one half times exponential negative relative entropy.",
         "plain": "Observing an event cannot make two laws easier to distinguish than their full relative entropy permits.",
-        "boundary": "BanditRLProof.LowerBounds.bretagnolleHuber compiles this unconditional measure/event theorem with D(P,Q), Q(A complement), and an explicit zero scale at infinite KL. It does not claim §14.1 source coding, full Exercise 14.10, or the Chapter 15 adaptive-history chain rule."
+        "boundary": "BanditRLProof.LowerBounds.bretagnolleHuber compiles this unconditional measure/event theorem with D(P,Q), Q(A complement), and an explicit zero scale at infinite KL. Exercise 14.10 also compiles separately as relativeEntropy_trim_le. Neither §14.1 Huffman/source coding nor the Chapter 15 adaptive-history chain rule is claimed here."
       },
       "lean_correspondence": [
+        {"name": "BanditRLProof.LowerBounds.BinaryPrefixCode", "status": "compiled", "role": "Finite binary prefix-code model with injectivity, nonempty codewords, and prefix freedom."},
+        {"name": "BanditRLProof.LowerBounds.BinaryPrefixCode.kraft_inequality", "status": "compiled", "role": "Prefix-code range is uniquely decodable and satisfies the binary Kraft inequality."},
+        {"name": "BanditRLProof.LowerBounds.discreteEntropyBaseTwo_eq_div_log_two", "status": "compiled", "role": "Exact conversion between finite base-two and natural entropy."},
+        {"name": "BanditRLProof.LowerBounds.expectedCodeLength", "status": "compiled", "role": "Finite expected codeword-length objective from Eq. (14.1)."},
         {"name": "BanditRLProof.LowerBounds.relativeEntropy", "status": "compiled", "role": "Extended-real alias of Mathlib measure KL in the source direction P to Q."},
         {"name": "BanditRLProof.LowerBounds.relativeEntropy_of_absolutelyContinuous_of_integrable", "status": "compiled", "role": "Theorem 14.1 regular branch with Mathlib's finite-measure mass correction visible."},
         {"name": "BanditRLProof.LowerBounds.relativeEntropy_of_probability_absolutelyContinuous_of_integrable", "status": "compiled", "role": "Probability-measure log-likelihood integral specialization."},
         {"name": "BanditRLProof.LowerBounds.relativeEntropy_eq_top_of_not_absolutelyContinuous", "status": "compiled", "role": "Theorem 14.1 singular branch: support mismatch gives infinity."},
         {"name": "BanditRLProof.LowerBounds.relativeEntropy_ne_top_iff", "status": "compiled", "role": "Exact absolute-continuity and log-likelihood-integrability finiteness contract."},
+        {"name": "BanditRLProof.LowerBounds.relativeEntropy_eq_zero_iff", "status": "compiled", "role": "KL separation for finite measures."},
+        {"name": "BanditRLProof.LowerBounds.relativeEntropy_trim_le", "status": "compiled", "role": "Full finite-measure arbitrary-sub-sigma-algebra data processing from Exercise 14.10."},
         {"name": "BanditRLProof.LowerBounds.bernoulliRelativeEntropy", "status": "compiled", "role": "Equation (14.4) two-point KL with exact support endpoints."},
         {"name": "BanditRLProof.LowerBounds.rnDeriv_restrict_restrict", "status": "compiled", "role": "Radon–Nikodym derivative identity after restricting both laws to a measurable cell."},
         {"name": "BanditRLProof.LowerBounds.relativeEntropy_restrict_add_compl", "status": "compiled", "role": "Exact KL decomposition across an event and its complement."},
@@ -192,23 +202,28 @@
         {"name": "BanditRLProof.LowerBounds.bretagnolleHuber", "status": "compiled", "role": "Exact unconditional Theorem 14.2 measure/event terminal."}
       ],
       "dependency_nodes": [
+        {"id": "coding-defs", "label": "prefix-code and entropy definitions", "status": "compiled"},
+        {"id": "kraft", "label": "prefix-to-unique-decoding Kraft adapter", "status": "compiled"},
         {"id": "kl", "label": "measure KL and RN branches", "status": "compiled"},
+        {"id": "full-dpi", "label": "arbitrary sub-sigma-algebra data processing", "status": "compiled"},
         {"id": "event", "label": "event-level binary data processing", "status": "compiled"},
         {"id": "binary", "label": "binary testing and endpoint analysis", "status": "compiled"},
         {"id": "bh", "label": "measure Bretagnolle–Huber terminal", "status": "compiled"},
-        {"id": "coding", "label": "entropy and optimal coding", "status": "planned"},
+        {"id": "coding", "label": "Huffman and source-coding terminals", "status": "planned"},
         {"id": "history", "label": "same-policy adaptive history KL (compiled in Chapter 15)", "status": "compiled"}
       ],
       "reading_path": [
+        "Start with BinaryPrefixCode and the entropy definitions; distinguish the compiled Kraft bridge from the missing Huffman/source-coding theorems.",
         "Read Eq. (14.4), Eq. (14.5), Theorem 14.1, and Eq. (14.6) before the testing theorem.",
+        "Inspect relativeEntropy_trim_le for the full Exercise 14.10 conditional-expectation/Jensen proof.",
         "Inspect relativeEntropy_ne_top_iff to see exactly where absolute continuity and integrability enter.",
         "Follow the event restriction identity into bernoulliRelativeEntropy_event_le and verify the P-to-Q direction.",
         "Read the binary endpoint theorem before the measure-level bretagnolleHuber terminal.",
         "Continue to Chapter 15 for adaptive same-policy history divergence and finite-arm minimax construction."
       ],
       "gaps": [
-        "Entropy, Huffman coding, and optimal source-coding results from §14.1 are not formalized by this lower-bound gate.",
-        "Full data processing for an arbitrary sub-sigma-algebra from Exercise 14.10 is not claimed; the compiled leaf is the event/binary specialization.",
+        "Huffman optimality, the one-bit entropy sandwich, and asymptotic source-coding achievability/converse from §14.1 remain uncompiled.",
+        "The Eq. (14.5) finite-discretisation supremum equivalence, full common-density and measure-overlap route, and general-variance Gaussian testing application remain uncompiled.",
         "Adaptive-bandit history likelihood ratios and KL decomposition belong to Chapter 15; the scoped finite-arm same-policy identity now compiles there."
       ]
     },

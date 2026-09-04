@@ -4,17 +4,38 @@ import Mathlib.Tactic.NormNum
 /-!
 # Textbook Part IV Chapter 14 public canary
 
-This root-import canary exercises the exact extended-real KL branches, the
-event data-processing adapter, and the unconditional Bretagnolle--Huber
-terminal.  It does not claim the adaptive-history KL decomposition deferred to
-Chapter 15.
+This root-import canary exercises the finite prefix-code/entropy surface, the
+exact extended-real KL branches, the full sub-sigma-algebra and event data-
+processing adapters, and the unconditional Bretagnolle--Huber terminal.  It
+does not claim the adaptive-history KL decomposition deferred to Chapter 15.
 -/
 
 namespace BanditRLProof.TextbookPartIVChapter14Canary
 
 open MeasureTheory Set
-open scoped ENNReal
+open scoped BigOperators ENNReal
 open LowerBounds
+
+section CodingAndEntropy
+
+variable {Symbol : Type*} [Fintype Symbol] [DecidableEq Symbol]
+
+example (code : BinaryPrefixCode Symbol) :
+    ∑ word ∈ code.codebook, (1 / 2 : Real) ^ word.length ≤ 1 :=
+  code.kraft_inequality
+
+example (support : Finset Symbol) (probability : Symbol → Real) :
+    discreteEntropyBaseTwo support probability =
+      discreteEntropy support probability / Real.log 2 :=
+  discreteEntropyBaseTwo_eq_div_log_two support probability
+
+example (support : Finset Symbol) (probability : Symbol → Real)
+    (hprobability : ∀ symbol ∈ support,
+      0 ≤ probability symbol ∧ probability symbol ≤ 1) :
+    0 ≤ discreteEntropy support probability :=
+  discreteEntropy_nonneg support probability hprobability
+
+end CodingAndEntropy
 
 section RelativeEntropySurface
 
@@ -27,6 +48,18 @@ example {α : Type*} [MeasurableSpace α] {P Q : Measure α} :
     relativeEntropy P Q ≠ (⊤ : ENNReal) ↔
       P ≪ Q ∧ Integrable (llr P Q) P :=
   relativeEntropy_ne_top_iff
+
+example {α : Type*} [MeasurableSpace α] {P Q : Measure α}
+    [IsFiniteMeasure P] [IsFiniteMeasure Q] :
+    relativeEntropy P Q = 0 ↔ P = Q :=
+  relativeEntropy_eq_zero_iff
+
+example {α : Type*} {m m₀ : MeasurableSpace α}
+    {P Q : @Measure α m₀} [IsFiniteMeasure P] [IsFiniteMeasure Q]
+    (hm : m ≤ m₀) :
+    @relativeEntropy α m (P.trim hm) (Q.trim hm) ≤
+      @relativeEntropy α m₀ P Q :=
+  relativeEntropy_trim_le hm
 
 end RelativeEntropySurface
 
@@ -66,10 +99,20 @@ example :
 end EventTesting
 
 #print axioms LowerBounds.relativeEntropy
+#print axioms LowerBounds.BinaryPrefixCode.uniquelyDecodable_range
+#print axioms LowerBounds.BinaryPrefixCode.kraft_inequality
+#print axioms LowerBounds.discreteEntropy
+#print axioms LowerBounds.discreteEntropyBaseTwo
+#print axioms LowerBounds.discreteEntropyBaseTwo_eq_div_log_two
+#print axioms LowerBounds.discreteEntropy_nonneg
+#print axioms LowerBounds.expectedCodeLength
+#print axioms LowerBounds.expectedCodeLength_nonneg
 #print axioms LowerBounds.relativeEntropy_of_absolutelyContinuous_of_integrable
 #print axioms LowerBounds.relativeEntropy_of_probability_absolutelyContinuous_of_integrable
 #print axioms LowerBounds.relativeEntropy_eq_top_of_not_absolutelyContinuous
 #print axioms LowerBounds.relativeEntropy_ne_top_iff
+#print axioms LowerBounds.relativeEntropy_eq_zero_iff
+#print axioms LowerBounds.relativeEntropy_trim_le
 #print axioms LowerBounds.bernoulliRelativeEntropy
 #print axioms LowerBounds.rnDeriv_restrict_restrict
 #print axioms LowerBounds.relativeEntropy_restrict_add_compl

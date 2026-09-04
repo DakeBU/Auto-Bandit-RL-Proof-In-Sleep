@@ -2,67 +2,49 @@
 \section{Chapter 14 Information-Theory Spine}
 
 \paragraph{Status.}
-This note is a synchronized mathematical export for task
-\texttt{TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE}.  The scoped
-Section~14.2 declaration surface compiles at Lean source commit
-\texttt{10dfd88}.  It covers Eqs.~(14.4)--(14.6), Theorem~14.1, the event
-specialization of Exercise~14.10, and Theorem~14.2.  It does not claim the
-entropy/coding results of Section~14.1, full sub-sigma-algebra data processing,
-or an adaptive bandit-history chain rule.
+The code/entropy definitions, Kraft adapter, finite-measure sub-$\sigma$-
+algebra data-processing inequality, and the existing Bretagnolle--Huber spine
+compile locally. Whole-chapter coverage remains \texttt{partial}: Huffman
+optimality, the one-bit entropy sandwich, asymptotic source coding, the finite-
+discretisation supremum equivalence, the common-density/measure-overlap route,
+and the general-variance Gaussian application are not claimed.
 
 \paragraph{Lean declarations.}
-The public surface is
-\texttt{relativeEntropy}, its regular, probability, singular, and finiteness
-adapters; \texttt{bernoulliRelativeEntropy}; the RN-restriction and KL-split
-helpers; \texttt{bernoulliKLCore\_event\_le}; the binary affinity and overlap
-lemmas; \texttt{binaryBretagnolleHuberCore};
-\texttt{bretagnolleHuberScale} and its nonnegativity;
-\texttt{binaryBretagnolleHuber};
-\texttt{bernoulliRelativeEntropy\_event\_le}; scale antitonicity; and the
-terminal \texttt{bretagnolleHuber}.
+The public surface includes \texttt{BinaryPrefixCode.kraft\_inequality},
+\texttt{discreteEntropyBaseTwo\_eq\_div\_log\_two},
+\texttt{relativeEntropy\_eq\_zero\_iff},
+\texttt{relativeEntropy\_trim\_le}, and
+\texttt{bretagnolleHuber}, together with their typed definitions and helpers.
 
-\paragraph{Measure and event reduction.}
-Define $D(P\Vert Q)$ as Mathlib's extended-real KL divergence.  On the regular
-branch $P\ll Q$ with an integrable log likelihood ratio, it is the nonnegative
-extended-real embedding of the RN/log-likelihood integral; the finite-measure
-mass correction vanishes for probability laws.  Failure of absolute
-continuity gives infinity, and finiteness is equivalent to absolute continuity
-plus integrability.
+\paragraph{Proof map.}
+A local binary prefix code assigns distinct nonempty bit strings to source
+symbols and forbids one codeword from prefixing a distinct one. Induction on
+message lists proves that its range is uniquely decodable, so Mathlib's
+Kraft--McMillan theorem gives
+\[
+  \sum_{w\in C}2^{-|w|}\le 1.
+\]
+For finite support, the local natural and base-two entropies satisfy
+\[
+ H(P)=\sum_x p_x\log(p_x^{-1}),\qquad
+ H_2(P)=\frac{H(P)}{\log 2},
+\]
+and $H(P)\ge0$ for masses in $[0,1]$. Expected code length is
+$\sum_x p_x|c(x)|$. These facts do not imply Huffman optimality.
 
-For a measurable event $A$, restrict both laws to $A$ and $A^{\mathrm c}$.
-The restricted RN derivative agrees almost everywhere with the original one,
-so the KL integral splits exactly over the two cells.  Applying the convex
-mass-level \texttt{klFun} bound to both cells gives
+For finite measures on $\mathcal F$ and $\mathcal G\subseteq\mathcal F$,
+the infinite-KL branch is immediate. In the finite branch, the RN derivative
+after trimming equals the conditional expectation of the original density.
+Conditional Jensen for the convex KL integrand and integral transport yield
 \[
-  d(P(A),Q(A))\leq D(P\Vert Q).
+ D(P|_{\mathcal G}\Vert Q|_{\mathcal G})\le D(P\Vert Q).
 \]
-The endpoint cases $Q(A)\in\{0,1\}$ use absolute continuity, and the
-infinite-KL case is immediate.  The direction is always $P$ to $Q$.
+This is the full sub-$\sigma$-algebra form of Exercise 14.10.
 
-\paragraph{Binary testing.}
-For interior $q$, concavity of logarithm gives
+Finally, event data processing, the endpoint-complete binary affinity bound,
+and antitonicity of the testing scale prove
 \[
-  e^{-d(p,q)/2}
-  \leq \sqrt{pq}+\sqrt{(1-p)(1-q)}.
+ \frac12\exp\{-D(P\Vert Q)\}\le P(A)+Q(A^{\mathrm c}),
 \]
-A two-term square-root inequality bounds one half of the squared affinity by
-$p+(1-q)$.  After squaring the exponential inequality,
-\[
-  \frac12e^{-d(p,q)}\leq p+(1-q).
-\]
-The cases $q=0,1$ are discharged through the exact Bernoulli support
-convention.  The real scale is defined as $e^{-d}/2$ for finite extended-real
-$d$ and zero at $d=\infty$; it is nonnegative and antitone.
-
-\paragraph{Source terminal and boundary.}
-Event data processing, scale antitonicity, the endpoint-complete binary
-theorem, and $Q(A^{\mathrm c})=1-Q(A)$ yield
-\[
-  \operatorname{BHScale}(D(P\Vert Q))
-  \leq P(A)+Q(A^{\mathrm c}).
-\]
-This is the unconditional Theorem~14.2 terminal.  It has no finite-KL premise,
-mutual absolute-continuity premise, policy, horizon, filtration, kernel chain
-rule, or stopping-time assumption.  Chapter~15 must still build the
-same-policy adaptive-history laws and divergence decomposition that consume
-this theorem.
+with the left side defined as zero at infinite KL. The direction is $P$ to
+$Q$, and the complement is evaluated under $Q$.

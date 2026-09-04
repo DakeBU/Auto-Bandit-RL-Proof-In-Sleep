@@ -22,6 +22,23 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH14-REVIEW` | independent theorem/Lean audit | all artifacts | source, Lean, site | all above | check KL direction, AC, endpoints, quantifiers | no unresolved P0--P3 | repository | n/a | independent review | verified |
 | `CH14-REMOTE` | PR, main Actions, Pages and live Chapter 14 | accepted local chapter | GitHub workflow | repository | branch PR, never direct main push | PR #11; merge `194aca9`; main run `31949303227`; deploy job `95172626370`; live desktop/mobile | repository | n/a | deployment | verified |
 
+## Whole-chapter extension obligations
+
+| Node | Target | Dependencies | Intended proof route | Lean declaration | Gate | Status |
+| --- | --- | --- | --- | --- | --- | --- |
+| `CH14-CODE-MODEL` | typed finite binary prefix-code surface and expected length | lists, finite sums, Mathlib Kraft--McMillan | define injective/prefix-free/nonempty codes; prove range uniquely decodable and expose finite Kraft adapter | `BinaryPrefixCode`, `BinaryPrefixCode.uniquelyDecodable_range`, `BinaryPrefixCode.kraft_inequality`, `expectedCodeLength` | focused Lean | compiled |
+| `CH14-ENTROPY-DEFINITIONS` | Eqs. (14.2)--(14.3) entropy definitions, nonnegativity, and nats/bits conversion | finite sums, real log | exact finite support convention; term at zero is zero | `discreteEntropy`, `discreteEntropyBaseTwo`, `discreteEntropyBaseTwo_eq_div_log_two`, `discreteEntropy_nonneg` | focused Lean | compiled |
+| `CH14-HUFFMAN-BOUND` | Eq. (14.2), including existence/optimality of a prefix code | Kraft--McMillan, Huffman/tree construction | no conditional optimality premise may masquerade as this terminal | none | chapter terminal | blocked |
+| `CH14-SOURCE-CODING` | arithmetic/block-code achievability and converse | product distributions, uniquely decodable block codes, asymptotics | formal source-coding theorem | none | chapter terminal | blocked |
+| `CH14-FINITE-DISCRETE-KL` | Eq. (14.4) for an arbitrary finite alphabet | finite sums, support endpoints | bridge finite atomic measures to Mathlib `klDiv` | Bernoulli-only surface exists | focused Lean | partial |
+| `CH14-DISCRETISATION-SUP` | Eq. (14.5) and equality with RN KL in Theorem 14.1 | finite measurable quotients/partitions, supremum | source definition followed by Dobrushin/RN equivalence | none | chapter terminal | blocked |
+| `CH14-COMMON-DENSITY` | Eq. (14.6) under a common σ-finite dominating measure | RN chain rule, integral transport | expose exact density formula | Q-RN specialization only | focused Lean | partial |
+| `CH14-KL-SEPARATION` | nonnegativity and zero iff equality | Mathlib KL | `ENNReal` order plus thin source-mapped equality adapter | `relativeEntropy_eq_zero_iff` | focused Lean | compiled |
+| `CH14-GAUSSIAN-EXAMPLE` | common positive variance formula | Gaussian RN/KL and scaling | generalize the compiled unit-variance Chapter 15 leaf | unit-variance declaration only | focused Lean | partial |
+| `CH14-MEASURE-OVERLAP` | source Eqs. (14.8)--(14.9) | common density, Cauchy--Schwarz, Jensen | measure-level overlap and affinity route | binary specializations only | focused Lean | partial |
+| `CH14-GAUSSIAN-TESTING-APPLICATION` | displayed error, `3/10`, and max-error `3/20` consequences | general Gaussian KL, Theorem 14.2, scalar exp bound | direct source application | none | focused Lean | planned |
+| `CH14-EX14-10-FULL-DPI` | KL monotonicity after restriction to any sub-σ-algebra | `Measure.trim`, `toReal_rnDeriv_trim`, conditional expectation and Jensen | split infinite KL; identify the trimmed RN density as a conditional expectation and integrate Jensen; event DPI remains a specialization | `relativeEntropy_trim_le` | optional focused Lean | compiled |
+
 ## Failure classification
 
 Use exactly one: source translation gap; local Lean lemma gap; theorem-card
@@ -40,7 +57,8 @@ dynamic leaf; connected blocker; Windows path-length/build-artifact failure.
   `P(A),Q(A)`, so data processing and the final theorem both use `D(P,Q)`.
 - The complement is evaluated under `Q`; replacing it by `P`, or reversing KL,
   changes the theorem.
-- The event data-processing leaf is not the full Exercise 14.10.
+- The event data-processing leaf is not itself the full Exercise 14.10; the
+  arbitrary-sub-sigma-algebra theorem is `relativeEntropy_trim_le`.
 - The adaptive-bandit, same-policy history theorem now compiles in Chapter 15;
   it is not retroactively a Chapter 14 source claim.
 
