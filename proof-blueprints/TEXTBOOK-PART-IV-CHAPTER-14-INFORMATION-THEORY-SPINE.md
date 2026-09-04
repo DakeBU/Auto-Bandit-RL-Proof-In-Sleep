@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-04T03:47:50+00:00`
+Generated: `2026-09-04T05:44:42+00:00`
 
 ## Source Task
 
@@ -122,33 +122,30 @@ Theorem 14.2.
 - Integrability of `llr P Q` is explicit in the finite integral formula and is
   characterized by `relativeEntropy_ne_top_iff`.
 
-<!-- 120 characters omitted from the middle of this snapshot. -->
+<!-- 1416 characters omitted from the middle of this snapshot. -->
 
-- No policy, horizon, filtration, kernel-composition, stopping-time, or bandit
-  model assumption belongs to this chapter terminal.
-- `BinaryPrefixCode` requires every codeword to be nonempty.  This is needed
-  for its range to be uniquely decodable under arbitrary finite message
-  concatenation; a singleton empty codeword would otherwise be prefix-free.
+page are verified before this task becomes accepted.
 
-## Proof obligations
+## 2026-09-04 whole-body extension local evidence
 
-- [x] Official edition, chapter/section, printed/PDF pages, DOI and stable PDF
-  are recorded without copying source prose.
-- [x] Theorem 14.1 and Theorem 14.2 are mapped with exact KL direction and
-  extended-real conventions.
-- [x] Existing project Bernoulli KL and installed Mathlib KL APIs are audited.
-- [x] Relative-entropy definition and Theorem 14.1 branch adapters compile.
-- [x] Event-level Bernoulli data processing compiles from RN/f-divergence APIs.
-- [x] Scalar binary Bretagnolle--Huber compiles with endpoint cases.
-- [x] Exact measure-level Theorem 14.2 compiles without a hidden finite-KL
-  assumption.
-- [x] Root import, focused build, typed canary, Tests, axiom scan, full harness,
-  proof export, evidence indexes, documentation and website pass.
-- [x] Independent read-only review finds no unresolved P0--P3 issue.
-- [x] PR, authoritative-main Actions, Pages deployment and live desktop/mobile
-  page are verified before this task becomes accepted.
+- Detached short-path checkout `C:\a14` at `50dce67` passed the 2,670-job
+  focused information-theory build, the root-import Chapter 14 typed canary,
+  the 8,852-job root-library build, and the 8,894-job `Tests` build.
+- `python tools/bandit.py check` passed: both Lean gates, proof-graph export,
+  and 400 Python tests with seven expected skips completed successfully.
+- The typed canary includes a concrete one-bit Boolean prefix code and checks
+  unique decoding, Kraft, and expected length. Its axiom reports contain only
+  `propext`, `Classical.choice`, and `Quot.sound`.
+- The lean-verified site build/check passed with 604 modules, 8,224
+  declarations, zero placeholders, and 658 checked pages. In-app browser
+  inspection at desktop and 390×844 mobile widths confirmed the compiled vs.
+  partial split, all exact gap families, rendered math, official source links,
+  and no document-level horizontal overflow.
+- Independent read-only review found two P2 evidence-consistency defects; the
+  missing arbitrary finite-alphabet Eq. (14.4) gap and historical/current gate
+  ambiguity were corrected. No P0, P1, P2, or P3 issue remains unresolved.
 
-## Local verification evidence
+## Historical §14.2 local verification evidence
 
 - Commit `5a84d26` passed `python3 tools/bandit.py check` in detached
   short-path worktree `C:\abrl-p4-ch14-final-5a84d26`: the root library built
@@ -167,7 +164,7 @@ Theorem 14.2.
   nonclaim. See
   `reviews/2026-08-16-textbook-part-iv-chapter-14-information-theory-spine.md`.
 
-## Remote verification evidence
+## Historical §14.2 remote verification evidence
 
 - PR #11 passed `Lean and documentation / build` in run `31948234489`, job
   `95167560544` (22m25s), and was merged without a direct push to `main`.
@@ -265,9 +262,10 @@ separate dependency leaf.
   a compiled local declaration and typed canary.  A theorem card, imported API,
   conditional lemma, or prose mapping alone cannot promote the chapter.
 - Current decision: `partial`.  The Section 14.1 Huffman/source-coding
-  terminals, Eq. (14.5)-to-RN equivalence, common-density formula, full
-  measure-level overlap proof nodes, and general-variance Gaussian/application
-  surface are not all locally compiled.
+  terminals, arbitrary finite-alphabet Eq. (14.4) beyond Bernoulli,
+  Eq. (14.5)-to-RN equivalence, common-density formula, full measure-level
+  overlap proof nodes, and general-variance Gaussian/application surface are
+  not all locally compiled.
 
 ## Precise restatement
 
@@ -360,7 +358,7 @@ with `D(Q,P)` is also valid.
 | `CH14-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | full check | verified locally |
 | `CH14-EVIDENCE-SITE` | task/DAG/export/index/site agreement | compiled chapter surface | repository artifacts | repository | lean-verified/site/browser | verified locally |
 | `CH14-REVIEW` | independent source/Lean/evidence audit | all local artifacts | review record | repository | independent review | verified |
-| `CH14-REMOTE` | PR, main Actions, Pages and live page | accepted local chapter | PR #11; run `31949303227`; Pages job `95172626370`; live desktop/mobile | repository | deployment | verified |
+| `CH14-REMOTE` | PR, main Actions, Pages and live page | accepted local chapter | PR #11; run `31949303227`; Pages job `95172626370`; live desktop/mobile | repository | deployment | verified for the historical §14.2 milestone; the 2026-09-04 extension awaits its own PR |
 
 ## Gaps
 
@@ -372,6 +370,7 @@ with `D(Q,P)` is also valid.
 - [x] Chapter 15 same-policy history-law construction and divergence decomposition (compiled in its own gate).
 - [ ] Huffman optimality and the one-bit entropy sandwich in Eq. (14.2).
 - [ ] Block/arithmetic source-coding achievability and converse.
+- [ ] Eq. (14.4) for an arbitrary finite alphabet beyond Bernoulli.
 - [ ] Eq. (14.5) finite-discretisation supremum equivalence to RN KL.
 - [ ] General common-density, Gaussian-variance/application, and measure-overlap proof nodes.
 
@@ -390,7 +389,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `CH14-SOURCE-FENCE` | Theorem 14.1 RN formula and Theorem 14.2/Eq. (14.7), exact pages/direction | official PDF and CUP metadata | task/window | textbook card | conservative paraphrase | edition, printed/PDF pages, `D(P,Q)` direction | source evidence | n/a | source review | mapped |
 | `CH14-KL-SURFACE` | extended-real measure KL plus singular/finite characterization | Mathlib KL/LLR | `klDiv`, `llr`, branch lemmas | Mathlib source audit | transparent adapters | same space; AC and integrability visible | imported plus wrappers | `relativeEntropy` and branch adapters | focused Lean | compiled |
-| `CH14-BERNOULLI-SURFACE` | Eq. (14.4) with support endpoints | existing KLUCB KL | `bernoulliKL`, core and endpoint lemmas | local declaration index | reuse, do not duplicate semantics | `p,q∈[0,1]`; singular support gives `∞` | compiled local dependency | `bernoulliRelativeEntropy` | focused Lean | compiled |
+| `CH14-BERNOULLI-SURFACE` | two-symbol/Bernoulli specialization of Eq. (14.4), with support endpoints | existing KLUCB KL | `bernoulliKL`, core and endpoint lemmas | local declaration index | reuse, do not duplicate semantics | `p,q∈[0,1]`; singular support gives `∞`; arbitrary finite alphabets remain open | compiled local dependency | `bernoulliRelativeEntropy` | focused Lean | compiled |
 | `CH14-RN-RESTRICT` | RN derivative agrees after restricting both laws to a measurable event | AC and density representation | `withDensity_rnDeriv_eq`, `restrict_withDensity`, `rnDeriv_withDensity` | Mathlib source audit | identify both restricted measures through the original density | finite probability measures; `MeasurableSet A`; `P≪Q` | Mathlib-candidate project leaf | `rnDeriv_restrict_restrict` | focused Lean | compiled |
 | `CH14-EVENT-DPI` | `d(P(A),Q(A)) <= D(P,Q)` | RN restrict helper, f-divergence integral, convex mass lower bound | `klDiv_eq_lintegral_klFun_of_ac`, `mul_klFun_le_toReal_klDiv` | Mathlib source audit | split over event/complement and add | probability laws; measurable event; exact KL direction | Mathlib-candidate project leaf | `bernoulliRelativeEntropy_event_le` | focused Lean | compiled |
 | `CH14-BINARY-BH` | `p+(1-q) >= exp(-d(p,q))/2` with exact endpoints | Bernoulli core | real sqrt/log/exp and concavity | source proof | affinity lower bound plus Le Cam overlap algebra | both parameters in unit interval; all endpoints explicit | project-local | `binaryBretagnolleHuber` | focused Lean | compiled |
@@ -400,7 +399,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH14-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | path/tooling failures distinguished from proofs | repository | n/a | full check | verified locally |
 | `CH14-EVIDENCE-SITE` | proof export, indexes, results/highlights/readings/maps/README/site agree | compiled chapter surface | harness/site scripts | repository | generated evidence plus maintained content | only compiled/gated declarations labelled compiled | repository | n/a | site/browser | verified locally |
 | `CH14-REVIEW` | independent theorem/Lean audit | all artifacts | source, Lean, site | all above | check KL direction, AC, endpoints, quantifiers | no unresolved P0--P3 | repository | n/a | independent review | verified |
-| `CH14-REMOTE` | PR, main Actions, Pages and live Chapter 14 | accepted local chapter | GitHub workflow | repository | branch PR, never direct main push | PR #11; merge `194aca9`; main run `31949303227`; deploy job `95172626370`; live desktop/mobile | repository | n/a | deployment | verified |
+| `CH14-REMOTE` | PR, main Actions, Pages and live Chapter 14 | accepted local chapter | GitHub workflow | repository | branch PR, never direct main push | PR #11; merge `194aca9`; main run `31949303227`; deploy job `95172626370`; live desktop/mobile | repository | n/a | deployment | verified for the historical §14.2 milestone; the 2026-09-04 extension awaits its own PR |
 
 ## Whole-chapter extension obligations
 

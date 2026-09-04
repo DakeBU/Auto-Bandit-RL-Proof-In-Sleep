@@ -58,7 +58,10 @@ and is not counted as Chapter 14 completion.
 
 - P0: none.
 - P1: none.
-- P2: none.
+- P2: none unresolved. Independent review found two evidence-consistency
+  defects: Eq. (14.4) was omitted from several remaining-scope lists, and this
+  extension's pending verification record was not distinguished from the
+  historical §14.2 milestone. Both were corrected before the final gates.
 - P3: none.
 
 No evidence-supported issue was found in the new statement signatures or proof
@@ -67,7 +70,25 @@ compiled slice.
 
 ## Verification record
 
-- Focused module build: pending final gate record.
-- Root import and typed canary: pending final gate record.
-- Full repository harness and site checks: pending final gate record.
-- Browser inspection: pending final gate record.
+- Short-path verification checkout: `C:\a14`, detached at commit `50dce67`.
+  The ordinary long worktree exposed a Windows path-length tooling failure in
+  an unrelated long-named RL module; the short path compiled that same module
+  and the complete root successfully.
+- Focused module build: `lake build
+  BanditRLProof.LowerBounds.InformationTheory` passed in 2,670 jobs.
+- Root import and typed canary: `lake env lean
+  Tests/TextbookPartIVChapter14Canary.lean` passed. Its printed axioms contain
+  only `propext`, `Classical.choice`, and `Quot.sound`.
+- Complete Lean gates: `lake build BanditRLProof` passed in 8,852 jobs and
+  `lake build Tests` passed in 8,894 jobs.
+- Full repository harness: `python tools/bandit.py check` passed, including
+  the same 8,852/8,894-job Lean gates, proof-graph export, and 400 Python tests
+  with seven expected skips.
+- Lean-verified website build/check passed with 658 HTML pages, 604 modules,
+  8,224 declarations, zero placeholders, valid internal links/anchors, and
+  valid MathJax fallbacks.
+- In-app browser inspection passed at the default desktop viewport and at a
+  390×844 mobile viewport. The page showed the compiled-leaves/partial-chapter
+  split, Kraft/full-DPI/Bretagnolle--Huber evidence, all six blocker families,
+  ten rendered math containers, two official-PDF links, and no document-level
+  horizontal overflow (`scrollWidth = clientWidth = 375`).

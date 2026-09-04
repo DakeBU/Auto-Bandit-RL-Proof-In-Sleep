@@ -141,7 +141,26 @@ Theorem 14.2.
 - [x] PR, authoritative-main Actions, Pages deployment and live desktop/mobile
   page are verified before this task becomes accepted.
 
-## Local verification evidence
+## 2026-09-04 whole-body extension local evidence
+
+- Detached short-path checkout `C:\a14` at `50dce67` passed the 2,670-job
+  focused information-theory build, the root-import Chapter 14 typed canary,
+  the 8,852-job root-library build, and the 8,894-job `Tests` build.
+- `python tools/bandit.py check` passed: both Lean gates, proof-graph export,
+  and 400 Python tests with seven expected skips completed successfully.
+- The typed canary includes a concrete one-bit Boolean prefix code and checks
+  unique decoding, Kraft, and expected length. Its axiom reports contain only
+  `propext`, `Classical.choice`, and `Quot.sound`.
+- The lean-verified site build/check passed with 604 modules, 8,224
+  declarations, zero placeholders, and 658 checked pages. In-app browser
+  inspection at desktop and 390×844 mobile widths confirmed the compiled vs.
+  partial split, all exact gap families, rendered math, official source links,
+  and no document-level horizontal overflow.
+- Independent read-only review found two P2 evidence-consistency defects; the
+  missing arbitrary finite-alphabet Eq. (14.4) gap and historical/current gate
+  ambiguity were corrected. No P0, P1, P2, or P3 issue remains unresolved.
+
+## Historical §14.2 local verification evidence
 
 - Commit `5a84d26` passed `python3 tools/bandit.py check` in detached
   short-path worktree `C:\abrl-p4-ch14-final-5a84d26`: the root library built
@@ -160,7 +179,7 @@ Theorem 14.2.
   nonclaim. See
   `reviews/2026-08-16-textbook-part-iv-chapter-14-information-theory-spine.md`.
 
-## Remote verification evidence
+## Historical §14.2 remote verification evidence
 
 - PR #11 passed `Lean and documentation / build` in run `31948234489`, job
   `95167560544` (22m25s), and was merged without a direct push to `main`.
