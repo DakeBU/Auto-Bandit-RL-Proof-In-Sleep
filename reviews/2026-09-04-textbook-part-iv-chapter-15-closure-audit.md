@@ -45,6 +45,18 @@ still counts all pulls through a fixed terminal horizon.
 
 ## Verification record
 
-The final focused/root/Tests/harness/site/browser results are recorded in the
-task packet and PR. Until those gates pass, this audit does not promote remote
-or deployment status.
+- Detached short-path `lake build`: passed, 8853 jobs.  This validates the
+  exact `58e7f01` checkpoint while avoiding the assigned worktree's unrelated
+  Windows `.olean` path-length failure.
+- `lake build Tests.TextbookPartIVChapter15Canary`: passed, 8853 jobs.  Both new
+  declarations report only `propext`, `Classical.choice`, and `Quot.sound`.
+- `python tools/bandit.py check`: passed, 8895 Lean/Tests jobs, ProofGraph
+  export, and 400 tool tests with seven expected skips.
+- Verified website build/check: passed, with 605 modules, 8213 scanner
+  declarations, zero placeholders, 114 highlights, 82 milestones, 659 HTML
+  pages, 8982 Lean source links, and 18 Mermaid blocks.
+- Browser visual QA: unavailable.  Two in-app Browser attempts timed out while
+  waiting for the webview to attach, so no desktop/mobile pass is claimed.
+
+This audit is direct rather than independent.  It therefore does not promote
+independent-review, remote Actions, deployment, or live-site status.

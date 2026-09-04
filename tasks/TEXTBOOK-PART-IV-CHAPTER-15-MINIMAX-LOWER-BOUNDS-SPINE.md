@@ -228,10 +228,40 @@ completion labels therefore have two deliberately different meanings:
   random-element inequality for Exercise 15.7 remain open.
 - [x] Root import, focused canary, Tests, scans, full harness, export, evidence
   indexes, documentation, and website build/check pass for this extension.
-- [x] Local desktop/mobile checks pass for this extension snapshot.
-- [x] Independent read-only mathematical and repository review passes with no
-  unresolved Blocking, High, or Medium finding.
+- [ ] Local desktop/mobile checks remain unavailable for this extension
+  snapshot because the Codex in-app Browser webview did not attach in two
+  attempts; this is not recorded as a visual pass.
+- [ ] Independent read-only mathematical and repository review remains a PR
+  gate.  The 2026-09-04 audit is direct, not independent.
 - [ ] PR, main Actions, Pages deployment, and live desktop/mobile checks pass.
+
+## Exercise 15.7 data-processing extension local verification (2026-09-04)
+
+- The frozen verification commit `58e7f01` was checked in detached short-path
+  worktree `C:\abrl-ch15-gate-7c14`.  `lake build` passed with 8853 jobs.
+  The assigned long Codex worktree reproduced a Windows path-length failure
+  while writing one unrelated pre-existing RL `.olean`; the same exact module
+  compiled successfully in the short-path worktree, so this is classified as
+  infrastructure rather than a Chapter 15 source failure.
+- `lake build Tests.TextbookPartIVChapter15Canary` passed with 8853 jobs.
+  `#print axioms` for both new declarations reports only `propext`,
+  `Classical.choice`, and `Quot.sound`.
+- `python tools/bandit.py check` passed: the complete Lean/Tests gate finished
+  8895 jobs, ProofGraph export completed, and all 400 tool tests passed with
+  seven expected skips.
+- `python website/scripts/build_site.py --lean-verified` passed with 605
+  modules, 8213 scanner declarations, zero placeholders, 114 highlights, and
+  82 milestones.  `python website/scripts/check_site.py` passed across 659
+  HTML pages, 8982 Lean source links, and 18 Mermaid blocks, including internal
+  links, anchors, readable fallbacks, README links, and the Pages workflow.
+- The task-local production and canary scan contains no `sorry`, `admit`,
+  `axiom`, or `postulate`; the `axiom` matches in the canary are the intentional
+  `#print axioms` commands.
+- Two attempts to open the local Chapter 15 page in the Codex in-app Browser
+  timed out waiting for its webview to attach.  No desktop/mobile visual pass
+  is claimed.  The static site build/check evidence remains valid.
+- Direct source/repository audit found no unresolved Chapter 15 source error.
+  It is not an independent review and does not close the PR review gate.
 
 ## Theorem 15.2 extension local verification (2026-08-19)
 
