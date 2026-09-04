@@ -43,10 +43,12 @@ required body blockers are:
 
 1. Eq. (14.2) Huffman optimum and the `H₂(P) ≤ L* ≤ H₂(P)+1` theorem;
 2. block/arithmetic source-coding achievability and converse;
-3. Eq. (14.5) finite-discretisation supremum and its equality with RN KL;
-4. the general common-density formula and measure-level overlap/affinity proof
+3. Eq. (14.4) for an arbitrary finite alphabet beyond the compiled Bernoulli
+   specialization;
+4. Eq. (14.5) finite-discretisation supremum and its equality with RN KL;
+5. the general common-density formula and measure-level overlap/affinity proof
    nodes;
-5. the arbitrary positive-variance Gaussian formula and displayed testing
+6. the arbitrary positive-variance Gaussian formula and displayed testing
    application, including `3/10` and `3/20` consequences.
 
 The adaptive same-policy history-KL decomposition remains Chapter 15 evidence

@@ -4,9 +4,10 @@ Task id: `TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE`
 
 Status: the declarations listed below compile locally. Whole-chapter coverage
 remains `partial`: this export does not claim Huffman optimality, the one-bit
-entropy sandwich, asymptotic source coding, the finite-discretisation supremum
-equivalence, the full common-density/measure-overlap route, or the general-
-variance Gaussian testing application.
+entropy sandwich, asymptotic source coding, arbitrary finite-alphabet Eq. (14.4)
+beyond Bernoulli, the finite-discretisation supremum equivalence, the full
+common-density/measure-overlap route, or the general-variance Gaussian testing
+application.
 
 ## Lean Declarations
 

@@ -33,9 +33,10 @@ separate dependency leaf.
   a compiled local declaration and typed canary.  A theorem card, imported API,
   conditional lemma, or prose mapping alone cannot promote the chapter.
 - Current decision: `partial`.  The Section 14.1 Huffman/source-coding
-  terminals, Eq. (14.5)-to-RN equivalence, common-density formula, full
-  measure-level overlap proof nodes, and general-variance Gaussian/application
-  surface are not all locally compiled.
+  terminals, arbitrary finite-alphabet Eq. (14.4) beyond Bernoulli,
+  Eq. (14.5)-to-RN equivalence, common-density formula, full measure-level
+  overlap proof nodes, and general-variance Gaussian/application surface are
+  not all locally compiled.
 
 ## Precise restatement
 
@@ -140,5 +141,6 @@ with `D(Q,P)` is also valid.
 - [x] Chapter 15 same-policy history-law construction and divergence decomposition (compiled in its own gate).
 - [ ] Huffman optimality and the one-bit entropy sandwich in Eq. (14.2).
 - [ ] Block/arithmetic source-coding achievability and converse.
+- [ ] Eq. (14.4) for an arbitrary finite alphabet beyond Bernoulli.
 - [ ] Eq. (14.5) finite-discretisation supremum equivalence to RN KL.
 - [ ] General common-density, Gaussian-variance/application, and measure-overlap proof nodes.
