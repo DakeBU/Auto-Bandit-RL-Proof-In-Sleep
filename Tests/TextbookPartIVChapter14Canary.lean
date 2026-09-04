@@ -20,6 +20,35 @@ section CodingAndEntropy
 
 variable {Symbol : Type*} [Fintype Symbol] [DecidableEq Symbol]
 
+/-- Concrete two-symbol code exercising every `BinaryPrefixCode` field. -/
+def boolOneBitPrefixCode : BinaryPrefixCode Bool where
+  encode bit := [bit]
+  injective := by
+    intro left right h
+    simpa using h
+  nonempty := by simp
+  prefixFree := by
+    intro left right h
+    rcases h with ⟨tail, htail⟩
+    simpa using congrArg List.head? htail
+
+example : boolOneBitPrefixCode.encode false = [false] := rfl
+
+example :
+    InformationTheory.UniquelyDecodable
+      (Set.range boolOneBitPrefixCode.encode) :=
+  boolOneBitPrefixCode.uniquelyDecodable_range
+
+example :
+    ∑ word ∈ boolOneBitPrefixCode.codebook,
+      (1 / 2 : Real) ^ word.length ≤ 1 :=
+  boolOneBitPrefixCode.kraft_inequality
+
+example :
+    expectedCodeLength (fun _ : Bool => (1 / 2 : Real))
+      boolOneBitPrefixCode = 1 := by
+  norm_num [expectedCodeLength, boolOneBitPrefixCode]
+
 example (code : BinaryPrefixCode Symbol) :
     ∑ word ∈ code.codebook, (1 / 2 : Real) ^ word.length ≤ 1 :=
   code.kraft_inequality
@@ -99,6 +128,7 @@ example :
 end EventTesting
 
 #print axioms LowerBounds.relativeEntropy
+#print axioms boolOneBitPrefixCode
 #print axioms LowerBounds.BinaryPrefixCode.uniquelyDecodable_range
 #print axioms LowerBounds.BinaryPrefixCode.kraft_inequality
 #print axioms LowerBounds.discreteEntropy
