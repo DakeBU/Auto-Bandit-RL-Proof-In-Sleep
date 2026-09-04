@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-02T06:31:27+00:00",
+  "generated": "2026-09-04T03:56:24+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -5198,7 +5198,7 @@
       "name": "twoArmOptimalPullCountBelowEvent_charge_mul_probability_le_integral",
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCountBelowEvent_charge_mul_probability_le_integral",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-      "line": 331,
+      "line": 333,
       "statement": "theorem twoArmOptimalPullCountBelowEvent_charge_mul_probability_le_integral {Env : Type v} [MeasurableSpace Env] (mu : Measure (Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real))) [IsFiniteMeasure mu] (Delta : Real) (hDelta : 0 \u2264 Delta) (m horizon : Nat) : Delta * ((horizon - m : Nat) : Real) * mu.real (twoArmOptimalPullCountBelowEvent (Env := Env) m horizon) \u2264 integral mu (twoArmSampledPseudoRegret (Env := Env) Delta horizon)"
     },
     {
@@ -5206,7 +5206,7 @@
       "name": "twoArmStepOneStarvationEvent_charge_mul_probability_le_integral",
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_charge_mul_probability_le_integral",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-      "line": 394,
+      "line": 396,
       "statement": "theorem twoArmStepOneStarvationEvent_charge_mul_probability_le_integral {Env : Type v} [MeasurableSpace Env] (mu : Measure (Env \u00d7 ((k : Nat) \u2192 Fin 2 \u00d7 Real))) [IsFiniteMeasure mu] (eta Delta : Real) (hDelta : 0 \u2264 Delta) (cutoff n horizon : Nat) : Delta * ((horizon - n : Nat) : Real) * mu.real (twoArmStepOneStarvationEvent (Env := Env) eta cutoff n horizon) \u2264 integral mu (twoArmSampledPseudoRegret (Env := Env) Delta horizon)"
     },
     {
@@ -5214,7 +5214,7 @@
       "name": "twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral",
       "full_name": "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
-      "line": 449,
+      "line": 451,
       "statement": "theorem twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral (armLaw : Fin 2 -> Measure Real) (hprob : forall arm, IsProbabilityMeasure (armLaw arm)) (eta Delta : Real) (hDelta : 0 <= Delta) (cutoff n horizon : Nat) : Delta * ((horizon - n : Nat) : Real) * (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)).real (twoArmStepOneStarvationEvent (Env := Unit) eta cutoff n horizon) <= integral (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) (twoArmSampledPseudoRegret (Env := Unit) Delta horizon)"
     },
     {
@@ -27906,11 +27906,35 @@
       "statement": "noncomputable def minimaxExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -> Environment -> ENNReal) (policyClass : Set Policy) (environmentClass : Set Environment) : ENNReal"
     },
     {
+      "kind": "def",
+      "name": "IsMinimaxOptimal",
+      "full_name": "BanditRLProof.LowerBounds.IsMinimaxOptimal",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 65,
+      "statement": "def IsMinimaxOptimal {Policy : Type u} {Environment : Type v} (regret : Policy -> Environment -> ENNReal) (policyClass : Set Policy) (environmentClass : Set Environment) (policy : Policy) : Prop"
+    },
+    {
+      "kind": "theorem",
+      "name": "IsMinimaxOptimal.mem_policyClass",
+      "full_name": "BanditRLProof.LowerBounds.IsMinimaxOptimal.mem_policyClass",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 75,
+      "statement": "theorem IsMinimaxOptimal.mem_policyClass {Policy : Type u} {Environment : Type v} {regret : Policy -> Environment -> ENNReal} {policyClass : Set Policy} {environmentClass : Set Environment} {policy : Policy} (hpolicy : IsMinimaxOptimal regret policyClass environmentClass policy) : policy \u2208 policyClass"
+    },
+    {
+      "kind": "theorem",
+      "name": "IsMinimaxOptimal.eq_minimaxExpectedRegret",
+      "full_name": "BanditRLProof.LowerBounds.IsMinimaxOptimal.eq_minimaxExpectedRegret",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 85,
+      "statement": "theorem IsMinimaxOptimal.eq_minimaxExpectedRegret {Policy : Type u} {Environment : Type v} {regret : Policy -> Environment -> ENNReal} {policyClass : Set Policy} {environmentClass : Set Environment} {policy : Policy} (hpolicy : IsMinimaxOptimal regret policyClass environmentClass policy) : worstCaseExpectedRegret regret environmentClass policy = minimaxExpectedRegret regret policyClass environmentClass"
+    },
+    {
       "kind": "theorem",
       "name": "expectedRegret_le_worstCaseExpectedRegret",
       "full_name": "BanditRLProof.LowerBounds.expectedRegret_le_worstCaseExpectedRegret",
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
-      "line": 58,
+      "line": 96,
       "statement": "theorem expectedRegret_le_worstCaseExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -> Environment -> ENNReal) (environmentClass : Set Environment) (policy : Policy) (environment : Environment) (henvironment : environment \u2208 environmentClass) : regret policy environment \u2264 worstCaseExpectedRegret regret environmentClass policy"
     },
     {
@@ -27918,7 +27942,7 @@
       "name": "minimaxExpectedRegret_le_worstCaseExpectedRegret",
       "full_name": "BanditRLProof.LowerBounds.minimaxExpectedRegret_le_worstCaseExpectedRegret",
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
-      "line": 71,
+      "line": 109,
       "statement": "theorem minimaxExpectedRegret_le_worstCaseExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -> Environment -> ENNReal) (policyClass : Set Policy) (environmentClass : Set Environment) (policy : Policy) (hpolicy : policy \u2208 policyClass) : minimaxExpectedRegret regret policyClass environmentClass \u2264 worstCaseExpectedRegret regret environmentClass policy"
     },
     {
@@ -27926,7 +27950,7 @@
       "name": "le_minimaxExpectedRegret",
       "full_name": "BanditRLProof.LowerBounds.le_minimaxExpectedRegret",
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
-      "line": 82,
+      "line": 120,
       "statement": "theorem le_minimaxExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -> Environment -> ENNReal) (policyClass : Set Policy) (environmentClass : Set Environment) (lower : ENNReal) (hlower : \u2200 policy : policyClass, lower \u2264 worstCaseExpectedRegret regret environmentClass policy.1) : lower \u2264 minimaxExpectedRegret regret policyClass environmentClass"
     },
     {
@@ -27934,7 +27958,7 @@
       "name": "exists_alternative_le_average",
       "full_name": "BanditRLProof.LowerBounds.exists_alternative_le_average",
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
-      "line": 100,
+      "line": 138,
       "statement": "theorem exists_alternative_le_average {m : Nat} (hm : 0 < m) (alternativeExpectedPulls : Fin m -> Real) (budget : Real) (hbudget : \u2211 i : Fin m, alternativeExpectedPulls i \u2264 budget) : \u2203 i : Fin m, alternativeExpectedPulls i \u2264 budget / (m : Real)"
     },
     {
@@ -27942,7 +27966,7 @@
       "name": "alternativeExpectedPullBudget_le",
       "full_name": "BanditRLProof.LowerBounds.alternativeExpectedPullBudget_le",
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
-      "line": 126,
+      "line": 164,
       "statement": "theorem alternativeExpectedPullBudget_le {m : Nat} (expectedPulls : Fin (m + 1) -> Real) (budget : Real) (hnonneg : \u2200 arm, 0 \u2264 expectedPulls arm) (htotal : \u2211 arm : Fin (m + 1), expectedPulls arm = budget) : (\u2211 i : Fin m, expectedPulls i.succ) \u2264 budget"
     },
     {
@@ -27950,7 +27974,7 @@
       "name": "exists_leastExploredAlternative",
       "full_name": "BanditRLProof.LowerBounds.exists_leastExploredAlternative",
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
-      "line": 143,
+      "line": 181,
       "statement": "theorem exists_leastExploredAlternative {m : Nat} (hm : 0 < m) (expectedPulls : Fin (m + 1) -> Real) (horizon : Nat) (hnonneg : \u2200 arm, 0 \u2264 expectedPulls arm) (htotal : \u2211 arm : Fin (m + 1), expectedPulls arm = (horizon : Real)) : \u2203 i : Fin m, expectedPulls i.succ \u2264 (horizon : Real) / (m : Real)"
     },
     {
@@ -27958,7 +27982,7 @@
       "name": "baseEnvironmentRegret",
       "full_name": "BanditRLProof.LowerBounds.baseEnvironmentRegret",
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
-      "line": 156,
+      "line": 194,
       "statement": "def baseEnvironmentRegret (horizon : Nat) (gap baseFirstExpectedPulls : Real) : Real"
     },
     {
@@ -27966,7 +27990,7 @@
       "name": "changedEnvironmentRegretLowerBound",
       "full_name": "BanditRLProof.LowerBounds.changedEnvironmentRegretLowerBound",
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
-      "line": 161,
+      "line": 199,
       "statement": "def changedEnvironmentRegretLowerBound (gap changedFirstExpectedPulls : Real) : Real"
     },
     {
@@ -27974,7 +27998,7 @@
       "name": "max_base_changed_regretLowerBound_ge_half_sub_error",
       "full_name": "BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error",
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
-      "line": 173,
+      "line": 211,
       "statement": "theorem max_base_changed_regretLowerBound_ge_half_sub_error (horizon : Nat) (gap baseFirstExpectedPulls changedFirstExpectedPulls error : Real) (hgap : 0 \u2264 gap) (hpullDifference : baseFirstExpectedPulls - changedFirstExpectedPulls \u2264 error) : gap * ((horizon : Real) - error) / 2 \u2264 max (baseEnvironmentRegret horizon gap baseFirstExpectedPulls) (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls)"
     },
     {
@@ -27982,7 +28006,7 @@
       "name": "max_base_changed_regretLowerBound_ge_half",
       "full_name": "BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half",
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
-      "line": 205,
+      "line": 243,
       "statement": "theorem max_base_changed_regretLowerBound_ge_half (horizon : Nat) (gap baseFirstExpectedPulls changedFirstExpectedPulls : Real) (hgap : 0 \u2264 gap) (htransport : baseFirstExpectedPulls \u2264 changedFirstExpectedPulls) : gap * (horizon : Real) / 2 \u2264 max (baseEnvironmentRegret horizon gap baseFirstExpectedPulls) (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls)"
     },
     {
@@ -28064,6 +28088,166 @@
       "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
       "line": 379,
       "statement": "theorem klDiv_historyStep_samePolicy_eq_iterated_lintegral_armKL_general {History Reward : Type*} {K : Nat} [MeasurableSpace History] [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (historyLaw : Measure History) [IsFiniteMeasure historyLaw] (policy : Kernel History (Fin K)) [IsMarkovKernel policy] (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] : InformationTheory.klDiv (historyLaw \u2297\u2098 (policy \u2297\u2096 armLaw.comap Prod.snd measurable_snd)) (historyLaw \u2297\u2098 (policy \u2297\u2096 referenceArmLaw.comap Prod.snd measurable_snd)) = \u222b\u207b history, \u222b\u207b arm, InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm) \u2202policy history \u2202historyLaw"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianSampleMeanVariance",
+      "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanVariance",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 30,
+      "statement": "def gaussianSampleMeanVariance (sampleSize : Nat) : NNReal"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianSampleMeanVariance_pos",
+      "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanVariance_pos",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 34,
+      "statement": "theorem gaussianSampleMeanVariance_pos (sampleSize : Nat) (hsampleSize : 0 < sampleSize) : 0 < gaussianSampleMeanVariance sampleSize"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianSampleMeanLaw",
+      "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanLaw",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 41,
+      "statement": "noncomputable def gaussianSampleMeanLaw (sampleSize : Nat) (mean : Real) : Measure Real"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianIIDObservationLaw",
+      "full_name": "BanditRLProof.LowerBounds.gaussianIIDObservationLaw",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 46,
+      "statement": "noncomputable def gaussianIIDObservationLaw (sampleSize : Nat) (mean : Real) : Measure (Fin sampleSize \u2192 Real)"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianCoordinateAverage",
+      "full_name": "BanditRLProof.LowerBounds.gaussianCoordinateAverage",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 51,
+      "statement": "def gaussianCoordinateAverage (sampleSize : Nat) (observations : Fin sampleSize \u2192 Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianIIDSumLaw",
+      "full_name": "BanditRLProof.LowerBounds.gaussianIIDSumLaw",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 56,
+      "statement": "theorem gaussianIIDSumLaw (sampleSize : Nat) (mean : Real) : (gaussianIIDObservationLaw sampleSize mean).map (fun observations => \u2211 i, observations i) = gaussianReal ((sampleSize : Real) * mean) (sampleSize : NNReal)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianIIDSampleMeanLaw",
+      "full_name": "BanditRLProof.LowerBounds.gaussianIIDSampleMeanLaw",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 76,
+      "statement": "theorem gaussianIIDSampleMeanLaw (sampleSize : Nat) (mean : Real) (hsampleSize : 0 < sampleSize) : (gaussianIIDObservationLaw sampleSize mean).map (gaussianCoordinateAverage sampleSize) = gaussianSampleMeanLaw sampleSize mean"
+    },
+    {
+      "kind": "def",
+      "name": "twoPointGaussianThresholdDecision",
+      "full_name": "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 100,
+      "statement": "def twoPointGaussianThresholdDecision (gap observation : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoPointGaussianThresholdDecision_zero_error_event",
+      "full_name": "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision_zero_error_event",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 104,
+      "statement": "theorem twoPointGaussianThresholdDecision_zero_error_event {gap : Real} (hgap : 0 < gap) : {observation | twoPointGaussianThresholdDecision gap observation \u2260 0} = Set.Ici (gap / 2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoPointGaussianThresholdDecision_gap_error_event",
+      "full_name": "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision_gap_error_event",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 114,
+      "statement": "theorem twoPointGaussianThresholdDecision_gap_error_event {gap : Real} (hgap : 0 < gap) : {observation | twoPointGaussianThresholdDecision gap observation \u2260 gap} = Set.Iio (gap / 2)"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianSampleMeanZeroErrorProbability",
+      "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 130,
+      "statement": "noncomputable def gaussianSampleMeanZeroErrorProbability (sampleSize : Nat) (gap : Real) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianSampleMeanGapErrorProbability",
+      "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanGapErrorProbability",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 136,
+      "statement": "noncomputable def gaussianSampleMeanGapErrorProbability (sampleSize : Nat) (gap : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "hasSubgaussianMGF_id_gaussianReal_zero",
+      "full_name": "BanditRLProof.LowerBounds.hasSubgaussianMGF_id_gaussianReal_zero",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 142,
+      "statement": "theorem hasSubgaussianMGF_id_gaussianReal_zero (variance : NNReal) : HasSubgaussianMGF id variance (gaussianReal 0 variance)"
+    },
+    {
+      "kind": "theorem",
+      "name": "hasSubgaussianMGF_gap_sub_id_gaussianReal",
+      "full_name": "BanditRLProof.LowerBounds.hasSubgaussianMGF_gap_sub_id_gaussianReal",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 152,
+      "statement": "theorem hasSubgaussianMGF_gap_sub_id_gaussianReal (gap : Real) (variance : NNReal) : HasSubgaussianMGF (fun observation => gap - observation) variance (gaussianReal gap variance)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianReal_zero_Ici_le_exp_neg_sq_div_two_variance",
+      "full_name": "BanditRLProof.LowerBounds.gaussianReal_zero_Ici_le_exp_neg_sq_div_two_variance",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 161,
+      "statement": "theorem gaussianReal_zero_Ici_le_exp_neg_sq_div_two_variance (variance : NNReal) (threshold : Real) (hthreshold : 0 \u2264 threshold) : (gaussianReal 0 variance).real (Set.Ici threshold) \u2264 Real.exp (-threshold ^ 2 / (2 * (variance : Real)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianReal_gap_Iio_half_le_exp_neg_sq_div_two_variance",
+      "full_name": "BanditRLProof.LowerBounds.gaussianReal_gap_Iio_half_le_exp_neg_sq_div_two_variance",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 169,
+      "statement": "theorem gaussianReal_gap_Iio_half_le_exp_neg_sq_div_two_variance (gap : Real) (variance : NNReal) (hgap : 0 < gap) : (gaussianReal gap variance).real (Set.Iio (gap / 2)) \u2264 Real.exp (-(gap / 2) ^ 2 / (2 * (variance : Real)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianSampleMeanZeroErrorProbability_le_exp",
+      "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability_le_exp",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 193,
+      "statement": "theorem gaussianSampleMeanZeroErrorProbability_le_exp (sampleSize : Nat) (gap : Real) (hgap : 0 < gap) : gaussianSampleMeanZeroErrorProbability sampleSize gap \u2264 Real.exp (-(sampleSize : Real) * gap ^ 2 / 8)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianSampleMeanGapErrorProbability_le_exp",
+      "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanGapErrorProbability_le_exp",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 218,
+      "statement": "theorem gaussianSampleMeanGapErrorProbability_le_exp (sampleSize : Nat) (gap : Real) (hgap : 0 < gap) : gaussianSampleMeanGapErrorProbability sampleSize gap \u2264 Real.exp (-(sampleSize : Real) * gap ^ 2 / 8)"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianSampleMeanThresholdRisk",
+      "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanThresholdRisk",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 239,
+      "statement": "noncomputable def gaussianSampleMeanThresholdRisk (sampleSize : Nat) (gap : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianSampleMeanThresholdRisk_le_exp",
+      "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanThresholdRisk_le_exp",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 245,
+      "statement": "theorem gaussianSampleMeanThresholdRisk_le_exp (sampleSize : Nat) (gap : Real) (hgap : 0 < gap) : gaussianSampleMeanThresholdRisk sampleSize gap \u2264 Real.exp (-(sampleSize : Real) * gap ^ 2 / 8)"
     },
     {
       "kind": "def",

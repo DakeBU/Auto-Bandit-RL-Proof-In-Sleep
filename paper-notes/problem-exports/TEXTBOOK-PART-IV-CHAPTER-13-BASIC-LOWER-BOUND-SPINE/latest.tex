@@ -1,54 +1,63 @@
-\section{Chapter 13 Lower-Bound Basic Ideas Spine}
+% Synchronized proof export for TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
+\section{Chapter 13 Lower-Bound Basic Ideas and Gaussian Testing}
 
 \paragraph{Status.}
-This note is a synchronized natural-language export for task
-\texttt{TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE}.  The semantic
-and deterministic Chapter 13 slice passed its local Lean and repository gates
-at commit \texttt{47ef4fe42679cd53e208aed540b6aa2bdb253aa8}.  It does not
-claim the unit-variance Gaussian minimax lower bound in Theorem~13.1, whose
-proof the source defers to Chapter~15.
+The whole-chapter contract remains \texttt{partial}. The core Theorem~13.1
+route and the new minimax-optimality and Gaussian-testing companion leaves are
+compiled; the blockers below remain explicit.
 
-\paragraph{Lean declarations.}
-The compiled public surface consists of
-\texttt{worstCaseExpectedRegret}, \texttt{minimaxExpectedRegret}, their three
-order lemmas, \texttt{exists\_alternative\_le\_average},
-\texttt{alternativeExpectedPullBudget\_le},
-\texttt{exists\_leastExploredAlternative}, the two regret expressions, and
-\texttt{max\_base\_changed\_regretLowerBound\_ge\_half\_sub\_error} with its
-zero-error corollary \texttt{max\_base\_changed\_regretLowerBound\_ge\_half}.
+\paragraph{Model and notation.}
+For a fixed-horizon expected pseudo-regret functional $R$, policy class
+$\mathcal P$, and environment class $\mathcal E$, the worst-case value is
+$\sup_{\nu\in\mathcal E}R(\pi,\nu)$ and the minimax value is its infimum over
+$\pi\in\mathcal P$. A minimax-optimal policy is admissible and attains this
+infimum for the same classes and horizon-indexed functional.
 
-\paragraph{Proof map.}
-Let $R(\pi,\nu)$ take values in $[0,\infty]$.  The worst-case value of a policy
-is the supremum over the explicit environment subtype, and the minimax value
-is the infimum of these worst-case values over the explicit policy subtype.
-The order lemmas follow from the corresponding complete-lattice introduction
-and elimination rules.
+For the two-point test in Section~13.1, the distribution-level observation law
+is $\mathcal N(\mu,1/n)$. The midpoint decision returns $\Delta$ when the
+observation is at least $\Delta/2$ and zero otherwise.
+The canonical finite product of $n>0$ copies of $\mathcal N(\mu,1)$ is mapped
+by the arithmetic mean to exactly this observation law.
 
-For $m+1$ arms, split the finite sum at arm zero.  Nonnegativity of its
-expected pull count and the exact total-pull identity imply that the sum over
-the $m$ alternative arms is at most the horizon.  Finite averaging then gives
-an $i\in\mathrm{Fin}(m)$ whose successor arm has expected count at most $n/m$.
-
-For the two-environment algebra, write
+\paragraph{Compiled proof map.}
+The declarations \texttt{worstCaseExpectedRegret},
+\texttt{minimaxExpectedRegret}, and \texttt{IsMinimaxOptimal} compile the
+source order and attainment semantics without assuming a general minimizer.
+The declarations \texttt{gaussianIIDSumLaw} and
+\texttt{gaussianIIDSampleMeanLaw} identify the canonical iid sum as
+$\mathcal N(n\mu,n)$ and its arithmetic mean as $\mathcal N(\mu,1/n)$.
+The two midpoint error-event declarations identify the exact upper and lower
+half-line events. From Mathlib's exact Gaussian MGF and reflection,
+\texttt{hasSubgaussianMGF\_id\_gaussianReal\_zero} and
+\texttt{hasSubgaussianMGF\_gap\_sub\_id\_gaussianReal} prove the two
+centered sub-Gaussian proxies. The declaration
+\texttt{gaussianSampleMeanThresholdRisk\_le\_exp} yields
 \[
-  B=\Delta(n-x),\qquad C=\Delta y.
+  \max_{\mu\in\{0,\Delta\}}
+  \mathbb P_{\mathcal N(\mu,1/n)}(\widehat\mu\ne\mu)
+  \le \exp(-n\Delta^2/8).
 \]
-If $\Delta\geq 0$ and $x-y\leq e$, then
-$B+C\geq\Delta(n-e)$.  Since both $B$ and $C$ are at most
-$\max\{B,C\}$, it follows that
-\[
-  \frac{\Delta(n-e)}{2}\leq\max\{B,C\}.
-\]
-The half-horizon statement is the special case $e=0$ under $x\leq y$.
-The transport comparison is an explicit premise: no likelihood-ratio, KL,
-absolute-continuity, policy-consistency, or Gaussian result is inferred from
-this deterministic theorem.
+This is a symmetric Chernoff companion, not the exact Mills-ratio
+Eq.~(13.1).
 
-\paragraph{Verification boundary.}
-The focused module, typed root-import canary, full Tests target, axiom print,
-repository check, lean-verified website build, site checker, and desktop/mobile
-browser inspection passed locally.  Theorem~13.1 remains planned until the
-Chapter~14 history-law bridge and Chapter~15 minimax construction compile.
-PR~\#9, main Actions run \texttt{31942624241}, Pages deployment job
-\texttt{95156292456}, and the live desktop/mobile page also passed.  The scoped
-Chapter~13 task is accepted, while the chapter page correctly remains partial.
+The compiled least-explored-arm theorem and the exact deterministic
+expressions behind Eqs.~(13.2)--(13.3) feed the Chapter~14--15 history-KL and
+testing construction. The caller-free declaration
+\texttt{unitGaussianMinimaxExpectedPseudoRegret\_ge\_one\_div\_fiftyFour\_sqrt}
+then proves Theorem~13.1 on unit-variance Gaussian means in $[0,1]^k$ for
+$k>1$ and $n\ge k$, with universal constant $1/54$.
+
+\paragraph{Compiled declaration groups.}
+The exact local groups are: minimax semantics and optimality; finite averaging
+and least-explored-arm selection; Eqs.~(13.2)--(13.3) error-bearing algebra;
+Gaussian sample-mean target-law, midpoint decision, error events, exact MGF
+and reflection bridges, two one-sided Chernoff tails and their maximum risk;
+and the Chapter~15 Theorem~13.1 consumer.
+Every declaration is enumerated in the synchronized Markdown export.
+
+\paragraph{Required blockers and optional boundary.}
+The exact lower and sharpened upper Mills-ratio bounds of Eq.~(13.4), and
+hence Eq.~(13.1), are not compiled. The broader finite-arm
+1-subgaussian near-minimax statement also lacks its MOSS/Algorithm~7 upper
+theorem. Notes~13.2 and Exercises~13.1--13.2 are optional and do not block the
+frozen whole-main-text contract.

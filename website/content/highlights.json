@@ -934,6 +934,40 @@
       ]
     },
     {
+      "full_name": "BanditRLProof.LowerBounds.IsMinimaxOptimal",
+      "chapter": "foundations",
+      "plain": "A policy is minimax optimal only if it belongs to the chosen policy class and its worst-case regret over the chosen environment class attains that class's minimax value.",
+      "math": "\u005cpi\u005cin\u005cmathcal P\u005cquad\u005ctext{and}\u005cquad\u005csup_{\u005cnu\u005cin\u005cmathcal E}R_n(\u005cpi,\u005cnu)=\u005cinf_{\u005cpi'\u005cin\u005cmathcal P}\u005csup_{\u005cnu\u005cin\u005cmathcal E}R_n(\u005cpi',\u005cnu).",
+      "intuition": "The same policy can be minimax optimal for one horizon or environment class and fail to be optimal for another.",
+      "why": "This compiles the explicit Chapter 13 warning that minimax optimality is not a property of a policy alone.",
+      "position": "It refines the minimax value surface without asserting that an arbitrary infimum has a minimizing policy.",
+      "proof_idea": "Package policy-class membership and equality with the already compiled minimax value in one proposition, with projection lemmas for both components.",
+      "lean_notes": "The horizon is carried by the regret functional. Policy and environment classes remain explicit, and no nonemptiness or attainment theorem is assumed.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.minimaxExpectedRegret"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanThresholdRisk_le_exp",
+      "chapter": "foundations",
+      "plain": "For the two Gaussian observation laws with means zero and Delta and variance one over n, the midpoint decision's worst-case error probability is at most exp(-n Delta squared over eight).",
+      "math": "\u005cmax_{\u005cmu\u005cin\u005c{0,\u005cDelta\u005c}}\u005cmathbb P_{\u005cmathcal N(\u005cmu,1/n)}(\u005chat\u005cmu\u005cneq\u005cmu)\u005cle\u005cexp(-n\u005cDelta^2/8).",
+      "intuition": "A larger sample size or a wider separation makes the two Gaussian hypotheses exponentially easier to distinguish.",
+      "why": "It adds a real two-hypothesis probability theorem for the opening of Section 13.1 while leaving the sharper source display auditable.",
+      "position": "This is a symmetric Chernoff companion. It is not the exact two-sided Mills-ratio Eq. (13.1) and does not replace that blocked source node.",
+      "proof_idea": "Identify both midpoint error events, derive centered Gaussian sub-Gaussianity from Mathlib's exact MGF, reflect the positive-mean lower tail, apply one-sided Chernoff on each side, and take their maximum.",
+      "lean_notes": "The module proves that the arithmetic-mean pushforward of the canonical finite iid N(mu,1) product is N(mu,1/n). The exact Eq. (13.1) constants remain a separate obligation.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.gaussianIIDSampleMeanLaw",
+        "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision_zero_error_event",
+        "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision_gap_error_event",
+        "BanditRLProof.LowerBounds.hasSubgaussianMGF_id_gaussianReal_zero",
+        "BanditRLProof.LowerBounds.hasSubgaussianMGF_gap_sub_id_gaussianReal",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability_le_exp",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanGapErrorProbability_le_exp"
+      ]
+    },
+    {
       "full_name": "BanditRLProof.LowerBounds.exists_leastExploredAlternative",
       "chapter": "foundations",
       "plain": "In an m-plus-one-arm problem with arm zero distinguished, nonnegative expected pulls summing exactly to the horizon imply that some alternative arm is pulled no more than the alternative average n divided by m.",

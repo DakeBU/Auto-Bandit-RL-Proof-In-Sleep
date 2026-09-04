@@ -10,13 +10,15 @@ Harness: `hierarchical`
 
 ## Goal
 
-Build the source-faithful deterministic and order-theoretic interface used by
-Chapter 13, *Lower Bounds: Basic Ideas*, and connect it to the minimax lower
-bound whose proof the source defers to Chapter 15. The compiled Chapter 13
-module exposes minimax/worst-case expected-regret semantics, the
-least-explored alternative-arm averaging step, and the conditional algebraic
-two-environment reduction behind equations (13.2)--(13.3); the separately
-compiled Chapter 15 construction supplies the caller-free Gaussian endpoint.
+Close the source-faithful main-text contract for Chapter 13, *Lower Bounds:
+Basic Ideas*.  The previously compiled slice exposes minimax/worst-case
+expected-regret semantics, the least-explored alternative-arm averaging step,
+and the conditional algebraic two-environment reduction behind equations
+(13.2)--(13.3); the separately compiled Chapter 15 construction supplies the
+caller-free Gaussian endpoint.  The expanded contract also accounts for the
+minimax-optimality definition, the Gaussian two-point testing discussion and
+Eq. (13.1), and the broader 1-subgaussian near-minimax consequence stated in
+the main prose.
 
 The maintained public names remain **BanditRLlib** and
 *ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for
@@ -43,10 +45,28 @@ and `n >= k`, the infimum over policies of the worst-case expected cumulative
 pseudo-regret is at least `c * sqrt (k*n)`. Chapter 13 labels this as Theorem
 13.1 and explicitly defers its proof to Chapter 15.
 
-## Frozen Chapter 13 target contract
+## Frozen Chapter 13 completion contract
 
-The Chapter 13 gate compiles only the interfaces that the chapter actually
-develops before that deferral:
+The contract was re-audited against physical PDF pp. 189--194.  A `complete`
+chapter claim requires every mathematical main-text item below to be mapped
+and every precise result to have a source-faithful compiled endpoint.  A
+weaker consequence may be useful evidence but cannot discharge the exact
+source node.
+
+| Source item | Completion role | Required evidence | Current status |
+| --- | --- | --- | --- |
+| worst-case and minimax regret; minimax-optimal policy | required main text | explicit classes and fixed-horizon regret functional; attainment predicate | compiled |
+| Theorem 13.1 | required main theorem | unit-Gaussian `[0,1]^k` minimax lower bound for `k>1`, `n>=k` | compiled through Chapter 15 with `c=1/54` |
+| Section 13.1 two-point Gaussian test and midpoint decision | required main text | derive the empirical mean law `N(mu,1/n)` from `n` independent `N(mu,1)` observations; exact midpoint error events | compiled for the canonical finite product law |
+| Eq. (13.1) | required displayed result | both explicit Mills-ratio bounds with the printed constants | blocked; Chernoff upper companion compiled, exact lower/upper pair absent |
+| competition/similarity trade-off | required source mapping | narrative route to the precise two-environment nodes; no invented standalone proposition | mapped |
+| Eqs. (13.2)--(13.3), least-explored arm, one-coordinate change, `Delta` tuning, information bridge | required main text | exact identities/inequalities and the Chapter 14--15 same-policy history-law route | compiled locally or through Chapter 15 |
+| Algorithm 7 / Theorem 9.1 near-minimax claim for the broader 1-subgaussian class | required connected main-text claim | Gaussian-subclass lower transfer plus a compiled MOSS upper theorem on the stated broader class | partial; lower side compiled, MOSS upper side absent |
+| Section 13.2 Notes | optional enrichment | itemized mapping if attempted; never used to hide a main-text gap | optional, unformalized |
+| Section 13.3 Bibliographic Remarks / Eq. (13.4) | source support for Eq. (13.1) | Abramowitz--Stegun Mills-ratio source and exact integral leaf | mapped source; exact leaf is the Eq. (13.1) blocker |
+| Section 13.4 Exercises 13.1--13.2 | optional exercises | separate exercise contracts if attempted | optional, unformalized |
+
+The currently compiled core uses these interfaces:
 
 1. For arbitrary policy and environment types, define worst-case and minimax
    expected regret in `ENNReal` over explicit policy/environment classes.
@@ -72,6 +92,10 @@ develops before that deferral:
 4. Publish the declarations through the root library and a full-typed external
    canary. The canary must instantiate nonempty policy/environment classes and
    a nondegenerate three-arm expected-pull vector.
+5. Compile the fixed-class minimax-optimality predicate, the canonical iid
+   Gaussian product law and its empirical-mean pushforward, the midpoint
+   decision error events, and a genuine Gaussian Chernoff upper bound without
+   labeling it as the exact Eq. (13.1).
 
 Target files: `BanditRLProof/LowerBounds/BasicIdeas.lean` and the downstream
 consumer `BanditRLProof/LowerBounds/GaussianMinimax.lean`.
@@ -81,6 +105,9 @@ Expected public declarations:
 ```lean
 LowerBounds.worstCaseExpectedRegret
 LowerBounds.minimaxExpectedRegret
+LowerBounds.IsMinimaxOptimal
+LowerBounds.IsMinimaxOptimal.mem_policyClass
+LowerBounds.IsMinimaxOptimal.eq_minimaxExpectedRegret
 LowerBounds.expectedRegret_le_worstCaseExpectedRegret
 LowerBounds.minimaxExpectedRegret_le_worstCaseExpectedRegret
 LowerBounds.le_minimaxExpectedRegret
@@ -91,6 +118,26 @@ LowerBounds.baseEnvironmentRegret
 LowerBounds.changedEnvironmentRegretLowerBound
 LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error
 LowerBounds.max_base_changed_regretLowerBound_ge_half
+LowerBounds.gaussianSampleMeanVariance
+LowerBounds.gaussianSampleMeanVariance_pos
+LowerBounds.gaussianSampleMeanLaw
+LowerBounds.gaussianIIDObservationLaw
+LowerBounds.gaussianCoordinateAverage
+LowerBounds.gaussianIIDSumLaw
+LowerBounds.gaussianIIDSampleMeanLaw
+LowerBounds.twoPointGaussianThresholdDecision
+LowerBounds.twoPointGaussianThresholdDecision_zero_error_event
+LowerBounds.twoPointGaussianThresholdDecision_gap_error_event
+LowerBounds.gaussianSampleMeanZeroErrorProbability
+LowerBounds.gaussianSampleMeanGapErrorProbability
+LowerBounds.hasSubgaussianMGF_id_gaussianReal_zero
+LowerBounds.hasSubgaussianMGF_gap_sub_id_gaussianReal
+LowerBounds.gaussianReal_zero_Ici_le_exp_neg_sq_div_two_variance
+LowerBounds.gaussianReal_gap_Iio_half_le_exp_neg_sq_div_two_variance
+LowerBounds.gaussianSampleMeanZeroErrorProbability_le_exp
+LowerBounds.gaussianSampleMeanGapErrorProbability_le_exp
+LowerBounds.gaussianSampleMeanThresholdRisk
+LowerBounds.gaussianSampleMeanThresholdRisk_le_exp
 LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt
 ```
 
@@ -102,6 +149,16 @@ LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt
 - [x] The compiled Chapter 13 semantic signature is frozen before tactics.
 - [x] Hidden regularity assumptions are explicit in the conversion window.
 - [x] Minimax and worst-case definitions and order leaves compile.
+- [x] Fixed-class minimax-optimality semantics compile.
+- [x] The Section 13.1 midpoint decision and both deterministic error-event
+  identities compile.
+- [x] The empirical mean of `n>0` independent `N(mu,1)` observations is
+  connected to the declared `N(mu,1/n)` observation law.
+- [x] Centered/reflected Gaussian sub-Gaussian bridges and the source-shaped
+  `exp(-n*Delta^2/8)` Chernoff upper bound compile for both hypotheses and
+  their worst-case threshold risk.
+- [ ] The exact two-sided Mills-ratio Eq. (13.1) compiles with its printed
+  constants.
 - [x] Alternative-arm averaging leaves compile from the exact pull budget.
 - [x] Conditional two-environment algebra leaves compile without a statistical
   nonclaim being promoted.
@@ -113,12 +170,18 @@ LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt
   page pass.
 - [ ] The current Chapter 15 downstream Theorem 13.1 consumer passes its own
   PR, authoritative-main Actions, Pages deployment, and live Chapter 13 check.
+- [ ] The main-prose broader-class near-minimax consequence has a compiled
+  MOSS/Algorithm 7 upper theorem for the stated 1-subgaussian class.
 
 ## Mathlib-ready leaf contract
 
 | Leaf | Local APIs/imports | Intended proof route | Regularity contracts | Mathlib status |
 | --- | --- | --- | --- | --- |
 | minimax surface | `iSup`, `iInf`, `ENNReal`, subtypes | complete-lattice introduction/elimination | explicit policy/environment subsets; nonemptiness only at semantic consumers | project-local |
+| minimax-optimality | compiled minimax surface, equality | package admissibility and attainment without assuming an infimum is attained | fixed policy/environment classes and horizon-indexed regret functional | project-local |
+| Gaussian test upper tail | Mathlib `gaussianReal`, exact Gaussian MGF, `HasSubgaussianMGF.measure_ge_le` | identify both midpoint error events and apply the one-sided Chernoff bound at variance `1/n` on each side | positive gap; positive sample size is compiled separately for the nondegenerate source interpretation | compiled project-local consequence |
+| Gaussian empirical-mean law | `Measure.pi`, `charFun_map_sum_pi_eq_prod`, `charFun_gaussianReal`, `gaussianReal_map_div_const` | identify the exact sum law on the canonical finite iid product, then scale by `1/n` | `n>0`; coordinate law `N(mu,1)` | compiled project bridge |
+| exact Eq. (13.1) | Gaussian density/set integral plus Eq. (13.4) Mills-ratio bounds | prove the printed lower and upper denominator constants, then rescale to variance `1/n` | `n>0`, `Delta>0`, measurable midpoint event | blocked Mathlib-candidate analytic leaf |
 | finite average | `Fin.sum_univ_succ`, `Finset.exists_le_of_sum_le`, `Fintype.card_fin` | split arm zero, bound alternative sum, compare with constant average | `0 < m`, every expected pull nonnegative, exact total expected-pull identity | mathlib-composed project leaf |
 | two-environment algebra | ordered-field arithmetic, `max`, `nlinarith` | combine base and changed lower expressions under a named upper bound on `E_nu[T_0]-E_nu'[T_0]` | `0 <= Delta`; the quantitative cross-law discrepancy is explicit and remains unproved here | project-local |
 | history change of measure | compiled Chapter 15 Lemma 15.1 | Chapter 14 KL plus the Chapter 15 randomized-history construction | measurability, common randomized policy, countably generated rewards | compiled downstream dependency |
@@ -137,6 +200,8 @@ LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt
 
 - Theorem 13.1 is not proved inside the Chapter 13 module; the project-level
   source endpoint is the separately compiled Chapter 15 consumer.
+- The Chernoff upper bound is not Eq. (13.1): it neither supplies the printed
+  Mills-ratio denominator nor the required lower bound.
 - No Gaussian measure, adaptive history likelihood ratio, KL chain rule,
   event-level binary KL inequality, Pinsker/Bretagnolle--Huber inequality, or
   absolute-continuity result is claimed locally in this chapter.
@@ -146,6 +211,9 @@ LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt
   same policy and history law.
 - The chapter does not cover finite-arm minimax sharp constants,
   instance-dependent asymptotics, or high-probability lower bounds.
+- A Gaussian-subclass lower bound alone does not prove the broader
+  1-subgaussian Algorithm 7 near-minimax statement; its upper side remains a
+  distinct MOSS/Chapter 9 dependency.
 
 ## Failure policy
 

@@ -7,10 +7,10 @@ import Mathlib.Tactic.NormNum
 # Textbook Part IV Chapter 13 public canary
 
 This external root-import canary exercises the compiled Chapter 13 semantic
-and deterministic interfaces. It deliberately does not claim the
-unit-variance Gaussian minimax lower bound stated as Theorem 13.1: the source
-defers that proof to Chapter 15, and the required history change-of-measure
-bridge remains planned for Chapters 14--15.
+and deterministic interfaces, the Gaussian two-point testing companion, and
+the unit-variance Gaussian minimax lower bound stated as Theorem 13.1 and
+compiled through Chapter 15.  The Chernoff test bound is deliberately not
+labeled as the sharper two-sided Mills-ratio Eq. (13.1).
 -/
 
 namespace BanditRLProof.TextbookPartIVChapter13Canary
@@ -37,6 +37,16 @@ example (regret : Fin 2 -> Fin 2 -> ENNReal) (lower : ENNReal)
       lower ≤ worstCaseExpectedRegret regret Set.univ policy.1) :
     lower ≤ minimaxExpectedRegret regret Set.univ Set.univ := by
   exact le_minimaxExpectedRegret regret Set.univ Set.univ lower hlower
+
+example {Policy Environment : Type}
+    (regret : Policy -> Environment -> ENNReal)
+    (policyClass : Set Policy) (environmentClass : Set Environment)
+    (policy : Policy)
+    (hpolicy : IsMinimaxOptimal regret policyClass environmentClass policy) :
+    policy ∈ policyClass ∧
+      worstCaseExpectedRegret regret environmentClass policy =
+        minimaxExpectedRegret regret policyClass environmentClass := by
+  exact ⟨hpolicy.mem_policyClass, hpolicy.eq_minimaxExpectedRegret⟩
 
 end MinimaxSurface
 
@@ -78,8 +88,44 @@ example :
 
 end ConditionalTwoEnvironmentAlgebra
 
+section GaussianTwoPointTesting
+
+example : 0 < gaussianSampleMeanVariance 8 := by
+  exact gaussianSampleMeanVariance_pos 8 (by norm_num)
+
+example :
+    (gaussianIIDObservationLaw 8 1).map (gaussianCoordinateAverage 8) =
+      gaussianSampleMeanLaw 8 1 := by
+  exact gaussianIIDSampleMeanLaw 8 1 (by norm_num)
+
+example :
+    {observation : Real | twoPointGaussianThresholdDecision 2 observation ≠ 0} =
+      Set.Ici 1 := by
+  simpa using
+    (twoPointGaussianThresholdDecision_zero_error_event (gap := (2 : Real)) (by norm_num))
+
+example :
+    gaussianSampleMeanZeroErrorProbability 8 1 ≤ Real.exp (-1) := by
+  simpa using
+    (gaussianSampleMeanZeroErrorProbability_le_exp 8 1 (by norm_num))
+
+example :
+    gaussianSampleMeanGapErrorProbability 8 1 ≤ Real.exp (-1) := by
+  simpa using
+    (gaussianSampleMeanGapErrorProbability_le_exp 8 1 (by norm_num))
+
+example :
+    gaussianSampleMeanThresholdRisk 8 1 ≤ Real.exp (-1) := by
+  simpa using
+    (gaussianSampleMeanThresholdRisk_le_exp 8 1 (by norm_num))
+
+end GaussianTwoPointTesting
+
 #print axioms LowerBounds.worstCaseExpectedRegret
 #print axioms LowerBounds.minimaxExpectedRegret
+#print axioms LowerBounds.IsMinimaxOptimal
+#print axioms LowerBounds.IsMinimaxOptimal.mem_policyClass
+#print axioms LowerBounds.IsMinimaxOptimal.eq_minimaxExpectedRegret
 #print axioms LowerBounds.expectedRegret_le_worstCaseExpectedRegret
 #print axioms LowerBounds.minimaxExpectedRegret_le_worstCaseExpectedRegret
 #print axioms LowerBounds.le_minimaxExpectedRegret
@@ -90,5 +136,26 @@ end ConditionalTwoEnvironmentAlgebra
 #print axioms LowerBounds.changedEnvironmentRegretLowerBound
 #print axioms LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error
 #print axioms LowerBounds.max_base_changed_regretLowerBound_ge_half
+#print axioms LowerBounds.gaussianSampleMeanVariance
+#print axioms LowerBounds.gaussianSampleMeanVariance_pos
+#print axioms LowerBounds.gaussianSampleMeanLaw
+#print axioms LowerBounds.gaussianIIDObservationLaw
+#print axioms LowerBounds.gaussianCoordinateAverage
+#print axioms LowerBounds.gaussianIIDSumLaw
+#print axioms LowerBounds.gaussianIIDSampleMeanLaw
+#print axioms LowerBounds.twoPointGaussianThresholdDecision
+#print axioms LowerBounds.twoPointGaussianThresholdDecision_zero_error_event
+#print axioms LowerBounds.twoPointGaussianThresholdDecision_gap_error_event
+#print axioms LowerBounds.gaussianSampleMeanZeroErrorProbability
+#print axioms LowerBounds.gaussianSampleMeanGapErrorProbability
+#print axioms LowerBounds.hasSubgaussianMGF_id_gaussianReal_zero
+#print axioms LowerBounds.hasSubgaussianMGF_gap_sub_id_gaussianReal
+#print axioms LowerBounds.gaussianReal_zero_Ici_le_exp_neg_sq_div_two_variance
+#print axioms LowerBounds.gaussianReal_gap_Iio_half_le_exp_neg_sq_div_two_variance
+#print axioms LowerBounds.gaussianSampleMeanZeroErrorProbability_le_exp
+#print axioms LowerBounds.gaussianSampleMeanGapErrorProbability_le_exp
+#print axioms LowerBounds.gaussianSampleMeanThresholdRisk
+#print axioms LowerBounds.gaussianSampleMeanThresholdRisk_le_exp
+#print axioms LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt
 
 end BanditRLProof.TextbookPartIVChapter13Canary
