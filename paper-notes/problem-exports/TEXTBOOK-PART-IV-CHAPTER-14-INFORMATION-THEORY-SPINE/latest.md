@@ -2,11 +2,11 @@
 
 Task id: `TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE`
 
-Status: the declarations listed below compile locally. Whole-chapter coverage
-remains `partial`: this export does not claim Huffman optimality, the one-bit
-entropy sandwich, asymptotic source coding, the full
-common-density/measure-overlap route, or the general-variance Gaussian testing
-application.
+Status: whole-chapter coverage remains `partial`. The original spine below
+is supplemented by the current terminal update at the end. Huffman,
+common-density, overlap and Gaussian terminals have full local gates;
+arithmetic coding is focused-validated with its full gate running. Additional
+body assertions and export/site closure remain open in the body-closure audit.
 
 ## Lean Declarations
 
@@ -195,3 +195,33 @@ same-policy history KL is a Chapter 15 consumer, not a Chapter 14 claim.
   not new local theorems.
 - Whole-chapter status is deliberately retained as `partial` until every body
   row in the frozen completion contract compiles and is canaried.
+
+## Current terminal update
+
+For a finite nonnegative normalized law p, let H2 denote its base-two entropy.
+`huffmanOptimalCode` recursively merges two least weights; `huffmanCode_optimal`
+proves global prefix-code optimality and `huffmanCode_entropy_sandwich` proves
+H2 <= E length <= H2+1. Full local gate: dff13cb. Codewords are nonempty,
+including the singleton convention.
+
+`arithmeticBlockCode` is an exact-real classical interval-address code with
+a one-bit positive-support/zero-mass escape tag. For blocks of n>0 symbols
+on Fin k, `arithmeticBlockCode_rate_sandwich` proves H2 <= E length/n <=
+H2+3/n. `arithmeticBlockCode_rate_tendsto_entropy` proves convergence to H2;
+`sourceBlock_code_family_limit_ge_entropy` gives the universal prefix-code
+converse. Zero masses are allowed. This is not an executable finite-precision
+implementation. Arithmetic full gate at 2a31a01 is still pending.
+
+`relativeEntropy_commonDensity_eq_if` gives the common sigma-finite density
+formula with exact infinite branches (gate 78846b8).
+`bretagnolleHuberScale_le_half_commonDensityAffinity_sq` and
+`half_commonDensityAffinity_sq_le_overlap` give the source Jensen/Le Cam
+route (gate b8325c2). `klDiv_gaussianReal_same_variance`,
+`gaussian_testing_error_lower_bound`, `gaussian_testing_error_three_tenths`
+and `gaussian_testing_max_error_three_twentieths` cover common positive
+variance and the exact SNR constants (gate 1e8af14).
+
+All names above are in BanditRLProof.LowerBounds. Unresolved source-mapping
+items include explicit metric counterexamples and the supporting exposition
+claims enumerated in `reviews/2026-09-05-chapter-14-body-closure-audit.md`.
+No new unproved concentration or measurability premise is introduced.

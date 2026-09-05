@@ -4,10 +4,10 @@
 \paragraph{Status.}
 The code/entropy definitions, Kraft adapter, finite-measure sub-$\sigma$-
 algebra data-processing inequality, and the existing Bretagnolle--Huber spine
-compile locally. Whole-chapter coverage remains \texttt{partial}: Huffman
-optimality, the one-bit entropy sandwich, asymptotic source coding,
-the common-density/measure-overlap route, and the general-variance
-Gaussian application are not claimed.
+compile locally. Whole-chapter coverage remains \texttt{partial}. The terminal
+update below records gated Huffman, common-density, overlap and Gaussian
+results, and the focused-validated arithmetic construction whose full gate
+is pending. Additional body assertions and export/site closure remain open.
 
 \paragraph{Lean declarations.}
 The public surface includes \texttt{BinaryPrefixCode.kraft\_inequality},
@@ -100,3 +100,37 @@ and antitonicity of the testing scale prove
 \]
 with the left side defined as zero at infinite KL. The direction is $P$ to
 $Q$, and the complement is evaluated under $Q$.
+
+\paragraph{Current terminal update.}
+For a finite nonnegative normalized law $p$, write $H_2$ for its bit entropy.
+\texttt{huffmanOptimalCode} recursively merges the two least weights;
+\texttt{huffmanCode\_optimal} proves global prefix-code optimality, and
+\texttt{huffmanCode\_entropy\_sandwich} gives $H_2\le E\ell\le H_2+1$.
+Full gate: \texttt{dff13cb}. Codewords are nonempty, including the singleton.
+
+\texttt{arithmeticBlockCode} is a classical exact-real interval-address code
+with a one-bit support/zero-mass escape tag. On $n>0$ independent symbols
+from a law on $\mathrm{Fin}\,k$,
+\texttt{arithmeticBlockCode\_rate\_sandwich} proves
+\[
+ H_2\le E\ell/n\le H_2+3/n.
+\]
+\texttt{arithmeticBlockCode\_rate\_tendsto\_entropy} proves convergence;
+\texttt{sourceBlock\_code\_family\_limit\_ge\_entropy} is the universal
+prefix-code converse. Zero masses are allowed. This is not a finite-precision
+executable encoder. Arithmetic gate \texttt{2a31a01} remains pending.
+
+\texttt{relativeEntropy\_commonDensity\_eq\_if} gives the common
+$\sigma$-finite density formula with exact infinite branches (gate
+\texttt{78846b8}).
+\texttt{bretagnolleHuberScale\_le\_half\_commonDensityAffinity\_sq} and
+\texttt{half\_commonDensityAffinity\_sq\_le\_overlap} provide the source
+Jensen/Le Cam route (gate \texttt{b8325c2}).
+\texttt{klDiv\_gaussianReal\_same\_variance},
+\texttt{gaussian\_testing\_error\_lower\_bound},
+\texttt{gaussian\_testing\_error\_three\_tenths} and
+\texttt{gaussian\_testing\_max\_error\_three\_twentieths} cover positive
+common variance and the exact SNR constants (gate \texttt{1e8af14}).
+All names are in \texttt{BanditRLProof.LowerBounds}. Explicit metric
+counterexamples and supporting exposition claims remain under body audit.
+No new unproved concentration or measurability premise is introduced.

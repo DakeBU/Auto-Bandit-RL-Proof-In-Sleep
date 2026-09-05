@@ -32,11 +32,12 @@ separate dependency leaf.
 - Promotion rule: every required mathematical definition and claim must map to
   a compiled local declaration and typed canary.  A theorem card, imported API,
   conditional lemma, or prose mapping alone cannot promote the chapter.
-- Current decision: `partial`.  The Section 14.1 Huffman/source-coding
-  terminals,
-  common-density formula, full measure-level
-  overlap proof nodes, and general-variance Gaussian/application surface are
-  not all locally compiled.
+- Current decision: `partial`. Main Huffman, common-density, overlap and
+  Gaussian terminals are compiled and fully gated. The constructed arithmetic
+  code rate theorem is focused-validated and awaiting its aggregate gate.
+  Additional body assertions and current export/site closure are audited in
+  `reviews/2026-09-05-chapter-14-body-closure-audit.md`; historical site/review
+  rows below do not certify this expanded scope.
 
 ## Precise restatement
 
@@ -45,8 +46,9 @@ bit strings with no distinct codeword prefixing another.  Its expected length
 is the probability-weighted codeword length.  Natural entropy is
 `∑ₓ pₓ log(pₓ⁻¹)` and base-two entropy divides this by `log 2`.  The local
 surface proves the induced codebook uniquely decodable and hence its Kraft
-inequality, but does not yet prove Huffman optimality or the source-coding
-theorem.
+inequality. The recursive Huffman constructor is globally optimal. A named
+arithmetic interval-address block-code family with a zero-mass escape tag
+has expected rate tending to entropy; its aggregate validation is pending.
 
 For probability measures `P,Q` on `(Ω,F)`, relative entropy is infinite when
 `P` is not absolutely continuous with respect to `Q`. In the finite regular
@@ -139,10 +141,11 @@ with `D(Q,P)` is also valid.
 - [x] Exact finite code/entropy definitions and a prefix-code Kraft adapter.
 - [x] Full arbitrary-sub-sigma-algebra data processing (Exercise 14.10).
 - [x] Chapter 15 same-policy history-law construction and divergence decomposition (compiled in its own gate).
-- [ ] Huffman optimality and the one-bit entropy sandwich in Eq. (14.2).
-- [ ] Block/arithmetic source-coding achievability and converse.
+- [x] Huffman optimality and the one-bit entropy sandwich; full gate dff13cb.
+- [ ] Arithmetic source-coding aggregate validation and source audit (rate and converse compiled).
 - [x] Eq. (14.4) for an arbitrary finite alphabet, with exact support dichotomy and zero-mass terms.
 - [x] Eq. (14.5) finite-discretisation supremum equivalence to RN KL, including singular and nonintegrable branches.
 - [x] Eq. (14.6) general common-density formula; full harness passed at `78846b8`.
-- [ ] Measure-overlap root/aggregate verification (Eqs. (14.8)--(14.9) and source affinity/KL Jensen intermediate focused-build passed).
-- [ ] General Gaussian-variance/application proof nodes.
+- [x] Measure-overlap and source affinity/Jensen; full gate b8325c2.
+- [x] General Gaussian-variance/application; full gate 1e8af14.
+- [ ] Additional mathematical body assertions and evidence closure in the body audit.
