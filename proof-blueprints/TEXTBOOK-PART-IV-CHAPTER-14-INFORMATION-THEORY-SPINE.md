@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T07:57:46+00:00`
+Generated: `2026-09-05T08:03:59+00:00`
 
 ## Source Task
 
@@ -288,11 +288,8 @@ with `D(Q,P)` is also valid.
 | `D(P,Q)=∞` | explicit branch of `bretagnolleHuberScale` | implements `exp(-∞)=0` | no |
 | mutual AC | absent | not required by source | must remain absent |
 
-<!-- 363 characters omitted from the middle of this snapshot. -->
+<!-- 478 characters omitted from the middle of this snapshot. -->
 
-## Local API and proof route
-
-| Leaf | Existing APIs/imports | Retrieval evidence | Intended route | Pivot rule |
 | --- | --- | --- | --- | --- |
 | KL definition/branches | `Mathlib.InformationTheory.KullbackLeibler.Basic` | installed Mathlib source | exact wrappers around `klDiv` branch lemmas | do not invent a second measure KL |
 | prefix coding | `InformationTheory.UniquelyDecodable`, `kraft_mcmillan_inequality` | installed Mathlib source | prove the finite range uniquely decodable from prefix freedom, then adapt Kraft | do not label Kraft as the missing Huffman/source-coding terminal |
@@ -319,7 +316,7 @@ with `D(Q,P)` is also valid.
 | `CH14-TYPED-CANARY` | full conclusions including finite and singular examples | all compiled declarations | `Tests/TextbookPartIVChapter14Canary.lean` | project-local | Tests | verified |
 | `CH14-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | full check | verified locally |
 | `CH14-EVIDENCE-SITE` | task/DAG/export/index/site agreement | compiled chapter surface | repository artifacts | repository | lean-verified/site/browser | expanded-body static check passed at 7b5b5f4; targeted desktop and mouse/keyboard anchors verified at 24aa742; current remote publication unverified |
-| `CH14-REVIEW` | independent source/Lean/evidence audit | all local artifacts | review record | repository | independent review | historical §14.2 only; expanded-body completion audit remains open |
+| `CH14-REVIEW` | independent source/Lean/evidence audit | all local artifacts | review record | repository | independent review | expanded-body source/statement audit passed after cf3ed1f arbitrary-event repair; final compiler evidence in independent-source review |
 | `CH14-REMOTE` | PR, main Actions, Pages and live page | accepted local chapter | PR #11; run `31949303227`; Pages job `95172626370`; live desktop/mobile | repository | deployment | verified for the historical §14.2 milestone; the 2026-09-04 extension awaits its own PR |
 
 ## Gaps
@@ -344,7 +341,7 @@ The boxed unique-decoding equivalence is now mapped to
 injective encoder with uniquely decodable range. Its nonempty words are
 derived, not assumed; the non-strict Kraft converse includes equality.
 The full 3d7c9a1 gate passed, including root canaries. Final evidence
-synchronization and independent whole-body review remain open. See the boxed-code and arithmetic-identity audits
+synchronization is tracked in the closeout checklist; independent source review passed after the cf3ed1f arbitrary-event repair. See the boxed-code and arithmetic-identity audits
 for the two source-fidelity repairs after the a47106a gate.
 
 

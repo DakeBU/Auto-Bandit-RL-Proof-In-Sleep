@@ -19,7 +19,7 @@ accepted/task/site status does not independently certify the expanded body.
 | Theorem14.2 / Eq.14.7 | InformationTheory | bretagnolleHuber | (empty) | existing spine + subsequent gates |
 | Eq.14.8 overlap terminal and source Jensen step | CommonDensityOverlap; AffinityKL | bretagnolleHuberScale_le_commonDensityOverlap; bretagnolleHuberScale_le_half_commonDensityAffinity_sq | Overlap; Affinity | b8325c2 |
 | Eq.14.9 Le Cam bound | CommonDensityOverlap | half_commonDensityAffinity_sq_le_overlap | Overlap | b8325c2 |
-| p.191 arbitrary-event overlap sufficiency step; p.190 reversed-KL remark | CommonDensityOverlap; InformationTheory | commonDensityOverlap_le_testingError; bretagnolleHuber with swapped measures/complement | Affinity | focused overlap build passed; cf3ed1f full gate pending |
+| p.191 arbitrary-event overlap sufficiency step; p.190 reversed-KL remark | CommonDensityOverlap; InformationTheory | commonDensityOverlap_le_testingError; bretagnolleHuber with swapped measures/complement | Affinity | cf3ed1f full gate passed: 400 tests, 7 skipped |
 | Gaussian KL and testing constants | GaussianTesting | klDiv_gaussianReal_same_variance; gaussian_testing_max_error_three_twentieths | Gaussian | 1e8af14 |
 | non-metric counterexamples | RelativeEntropyNonMetric | bernoulliRelativeEntropy_asymmetry; relativeEntropy_triangle_counterexample | NonMetric | d325147 passed |
 | cross entropy and zero-mass limit | CrossEntropy | relativeEntropy_finite_crossEntropy; entropyTerm_tendsto_zero_right | CrossEntropy | d325147 passed |

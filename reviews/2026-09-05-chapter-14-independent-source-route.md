@@ -46,5 +46,14 @@ README, Tests root, blueprint, retrieval indexes and theory tree). No merge
 was performed. User authorized independent review and PR creation only,
 explicitly excluding merge and deployment. A PR must disclose this boundary.
 
-Full gate for cf3ed1f is pending in
-C:/a14/tmp/ch14-independent-source-full-check.log.
+Full gate for cf3ed1f PASSED: root library 8881 jobs, aggregate Tests 8951
+jobs, 400 Python tests, 7 skipped, 205.531s. Log:
+C:/a14/tmp/ch14-independent-source-full-check.log. The arbitrary-event source
+chain and reversed-KL canaries compiled; the new lemma uses only propext,
+Classical.choice and Quot.sound. This satisfies the review's compiler condition.
+No Lean edits followed cf3ed1f.
+
+Site at clean 372684e passed: 687 pages, 8437 declarations, 9236 Lean source
+links; internal anchors and mathematical fallbacks valid. No new browser QA
+or remote publication is claimed. The whole chapter stays partial because
+current-main integration/remote evidence are not completed or authorized here.
