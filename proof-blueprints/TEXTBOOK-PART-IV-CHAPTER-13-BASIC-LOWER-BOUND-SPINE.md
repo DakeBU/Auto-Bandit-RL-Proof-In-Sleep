@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T06:43:38+00:00`
+Generated: `2026-09-05T06:48:08+00:00`
 
 ## Source Task
 
@@ -123,24 +123,9 @@ LowerBounds.exists_leastExploredAlternative
 LowerBounds.baseEnvironmentRegret
 LowerBounds.changedEnvironmentRegretLowerBound
 
-<!-- 1621 characters omitted from the middle of this snapshot. -->
+<!-- 2514 characters omitted from the middle of this snapshot. -->
 
-- [x] Fixed-class minimax-optimality semantics compile.
-- [x] The Section 13.1 midpoint decision and both deterministic error-event
-  identities compile.
-- [x] The empirical mean of `n>0` independent `N(mu,1)` observations is
-  connected to the declared `N(mu,1/n)` observation law.
-- [x] Centered/reflected Gaussian sub-Gaussian bridges and the source-shaped
-  `exp(-n*Delta^2/8)` Chernoff upper bound compile for both hypotheses and
-  their worst-case threshold risk.
-- [x] The exact two-sided Mills-ratio Eq. (13.1) compiles with its printed
-  constants.
-- [x] Alternative-arm averaging leaves compile from the exact pull budget.
-- [x] Conditional two-environment algebra leaves compile without a statistical
-  nonclaim being promoted.
-- [ ] Re-run integration for the exact Mills-ratio extension: root import,
-  typed canary, Tests, axiom scan, full harness, synchronized exports/indexes,
-  documentation and website. The earlier Chernoff-only baseline passed;
+documentation and website. The earlier Chernoff-only baseline passed;
   that historical gate does not certify this extension.
 - [ ] Refresh the structured source/Lean/evidence review for the exact-bound
   extension. The earlier review's website-status-enum P3 was corrected.
@@ -149,7 +134,7 @@ LowerBounds.changedEnvironmentRegretLowerBound
   page pass.
 - [ ] The current Chapter 15 downstream Theorem 13.1 consumer passes its own
   PR, authoritative-main Actions, Pages deployment, and live Chapter 13 check.
-- [ ] The main-prose broader-class near-minimax consequence has a compiled
+- [x] The main-prose broader-class near-minimax consequence has a compiled
   MOSS/Algorithm 7 upper theorem for the stated 1-subgaussian class.
 
 ## Mathlib-ready leaf contract
@@ -195,6 +180,20 @@ LowerBounds.changedEnvironmentRegretLowerBound
   distinct MOSS/Chapter 9 dependency.
 
 ## Failure policy
+
+### 2026-09-05 Broader-class near-minimax consumer
+
+`LowerBounds/SubgaussianMinimax.lean` now compiles the main-prose consequence.
+The class is all stationary unit-subgaussian arm laws with gaps in `[0,1]`,
+not merely bounded means. `subgaussianMinimax_sandwich` proves lower constant
+1/54 and MOSS worst-case upper constant 40 on the same history-law regret;
+`moss_nearMinimax` proves the universal factor 2160. The source only asks
+for a constant factor, not an optimal constant. The Gaussian subclass
+embedding is regret preserving and the MOSS policy does not depend on means.
+The horizon is t+1 for inclusive history t, with k>1 and k<=t+1.
+This supersedes the historical open-MOSS note below. Whole-chapter status
+remains partial pending current full checks, comprehensive export/site
+synchronization, review, PR and authoritative deployment/live verification.
 
 ### 2026-09-05 MOSS peeling progress
 
@@ -253,7 +252,8 @@ the stated Algorithm 7/Theorem 9.1 near-minimax consequence for the broader
 1-subgaussian class.  Notes 13.2 and Exercises 13.1--13.2 are optional;
 Bibliographic Remarks 13.3 is source evidence for the required Eq. (13.1), not
 an excuse to omit it.  Therefore the chapter remains `partial` while the
-broader-class MOSS upper side remains open. Exact Eq. (13.1) now compiles.
+integration/review/export/deployment gates remain open. Exact Eq. (13.1)
+and the broader-class MOSS near-minimax consumer now compile.
 
 ## Natural-language statements
 
@@ -306,16 +306,15 @@ the `Delta*n/2` statement is retained only as the zero-error corollary.
 | equation (13.3) RHS | changed regret lower expression | `LowerBounds.changedEnvironmentRegretLowerBound` | deterministic real expression | target |
 | comparison of `T_0` under `nu,nu'` | statistical indistinguishability bridge | source event comparison in `GaussianMinimax.lean` | quantitative bridge contract | compiled Ch. 14--15 consumer |
 | Theorem 13.1 | Gaussian minimax lower bound | `unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt` | source-order endpoint with explicit `c=1/54` | compiled through Ch. 15 |
-| Algorithm 7 / Theorem 9.1 consequence | constant-factor near-minimax policy on the broader finite-arm 1-subgaussian class with gaps in `[0,1]` | no local MOSS upper theorem | connected cross-chapter claim | partial; lower side only |
+| Algorithm 7 / Theorem 9.1 consequence | constant-factor near-minimax policy on the broader finite-arm 1-subgaussian class with gaps in `[0,1]` | `SubgaussianMinimax.moss_nearMinimax` (namespace `LowerBounds`) | connected cross-chapter claim | compiled; integration gates pending |
 
 ## Semantic signature and assumption ledger
 
 | Assumption | Lean status | Purpose | Blocking Chapter 13? |
 | --- | --- | --- | --- |
 | explicit policy and environment classes | subtype arguments | avoids silently quantifying over a different model class | no |
-| `ENNReal` regret codomain | typed | supplies complete-lattice sup/inf without a hidden boundedness premise | no |
 
-<!-- 5721 characters omitted from the middle of this snapshot. -->
+<!-- 5917 characters omitted from the middle of this snapshot. -->
 
 | `CH13-GAUSSIAN-SAMPLE-MEAN-LAW` | empirical mean of `n>0` independent unit-variance Gaussians has law `N(mu,1/n)` | finite product measure, characteristic-function product, Gaussian scaling | `gaussianIIDObservationLaw`, `gaussianCoordinateAverage`, `gaussianIIDSumLaw`, `gaussianIIDSampleMeanLaw` | project-local bridge | focused Lean | compiled |
 | `CH13-GAUSSIAN-TEST-CHERNOFF` | both `N(0,1/n)` and `N(Delta,1/n)` midpoint errors, and their maximum, are at most `exp(-n*Delta^2/8)` | exact Gaussian MGF, reflection, and Mathlib Chernoff | `hasSubgaussianMGF_id_gaussianReal_zero`, `hasSubgaussianMGF_gap_sub_id_gaussianReal`, `gaussianSampleMeanThresholdRisk_le_exp` | project-local consequence | focused Lean | compiled |
@@ -325,7 +324,7 @@ the `Delta*n/2` statement is retained only as the zero-error corollary.
 | `CH13-TWO-ENV-ALGEBRA` | quantitative `Delta*(n-error)/2` max bound | nonnegative gap, explicit upper bound on the cross-law pull discrepancy | `max_base_changed_regretLowerBound_ge_half_sub_error`; zero-error corollary `max_base_changed_regretLowerBound_ge_half` | project-local | focused Lean | compiled |
 | `CH13-HISTORY-TRANSPORT` | derive cross-law event comparison | same policy/history law, Gaussian KL, history KL | `base_event_probability_lower_bound`, `changed_complement_probability_lower_bound` | project-local | Chapter 15 | compiled |
 | `CH13-THEOREM-13-1` | universal-constant Gaussian minimax `sqrt(k*n)` lower bound | Chapter 13 leaves plus Chapter 14 information theory and Chapter 15 packing/tuning | `unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt` | source-order endpoint | Chapter 15 | compiled |
-| `CH13-BROADER-SUBGAUSSIAN-NEAR-MINIMAX` | Algorithm 7 constant-factor near-minimax consequence on the stated 1-subgaussian class | Gaussian subclass transfer and Theorem 9.1 MOSS upper theorem | lower terminal only | connected dependency | Chapter 9 plus Chapter 13 | partial |
+| `CH13-BROADER-SUBGAUSSIAN-NEAR-MINIMAX` | Algorithm 7 constant-factor near-minimax consequence on the stated 1-subgaussian class | Gaussian subclass transfer and Theorem 9.1 MOSS upper theorem | `LowerBounds.moss_nearMinimax` | connected dependency | Chapter 9 plus Chapter 13 | compiled; integration pending |
 | `CH13-TYPED-CANARY` | full-conclusion applications and nondegenerate instance | compiled declarations | `Tests/TextbookPartIVChapter13Canary.lean` | project-local | Tests | verified |
 | `CH13-EVIDENCE-SITE` | task/window/DAG/export/index/site agreement | all local gates | repository artifacts | repository | site checks/review | verified locally |
 | `CH13-REMOTE` | current Chapter 15 downstream extension PR, Actions, Pages, live page | accepted local chapter; earlier dependency-slice PR remains historical evidence only | remote workflow | repository | deployment | pending current extension |
@@ -384,7 +383,7 @@ and its deterministic kernel; stochastic regret remains a separate target.
 - [x] The finite-iid Gaussian sum/scaling bridge compiles on the canonical
   product law via characteristic-function factorization and exact Gaussian
   scaling.
-- [ ] Compile the source-compatible MOSS/Algorithm 7 upper theorem for the
+- [x] Compile the source-compatible MOSS/Algorithm 7 upper theorem for the
   broader finite-arm 1-subgaussian class before claiming the main-prose
   constant-factor near-minimax consequence.
 
@@ -519,8 +518,9 @@ Use exactly one:
   inferred from deterministic algebra or a theorem card.
 - Theorem 13.1 is represented by the caller-free Chapter 15 minimax consumer
   with explicit `c=1/54`; broader classes or constants require separate gates.
-- The chapter remains `partial`: the main-prose broader-class MOSS upper
-  consequence remains open under the frozen contract, while Notes 13.2 and
+- The chapter remains `partial`: the broader-class MOSS consequence now
+  compiles in `LowerBounds/SubgaussianMinimax.lean`, but whole-chapter
+  integration/review/export/deployment gates remain open. Notes 13.2 and
   Exercises 13.1--13.2 are optional and do not block completion.
 
 ## Failure policy
@@ -60915,6 +60915,86 @@ These cards are planning inspiration only.  They do not certify any theorem.
   },
   {
     "kind": "structure",
+    "name": "UnitSubgaussianBanditEnvironment",
+    "full_name": "BanditRLProof.LowerBounds.UnitSubgaussianBanditEnvironment",
+    "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+    "line": 10,
+    "statement": "structure UnitSubgaussianBanditEnvironment (k : \u2115) where"
+  },
+  {
+    "kind": "def",
+    "name": "UnitGaussianBanditEnvironment.toSubgaussian",
+    "full_name": "BanditRLProof.LowerBounds.UnitGaussianBanditEnvironment.toSubgaussian",
+    "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+    "line": 22,
+    "statement": "def UnitGaussianBanditEnvironment.toSubgaussian {k : \u2115} (e : UnitGaussianBanditEnvironment k) : UnitSubgaussianBanditEnvironment k where"
+  },
+  {
+    "kind": "def",
+    "name": "subgaussianExpectedPseudoRegret",
+    "full_name": "BanditRLProof.LowerBounds.subgaussianExpectedPseudoRegret",
+    "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+    "line": 38,
+    "statement": "def subgaussianExpectedPseudoRegret {k : \u2115} (algorithm : Thompson.HistoryAlgorithm (Fin k) \u211d) (e : UnitSubgaussianBanditEnvironment k) (t : \u2115) : \u211d\u22650\u221e"
+  },
+  {
+    "kind": "def",
+    "name": "subgaussianWorstCaseExpectedPseudoRegret",
+    "full_name": "BanditRLProof.LowerBounds.subgaussianWorstCaseExpectedPseudoRegret",
+    "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+    "line": 43,
+    "statement": "def subgaussianWorstCaseExpectedPseudoRegret (k : \u2115) (algorithm : Thompson.HistoryAlgorithm (Fin k) \u211d) (t : \u2115) : \u211d\u22650\u221e"
+  },
+  {
+    "kind": "def",
+    "name": "subgaussianMinimaxExpectedPseudoRegret",
+    "full_name": "BanditRLProof.LowerBounds.subgaussianMinimaxExpectedPseudoRegret",
+    "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+    "line": 47,
+    "statement": "def subgaussianMinimaxExpectedPseudoRegret (k t : \u2115) : \u211d\u22650\u221e"
+  },
+  {
+    "kind": "theorem",
+    "name": "subgaussianExpectedPseudoRegret_gaussian",
+    "full_name": "BanditRLProof.LowerBounds.subgaussianExpectedPseudoRegret_gaussian",
+    "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+    "line": 51,
+    "statement": "theorem subgaussianExpectedPseudoRegret_gaussian {k : \u2115} (algorithm : Thompson.HistoryAlgorithm (Fin k) \u211d) (e : UnitGaussianBanditEnvironment k) (t : \u2115) : subgaussianExpectedPseudoRegret algorithm e.toSubgaussian t = gaussianExpectedPseudoRegret algorithm e t"
+  },
+  {
+    "kind": "theorem",
+    "name": "unitGaussianMinimax_le_subgaussianMinimax",
+    "full_name": "BanditRLProof.LowerBounds.unitGaussianMinimax_le_subgaussianMinimax",
+    "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+    "line": 58,
+    "statement": "theorem unitGaussianMinimax_le_subgaussianMinimax (k t : \u2115) : unitGaussianMinimaxExpectedPseudoRegret k t \u2264 subgaussianMinimaxExpectedPseudoRegret k t"
+  },
+  {
+    "kind": "theorem",
+    "name": "moss_subgaussianExpectedPseudoRegret_le",
+    "full_name": "BanditRLProof.LowerBounds.moss_subgaussianExpectedPseudoRegret_le",
+    "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+    "line": 67,
+    "statement": "theorem moss_subgaussianExpectedPseudoRegret_le {k : \u2115} [NeZero k] (hk : 0 < k) (t : \u2115) (hkt : k \u2264 t+1) (e : UnitSubgaussianBanditEnvironment k) : subgaussianExpectedPseudoRegret (MOSS.historyAlgorithm hk (t+1)) e t \u2264 ENNReal.ofReal (40*Real.sqrt ((k : \u211d)*(t+1)))"
+  },
+  {
+    "kind": "theorem",
+    "name": "subgaussianMinimax_sandwich",
+    "full_name": "BanditRLProof.LowerBounds.subgaussianMinimax_sandwich",
+    "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+    "line": 92,
+    "statement": "theorem subgaussianMinimax_sandwich {k : \u2115} [NeZero k] (hk : 1 < k) (t : \u2115) (hkt : k \u2264 t+1) : ENNReal.ofReal ((1/54 : \u211d)*Real.sqrt ((k : \u211d)*(t+1))) \u2264 subgaussianMinimaxExpectedPseudoRegret k t \u2227 subgaussianMinimaxExpectedPseudoRegret k t \u2264 subgaussianWorstCaseExpectedPseudoRegret k (MOSS.historyAlgorithm (by omega) (t+1)) t \u2227 subgaussianWorstCaseExpectedPseudoRegret k (MOSS.historyAlgorithm (by omega) (t+1)) t \u2264 ENNReal.ofReal (40*Real.sqrt ((k : \u211d)*(t+1)))"
+  },
+  {
+    "kind": "theorem",
+    "name": "moss_nearMinimax",
+    "full_name": "BanditRLProof.LowerBounds.moss_nearMinimax",
+    "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+    "line": 107,
+    "statement": "theorem moss_nearMinimax {k : \u2115} [NeZero k] (hk : 1 < k) (t : \u2115) (hkt : k \u2264 t+1) : subgaussianWorstCaseExpectedPseudoRegret k (MOSS.historyAlgorithm (by omega) (t+1)) t \u2264 2160 * subgaussianMinimaxExpectedPseudoRegret k t"
+  },
+  {
+    "kind": "structure",
     "name": "SuccinctUnitSystem",
     "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem",
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
@@ -96803,78 +96883,6 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "harness": "",
     "input_tokens": 0,
     "kind": "build",
-    "lean": "",
-    "lean_check_seconds": 0.0,
-    "new_declarations": [],
-    "notes": "Independent centered subgaussian maximal partial-sum bound and Jensen/Doob route compiled; external full-statement canary 3473 jobs, baseline axioms. MOSS policy full check 1eb5af0 passed (400 Python tests, 7 skipped). Peeling remains open.",
-    "obligations_after": 0,
-    "obligations_before": 0,
-    "output_tokens": 0,
-    "parent_id": "",
-    "progress_class": "unreviewed",
-    "prompt_chars": 0,
-    "reused_declarations": [],
-    "reviewer_validated": false,
-    "role": "reviewer",
-    "route_fingerprint": "",
-    "route_packet_hash": "",
-    "run_id": "",
-    "source": "",
-    "statement_hash": "",
-    "status": "compiled",
-    "target_fingerprint": "",
-    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
-    "time": "2026-09-05T05:13:18+00:00",
-    "verifier_evidence": [],
-    "worker_id": ""
-  },
-  {
-    "attempt_id": "",
-    "changed_files": [],
-    "dag_depth": 0,
-    "dag_nodes": 0,
-    "elapsed_seconds": 0.0,
-    "error_signature": "",
-    "experiment_id": "",
-    "harness": "",
-    "input_tokens": 0,
-    "kind": "build",
-    "lean": "BanditRLProof/Algorithms/MOSSPeeling.lean",
-    "lean_check_seconds": 0.0,
-    "new_declarations": [],
-    "notes": "Source Lemma 9.3 actual mean event with constant 15 compiled; dyadic telescoping intermediate 12; 3495 focused jobs and baseline axioms. Full 511062a gate passed 400 tests with 7 skips. MOSS regret remains pending.",
-    "obligations_after": 0,
-    "obligations_before": 0,
-    "output_tokens": 0,
-    "parent_id": "",
-    "progress_class": "compiled-leaf",
-    "prompt_chars": 0,
-    "reused_declarations": [],
-    "reviewer_validated": false,
-    "role": "lower",
-    "route_fingerprint": "",
-    "route_packet_hash": "",
-    "run_id": "",
-    "source": "",
-    "statement_hash": "",
-    "status": "compiled",
-    "target_fingerprint": "",
-    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
-    "time": "2026-09-05T05:23:07+00:00",
-    "verifier_evidence": [],
-    "worker_id": ""
-  },
-  {
-    "attempt_id": "",
-    "changed_files": [],
-    "dag_depth": 0,
-    "dag_nodes": 0,
-    "elapsed_seconds": 0.0,
-    "error_signature": "",
-    "experiment_id": "",
-    "harness": "",
-    "input_tokens": 0,
-    "kind": "build",
     "lean": "BanditRLProof/Algorithms/MOSSOptimism.lean",
     "lean_check_seconds": 0.0,
     "new_declarations": [],
@@ -97538,6 +97546,82 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "target_fingerprint": "",
     "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
     "time": "2026-09-05T06:38:37+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "build",
+    "lean": "BanditRLProof/Algorithms/MOSSHistoryRegret.lean",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [
+      "BanditRLProof.MOSS.canonicalGapExpectedRegret_le"
+    ],
+    "notes": "Exact constant 39 upper bound transported to canonical common-history expected gap regret; inclusive horizon t+1. Chapter remains partial.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "compiled-leaf",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "lower",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "compiled",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T06:43:54+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "build",
+    "lean": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [
+      "BanditRLProof.LowerBounds.moss_nearMinimax"
+    ],
+    "notes": "Main-prose broad gaps-in-[0,1] class: Gaussian embedding, 1/54 lower and 40 MOSS upper, universal factor 2160. Typed canary passes; whole chapter remains partial.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "compiled-leaf",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "lower",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "compiled",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T06:48:02+00:00",
     "verifier_evidence": [],
     "worker_id": ""
   }

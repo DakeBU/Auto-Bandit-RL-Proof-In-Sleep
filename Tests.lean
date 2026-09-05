@@ -43,3 +43,4 @@ import Tests.StochasticGradientBanditTheoremTwoSelectedIIDCanary
 import Tests.StochasticGradientBanditTheoremFourContractAuditCanary
 import Tests.MOSSPeelingCanary
 import Tests.MOSSStreamCanary
+import Tests.SubgaussianMinimaxCanary

@@ -173,7 +173,7 @@ LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt
   page pass.
 - [ ] The current Chapter 15 downstream Theorem 13.1 consumer passes its own
   PR, authoritative-main Actions, Pages deployment, and live Chapter 13 check.
-- [ ] The main-prose broader-class near-minimax consequence has a compiled
+- [x] The main-prose broader-class near-minimax consequence has a compiled
   MOSS/Algorithm 7 upper theorem for the stated 1-subgaussian class.
 
 ## Mathlib-ready leaf contract
@@ -219,6 +219,20 @@ LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt
   distinct MOSS/Chapter 9 dependency.
 
 ## Failure policy
+
+### 2026-09-05 Broader-class near-minimax consumer
+
+`LowerBounds/SubgaussianMinimax.lean` now compiles the main-prose consequence.
+The class is all stationary unit-subgaussian arm laws with gaps in `[0,1]`,
+not merely bounded means. `subgaussianMinimax_sandwich` proves lower constant
+1/54 and MOSS worst-case upper constant 40 on the same history-law regret;
+`moss_nearMinimax` proves the universal factor 2160. The source only asks
+for a constant factor, not an optimal constant. The Gaussian subclass
+embedding is regret preserving and the MOSS policy does not depend on means.
+The horizon is t+1 for inclusive history t, with k>1 and k<=t+1.
+This supersedes the historical open-MOSS note below. Whole-chapter status
+remains partial pending current full checks, comprehensive export/site
+synchronization, review, PR and authoritative deployment/live verification.
 
 ### 2026-09-05 MOSS peeling progress
 

@@ -119,8 +119,9 @@ Use exactly one:
   inferred from deterministic algebra or a theorem card.
 - Theorem 13.1 is represented by the caller-free Chapter 15 minimax consumer
   with explicit `c=1/54`; broader classes or constants require separate gates.
-- The chapter remains `partial`: the main-prose broader-class MOSS upper
-  consequence remains open under the frozen contract, while Notes 13.2 and
+- The chapter remains `partial`: the broader-class MOSS consequence now
+  compiles in `LowerBounds/SubgaussianMinimax.lean`, but whole-chapter
+  integration/review/export/deployment gates remain open. Notes 13.2 and
   Exercises 13.1--13.2 are optional and do not block completion.
 
 ## Failure policy

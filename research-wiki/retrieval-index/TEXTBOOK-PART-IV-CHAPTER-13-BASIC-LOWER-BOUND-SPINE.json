@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
-  "generated": "2026-09-05T06:43:44+00:00",
+  "generated": "2026-09-05T06:48:14+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -59814,6 +59814,86 @@
     },
     {
       "kind": "structure",
+      "name": "UnitSubgaussianBanditEnvironment",
+      "full_name": "BanditRLProof.LowerBounds.UnitSubgaussianBanditEnvironment",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 10,
+      "statement": "structure UnitSubgaussianBanditEnvironment (k : ℕ) where"
+    },
+    {
+      "kind": "def",
+      "name": "UnitGaussianBanditEnvironment.toSubgaussian",
+      "full_name": "BanditRLProof.LowerBounds.UnitGaussianBanditEnvironment.toSubgaussian",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 22,
+      "statement": "def UnitGaussianBanditEnvironment.toSubgaussian {k : ℕ} (e : UnitGaussianBanditEnvironment k) : UnitSubgaussianBanditEnvironment k where"
+    },
+    {
+      "kind": "def",
+      "name": "subgaussianExpectedPseudoRegret",
+      "full_name": "BanditRLProof.LowerBounds.subgaussianExpectedPseudoRegret",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 38,
+      "statement": "def subgaussianExpectedPseudoRegret {k : ℕ} (algorithm : Thompson.HistoryAlgorithm (Fin k) ℝ) (e : UnitSubgaussianBanditEnvironment k) (t : ℕ) : ℝ≥0∞"
+    },
+    {
+      "kind": "def",
+      "name": "subgaussianWorstCaseExpectedPseudoRegret",
+      "full_name": "BanditRLProof.LowerBounds.subgaussianWorstCaseExpectedPseudoRegret",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 43,
+      "statement": "def subgaussianWorstCaseExpectedPseudoRegret (k : ℕ) (algorithm : Thompson.HistoryAlgorithm (Fin k) ℝ) (t : ℕ) : ℝ≥0∞"
+    },
+    {
+      "kind": "def",
+      "name": "subgaussianMinimaxExpectedPseudoRegret",
+      "full_name": "BanditRLProof.LowerBounds.subgaussianMinimaxExpectedPseudoRegret",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 47,
+      "statement": "def subgaussianMinimaxExpectedPseudoRegret (k t : ℕ) : ℝ≥0∞"
+    },
+    {
+      "kind": "theorem",
+      "name": "subgaussianExpectedPseudoRegret_gaussian",
+      "full_name": "BanditRLProof.LowerBounds.subgaussianExpectedPseudoRegret_gaussian",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 51,
+      "statement": "theorem subgaussianExpectedPseudoRegret_gaussian {k : ℕ} (algorithm : Thompson.HistoryAlgorithm (Fin k) ℝ) (e : UnitGaussianBanditEnvironment k) (t : ℕ) : subgaussianExpectedPseudoRegret algorithm e.toSubgaussian t = gaussianExpectedPseudoRegret algorithm e t"
+    },
+    {
+      "kind": "theorem",
+      "name": "unitGaussianMinimax_le_subgaussianMinimax",
+      "full_name": "BanditRLProof.LowerBounds.unitGaussianMinimax_le_subgaussianMinimax",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 58,
+      "statement": "theorem unitGaussianMinimax_le_subgaussianMinimax (k t : ℕ) : unitGaussianMinimaxExpectedPseudoRegret k t ≤ subgaussianMinimaxExpectedPseudoRegret k t"
+    },
+    {
+      "kind": "theorem",
+      "name": "moss_subgaussianExpectedPseudoRegret_le",
+      "full_name": "BanditRLProof.LowerBounds.moss_subgaussianExpectedPseudoRegret_le",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 67,
+      "statement": "theorem moss_subgaussianExpectedPseudoRegret_le {k : ℕ} [NeZero k] (hk : 0 < k) (t : ℕ) (hkt : k ≤ t+1) (e : UnitSubgaussianBanditEnvironment k) : subgaussianExpectedPseudoRegret (MOSS.historyAlgorithm hk (t+1)) e t ≤ ENNReal.ofReal (40*Real.sqrt ((k : ℝ)*(t+1)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "subgaussianMinimax_sandwich",
+      "full_name": "BanditRLProof.LowerBounds.subgaussianMinimax_sandwich",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 92,
+      "statement": "theorem subgaussianMinimax_sandwich {k : ℕ} [NeZero k] (hk : 1 < k) (t : ℕ) (hkt : k ≤ t+1) : ENNReal.ofReal ((1/54 : ℝ)*Real.sqrt ((k : ℝ)*(t+1))) ≤ subgaussianMinimaxExpectedPseudoRegret k t ∧ subgaussianMinimaxExpectedPseudoRegret k t ≤ subgaussianWorstCaseExpectedPseudoRegret k (MOSS.historyAlgorithm (by omega) (t+1)) t ∧ subgaussianWorstCaseExpectedPseudoRegret k (MOSS.historyAlgorithm (by omega) (t+1)) t ≤ ENNReal.ofReal (40*Real.sqrt ((k : ℝ)*(t+1)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "moss_nearMinimax",
+      "full_name": "BanditRLProof.LowerBounds.moss_nearMinimax",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 107,
+      "statement": "theorem moss_nearMinimax {k : ℕ} [NeZero k] (hk : 1 < k) (t : ℕ) (hkt : k ≤ t+1) : subgaussianWorstCaseExpectedPseudoRegret k (MOSS.historyAlgorithm (by omega) (t+1)) t ≤ 2160 * subgaussianMinimaxExpectedPseudoRegret k t"
+    },
+    {
+      "kind": "structure",
       "name": "SuccinctUnitSystem",
       "full_name": "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem",
       "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
@@ -96504,6 +96584,82 @@
       "target_fingerprint": "",
       "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
       "time": "2026-09-05T06:38:37+00:00",
+      "verifier_evidence": [],
+      "worker_id": ""
+    },
+    {
+      "attempt_id": "",
+      "changed_files": [],
+      "dag_depth": 0,
+      "dag_nodes": 0,
+      "elapsed_seconds": 0.0,
+      "error_signature": "",
+      "experiment_id": "",
+      "harness": "",
+      "input_tokens": 0,
+      "kind": "build",
+      "lean": "BanditRLProof/Algorithms/MOSSHistoryRegret.lean",
+      "lean_check_seconds": 0.0,
+      "new_declarations": [
+        "BanditRLProof.MOSS.canonicalGapExpectedRegret_le"
+      ],
+      "notes": "Exact constant 39 upper bound transported to canonical common-history expected gap regret; inclusive horizon t+1. Chapter remains partial.",
+      "obligations_after": 0,
+      "obligations_before": 0,
+      "output_tokens": 0,
+      "parent_id": "",
+      "progress_class": "compiled-leaf",
+      "prompt_chars": 0,
+      "reused_declarations": [],
+      "reviewer_validated": false,
+      "role": "lower",
+      "route_fingerprint": "",
+      "route_packet_hash": "",
+      "run_id": "",
+      "source": "",
+      "statement_hash": "",
+      "status": "compiled",
+      "target_fingerprint": "",
+      "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+      "time": "2026-09-05T06:43:54+00:00",
+      "verifier_evidence": [],
+      "worker_id": ""
+    },
+    {
+      "attempt_id": "",
+      "changed_files": [],
+      "dag_depth": 0,
+      "dag_nodes": 0,
+      "elapsed_seconds": 0.0,
+      "error_signature": "",
+      "experiment_id": "",
+      "harness": "",
+      "input_tokens": 0,
+      "kind": "build",
+      "lean": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "lean_check_seconds": 0.0,
+      "new_declarations": [
+        "BanditRLProof.LowerBounds.moss_nearMinimax"
+      ],
+      "notes": "Main-prose broad gaps-in-[0,1] class: Gaussian embedding, 1/54 lower and 40 MOSS upper, universal factor 2160. Typed canary passes; whole chapter remains partial.",
+      "obligations_after": 0,
+      "obligations_before": 0,
+      "output_tokens": 0,
+      "parent_id": "",
+      "progress_class": "compiled-leaf",
+      "prompt_chars": 0,
+      "reused_declarations": [],
+      "reviewer_validated": false,
+      "role": "lower",
+      "route_fingerprint": "",
+      "route_packet_hash": "",
+      "run_id": "",
+      "source": "",
+      "statement_hash": "",
+      "status": "compiled",
+      "target_fingerprint": "",
+      "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+      "time": "2026-09-05T06:48:02+00:00",
       "verifier_evidence": [],
       "worker_id": ""
     }

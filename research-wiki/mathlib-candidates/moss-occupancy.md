@@ -330,3 +330,22 @@ change. Full check of earlier bf27f91 passed: Tests 8923 jobs, ProofGraphExport,
 400 Python tests in 197.014s, 7 skips. This is not a full check of this leaf.
 Next: bounded-mean broader-class near-minimax consumer, then synchronized
 chapter ledger/export/website, current-commit full checks and review/PR/deploy.
+
+### Chapter 13 broader-class consumer
+
+Source p.180 says gaps in [0,1], not means in [0,1]. Define the environment
+class by a Markov arm kernel, its actual means, a best arm, centered unit
+subgaussian MGF, and gaps at most one. Embed UnitGaussianBanditEnvironment
+using the compiled reflected Gaussian subgaussian lemma and negation.
+Use ENNReal worst-case/minimax over the same HistoryAlgorithm policies and
+canonicalGapExpectedPseudoRegret functional; the Gaussian embedding is
+definitionally regret preserving. Bound sum gaps by k and k by sqrt(n*k),
+then lift the constant 40 upper bound by iSup_le, the Gaussian lower by
+iInf_mono/iSup inclusion. This is project-local composition, with no
+additional regularity assumptions or narrower bounded-mean class.
+
+Compiled `LowerBounds.subgaussianMinimax_sandwich` and `moss_nearMinimax`:
+1/54 lower, 40 MOSS upper, factor 2160 on the same broad class. The explicit
+Gaussian embedding preserves regret definitionally. First elaboration needed
+an explicit lambda for function negation and unfolding the wrapper before
+ofReal_toReal; no mathematical or statement change was needed.

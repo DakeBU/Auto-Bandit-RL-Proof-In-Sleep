@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T06:43:32+00:00",
+  "generated": "2026-09-05T06:48:02+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -30800,6 +30800,86 @@
       "file": "BanditRLProof/LowerBounds/Minimax.lean",
       "line": 155,
       "statement": "theorem gaussianMinimaxGap_le_half {alternativeCount horizon : Real} (hhorizon : 0 < horizon) (hcount_le : alternativeCount \u2264 horizon) : gaussianMinimaxGap alternativeCount horizon \u2264 1 / 2"
+    },
+    {
+      "kind": "structure",
+      "name": "UnitSubgaussianBanditEnvironment",
+      "full_name": "BanditRLProof.LowerBounds.UnitSubgaussianBanditEnvironment",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 10,
+      "statement": "structure UnitSubgaussianBanditEnvironment (k : \u2115) where"
+    },
+    {
+      "kind": "def",
+      "name": "UnitGaussianBanditEnvironment.toSubgaussian",
+      "full_name": "BanditRLProof.LowerBounds.UnitGaussianBanditEnvironment.toSubgaussian",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 22,
+      "statement": "def UnitGaussianBanditEnvironment.toSubgaussian {k : \u2115} (e : UnitGaussianBanditEnvironment k) : UnitSubgaussianBanditEnvironment k where"
+    },
+    {
+      "kind": "def",
+      "name": "subgaussianExpectedPseudoRegret",
+      "full_name": "BanditRLProof.LowerBounds.subgaussianExpectedPseudoRegret",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 38,
+      "statement": "def subgaussianExpectedPseudoRegret {k : \u2115} (algorithm : Thompson.HistoryAlgorithm (Fin k) \u211d) (e : UnitSubgaussianBanditEnvironment k) (t : \u2115) : \u211d\u22650\u221e"
+    },
+    {
+      "kind": "def",
+      "name": "subgaussianWorstCaseExpectedPseudoRegret",
+      "full_name": "BanditRLProof.LowerBounds.subgaussianWorstCaseExpectedPseudoRegret",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 43,
+      "statement": "def subgaussianWorstCaseExpectedPseudoRegret (k : \u2115) (algorithm : Thompson.HistoryAlgorithm (Fin k) \u211d) (t : \u2115) : \u211d\u22650\u221e"
+    },
+    {
+      "kind": "def",
+      "name": "subgaussianMinimaxExpectedPseudoRegret",
+      "full_name": "BanditRLProof.LowerBounds.subgaussianMinimaxExpectedPseudoRegret",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 47,
+      "statement": "def subgaussianMinimaxExpectedPseudoRegret (k t : \u2115) : \u211d\u22650\u221e"
+    },
+    {
+      "kind": "theorem",
+      "name": "subgaussianExpectedPseudoRegret_gaussian",
+      "full_name": "BanditRLProof.LowerBounds.subgaussianExpectedPseudoRegret_gaussian",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 51,
+      "statement": "theorem subgaussianExpectedPseudoRegret_gaussian {k : \u2115} (algorithm : Thompson.HistoryAlgorithm (Fin k) \u211d) (e : UnitGaussianBanditEnvironment k) (t : \u2115) : subgaussianExpectedPseudoRegret algorithm e.toSubgaussian t = gaussianExpectedPseudoRegret algorithm e t"
+    },
+    {
+      "kind": "theorem",
+      "name": "unitGaussianMinimax_le_subgaussianMinimax",
+      "full_name": "BanditRLProof.LowerBounds.unitGaussianMinimax_le_subgaussianMinimax",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 58,
+      "statement": "theorem unitGaussianMinimax_le_subgaussianMinimax (k t : \u2115) : unitGaussianMinimaxExpectedPseudoRegret k t \u2264 subgaussianMinimaxExpectedPseudoRegret k t"
+    },
+    {
+      "kind": "theorem",
+      "name": "moss_subgaussianExpectedPseudoRegret_le",
+      "full_name": "BanditRLProof.LowerBounds.moss_subgaussianExpectedPseudoRegret_le",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 67,
+      "statement": "theorem moss_subgaussianExpectedPseudoRegret_le {k : \u2115} [NeZero k] (hk : 0 < k) (t : \u2115) (hkt : k \u2264 t+1) (e : UnitSubgaussianBanditEnvironment k) : subgaussianExpectedPseudoRegret (MOSS.historyAlgorithm hk (t+1)) e t \u2264 ENNReal.ofReal (40*Real.sqrt ((k : \u211d)*(t+1)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "subgaussianMinimax_sandwich",
+      "full_name": "BanditRLProof.LowerBounds.subgaussianMinimax_sandwich",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 92,
+      "statement": "theorem subgaussianMinimax_sandwich {k : \u2115} [NeZero k] (hk : 1 < k) (t : \u2115) (hkt : k \u2264 t+1) : ENNReal.ofReal ((1/54 : \u211d)*Real.sqrt ((k : \u211d)*(t+1))) \u2264 subgaussianMinimaxExpectedPseudoRegret k t \u2227 subgaussianMinimaxExpectedPseudoRegret k t \u2264 subgaussianWorstCaseExpectedPseudoRegret k (MOSS.historyAlgorithm (by omega) (t+1)) t \u2227 subgaussianWorstCaseExpectedPseudoRegret k (MOSS.historyAlgorithm (by omega) (t+1)) t \u2264 ENNReal.ofReal (40*Real.sqrt ((k : \u211d)*(t+1)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "moss_nearMinimax",
+      "full_name": "BanditRLProof.LowerBounds.moss_nearMinimax",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 107,
+      "statement": "theorem moss_nearMinimax {k : \u2115} [NeZero k] (hk : 1 < k) (t : \u2115) (hkt : k \u2264 t+1) : subgaussianWorstCaseExpectedPseudoRegret k (MOSS.historyAlgorithm (by omega) (t+1)) t \u2264 2160 * subgaussianMinimaxExpectedPseudoRegret k t"
     },
     {
       "kind": "structure",
