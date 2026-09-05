@@ -155,6 +155,6 @@ The boxed unique-decoding equivalence is now mapped to
 `exists_prefixCode_of_uniquelyDecodable`, preserving every length on a finite
 injective encoder with uniquely decodable range. Its nonempty words are
 derived, not assumed; the non-strict Kraft converse includes equality.
-Module/direct canaries pass at 3d7c9a1; root/full gate and current export/site
-verification remain pending. See the boxed-code and arithmetic-identity audits
+The full 3d7c9a1 gate passed, including root canaries. Final evidence
+synchronization and independent whole-body review remain open. See the boxed-code and arithmetic-identity audits
 for the two source-fidelity repairs after the a47106a gate.

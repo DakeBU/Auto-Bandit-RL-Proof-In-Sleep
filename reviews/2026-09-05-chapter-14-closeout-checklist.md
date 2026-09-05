@@ -12,7 +12,7 @@ Notes. No row below substitutes a narrower accepted historical milestone.
 | Boxed unique-decoding equivalence including Kraft equality | 3d7c9a1 full gate passed, including original root canary | proved for finite injective uniquely decodable encoders |
 | KL, density, source affinity/overlap and Gaussian claims | exact terminals/canaries in evidence matrix, included in b5e21b8 full check | compiled; preserve all source/model qualifications |
 | Supporting body claims | finite cross entropy, zero limit, non-metric, uniform qualification and domination canaries | included in b5e21b8 full check |
-| Markdown/LaTeX current snapshot | synchronized new boxed-code paragraph; fbd6997 fragment rebuilt and all three pages inspected | current snapshot visual QA passed; future edits invalidate it |
+| Markdown/LaTeX current snapshot | final full-gate status synchronized; fragment rebuilt, unchanged pages 1-2 retain prior QA and changed page 3 re-inspected | current snapshot visual QA passed; future edits invalidate it |
 | Current site content and browser | 24aa742 static check passed; desktop content, mouse and keyboard theorem-anchor navigation verified | targeted desktop verification passed; no remote claim |
 | Independent whole-body review | historical independent review covers only old Section 14.2 | no current independent-review evidence |
 | Current PR and remote/publication evidence | read-only gh pr list for exact current branch returned [] | no current PR; historical PR #11/Pages does not cover this branch |
@@ -31,5 +31,7 @@ boxes or LaTeX errors. Poppler rendering at 1300 pixels was inspected on every
 page, including the new unique-decoding paragraph and retained arithmetic
 identity qualification. No clipping, overlap or missing glyphs was observed.
 The current latest.tex SHA256 is
-8FC8DF4C1FC0B97170164664B238DEC01161CF3B688752ECD31550DEE66C5618.
+75CD27D7B46CF2BF46C09E3C20C8EE0DC220013F38405F17547831EB5A3248ED.
+The status-only update was rebuilt successfully and its changed page 3 rendered
+and inspected again; pages 1-2 have no content changes.
 The article wrapper and preview PDF are scratch artifacts, not a publication.

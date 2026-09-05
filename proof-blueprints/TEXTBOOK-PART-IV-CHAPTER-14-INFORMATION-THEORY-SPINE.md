@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T07:33:23+00:00`
+Generated: `2026-09-05T07:35:21+00:00`
 
 ## Source Task
 
@@ -78,10 +78,10 @@ mapped local adapter before they count as chapter evidence.
 
 Current audit qualification: the arithmetic-identity audit found that the
 earlier rate constructor dropped interval containment at its existence
-interface. The strengthened `arithmeticBlockCode_payload_interval` now
-focused-build compiles for the actual named code. Prior gates certify the
-rate but do not certify this stronger interface; its canary/full gate is
-tracked in `reviews/2026-09-05-chapter-14-arithmetic-identity-audit.md`.
+interface. The strengthened `arithmeticBlockCode_payload_interval` passed
+the b5e21b8 full gate for the actual named code. The later 3d7c9a1 full gate
+also includes the boxed code-equivalence theorem and its root canary.
+Exact evidence is tracked in the arithmetic-identity and boxed-code audits.
 
 Optional rows are §14.3 Notes, §14.4 Bibliographic Remarks, and Exercises
 
@@ -290,9 +290,7 @@ with `D(Q,P)` is also valid.
 | `D(P,Q)=∞` | explicit branch of `bretagnolleHuberScale` | implements `exp(-∞)=0` | no |
 | mutual AC | absent | not required by source | must remain absent |
 
-<!-- 291 characters omitted from the middle of this snapshot. -->
-
-| concentration/stopping time | absent | Chapter 14 uses neither | no |
+<!-- 363 characters omitted from the middle of this snapshot. -->
 
 ## Local API and proof route
 
@@ -347,8 +345,8 @@ The boxed unique-decoding equivalence is now mapped to
 `exists_prefixCode_of_uniquelyDecodable`, preserving every length on a finite
 injective encoder with uniquely decodable range. Its nonempty words are
 derived, not assumed; the non-strict Kraft converse includes equality.
-Module/direct canaries pass at 3d7c9a1; root/full gate and current export/site
-verification remain pending. See the boxed-code and arithmetic-identity audits
+The full 3d7c9a1 gate passed, including root canaries. Final evidence
+synchronization and independent whole-body review remain open. See the boxed-code and arithmetic-identity audits
 for the two source-fidelity repairs after the a47106a gate.
 
 

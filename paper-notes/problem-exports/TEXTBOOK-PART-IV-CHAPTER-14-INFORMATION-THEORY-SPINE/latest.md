@@ -275,6 +275,6 @@ The proof uses Mathlib's `UniquelyDecodable.epsilon_not_mem` and
 `exists_prefix_encoding_of_kraft_le_one` and
 `exists_binaryPrefixCode_of_kraft_le_one`. Nonempty words are derived from
 unique decodability; no strict Kraft assumption is imposed on the encoder.
-The module and direct-module typed checks pass; root/aggregate validation
-after 3d7c9a1 is pending. `IsOptimalPrefixCode.length_antitone` separately
+The full 3d7c9a1 gate passed, including the root-import canary (400 Python
+tests, 7 skipped). `IsOptimalPrefixCode.length_antitone` separately
 formalizes the body observation about more likely symbols in an optimal code.

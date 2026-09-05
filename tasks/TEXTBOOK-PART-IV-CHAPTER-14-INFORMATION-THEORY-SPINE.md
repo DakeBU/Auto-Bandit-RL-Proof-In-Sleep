@@ -72,10 +72,10 @@ mapped local adapter before they count as chapter evidence.
 
 Current audit qualification: the arithmetic-identity audit found that the
 earlier rate constructor dropped interval containment at its existence
-interface. The strengthened `arithmeticBlockCode_payload_interval` now
-focused-build compiles for the actual named code. Prior gates certify the
-rate but do not certify this stronger interface; its canary/full gate is
-tracked in `reviews/2026-09-05-chapter-14-arithmetic-identity-audit.md`.
+interface. The strengthened `arithmeticBlockCode_payload_interval` passed
+the b5e21b8 full gate for the actual named code. The later 3d7c9a1 full gate
+also includes the boxed code-equivalence theorem and its root canary.
+Exact evidence is tracked in the arithmetic-identity and boxed-code audits.
 
 Optional rows are §14.3 Notes, §14.4 Bibliographic Remarks, and Exercises
 14.1--14.15.  Exercise 14.10 is a high-value optional target: the existing
