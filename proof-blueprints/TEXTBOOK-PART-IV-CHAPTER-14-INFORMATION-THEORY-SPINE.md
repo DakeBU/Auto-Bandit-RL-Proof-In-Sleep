@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T06:01:54+00:00`
+Generated: `2026-09-05T06:04:33+00:00`
 
 ## Source Task
 
@@ -59934,6 +59934,46 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/PrefixCodeExchange.lean",
     "line": 97,
     "statement": "theorem singletonPrefixCode_optimal {\u03b1 : Type*} [Fintype \u03b1] [Subsingleton \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) : IsOptimalPrefixCode p (singletonPrefixCode \u03b1)"
+  },
+  {
+    "kind": "theorem",
+    "name": "BinaryPrefixCode.extended_prefix_parent_eq",
+    "full_name": "BanditRLProof.LowerBounds.BinaryPrefixCode.extended_prefix_parent_eq",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+    "line": 5,
+    "statement": "theorem BinaryPrefixCode.extended_prefix_parent_eq {\u03b1 : Type*} (code : BinaryPrefixCode \u03b1) (a b : \u03b1) (u v : List Bool) (h : code.encode a ++ u <+: code.encode b ++ v) : a = b"
+  },
+  {
+    "kind": "def",
+    "name": "siblingExpandedWord",
+    "full_name": "BanditRLProof.LowerBounds.siblingExpandedWord",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+    "line": 14,
+    "statement": "def siblingExpandedWord {\u03b1 : Type*} (code : BinaryPrefixCode (Option \u03b1)) : \u03b1 \u2295 Bool \u2192 List Bool | .inl a => code.encode (some a) | .inr b => code.encode none ++ [b]"
+  },
+  {
+    "kind": "theorem",
+    "name": "siblingExpandedWord_prefixFree",
+    "full_name": "BanditRLProof.LowerBounds.siblingExpandedWord_prefixFree",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+    "line": 18,
+    "statement": "theorem siblingExpandedWord_prefixFree {\u03b1 : Type*} (code : BinaryPrefixCode (Option \u03b1)) {a b : \u03b1 \u2295 Bool} (h : siblingExpandedWord code a <+: siblingExpandedWord code b) : a = b"
+  },
+  {
+    "kind": "def",
+    "name": "BinaryPrefixCode.expandSibling",
+    "full_name": "BanditRLProof.LowerBounds.BinaryPrefixCode.expandSibling",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+    "line": 46,
+    "statement": "def BinaryPrefixCode.expandSibling {\u03b1 : Type*} (code : BinaryPrefixCode (Option \u03b1)) : BinaryPrefixCode (\u03b1 \u2295 Bool) where"
+  },
+  {
+    "kind": "theorem",
+    "name": "expectedCodeLength_expandSibling",
+    "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_expandSibling",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+    "line": 58,
+    "statement": "theorem expectedCodeLength_expandSibling {\u03b1 : Type*} [Fintype \u03b1] (code : BinaryPrefixCode (Option \u03b1)) (p : \u03b1 \u2192 \u211d) (q r : \u211d) : expectedCodeLength (Sum.elim p (fun b => if b then r else q)) code.expandSibling = expectedCodeLength (fun a => a.elim (q + r) p) code + q + r"
   },
   {
     "kind": "theorem",
