@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T06:35:43+00:00`
+Generated: `2026-09-05T06:38:04+00:00`
 
 ## Source Task
 
@@ -57836,6 +57836,46 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/ArithmeticPrefixCode.lean",
     "line": 68,
     "statement": "theorem arithmeticLength_le_information_add_two {mass : \u211d} (hm : 0 < mass) (hm1 : mass \u2264 1) : (arithmeticLength mass : \u211d) \u2264 Real.log mass\u207b\u00b9 / Real.log 2 + 2"
+  },
+  {
+    "kind": "def",
+    "name": "supportTaggedWord",
+    "full_name": "BanditRLProof.LowerBounds.supportTaggedWord",
+    "file": "BanditRLProof/LowerBounds/ArithmeticZeroExtension.lean",
+    "line": 6,
+    "statement": "noncomputable def supportTaggedWord {\u03b1 : Type*} (p : \u03b1 \u2192 \u211d) (positive : BinaryPrefixCode {a // 0 < p a}) (fallback : BinaryPrefixCode \u03b1) (a : \u03b1) : List Bool"
+  },
+  {
+    "kind": "theorem",
+    "name": "supportTaggedWord_prefixFree",
+    "full_name": "BanditRLProof.LowerBounds.supportTaggedWord_prefixFree",
+    "file": "BanditRLProof/LowerBounds/ArithmeticZeroExtension.lean",
+    "line": 12,
+    "statement": "theorem supportTaggedWord_prefixFree {\u03b1 : Type*} (p : \u03b1 \u2192 \u211d) (positive : BinaryPrefixCode {a // 0 < p a}) (fallback : BinaryPrefixCode \u03b1) {a b : \u03b1} (h : supportTaggedWord p positive fallback a <+: supportTaggedWord p positive fallback b) : a = b"
+  },
+  {
+    "kind": "def",
+    "name": "BinaryPrefixCode.extendZeroMass",
+    "full_name": "BanditRLProof.LowerBounds.BinaryPrefixCode.extendZeroMass",
+    "file": "BanditRLProof/LowerBounds/ArithmeticZeroExtension.lean",
+    "line": 26,
+    "statement": "noncomputable def BinaryPrefixCode.extendZeroMass {\u03b1 : Type*} (p : \u03b1 \u2192 \u211d) (positive : BinaryPrefixCode {a // 0 < p a}) (fallback : BinaryPrefixCode \u03b1) : BinaryPrefixCode \u03b1 where"
+  },
+  {
+    "kind": "theorem",
+    "name": "expectedCodeLength_extendZeroMass_le",
+    "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_extendZeroMass_le",
+    "file": "BanditRLProof/LowerBounds/ArithmeticZeroExtension.lean",
+    "line": 39,
+    "statement": "theorem expectedCodeLength_extendZeroMass_le {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 a, 0 \u2264 p a) (hs : \u2211 a, p a = 1) (positive : BinaryPrefixCode {a // 0 < p a}) (fallback : BinaryPrefixCode \u03b1) (hpos : \u2200 a (ha : 0 < p a), ((positive.encode \u27e8a, ha\u27e9).length : \u211d) \u2264 Real.log (p a)\u207b\u00b9 / Real.log 2 + 2) : expectedCodeLength p (positive.extendZeroMass p fallback) \u2264 discreteEntropyBaseTwo Finset.univ p + 3"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_zeroSafe_arithmeticCode",
+    "full_name": "BanditRLProof.LowerBounds.exists_zeroSafe_arithmeticCode",
+    "file": "BanditRLProof/LowerBounds/ArithmeticZeroExtension.lean",
+    "line": 61,
+    "statement": "theorem exists_zeroSafe_arithmeticCode {\u03b1 : Type*} [Fintype \u03b1] {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (message : \u03b1 \u2192 List (Fin k)) (hinj : Function.Injective message) (hlen : \u2200 a b, (message a).length = (message b).length) (q : \u03b1 \u2192 \u211d) (hq : \u2200 a, 0 \u2264 q a) (hqs : \u2211 a, q a = 1) (hmass : \u2200 a, ((message a).map p).prod = q a) : \u2203 positive : BinaryPrefixCode {a // 0 < q a}, (\u2200 a, (positive.encode a).length = arithmeticLength (q a.val)) \u2227 expectedCodeLength q (positive.extendZeroMass q (huffmanCode q hq)) \u2264 discreteEntropyBaseTwo Finset.univ q + 3"
   },
   {
     "kind": "def",

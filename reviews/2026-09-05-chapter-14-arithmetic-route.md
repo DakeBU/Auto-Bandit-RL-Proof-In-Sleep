@@ -95,3 +95,25 @@ that interface for positive mass; `arithmeticLength_le_information_add_two`
 gives the constant-two pointwise overhead. The nonempty-codeword condition
 is proved, not assumed. Still required: support/zero-mass extension and
 product-source expected-length/rate terminal. These leaves are focused-only.
+
+Zero-mass extension route: encode positive-mass symbols as false followed by
+their arithmetic support code, and other symbols as true followed by an
+arbitrary total fallback prefix code. Distinct first bits separate branches;
+within each branch prefix freedom comes from the respective code. For a
+nonnegative normalized law all outside-support terms have weight zero. A
+positive-symbol information+2 bound therefore becomes a full-alphabet
+expected-length bound H2+3. This explicit one-bit support/escape tag is a
+constant-overhead arithmetic variant, whose overhead vanishes per block.
+Fallback can be supplied by the already proved total Huffman constructor;
+it is never used on a positive-probability message. Local API: cons_prefix_cons.
+
+Zero-safe result: ArithmeticZeroExtension builds (2685 jobs), with passing
+typed canary and standard-only axiom reports. `exists_zeroSafe_arithmeticCode`
+constructs the positive support code from the actual arithmetic intervals,
+uses exact arithmetic lengths, and extends it to all messages using the tag.
+It proves expected length <= H2(q)+3 for a normalized equal-length message
+family whose probabilities are the products of source probabilities. No
+full-support assumption on p or q is imposed. A total Huffman fallback is
+used only on zero-mass messages. This is not a claim about an executable or
+finite-precision arithmetic implementation. SourceBlock/list conversion and
+the asymptotic rate terminal still need connecting; aggregate check pending.
