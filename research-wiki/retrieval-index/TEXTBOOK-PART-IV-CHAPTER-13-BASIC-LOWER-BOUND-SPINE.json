@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
-  "generated": "2026-09-05T05:56:36+00:00",
+  "generated": "2026-09-05T06:00:34+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -43214,6 +43214,46 @@
     },
     {
       "kind": "def",
+      "name": "cappedOccupancyTail",
+      "full_name": "BanditRLProof.Concentration.cappedOccupancyTail",
+      "file": "BanditRLProof/ConcentrationCappedOccupancy.lean",
+      "line": 7,
+      "statement": "def cappedOccupancyTail (a ε t : ℝ) : ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "cappedOccupancyTail_nonneg",
+      "full_name": "BanditRLProof.Concentration.cappedOccupancyTail_nonneg",
+      "file": "BanditRLProof/ConcentrationCappedOccupancy.lean",
+      "line": 10,
+      "statement": "theorem cappedOccupancyTail_nonneg (a ε t : ℝ) : 0 ≤ cappedOccupancyTail a ε t"
+    },
+    {
+      "kind": "theorem",
+      "name": "cappedOccupancyTail_antitone",
+      "full_name": "BanditRLProof.Concentration.cappedOccupancyTail_antitone",
+      "file": "BanditRLProof/ConcentrationCappedOccupancy.lean",
+      "line": 14,
+      "statement": "theorem cappedOccupancyTail_antitone (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) : Antitone (cappedOccupancyTail a ε)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_cappedOccupancyTail",
+      "full_name": "BanditRLProof.Concentration.integral_cappedOccupancyTail",
+      "file": "BanditRLProof/ConcentrationCappedOccupancy.lean",
+      "line": 28,
+      "statement": "theorem integral_cappedOccupancyTail (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) : IntegrableOn (cappedOccupancyTail a ε) (Ioi 0) ∧ (∫ t in Ioi 0, cappedOccupancyTail a ε t) = (2/ε^2)*(a+sqrt (Real.pi*a)+1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_le_occupancy_bound_sharp",
+      "full_name": "BanditRLProof.Concentration.sum_le_occupancy_bound_sharp",
+      "file": "BanditRLProof/ConcentrationCappedOccupancy.lean",
+      "line": 54,
+      "statement": "theorem sum_le_occupancy_bound_sharp (p : ℕ → ℝ) (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) (h1 : ∀ s, p s ≤ 1) (htail : ∀ s : ℕ, 2*a/ε^2 < (s : ℝ) → p s ≤ occupancyTail a ε s) (n : ℕ) : (∑ i ∈ Finset.range n, p (i+1)) ≤ (2/ε^2)*(a+sqrt (Real.pi*a)+1)"
+    },
+    {
+      "kind": "def",
       "name": "geometricConfidenceShare",
       "full_name": "BanditRLProof.Concentration.geometricConfidenceShare",
       "file": "BanditRLProof/ConcentrationConfidenceSchedule.lean",
@@ -43553,7 +43593,7 @@
       "name": "fixedRadiusMeanEvent",
       "full_name": "BanditRLProof.Concentration.fixedRadiusMeanEvent",
       "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
-      "line": 10,
+      "line": 11,
       "statement": "def fixedRadiusMeanEvent (X : ℕ → Ω → ℝ) (a ε : ℝ) (s : ℕ) : Set Ω"
     },
     {
@@ -43561,7 +43601,7 @@
       "name": "measure_fixedRadiusMeanEvent_le",
       "full_name": "BanditRLProof.Concentration.measure_fixedRadiusMeanEvent_le",
       "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
-      "line": 13,
+      "line": 14,
       "statement": "theorem measure_fixedRadiusMeanEvent_le (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) (s : ℕ) (hs : 2*a/ε^2 < (s : ℝ)) : μ (fixedRadiusMeanEvent X a ε s) ≤ ENNReal.ofReal (occupancyTail a ε s)"
     },
     {
@@ -43569,7 +43609,7 @@
       "name": "sum_measureReal_fixedRadiusMeanEvent_le",
       "full_name": "BanditRLProof.Concentration.sum_measureReal_fixedRadiusMeanEvent_le",
       "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
-      "line": 51,
+      "line": 52,
       "statement": "theorem sum_measureReal_fixedRadiusMeanEvent_le (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) (n : ℕ) : (∑ i ∈ range n, μ.real (fixedRadiusMeanEvent X a ε (i+1))) ≤ 1+(2/ε^2)*(a+sqrt (Real.pi*a)+1)"
     },
     {
@@ -43577,7 +43617,7 @@
       "name": "measurableSet_fixedRadiusMeanEvent",
       "full_name": "BanditRLProof.Concentration.measurableSet_fixedRadiusMeanEvent",
       "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
-      "line": 64,
+      "line": 65,
       "statement": "theorem measurableSet_fixedRadiusMeanEvent (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (a ε : ℝ) (s : ℕ) : MeasurableSet (fixedRadiusMeanEvent X a ε s)"
     },
     {
@@ -43585,7 +43625,7 @@
       "name": "fixedRadiusCount",
       "full_name": "BanditRLProof.Concentration.fixedRadiusCount",
       "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
-      "line": 72,
+      "line": 73,
       "statement": "def fixedRadiusCount (X : ℕ → Ω → ℝ) (a ε : ℝ) (n : ℕ) (ω : Ω) : ℝ"
     },
     {
@@ -43593,7 +43633,7 @@
       "name": "integrable_fixedRadiusCount",
       "full_name": "BanditRLProof.Concentration.integrable_fixedRadiusCount",
       "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
-      "line": 75,
+      "line": 76,
       "statement": "theorem integrable_fixedRadiusCount (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (a ε : ℝ) (n : ℕ) : Integrable (fixedRadiusCount X a ε n) μ"
     },
     {
@@ -43601,8 +43641,16 @@
       "name": "integral_fixedRadiusCount_le",
       "full_name": "BanditRLProof.Concentration.integral_fixedRadiusCount_le",
       "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
-      "line": 82,
+      "line": 83,
       "statement": "theorem integral_fixedRadiusCount_le (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) (n : ℕ) : (∫ ω, fixedRadiusCount X a ε n ω ∂μ) ≤ 1+(2/ε^2)*(a+sqrt (Real.pi*a)+1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_fixedRadiusCount_le_sharp",
+      "full_name": "BanditRLProof.Concentration.integral_fixedRadiusCount_le_sharp",
+      "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
+      "line": 102,
+      "statement": "theorem integral_fixedRadiusCount_le_sharp (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) (n : ℕ) : (∫ ω, fixedRadiusCount X a ε n ω ∂μ) ≤ (2/ε^2)*(a+sqrt (Real.pi*a)+1)"
     },
     {
       "kind": "theorem",
@@ -95463,6 +95511,42 @@
       "target_fingerprint": "",
       "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
       "time": "2026-09-05T05:53:45+00:00",
+      "verifier_evidence": [],
+      "worker_id": ""
+    },
+    {
+      "attempt_id": "",
+      "changed_files": [],
+      "dag_depth": 0,
+      "dag_nodes": 0,
+      "elapsed_seconds": 0.0,
+      "error_signature": "",
+      "experiment_id": "",
+      "harness": "",
+      "input_tokens": 0,
+      "kind": "build",
+      "lean": "BanditRLProof/Algorithms/MOSSConstants.lean",
+      "lean_check_seconds": 0.0,
+      "new_declarations": [],
+      "notes": "Dimensionless and scaled constant 15 proved; MOSS weighted index-exceedance expectation <=gap+15/sqrt(delta) for gap>=8sqrt(delta) compiled. Canary 3524 jobs baseline axioms. Actual selected-count transport and regret assembly remain pending.",
+      "obligations_after": 0,
+      "obligations_before": 0,
+      "output_tokens": 0,
+      "parent_id": "",
+      "progress_class": "compiled-leaf",
+      "prompt_chars": 0,
+      "reused_declarations": [],
+      "reviewer_validated": false,
+      "role": "lower",
+      "route_fingerprint": "",
+      "route_packet_hash": "",
+      "run_id": "",
+      "source": "",
+      "statement_hash": "",
+      "status": "compiled",
+      "target_fingerprint": "",
+      "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+      "time": "2026-09-05T05:56:51+00:00",
       "verifier_evidence": [],
       "worker_id": ""
     }

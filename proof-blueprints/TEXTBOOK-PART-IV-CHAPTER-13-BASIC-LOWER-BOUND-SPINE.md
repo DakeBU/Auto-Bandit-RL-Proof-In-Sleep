@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T05:56:29+00:00`
+Generated: `2026-09-05T06:00:28+00:00`
 
 ## Source Task
 
@@ -44315,6 +44315,46 @@ These cards are planning inspiration only.  They do not certify any theorem.
   },
   {
     "kind": "def",
+    "name": "cappedOccupancyTail",
+    "full_name": "BanditRLProof.Concentration.cappedOccupancyTail",
+    "file": "BanditRLProof/ConcentrationCappedOccupancy.lean",
+    "line": 7,
+    "statement": "def cappedOccupancyTail (a \u03b5 t : \u211d) : \u211d"
+  },
+  {
+    "kind": "theorem",
+    "name": "cappedOccupancyTail_nonneg",
+    "full_name": "BanditRLProof.Concentration.cappedOccupancyTail_nonneg",
+    "file": "BanditRLProof/ConcentrationCappedOccupancy.lean",
+    "line": 10,
+    "statement": "theorem cappedOccupancyTail_nonneg (a \u03b5 t : \u211d) : 0 \u2264 cappedOccupancyTail a \u03b5 t"
+  },
+  {
+    "kind": "theorem",
+    "name": "cappedOccupancyTail_antitone",
+    "full_name": "BanditRLProof.Concentration.cappedOccupancyTail_antitone",
+    "file": "BanditRLProof/ConcentrationCappedOccupancy.lean",
+    "line": 14,
+    "statement": "theorem cappedOccupancyTail_antitone (a \u03b5 : \u211d) (ha : 0 < a) (h\u03b5 : 0 < \u03b5) : Antitone (cappedOccupancyTail a \u03b5)"
+  },
+  {
+    "kind": "theorem",
+    "name": "integral_cappedOccupancyTail",
+    "full_name": "BanditRLProof.Concentration.integral_cappedOccupancyTail",
+    "file": "BanditRLProof/ConcentrationCappedOccupancy.lean",
+    "line": 28,
+    "statement": "theorem integral_cappedOccupancyTail (a \u03b5 : \u211d) (ha : 0 < a) (h\u03b5 : 0 < \u03b5) : IntegrableOn (cappedOccupancyTail a \u03b5) (Ioi 0) \u2227 (\u222b t in Ioi 0, cappedOccupancyTail a \u03b5 t) = (2/\u03b5^2)*(a+sqrt (Real.pi*a)+1)"
+  },
+  {
+    "kind": "theorem",
+    "name": "sum_le_occupancy_bound_sharp",
+    "full_name": "BanditRLProof.Concentration.sum_le_occupancy_bound_sharp",
+    "file": "BanditRLProof/ConcentrationCappedOccupancy.lean",
+    "line": 54,
+    "statement": "theorem sum_le_occupancy_bound_sharp (p : \u2115 \u2192 \u211d) (a \u03b5 : \u211d) (ha : 0 < a) (h\u03b5 : 0 < \u03b5) (h1 : \u2200 s, p s \u2264 1) (htail : \u2200 s : \u2115, 2*a/\u03b5^2 < (s : \u211d) \u2192 p s \u2264 occupancyTail a \u03b5 s) (n : \u2115) : (\u2211 i \u2208 Finset.range n, p (i+1)) \u2264 (2/\u03b5^2)*(a+sqrt (Real.pi*a)+1)"
+  },
+  {
+    "kind": "def",
     "name": "geometricConfidenceShare",
     "full_name": "BanditRLProof.Concentration.geometricConfidenceShare",
     "file": "BanditRLProof/ConcentrationConfidenceSchedule.lean",
@@ -44654,7 +44694,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "fixedRadiusMeanEvent",
     "full_name": "BanditRLProof.Concentration.fixedRadiusMeanEvent",
     "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
-    "line": 10,
+    "line": 11,
     "statement": "def fixedRadiusMeanEvent (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (a \u03b5 : \u211d) (s : \u2115) : Set \u03a9"
   },
   {
@@ -44662,7 +44702,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measure_fixedRadiusMeanEvent_le",
     "full_name": "BanditRLProof.Concentration.measure_fixedRadiusMeanEvent_le",
     "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
-    "line": 13,
+    "line": 14,
     "statement": "theorem measure_fixedRadiusMeanEvent_le (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (a \u03b5 : \u211d) (ha : 0 < a) (h\u03b5 : 0 < \u03b5) (s : \u2115) (hs : 2*a/\u03b5^2 < (s : \u211d)) : \u03bc (fixedRadiusMeanEvent X a \u03b5 s) \u2264 ENNReal.ofReal (occupancyTail a \u03b5 s)"
   },
   {
@@ -44670,7 +44710,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "sum_measureReal_fixedRadiusMeanEvent_le",
     "full_name": "BanditRLProof.Concentration.sum_measureReal_fixedRadiusMeanEvent_le",
     "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
-    "line": 51,
+    "line": 52,
     "statement": "theorem sum_measureReal_fixedRadiusMeanEvent_le (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (a \u03b5 : \u211d) (ha : 0 < a) (h\u03b5 : 0 < \u03b5) (n : \u2115) : (\u2211 i \u2208 range n, \u03bc.real (fixedRadiusMeanEvent X a \u03b5 (i+1))) \u2264 1+(2/\u03b5^2)*(a+sqrt (Real.pi*a)+1)"
   },
   {
@@ -44678,7 +44718,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measurableSet_fixedRadiusMeanEvent",
     "full_name": "BanditRLProof.Concentration.measurableSet_fixedRadiusMeanEvent",
     "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
-    "line": 64,
+    "line": 65,
     "statement": "theorem measurableSet_fixedRadiusMeanEvent (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (a \u03b5 : \u211d) (s : \u2115) : MeasurableSet (fixedRadiusMeanEvent X a \u03b5 s)"
   },
   {
@@ -44686,7 +44726,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "fixedRadiusCount",
     "full_name": "BanditRLProof.Concentration.fixedRadiusCount",
     "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
-    "line": 72,
+    "line": 73,
     "statement": "def fixedRadiusCount (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (a \u03b5 : \u211d) (n : \u2115) (\u03c9 : \u03a9) : \u211d"
   },
   {
@@ -44694,7 +44734,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "integrable_fixedRadiusCount",
     "full_name": "BanditRLProof.Concentration.integrable_fixedRadiusCount",
     "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
-    "line": 75,
+    "line": 76,
     "statement": "theorem integrable_fixedRadiusCount (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (a \u03b5 : \u211d) (n : \u2115) : Integrable (fixedRadiusCount X a \u03b5 n) \u03bc"
   },
   {
@@ -44702,8 +44742,16 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "integral_fixedRadiusCount_le",
     "full_name": "BanditRLProof.Concentration.integral_fixedRadiusCount_le",
     "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
-    "line": 82,
+    "line": 83,
     "statement": "theorem integral_fixedRadiusCount_le (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (a \u03b5 : \u211d) (ha : 0 < a) (h\u03b5 : 0 < \u03b5) (n : \u2115) : (\u222b \u03c9, fixedRadiusCount X a \u03b5 n \u03c9 \u2202\u03bc) \u2264 1+(2/\u03b5^2)*(a+sqrt (Real.pi*a)+1)"
+  },
+  {
+    "kind": "theorem",
+    "name": "integral_fixedRadiusCount_le_sharp",
+    "full_name": "BanditRLProof.Concentration.integral_fixedRadiusCount_le_sharp",
+    "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
+    "line": 102,
+    "statement": "theorem integral_fixedRadiusCount_le_sharp (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (a \u03b5 : \u211d) (ha : 0 < a) (h\u03b5 : 0 < \u03b5) (n : \u2115) : (\u222b \u03c9, fixedRadiusCount X a \u03b5 n \u03c9 \u2202\u03bc) \u2264 (2/\u03b5^2)*(a+sqrt (Real.pi*a)+1)"
   },
   {
     "kind": "theorem",
@@ -96569,6 +96617,42 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "target_fingerprint": "",
     "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
     "time": "2026-09-05T05:53:45+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "build",
+    "lean": "BanditRLProof/Algorithms/MOSSConstants.lean",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [],
+    "notes": "Dimensionless and scaled constant 15 proved; MOSS weighted index-exceedance expectation <=gap+15/sqrt(delta) for gap>=8sqrt(delta) compiled. Canary 3524 jobs baseline axioms. Actual selected-count transport and regret assembly remain pending.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "compiled-leaf",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "lower",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "compiled",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T05:56:51+00:00",
     "verifier_evidence": [],
     "worker_id": ""
   }

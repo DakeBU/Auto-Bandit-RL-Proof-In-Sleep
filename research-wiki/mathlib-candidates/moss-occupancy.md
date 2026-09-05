@@ -108,3 +108,26 @@ The proof uses exact rational upper bounds for log(64) and pi, no numerical
 oracle or added axiom. Next required node is actual selected-count transport,
 with complete initialization, count-consistent empirical rewards, optimal-arm
 index controlled by the derived deficit, and the finite-horizon regret split.
+
+## Initialization audit and target-preserving correction
+
+The source prose T_i(n)<=kappa_i omits the initial pull in the zero-based
+implementation. Counterexample: n=k, deterministic centered stream zero,
+positive suboptimality gap. Every arm is initialized once, while its MOSS
+radius is zero at every s>=1 (delta=k/n=1), hence kappa_i=0.
+The valid transport is T_i<=1+kappa_i. Do not assume the stronger false claim.
+To retain exactly 39*sqrt(n*k)+sum gaps, strengthen the Lemma 8.2 count bound
+by removing its loose additive 1: extend the tail kernel by 1 below
+u=2a/epsilon^2, apply the antitone sum-integral comparison on [0,n], and
+integrate to u+tailIntegral. Initial pull then supplies the one gap term.
+This improves an intermediate lemma without changing the final theorem target.
+
+Compiled correction: `ConcentrationCappedOccupancy` proves the globally
+antitone capped tail, its integrability/exact integral, and
+`sum_le_occupancy_bound_sharp`. `integral_fixedRadiusCount_le_sharp` derives
+E[kappa]<=2/epsilon^2*(a+sqrt(pi*a)+1), removing the additive one.
+The final source bound is unchanged. Next propagate this sharper intermediate
+through the MOSS expectation consumer and prove actual selected-count transport
+with its explicit initialization term. Full `73c0419` validation completed:
+root, Tests (8909 jobs), ProofGraphExport, 400 Python tests (7 skipped,
+193.963 seconds), check passed. Subsequent changes need a fresh full check.

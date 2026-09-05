@@ -1,5 +1,6 @@
 import BanditRLProof.ConcentrationGaussianOccupancy
 import BanditRLProof.ConcentrationMartingaleMaximal
+import BanditRLProof.ConcentrationCappedOccupancy
 
 noncomputable section
 open MeasureTheory ProbabilityTheory Real Finset
@@ -96,5 +97,29 @@ theorem integral_fixedRadiusCount_le (X : ℕ → Ω → ℝ)
     simp
   rw [he]
   exact sum_measureReal_fixedRadiusMeanEvent_le X hXm hind hmean hsubG a ε ha hε n
+
+/-- Sharper count bound: the removed additive one pays for MOSS initialization. -/
+theorem integral_fixedRadiusCount_le_sharp (X : ℕ → Ω → ℝ)
+    (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ)
+    (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ)
+    (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) (n : ℕ) :
+    (∫ ω, fixedRadiusCount X a ε n ω ∂μ) ≤
+      (2/ε^2)*(a+sqrt (Real.pi*a)+1) := by
+  unfold fixedRadiusCount
+  rw [integral_finset_sum _ (fun i _ => (integrable_const (1 : ℝ)).indicator
+    (measurableSet_fixedRadiusMeanEvent X hXm a ε (i+1)))]
+  have he : (∑ i ∈ range n, ∫ ω, (fixedRadiusMeanEvent X a ε (i+1)).indicator (fun _ => (1 : ℝ)) ω ∂μ) =
+      ∑ i ∈ range n, μ.real (fixedRadiusMeanEvent X a ε (i+1)) := by
+    apply Finset.sum_congr rfl
+    intro i hi
+    rw [integral_indicator (measurableSet_fixedRadiusMeanEvent X hXm a ε (i+1))]
+    simp
+  rw [he]
+  apply sum_le_occupancy_bound_sharp _ a ε ha hε (fun _ => measureReal_le_one) _ n
+  intro s hs
+  have h := ENNReal.toReal_mono ENNReal.ofReal_ne_top
+    (measure_fixedRadiusMeanEvent_le X hXm hind hmean hsubG a ε ha hε s hs)
+  have hn : 0 ≤ occupancyTail a ε s := (exp_pos _).le
+  simpa only [ENNReal.toReal_ofReal hn] using h
 
 end BanditRLProof.Concentration

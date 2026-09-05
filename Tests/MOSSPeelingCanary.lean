@@ -106,3 +106,20 @@ example {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasur
 #print axioms MOSS.largeGap_constant_fifteen
 #print axioms MOSS.largeGap_scaled_constant_fifteen
 #print axioms MOSS.gap_mul_integral_indexExceedanceCount_le
+
+example {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ)
+    (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ)
+    (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) (n : ℕ) :
+    (∫ ω, Concentration.fixedRadiusCount X a ε n ω ∂μ) ≤
+      (2/ε^2)*(a+sqrt (Real.pi*a)+1) :=
+  Concentration.integral_fixedRadiusCount_le_sharp X hXm hind hmean hsubG a ε ha hε n
+
+#print axioms Concentration.sum_le_occupancy_bound_sharp
+#print axioms Concentration.integral_fixedRadiusCount_le_sharp
+
+/-- Initialization audit: zero centered rewards give no exceedances at delta=1. -/
+example : MOSS.indexExceedanceCount (fun _ => 0) 1 1 2 = 0 := by
+  norm_num [MOSS.indexExceedanceCount, Finset.sum_range_succ, MOSS.logPlus]
+  intro x hx
+  interval_cases x <;> norm_num
