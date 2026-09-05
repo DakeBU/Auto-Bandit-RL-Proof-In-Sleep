@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
-  "generated": "2026-09-05T05:13:26+00:00",
+  "generated": "2026-09-05T05:23:02+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -32509,6 +32509,126 @@
       "statement": "theorem historyAction_index_max {k : ℕ} (hk : 0 < k) (n t : ℕ) (history : History.FinitePairHistory (Fin k) ℝ t) (ht : k ≤ t + 1) (a : Fin k) : index n (ETC.realHistoryEmpMean t history) (ETC.realHistoryPullCount t history) a ≤ index n (ETC.realHistoryEmpMean t history) (ETC.realHistoryPullCount t history) (historyAction hk n t history)"
     },
     {
+      "kind": "theorem",
+      "name": "logPlus_mono",
+      "full_name": "BanditRLProof.MOSS.logPlus_mono",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 16,
+      "statement": "theorem logPlus_mono {x y : ℝ} (hxy : x ≤ y) : logPlus x ≤ logPlus y"
+    },
+    {
+      "kind": "theorem",
+      "name": "exp_neg_logPlus_inv_le",
+      "full_name": "BanditRLProof.MOSS.exp_neg_logPlus_inv_le",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 19,
+      "statement": "theorem exp_neg_logPlus_inv_le (x : ℝ) (hx : 0 < x) : exp (-logPlus (1 / x)) ≤ x"
+    },
+    {
+      "kind": "def",
+      "name": "peelingBarrier",
+      "full_name": "BanditRLProof.MOSS.peelingBarrier",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 27,
+      "statement": "noncomputable def peelingBarrier (δ gap s : ℝ) : ℝ"
+    },
+    {
+      "kind": "def",
+      "name": "blockBarrier",
+      "full_name": "BanditRLProof.MOSS.blockBarrier",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 31,
+      "statement": "noncomputable def blockBarrier (δ gap m : ℝ) : ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "blockBarrier_pos",
+      "full_name": "BanditRLProof.MOSS.blockBarrier_pos",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 34,
+      "statement": "theorem blockBarrier_pos (δ gap m : ℝ) (hm : 0 < m) (hg : 0 < gap) : 0 < blockBarrier δ gap m"
+    },
+    {
+      "kind": "theorem",
+      "name": "blockBarrier_le_peelingBarrier",
+      "full_name": "BanditRLProof.MOSS.blockBarrier_le_peelingBarrier",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 39,
+      "statement": "theorem blockBarrier_le_peelingBarrier (δ gap m s : ℝ) (hδ : 0 < δ) (hg : 0 ≤ gap) (hm : 0 < m) (hms : m ≤ s) (hsm : s ≤ 2*m) : blockBarrier δ gap m ≤ peelingBarrier δ gap s"
+    },
+    {
+      "kind": "theorem",
+      "name": "exp_neg_blockBarrier_sq_le",
+      "full_name": "BanditRLProof.MOSS.exp_neg_blockBarrier_sq_le",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 53,
+      "statement": "theorem exp_neg_blockBarrier_sq_le (δ gap m : ℝ) (hδ : 0 < δ) (hg : 0 ≤ gap) (hm : 0 < m) : exp (-(blockBarrier δ gap m)^2 / (4*m)) ≤ (2*m*δ) * exp (-(m*gap^2/4))"
+    },
+    {
+      "kind": "def",
+      "name": "peelingSum",
+      "full_name": "BanditRLProof.MOSS.peelingSum",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 77,
+      "statement": "noncomputable def peelingSum {Ω : Type*} (X : ℕ → Ω → ℝ) (s : ℕ) (ω : Ω) : ℝ"
+    },
+    {
+      "kind": "def",
+      "name": "blockBadEvent",
+      "full_name": "BanditRLProof.MOSS.blockBadEvent",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 81,
+      "statement": "def blockBadEvent {Ω : Type*} (X : ℕ → Ω → ℝ) (δ gap : ℝ) (m : ℕ) : Set Ω"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_blockBadEvent_le",
+      "full_name": "BanditRLProof.MOSS.measure_blockBadEvent_le",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 86,
+      "statement": "theorem measure_blockBadEvent_le (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (m : ℕ) (hm : 0 < m) : μ (blockBadEvent X δ gap m) ≤ ENNReal.ofReal ((2*(m : ℝ)*δ) * exp (-((m : ℝ)*gap^2/4)))"
+    },
+    {
+      "kind": "def",
+      "name": "scaledBadEvent",
+      "full_name": "BanditRLProof.MOSS.scaledBadEvent",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 113,
+      "statement": "def scaledBadEvent (X : ℕ → Ω → ℝ) (δ gap : ℝ) : Set Ω"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_scaledBadEvent_le_fifteen",
+      "full_name": "BanditRLProof.MOSS.measure_scaledBadEvent_le_fifteen",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 117,
+      "statement": "theorem measure_scaledBadEvent_le_fifteen (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) : μ (scaledBadEvent X δ gap) ≤ ENNReal.ofReal (15*δ/gap^2)"
+    },
+    {
+      "kind": "def",
+      "name": "meanBadEvent",
+      "full_name": "BanditRLProof.MOSS.meanBadEvent",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 142,
+      "statement": "def meanBadEvent (X : ℕ → Ω → ℝ) (δ gap : ℝ) : Set Ω"
+    },
+    {
+      "kind": "theorem",
+      "name": "meanBadEvent_subset_scaledBadEvent",
+      "full_name": "BanditRLProof.MOSS.meanBadEvent_subset_scaledBadEvent",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 146,
+      "statement": "theorem meanBadEvent_subset_scaledBadEvent (X : ℕ → Ω → ℝ) (δ gap : ℝ) : meanBadEvent X δ gap ⊆ scaledBadEvent X δ gap"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_meanBadEvent_le_fifteen",
+      "full_name": "BanditRLProof.MOSS.measure_meanBadEvent_le_fifteen",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 167,
+      "statement": "theorem measure_meanBadEvent_le_fifteen (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) : μ (meanBadEvent X δ gap) ≤ ENNReal.ofReal (15*δ/gap^2)"
+    },
+    {
       "kind": "def",
       "name": "softmaxDenominator",
       "full_name": "BanditRLProof.StochasticGradientBandit.softmaxDenominator",
@@ -42963,6 +43083,54 @@
       "file": "BanditRLProof/ConcentrationConfidenceSchedule.lean",
       "line": 124,
       "statement": "theorem tsum_ofReal_telescopingConfidenceShare {delta : Real} (hdelta : 0 <= delta) : ∑' n, ENNReal.ofReal (telescopingConfidenceShare delta n) = ENNReal.ofReal delta"
+    },
+    {
+      "kind": "theorem",
+      "name": "mul_exp_neg_le_exp_difference",
+      "full_name": "BanditRLProof.Concentration.mul_exp_neg_le_exp_difference",
+      "file": "BanditRLProof/ConcentrationDyadicExponential.lean",
+      "line": 17,
+      "statement": "theorem mul_exp_neg_le_exp_difference (x : ℝ) (hx : 0 ≤ x) : x * exp (-x) ≤ (3 / 2 : ℝ) * (exp (-(2 * x / 3)) - exp (-(4 * x / 3)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_dyadic_mul_exp_neg_le",
+      "full_name": "BanditRLProof.Concentration.sum_dyadic_mul_exp_neg_le",
+      "file": "BanditRLProof/ConcentrationDyadicExponential.lean",
+      "line": 37,
+      "statement": "theorem sum_dyadic_mul_exp_neg_le (a : ℝ) (ha : 0 < a) (N : ℕ) : ∑ j ∈ range N, (2 : ℝ) ^ j * exp (-(a * 2 ^ j)) ≤ 3 / (2 * a) * (exp (-(2 * a / 3)) - exp (-(2 * (a * 2 ^ N) / 3)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_dyadic_mul_exp_neg_le_three_div_two",
+      "full_name": "BanditRLProof.Concentration.sum_dyadic_mul_exp_neg_le_three_div_two",
+      "file": "BanditRLProof/ConcentrationDyadicExponential.lean",
+      "line": 58,
+      "statement": "theorem sum_dyadic_mul_exp_neg_le_three_div_two (a : ℝ) (ha : 0 < a) (N : ℕ) : ∑ j ∈ range N, (2 : ℝ) ^ j * exp (-(a * 2 ^ j)) ≤ 3 / (2 * a)"
+    },
+    {
+      "kind": "theorem",
+      "name": "tsum_dyadic_mul_exp_neg_le",
+      "full_name": "BanditRLProof.Concentration.tsum_dyadic_mul_exp_neg_le",
+      "file": "BanditRLProof/ConcentrationDyadicExponential.lean",
+      "line": 67,
+      "statement": "theorem tsum_dyadic_mul_exp_neg_le (a : ℝ) (ha : 0 < a) : (∑' j : ℕ, ENNReal.ofReal ((2 : ℝ) ^ j * exp (-(a * 2 ^ j)))) ≤ ENNReal.ofReal (3 / (2 * a))"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_moss_peeling_exponential_le_twelve",
+      "full_name": "BanditRLProof.Concentration.sum_moss_peeling_exponential_le_twelve",
+      "file": "BanditRLProof/ConcentrationDyadicExponential.lean",
+      "line": 76,
+      "statement": "theorem sum_moss_peeling_exponential_le_twelve (δ gap : ℝ) (hδ : 0 ≤ δ) (hgap : 0 < gap) (N : ℕ) : ∑ j ∈ range N, δ * (2 : ℝ) ^ (j+1) * exp (-(gap ^ 2 / 4 * 2 ^ j)) ≤ 12 * δ / gap ^ 2"
+    },
+    {
+      "kind": "theorem",
+      "name": "tsum_moss_peeling_exponential_le_fifteen",
+      "full_name": "BanditRLProof.Concentration.tsum_moss_peeling_exponential_le_fifteen",
+      "file": "BanditRLProof/ConcentrationDyadicExponential.lean",
+      "line": 95,
+      "statement": "theorem tsum_moss_peeling_exponential_le_fifteen (δ gap : ℝ) (hδ : 0 ≤ δ) (hgap : 0 < gap) : (∑' j : ℕ, ENNReal.ofReal (δ * (2 : ℝ) ^ (j+1) * exp (-(gap ^ 2 / 4 * 2 ^ j)))) ≤ ENNReal.ofReal (15 * δ / gap ^ 2)"
     },
     {
       "kind": "theorem",

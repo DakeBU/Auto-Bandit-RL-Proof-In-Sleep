@@ -220,6 +220,22 @@ LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt
 
 ## Failure policy
 
+### 2026-09-05 MOSS peeling progress
+
+`ConcentrationDyadicExponential.lean` and `Algorithms/MOSSPeeling.lean`
+compile the geometric-series estimate and source Lemma 9.3 with its actual
+empirical-mean/radius event and printed constant 15. Contracts remain explicit:
+strongly measurable independent centered unit-subgaussian coordinates,
+positive delta and gap. The telescoping intermediate bound 12 implies 15;
+no probability-tail premise is assumed. This does not yet instantiate the
+centered arm-stream model or prove Theorem 9.1. Next leaves are expected
+optimism deficit, large-gap occupancy, and concrete history regret assembly.
+Chapter status remains partial. Route: `research-wiki/mathlib-candidates/moss-dyadic-peeling.md`.
+
+Full validation at preceding commit `511062a` passed root (8857 jobs),
+Tests (8901 jobs), ProofGraphExport, and 400 Python tests (7 skipped,
+176.716 seconds). This is not full validation of the subsequent peeling files.
+
 Do not weaken Theorem 13.1, identify expectations from different environments,
 drop the policy-consistency or absolute-continuity requirements of the future
 bridge, or relabel deterministic scaffolding as the Gaussian minimax theorem.

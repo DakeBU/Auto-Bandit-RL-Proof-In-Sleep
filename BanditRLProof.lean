@@ -569,3 +569,4 @@ import BanditRLProof.DelayedFeedback.Processing
 import BanditRLProof.Literature
 import BanditRLProof.Automation
 import BanditRLProof.OpenProblems
+import BanditRLProof.Algorithms.MOSSPeeling

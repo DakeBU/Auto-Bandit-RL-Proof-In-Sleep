@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T05:13:18+00:00`
+Generated: `2026-09-05T05:22:57+00:00`
 
 ## Source Task
 
@@ -123,26 +123,8 @@ LowerBounds.exists_leastExploredAlternative
 LowerBounds.baseEnvironmentRegret
 LowerBounds.changedEnvironmentRegretLowerBound
 
-<!-- 701 characters omitted from the middle of this snapshot. -->
+<!-- 1621 characters omitted from the middle of this snapshot. -->
 
-LowerBounds.hasSubgaussianMGF_gap_sub_id_gaussianReal
-LowerBounds.gaussianReal_zero_Ici_le_exp_neg_sq_div_two_variance
-LowerBounds.gaussianReal_gap_Iio_half_le_exp_neg_sq_div_two_variance
-LowerBounds.gaussianSampleMeanZeroErrorProbability_le_exp
-LowerBounds.gaussianSampleMeanGapErrorProbability_le_exp
-LowerBounds.gaussianSampleMeanThresholdRisk
-LowerBounds.gaussianSampleMeanThresholdRisk_le_exp
-LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt
-```
-
-## Proof obligations
-
-- [x] The formal source and page placement are recorded.
-- [x] Theorem 13.1 is fenced as source-stated and is compiled through the
-  Chapter 15 specialization with explicit universal constant `1/54`.
-- [x] The compiled Chapter 13 semantic signature is frozen before tactics.
-- [x] Hidden regularity assumptions are explicit in the conversion window.
-- [x] Minimax and worst-case definitions and order leaves compile.
 - [x] Fixed-class minimax-optimality semantics compile.
 - [x] The Section 13.1 midpoint decision and both deterministic error-event
   identities compile.
@@ -213,6 +195,22 @@ LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt
   distinct MOSS/Chapter 9 dependency.
 
 ## Failure policy
+
+### 2026-09-05 MOSS peeling progress
+
+`ConcentrationDyadicExponential.lean` and `Algorithms/MOSSPeeling.lean`
+compile the geometric-series estimate and source Lemma 9.3 with its actual
+empirical-mean/radius event and printed constant 15. Contracts remain explicit:
+strongly measurable independent centered unit-subgaussian coordinates,
+positive delta and gap. The telescoping intermediate bound 12 implies 15;
+no probability-tail premise is assumed. This does not yet instantiate the
+centered arm-stream model or prove Theorem 9.1. Next leaves are expected
+optimism deficit, large-gap occupancy, and concrete history regret assembly.
+Chapter status remains partial. Route: `research-wiki/mathlib-candidates/moss-dyadic-peeling.md`.
+
+Full validation at preceding commit `511062a` passed root (8857 jobs),
+Tests (8901 jobs), ProofGraphExport, and 400 Python tests (7 skipped,
+176.716 seconds). This is not full validation of the subsequent peeling files.
 
 Do not weaken Theorem 13.1, identify expectations from different environments,
 drop the policy-consistency or absolute-continuity requirements of the future
@@ -33600,6 +33598,126 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "statement": "theorem historyAction_index_max {k : \u2115} (hk : 0 < k) (n t : \u2115) (history : History.FinitePairHistory (Fin k) \u211d t) (ht : k \u2264 t + 1) (a : Fin k) : index n (ETC.realHistoryEmpMean t history) (ETC.realHistoryPullCount t history) a \u2264 index n (ETC.realHistoryEmpMean t history) (ETC.realHistoryPullCount t history) (historyAction hk n t history)"
   },
   {
+    "kind": "theorem",
+    "name": "logPlus_mono",
+    "full_name": "BanditRLProof.MOSS.logPlus_mono",
+    "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+    "line": 16,
+    "statement": "theorem logPlus_mono {x y : \u211d} (hxy : x \u2264 y) : logPlus x \u2264 logPlus y"
+  },
+  {
+    "kind": "theorem",
+    "name": "exp_neg_logPlus_inv_le",
+    "full_name": "BanditRLProof.MOSS.exp_neg_logPlus_inv_le",
+    "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+    "line": 19,
+    "statement": "theorem exp_neg_logPlus_inv_le (x : \u211d) (hx : 0 < x) : exp (-logPlus (1 / x)) \u2264 x"
+  },
+  {
+    "kind": "def",
+    "name": "peelingBarrier",
+    "full_name": "BanditRLProof.MOSS.peelingBarrier",
+    "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+    "line": 27,
+    "statement": "noncomputable def peelingBarrier (\u03b4 gap s : \u211d) : \u211d"
+  },
+  {
+    "kind": "def",
+    "name": "blockBarrier",
+    "full_name": "BanditRLProof.MOSS.blockBarrier",
+    "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+    "line": 31,
+    "statement": "noncomputable def blockBarrier (\u03b4 gap m : \u211d) : \u211d"
+  },
+  {
+    "kind": "theorem",
+    "name": "blockBarrier_pos",
+    "full_name": "BanditRLProof.MOSS.blockBarrier_pos",
+    "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+    "line": 34,
+    "statement": "theorem blockBarrier_pos (\u03b4 gap m : \u211d) (hm : 0 < m) (hg : 0 < gap) : 0 < blockBarrier \u03b4 gap m"
+  },
+  {
+    "kind": "theorem",
+    "name": "blockBarrier_le_peelingBarrier",
+    "full_name": "BanditRLProof.MOSS.blockBarrier_le_peelingBarrier",
+    "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+    "line": 39,
+    "statement": "theorem blockBarrier_le_peelingBarrier (\u03b4 gap m s : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 \u2264 gap) (hm : 0 < m) (hms : m \u2264 s) (hsm : s \u2264 2*m) : blockBarrier \u03b4 gap m \u2264 peelingBarrier \u03b4 gap s"
+  },
+  {
+    "kind": "theorem",
+    "name": "exp_neg_blockBarrier_sq_le",
+    "full_name": "BanditRLProof.MOSS.exp_neg_blockBarrier_sq_le",
+    "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+    "line": 53,
+    "statement": "theorem exp_neg_blockBarrier_sq_le (\u03b4 gap m : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 \u2264 gap) (hm : 0 < m) : exp (-(blockBarrier \u03b4 gap m)^2 / (4*m)) \u2264 (2*m*\u03b4) * exp (-(m*gap^2/4))"
+  },
+  {
+    "kind": "def",
+    "name": "peelingSum",
+    "full_name": "BanditRLProof.MOSS.peelingSum",
+    "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+    "line": 77,
+    "statement": "noncomputable def peelingSum {\u03a9 : Type*} (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (s : \u2115) (\u03c9 : \u03a9) : \u211d"
+  },
+  {
+    "kind": "def",
+    "name": "blockBadEvent",
+    "full_name": "BanditRLProof.MOSS.blockBadEvent",
+    "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+    "line": 81,
+    "statement": "def blockBadEvent {\u03a9 : Type*} (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03b4 gap : \u211d) (m : \u2115) : Set \u03a9"
+  },
+  {
+    "kind": "theorem",
+    "name": "measure_blockBadEvent_le",
+    "full_name": "BanditRLProof.MOSS.measure_blockBadEvent_le",
+    "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+    "line": 86,
+    "statement": "theorem measure_blockBadEvent_le (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) (m : \u2115) (hm : 0 < m) : \u03bc (blockBadEvent X \u03b4 gap m) \u2264 ENNReal.ofReal ((2*(m : \u211d)*\u03b4) * exp (-((m : \u211d)*gap^2/4)))"
+  },
+  {
+    "kind": "def",
+    "name": "scaledBadEvent",
+    "full_name": "BanditRLProof.MOSS.scaledBadEvent",
+    "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+    "line": 113,
+    "statement": "def scaledBadEvent (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03b4 gap : \u211d) : Set \u03a9"
+  },
+  {
+    "kind": "theorem",
+    "name": "measure_scaledBadEvent_le_fifteen",
+    "full_name": "BanditRLProof.MOSS.measure_scaledBadEvent_le_fifteen",
+    "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+    "line": 117,
+    "statement": "theorem measure_scaledBadEvent_le_fifteen (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) : \u03bc (scaledBadEvent X \u03b4 gap) \u2264 ENNReal.ofReal (15*\u03b4/gap^2)"
+  },
+  {
+    "kind": "def",
+    "name": "meanBadEvent",
+    "full_name": "BanditRLProof.MOSS.meanBadEvent",
+    "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+    "line": 142,
+    "statement": "def meanBadEvent (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03b4 gap : \u211d) : Set \u03a9"
+  },
+  {
+    "kind": "theorem",
+    "name": "meanBadEvent_subset_scaledBadEvent",
+    "full_name": "BanditRLProof.MOSS.meanBadEvent_subset_scaledBadEvent",
+    "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+    "line": 146,
+    "statement": "theorem meanBadEvent_subset_scaledBadEvent (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03b4 gap : \u211d) : meanBadEvent X \u03b4 gap \u2286 scaledBadEvent X \u03b4 gap"
+  },
+  {
+    "kind": "theorem",
+    "name": "measure_meanBadEvent_le_fifteen",
+    "full_name": "BanditRLProof.MOSS.measure_meanBadEvent_le_fifteen",
+    "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+    "line": 167,
+    "statement": "theorem measure_meanBadEvent_le_fifteen (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) : \u03bc (meanBadEvent X \u03b4 gap) \u2264 ENNReal.ofReal (15*\u03b4/gap^2)"
+  },
+  {
     "kind": "def",
     "name": "softmaxDenominator",
     "full_name": "BanditRLProof.StochasticGradientBandit.softmaxDenominator",
@@ -44054,6 +44172,54 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/ConcentrationConfidenceSchedule.lean",
     "line": 124,
     "statement": "theorem tsum_ofReal_telescopingConfidenceShare {delta : Real} (hdelta : 0 <= delta) : \u2211' n, ENNReal.ofReal (telescopingConfidenceShare delta n) = ENNReal.ofReal delta"
+  },
+  {
+    "kind": "theorem",
+    "name": "mul_exp_neg_le_exp_difference",
+    "full_name": "BanditRLProof.Concentration.mul_exp_neg_le_exp_difference",
+    "file": "BanditRLProof/ConcentrationDyadicExponential.lean",
+    "line": 17,
+    "statement": "theorem mul_exp_neg_le_exp_difference (x : \u211d) (hx : 0 \u2264 x) : x * exp (-x) \u2264 (3 / 2 : \u211d) * (exp (-(2 * x / 3)) - exp (-(4 * x / 3)))"
+  },
+  {
+    "kind": "theorem",
+    "name": "sum_dyadic_mul_exp_neg_le",
+    "full_name": "BanditRLProof.Concentration.sum_dyadic_mul_exp_neg_le",
+    "file": "BanditRLProof/ConcentrationDyadicExponential.lean",
+    "line": 37,
+    "statement": "theorem sum_dyadic_mul_exp_neg_le (a : \u211d) (ha : 0 < a) (N : \u2115) : \u2211 j \u2208 range N, (2 : \u211d) ^ j * exp (-(a * 2 ^ j)) \u2264 3 / (2 * a) * (exp (-(2 * a / 3)) - exp (-(2 * (a * 2 ^ N) / 3)))"
+  },
+  {
+    "kind": "theorem",
+    "name": "sum_dyadic_mul_exp_neg_le_three_div_two",
+    "full_name": "BanditRLProof.Concentration.sum_dyadic_mul_exp_neg_le_three_div_two",
+    "file": "BanditRLProof/ConcentrationDyadicExponential.lean",
+    "line": 58,
+    "statement": "theorem sum_dyadic_mul_exp_neg_le_three_div_two (a : \u211d) (ha : 0 < a) (N : \u2115) : \u2211 j \u2208 range N, (2 : \u211d) ^ j * exp (-(a * 2 ^ j)) \u2264 3 / (2 * a)"
+  },
+  {
+    "kind": "theorem",
+    "name": "tsum_dyadic_mul_exp_neg_le",
+    "full_name": "BanditRLProof.Concentration.tsum_dyadic_mul_exp_neg_le",
+    "file": "BanditRLProof/ConcentrationDyadicExponential.lean",
+    "line": 67,
+    "statement": "theorem tsum_dyadic_mul_exp_neg_le (a : \u211d) (ha : 0 < a) : (\u2211' j : \u2115, ENNReal.ofReal ((2 : \u211d) ^ j * exp (-(a * 2 ^ j)))) \u2264 ENNReal.ofReal (3 / (2 * a))"
+  },
+  {
+    "kind": "theorem",
+    "name": "sum_moss_peeling_exponential_le_twelve",
+    "full_name": "BanditRLProof.Concentration.sum_moss_peeling_exponential_le_twelve",
+    "file": "BanditRLProof/ConcentrationDyadicExponential.lean",
+    "line": 76,
+    "statement": "theorem sum_moss_peeling_exponential_le_twelve (\u03b4 gap : \u211d) (h\u03b4 : 0 \u2264 \u03b4) (hgap : 0 < gap) (N : \u2115) : \u2211 j \u2208 range N, \u03b4 * (2 : \u211d) ^ (j+1) * exp (-(gap ^ 2 / 4 * 2 ^ j)) \u2264 12 * \u03b4 / gap ^ 2"
+  },
+  {
+    "kind": "theorem",
+    "name": "tsum_moss_peeling_exponential_le_fifteen",
+    "full_name": "BanditRLProof.Concentration.tsum_moss_peeling_exponential_le_fifteen",
+    "file": "BanditRLProof/ConcentrationDyadicExponential.lean",
+    "line": 95,
+    "statement": "theorem tsum_moss_peeling_exponential_le_fifteen (\u03b4 gap : \u211d) (h\u03b4 : 0 \u2264 \u03b4) (hgap : 0 < gap) : (\u2211' j : \u2115, ENNReal.ofReal (\u03b4 * (2 : \u211d) ^ (j+1) * exp (-(gap ^ 2 / 4 * 2 ^ j)))) \u2264 ENNReal.ofReal (15 * \u03b4 / gap ^ 2)"
   },
   {
     "kind": "theorem",
