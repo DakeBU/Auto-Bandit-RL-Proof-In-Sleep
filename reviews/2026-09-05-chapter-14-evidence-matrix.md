@@ -18,9 +18,9 @@ accepted/task/site status does not independently certify the expanded body.
 | Eq.14.8 source Jensen step | AffinityKL | bretagnolleHuberScale_le_half_commonDensityAffinity_sq | Affinity | b8325c2 |
 | Eq.14.9 Le Cam bound | CommonDensityOverlap | half_commonDensityAffinity_sq_le_overlap | Overlap | b8325c2 |
 | Gaussian KL and testing constants | GaussianTesting | klDiv_gaussianReal_same_variance; gaussian_testing_max_error_three_twentieths | Gaussian | 1e8af14 |
-| non-metric counterexamples | RelativeEntropyNonMetric | bernoulliRelativeEntropy_asymmetry; relativeEntropy_triangle_counterexample | NonMetric | d325147 running |
-| cross entropy and zero-mass limit | CrossEntropy | relativeEntropy_finite_crossEntropy; entropyTerm_tendsto_zero_right | CrossEntropy | d325147 running |
-| ceiling-log fixed-length construction | FixedLengthCoding | exists_ceilingLogPrefixCode | FixedCode | d325147 running |
+| non-metric counterexamples | RelativeEntropyNonMetric | bernoulliRelativeEntropy_asymmetry; relativeEntropy_triangle_counterexample | NonMetric | d325147 passed |
+| cross entropy and zero-mass limit | CrossEntropy | relativeEntropy_finite_crossEntropy; entropyTerm_tendsto_zero_right | CrossEntropy | d325147 passed |
+| ceiling-log fixed-length construction | FixedLengthCoding | exists_ceilingLogPrefixCode | FixedCode | d325147 passed |
 | precise uniform-law qualification | UniformCoding | fixedLength_uniformPowerTwo_optimal; uniform_three_fixedLength_not_optimal | UniformCode | pending after d325147 |
 | common domination and finite-KL iff | CommonDomination | exists_commonSigmaFiniteDominatingMeasure; relativeEntropy_finite_lt_top_iff_ac | Domination | pending after d325147 |
 
@@ -59,3 +59,15 @@ were repaired using discretionary breaks; the final log has no overfull boxes
 or LaTeX errors and produces a three-page PDF. Log:
 tmp/ch14-export-build/ch14-export-check.log. Visual page review remains pending;
 temporary wrapper/build outputs are not committed source artifacts.
+
+PDF visual QA: rendered and inspected all three pages of the current export
+with Poppler at 1300-pixel page height. Equations, glyphs, long declaration
+names, margins and page numbers are readable without clipping or overlap.
+The third page is short because this is a compiled fragment preview, not a
+camera-ready manuscript. This closes visual QA for this exact export snapshot,
+not for any future edit or website page. No PDF source was rewritten during QA.
+
+Adapter gate d325147 completed successfully: aggregate Tests 8947 jobs,
+400 Python tests, 7 skipped, 211.215s. Log:
+C:/a14/tmp/ch14-body-adapters-full-check.log. The final source-inclusive gate
+at a47106a is next and includes UniformCoding/CommonDomination as well.
