@@ -169,31 +169,31 @@
       "core_status": "compiled",
       "core_status_label": "Compiled Chapter 14 leaves",
       "chapter_status_label": "Whole chapter coverage",
-      "status_note": "Finite prefix-code and entropy definitions, the Kraft adapter, KL separation, full sub-sigma-algebra data processing, event data processing, and Bretagnolle–Huber compile. Whole-chapter coverage remains partial because the Huffman/source-coding terminals and several §14.2 body equivalences/examples are still open.",
+      "status_note": "The required body now has compiled Huffman optimality, an exact-real arithmetic block-code rate theorem and converse, finite/partition/common-density KL, the source affinity/overlap route, and Gaussian testing. Whole-chapter status remains partial pending final evidence synchronization and verification; the singleton and uniform-code qualifications below are part of the claim boundary.",
       "print_pages": "160–169",
       "pdf_pages": "195–206",
       "pdf_page": 195,
       "sections": [
-        "§14.1 Entropy and Optimal Coding (CUP starts p. 160 / author-online pp. 186–188 / PDF pp. 195–197; definitions and Kraft bridge compiled, optimal-coding terminals open)",
-        "§14.2 Relative Entropy (CUP starts p. 162 / author-online pp. 188–191 / PDF pp. 197–200; main lower-bound-facing surface compiled, exact remaining gaps listed below)",
+        "§14.1 Entropy and Optimal Coding (CUP starts p. 160 / author-online pp. 186–188 / PDF pp. 195–197; Huffman and arithmetic source-coding terminals compiled with the model qualifications below)",
+        "§14.2 Relative Entropy (CUP starts p. 162 / author-online pp. 188–191 / PDF pp. 197–200; finite, partition and common-density formulas, source testing route and Gaussian example compiled)",
         "§14.3 Notes (CUP p. 165 / author-online pp. 191–194 / PDF pp. 200–203)",
         "§14.4 Bibliographic Remarks (CUP p. 167 / author-online p. 194 / PDF p. 203)",
         "§14.5 Exercises (CUP pp. 167–169 / author-online pp. 194–197 / PDF pp. 203–206)"
       ],
       "learning_goals": [
-        "Read finite binary prefix codes, expected length, entropy in bits and nats, and the exact boundary between Kraft and the missing coding terminals.",
+        "Follow Kraft and the entropy lower bound into recursive Huffman optimality and the one-bit entropy sandwich, then read the exact-real arithmetic block-code construction and rate converse.",
         "Read relative entropy as an extended-real, direction-sensitive comparison of probability measures.",
         "Distinguish the absolutely-continuous log-likelihood branch from singular support mismatch.",
         "Use conditional Jensen to see why restriction to any sub-sigma-algebra cannot increase KL, then specialize to an event.",
         "Derive the unconditional Bretagnolle–Huber testing bound, including the exp(-infinity)=0 branch.",
-        "Keep Huffman/source-coding optimality and adaptive bandit-history decomposition outside the compiled claims."
+        "Distinguish compiled mathematical coding constructions from executable finite-precision encoders; keep adaptive bandit-history decomposition in Chapter 15."
       ],
       "definitions": [
         {
           "name": "Entropy and optimal coding",
           "math": "H(P)=-\\sum_x P(x)\\log P(x).",
-          "fallback": "Finite entropy in bits and nats, binary prefix codes, expected code length, and a Kraft bound compile; Huffman optimality and the source-coding theorem do not.",
-          "status": "partial"
+          "fallback": "Finite binary prefix codes satisfy H ≤ expected length; the recursive Huffman code is globally optimal with expected length ≤ H+1. A named exact-real arithmetic block-code family has expected rate tending to H, with a universal converse. Local codewords are nonempty, including for a singleton alphabet.",
+          "status": "compiled"
         },
         {
           "name": "Extended-real relative entropy",
@@ -231,13 +231,25 @@
         "math": "P(A)+Q(A^{\\mathrm c})\\ge\\tfrac12\\exp\\{-D(P\\Vert Q)\\}",
         "fallback": "For two probability measures and any measurable event, the sum of the P error on A and the Q error on its complement is at least one half times exponential negative relative entropy.",
         "plain": "Observing an event cannot make two laws easier to distinguish than their full relative entropy permits.",
-        "boundary": "BanditRLProof.LowerBounds.bretagnolleHuber compiles this unconditional measure/event theorem with D(P,Q), Q(A complement), and an explicit zero scale at infinite KL. Exercise 14.10 also compiles separately as relativeEntropy_trim_le. Neither §14.1 Huffman/source coding nor the Chapter 15 adaptive-history chain rule is claimed here."
+        "boundary": "BanditRLProof.LowerBounds.bretagnolleHuber compiles this unconditional measure/event theorem with D(P,Q), Q(A complement), and an explicit zero scale at infinite KL. The common-density Jensen/affinity and overlap steps of Eqs. (14.8–14.9) also compile. Exercise 14.10 compiles separately as relativeEntropy_trim_le; the adaptive-history chain rule belongs to Chapter 15."
       },
       "lean_correspondence": [
         {"name": "BanditRLProof.LowerBounds.BinaryPrefixCode", "status": "compiled", "role": "Finite binary prefix-code model with injectivity, nonempty codewords, and prefix freedom."},
         {"name": "BanditRLProof.LowerBounds.BinaryPrefixCode.kraft_inequality", "status": "compiled", "role": "Prefix-code range is uniquely decodable and satisfies the binary Kraft inequality."},
         {"name": "BanditRLProof.LowerBounds.discreteEntropyBaseTwo_eq_div_log_two", "status": "compiled", "role": "Exact conversion between finite base-two and natural entropy."},
         {"name": "BanditRLProof.LowerBounds.expectedCodeLength", "status": "compiled", "role": "Finite expected codeword-length objective from Eq. (14.1)."},
+        {"name": "BanditRLProof.LowerBounds.huffmanCode_optimal", "status": "compiled", "role": "Recursive Huffman construction minimizes expected length over all local binary prefix codes."},
+        {"name": "BanditRLProof.LowerBounds.exists_prefixCode_of_uniquelyDecodable", "status": "compiled", "role": "Every finite injective uniquely decodable encoder has a prefix code preserving each symbol length, including Kraft equality; full aggregate verification passed."},
+        {"name": "BanditRLProof.LowerBounds.IsOptimalPrefixCode.length_antitone", "status": "compiled", "role": "An optimal code assigns no longer words to strictly more probable symbols."},
+        {"name": "BanditRLProof.LowerBounds.huffmanCode_entropy_sandwich", "status": "compiled", "role": "Eq. (14.2): H ≤ expected Huffman length ≤ H+1."},
+        {"name": "BanditRLProof.LowerBounds.arithmeticBlockCode_rate_tendsto_entropy", "status": "compiled", "role": "Named exact-real arithmetic interval/address code has expected IID block rate tending to entropy, including zero masses and constant support-tag overhead."},
+        {"name": "BanditRLProof.LowerBounds.arithmeticBlockCode_payload_interval", "status": "compiled", "role": "The actual named code's positive-mass payload lies inside its message arithmetic interval after removing the support tag; the strengthened interface passed the full b5e21b8 gate."},
+        {"name": "BanditRLProof.LowerBounds.sourceBlock_code_family_limit_ge_entropy", "status": "compiled", "role": "Universal converse for a convergent expected block-code rate."},
+        {"name": "BanditRLProof.LowerBounds.exists_ceilingLogPrefixCode", "status": "compiled", "role": "Fixed-length ceiling-log construction for alphabet cardinality greater than one."},
+        {"name": "BanditRLProof.LowerBounds.fixedLength_uniformPowerTwo_optimal", "status": "compiled", "role": "Uniform fixed-length optimality at power-of-two cardinalities; full aggregate verified."},
+        {"name": "BanditRLProof.LowerBounds.uniform_three_fixedLength_not_optimal", "status": "compiled", "role": "Ternary mean length 5/3 refutes the broad arbitrary-cardinality uniform fixed-length claim; full aggregate verified."},
+        {"name": "BanditRLProof.LowerBounds.relativeEntropy_finite_crossEntropy", "status": "compiled", "role": "Unrounded cross-entropy minus entropy equals finite-alphabet KL under absolute continuity."},
+        {"name": "BanditRLProof.LowerBounds.entropyTerm_tendsto_zero_right", "status": "compiled", "role": "The zero-mass entropy convention agrees with its right-hand limit."},
         {"name": "BanditRLProof.LowerBounds.relativeEntropy", "status": "compiled", "role": "Extended-real alias of Mathlib measure KL in the source direction P to Q."},
         {"name": "BanditRLProof.LowerBounds.relativeEntropy_of_absolutelyContinuous_of_integrable", "status": "compiled", "role": "Theorem 14.1 regular branch with Mathlib's finite-measure mass correction visible."},
         {"name": "BanditRLProof.LowerBounds.relativeEntropy_of_probability_absolutelyContinuous_of_integrable", "status": "compiled", "role": "Probability-measure log-likelihood integral specialization."},
@@ -246,6 +258,21 @@
         {"name": "BanditRLProof.LowerBounds.relativeEntropy_eq_zero_iff", "status": "compiled", "role": "KL separation for finite measures."},
         {"name": "BanditRLProof.LowerBounds.relativeEntropy_trim_le", "status": "compiled", "role": "Full finite-measure arbitrary-sub-sigma-algebra data processing from Exercise 14.10."},
         {"name": "BanditRLProof.LowerBounds.bernoulliRelativeEntropy", "status": "compiled", "role": "Equation (14.4) two-point KL with exact support endpoints."},
+        {"name": "BanditRLProof.LowerBounds.relativeEntropy_finite_sum_log", "status": "compiled", "role": "Equation (14.4) on any finite alphabet under support inclusion, including zero source masses."},
+        {"name": "BanditRLProof.LowerBounds.relativeEntropy_finite_eq_if", "status": "compiled", "role": "Exhaustive finite-sum or infinity formula from atomwise support inclusion."},
+        {"name": "BanditRLProof.LowerBounds.relativeEntropy_finite_eq_top_iff", "status": "compiled", "role": "Infinite finite-alphabet KL exactly when a positive source atom has zero reference mass."},
+        {"name": "BanditRLProof.LowerBounds.finitePartitionRelativeEntropy", "status": "compiled", "role": "Eq. (14.5): supremum over all finite measurable observations."},
+        {"name": "BanditRLProof.LowerBounds.finitePartitionRelativeEntropy_eq_relativeEntropy", "status": "compiled", "role": "Full finite-discretisation/RN equality for finite measures on arbitrary measurable spaces, including infinite KL."},
+        {"name": "BanditRLProof.LowerBounds.relativeEntropy_commonDensity_eq_if", "status": "compiled", "role": "Eq. (14.6) with explicit common-density finite and infinite branches."},
+        {"name": "BanditRLProof.LowerBounds.exists_commonSigmaFiniteDominatingMeasure", "status": "compiled", "role": "P+Q supplies common domination; full aggregate verified."},
+        {"name": "BanditRLProof.LowerBounds.relativeEntropy_finite_lt_top_iff_ac", "status": "compiled", "role": "Finite-alphabet-only equivalence of finite KL and absolute continuity; full aggregate verified."},
+        {"name": "BanditRLProof.LowerBounds.bernoulliRelativeEntropy_asymmetry", "status": "compiled", "role": "Explicit directional counterexample to symmetry."},
+        {"name": "BanditRLProof.LowerBounds.relativeEntropy_triangle_counterexample", "status": "compiled", "role": "Finite Gaussian KL counterexample to the triangle inequality."},
+        {"name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_le_half_commonDensityAffinity_sq", "status": "compiled", "role": "Source Eq. (14.8) common-density Jensen/affinity step."},
+        {"name": "BanditRLProof.LowerBounds.half_commonDensityAffinity_sq_le_overlap", "status": "compiled", "role": "Source Eq. (14.9) affinity-to-overlap step."},
+        {"name": "BanditRLProof.LowerBounds.commonDensityOverlap_le_testingError", "status": "compiled", "role": "Source p.191 overlap bound for every measurable testing event; closes the Jensen/affinity/overlap proof chain."},
+        {"name": "BanditRLProof.LowerBounds.klDiv_gaussianReal_same_variance", "status": "compiled", "role": "Exact Gaussian KL for a common positive variance."},
+        {"name": "BanditRLProof.LowerBounds.gaussian_testing_max_error_three_twentieths", "status": "compiled", "role": "Gaussian testing application with the source 3/20 maximum-error constant."},
         {"name": "BanditRLProof.LowerBounds.rnDeriv_restrict_restrict", "status": "compiled", "role": "Radon–Nikodym derivative identity after restricting both laws to a measurable cell."},
         {"name": "BanditRLProof.LowerBounds.relativeEntropy_restrict_add_compl", "status": "compiled", "role": "Exact KL decomposition across an event and its complement."},
         {"name": "BanditRLProof.LowerBounds.bernoulliRelativeEntropy_event_le", "status": "compiled", "role": "Event-level binary data processing with P(A), Q(A) and D(P,Q)."},
@@ -258,15 +285,17 @@
         {"id": "coding-defs", "label": "prefix-code and entropy definitions", "status": "compiled"},
         {"id": "kraft", "label": "prefix-to-unique-decoding Kraft adapter", "status": "compiled"},
         {"id": "kl", "label": "measure KL and RN branches", "status": "compiled"},
+        {"id": "finite-kl", "label": "finite-alphabet KL with complete support endpoints", "status": "compiled"},
+        {"id": "partition-kl", "label": "finite-discretisation supremum equals RN KL", "status": "compiled"},
         {"id": "full-dpi", "label": "arbitrary sub-sigma-algebra data processing", "status": "compiled"},
         {"id": "event", "label": "event-level binary data processing", "status": "compiled"},
         {"id": "binary", "label": "binary testing and endpoint analysis", "status": "compiled"},
         {"id": "bh", "label": "measure Bretagnolle–Huber terminal", "status": "compiled"},
-        {"id": "coding", "label": "Huffman and source-coding terminals", "status": "planned"},
+        {"id": "coding", "label": "Huffman and exact-real arithmetic source-coding terminals", "status": "compiled"},
         {"id": "history", "label": "same-policy adaptive history KL (compiled in Chapter 15)", "status": "compiled"}
       ],
       "reading_path": [
-        "Start with BinaryPrefixCode and the entropy definitions; distinguish the compiled Kraft bridge from the missing Huffman/source-coding theorems.",
+        "Start with BinaryPrefixCode and entropy; follow Kraft into huffmanCode_optimal and the named arithmeticBlockCode rate theorem, preserving the nonempty-word and exact-real model boundaries.",
         "Read Eq. (14.4), Eq. (14.5), Theorem 14.1, and Eq. (14.6) before the testing theorem.",
         "Inspect relativeEntropy_trim_le for the full Exercise 14.10 conditional-expectation/Jensen proof.",
         "Inspect relativeEntropy_ne_top_iff to see exactly where absolute continuity and integrability enter.",
@@ -275,9 +304,9 @@
         "Continue to Chapter 15 for adaptive same-policy history divergence and finite-arm minimax construction."
       ],
       "gaps": [
-        "Huffman optimality, the one-bit entropy sandwich, and asymptotic source-coding achievability/converse from §14.1 remain uncompiled.",
-        "Arbitrary finite-alphabet Eq. (14.4) beyond Bernoulli and the Eq. (14.5) finite-discretisation supremum equivalence remain uncompiled.",
-        "The full common-density and measure-overlap route and general-variance Gaussian testing application remain uncompiled.",
+        "Whole-chapter promotion still requires final aggregate and synchronized source/export/site evidence; current local compilation is not evidence of public deployment.",
+        "Model qualification: singleton codewords are nonempty. Uniform fixed-length optimality is proved for power-of-two cardinalities, not arbitrary cardinalities: the ternary prefix code 0, 10, 11 has mean length 5/3 rather than 2.",
+        "Arithmetic coding is a classical exact-real construction with constant support/escape overhead, not an executable finite-precision encoder. Cross-entropy differences are unrounded; finite KL iff absolute continuity is finite-alphabet-only.",
         "Adaptive-bandit history likelihood ratios and KL decomposition belong to Chapter 15; the scoped finite-arm same-policy identity now compiles there."
       ]
     },

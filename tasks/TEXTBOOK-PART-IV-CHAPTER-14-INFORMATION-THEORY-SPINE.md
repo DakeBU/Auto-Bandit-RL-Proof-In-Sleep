@@ -52,22 +52,30 @@ mapped local adapter before they count as chapter evidence.
 | Source body node | Exact required content | Current evidence | Status |
 | --- | --- | --- | --- |
 | opening motivation | information-theory/KL role in generalising Chapter 13 | maintained source map; no theorem claim | mapped |
-| §14.1 code model | binary codewords, injectivity, prefix freedom, codeword length, and expected length | `BinaryPrefixCode`, its uniquely-decodable range, finite codebook, Kraft adapter, and `expectedCodeLength` compile; the explicit nonempty-codeword contract is recorded | partial |
-| Eq. (14.1) | optimal expected-length objective over valid prefix codes | no local optimum/existence theorem | blocked |
-| Eq. (14.2) | Huffman optimum satisfies `H₂(P) ≤ L* ≤ H₂(P)+1` | no Huffman construction or Kraft/source-coding proof | blocked |
-| §14.1 asymptotic statement | arithmetic coding approaches entropy and no code improves the asymptotic rate | no block-code/asymptotic coding model | blocked |
+| §14.1 boxed code equivalence | every finite uniquely decodable encoder admits a prefix code with the same symbol lengths | `exists_prefixCode_of_uniquelyDecodable` via non-strict Kraft converse; full 3d7c9a1 gate passed, including root canary | compiled |
+| §14.1 code model | binary codewords, injectivity, prefix freedom, codeword length, and expected length | `BinaryPrefixCode`, its uniquely-decodable range, finite codebook, Kraft adapter, and `expectedCodeLength` compile; the explicit nonempty-codeword contract is recorded | compiled |
+| Eq. (14.1) | optimal expected-length objective over valid prefix codes | `huffmanOptimalCode`, `huffmanCode_optimal`; exact global minimization, full gate dff13cb | compiled |
+| Eq. (14.2) | Huffman optimum satisfies `H₂(P) ≤ L* ≤ H₂(P)+1` | `huffmanOptimalCode` recursively merges two least weights; global optimality and entropy sandwich for finite alphabets, ties/zeros included; classical real-weight construction, not an executable encoder; full gate passed at dff13cb | compiled |
+| §14.1 asymptotic statement | arithmetic coding approaches entropy and no code improves the asymptotic rate | named interval-address arithmetic block code with zero-mass escape tag; rate tends to entropy on Fin k, matching universal prefix-code converse; full gate passed at 2a31a01; whole-body source/export audit remains open | compiled |
 | Eqs. (14.2)--(14.3) definitions | finite discrete base-two entropy, natural entropy, and exact unit conversion | `discreteEntropy`, `discreteEntropyBaseTwo`, their exact conversion, and nonnegativity compile | compiled |
-| Eq. (14.4) | arbitrary finite-alphabet discrete relative entropy with exact zero/support endpoints | only the Bernoulli specialization compiles | partial |
-| Eq. (14.5) | relative entropy as the supremum over all finite measurable discretisations | local `relativeEntropy` aliases Mathlib RN KL; equivalence to the source definition is absent | blocked |
-| Theorem 14.1 | Eq. (14.5) equals the RN/log-likelihood formula, including the singular and nonintegrable branches | RN branch adapters compile, but the Eq. (14.5)-to-RN equivalence is absent | partial |
-| Eq. (14.6) | common-dominating-measure density formula | only the `Q`-RN specialization is exposed | partial |
-| §14.2 metric properties | nonnegativity and `D(P,Q)=0 ↔ P=Q`, with asymmetry/non-triangle statements treated as explanatory nonclaims | order nonnegativity is intrinsic to `ENNReal`; `relativeEntropy_eq_zero_iff` compiles | compiled |
-| Gaussian example | common-variance Gaussian KL formula | unit-variance specialization compiles in Chapter 15; arbitrary positive variance is absent | partial |
+| Eq. (14.4) | arbitrary finite-alphabet discrete relative entropy with exact zero/support endpoints | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, and `relativeEntropy_finite_eq_top_iff` compile; root-import finite/singular three-symbol canaries pass | compiled |
+| Eq. (14.5) | relative entropy as the supremum over all finite measurable discretisations | `finitePartitionRelativeEntropy_eq_relativeEntropy` compiles for arbitrary finite measures, using finite encodings of the concrete density filtration; root and aggregate Tests pass | compiled |
+| Theorem 14.1 | Eq. (14.5) equals the RN/log-likelihood formula, including the singular and nonintegrable branches | full supremum/RN equality and exact RN branch adapters compile; no finite-KL or AC premise on the equality; root and aggregate Tests pass | compiled |
+| Eq. (14.6) | common-dominating-measure density formula | `relativeEntropy_commonDensity_eq_if` and the nonnegative `klFun` formula; root/aggregate/full harness passed at `78846b8` for arbitrary sigma-finite domination | compiled |
+| §14.2 metric properties | nonnegativity, `D(P,Q)=0 ↔ P=Q`, and counterexamples to symmetry/triangle inequality | zero/separation, `bernoulliRelativeEntropy_asymmetry` and `relativeEntropy_triangle_counterexample` compile; full gate d325147 passed | compiled |
+| Gaussian example | common-variance Gaussian KL formula | `klDiv_gaussianReal_same_variance`; root/aggregate/full harness passed at `1e8af14` | compiled |
 | Bernoulli example | endpoint-complete binary KL formula | `bernoulliRelativeEntropy` and endpoint lemmas compile | compiled |
 | Theorem 14.2 / Eq. (14.7) | unconditional Bretagnolle--Huber event inequality in direction `D(P,Q)` | exact local terminal compiles | compiled |
-| Eq. (14.8) | measure-level overlap lower bound used in the source proof | only a binary specialization is compiled | partial |
-| Eq. (14.9) | measure-level Le Cam affinity/overlap inequality | only a binary specialization is compiled | partial |
-| Gaussian testing application | the displayed Gaussian error bound and the `3/10`, `3/20` consequences under `Δ²/σ²≤1` | not exposed as Chapter 14 declarations | planned |
+| Eq. (14.8) | measure-level overlap lower bound used in the source proof | attaining-event and integral-Jensen/Cauchy--Schwarz routes; root/aggregate/full harness passed at `b8325c2` | compiled |
+| Eq. (14.9) | measure-level Le Cam affinity/overlap inequality | `half_commonDensityAffinity_sq_le_overlap`; root/aggregate/full harness passed at `b8325c2` | compiled |
+| Gaussian testing application | the displayed Gaussian error bound and the `3/10`, `3/20` consequences under `Δ²/σ²≤1` | exponential and both rational bounds; root/aggregate/full harness passed at `1e8af14` | compiled |
+
+Current audit qualification: the arithmetic-identity audit found that the
+earlier rate constructor dropped interval containment at its existence
+interface. The strengthened `arithmeticBlockCode_payload_interval` passed
+the b5e21b8 full gate for the actual named code. The later 3d7c9a1 full gate
+also includes the boxed code-equivalence theorem and its root canary.
+Exact evidence is tracked in the arithmetic-identity and boxed-code audits.
 
 Optional rows are §14.3 Notes, §14.4 Bibliographic Remarks, and Exercises
 14.1--14.15.  Exercise 14.10 is a high-value optional target: the existing
@@ -228,8 +236,10 @@ compiled status.
 
 ## Nonclaims and failure policy
 
-- The §14.1 typed code/entropy surface and Kraft adapter compile, but neither
-  Huffman optimality nor the finite/block source-coding theorem is claimed.
+- Huffman global optimality, its entropy sandwich, and finite/block source
+  coding compile under the explicit nonempty-word convention. Arithmetic
+  coding is an exact-real classical construction, not an executable encoder.
+  These proofs alone do not establish completion of the whole-body review.
 - The full sub-sigma-algebra data-processing Exercise 14.10 compiles as
   `relativeEntropy_trim_le`; the event theorem remains a distinct specialization.
 - The adaptive-bandit divergence decomposition is Chapter 15, not Chapter 14.

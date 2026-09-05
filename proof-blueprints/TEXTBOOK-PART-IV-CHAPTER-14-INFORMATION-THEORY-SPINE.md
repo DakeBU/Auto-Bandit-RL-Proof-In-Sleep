@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T06:57:59+00:00`
+Generated: `2026-09-05T09:21:29+00:00`
 
 ## Source Task
 
@@ -58,75 +58,34 @@ mapped local adapter before they count as chapter evidence.
 | Source body node | Exact required content | Current evidence | Status |
 | --- | --- | --- | --- |
 | opening motivation | information-theory/KL role in generalising Chapter 13 | maintained source map; no theorem claim | mapped |
-| §14.1 code model | binary codewords, injectivity, prefix freedom, codeword length, and expected length | `BinaryPrefixCode`, its uniquely-decodable range, finite codebook, Kraft adapter, and `expectedCodeLength` compile; the explicit nonempty-codeword contract is recorded | partial |
-| Eq. (14.1) | optimal expected-length objective over valid prefix codes | no local optimum/existence theorem | blocked |
-| Eq. (14.2) | Huffman optimum satisfies `H₂(P) ≤ L* ≤ H₂(P)+1` | no Huffman construction or Kraft/source-coding proof | blocked |
-| §14.1 asymptotic statement | arithmetic coding approaches entropy and no code improves the asymptotic rate | no block-code/asymptotic coding model | blocked |
+| §14.1 boxed code equivalence | every finite uniquely decodable encoder admits a prefix code with the same symbol lengths | `exists_prefixCode_of_uniquelyDecodable` via non-strict Kraft converse; full 3d7c9a1 gate passed, including root canary | compiled |
+| §14.1 code model | binary codewords, injectivity, prefix freedom, codeword length, and expected length | `BinaryPrefixCode`, its uniquely-decodable range, finite codebook, Kraft adapter, and `expectedCodeLength` compile; the explicit nonempty-codeword contract is recorded | compiled |
+| Eq. (14.1) | optimal expected-length objective over valid prefix codes | `huffmanOptimalCode`, `huffmanCode_optimal`; exact global minimization, full gate dff13cb | compiled |
+| Eq. (14.2) | Huffman optimum satisfies `H₂(P) ≤ L* ≤ H₂(P)+1` | `huffmanOptimalCode` recursively merges two least weights; global optimality and entropy sandwich for finite alphabets, ties/zeros included; classical real-weight construction, not an executable encoder; full gate passed at dff13cb | compiled |
+| §14.1 asymptotic statement | arithmetic coding approaches entropy and no code improves the asymptotic rate | named interval-address arithmetic block code with zero-mass escape tag; rate tends to entropy on Fin k, matching universal prefix-code converse; full gate passed at 2a31a01; whole-body source/export audit remains open | compiled |
 | Eqs. (14.2)--(14.3) definitions | finite discrete base-two entropy, natural entropy, and exact unit conversion | `discreteEntropy`, `discreteEntropyBaseTwo`, their exact conversion, and nonnegativity compile | compiled |
-| Eq. (14.4) | arbitrary finite-alphabet discrete relative entropy with exact zero/support endpoints | only the Bernoulli specialization compiles | partial |
-| Eq. (14.5) | relative entropy as the supremum over all finite measurable discretisations | local `relativeEntropy` aliases Mathlib RN KL; equivalence to the source definition is absent | blocked |
-| Theorem 14.1 | Eq. (14.5) equals the RN/log-likelihood formula, including the singular and nonintegrable branches | RN branch adapters compile, but the Eq. (14.5)-to-RN equivalence is absent | partial |
-| Eq. (14.6) | common-dominating-measure density formula | only the `Q`-RN specialization is exposed | partial |
-| §14.2 metric properties | nonnegativity and `D(P,Q)=0 ↔ P=Q`, with asymmetry/non-triangle statements treated as explanatory nonclaims | order nonnegativity is intrinsic to `ENNReal`; `relativeEntropy_eq_zero_iff` compiles | compiled |
-| Gaussian example | common-variance Gaussian KL formula | unit-variance specialization compiles in Chapter 15; arbitrary positive variance is absent | partial |
+| Eq. (14.4) | arbitrary finite-alphabet discrete relative entropy with exact zero/support endpoints | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, and `relativeEntropy_finite_eq_top_iff` compile; root-import finite/singular three-symbol canaries pass | compiled |
+| Eq. (14.5) | relative entropy as the supremum over all finite measurable discretisations | `finitePartitionRelativeEntropy_eq_relativeEntropy` compiles for arbitrary finite measures, using finite encodings of the concrete density filtration; root and aggregate Tests pass | compiled |
+| Theorem 14.1 | Eq. (14.5) equals the RN/log-likelihood formula, including the singular and nonintegrable branches | full supremum/RN equality and exact RN branch adapters compile; no finite-KL or AC premise on the equality; root and aggregate Tests pass | compiled |
+| Eq. (14.6) | common-dominating-measure density formula | `relativeEntropy_commonDensity_eq_if` and the nonnegative `klFun` formula; root/aggregate/full harness passed at `78846b8` for arbitrary sigma-finite domination | compiled |
+| §14.2 metric properties | nonnegativity, `D(P,Q)=0 ↔ P=Q`, and counterexamples to symmetry/triangle inequality | zero/separation, `bernoulliRelativeEntropy_asymmetry` and `relativeEntropy_triangle_counterexample` compile; full gate d325147 passed | compiled |
+| Gaussian example | common-variance Gaussian KL formula | `klDiv_gaussianReal_same_variance`; root/aggregate/full harness passed at `1e8af14` | compiled |
 | Bernoulli example | endpoint-complete binary KL formula | `bernoulliRelativeEntropy` and endpoint lemmas compile | compiled |
 | Theorem 14.2 / Eq. (14.7) | unconditional Bretagnolle--Huber event inequality in direction `D(P,Q)` | exact local terminal compiles | compiled |
-| Eq. (14.8) | measure-level overlap lower bound used in the source proof | only a binary specialization is compiled | partial |
-| Eq. (14.9) | measure-level Le Cam affinity/overlap inequality | only a binary specialization is compiled | partial |
-| Gaussian testing application | the displayed Gaussian error bound and the `3/10`, `3/20` consequences under `Δ²/σ²≤1` | not exposed as Chapter 14 declarations | planned |
+| Eq. (14.8) | measure-level overlap lower bound used in the source proof | attaining-event and integral-Jensen/Cauchy--Schwarz routes; root/aggregate/full harness passed at `b8325c2` | compiled |
+| Eq. (14.9) | measure-level Le Cam affinity/overlap inequality | `half_commonDensityAffinity_sq_le_overlap`; root/aggregate/full harness passed at `b8325c2` | compiled |
+| Gaussian testing application | the displayed Gaussian error bound and the `3/10`, `3/20` consequences under `Δ²/σ²≤1` | exponential and both rational bounds; root/aggregate/full harness passed at `1e8af14` | compiled |
+
+Current audit qualification: the arithmetic-identity audit found that the
+earlier rate constructor dropped interval containment at its existence
+interface. The strengthened `arithmeticBlockCode_payload_interval` passed
+the b5e21b8 full gate for the actual named code. The later 3d7c9a1 full gate
+also includes the boxed code-equivalence theorem and its root canary.
+Exact evidence is tracked in the arithmetic-identity and boxed-code audits.
 
 Optional rows are §14.3 Notes, §14.4 Bibliographic Remarks, and Exercises
-14.1--14.15.  Exercise 14.10 is a high-value optional target: the existing
-event/Bernoulli theorem is its two-cell specialization, while
-`relativeEntropy_trim_le` now compiles the arbitrary-sub-sigma-algebra result
-for finite measures.
 
-## Frozen Lean target
-
-Target file: `BanditRLProof/LowerBounds/InformationTheory.lean`.
-
-Expected public declarations (names may gain narrowly descriptive helpers but
-the semantic signatures may not be weakened):
-
-```lean
-LowerBounds.relativeEntropy
-LowerBounds.relativeEntropy_of_absolutelyContinuous_of_integrable
-LowerBounds.relativeEntropy_eq_top_of_not_absolutelyContinuous
-LowerBounds.relativeEntropy_ne_top_iff
-LowerBounds.relativeEntropy_eq_zero_iff
-LowerBounds.BinaryPrefixCode
-LowerBounds.BinaryPrefixCode.kraft_inequality
-LowerBounds.discreteEntropy
-LowerBounds.discreteEntropyBaseTwo
-LowerBounds.expectedCodeLength
-LowerBounds.bernoulliRelativeEntropy
-LowerBounds.relativeEntropy_trim_le
-LowerBounds.bernoulliRelativeEntropy_event_le
-LowerBounds.binaryBretagnolleHuber
-LowerBounds.bretagnolleHuberScale
-LowerBounds.bretagnolleHuber
-```
-
-The public terminal uses a real-valued scale `0` when `D(P,Q)=∞`, and
-`exp (-(D(P,Q)).toReal)/2` otherwise. This is the explicit Lean encoding of
-the source convention `exp(-∞)=0`; no finiteness assumption is added to
-Theorem 14.2.
-
-## Exact regularity contract
-
-- `P` and `Q` are probability measures on one measurable space.
-- The event is a `MeasurableSet`.
-- KL direction is `D(P,Q)`, never silently reversed.
-- `P ≪ Q` is derived from finite KL when needed; the infinite branch is
-  discharged by the explicit testing scale.
-- Integrability of `llr P Q` is explicit in the finite integral formula and is
-  characterized by `relativeEntropy_ne_top_iff`.
-
-<!-- 1416 characters omitted from the middle of this snapshot. -->
-
-page are verified before this task becomes accepted.
-
-## 2026-09-04 whole-body extension local evidence
+<!-- 3266 characters omitted from the middle of this snapshot. -->
 
 - Detached short-path checkout `C:\a14` at `50dce67` passed the 2,670-job
   focused information-theory build, the root-import Chapter 14 typed canary,
@@ -213,8 +172,10 @@ compiled status.
 
 ## Nonclaims and failure policy
 
-- The §14.1 typed code/entropy surface and Kraft adapter compile, but neither
-  Huffman optimality nor the finite/block source-coding theorem is claimed.
+- Huffman global optimality, its entropy sandwich, and finite/block source
+  coding compile under the explicit nonempty-word convention. Arithmetic
+  coding is an exact-real classical construction, not an executable encoder.
+  These proofs alone do not establish completion of the whole-body review.
 - The full sub-sigma-algebra data-processing Exercise 14.10 compiles as
   `relativeEntropy_trim_le`; the event theorem remains a distinct specialization.
 - The adaptive-bandit divergence decomposition is Chapter 15, not Chapter 14.
@@ -261,11 +222,13 @@ separate dependency leaf.
 - Promotion rule: every required mathematical definition and claim must map to
   a compiled local declaration and typed canary.  A theorem card, imported API,
   conditional lemma, or prose mapping alone cannot promote the chapter.
-- Current decision: `partial`.  The Section 14.1 Huffman/source-coding
-  terminals, arbitrary finite-alphabet Eq. (14.4) beyond Bernoulli,
-  Eq. (14.5)-to-RN equivalence, common-density formula, full measure-level
-  overlap proof nodes, and general-variance Gaussian/application surface are
-  not all locally compiled.
+- Current decision: `partial`. Main Huffman, common-density, overlap and
+  Gaussian terminals are compiled and fully gated. The constructed arithmetic
+  code rate theorem passed its full gate at 2a31a01. Supporting non-metric,
+  cross-entropy and fixed-length adapters passed the d325147 gate.
+  Additional body assertions and current export/site closure are audited in
+  `reviews/2026-09-05-chapter-14-body-closure-audit.md`; historical site/review
+  rows below do not certify this expanded scope.
 
 ## Precise restatement
 
@@ -274,8 +237,9 @@ bit strings with no distinct codeword prefixing another.  Its expected length
 is the probability-weighted codeword length.  Natural entropy is
 `∑ₓ pₓ log(pₓ⁻¹)` and base-two entropy divides this by `log 2`.  The local
 surface proves the induced codebook uniquely decodable and hence its Kraft
-inequality, but does not yet prove Huffman optimality or the source-coding
-theorem.
+inequality. The recursive Huffman constructor is globally optimal. A named
+arithmetic interval-address block-code family with a zero-mass escape tag
+has expected rate tending to entropy; its full gate passed at 2a31a01.
 
 For probability measures `P,Q` on `(Ω,F)`, relative entropy is infinite when
 `P` is not absolutely continuous with respect to `Q`. In the finite regular
@@ -297,18 +261,18 @@ with `D(Q,P)` is also valid.
 | Kraft inequality | codeword lengths satisfy the binary Kraft bound | `BinaryPrefixCode.kraft_inequality` | Mathlib uniquely-decodable adapter | compiled |
 | `H(P),H₂(P)` | finite natural/base-two entropy and unit conversion | `discreteEntropy`, `discreteEntropyBaseTwo`, `discreteEntropyBaseTwo_eq_div_log_two` | exact finite-sum definitions | compiled |
 | `E[ℓ(c(X))]` | expected codeword length objective | `expectedCodeLength` | exact finite-sum definition | compiled |
-| `D(P,Q)` | extended-real relative entropy | `LowerBounds.relativeEntropy P Q` | `ENNReal`, alias of `InformationTheory.klDiv` | target |
+| `D(P,Q)` | extended-real relative entropy | `LowerBounds.relativeEntropy P Q` | `ENNReal`, alias of `InformationTheory.klDiv` | compiled |
 | `log(dP/dQ)` | log likelihood ratio | `MeasureTheory.llr P Q` | measurable real function | imported |
-| Theorem 14.1 finite branch | RN/LLR integral formula | `relativeEntropy_of_absolutelyContinuous_of_integrable` | equality in `ENNReal` | target |
-| Theorem 14.1 singular branch | non-AC gives infinity | `relativeEntropy_eq_top_of_not_absolutelyContinuous` | endpoint equality | target |
-| finite KL contract | AC and LLR integrability | `relativeEntropy_ne_top_iff` | exact iff | target |
+| Theorem 14.1 finite branch | RN/LLR integral formula | `relativeEntropy_of_absolutelyContinuous_of_integrable` | equality in `ENNReal` | compiled |
+| Theorem 14.1 singular branch | non-AC gives infinity | `relativeEntropy_eq_top_of_not_absolutelyContinuous` | endpoint equality | compiled |
+| finite KL contract | AC and LLR integrability | `relativeEntropy_ne_top_iff` | exact iff | compiled |
 | `D(P,Q)=0 ↔ P=Q` | separation for finite measures | `relativeEntropy_eq_zero_iff` | exact iff | compiled |
 | Exercise 14.10 | KL after restriction to arbitrary `m ≤ m₀` | `relativeEntropy_trim_le` | finite-measure data processing | compiled |
-| `d(p,q)` | Bernoulli relative entropy | `LowerBounds.bernoulliRelativeEntropy` reusing `KLUCB.bernoulliKL` | `ENNReal` with exact endpoints | target adapter |
-| Exercise 14.10 at event sigma-algebra | binary KL cannot exceed measure KL | `bernoulliRelativeEntropy_event_le` | dependency theorem | target leaf |
-| binary testing inequality | two-atom Bretagnolle--Huber | `binaryBretagnolleHuber` | real inequality | target leaf |
-| `exp(-D)/2` including `D=∞` | source RHS | `bretagnolleHuberScale` | real nonnegative scale | target definition |
-| Theorem 14.2 / Eq. (14.7) | `P(A)+Q(Aᶜ)` lower bound | `bretagnolleHuber` | exact measure/event terminal | target |
+| `d(p,q)` | Bernoulli relative entropy | `LowerBounds.bernoulliRelativeEntropy` reusing `KLUCB.bernoulliKL` | `ENNReal` with exact endpoints | compiled |
+| Exercise 14.10 at event sigma-algebra | binary KL cannot exceed measure KL | `bernoulliRelativeEntropy_event_le` | dependency theorem | compiled |
+| binary testing inequality | two-atom Bretagnolle--Huber | `binaryBretagnolleHuber` | real inequality | compiled |
+| `exp(-D)/2` including `D=∞` | source RHS | `bretagnolleHuberScale` | real nonnegative scale | compiled |
+| Theorem 14.2 / Eq. (14.7) | `P(A)+Q(Aᶜ)` lower bound | `bretagnolleHuber` | exact measure/event terminal | compiled |
 | history relative entropy | adaptive bandit history law | `banditHistoryRelativeEntropy_eq_expectedPulls_sum` | compiled Chapter 15 consumer | compiled outside Chapter 14 gate |
 
 ## Assumption ledger
@@ -323,14 +287,9 @@ with `D(Q,P)` is also valid.
 | `Integrable (llr P Q) P` | explicit only on finite integral branch; equivalent to finite KL jointly with AC | Mathlib's real integral convention | no |
 | `D(P,Q)=∞` | explicit branch of `bretagnolleHuberScale` | implements `exp(-∞)=0` | no |
 | mutual AC | absent | not required by source | must remain absent |
-| finite KL premise on Theorem 14.2 | absent | source theorem is unconditional | must remain absent |
-| reversed `D(Q,P)` | absent from main terminal | a separate application, never a silent replacement | no |
-| policy consistency/history adaptation | absent | belongs to Chapter 15 | no |
-| concentration/stopping time | absent | Chapter 14 uses neither | no |
 
-## Local API and proof route
+<!-- 478 characters omitted from the middle of this snapshot. -->
 
-| Leaf | Existing APIs/imports | Retrieval evidence | Intended route | Pivot rule |
 | --- | --- | --- | --- | --- |
 | KL definition/branches | `Mathlib.InformationTheory.KullbackLeibler.Basic` | installed Mathlib source | exact wrappers around `klDiv` branch lemmas | do not invent a second measure KL |
 | prefix coding | `InformationTheory.UniquelyDecodable`, `kraft_mcmillan_inequality` | installed Mathlib source | prove the finite range uniquely decodable from prefix freedom, then adapt Kraft | do not label Kraft as the missing Huffman/source-coding terminal |
@@ -356,8 +315,8 @@ with `D(Q,P)` is also valid.
 | `CH14-HISTORY-KL` | same-policy adaptive history decomposition | kernel chain rule plus policy/history model | `banditHistoryRelativeEntropy_eq_expectedPulls_sum` | compiled Chapter 15 | Chapter 15 | compiled outside Chapter 14 gate |
 | `CH14-TYPED-CANARY` | full conclusions including finite and singular examples | all compiled declarations | `Tests/TextbookPartIVChapter14Canary.lean` | project-local | Tests | verified |
 | `CH14-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | full check | verified locally |
-| `CH14-EVIDENCE-SITE` | task/DAG/export/index/site agreement | compiled chapter surface | repository artifacts | repository | lean-verified/site/browser | verified locally |
-| `CH14-REVIEW` | independent source/Lean/evidence audit | all local artifacts | review record | repository | independent review | verified |
+| `CH14-EVIDENCE-SITE` | task/DAG/export/index/site agreement | compiled chapter surface | repository artifacts | repository | lean-verified/site/browser | expanded-body static check passed at 7b5b5f4; targeted desktop and mouse/keyboard anchors verified at 24aa742; current remote publication unverified |
+| `CH14-REVIEW` | independent source/Lean/evidence audit | all local artifacts | review record | repository | independent review | expanded-body source/statement audit passed after cf3ed1f arbitrary-event repair; final compiler evidence in independent-source review |
 | `CH14-REMOTE` | PR, main Actions, Pages and live page | accepted local chapter | PR #11; run `31949303227`; Pages job `95172626370`; live desktop/mobile | repository | deployment | verified for the historical §14.2 milestone; the 2026-09-04 extension awaits its own PR |
 
 ## Gaps
@@ -368,11 +327,22 @@ with `D(Q,P)` is also valid.
 - [x] Exact finite code/entropy definitions and a prefix-code Kraft adapter.
 - [x] Full arbitrary-sub-sigma-algebra data processing (Exercise 14.10).
 - [x] Chapter 15 same-policy history-law construction and divergence decomposition (compiled in its own gate).
-- [ ] Huffman optimality and the one-bit entropy sandwich in Eq. (14.2).
-- [ ] Block/arithmetic source-coding achievability and converse.
-- [ ] Eq. (14.4) for an arbitrary finite alphabet beyond Bernoulli.
-- [ ] Eq. (14.5) finite-discretisation supremum equivalence to RN KL.
-- [ ] General common-density, Gaussian-variance/application, and measure-overlap proof nodes.
+- [x] Huffman optimality and the one-bit entropy sandwich; full gate dff13cb.
+- [x] Arithmetic source-coding aggregate validation at 2a31a01 (named rate and converse compiled); final whole-body source audit is tracked separately below.
+- [x] Eq. (14.4) for an arbitrary finite alphabet, with exact support dichotomy and zero-mass terms.
+- [x] Eq. (14.5) finite-discretisation supremum equivalence to RN KL, including singular and nonintegrable branches.
+- [x] Eq. (14.6) general common-density formula; full harness passed at `78846b8`.
+- [x] Measure-overlap and source affinity/Jensen; full gate b8325c2.
+- [x] General Gaussian-variance/application; full gate 1e8af14.
+- [ ] Additional mathematical body assertions and evidence closure in the body audit.
+
+The boxed unique-decoding equivalence is now mapped to
+`exists_prefixCode_of_uniquelyDecodable`, preserving every length on a finite
+injective encoder with uniquely decodable range. Its nonempty words are
+derived, not assumed; the non-strict Kraft converse includes equality.
+The full 3d7c9a1 gate passed, including root canaries. Final evidence
+synchronization is tracked in the closeout checklist; independent source review passed after the cf3ed1f arbitrary-event repair. See the boxed-code and arithmetic-identity audits
+for the two source-fidelity repairs after the a47106a gate.
 
 
 ## Obligation Snapshot
@@ -389,7 +359,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `CH14-SOURCE-FENCE` | Theorem 14.1 RN formula and Theorem 14.2/Eq. (14.7), exact pages/direction | official PDF and CUP metadata | task/window | textbook card | conservative paraphrase | edition, printed/PDF pages, `D(P,Q)` direction | source evidence | n/a | source review | mapped |
 | `CH14-KL-SURFACE` | extended-real measure KL plus singular/finite characterization | Mathlib KL/LLR | `klDiv`, `llr`, branch lemmas | Mathlib source audit | transparent adapters | same space; AC and integrability visible | imported plus wrappers | `relativeEntropy` and branch adapters | focused Lean | compiled |
-| `CH14-BERNOULLI-SURFACE` | two-symbol/Bernoulli specialization of Eq. (14.4), with support endpoints | existing KLUCB KL | `bernoulliKL`, core and endpoint lemmas | local declaration index | reuse, do not duplicate semantics | `p,q∈[0,1]`; singular support gives `∞`; arbitrary finite alphabets remain open | compiled local dependency | `bernoulliRelativeEntropy` | focused Lean | compiled |
+| `CH14-BERNOULLI-SURFACE` | two-symbol/Bernoulli specialization of Eq. (14.4), with support endpoints | existing KLUCB KL | `bernoulliKL`, core and endpoint lemmas | local declaration index | reuse, do not duplicate semantics | `p,q∈[0,1]`; singular support gives `∞`; arbitrary finite alphabets are covered by the separate finite-discrete-KL node | compiled local dependency | `bernoulliRelativeEntropy` | focused Lean | compiled |
 | `CH14-RN-RESTRICT` | RN derivative agrees after restricting both laws to a measurable event | AC and density representation | `withDensity_rnDeriv_eq`, `restrict_withDensity`, `rnDeriv_withDensity` | Mathlib source audit | identify both restricted measures through the original density | finite probability measures; `MeasurableSet A`; `P≪Q` | Mathlib-candidate project leaf | `rnDeriv_restrict_restrict` | focused Lean | compiled |
 | `CH14-EVENT-DPI` | `d(P(A),Q(A)) <= D(P,Q)` | RN restrict helper, f-divergence integral, convex mass lower bound | `klDiv_eq_lintegral_klFun_of_ac`, `mul_klFun_le_toReal_klDiv` | Mathlib source audit | split over event/complement and add | probability laws; measurable event; exact KL direction | Mathlib-candidate project leaf | `bernoulliRelativeEntropy_event_le` | focused Lean | compiled |
 | `CH14-BINARY-BH` | `p+(1-q) >= exp(-d(p,q))/2` with exact endpoints | Bernoulli core | real sqrt/log/exp and concavity | source proof | affinity lower bound plus Le Cam overlap algebra | both parameters in unit interval; all endpoints explicit | project-local | `binaryBretagnolleHuber` | focused Lean | compiled |
@@ -397,8 +367,8 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH14-HISTORY-KL` | adaptive same-policy history divergence decomposition | Chapter 14 measure leaves and kernel chain rule | Chapter 15 bandit history model | compiled Chapter 15 conditional-KL theorem | Chapter 15 iterative construction | common randomized policy, measurability, countably generated rewards | downstream source theorem | `banditHistoryRelativeEntropy_eq_expectedPulls_sum` | Chapter 15 | compiled outside Chapter 14 gate |
 | `CH14-TYPED-CANARY` | root-import applications to finite and singular cases, all axioms printed | compiled Chapter 14 declarations | root import | local declarations | exact full-conclusion examples | explicit probability measures/events | project-local | `Tests/TextbookPartIVChapter14Canary.lean` | Tests | verified |
 | `CH14-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | path/tooling failures distinguished from proofs | repository | n/a | full check | verified locally |
-| `CH14-EVIDENCE-SITE` | proof export, indexes, results/highlights/readings/maps/README/site agree | compiled chapter surface | harness/site scripts | repository | generated evidence plus maintained content | only compiled/gated declarations labelled compiled | repository | n/a | site/browser | verified locally |
-| `CH14-REVIEW` | independent theorem/Lean audit | all artifacts | source, Lean, site | all above | check KL direction, AC, endpoints, quantifiers | no unresolved P0--P3 | repository | n/a | independent review | verified |
+| `CH14-EVIDENCE-SITE` | proof export, indexes, results/highlights/readings/maps/README/site agree | compiled chapter surface | harness/site scripts | repository | generated evidence plus maintained content | only compiled/gated declarations labelled compiled | repository | n/a | site/browser | historical §14.2 verified; expanded-body local site check passed in 8578e2a, browser/current publication not yet verified |
+| `CH14-REVIEW` | independent theorem/Lean audit | all artifacts | source, Lean, site | all above | check KL direction, AC, endpoints, quantifiers | no unresolved P0--P3 | repository | n/a | independent review | verified for historical §14.2 only; expanded-body completion audit remains open |
 | `CH14-REMOTE` | PR, main Actions, Pages and live Chapter 14 | accepted local chapter | GitHub workflow | repository | branch PR, never direct main push | PR #11; merge `194aca9`; main run `31949303227`; deploy job `95172626370`; live desktop/mobile | repository | n/a | deployment | verified for the historical §14.2 milestone; the 2026-09-04 extension awaits its own PR |
 
 ## Whole-chapter extension obligations
@@ -407,16 +377,27 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | --- | --- | --- | --- | --- | --- | --- |
 | `CH14-CODE-MODEL` | typed finite binary prefix-code surface and expected length | lists, finite sums, Mathlib Kraft--McMillan | define injective/prefix-free/nonempty codes; prove range uniquely decodable and expose finite Kraft adapter | `BinaryPrefixCode`, `BinaryPrefixCode.uniquelyDecodable_range`, `BinaryPrefixCode.kraft_inequality`, `expectedCodeLength` | focused Lean | compiled |
 | `CH14-ENTROPY-DEFINITIONS` | Eqs. (14.2)--(14.3) entropy definitions, nonnegativity, and nats/bits conversion | finite sums, real log | exact finite support convention; term at zero is zero | `discreteEntropy`, `discreteEntropyBaseTwo`, `discreteEntropyBaseTwo_eq_div_log_two`, `discreteEntropy_nonneg` | focused Lean | compiled |
-| `CH14-HUFFMAN-BOUND` | Eq. (14.2), including existence/optimality of a prefix code | Kraft--McMillan, Huffman/tree construction | no conditional optimality premise may masquerade as this terminal | none | chapter terminal | blocked |
-| `CH14-SOURCE-CODING` | arithmetic/block-code achievability and converse | product distributions, uniquely decodable block codes, asymptotics | formal source-coding theorem | none | chapter terminal | blocked |
-| `CH14-FINITE-DISCRETE-KL` | Eq. (14.4) for an arbitrary finite alphabet | finite sums, support endpoints | bridge finite atomic measures to Mathlib `klDiv` | Bernoulli-only surface exists | focused Lean | partial |
-| `CH14-DISCRETISATION-SUP` | Eq. (14.5) and equality with RN KL in Theorem 14.1 | finite measurable quotients/partitions, supremum | source definition followed by Dobrushin/RN equivalence | none | chapter terminal | blocked |
-| `CH14-COMMON-DENSITY` | Eq. (14.6) under a common σ-finite dominating measure | RN chain rule, integral transport | expose exact density formula | Q-RN specialization only | focused Lean | partial |
+| `CH14-HUFFMAN-BOUND` | Eq. (14.2), including existence/optimality of a prefix code | Kraft--McMillan, least-weight sibling exchange, cardinality recursion | recursive Huffman merge/expand construction with proved global optimality and entropy sandwich; finite nonnegative real weights, ties/zeros admitted; classical noncomputable construction | root-integrated `huffmanOptimalCode`, `huffmanCode_optimal`, `huffmanCode_entropy_sandwich`; full gate passed at dff13cb (400 tests, 7 skipped) | chapter terminal | compiled |
+| `CH14-SOURCE-CODING` | arithmetic/block-code achievability and converse | product distributions, recursive arithmetic intervals, dyadic addresses, asymptotics | named arithmetic block code (classical exact-real construction) including zero-mass escape tag; nH2<=E length<=nH2+3 and rate convergence, with universal prefix-code converse | `arithmeticBlockCode_rate_tendsto_entropy`, `arithmeticBlockCode_rate_sandwich`, `sourceBlock_code_family_limit_ge_entropy`; full gate 2a31a01 passed (400 tests, 7 skipped) | chapter terminal | compiled |
+| `CH14-FINITE-DISCRETE-KL` | Eq. (14.4) for an arbitrary finite alphabet | finite sums, support endpoints | atomwise AC equivalence, RN density ratio, finite LLR integrability, and finite integral sum; singular atom forces infinity | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, `relativeEntropy_finite_eq_top_iff` | focused Lean and root-import canary passed | compiled |
+| `CH14-DISCRETISATION-SUP` | Eq. (14.5) and equality with RN KL in Theorem 14.1 | finite measurable quotients/partitions, supremum | finite-cell Jensen upper bound; binary singular witness; density filtration recovery by conditional-expectation convergence/Fatou; finite-range coding of each layer | `finitePartitionRelativeEntropy_eq_relativeEntropy` and its finite-partition/filtration/encoding helpers | root, aggregate Tests, and full harness pass at 40c56ca | compiled |
+| `CH14-COMMON-DENSITY` | Eq. (14.6) under a common σ-finite dominating measure | RN ratio, integral transport | transfer log-density equality to P-a.e.; transport integrability and integral; retain singular/nonintegrable infinity branches | `relativeEntropy_commonDensity_eq_if`, `relativeEntropy_commonDensity_klFun` and helpers | root/aggregate/full harness passed at `78846b8` | compiled |
 | `CH14-KL-SEPARATION` | nonnegativity and zero iff equality | Mathlib KL | `ENNReal` order plus thin source-mapped equality adapter | `relativeEntropy_eq_zero_iff` | focused Lean | compiled |
-| `CH14-GAUSSIAN-EXAMPLE` | common positive variance formula | Gaussian RN/KL and scaling | generalize the compiled unit-variance Chapter 15 leaf | unit-variance declaration only | focused Lean | partial |
-| `CH14-MEASURE-OVERLAP` | source Eqs. (14.8)--(14.9) | common density, Cauchy--Schwarz, Jensen | measure-level overlap and affinity route | binary specializations only | focused Lean | partial |
-| `CH14-GAUSSIAN-TESTING-APPLICATION` | displayed error, `3/10`, and max-error `3/20` consequences | general Gaussian KL, Theorem 14.2, scalar exp bound | direct source application | none | focused Lean | planned |
+| `CH14-GAUSSIAN-EXAMPLE` | common positive variance formula | Gaussian RN/KL and integration | general positive-variance density-ratio/affine-LLR route | `klDiv_gaussianReal_same_variance` and helpers | full gate 1e8af14 passed | compiled |
+| `CH14-MEASURE-OVERLAP` | source Eqs. (14.8)--(14.9) | common density, Cauchy--Schwarz, Jensen | integral exponential Jensen, RN affinity transport, L2 Cauchy--Schwarz; alternative attaining-event proof | `bretagnolleHuberScale_le_half_commonDensityAffinity_sq`, `bretagnolleHuberScale_le_commonDensityOverlap`, `half_commonDensityAffinity_sq_le_overlap` | full gate b8325c2 passed, including source Jensen intermediate | compiled |
+| `CH14-GAUSSIAN-TESTING-APPLICATION` | displayed error, `3/10`, and max-error `3/20` consequences | general Gaussian KL, Theorem 14.2, scalar exp bound | direct source application with certified rational constant | `gaussian_testing_error_lower_bound`, `gaussian_testing_error_three_tenths`, `gaussian_testing_max_error_three_twentieths` | full gate 1e8af14 passed | compiled |
 | `CH14-EX14-10-FULL-DPI` | KL monotonicity after restriction to any sub-σ-algebra | `Measure.trim`, `toReal_rnDeriv_trim`, conditional expectation and Jensen | split infinite KL; identify the trimmed RN density as a conditional expectation and integrate Jensen; event DPI remains a specialization | `relativeEntropy_trim_le` | optional focused Lean | compiled |
+
+## Current whole-body gate snapshot
+
+The final source-inclusive a47106a gate passed: Tests 8951 jobs, 400 Python
+tests, 7 skipped, 226.925s (C:/a14/tmp/ch14-final-body-full-check.log).
+This includes NonMetric, CrossEntropy, FixedLengthCoding, UniformCoding and
+CommonDomination, not just the historical spine. The exact source/module/
+terminal/canary matrix is reviews/2026-09-05-chapter-14-evidence-matrix.md.
+Local site checks passed in the site-sync review; historical independent
+review and remote publication do not cover this expanded body. Whole-chapter
+status remains partial until the final source and evidence audit is complete.
 
 ## Failure classification
 
@@ -58991,6 +58972,318 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "statement": "def lmlBanditDeclarationCards : List RegretBoundCard"
   },
   {
+    "kind": "theorem",
+    "name": "mul_exp_neg_half_log_eq_sqrt",
+    "full_name": "BanditRLProof.LowerBounds.mul_exp_neg_half_log_eq_sqrt",
+    "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
+    "line": 15,
+    "statement": "theorem mul_exp_neg_half_log_eq_sqrt {r : \u211d} (hr : 0 \u2264 r) : r * Real.exp (-Real.log r / 2) = Real.sqrt r"
+  },
+  {
+    "kind": "theorem",
+    "name": "integrable_sqrt_rnDeriv",
+    "full_name": "BanditRLProof.LowerBounds.integrable_sqrt_rnDeriv",
+    "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
+    "line": 25,
+    "statement": "theorem integrable_sqrt_rnDeriv {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] : Integrable (fun x => Real.sqrt (P.rnDeriv Q x).toReal) Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "integrable_exp_neg_half_llr",
+    "full_name": "BanditRLProof.LowerBounds.integrable_exp_neg_half_llr",
+    "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
+    "line": 32,
+    "statement": "theorem integrable_exp_neg_half_llr {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] (hPQ : P \u226a Q) : Integrable (fun x => Real.exp (-llr P Q x / 2)) P"
+  },
+  {
+    "kind": "theorem",
+    "name": "integral_exp_neg_half_llr_eq",
+    "full_name": "BanditRLProof.LowerBounds.integral_exp_neg_half_llr_eq",
+    "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
+    "line": 40,
+    "statement": "theorem integral_exp_neg_half_llr_eq {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] (hPQ : P \u226a Q) : (\u222b x, Real.exp (-llr P Q x / 2) \u2202P) = \u222b x, Real.sqrt (P.rnDeriv Q x).toReal \u2202Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "exp_neg_half_integral_llr_le_rnAffinity",
+    "full_name": "BanditRLProof.LowerBounds.exp_neg_half_integral_llr_le_rnAffinity",
+    "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
+    "line": 49,
+    "statement": "theorem exp_neg_half_integral_llr_le_rnAffinity {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] (hPQ : P \u226a Q) (hi : Integrable (llr P Q) P) : Real.exp (-(\u222b x, llr P Q x \u2202P) / 2) \u2264 \u222b x, Real.sqrt (P.rnDeriv Q x).toReal \u2202Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "rnAffinity_eq_commonDensityAffinity",
+    "full_name": "BanditRLProof.LowerBounds.rnAffinity_eq_commonDensityAffinity",
+    "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
+    "line": 63,
+    "statement": "theorem rnAffinity_eq_commonDensityAffinity {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] [SigmaFinite \u03bc] (hPQ : P \u226a Q) (hQ : Q \u226a \u03bc) : (\u222b x, Real.sqrt (P.rnDeriv Q x).toReal \u2202Q) = commonDensityAffinity P Q \u03bc"
+  },
+  {
+    "kind": "theorem",
+    "name": "exp_neg_half_integral_llr_le_commonDensityAffinity",
+    "full_name": "BanditRLProof.LowerBounds.exp_neg_half_integral_llr_le_commonDensityAffinity",
+    "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
+    "line": 82,
+    "statement": "theorem exp_neg_half_integral_llr_le_commonDensityAffinity {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite \u03bc] (hPQ : P \u226a Q) (hQ : Q \u226a \u03bc) (hi : Integrable (llr P Q) P) : Real.exp (-(\u222b x, llr P Q x \u2202P) / 2) \u2264 commonDensityAffinity P Q \u03bc"
+  },
+  {
+    "kind": "theorem",
+    "name": "bretagnolleHuberScale_le_half_commonDensityAffinity_sq",
+    "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_le_half_commonDensityAffinity_sq",
+    "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
+    "line": 91,
+    "statement": "theorem bretagnolleHuberScale_le_half_commonDensityAffinity_sq {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite \u03bc] (hQ : Q \u226a \u03bc) : bretagnolleHuberScale (relativeEntropy P Q) \u2264 (1 / 2 : \u211d) * commonDensityAffinity P Q \u03bc ^ 2"
+  },
+  {
+    "kind": "def",
+    "name": "sourceBlockList",
+    "full_name": "BanditRLProof.LowerBounds.sourceBlockList",
+    "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+    "line": 5,
+    "statement": "def sourceBlockList {\u03b1 : Type*} : (n : \u2115) \u2192 SourceBlock \u03b1 n \u2192 List \u03b1 | 0, _ => [] | n + 1, x => x.1 :: sourceBlockList n x.2"
+  },
+  {
+    "kind": "theorem",
+    "name": "sourceBlockList_length",
+    "full_name": "BanditRLProof.LowerBounds.sourceBlockList_length",
+    "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+    "line": 9,
+    "statement": "theorem sourceBlockList_length {\u03b1 : Type*} (n : \u2115) (x : SourceBlock \u03b1 n) : (sourceBlockList n x).length = n"
+  },
+  {
+    "kind": "theorem",
+    "name": "sourceBlockList_injective",
+    "full_name": "BanditRLProof.LowerBounds.sourceBlockList_injective",
+    "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+    "line": 15,
+    "statement": "theorem sourceBlockList_injective {\u03b1 : Type*} (n : \u2115) : Function.Injective (sourceBlockList (\u03b1 := \u03b1) n)"
+  },
+  {
+    "kind": "theorem",
+    "name": "sourceBlockList_mass",
+    "full_name": "BanditRLProof.LowerBounds.sourceBlockList_mass",
+    "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+    "line": 27,
+    "statement": "theorem sourceBlockList_mass {\u03b1 : Type*} (p : \u03b1 \u2192 \u211d) (n : \u2115) (x : SourceBlock \u03b1 n) : ((sourceBlockList n x).map p).prod = sourceBlockMass p n x"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_arithmeticBlockSupport",
+    "full_name": "BanditRLProof.LowerBounds.exists_arithmeticBlockSupport",
+    "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+    "line": 33,
+    "statement": "theorem exists_arithmeticBlockSupport {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) : \u2203 positive : BinaryPrefixCode {x : SourceBlock.{0,0} (Fin k) n // 0 < sourceBlockMass p n x}, (\u2200 x, (positive.encode x).length = arithmeticLength (sourceBlockMass p n x.val)) \u2227 (\u2200 x, (arithmeticInterval p (sourceBlockList n x.val)).1 \u2264 dyadicAddressLower (positive.encode x) \u2227 dyadicAddressUpper (positive.encode x) < (arithmeticInterval p (sourceBlockList n x.val)).2) \u2227 expectedCodeLength (sourceBlockMass p n) (positive.extendZeroMass (sourceBlockMass p n) (huffmanCode (sourceBlockMass p n) (sourceBlockMass_nonneg p hp n))) \u2264 n * discreteEntropyBaseTwo Finset.univ p + 3"
+  },
+  {
+    "kind": "def",
+    "name": "arithmeticBlockCode",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticBlockCode",
+    "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+    "line": 53,
+    "statement": "noncomputable def arithmeticBlockCode {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) : BinaryPrefixCode (SourceBlock.{0,0} (Fin k) n)"
+  },
+  {
+    "kind": "theorem",
+    "name": "arithmeticBlockCode_expected_length_le",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticBlockCode_expected_length_le",
+    "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+    "line": 59,
+    "statement": "theorem arithmeticBlockCode_expected_length_le {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) : expectedCodeLength (sourceBlockMass p n) (arithmeticBlockCode p hp hs n) \u2264 n * discreteEntropyBaseTwo Finset.univ p + 3"
+  },
+  {
+    "kind": "theorem",
+    "name": "arithmeticBlockCode_payload_interval",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticBlockCode_payload_interval",
+    "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+    "line": 68,
+    "statement": "theorem arithmeticBlockCode_payload_interval {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) (x : SourceBlock.{0,0} (Fin k) n) (hx : 0 < sourceBlockMass p n x) : (arithmeticInterval p (sourceBlockList n x)).1 \u2264 dyadicAddressLower ((arithmeticBlockCode p hp hs n).encode x).tail \u2227 dyadicAddressUpper ((arithmeticBlockCode p hp hs n).encode x).tail < (arithmeticInterval p (sourceBlockList n x)).2"
+  },
+  {
+    "kind": "theorem",
+    "name": "arithmeticBlockCode_rate_sandwich",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticBlockCode_rate_sandwich",
+    "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+    "line": 78,
+    "statement": "theorem arithmeticBlockCode_rate_sandwich {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) (hn : 0 < n) : discreteEntropyBaseTwo Finset.univ p \u2264 expectedCodeLength (sourceBlockMass p n) (arithmeticBlockCode p hp hs n) / n \u2227 expectedCodeLength (sourceBlockMass p n) (arithmeticBlockCode p hp hs n) / n \u2264 discreteEntropyBaseTwo Finset.univ p + 3 / n"
+  },
+  {
+    "kind": "theorem",
+    "name": "arithmeticBlockCode_rate_tendsto_entropy",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticBlockCode_rate_tendsto_entropy",
+    "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+    "line": 94,
+    "statement": "theorem arithmeticBlockCode_rate_tendsto_entropy {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) : Filter.Tendsto (fun n : \u2115 => expectedCodeLength (sourceBlockMass p (n + 1)) (arithmeticBlockCode p hp hs (n + 1)) / (n + 1)) Filter.atTop (nhds (discreteEntropyBaseTwo Finset.univ p))"
+  },
+  {
+    "kind": "def",
+    "name": "arithmeticOffset",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticOffset",
+    "file": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
+    "line": 6,
+    "statement": "def arithmeticOffset {k : \u2115} (p : Fin k \u2192 \u211d) (a : Fin k) : \u211d"
+  },
+  {
+    "kind": "theorem",
+    "name": "arithmeticOffset_nonneg",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticOffset_nonneg",
+    "file": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
+    "line": 9,
+    "statement": "theorem arithmeticOffset_nonneg {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (a : Fin k) : 0 \u2264 arithmeticOffset p a"
+  },
+  {
+    "kind": "theorem",
+    "name": "arithmeticOffset_add_le_one",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticOffset_add_le_one",
+    "file": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
+    "line": 13,
+    "statement": "theorem arithmeticOffset_add_le_one {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (a : Fin k) : arithmeticOffset p a + p a \u2264 1"
+  },
+  {
+    "kind": "def",
+    "name": "arithmeticInterval",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticInterval",
+    "file": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
+    "line": 25,
+    "statement": "def arithmeticInterval {k : \u2115} (p : Fin k \u2192 \u211d) : List (Fin k) \u2192 \u211d \u00d7 \u211d | [] => (0, 1) | a :: w => (arithmeticOffset p a + p a * (arithmeticInterval p w).1, arithmeticOffset p a + p a * (arithmeticInterval p w).2)"
+  },
+  {
+    "kind": "theorem",
+    "name": "arithmeticInterval_width",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticInterval_width",
+    "file": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
+    "line": 30,
+    "statement": "theorem arithmeticInterval_width {k : \u2115} (p : Fin k \u2192 \u211d) (w : List (Fin k)) : (arithmeticInterval p w).2 - (arithmeticInterval p w).1 = (w.map p).prod"
+  },
+  {
+    "kind": "theorem",
+    "name": "arithmeticInterval_bounds",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticInterval_bounds",
+    "file": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
+    "line": 39,
+    "statement": "theorem arithmeticInterval_bounds {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (w : List (Fin k)) : 0 \u2264 (arithmeticInterval p w).1 \u2227 (arithmeticInterval p w).1 \u2264 (arithmeticInterval p w).2 \u2227 (arithmeticInterval p w).2 \u2264 1"
+  },
+  {
+    "kind": "theorem",
+    "name": "arithmeticOffset_separated",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticOffset_separated",
+    "file": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
+    "line": 57,
+    "statement": "theorem arithmeticOffset_separated {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (a b : Fin k) (hab : a < b) : arithmeticOffset p a + p a \u2264 arithmeticOffset p b"
+  },
+  {
+    "kind": "theorem",
+    "name": "arithmeticInterval_head_separated",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticInterval_head_separated",
+    "file": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
+    "line": 75,
+    "statement": "theorem arithmeticInterval_head_separated {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (a b : Fin k) (u v : List (Fin k)) (hab : a < b) : (arithmeticInterval p (a :: u)).2 \u2264 (arithmeticInterval p (b :: v)).1"
+  },
+  {
+    "kind": "theorem",
+    "name": "arithmeticInterval_separated",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticInterval_separated",
+    "file": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
+    "line": 88,
+    "statement": "theorem arithmeticInterval_separated {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (u v : List (Fin k)) (hlen : u.length = v.length) (hne : u \u2260 v) : (arithmeticInterval p u).2 \u2264 (arithmeticInterval p v).1 \u2228 (arithmeticInterval p v).2 \u2264 (arithmeticInterval p u).1"
+  },
+  {
+    "kind": "theorem",
+    "name": "arithmeticInterval_interior_unique",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticInterval_interior_unique",
+    "file": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
+    "line": 114,
+    "statement": "theorem arithmeticInterval_interior_unique {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (u v : List (Fin k)) (hlen : u.length = v.length) (x : \u211d) (hu : (arithmeticInterval p u).1 < x \u2227 x < (arithmeticInterval p u).2) (hv : (arithmeticInterval p v).1 < x \u2227 x < (arithmeticInterval p v).2) : u = v"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_grid_cell_inside",
+    "full_name": "BanditRLProof.LowerBounds.exists_grid_cell_inside",
+    "file": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
+    "line": 124,
+    "statement": "theorem exists_grid_cell_inside (L U \u03b4 : \u211d) (hL : 0 \u2264 L) (h\u03b4 : 0 < \u03b4) (hwidth : 2 * \u03b4 \u2264 U - L) : \u2203 m : \u2115, L \u2264 (m : \u211d) * \u03b4 \u2227 ((m : \u211d) + 1) * \u03b4 < U"
+  },
+  {
+    "kind": "theorem",
+    "name": "arithmeticAddress_prefix_forces_eq",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticAddress_prefix_forces_eq",
+    "file": "BanditRLProof/LowerBounds/ArithmeticPrefixCode.lean",
+    "line": 5,
+    "statement": "theorem arithmeticAddress_prefix_forces_eq {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (u v : List (Fin k)) (hlen : u.length = v.length) (cu cv : List Bool) (huL : (arithmeticInterval p u).1 \u2264 dyadicAddressLower cu) (huU : dyadicAddressUpper cu < (arithmeticInterval p u).2) (hvL : (arithmeticInterval p v).1 \u2264 dyadicAddressLower cv) (hvU : dyadicAddressUpper cv < (arithmeticInterval p v).2) (hprefix : cu <+: cv) : u = v"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_arithmeticPrefixCode",
+    "full_name": "BanditRLProof.LowerBounds.exists_arithmeticPrefixCode",
+    "file": "BanditRLProof/LowerBounds/ArithmeticPrefixCode.lean",
+    "line": 22,
+    "statement": "theorem exists_arithmeticPrefixCode {\u03b1 : Type*} {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (message : \u03b1 \u2192 List (Fin k)) (hinj : Function.Injective message) (hlen : \u2200 a b, (message a).length = (message b).length) (bits : \u03b1 \u2192 \u2115) (hbudget : \u2200 a, 2 * (1 / (2 : \u211d) ^ bits a) \u2264 (arithmeticInterval p (message a)).2 - (arithmeticInterval p (message a)).1) : \u2203 code : BinaryPrefixCode \u03b1, (\u2200 a, (code.encode a).length = bits a) \u2227 \u2200 a, (arithmeticInterval p (message a)).1 \u2264 dyadicAddressLower (code.encode a) \u2227 dyadicAddressUpper (code.encode a) < (arithmeticInterval p (message a)).2"
+  },
+  {
+    "kind": "def",
+    "name": "arithmeticLength",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticLength",
+    "file": "BanditRLProof/LowerBounds/ArithmeticPrefixCode.lean",
+    "line": 57,
+    "statement": "noncomputable def arithmeticLength (mass : \u211d) : \u2115"
+  },
+  {
+    "kind": "theorem",
+    "name": "arithmeticLength_width_budget",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticLength_width_budget",
+    "file": "BanditRLProof/LowerBounds/ArithmeticPrefixCode.lean",
+    "line": 59,
+    "statement": "theorem arithmeticLength_width_budget {mass : \u211d} (hm : 0 < mass) : 2 * (1 / (2 : \u211d) ^ arithmeticLength mass) < mass"
+  },
+  {
+    "kind": "theorem",
+    "name": "arithmeticLength_le_information_add_two",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticLength_le_information_add_two",
+    "file": "BanditRLProof/LowerBounds/ArithmeticPrefixCode.lean",
+    "line": 68,
+    "statement": "theorem arithmeticLength_le_information_add_two {mass : \u211d} (hm : 0 < mass) (hm1 : mass \u2264 1) : (arithmeticLength mass : \u211d) \u2264 Real.log mass\u207b\u00b9 / Real.log 2 + 2"
+  },
+  {
+    "kind": "def",
+    "name": "supportTaggedWord",
+    "full_name": "BanditRLProof.LowerBounds.supportTaggedWord",
+    "file": "BanditRLProof/LowerBounds/ArithmeticZeroExtension.lean",
+    "line": 6,
+    "statement": "noncomputable def supportTaggedWord {\u03b1 : Type*} (p : \u03b1 \u2192 \u211d) (positive : BinaryPrefixCode {a // 0 < p a}) (fallback : BinaryPrefixCode \u03b1) (a : \u03b1) : List Bool"
+  },
+  {
+    "kind": "theorem",
+    "name": "supportTaggedWord_prefixFree",
+    "full_name": "BanditRLProof.LowerBounds.supportTaggedWord_prefixFree",
+    "file": "BanditRLProof/LowerBounds/ArithmeticZeroExtension.lean",
+    "line": 12,
+    "statement": "theorem supportTaggedWord_prefixFree {\u03b1 : Type*} (p : \u03b1 \u2192 \u211d) (positive : BinaryPrefixCode {a // 0 < p a}) (fallback : BinaryPrefixCode \u03b1) {a b : \u03b1} (h : supportTaggedWord p positive fallback a <+: supportTaggedWord p positive fallback b) : a = b"
+  },
+  {
+    "kind": "def",
+    "name": "BinaryPrefixCode.extendZeroMass",
+    "full_name": "BanditRLProof.LowerBounds.BinaryPrefixCode.extendZeroMass",
+    "file": "BanditRLProof/LowerBounds/ArithmeticZeroExtension.lean",
+    "line": 26,
+    "statement": "noncomputable def BinaryPrefixCode.extendZeroMass {\u03b1 : Type*} (p : \u03b1 \u2192 \u211d) (positive : BinaryPrefixCode {a // 0 < p a}) (fallback : BinaryPrefixCode \u03b1) : BinaryPrefixCode \u03b1 where"
+  },
+  {
+    "kind": "theorem",
+    "name": "expectedCodeLength_extendZeroMass_le",
+    "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_extendZeroMass_le",
+    "file": "BanditRLProof/LowerBounds/ArithmeticZeroExtension.lean",
+    "line": 39,
+    "statement": "theorem expectedCodeLength_extendZeroMass_le {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 a, 0 \u2264 p a) (hs : \u2211 a, p a = 1) (positive : BinaryPrefixCode {a // 0 < p a}) (fallback : BinaryPrefixCode \u03b1) (hpos : \u2200 a (ha : 0 < p a), ((positive.encode \u27e8a, ha\u27e9).length : \u211d) \u2264 Real.log (p a)\u207b\u00b9 / Real.log 2 + 2) : expectedCodeLength p (positive.extendZeroMass p fallback) \u2264 discreteEntropyBaseTwo Finset.univ p + 3"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_zeroSafe_arithmeticCode",
+    "full_name": "BanditRLProof.LowerBounds.exists_zeroSafe_arithmeticCode",
+    "file": "BanditRLProof/LowerBounds/ArithmeticZeroExtension.lean",
+    "line": 61,
+    "statement": "theorem exists_zeroSafe_arithmeticCode {\u03b1 : Type*} [Fintype \u03b1] {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (message : \u03b1 \u2192 List (Fin k)) (hinj : Function.Injective message) (hlen : \u2200 a b, (message a).length = (message b).length) (q : \u03b1 \u2192 \u211d) (hq : \u2200 a, 0 \u2264 q a) (hqs : \u2211 a, q a = 1) (hmass : \u2200 a, ((message a).map p).prod = q a) : \u2203 positive : BinaryPrefixCode {a // 0 < q a}, (\u2200 a, (positive.encode a).length = arithmeticLength (q a.val)) \u2227 (\u2200 a, (arithmeticInterval p (message a.val)).1 \u2264 dyadicAddressLower (positive.encode a) \u2227 dyadicAddressUpper (positive.encode a) < (arithmeticInterval p (message a.val)).2) \u2227 expectedCodeLength q (positive.extendZeroMass q (huffmanCode q hq)) \u2264 discreteEntropyBaseTwo Finset.univ q + 3"
+  },
+  {
     "kind": "def",
     "name": "pairHistoryZeroMeasurableEquiv",
     "full_name": "BanditRLProof.LowerBounds.pairHistoryZeroMeasurableEquiv",
@@ -59368,6 +59661,294 @@ These cards are planning inspiration only.  They do not certify any theorem.
   },
   {
     "kind": "theorem",
+    "name": "entropy_product_term",
+    "full_name": "BanditRLProof.LowerBounds.entropy_product_term",
+    "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+    "line": 5,
+    "statement": "theorem entropy_product_term (p q : \u211d) : (p * q) * Real.log (p * q)\u207b\u00b9 = q * (p * Real.log p\u207b\u00b9) + p * (q * Real.log q\u207b\u00b9)"
+  },
+  {
+    "kind": "theorem",
+    "name": "discreteEntropy_prod",
+    "full_name": "BanditRLProof.LowerBounds.discreteEntropy_prod",
+    "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+    "line": 16,
+    "statement": "theorem discreteEntropy_prod {\u03b1 \u03b2 : Type*} [Fintype \u03b1] [Fintype \u03b2] (p : \u03b1 \u2192 \u211d) (q : \u03b2 \u2192 \u211d) : discreteEntropy Finset.univ (fun x : \u03b1 \u00d7 \u03b2 => p x.1 * q x.2) = (\u2211 j, q j) * discreteEntropy Finset.univ p + (\u2211 i, p i) * discreteEntropy Finset.univ q"
+  },
+  {
+    "kind": "theorem",
+    "name": "discreteEntropy_prod_probability",
+    "full_name": "BanditRLProof.LowerBounds.discreteEntropy_prod_probability",
+    "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+    "line": 26,
+    "statement": "theorem discreteEntropy_prod_probability {\u03b1 \u03b2 : Type*} [Fintype \u03b1] [Fintype \u03b2] (p : \u03b1 \u2192 \u211d) (q : \u03b2 \u2192 \u211d) (hp : \u2211 i, p i = 1) (hq : \u2211 j, q j = 1) : discreteEntropy Finset.univ (fun x : \u03b1 \u00d7 \u03b2 => p x.1 * q x.2) = discreteEntropy Finset.univ p + discreteEntropy Finset.univ q"
+  },
+  {
+    "kind": "theorem",
+    "name": "discreteEntropyBaseTwo_prod_probability",
+    "full_name": "BanditRLProof.LowerBounds.discreteEntropyBaseTwo_prod_probability",
+    "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+    "line": 33,
+    "statement": "theorem discreteEntropyBaseTwo_prod_probability {\u03b1 \u03b2 : Type*} [Fintype \u03b1] [Fintype \u03b2] (p : \u03b1 \u2192 \u211d) (q : \u03b2 \u2192 \u211d) (hp : \u2211 i, p i = 1) (hq : \u2211 j, q j = 1) : discreteEntropyBaseTwo Finset.univ (fun x : \u03b1 \u00d7 \u03b2 => p x.1 * q x.2) = discreteEntropyBaseTwo Finset.univ p + discreteEntropyBaseTwo Finset.univ q"
+  },
+  {
+    "kind": "def",
+    "name": "SourceBlock",
+    "full_name": "BanditRLProof.LowerBounds.SourceBlock",
+    "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+    "line": 42,
+    "statement": "def SourceBlock (\u03b1 : Type*) : \u2115 \u2192 Type _ | 0 => PUnit | n + 1 => \u03b1 \u00d7 SourceBlock \u03b1 n instance sourceBlockFintype {\u03b1 : Type*} [Fintype \u03b1] (n : \u2115) : Fintype (SourceBlock \u03b1 n)"
+  },
+  {
+    "kind": "def",
+    "name": "sourceBlockMass",
+    "full_name": "BanditRLProof.LowerBounds.sourceBlockMass",
+    "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+    "line": 58,
+    "statement": "def sourceBlockMass {\u03b1 : Type*} (p : \u03b1 \u2192 \u211d) : (n : \u2115) \u2192 SourceBlock \u03b1 n \u2192 \u211d | 0, _ => 1 | n + 1, x => p x.1 * sourceBlockMass p n x.2"
+  },
+  {
+    "kind": "theorem",
+    "name": "sourceBlockMass_nonneg",
+    "full_name": "BanditRLProof.LowerBounds.sourceBlockMass_nonneg",
+    "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+    "line": 62,
+    "statement": "theorem sourceBlockMass_nonneg {\u03b1 : Type*} (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (n : \u2115) (x : SourceBlock \u03b1 n) : 0 \u2264 sourceBlockMass p n x"
+  },
+  {
+    "kind": "theorem",
+    "name": "sum_sourceBlockMass",
+    "full_name": "BanditRLProof.LowerBounds.sum_sourceBlockMass",
+    "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+    "line": 68,
+    "statement": "theorem sum_sourceBlockMass {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2211 i, p i = 1) (n : \u2115) : \u2211 x, sourceBlockMass p n x = 1"
+  },
+  {
+    "kind": "theorem",
+    "name": "discreteEntropyBaseTwo_sourceBlockMass",
+    "full_name": "BanditRLProof.LowerBounds.discreteEntropyBaseTwo_sourceBlockMass",
+    "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+    "line": 76,
+    "statement": "theorem discreteEntropyBaseTwo_sourceBlockMass {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2211 i, p i = 1) (n : \u2115) : discreteEntropyBaseTwo Finset.univ (sourceBlockMass p n) = n * discreteEntropyBaseTwo Finset.univ p"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_sourceBlock_code_rate_sandwich",
+    "full_name": "BanditRLProof.LowerBounds.exists_sourceBlock_code_rate_sandwich",
+    "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+    "line": 91,
+    "statement": "theorem exists_sourceBlock_code_rate_sandwich {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) (hn : 0 < n) : \u2203 code : BinaryPrefixCode (SourceBlock \u03b1 n), discreteEntropyBaseTwo Finset.univ p \u2264 expectedCodeLength (sourceBlockMass p n) code / n \u2227 expectedCodeLength (sourceBlockMass p n) code / n \u2264 discreteEntropyBaseTwo Finset.univ p + 1 / n"
+  },
+  {
+    "kind": "theorem",
+    "name": "sourceBlock_code_rate_lower_bound",
+    "full_name": "BanditRLProof.LowerBounds.sourceBlock_code_rate_lower_bound",
+    "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+    "line": 110,
+    "statement": "theorem sourceBlock_code_rate_lower_bound {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) (hn : 0 < n) (code : BinaryPrefixCode (SourceBlock \u03b1 n)) : discreteEntropyBaseTwo Finset.univ p \u2264 expectedCodeLength (sourceBlockMass p n) code / n"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_sourceBlock_code_family_tendsto_entropy",
+    "full_name": "BanditRLProof.LowerBounds.exists_sourceBlock_code_family_tendsto_entropy",
+    "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+    "line": 122,
+    "statement": "theorem exists_sourceBlock_code_family_tendsto_entropy {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) : \u2203 code : (n : \u2115) \u2192 BinaryPrefixCode (SourceBlock \u03b1 (n + 1)), Filter.Tendsto (fun n => expectedCodeLength (sourceBlockMass p (n + 1)) (code n) / (n + 1)) Filter.atTop (nhds (discreteEntropyBaseTwo Finset.univ p))"
+  },
+  {
+    "kind": "theorem",
+    "name": "sourceBlock_code_family_limit_ge_entropy",
+    "full_name": "BanditRLProof.LowerBounds.sourceBlock_code_family_limit_ge_entropy",
+    "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+    "line": 142,
+    "statement": "theorem sourceBlock_code_family_limit_ge_entropy {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (code : (n : \u2115) \u2192 BinaryPrefixCode (SourceBlock \u03b1 (n + 1))) (r : \u211d) (hr : Filter.Tendsto (fun n => expectedCodeLength (sourceBlockMass p (n + 1)) (code n) / (n + 1)) Filter.atTop (nhds r)) : discreteEntropyBaseTwo Finset.univ p \u2264 r"
+  },
+  {
+    "kind": "theorem",
+    "name": "entropy_term_le_codeLength_remainder",
+    "full_name": "BanditRLProof.LowerBounds.entropy_term_le_codeLength_remainder",
+    "file": "BanditRLProof/LowerBounds/CodingEntropyBound.lean",
+    "line": 7,
+    "statement": "theorem entropy_term_le_codeLength_remainder {p : \u211d} (hp : 0 \u2264 p) (l : \u2115) : p * Real.log p\u207b\u00b9 \u2264 p * l * Real.log 2 + (1 / 2 : \u211d) ^ l - p"
+  },
+  {
+    "kind": "theorem",
+    "name": "discreteEntropyBaseTwo_le_expectedCodeLength",
+    "full_name": "BanditRLProof.LowerBounds.discreteEntropyBaseTwo_le_expectedCodeLength",
+    "file": "BanditRLProof/LowerBounds/CodingEntropyBound.lean",
+    "line": 25,
+    "statement": "theorem discreteEntropyBaseTwo_le_expectedCodeLength {Symbol : Type*} [Fintype Symbol] [DecidableEq Symbol] (p : Symbol \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hsum : \u2211 i, p i = 1) (code : BinaryPrefixCode Symbol) : discreteEntropyBaseTwo Finset.univ p \u2264 expectedCodeLength p code"
+  },
+  {
+    "kind": "theorem",
+    "name": "llr_ae_eq_log_commonDensity",
+    "full_name": "BanditRLProof.LowerBounds.llr_ae_eq_log_commonDensity",
+    "file": "BanditRLProof/LowerBounds/CommonDensityKL.lean",
+    "line": 13,
+    "statement": "theorem llr_ae_eq_log_commonDensity {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) (hPQ : P \u226a Q) : llr P Q =\u1d50[P] fun x => Real.log ((P.rnDeriv \u03bc x).toReal / (Q.rnDeriv \u03bc x).toReal)"
+  },
+  {
+    "kind": "theorem",
+    "name": "integrable_commonDensity_iff",
+    "full_name": "BanditRLProof.LowerBounds.integrable_commonDensity_iff",
+    "file": "BanditRLProof/LowerBounds/CommonDensityKL.lean",
+    "line": 22,
+    "statement": "theorem integrable_commonDensity_iff {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) (hPQ : P \u226a Q) : Integrable (fun x => (P.rnDeriv \u03bc x).toReal * Real.log ((P.rnDeriv \u03bc x).toReal / (Q.rnDeriv \u03bc x).toReal)) \u03bc \u2194 Integrable (llr P Q) P"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_commonDensity_of_integrable",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_commonDensity_of_integrable",
+    "file": "BanditRLProof/LowerBounds/CommonDensityKL.lean",
+    "line": 33,
+    "statement": "theorem relativeEntropy_commonDensity_of_integrable {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) (hPQ : P \u226a Q) (hi : Integrable (fun x => (P.rnDeriv \u03bc x).toReal * Real.log ((P.rnDeriv \u03bc x).toReal / (Q.rnDeriv \u03bc x).toReal)) \u03bc) : relativeEntropy P Q = ENNReal.ofReal (\u222b x, (P.rnDeriv \u03bc x).toReal * Real.log ((P.rnDeriv \u03bc x).toReal / (Q.rnDeriv \u03bc x).toReal) \u2202\u03bc)"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_commonDensity_eq_if",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_commonDensity_eq_if",
+    "file": "BanditRLProof/LowerBounds/CommonDensityKL.lean",
+    "line": 49,
+    "statement": "theorem relativeEntropy_commonDensity_eq_if {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) : relativeEntropy P Q = if P \u226a Q \u2227 Integrable (fun x => (P.rnDeriv \u03bc x).toReal * Real.log ((P.rnDeriv \u03bc x).toReal / (Q.rnDeriv \u03bc x).toReal)) \u03bc then ENNReal.ofReal (\u222b x, (P.rnDeriv \u03bc x).toReal * Real.log ((P.rnDeriv \u03bc x).toReal / (Q.rnDeriv \u03bc x).toReal) \u2202\u03bc) else (\u22a4 : ENNReal)"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_commonDensity_klFun",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_commonDensity_klFun",
+    "file": "BanditRLProof/LowerBounds/CommonDensityKL.lean",
+    "line": 68,
+    "statement": "theorem relativeEntropy_commonDensity_klFun {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) (hPQ : P \u226a Q) : relativeEntropy P Q = \u222b\u207b x, Q.rnDeriv \u03bc x * ENNReal.ofReal (InformationTheory.klFun ((P.rnDeriv \u03bc x / Q.rnDeriv \u03bc x).toReal)) \u2202\u03bc"
+  },
+  {
+    "kind": "theorem",
+    "name": "memLp_sqrt_of_integrable_nonneg",
+    "full_name": "BanditRLProof.LowerBounds.memLp_sqrt_of_integrable_nonneg",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 14,
+    "statement": "theorem memLp_sqrt_of_integrable_nonneg {\u03b1 : Type*} [MeasurableSpace \u03b1] {\u03bc : Measure \u03b1} {f : \u03b1 \u2192 \u211d} (hf : Integrable f \u03bc) (hpos : \u2200 x, 0 \u2264 f x) : MemLp (fun x => Real.sqrt (f x)) 2 \u03bc"
+  },
+  {
+    "kind": "theorem",
+    "name": "integral_sqrt_mul_sq_le",
+    "full_name": "BanditRLProof.LowerBounds.integral_sqrt_mul_sq_le",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 25,
+    "statement": "theorem integral_sqrt_mul_sq_le {\u03b1 : Type*} [MeasurableSpace \u03b1] {\u03bc : Measure \u03b1} {p q : \u03b1 \u2192 \u211d} (hp : Integrable p \u03bc) (hq : Integrable q \u03bc) (hp0 : \u2200 x, 0 \u2264 p x) (hq0 : \u2200 x, 0 \u2264 q x) : (\u222b x, Real.sqrt (p x * q x) \u2202\u03bc) ^ 2 \u2264 (\u222b x, p x \u2202\u03bc) * \u222b x, q x \u2202\u03bc"
+  },
+  {
+    "kind": "def",
+    "name": "commonDensityOverlap",
+    "full_name": "BanditRLProof.LowerBounds.commonDensityOverlap",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 51,
+    "statement": "def commonDensityOverlap {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) : \u211d"
+  },
+  {
+    "kind": "def",
+    "name": "commonDensityAffinity",
+    "full_name": "BanditRLProof.LowerBounds.commonDensityAffinity",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 55,
+    "statement": "def commonDensityAffinity {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) : \u211d"
+  },
+  {
+    "kind": "theorem",
+    "name": "integrable_commonDensityAffinity",
+    "full_name": "BanditRLProof.LowerBounds.integrable_commonDensityAffinity",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 58,
+    "statement": "theorem integrable_commonDensityAffinity {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] : Integrable (fun x => Real.sqrt ((P.rnDeriv \u03bc x).toReal * (Q.rnDeriv \u03bc x).toReal)) \u03bc"
+  },
+  {
+    "kind": "theorem",
+    "name": "half_commonDensityAffinity_sq_le_overlap",
+    "full_name": "BanditRLProof.LowerBounds.half_commonDensityAffinity_sq_le_overlap",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 75,
+    "statement": "theorem half_commonDensityAffinity_sq_le_overlap {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) : (1 / 2 : \u211d) * commonDensityAffinity P Q \u03bc ^ 2 \u2264 commonDensityOverlap P Q \u03bc"
+  },
+  {
+    "kind": "def",
+    "name": "commonDensityComparisonEvent",
+    "full_name": "BanditRLProof.LowerBounds.commonDensityComparisonEvent",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 109,
+    "statement": "def commonDensityComparisonEvent {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) : Set \u03b1"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurableSet_commonDensityComparisonEvent",
+    "full_name": "BanditRLProof.LowerBounds.measurableSet_commonDensityComparisonEvent",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 113,
+    "statement": "theorem measurableSet_commonDensityComparisonEvent {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) : MeasurableSet (commonDensityComparisonEvent P Q \u03bc)"
+  },
+  {
+    "kind": "theorem",
+    "name": "integrable_min_commonDensity",
+    "full_name": "BanditRLProof.LowerBounds.integrable_min_commonDensity",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 118,
+    "statement": "theorem integrable_min_commonDensity {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] : Integrable (fun x => min (P.rnDeriv \u03bc x).toReal (Q.rnDeriv \u03bc x).toReal) \u03bc"
+  },
+  {
+    "kind": "theorem",
+    "name": "commonDensityOverlap_nonneg",
+    "full_name": "BanditRLProof.LowerBounds.commonDensityOverlap_nonneg",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 124,
+    "statement": "theorem commonDensityOverlap_nonneg {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) : 0 \u2264 commonDensityOverlap P Q \u03bc"
+  },
+  {
+    "kind": "theorem",
+    "name": "commonDensityOverlap_eq_testingError",
+    "full_name": "BanditRLProof.LowerBounds.commonDensityOverlap_eq_testingError",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 130,
+    "statement": "theorem commonDensityOverlap_eq_testingError {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) : commonDensityOverlap P Q \u03bc = P.real (commonDensityComparisonEvent P Q \u03bc) + Q.real (commonDensityComparisonEvent P Q \u03bc)\u1d9c"
+  },
+  {
+    "kind": "theorem",
+    "name": "commonDensityOverlap_le_testingError",
+    "full_name": "BanditRLProof.LowerBounds.commonDensityOverlap_le_testingError",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 155,
+    "statement": "theorem commonDensityOverlap_le_testingError {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) {A : Set \u03b1} (hA : MeasurableSet A) : commonDensityOverlap P Q \u03bc \u2264 P.real A + Q.real A\u1d9c"
+  },
+  {
+    "kind": "theorem",
+    "name": "bretagnolleHuberScale_le_commonDensityOverlap",
+    "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_le_commonDensityOverlap",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 174,
+    "statement": "theorem bretagnolleHuberScale_le_commonDensityOverlap {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) : bretagnolleHuberScale (relativeEntropy P Q) \u2264 commonDensityOverlap P Q \u03bc"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_commonFiniteDominatingMeasure",
+    "full_name": "BanditRLProof.LowerBounds.exists_commonFiniteDominatingMeasure",
+    "file": "BanditRLProof/LowerBounds/CommonDomination.lean",
+    "line": 8,
+    "statement": "theorem exists_commonFiniteDominatingMeasure {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] : \u2203 \u03bc : Measure \u03b1, IsFiniteMeasure \u03bc \u2227 P \u226a \u03bc \u2227 Q \u226a \u03bc"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_commonSigmaFiniteDominatingMeasure",
+    "full_name": "BanditRLProof.LowerBounds.exists_commonSigmaFiniteDominatingMeasure",
+    "file": "BanditRLProof/LowerBounds/CommonDomination.lean",
+    "line": 19,
+    "statement": "theorem exists_commonSigmaFiniteDominatingMeasure {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] : \u2203 \u03bc : Measure \u03b1, SigmaFinite \u03bc \u2227 P \u226a \u03bc \u2227 Q \u226a \u03bc"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_finite_lt_top_iff_ac",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_finite_lt_top_iff_ac",
+    "file": "BanditRLProof/LowerBounds/CommonDomination.lean",
+    "line": 27,
+    "statement": "theorem relativeEntropy_finite_lt_top_iff_ac {\u03b1 : Type*} [Fintype \u03b1] [MeasurableSpace \u03b1] [MeasurableSingletonClass \u03b1] (P Q : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] : relativeEntropy P Q < \u22a4 \u2194 P \u226a Q"
+  },
+  {
+    "kind": "theorem",
     "name": "klDiv_compProd_same_left_eq_lintegral_kernelRN_ae",
     "full_name": "BanditRLProof.LowerBounds.klDiv_compProd_same_left_eq_lintegral_kernelRN_ae",
     "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
@@ -59445,6 +60026,334 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
     "line": 379,
     "statement": "theorem klDiv_historyStep_samePolicy_eq_iterated_lintegral_armKL_general {History Reward : Type*} {K : Nat} [MeasurableSpace History] [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (historyLaw : Measure History) [IsFiniteMeasure historyLaw] (policy : Kernel History (Fin K)) [IsMarkovKernel policy] (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] : InformationTheory.klDiv (historyLaw \u2297\u2098 (policy \u2297\u2096 armLaw.comap Prod.snd measurable_snd)) (historyLaw \u2297\u2098 (policy \u2297\u2096 referenceArmLaw.comap Prod.snd measurable_snd)) = \u222b\u207b history, \u222b\u207b arm, InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm) \u2202policy history \u2202historyLaw"
+  },
+  {
+    "kind": "def",
+    "name": "discreteCrossEntropy",
+    "full_name": "BanditRLProof.LowerBounds.discreteCrossEntropy",
+    "file": "BanditRLProof/LowerBounds/CrossEntropy.lean",
+    "line": 8,
+    "statement": "noncomputable def discreteCrossEntropy {\u03b1 : Type*} [Fintype \u03b1] (p q : \u03b1 \u2192 \u211d) : \u211d"
+  },
+  {
+    "kind": "theorem",
+    "name": "discreteCrossEntropy_sub_entropy",
+    "full_name": "BanditRLProof.LowerBounds.discreteCrossEntropy_sub_entropy",
+    "file": "BanditRLProof/LowerBounds/CrossEntropy.lean",
+    "line": 12,
+    "statement": "theorem discreteCrossEntropy_sub_entropy {\u03b1 : Type*} [Fintype \u03b1] (p q : \u03b1 \u2192 \u211d) (hsupport : \u2200 i, p i \u2260 0 \u2192 q i \u2260 0) : discreteCrossEntropy p q - discreteEntropy Finset.univ p = \u2211 i, p i * Real.log (p i / q i)"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_finite_crossEntropy",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_finite_crossEntropy",
+    "file": "BanditRLProof/LowerBounds/CrossEntropy.lean",
+    "line": 24,
+    "statement": "theorem relativeEntropy_finite_crossEntropy {\u03b1 : Type*} [Fintype \u03b1] [MeasurableSpace \u03b1] [MeasurableSingletonClass \u03b1] (P Q : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] (h : P \u226a Q) : relativeEntropy P Q = ENNReal.ofReal (discreteCrossEntropy (fun i => (P {i}).toReal) (fun i => (Q {i}).toReal) - discreteEntropy Finset.univ (fun i => (P {i}).toReal))"
+  },
+  {
+    "kind": "theorem",
+    "name": "entropyTerm_tendsto_zero_right",
+    "full_name": "BanditRLProof.LowerBounds.entropyTerm_tendsto_zero_right",
+    "file": "BanditRLProof/LowerBounds/CrossEntropy.lean",
+    "line": 38,
+    "statement": "theorem entropyTerm_tendsto_zero_right : Filter.Tendsto (fun x : \u211d => x * Real.log x\u207b\u00b9) (nhdsWithin 0 (Set.Ioi 0)) (nhds 0)"
+  },
+  {
+    "kind": "def",
+    "name": "binaryAddressValue",
+    "full_name": "BanditRLProof.LowerBounds.binaryAddressValue",
+    "file": "BanditRLProof/LowerBounds/DyadicAddresses.lean",
+    "line": 6,
+    "statement": "def binaryAddressValue : List Bool \u2192 \u2115 | [] => 0 | b :: w => (if b then 2 ^ w.length else 0) + binaryAddressValue w"
+  },
+  {
+    "kind": "theorem",
+    "name": "binaryAddressValue_lt",
+    "full_name": "BanditRLProof.LowerBounds.binaryAddressValue_lt",
+    "file": "BanditRLProof/LowerBounds/DyadicAddresses.lean",
+    "line": 10,
+    "statement": "theorem binaryAddressValue_lt (w : List Bool) : binaryAddressValue w < 2 ^ w.length"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_binaryAddress",
+    "full_name": "BanditRLProof.LowerBounds.exists_binaryAddress",
+    "file": "BanditRLProof/LowerBounds/DyadicAddresses.lean",
+    "line": 18,
+    "statement": "theorem exists_binaryAddress (n m : \u2115) (hm : m < 2 ^ n) : \u2203 w : List Bool, w.length = n \u2227 binaryAddressValue w = m"
+  },
+  {
+    "kind": "theorem",
+    "name": "binaryAddressValue_append",
+    "full_name": "BanditRLProof.LowerBounds.binaryAddressValue_append",
+    "file": "BanditRLProof/LowerBounds/DyadicAddresses.lean",
+    "line": 36,
+    "statement": "theorem binaryAddressValue_append (u v : List Bool) : binaryAddressValue (u ++ v) = binaryAddressValue u * 2 ^ v.length + binaryAddressValue v"
+  },
+  {
+    "kind": "def",
+    "name": "dyadicAddressLower",
+    "full_name": "BanditRLProof.LowerBounds.dyadicAddressLower",
+    "file": "BanditRLProof/LowerBounds/DyadicAddresses.lean",
+    "line": 43,
+    "statement": "noncomputable def dyadicAddressLower (w : List Bool) : \u211d"
+  },
+  {
+    "kind": "def",
+    "name": "dyadicAddressUpper",
+    "full_name": "BanditRLProof.LowerBounds.dyadicAddressUpper",
+    "file": "BanditRLProof/LowerBounds/DyadicAddresses.lean",
+    "line": 44,
+    "statement": "noncomputable def dyadicAddressUpper (w : List Bool) : \u211d"
+  },
+  {
+    "kind": "theorem",
+    "name": "dyadicAddress_width",
+    "full_name": "BanditRLProof.LowerBounds.dyadicAddress_width",
+    "file": "BanditRLProof/LowerBounds/DyadicAddresses.lean",
+    "line": 46,
+    "statement": "theorem dyadicAddress_width (w : List Bool) : dyadicAddressUpper w - dyadicAddressLower w = 1 / (2 : \u211d) ^ w.length"
+  },
+  {
+    "kind": "theorem",
+    "name": "dyadicAddress_nonempty",
+    "full_name": "BanditRLProof.LowerBounds.dyadicAddress_nonempty",
+    "file": "BanditRLProof/LowerBounds/DyadicAddresses.lean",
+    "line": 51,
+    "statement": "theorem dyadicAddress_nonempty (w : List Bool) : dyadicAddressLower w < dyadicAddressUpper w"
+  },
+  {
+    "kind": "theorem",
+    "name": "dyadicAddress_append_contained",
+    "full_name": "BanditRLProof.LowerBounds.dyadicAddress_append_contained",
+    "file": "BanditRLProof/LowerBounds/DyadicAddresses.lean",
+    "line": 56,
+    "statement": "theorem dyadicAddress_append_contained (u v : List Bool) : dyadicAddressLower u \u2264 dyadicAddressLower (u ++ v) \u2227 dyadicAddressUpper (u ++ v) \u2264 dyadicAddressUpper u"
+  },
+  {
+    "kind": "theorem",
+    "name": "dyadicAddress_prefix_contained",
+    "full_name": "BanditRLProof.LowerBounds.dyadicAddress_prefix_contained",
+    "file": "BanditRLProof/LowerBounds/DyadicAddresses.lean",
+    "line": 72,
+    "statement": "theorem dyadicAddress_prefix_contained (u v : List Bool) (h : u <+: v) : dyadicAddressLower u \u2264 dyadicAddressLower v \u2227 dyadicAddressUpper v \u2264 dyadicAddressUpper u"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_dyadicAddress_inside",
+    "full_name": "BanditRLProof.LowerBounds.exists_dyadicAddress_inside",
+    "file": "BanditRLProof/LowerBounds/DyadicAddresses.lean",
+    "line": 78,
+    "statement": "theorem exists_dyadicAddress_inside (L U : \u211d) (n : \u2115) (hL : 0 \u2264 L) (hU : U \u2264 1) (hwidth : 2 * (1 / (2 : \u211d) ^ n) \u2264 U - L) : \u2203 w : List Bool, w.length = n \u2227 L \u2264 dyadicAddressLower w \u2227 dyadicAddressUpper w < U"
+  },
+  {
+    "kind": "theorem",
+    "name": "absolutelyContinuous_iff_atom_support",
+    "full_name": "BanditRLProof.LowerBounds.absolutelyContinuous_iff_atom_support",
+    "file": "BanditRLProof/LowerBounds/FiniteDiscreteKL.lean",
+    "line": 12,
+    "statement": "theorem absolutelyContinuous_iff_atom_support {\u03b1 : Type*} [Fintype \u03b1] [MeasurableSpace \u03b1] [MeasurableSingletonClass \u03b1] (P Q : Measure \u03b1) : P \u226a Q \u2194 \u2200 x, Q {x} = 0 \u2192 P {x} = 0"
+  },
+  {
+    "kind": "theorem",
+    "name": "rnDeriv_mul_atom",
+    "full_name": "BanditRLProof.LowerBounds.rnDeriv_mul_atom",
+    "file": "BanditRLProof/LowerBounds/FiniteDiscreteKL.lean",
+    "line": 27,
+    "statement": "theorem rnDeriv_mul_atom {\u03b1 : Type*} [MeasurableSpace \u03b1] [MeasurableSingletonClass \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h : P \u226a Q) (x : \u03b1) : P.rnDeriv Q x * Q {x} = P {x}"
+  },
+  {
+    "kind": "theorem",
+    "name": "rnDeriv_atom_eq_div",
+    "full_name": "BanditRLProof.LowerBounds.rnDeriv_atom_eq_div",
+    "file": "BanditRLProof/LowerBounds/FiniteDiscreteKL.lean",
+    "line": 36,
+    "statement": "theorem rnDeriv_atom_eq_div {\u03b1 : Type*} [MeasurableSpace \u03b1] [MeasurableSingletonClass \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h : P \u226a Q) (x : \u03b1) (hq : Q {x} \u2260 0) : P.rnDeriv Q x = P {x} / Q {x}"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_eq_top_of_atom_support_mismatch",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_eq_top_of_atom_support_mismatch",
+    "file": "BanditRLProof/LowerBounds/FiniteDiscreteKL.lean",
+    "line": 44,
+    "statement": "theorem relativeEntropy_eq_top_of_atom_support_mismatch {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) (x : \u03b1) (hp : P {x} \u2260 0) (hq : Q {x} = 0) : relativeEntropy P Q = \u221e"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_finite_klFun",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_finite_klFun",
+    "file": "BanditRLProof/LowerBounds/FiniteDiscreteKL.lean",
+    "line": 52,
+    "statement": "theorem relativeEntropy_finite_klFun {\u03b1 : Type*} [Fintype \u03b1] [MeasurableSpace \u03b1] [MeasurableSingletonClass \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h : P \u226a Q) : relativeEntropy P Q = \u2211 x, ENNReal.ofReal (InformationTheory.klFun ((P {x} / Q {x}).toReal)) * Q {x}"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_finite_sum_log",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_finite_sum_log",
+    "file": "BanditRLProof/LowerBounds/FiniteDiscreteKL.lean",
+    "line": 66,
+    "statement": "theorem relativeEntropy_finite_sum_log {\u03b1 : Type*} [Fintype \u03b1] [MeasurableSpace \u03b1] [MeasurableSingletonClass \u03b1] (P Q : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] (h : P \u226a Q) : relativeEntropy P Q = ENNReal.ofReal (\u2211 x, (P {x}).toReal * Real.log ((P {x}).toReal / (Q {x}).toReal))"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_finite_eq_if",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_finite_eq_if",
+    "file": "BanditRLProof/LowerBounds/FiniteDiscreteKL.lean",
+    "line": 85,
+    "statement": "theorem relativeEntropy_finite_eq_if {\u03b1 : Type*} [Fintype \u03b1] [MeasurableSpace \u03b1] [MeasurableSingletonClass \u03b1] (P Q : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] : relativeEntropy P Q = if \u2200 x, Q {x} = 0 \u2192 P {x} = 0 then ENNReal.ofReal (\u2211 x, (P {x}).toReal * Real.log ((P {x}).toReal / (Q {x}).toReal)) else \u221e"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_finite_eq_top_iff",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_finite_eq_top_iff",
+    "file": "BanditRLProof/LowerBounds/FiniteDiscreteKL.lean",
+    "line": 99,
+    "statement": "theorem relativeEntropy_finite_eq_top_iff {\u03b1 : Type*} [Fintype \u03b1] [MeasurableSpace \u03b1] [MeasurableSingletonClass \u03b1] (P Q : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] : relativeEntropy P Q = \u221e \u2194 \u2203 x, P {x} \u2260 0 \u2227 Q {x} = 0"
+  },
+  {
+    "kind": "theorem",
+    "name": "totalMass_klFun_le_relativeEntropy",
+    "full_name": "BanditRLProof.LowerBounds.totalMass_klFun_le_relativeEntropy",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+    "line": 20,
+    "statement": "theorem totalMass_klFun_le_relativeEntropy {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] : ENNReal.ofReal (InformationTheory.klFun ((P univ / Q univ).toReal)) * Q univ \u2264 relativeEntropy P Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "sum_relativeEntropy_restrict_fibers",
+    "full_name": "BanditRLProof.LowerBounds.sum_relativeEntropy_restrict_fibers",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+    "line": 38,
+    "statement": "theorem sum_relativeEntropy_restrict_fibers {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h : P \u226a Q) {n : \u2115} (f : \u03b1 \u2192 Fin n) (hf : Measurable f) : (\u2211 i, relativeEntropy (P.restrict (f \u207b\u00b9' {i})) (Q.restrict (f \u207b\u00b9' {i}))) = relativeEntropy P Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_finite_map_le",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_finite_map_le",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+    "line": 65,
+    "statement": "theorem relativeEntropy_finite_map_le {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] {n : \u2115} (f : \u03b1 \u2192 Fin n) (hf : Measurable f) : relativeEntropy (P.map f) (Q.map f) \u2264 relativeEntropy P Q"
+  },
+  {
+    "kind": "def",
+    "name": "finitePartitionRelativeEntropy",
+    "full_name": "BanditRLProof.LowerBounds.finitePartitionRelativeEntropy",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+    "line": 84,
+    "statement": "def finitePartitionRelativeEntropy {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) : ENNReal"
+  },
+  {
+    "kind": "theorem",
+    "name": "finitePartitionRelativeEntropy_le_relativeEntropy",
+    "full_name": "BanditRLProof.LowerBounds.finitePartitionRelativeEntropy_le_relativeEntropy",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+    "line": 90,
+    "statement": "theorem finitePartitionRelativeEntropy_le_relativeEntropy {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] : finitePartitionRelativeEntropy P Q \u2264 relativeEntropy P Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_map_le_finitePartitionRelativeEntropy",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_map_le_finitePartitionRelativeEntropy",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+    "line": 98,
+    "statement": "theorem relativeEntropy_map_le_finitePartitionRelativeEntropy {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) {n : \u2115} (f : \u03b1 \u2192 Fin n) (hf : Measurable f) : relativeEntropy (P.map f) (Q.map f) \u2264 finitePartitionRelativeEntropy P Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "finitePartitionRelativeEntropy_fin_eq",
+    "full_name": "BanditRLProof.LowerBounds.finitePartitionRelativeEntropy_fin_eq",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+    "line": 105,
+    "statement": "theorem finitePartitionRelativeEntropy_fin_eq {n : \u2115} (P Q : Measure (Fin n)) [IsFiniteMeasure P] [IsFiniteMeasure Q] : finitePartitionRelativeEntropy P Q = relativeEntropy P Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_finite_map_eq_if",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_finite_map_eq_if",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+    "line": 112,
+    "statement": "theorem relativeEntropy_finite_map_eq_if {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] {n : \u2115} (f : \u03b1 \u2192 Fin n) (hf : Measurable f) : relativeEntropy (P.map f) (Q.map f) = if \u2200 i, Q (f \u207b\u00b9' {i}) = 0 \u2192 P (f \u207b\u00b9' {i}) = 0 then ENNReal.ofReal (\u2211 i, (P (f \u207b\u00b9' {i})).toReal * Real.log ((P (f \u207b\u00b9' {i})).toReal / (Q (f \u207b\u00b9' {i})).toReal)) else (\u22a4 : ENNReal)"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_binary_map_relativeEntropy_eq_top_of_event",
+    "full_name": "BanditRLProof.LowerBounds.exists_binary_map_relativeEntropy_eq_top_of_event",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+    "line": 128,
+    "statement": "theorem exists_binary_map_relativeEntropy_eq_top_of_event {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) {A : Set \u03b1} (hA : MeasurableSet A) (hp : P A \u2260 0) (hq : Q A = 0) : \u2203 f : \u03b1 \u2192 Fin 2, Measurable f \u2227 relativeEntropy (P.map f) (Q.map f) = (\u22a4 : ENNReal)"
+  },
+  {
+    "kind": "theorem",
+    "name": "finitePartitionRelativeEntropy_eq_top_of_not_absolutelyContinuous",
+    "full_name": "BanditRLProof.LowerBounds.finitePartitionRelativeEntropy_eq_top_of_not_absolutelyContinuous",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+    "line": 144,
+    "statement": "theorem finitePartitionRelativeEntropy_eq_top_of_not_absolutelyContinuous {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) (h : \u00ac P \u226a Q) : finitePartitionRelativeEntropy P Q = (\u22a4 : ENNReal)"
+  },
+  {
+    "kind": "theorem",
+    "name": "finitePartitionRelativeEntropy_eq_relativeEntropy_of_not_absolutelyContinuous",
+    "full_name": "BanditRLProof.LowerBounds.finitePartitionRelativeEntropy_eq_relativeEntropy_of_not_absolutelyContinuous",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+    "line": 162,
+    "statement": "theorem finitePartitionRelativeEntropy_eq_relativeEntropy_of_not_absolutelyContinuous {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) (h : \u00ac P \u226a Q) : finitePartitionRelativeEntropy P Q = relativeEntropy P Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_fin_encoding_of_finite_range",
+    "full_name": "BanditRLProof.LowerBounds.exists_fin_encoding_of_finite_range",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKLRecovery.lean",
+    "line": 15,
+    "statement": "theorem exists_fin_encoding_of_finite_range {\u03b1 \u03b2 : Type*} [MeasurableSpace \u03b1] [MeasurableSpace \u03b2] [MeasurableSingletonClass \u03b2] (f : \u03b1 \u2192 \u03b2) (hf : Measurable f) (hfin : (Set.range f).Finite) : \u2203 (n : \u2115) (g : \u03b1 \u2192 Fin n), Measurable g \u2227 \u2203 d : Fin n \u2192 \u03b2, f = d \u2218 g"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_fin_observation_densityApproximation",
+    "full_name": "BanditRLProof.LowerBounds.exists_fin_observation_densityApproximation",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKLRecovery.lean",
+    "line": 31,
+    "statement": "theorem exists_fin_observation_densityApproximation {\u03b1 : Type*} [m : MeasurableSpace \u03b1] (r : \u03b1 \u2192 ENNReal) (n : \u2115) : \u2203 (k : \u2115) (g : \u03b1 \u2192 Fin k) (_hg : Measurable g), densityApproximationFiltration r n \u2264 (inferInstance : MeasurableSpace (Fin k)).comap g"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_trim_mono",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_trim_mono",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKLRecovery.lean",
+    "line": 56,
+    "statement": "theorem relativeEntropy_trim_mono {\u03b1 : Type*} {m\u2081 m\u2082 m\u2080 : MeasurableSpace \u03b1} (P Q : @Measure \u03b1 m\u2080) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h\u2081\u2082 : m\u2081 \u2264 m\u2082) (h\u2082 : m\u2082 \u2264 m\u2080) : @relativeEntropy \u03b1 m\u2081 (P.trim (h\u2081\u2082.trans h\u2082)) (Q.trim (h\u2081\u2082.trans h\u2082)) \u2264 @relativeEntropy \u03b1 m\u2082 (P.trim h\u2082) (Q.trim h\u2082)"
+  },
+  {
+    "kind": "theorem",
+    "name": "finitePartitionRelativeEntropy_eq_relativeEntropy",
+    "full_name": "BanditRLProof.LowerBounds.finitePartitionRelativeEntropy_eq_relativeEntropy",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKLRecovery.lean",
+    "line": 65,
+    "statement": "theorem finitePartitionRelativeEntropy_eq_relativeEntropy {\u03b1 : Type*} [m : MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] : finitePartitionRelativeEntropy P Q = relativeEntropy P Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_fixedLengthPrefixCode",
+    "full_name": "BanditRLProof.LowerBounds.exists_fixedLengthPrefixCode",
+    "file": "BanditRLProof/LowerBounds/FixedLengthCoding.lean",
+    "line": 7,
+    "statement": "theorem exists_fixedLengthPrefixCode {\u03b1 : Type*} [Fintype \u03b1] (n : \u2115) (hn : 0 < n) (hcapacity : Fintype.card \u03b1 \u2264 2 ^ n) : \u2203 code : BinaryPrefixCode \u03b1, \u2200 a, (code.encode a).length = n"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_ceilingLogPrefixCode",
+    "full_name": "BanditRLProof.LowerBounds.exists_ceilingLogPrefixCode",
+    "file": "BanditRLProof/LowerBounds/FixedLengthCoding.lean",
+    "line": 34,
+    "statement": "theorem exists_ceilingLogPrefixCode {\u03b1 : Type*} [Fintype \u03b1] (hcard : 1 < Fintype.card \u03b1) : \u2203 code : BinaryPrefixCode \u03b1, \u2200 a, (code.encode a).length = Nat.clog 2 (Fintype.card \u03b1)"
+  },
+  {
+    "kind": "theorem",
+    "name": "expectedCodeLength_fixedLength",
+    "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_fixedLength",
+    "file": "BanditRLProof/LowerBounds/FixedLengthCoding.lean",
+    "line": 45,
+    "statement": "theorem expectedCodeLength_fixedLength {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (hs : \u2211 a, p a = 1) (code : BinaryPrefixCode \u03b1) (n : \u2115) (hlen : \u2200 a, (code.encode a).length = n) : expectedCodeLength p code = n"
   },
   {
     "kind": "def",
@@ -60239,6 +61148,70 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "statement": "theorem unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt {k horizon : Nat} (hk : 1 < k) (hkhorizon : k \u2264 horizon) : ENNReal.ofReal ((1 / 54 : Real) * Real.sqrt ((k : Real) * (horizon : Real))) \u2264 unitGaussianMinimaxExpectedPseudoRegret k (horizon - 1)"
   },
   {
+    "kind": "theorem",
+    "name": "log_gaussianPDFReal_div_same_variance",
+    "full_name": "BanditRLProof.LowerBounds.log_gaussianPDFReal_div_same_variance",
+    "file": "BanditRLProof/LowerBounds/GaussianTesting.lean",
+    "line": 11,
+    "statement": "theorem log_gaussianPDFReal_div_same_variance (m n x : \u211d) (v : \u211d\u22650) (hv : v \u2260 0) : Real.log (gaussianPDFReal m v x / gaussianPDFReal n v x) = ((m - n) * x + (n ^ 2 - m ^ 2) / 2) / v"
+  },
+  {
+    "kind": "theorem",
+    "name": "llr_gaussianReal_same_variance_ae",
+    "full_name": "BanditRLProof.LowerBounds.llr_gaussianReal_same_variance_ae",
+    "file": "BanditRLProof/LowerBounds/GaussianTesting.lean",
+    "line": 22,
+    "statement": "theorem llr_gaussianReal_same_variance_ae (m n : \u211d) (v : \u211d\u22650) (hv : v \u2260 0) : llr (gaussianReal m v) (gaussianReal n v) =\u1d50[gaussianReal m v] fun x => ((m - n) * x + (n ^ 2 - m ^ 2) / 2) / v"
+  },
+  {
+    "kind": "theorem",
+    "name": "integrable_llr_gaussianReal_same_variance",
+    "full_name": "BanditRLProof.LowerBounds.integrable_llr_gaussianReal_same_variance",
+    "file": "BanditRLProof/LowerBounds/GaussianTesting.lean",
+    "line": 35,
+    "statement": "theorem integrable_llr_gaussianReal_same_variance (m n : \u211d) (v : \u211d\u22650) (hv : v \u2260 0) : Integrable (llr (gaussianReal m v) (gaussianReal n v)) (gaussianReal m v)"
+  },
+  {
+    "kind": "theorem",
+    "name": "klDiv_gaussianReal_same_variance",
+    "full_name": "BanditRLProof.LowerBounds.klDiv_gaussianReal_same_variance",
+    "file": "BanditRLProof/LowerBounds/GaussianTesting.lean",
+    "line": 44,
+    "statement": "theorem klDiv_gaussianReal_same_variance (m n : \u211d) (v : \u211d\u22650) (hv : v \u2260 0) : InformationTheory.klDiv (gaussianReal m v) (gaussianReal n v) = ENNReal.ofReal ((m - n) ^ 2 / (2 * v))"
+  },
+  {
+    "kind": "theorem",
+    "name": "three_fifths_le_exp_neg_half",
+    "full_name": "BanditRLProof.LowerBounds.three_fifths_le_exp_neg_half",
+    "file": "BanditRLProof/LowerBounds/GaussianTesting.lean",
+    "line": 63,
+    "statement": "theorem three_fifths_le_exp_neg_half : (3 / 5 : \u211d) \u2264 Real.exp (-(1 / 2 : \u211d))"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussian_testing_error_lower_bound",
+    "full_name": "BanditRLProof.LowerBounds.gaussian_testing_error_lower_bound",
+    "file": "BanditRLProof/LowerBounds/GaussianTesting.lean",
+    "line": 74,
+    "statement": "theorem gaussian_testing_error_lower_bound (\u0394 : \u211d) (v : \u211d\u22650) (hv : v \u2260 0) {A : Set \u211d} (hA : MeasurableSet A) : (1 / 2 : \u211d) * Real.exp (-(\u0394 ^ 2 / (2 * v))) \u2264 (gaussianReal 0 v).real A + (gaussianReal \u0394 v).real A\u1d9c"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussian_testing_error_three_tenths",
+    "full_name": "BanditRLProof.LowerBounds.gaussian_testing_error_three_tenths",
+    "file": "BanditRLProof/LowerBounds/GaussianTesting.lean",
+    "line": 85,
+    "statement": "theorem gaussian_testing_error_three_tenths (\u0394 : \u211d) (v : \u211d\u22650) (hv : v \u2260 0) (hsnr : \u0394 ^ 2 / (v : \u211d) \u2264 1) {A : Set \u211d} (hA : MeasurableSet A) : (3 / 10 : \u211d) \u2264 (gaussianReal 0 v).real A + (gaussianReal \u0394 v).real A\u1d9c"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussian_testing_max_error_three_twentieths",
+    "full_name": "BanditRLProof.LowerBounds.gaussian_testing_max_error_three_twentieths",
+    "file": "BanditRLProof/LowerBounds/GaussianTesting.lean",
+    "line": 98,
+    "statement": "theorem gaussian_testing_max_error_three_twentieths (\u0394 : \u211d) (v : \u211d\u22650) (hv : v \u2260 0) (hsnr : \u0394 ^ 2 / (v : \u211d) \u2264 1) {A : Set \u211d} (hA : MeasurableSet A) : (3 / 20 : \u211d) \u2264 max ((gaussianReal 0 v).real A) ((gaussianReal \u0394 v).real A\u1d9c)"
+  },
+  {
     "kind": "def",
     "name": "tailAtLeast",
     "full_name": "BanditRLProof.LowerBounds.tailAtLeast",
@@ -60317,6 +61290,134 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/HighProbability.lean",
     "line": 133,
     "statement": "theorem randomRegret_ge_quarter_of_clippingDecomposition (horizon pullCount clippingCount : Nat) (gap randomRegret : Real) (hGap : 0 <= gap) (hPull : (pullCount : Real) <= (horizon : Real) / 2) (hClipping : (clippingCount : Real) <= (horizon : Real) / 4) (hSource : adversarialRegretLowerExpression horizon pullCount clippingCount gap <= randomRegret) : gap * ((horizon : Real) / 4) <= randomRegret"
+  },
+  {
+    "kind": "theorem",
+    "name": "expectedCodeLength_relabel",
+    "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_relabel",
+    "file": "BanditRLProof/LowerBounds/HuffmanAlphabet.lean",
+    "line": 5,
+    "statement": "theorem expectedCodeLength_relabel {\u03b1 \u03b2 : Type*} [Fintype \u03b1] [Fintype \u03b2] (p : \u03b1 \u2192 \u211d) (code : BinaryPrefixCode \u03b1) (e : \u03b2 \u2243 \u03b1) : expectedCodeLength (p \u2218 e) (code.relabel e) = expectedCodeLength p code"
+  },
+  {
+    "kind": "theorem",
+    "name": "IsOptimalPrefixCode.relabel",
+    "full_name": "BanditRLProof.LowerBounds.IsOptimalPrefixCode.relabel",
+    "file": "BanditRLProof/LowerBounds/HuffmanAlphabet.lean",
+    "line": 12,
+    "statement": "theorem IsOptimalPrefixCode.relabel {\u03b1 \u03b2 : Type*} [Fintype \u03b1] [Fintype \u03b2] (p : \u03b1 \u2192 \u211d) (code : BinaryPrefixCode \u03b1) (e : \u03b2 \u2243 \u03b1) (hopt : IsOptimalPrefixCode p code) : IsOptimalPrefixCode (p \u2218 e) (code.relabel e)"
+  },
+  {
+    "kind": "def",
+    "name": "HuffmanRemainder",
+    "full_name": "BanditRLProof.LowerBounds.HuffmanRemainder",
+    "file": "BanditRLProof/LowerBounds/HuffmanAlphabet.lean",
+    "line": 25,
+    "statement": "def HuffmanRemainder {\u03b1 : Type*} (a b : \u03b1)"
+  },
+  {
+    "kind": "def",
+    "name": "huffmanSplitEquiv",
+    "full_name": "BanditRLProof.LowerBounds.huffmanSplitEquiv",
+    "file": "BanditRLProof/LowerBounds/HuffmanAlphabet.lean",
+    "line": 31,
+    "statement": "def huffmanSplitEquiv {\u03b1 : Type*} [DecidableEq \u03b1] (a b : \u03b1) (hab : a \u2260 b) : HuffmanRemainder a b \u2295 Bool \u2243 \u03b1 where"
+  },
+  {
+    "kind": "theorem",
+    "name": "huffmanSplitEquiv_false",
+    "full_name": "BanditRLProof.LowerBounds.huffmanSplitEquiv_false",
+    "file": "BanditRLProof/LowerBounds/HuffmanAlphabet.lean",
+    "line": 49,
+    "statement": "@[simp] theorem huffmanSplitEquiv_false {\u03b1 : Type*} [DecidableEq \u03b1] (a b : \u03b1) (hab : a \u2260 b) : huffmanSplitEquiv a b hab (.inr false) = a"
+  },
+  {
+    "kind": "theorem",
+    "name": "huffmanSplitEquiv_true",
+    "full_name": "BanditRLProof.LowerBounds.huffmanSplitEquiv_true",
+    "file": "BanditRLProof/LowerBounds/HuffmanAlphabet.lean",
+    "line": 52,
+    "statement": "@[simp] theorem huffmanSplitEquiv_true {\u03b1 : Type*} [DecidableEq \u03b1] (a b : \u03b1) (hab : a \u2260 b) : huffmanSplitEquiv a b hab (.inr true) = b"
+  },
+  {
+    "kind": "theorem",
+    "name": "huffman_merged_card_lt",
+    "full_name": "BanditRLProof.LowerBounds.huffman_merged_card_lt",
+    "file": "BanditRLProof/LowerBounds/HuffmanAlphabet.lean",
+    "line": 56,
+    "statement": "theorem huffman_merged_card_lt {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (a b : \u03b1) (hab : a \u2260 b) : Fintype.card (Option (HuffmanRemainder a b)) < Fintype.card \u03b1"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_two_least_weights",
+    "full_name": "BanditRLProof.LowerBounds.exists_two_least_weights",
+    "file": "BanditRLProof/LowerBounds/HuffmanAlphabet.lean",
+    "line": 65,
+    "statement": "theorem exists_two_least_weights {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1] (p : \u03b1 \u2192 \u211d) : \u2203 a b, a \u2260 b \u2227 (\u2200 i, p a \u2264 p i) \u2227 (\u2200 i, i \u2260 a \u2192 p b \u2264 p i)"
+  },
+  {
+    "kind": "theorem",
+    "name": "oneBitCode_optimal",
+    "full_name": "BanditRLProof.LowerBounds.oneBitCode_optimal",
+    "file": "BanditRLProof/LowerBounds/HuffmanConstruction.lean",
+    "line": 5,
+    "statement": "theorem oneBitCode_optimal {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (code : BinaryPrefixCode \u03b1) (hlen : \u2200 i, (code.encode i).length = 1) : IsOptimalPrefixCode p code"
+  },
+  {
+    "kind": "def",
+    "name": "emptyRemainderRoot",
+    "full_name": "BanditRLProof.LowerBounds.emptyRemainderRoot",
+    "file": "BanditRLProof/LowerBounds/HuffmanConstruction.lean",
+    "line": 19,
+    "statement": "def emptyRemainderRoot {\u03b1 : Type*} [IsEmpty \u03b1] : BinaryPrefixCode (\u03b1 \u2295 Bool) where"
+  },
+  {
+    "kind": "def",
+    "name": "huffmanOptimalCode",
+    "full_name": "BanditRLProof.LowerBounds.huffmanOptimalCode",
+    "file": "BanditRLProof/LowerBounds/HuffmanConstruction.lean",
+    "line": 47,
+    "statement": "noncomputable def huffmanOptimalCode {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) : {code : BinaryPrefixCode \u03b1 // IsOptimalPrefixCode p code}"
+  },
+  {
+    "kind": "def",
+    "name": "huffmanCode",
+    "full_name": "BanditRLProof.LowerBounds.huffmanCode",
+    "file": "BanditRLProof/LowerBounds/HuffmanConstruction.lean",
+    "line": 99,
+    "statement": "noncomputable def huffmanCode {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) : BinaryPrefixCode \u03b1"
+  },
+  {
+    "kind": "theorem",
+    "name": "huffmanCode_optimal",
+    "full_name": "BanditRLProof.LowerBounds.huffmanCode_optimal",
+    "file": "BanditRLProof/LowerBounds/HuffmanConstruction.lean",
+    "line": 103,
+    "statement": "theorem huffmanCode_optimal {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) : IsOptimalPrefixCode p (huffmanCode p hp)"
+  },
+  {
+    "kind": "theorem",
+    "name": "huffmanCode_entropy_sandwich",
+    "full_name": "BanditRLProof.LowerBounds.huffmanCode_entropy_sandwich",
+    "file": "BanditRLProof/LowerBounds/HuffmanConstruction.lean",
+    "line": 108,
+    "statement": "theorem huffmanCode_entropy_sandwich {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) : discreteEntropyBaseTwo Finset.univ p \u2264 expectedCodeLength p (huffmanCode p hp) \u2227 expectedCodeLength p (huffmanCode p hp) \u2264 discreteEntropyBaseTwo Finset.univ p + 1"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_oriented_sibling_code",
+    "full_name": "BanditRLProof.LowerBounds.exists_oriented_sibling_code",
+    "file": "BanditRLProof/LowerBounds/HuffmanStep.lean",
+    "line": 6,
+    "statement": "theorem exists_oriented_sibling_code {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2295 Bool \u2192 \u211d) (code : BinaryPrefixCode (\u03b1 \u2295 Bool)) (w : List Bool) (bit : Bool) (hf : code.encode (.inr false) = w ++ [bit]) (ht : code.encode (.inr true) = w ++ [!bit]) : \u2203 other : BinaryPrefixCode (\u03b1 \u2295 Bool), expectedCodeLength p other = expectedCodeLength p code \u2227 \u2200 b, other.encode (.inr b) = w ++ [b]"
+  },
+  {
+    "kind": "theorem",
+    "name": "IsOptimalPrefixCode.expand_least_weights",
+    "full_name": "BanditRLProof.LowerBounds.IsOptimalPrefixCode.expand_least_weights",
+    "file": "BanditRLProof/LowerBounds/HuffmanStep.lean",
+    "line": 30,
+    "statement": "theorem IsOptimalPrefixCode.expand_least_weights {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] [Nonempty \u03b1] (p : \u03b1 \u2192 \u211d) (q r : \u211d) (hp : \u2200 i, 0 \u2264 p i) (hq : 0 \u2264 q) (hqr : q \u2264 r) (hr : \u2200 i, r \u2264 p i) (code : BinaryPrefixCode (Option \u03b1)) (hopt : IsOptimalPrefixCode (fun a => a.elim (q + r) p) code) : IsOptimalPrefixCode (Sum.elim p (fun b => if b then r else q)) code.expandSibling"
   },
   {
     "kind": "structure",
@@ -60935,6 +62036,542 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "statement": "theorem gaussianMinimaxGap_le_half {alternativeCount horizon : Real} (hhorizon : 0 < horizon) (hcount_le : alternativeCount \u2264 horizon) : gaussianMinimaxGap alternativeCount horizon \u2264 1 / 2"
   },
   {
+    "kind": "def",
+    "name": "binaryWords",
+    "full_name": "BanditRLProof.LowerBounds.binaryWords",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 7,
+    "statement": "def binaryWords (n : \u2115) : Finset (List Bool)"
+  },
+  {
+    "kind": "theorem",
+    "name": "card_binaryWords",
+    "full_name": "BanditRLProof.LowerBounds.card_binaryWords",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 10,
+    "statement": "theorem card_binaryWords (n : \u2115) : (binaryWords n).card = 2 ^ n"
+  },
+  {
+    "kind": "theorem",
+    "name": "mem_binaryWords_iff",
+    "full_name": "BanditRLProof.LowerBounds.mem_binaryWords_iff",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 14,
+    "statement": "theorem mem_binaryWords_iff (w : List Bool) (n : \u2115) : w \u2208 binaryWords n \u2194 w.length = n"
+  },
+  {
+    "kind": "def",
+    "name": "binaryExtensions",
+    "full_name": "BanditRLProof.LowerBounds.binaryExtensions",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 26,
+    "statement": "def binaryExtensions (w : List Bool) (n : \u2115) : Finset (List Bool)"
+  },
+  {
+    "kind": "theorem",
+    "name": "card_binaryExtensions",
+    "full_name": "BanditRLProof.LowerBounds.card_binaryExtensions",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 29,
+    "statement": "theorem card_binaryExtensions (w : List Bool) (n : \u2115) : (binaryExtensions w n).card = 2 ^ n"
+  },
+  {
+    "kind": "theorem",
+    "name": "mem_binaryExtensions_iff",
+    "full_name": "BanditRLProof.LowerBounds.mem_binaryExtensions_iff",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 36,
+    "statement": "theorem mem_binaryExtensions_iff (w v : List Bool) (n : \u2115) : v \u2208 binaryExtensions w n \u2194 w <+: v \u2227 v.length = w.length + n"
+  },
+  {
+    "kind": "theorem",
+    "name": "binaryExtensions_disjoint_of_incomparable",
+    "full_name": "BanditRLProof.LowerBounds.binaryExtensions_disjoint_of_incomparable",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 48,
+    "statement": "theorem binaryExtensions_disjoint_of_incomparable (u v : List Bool) (m n : \u2115) (huv : \u00ac u <+: v) (hvu : \u00ac v <+: u) : Disjoint (binaryExtensions u m) (binaryExtensions v n)"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_binaryWord_avoiding_prefixes",
+    "full_name": "BanditRLProof.LowerBounds.exists_binaryWord_avoiding_prefixes",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 58,
+    "statement": "theorem exists_binaryWord_avoiding_prefixes (S : Finset (List Bool)) (n : \u2115) (hlen : \u2200 w \u2208 S, w.length \u2264 n) (hbudget : (\u2211 w \u2208 S, 2 ^ (n - w.length)) < 2 ^ n) : \u2203 v : List Bool, v.length = n \u2227 \u2200 w \u2208 S, \u00ac w <+: v"
+  },
+  {
+    "kind": "theorem",
+    "name": "binary_level_mul_kraft_weight",
+    "full_name": "BanditRLProof.LowerBounds.binary_level_mul_kraft_weight",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 81,
+    "statement": "theorem binary_level_mul_kraft_weight {k n : \u2115} (h : k \u2264 n) : (2 : \u211d) ^ n * (1 / 2 : \u211d) ^ k = 2 ^ (n - k)"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_binaryWord_of_kraft_lt_one",
+    "full_name": "BanditRLProof.LowerBounds.exists_binaryWord_of_kraft_lt_one",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 89,
+    "statement": "theorem exists_binaryWord_of_kraft_lt_one (S : Finset (List Bool)) (n : \u2115) (hlen : \u2200 w \u2208 S, w.length \u2264 n) (hk : (\u2211 w \u2208 S, (1 / 2 : \u211d) ^ w.length) < 1) : \u2203 v : List Bool, v.length = n \u2227 \u2200 w \u2208 S, \u00ac w <+: v"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_prefixFree_insert_of_kraft_lt_one",
+    "full_name": "BanditRLProof.LowerBounds.exists_prefixFree_insert_of_kraft_lt_one",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 104,
+    "statement": "theorem exists_prefixFree_insert_of_kraft_lt_one (S : Finset (List Bool)) (n : \u2115) (hfree : \u2200 a \u2208 S, \u2200 b \u2208 S, a <+: b \u2192 a = b) (hlen : \u2200 w \u2208 S, w.length \u2264 n) (hk : (\u2211 w \u2208 S, (1 / 2 : \u211d) ^ w.length) < 1) : \u2203 v : List Bool, v.length = n \u2227 v \u2209 S \u2227 \u2200 a \u2208 insert v S, \u2200 b \u2208 insert v S, a <+: b \u2192 a = b"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_prefix_encoding_of_kraft_le_one",
+    "full_name": "BanditRLProof.LowerBounds.exists_prefix_encoding_of_kraft_le_one",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 139,
+    "statement": "theorem exists_prefix_encoding_of_kraft_le_one {\u03b1 : Type*} [DecidableEq \u03b1] (s : Finset \u03b1) (l : \u03b1 \u2192 \u2115) (hk : (\u2211 i \u2208 s, (1 / 2 : \u211d) ^ l i) \u2264 1) : \u2203 c : \u03b1 \u2192 List Bool, (\u2200 i \u2208 s, (c i).length = l i) \u2227 (\u2200 i \u2208 s, \u2200 j \u2208 s, c i <+: c j \u2192 i = j)"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_prefix_encoding_of_kraft_lt_one",
+    "full_name": "BanditRLProof.LowerBounds.exists_prefix_encoding_of_kraft_lt_one",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 217,
+    "statement": "theorem exists_prefix_encoding_of_kraft_lt_one {\u03b1 : Type*} [DecidableEq \u03b1] (s : Finset \u03b1) (l : \u03b1 \u2192 \u2115) (hk : (\u2211 i \u2208 s, (1 / 2 : \u211d) ^ l i) < 1) : \u2203 c : \u03b1 \u2192 List Bool, (\u2200 i \u2208 s, (c i).length = l i) \u2227 (\u2200 i \u2208 s, \u2200 j \u2208 s, c i <+: c j \u2192 i = j)"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_binaryPrefixCode_of_kraft_le_one",
+    "full_name": "BanditRLProof.LowerBounds.exists_binaryPrefixCode_of_kraft_le_one",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 225,
+    "statement": "theorem exists_binaryPrefixCode_of_kraft_le_one {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (l : \u03b1 \u2192 \u2115) (hl : \u2200 i, 0 < l i) (hk : (\u2211 i, (1 / 2 : \u211d) ^ l i) \u2264 1) : \u2203 code : BinaryPrefixCode \u03b1, \u2200 i, (code.encode i).length = l i"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_binaryPrefixCode_of_kraft_lt_one",
+    "full_name": "BanditRLProof.LowerBounds.exists_binaryPrefixCode_of_kraft_lt_one",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 247,
+    "statement": "theorem exists_binaryPrefixCode_of_kraft_lt_one {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (l : \u03b1 \u2192 \u2115) (hl : \u2200 i, 0 < l i) (hk : (\u2211 i, (1 / 2 : \u211d) ^ l i) < 1) : \u2203 code : BinaryPrefixCode \u03b1, \u2200 i, (code.encode i).length = l i"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_prefixCode_of_uniquelyDecodable",
+    "full_name": "BanditRLProof.LowerBounds.exists_prefixCode_of_uniquelyDecodable",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 255,
+    "statement": "theorem exists_prefixCode_of_uniquelyDecodable {\u03b1 : Type*} [Fintype \u03b1] (c : \u03b1 \u2192 List Bool) (hinj : Function.Injective c) (hud : InformationTheory.UniquelyDecodable (Set.range c)) : \u2203 code : BinaryPrefixCode \u03b1, \u2200 i, (code.encode i).length = (c i).length"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_binaryPrefixCode_entropy_sandwich",
+    "full_name": "BanditRLProof.LowerBounds.exists_binaryPrefixCode_entropy_sandwich",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 274,
+    "statement": "theorem exists_binaryPrefixCode_entropy_sandwich {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) : \u2203 code : BinaryPrefixCode \u03b1, discreteEntropyBaseTwo Finset.univ p \u2264 expectedCodeLength p code \u2227 expectedCodeLength p code \u2264 discreteEntropyBaseTwo Finset.univ p + 1"
+  },
+  {
+    "kind": "def",
+    "name": "BinaryPrefixCode.relabel",
+    "full_name": "BanditRLProof.LowerBounds.BinaryPrefixCode.relabel",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeExchange.lean",
+    "line": 5,
+    "statement": "def BinaryPrefixCode.relabel {\u03b1 \u03b2 : Type*} (code : BinaryPrefixCode \u03b1) (e : \u03b2 \u2243 \u03b1) : BinaryPrefixCode \u03b2 where"
+  },
+  {
+    "kind": "def",
+    "name": "IsOptimalPrefixCode",
+    "full_name": "BanditRLProof.LowerBounds.IsOptimalPrefixCode",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeExchange.lean",
+    "line": 13,
+    "statement": "def IsOptimalPrefixCode {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (code : BinaryPrefixCode \u03b1) : Prop"
+  },
+  {
+    "kind": "theorem",
+    "name": "expectedCodeLength_swap",
+    "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_swap",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeExchange.lean",
+    "line": 16,
+    "statement": "theorem expectedCodeLength_swap {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (code : BinaryPrefixCode \u03b1) (a b : \u03b1) (hab : a \u2260 b) : expectedCodeLength p (code.relabel (Equiv.swap a b)) = expectedCodeLength p code + (p a - p b) * ((code.encode b).length - (code.encode a).length : \u211d)"
+  },
+  {
+    "kind": "theorem",
+    "name": "expectedCodeLength_swap_le",
+    "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_swap_le",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeExchange.lean",
+    "line": 41,
+    "statement": "theorem expectedCodeLength_swap_le {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (code : BinaryPrefixCode \u03b1) (a b : \u03b1) (hab : a \u2260 b) (hp : p a \u2264 p b) (hl : (code.encode a).length \u2264 (code.encode b).length) : expectedCodeLength p (code.relabel (Equiv.swap a b)) \u2264 expectedCodeLength p code"
+  },
+  {
+    "kind": "theorem",
+    "name": "IsOptimalPrefixCode.length_antitone",
+    "full_name": "BanditRLProof.LowerBounds.IsOptimalPrefixCode.length_antitone",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeExchange.lean",
+    "line": 52,
+    "statement": "theorem IsOptimalPrefixCode.length_antitone {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] {p : \u03b1 \u2192 \u211d} {code : BinaryPrefixCode \u03b1} (hopt : IsOptimalPrefixCode p code) (a b : \u03b1) (hp : p a < p b) : (code.encode b).length \u2264 (code.encode a).length"
+  },
+  {
+    "kind": "theorem",
+    "name": "IsOptimalPrefixCode.entropy_sandwich",
+    "full_name": "BanditRLProof.LowerBounds.IsOptimalPrefixCode.entropy_sandwich",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeExchange.lean",
+    "line": 66,
+    "statement": "theorem IsOptimalPrefixCode.entropy_sandwich {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] {p : \u03b1 \u2192 \u211d} {code : BinaryPrefixCode \u03b1} (hopt : IsOptimalPrefixCode p code) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) : discreteEntropyBaseTwo Finset.univ p \u2264 expectedCodeLength p code \u2227 expectedCodeLength p code \u2264 discreteEntropyBaseTwo Finset.univ p + 1"
+  },
+  {
+    "kind": "theorem",
+    "name": "one_le_expectedCodeLength",
+    "full_name": "BanditRLProof.LowerBounds.one_le_expectedCodeLength",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeExchange.lean",
+    "line": 75,
+    "statement": "theorem one_le_expectedCodeLength {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (code : BinaryPrefixCode \u03b1) : 1 \u2264 expectedCodeLength p code"
+  },
+  {
+    "kind": "def",
+    "name": "singletonPrefixCode",
+    "full_name": "BanditRLProof.LowerBounds.singletonPrefixCode",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeExchange.lean",
+    "line": 90,
+    "statement": "def singletonPrefixCode (\u03b1 : Type*) [Subsingleton \u03b1] : BinaryPrefixCode \u03b1 where"
+  },
+  {
+    "kind": "theorem",
+    "name": "singletonPrefixCode_optimal",
+    "full_name": "BanditRLProof.LowerBounds.singletonPrefixCode_optimal",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeExchange.lean",
+    "line": 97,
+    "statement": "theorem singletonPrefixCode_optimal {\u03b1 : Type*} [Fintype \u03b1] [Subsingleton \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) : IsOptimalPrefixCode p (singletonPrefixCode \u03b1)"
+  },
+  {
+    "kind": "theorem",
+    "name": "expectedCodeLength_swap_le_allow_eq",
+    "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_swap_le_allow_eq",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeGreedy.lean",
+    "line": 6,
+    "statement": "theorem expectedCodeLength_swap_le_allow_eq {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (code : BinaryPrefixCode \u03b1) (a b : \u03b1) (hp : p a \u2264 p b) (hl : (code.encode a).length \u2264 (code.encode b).length) : expectedCodeLength p (code.relabel (Equiv.swap a b)) \u2264 expectedCodeLength p code"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_no_worse_least_weight_siblings",
+    "full_name": "BanditRLProof.LowerBounds.exists_no_worse_least_weight_siblings",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeGreedy.lean",
+    "line": 19,
+    "statement": "theorem exists_no_worse_least_weight_siblings {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (original : BinaryPrefixCode \u03b1) (a b : \u03b1) (hab : a \u2260 b) (ha : \u2200 i, p a \u2264 p i) (hb : \u2200 i, i \u2260 a \u2192 p b \u2264 p i) : \u2203 code : BinaryPrefixCode \u03b1, expectedCodeLength p code \u2264 expectedCodeLength p original \u2227 \u2203 w bit, code.encode a = w ++ [bit] \u2227 code.encode b = w ++ [!bit] \u2227 \u2200 i, (code.encode i).length \u2264 (code.encode a).length"
+  },
+  {
+    "kind": "theorem",
+    "name": "deepest_parent_incomparable",
+    "full_name": "BanditRLProof.LowerBounds.deepest_parent_incomparable",
+    "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+    "line": 6,
+    "statement": "theorem deepest_parent_incomparable {\u03b1 : Type*} (code : BinaryPrefixCode \u03b1) (a : \u03b1) (w : List Bool) (b : Bool) (ha : code.encode a = w ++ [b]) (hmax : \u2200 i, (code.encode i).length \u2264 (code.encode a).length) (hmissing : \u2200 i, code.encode i \u2260 w ++ [!b]) : \u2200 i, i \u2260 a \u2192 (\u00ac code.encode i <+: w) \u2227 (\u00ac w <+: code.encode i)"
+  },
+  {
+    "kind": "def",
+    "name": "BinaryPrefixCode.replaceWord",
+    "full_name": "BanditRLProof.LowerBounds.BinaryPrefixCode.replaceWord",
+    "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+    "line": 38,
+    "statement": "def BinaryPrefixCode.replaceWord {\u03b1 : Type*} [DecidableEq \u03b1] (code : BinaryPrefixCode \u03b1) (a : \u03b1) (w : List Bool) (hw : w \u2260 []) (hsep : \u2200 i, i \u2260 a \u2192 (\u00ac code.encode i <+: w) \u2227 (\u00ac w <+: code.encode i)) : BinaryPrefixCode \u03b1"
+  },
+  {
+    "kind": "def",
+    "name": "BinaryPrefixCode.pruneDeepest",
+    "full_name": "BanditRLProof.LowerBounds.BinaryPrefixCode.pruneDeepest",
+    "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+    "line": 58,
+    "statement": "def BinaryPrefixCode.pruneDeepest {\u03b1 : Type*} [DecidableEq \u03b1] (code : BinaryPrefixCode \u03b1) (a : \u03b1) (w : List Bool) (b : Bool) (hw : w \u2260 []) (ha : code.encode a = w ++ [b]) (hmax : \u2200 i, (code.encode i).length \u2264 (code.encode a).length) (hmissing : \u2200 i, code.encode i \u2260 w ++ [!b]) : BinaryPrefixCode \u03b1"
+  },
+  {
+    "kind": "theorem",
+    "name": "expectedCodeLength_replaceWord",
+    "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_replaceWord",
+    "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+    "line": 65,
+    "statement": "theorem expectedCodeLength_replaceWord {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (code : BinaryPrefixCode \u03b1) (a : \u03b1) (w : List Bool) (hw : w \u2260 []) (hsep : \u2200 i, i \u2260 a \u2192 (\u00ac code.encode i <+: w) \u2227 (\u00ac w <+: code.encode i)) : expectedCodeLength p (code.replaceWord a w hw hsep) = expectedCodeLength p code + p a * (w.length - (code.encode a).length : \u211d)"
+  },
+  {
+    "kind": "theorem",
+    "name": "expectedCodeLength_pruneDeepest",
+    "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_pruneDeepest",
+    "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+    "line": 82,
+    "statement": "theorem expectedCodeLength_pruneDeepest {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (code : BinaryPrefixCode \u03b1) (a : \u03b1) (w : List Bool) (b : Bool) (hw : w \u2260 []) (ha : code.encode a = w ++ [b]) (hmax : \u2200 i, (code.encode i).length \u2264 (code.encode a).length) (hmissing : \u2200 i, code.encode i \u2260 w ++ [!b]) : expectedCodeLength p (code.pruneDeepest a w b hw ha hmax hmissing) = expectedCodeLength p code - p a"
+  },
+  {
+    "kind": "theorem",
+    "name": "expectedCodeLength_pruneDeepest_le",
+    "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_pruneDeepest_le",
+    "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+    "line": 95,
+    "statement": "theorem expectedCodeLength_pruneDeepest_le {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (code : BinaryPrefixCode \u03b1) (a : \u03b1) (w : List Bool) (b : Bool) (hp : 0 \u2264 p a) (hw : w \u2260 []) (ha : code.encode a = w ++ [b]) (hmax : \u2200 i, (code.encode i).length \u2264 (code.encode a).length) (hmissing : \u2200 i, code.encode i \u2260 w ++ [!b]) : expectedCodeLength p (code.pruneDeepest a w b hw ha hmax hmissing) \u2264 expectedCodeLength p code"
+  },
+  {
+    "kind": "def",
+    "name": "totalCodeLength",
+    "full_name": "BanditRLProof.LowerBounds.totalCodeLength",
+    "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+    "line": 106,
+    "statement": "def totalCodeLength {\u03b1 : Type*} [Fintype \u03b1] (code : BinaryPrefixCode \u03b1) : \u2115"
+  },
+  {
+    "kind": "theorem",
+    "name": "totalCodeLength_pruneDeepest",
+    "full_name": "BanditRLProof.LowerBounds.totalCodeLength_pruneDeepest",
+    "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+    "line": 109,
+    "statement": "theorem totalCodeLength_pruneDeepest {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (code : BinaryPrefixCode \u03b1) (a : \u03b1) (w : List Bool) (b : Bool) (hw : w \u2260 []) (ha : code.encode a = w ++ [b]) (hmax : \u2200 i, (code.encode i).length \u2264 (code.encode a).length) (hmissing : \u2200 i, code.encode i \u2260 w ++ [!b]) : totalCodeLength (code.pruneDeepest a w b hw ha hmax hmissing) + 1 = totalCodeLength code"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_minimal_totalCodeLength_competitor",
+    "full_name": "BanditRLProof.LowerBounds.exists_minimal_totalCodeLength_competitor",
+    "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+    "line": 123,
+    "statement": "theorem exists_minimal_totalCodeLength_competitor {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (original : BinaryPrefixCode \u03b1) : \u2203 code : BinaryPrefixCode \u03b1, expectedCodeLength p code \u2264 expectedCodeLength p original \u2227 \u2200 other : BinaryPrefixCode \u03b1, expectedCodeLength p other \u2264 expectedCodeLength p original \u2192 totalCodeLength code \u2264 totalCodeLength other"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_competitor_with_deepest_siblings",
+    "full_name": "BanditRLProof.LowerBounds.exists_competitor_with_deepest_siblings",
+    "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+    "line": 141,
+    "statement": "theorem exists_competitor_with_deepest_siblings {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (original : BinaryPrefixCode \u03b1) : \u2203 code : BinaryPrefixCode \u03b1, expectedCodeLength p code \u2264 expectedCodeLength p original \u2227 \u2200 a w b, code.encode a = w ++ [b] \u2192 (\u2200 i, (code.encode i).length \u2264 (code.encode a).length) \u2192 \u2203 j, code.encode j = w ++ [!b]"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_no_worse_deepest_sibling_pair",
+    "full_name": "BanditRLProof.LowerBounds.exists_no_worse_deepest_sibling_pair",
+    "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+    "line": 167,
+    "statement": "theorem exists_no_worse_deepest_sibling_pair {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (original : BinaryPrefixCode \u03b1) : \u2203 code : BinaryPrefixCode \u03b1, expectedCodeLength p code \u2264 expectedCodeLength p original \u2227 \u2203 a j w b, a \u2260 j \u2227 code.encode a = w ++ [b] \u2227 code.encode j = w ++ [!b] \u2227 \u2200 i, (code.encode i).length \u2264 (code.encode a).length"
+  },
+  {
+    "kind": "theorem",
+    "name": "BinaryPrefixCode.extended_prefix_parent_eq",
+    "full_name": "BanditRLProof.LowerBounds.BinaryPrefixCode.extended_prefix_parent_eq",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+    "line": 5,
+    "statement": "theorem BinaryPrefixCode.extended_prefix_parent_eq {\u03b1 : Type*} (code : BinaryPrefixCode \u03b1) (a b : \u03b1) (u v : List Bool) (h : code.encode a ++ u <+: code.encode b ++ v) : a = b"
+  },
+  {
+    "kind": "def",
+    "name": "siblingExpandedWord",
+    "full_name": "BanditRLProof.LowerBounds.siblingExpandedWord",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+    "line": 14,
+    "statement": "def siblingExpandedWord {\u03b1 : Type*} (code : BinaryPrefixCode (Option \u03b1)) : \u03b1 \u2295 Bool \u2192 List Bool | .inl a => code.encode (some a) | .inr b => code.encode none ++ [b]"
+  },
+  {
+    "kind": "theorem",
+    "name": "siblingExpandedWord_prefixFree",
+    "full_name": "BanditRLProof.LowerBounds.siblingExpandedWord_prefixFree",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+    "line": 18,
+    "statement": "theorem siblingExpandedWord_prefixFree {\u03b1 : Type*} (code : BinaryPrefixCode (Option \u03b1)) {a b : \u03b1 \u2295 Bool} (h : siblingExpandedWord code a <+: siblingExpandedWord code b) : a = b"
+  },
+  {
+    "kind": "def",
+    "name": "BinaryPrefixCode.expandSibling",
+    "full_name": "BanditRLProof.LowerBounds.BinaryPrefixCode.expandSibling",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+    "line": 46,
+    "statement": "def BinaryPrefixCode.expandSibling {\u03b1 : Type*} (code : BinaryPrefixCode (Option \u03b1)) : BinaryPrefixCode (\u03b1 \u2295 Bool) where"
+  },
+  {
+    "kind": "theorem",
+    "name": "expectedCodeLength_expandSibling",
+    "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_expandSibling",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+    "line": 58,
+    "statement": "theorem expectedCodeLength_expandSibling {\u03b1 : Type*} [Fintype \u03b1] (code : BinaryPrefixCode (Option \u03b1)) (p : \u03b1 \u2192 \u211d) (q r : \u211d) : expectedCodeLength (Sum.elim p (fun b => if b then r else q)) code.expandSibling = expectedCodeLength (fun a => a.elim (q + r) p) code + q + r"
+  },
+  {
+    "kind": "theorem",
+    "name": "sibling_parent_not_prefix_other",
+    "full_name": "BanditRLProof.LowerBounds.sibling_parent_not_prefix_other",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+    "line": 67,
+    "statement": "theorem sibling_parent_not_prefix_other {\u03b1 : Type*} (code : BinaryPrefixCode (\u03b1 \u2295 Bool)) (w : List Bool) (hs : \u2200 b, code.encode (.inr b) = w ++ [b]) (a : \u03b1) : \u00ac w <+: code.encode (.inl a)"
+  },
+  {
+    "kind": "def",
+    "name": "siblingContractedWord",
+    "full_name": "BanditRLProof.LowerBounds.siblingContractedWord",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+    "line": 87,
+    "statement": "def siblingContractedWord {\u03b1 : Type*} (code : BinaryPrefixCode (\u03b1 \u2295 Bool)) (w : List Bool) : Option \u03b1 \u2192 List Bool | none => w | some a => code.encode (.inl a)"
+  },
+  {
+    "kind": "theorem",
+    "name": "siblingContractedWord_prefixFree",
+    "full_name": "BanditRLProof.LowerBounds.siblingContractedWord_prefixFree",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+    "line": 92,
+    "statement": "theorem siblingContractedWord_prefixFree {\u03b1 : Type*} (code : BinaryPrefixCode (\u03b1 \u2295 Bool)) (w : List Bool) (hs : \u2200 b, code.encode (.inr b) = w ++ [b]) {a b : Option \u03b1} (h : siblingContractedWord code w a <+: siblingContractedWord code w b) : a = b"
+  },
+  {
+    "kind": "def",
+    "name": "BinaryPrefixCode.contractSibling",
+    "full_name": "BanditRLProof.LowerBounds.BinaryPrefixCode.contractSibling",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+    "line": 113,
+    "statement": "def BinaryPrefixCode.contractSibling {\u03b1 : Type*} (code : BinaryPrefixCode (\u03b1 \u2295 Bool)) (w : List Bool) (hw : w \u2260 []) (hs : \u2200 b, code.encode (.inr b) = w ++ [b]) : BinaryPrefixCode (Option \u03b1) where"
+  },
+  {
+    "kind": "theorem",
+    "name": "expectedCodeLength_contractSibling",
+    "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_contractSibling",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+    "line": 125,
+    "statement": "theorem expectedCodeLength_contractSibling {\u03b1 : Type*} [Fintype \u03b1] (code : BinaryPrefixCode (\u03b1 \u2295 Bool)) (w : List Bool) (hw : w \u2260 []) (hs : \u2200 b, code.encode (.inr b) = w ++ [b]) (p : \u03b1 \u2192 \u211d) (q r : \u211d) : expectedCodeLength (fun a => a.elim (q + r) p) (code.contractSibling w hw hs) + q + r = expectedCodeLength (Sum.elim p (fun b => if b then r else q)) code"
+  },
+  {
+    "kind": "def",
+    "name": "binaryRootPrefixCode",
+    "full_name": "BanditRLProof.LowerBounds.binaryRootPrefixCode",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+    "line": 136,
+    "statement": "def binaryRootPrefixCode : BinaryPrefixCode Bool where"
+  },
+  {
+    "kind": "theorem",
+    "name": "binaryRootPrefixCode_optimal",
+    "full_name": "BanditRLProof.LowerBounds.binaryRootPrefixCode_optimal",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+    "line": 144,
+    "statement": "theorem binaryRootPrefixCode_optimal (p : Bool \u2192 \u211d) (hp : \u2200 b, 0 \u2264 p b) (hs : \u2211 b, p b = 1) : IsOptimalPrefixCode p binaryRootPrefixCode"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_trim_eq_lintegral_condExp",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_trim_eq_lintegral_condExp",
+    "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
+    "line": 14,
+    "statement": "theorem relativeEntropy_trim_eq_lintegral_condExp {\u03b1 : Type*} {m m\u2080 : MeasurableSpace \u03b1} (P Q : @Measure \u03b1 m\u2080) [IsFiniteMeasure P] [IsFiniteMeasure Q] (hm : m \u2264 m\u2080) (h : P \u226a Q) : @relativeEntropy \u03b1 m (P.trim hm) (Q.trim hm) = \u222b\u207b x, ENNReal.ofReal (InformationTheory.klFun (Q[fun y => (P.rnDeriv Q y).toReal | m] x)) \u2202Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_map_eq_trim_of_absolutelyContinuous",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_map_eq_trim_of_absolutelyContinuous",
+    "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
+    "line": 32,
+    "statement": "theorem relativeEntropy_map_eq_trim_of_absolutelyContinuous {\u03b1 \u03b2 : Type*} [m\u03b1 : MeasurableSpace \u03b1] [m\u03b2 : MeasurableSpace \u03b2] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h : P \u226a Q) (f : \u03b1 \u2192 \u03b2) (hf : Measurable f) : relativeEntropy (P.map f) (Q.map f) = @relativeEntropy \u03b1 (m\u03b2.comap f) (P.trim hf.comap_le) (Q.trim hf.comap_le)"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_eq_iSup_trim_of_density_measurable",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_eq_iSup_trim_of_density_measurable",
+    "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
+    "line": 53,
+    "statement": "theorem relativeEntropy_eq_iSup_trim_of_density_measurable {\u03b1 : Type*} [m\u2080 : MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h : P \u226a Q) (F : Filtration \u2115 m\u2080) (hDensity : StronglyMeasurable[\u2a06 n, F n] (fun x => (P.rnDeriv Q x).toReal)) : relativeEntropy P Q = \u2a06 n, @relativeEntropy \u03b1 (F n) (P.trim (F.le n)) (Q.trim (F.le n))"
+  },
+  {
+    "kind": "def",
+    "name": "densityApproximationFiltration",
+    "full_name": "BanditRLProof.LowerBounds.densityApproximationFiltration",
+    "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
+    "line": 93,
+    "statement": "def densityApproximationFiltration {\u03b1 : Type*} [m : MeasurableSpace \u03b1] (r : \u03b1 \u2192 ENNReal) : Filtration \u2115 m"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_density_iSup_approximationFiltration",
+    "full_name": "BanditRLProof.LowerBounds.measurable_density_iSup_approximationFiltration",
+    "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
+    "line": 99,
+    "statement": "theorem measurable_density_iSup_approximationFiltration {\u03b1 : Type*} [m : MeasurableSpace \u03b1] (r : \u03b1 \u2192 ENNReal) (hr : Measurable r) : Measurable[\u2a06 n, densityApproximationFiltration r n] r"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_eq_iSup_densityApproximation_trim",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_eq_iSup_densityApproximation_trim",
+    "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
+    "line": 115,
+    "statement": "theorem relativeEntropy_eq_iSup_densityApproximation_trim {\u03b1 : Type*} [m : MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h : P \u226a Q) : relativeEntropy P Q = \u2a06 n, @relativeEntropy \u03b1 (densityApproximationFiltration (P.rnDeriv Q) n) (P.trim ((densityApproximationFiltration (P.rnDeriv Q)).le n)) (Q.trim ((densityApproximationFiltration (P.rnDeriv Q)).le n))"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_triangle_counterexample",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_triangle_counterexample",
+    "file": "BanditRLProof/LowerBounds/RelativeEntropyNonMetric.lean",
+    "line": 9,
+    "statement": "theorem relativeEntropy_triangle_counterexample : relativeEntropy (gaussianReal 0 1) (gaussianReal 1 1) + relativeEntropy (gaussianReal 1 1) (gaussianReal 2 1) < relativeEntropy (gaussianReal 0 1) (gaussianReal 2 1)"
+  },
+  {
+    "kind": "theorem",
+    "name": "bernoulliRelativeEntropy_asymmetry",
+    "full_name": "BanditRLProof.LowerBounds.bernoulliRelativeEntropy_asymmetry",
+    "file": "BanditRLProof/LowerBounds/RelativeEntropyNonMetric.lean",
+    "line": 19,
+    "statement": "theorem bernoulliRelativeEntropy_asymmetry : bernoulliRelativeEntropy 0 (1 / 2) \u2260 bernoulliRelativeEntropy (1 / 2) 0"
+  },
+  {
+    "kind": "def",
+    "name": "shannonLength",
+    "full_name": "BanditRLProof.LowerBounds.shannonLength",
+    "file": "BanditRLProof/LowerBounds/ShannonLengths.lean",
+    "line": 9,
+    "statement": "def shannonLength (p : \u211d) : \u2115"
+  },
+  {
+    "kind": "theorem",
+    "name": "shannonLength_pos",
+    "full_name": "BanditRLProof.LowerBounds.shannonLength_pos",
+    "file": "BanditRLProof/LowerBounds/ShannonLengths.lean",
+    "line": 11,
+    "statement": "theorem shannonLength_pos (p : \u211d) : 0 < shannonLength p"
+  },
+  {
+    "kind": "theorem",
+    "name": "shannonLength_kraft_weight_lt",
+    "full_name": "BanditRLProof.LowerBounds.shannonLength_kraft_weight_lt",
+    "file": "BanditRLProof/LowerBounds/ShannonLengths.lean",
+    "line": 15,
+    "statement": "theorem shannonLength_kraft_weight_lt {p : \u211d} (hp : 0 < p) : (1 / 2 : \u211d) ^ shannonLength p < p"
+  },
+  {
+    "kind": "theorem",
+    "name": "shannonLength_le_information_add_one",
+    "full_name": "BanditRLProof.LowerBounds.shannonLength_le_information_add_one",
+    "file": "BanditRLProof/LowerBounds/ShannonLengths.lean",
+    "line": 28,
+    "statement": "theorem shannonLength_le_information_add_one {p : \u211d} (hp : 0 < p) (hp1 : p \u2264 1) : (shannonLength p : \u211d) \u2264 Real.log p\u207b\u00b9 / Real.log 2 + 1"
+  },
+  {
+    "kind": "theorem",
+    "name": "weighted_shannonLength_le",
+    "full_name": "BanditRLProof.LowerBounds.weighted_shannonLength_le",
+    "file": "BanditRLProof/LowerBounds/ShannonLengths.lean",
+    "line": 36,
+    "statement": "theorem weighted_shannonLength_le {p : \u211d} (hp : 0 \u2264 p) (hp1 : p \u2264 1) : p * shannonLength p \u2264 p * (Real.log p\u207b\u00b9 / Real.log 2) + p"
+  },
+  {
+    "kind": "theorem",
+    "name": "sum_weighted_shannonLength_le_entropy_add_one",
+    "full_name": "BanditRLProof.LowerBounds.sum_weighted_shannonLength_le_entropy_add_one",
+    "file": "BanditRLProof/LowerBounds/ShannonLengths.lean",
+    "line": 45,
+    "statement": "theorem sum_weighted_shannonLength_le_entropy_add_one {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) : (\u2211 i, p i * shannonLength (p i)) \u2264 discreteEntropyBaseTwo Finset.univ p + 1"
+  },
+  {
+    "kind": "theorem",
+    "name": "sum_positive_shannon_weights_lt_one",
+    "full_name": "BanditRLProof.LowerBounds.sum_positive_shannon_weights_lt_one",
+    "file": "BanditRLProof/LowerBounds/ShannonLengths.lean",
+    "line": 57,
+    "statement": "theorem sum_positive_shannon_weights_lt_one {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) : (\u2211 i, if 0 < p i then (1 / 2 : \u211d) ^ shannonLength (p i) else 0) < 1"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_lengths_kraft_lt_one_entropy_bound",
+    "full_name": "BanditRLProof.LowerBounds.exists_lengths_kraft_lt_one_entropy_bound",
+    "file": "BanditRLProof/LowerBounds/ShannonLengths.lean",
+    "line": 76,
+    "statement": "theorem exists_lengths_kraft_lt_one_entropy_bound {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) : \u2203 l : \u03b1 \u2192 \u2115, (\u2200 i, 0 < l i) \u2227 (\u2211 i, (1 / 2 : \u211d) ^ l i) < 1 \u2227 (\u2211 i, p i * l i) \u2264 discreteEntropyBaseTwo Finset.univ p + 1"
+  },
+  {
     "kind": "structure",
     "name": "UnitSubgaussianBanditEnvironment",
     "full_name": "BanditRLProof.LowerBounds.UnitSubgaussianBanditEnvironment",
@@ -61445,6 +63082,54 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
     "line": 649,
     "statement": "theorem strictlySuccinctSize_unique {system : SuccinctUnitSystem V} {x : V} {s z : Nat} (hs : IsStrictlySuccinctAt system x s) (hz : IsStrictlySuccinctAt system x z) : s = z"
+  },
+  {
+    "kind": "theorem",
+    "name": "uniformPowerTwo_entropy",
+    "full_name": "BanditRLProof.LowerBounds.uniformPowerTwo_entropy",
+    "file": "BanditRLProof/LowerBounds/UniformCoding.lean",
+    "line": 6,
+    "statement": "theorem uniformPowerTwo_entropy {\u03b1 : Type*} [Fintype \u03b1] (n : \u2115) (hcard : Fintype.card \u03b1 = 2 ^ n) : discreteEntropyBaseTwo Finset.univ (fun _ : \u03b1 => (1 / (2 : \u211d) ^ n)) = n"
+  },
+  {
+    "kind": "theorem",
+    "name": "fixedLength_uniformPowerTwo_optimal",
+    "full_name": "BanditRLProof.LowerBounds.fixedLength_uniformPowerTwo_optimal",
+    "file": "BanditRLProof/LowerBounds/UniformCoding.lean",
+    "line": 12,
+    "statement": "theorem fixedLength_uniformPowerTwo_optimal {\u03b1 : Type*} [Fintype \u03b1] (n : \u2115) (hcard : Fintype.card \u03b1 = 2 ^ n) (code : BinaryPrefixCode \u03b1) (hlen : \u2200 a, (code.encode a).length = n) : IsOptimalPrefixCode (fun _ : \u03b1 => 1 / (2 : \u211d) ^ n) code"
+  },
+  {
+    "kind": "def",
+    "name": "ternaryPrefixWord",
+    "full_name": "BanditRLProof.LowerBounds.ternaryPrefixWord",
+    "file": "BanditRLProof/LowerBounds/UniformCoding.lean",
+    "line": 24,
+    "statement": "def ternaryPrefixWord (a : Fin 3) : List Bool"
+  },
+  {
+    "kind": "def",
+    "name": "ternaryPrefixCode",
+    "full_name": "BanditRLProof.LowerBounds.ternaryPrefixCode",
+    "file": "BanditRLProof/LowerBounds/UniformCoding.lean",
+    "line": 27,
+    "statement": "def ternaryPrefixCode : BinaryPrefixCode (Fin 3) where"
+  },
+  {
+    "kind": "theorem",
+    "name": "ternaryPrefixCode_uniform_length",
+    "full_name": "BanditRLProof.LowerBounds.ternaryPrefixCode_uniform_length",
+    "file": "BanditRLProof/LowerBounds/UniformCoding.lean",
+    "line": 37,
+    "statement": "theorem ternaryPrefixCode_uniform_length : expectedCodeLength (fun _ : Fin 3 => (1 / 3 : \u211d)) ternaryPrefixCode = 5 / 3"
+  },
+  {
+    "kind": "theorem",
+    "name": "uniform_three_fixedLength_not_optimal",
+    "full_name": "BanditRLProof.LowerBounds.uniform_three_fixedLength_not_optimal",
+    "file": "BanditRLProof/LowerBounds/UniformCoding.lean",
+    "line": 42,
+    "statement": "theorem uniform_three_fixedLength_not_optimal (code : BinaryPrefixCode (Fin 3)) (hlen : \u2200 a, (code.encode a).length = 2) : \u00ac IsOptimalPrefixCode (fun _ : Fin 3 => (1 / 3 : \u211d)) code"
   },
   {
     "kind": "structure",
