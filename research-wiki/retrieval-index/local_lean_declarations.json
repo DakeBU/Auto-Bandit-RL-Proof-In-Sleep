@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T07:13:49+00:00",
+  "generated": "2026-09-05T07:21:28+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -30371,26 +30371,50 @@
     },
     {
       "kind": "theorem",
+      "name": "exists_prefix_encoding_of_kraft_le_one",
+      "full_name": "BanditRLProof.LowerBounds.exists_prefix_encoding_of_kraft_le_one",
+      "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+      "line": 139,
+      "statement": "theorem exists_prefix_encoding_of_kraft_le_one {\u03b1 : Type*} [DecidableEq \u03b1] (s : Finset \u03b1) (l : \u03b1 \u2192 \u2115) (hk : (\u2211 i \u2208 s, (1 / 2 : \u211d) ^ l i) \u2264 1) : \u2203 c : \u03b1 \u2192 List Bool, (\u2200 i \u2208 s, (c i).length = l i) \u2227 (\u2200 i \u2208 s, \u2200 j \u2208 s, c i <+: c j \u2192 i = j)"
+    },
+    {
+      "kind": "theorem",
       "name": "exists_prefix_encoding_of_kraft_lt_one",
       "full_name": "BanditRLProof.LowerBounds.exists_prefix_encoding_of_kraft_lt_one",
       "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
-      "line": 139,
+      "line": 217,
       "statement": "theorem exists_prefix_encoding_of_kraft_lt_one {\u03b1 : Type*} [DecidableEq \u03b1] (s : Finset \u03b1) (l : \u03b1 \u2192 \u2115) (hk : (\u2211 i \u2208 s, (1 / 2 : \u211d) ^ l i) < 1) : \u2203 c : \u03b1 \u2192 List Bool, (\u2200 i \u2208 s, (c i).length = l i) \u2227 (\u2200 i \u2208 s, \u2200 j \u2208 s, c i <+: c j \u2192 i = j)"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_binaryPrefixCode_of_kraft_le_one",
+      "full_name": "BanditRLProof.LowerBounds.exists_binaryPrefixCode_of_kraft_le_one",
+      "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+      "line": 225,
+      "statement": "theorem exists_binaryPrefixCode_of_kraft_le_one {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (l : \u03b1 \u2192 \u2115) (hl : \u2200 i, 0 < l i) (hk : (\u2211 i, (1 / 2 : \u211d) ^ l i) \u2264 1) : \u2203 code : BinaryPrefixCode \u03b1, \u2200 i, (code.encode i).length = l i"
     },
     {
       "kind": "theorem",
       "name": "exists_binaryPrefixCode_of_kraft_lt_one",
       "full_name": "BanditRLProof.LowerBounds.exists_binaryPrefixCode_of_kraft_lt_one",
       "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
-      "line": 216,
+      "line": 247,
       "statement": "theorem exists_binaryPrefixCode_of_kraft_lt_one {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (l : \u03b1 \u2192 \u2115) (hl : \u2200 i, 0 < l i) (hk : (\u2211 i, (1 / 2 : \u211d) ^ l i) < 1) : \u2203 code : BinaryPrefixCode \u03b1, \u2200 i, (code.encode i).length = l i"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_prefixCode_of_uniquelyDecodable",
+      "full_name": "BanditRLProof.LowerBounds.exists_prefixCode_of_uniquelyDecodable",
+      "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+      "line": 255,
+      "statement": "theorem exists_prefixCode_of_uniquelyDecodable {\u03b1 : Type*} [Fintype \u03b1] (c : \u03b1 \u2192 List Bool) (hinj : Function.Injective c) (hud : InformationTheory.UniquelyDecodable (Set.range c)) : \u2203 code : BinaryPrefixCode \u03b1, \u2200 i, (code.encode i).length = (c i).length"
     },
     {
       "kind": "theorem",
       "name": "exists_binaryPrefixCode_entropy_sandwich",
       "full_name": "BanditRLProof.LowerBounds.exists_binaryPrefixCode_entropy_sandwich",
       "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
-      "line": 239,
+      "line": 274,
       "statement": "theorem exists_binaryPrefixCode_entropy_sandwich {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) : \u2203 code : BinaryPrefixCode \u03b1, discreteEntropyBaseTwo Finset.univ p \u2264 expectedCodeLength p code \u2227 expectedCodeLength p code \u2264 discreteEntropyBaseTwo Finset.univ p + 1"
     },
     {

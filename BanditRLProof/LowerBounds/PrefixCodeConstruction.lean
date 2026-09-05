@@ -135,10 +135,10 @@ theorem exists_prefixFree_insert_of_kraft_lt_one
       exact (hv a haS hab).elim
     · exact hfree a haS b ((Finset.mem_insert.mp hb).resolve_left hbv) hab
 
-/-- Finite strict Kraft converse, retaining each prescribed length. -/
-theorem exists_prefix_encoding_of_kraft_lt_one
+/-- Finite Kraft converse, retaining each prescribed length, including equality. -/
+theorem exists_prefix_encoding_of_kraft_le_one
     {α : Type*} [DecidableEq α] (s : Finset α) (l : α → ℕ)
-    (hk : (∑ i ∈ s, (1 / 2 : ℝ) ^ l i) < 1) :
+    (hk : (∑ i ∈ s, (1 / 2 : ℝ) ^ l i) ≤ 1) :
     ∃ c : α → List Bool, (∀ i ∈ s, (c i).length = l i) ∧
       (∀ i ∈ s, ∀ j ∈ s, c i <+: c j → i = j) := by
   classical
@@ -149,10 +149,11 @@ theorem exists_prefix_encoding_of_kraft_lt_one
       let t := s.erase a
       have ht : t ⊂ s := Finset.erase_ssubset ha
       have hkt : (∑ i ∈ t, (1 / 2 : ℝ) ^ l i) < 1 := by
-        apply lt_of_le_of_lt ?_ hk
-        exact Finset.sum_le_sum_of_subset_of_nonneg (Finset.erase_subset _ _)
-          (fun i _ _ => by positivity)
-      obtain ⟨c, hcl, hcf⟩ := ih t ht hkt
+        have he := Finset.sum_erase_add s (fun i => (1 / 2 : ℝ) ^ l i) ha
+        have hp : 0 < (1 / 2 : ℝ) ^ l a := by positivity
+        dsimp [t]
+        linarith
+      obtain ⟨c, hcl, hcf⟩ := ih t ht hkt.le
       let S := t.image c
       have hci : Set.InjOn c t := by
         intro i hi j hj hij
@@ -212,12 +213,20 @@ theorem exists_prefix_encoding_of_kraft_lt_one
       subst s
       exact ⟨fun _ => [], by simp⟩
 
-/-- Strict Kraft converse packaged as an actual binary prefix code. -/
-theorem exists_binaryPrefixCode_of_kraft_lt_one
+/-- Backwards-compatible strict version of the finite Kraft converse. -/
+theorem exists_prefix_encoding_of_kraft_lt_one
+    {α : Type*} [DecidableEq α] (s : Finset α) (l : α → ℕ)
+    (hk : (∑ i ∈ s, (1 / 2 : ℝ) ^ l i) < 1) :
+    ∃ c : α → List Bool, (∀ i ∈ s, (c i).length = l i) ∧
+      (∀ i ∈ s, ∀ j ∈ s, c i <+: c j → i = j) :=
+  exists_prefix_encoding_of_kraft_le_one s l hk.le
+
+/-- Non-strict Kraft converse packaged as an actual binary prefix code. -/
+theorem exists_binaryPrefixCode_of_kraft_le_one
     {α : Type*} [Fintype α] [DecidableEq α] (l : α → ℕ)
-    (hl : ∀ i, 0 < l i) (hk : (∑ i, (1 / 2 : ℝ) ^ l i) < 1) :
+    (hl : ∀ i, 0 < l i) (hk : (∑ i, (1 / 2 : ℝ) ^ l i) ≤ 1) :
     ∃ code : BinaryPrefixCode α, ∀ i, (code.encode i).length = l i := by
-  obtain ⟨c, hlen, hfree⟩ := exists_prefix_encoding_of_kraft_lt_one Finset.univ l hk
+  obtain ⟨c, hlen, hfree⟩ := exists_prefix_encoding_of_kraft_le_one Finset.univ l hk
   have hci : Function.Injective c := by
     intro i j hij
     exact hfree i (Finset.mem_univ _) j (Finset.mem_univ _) (by rw [hij])
@@ -233,6 +242,32 @@ theorem exists_binaryPrefixCode_of_kraft_lt_one
     exact hfree i (Finset.mem_univ _) j (Finset.mem_univ _) hp
   · intro i
     exact hlen i (Finset.mem_univ _)
+
+/-- Backwards-compatible strict Kraft packaging. -/
+theorem exists_binaryPrefixCode_of_kraft_lt_one
+    {α : Type*} [Fintype α] [DecidableEq α] (l : α → ℕ)
+    (hl : ∀ i, 0 < l i) (hk : (∑ i, (1 / 2 : ℝ) ^ l i) < 1) :
+    ∃ code : BinaryPrefixCode α, ∀ i, (code.encode i).length = l i :=
+  exists_binaryPrefixCode_of_kraft_le_one l hl hk.le
+
+/-- Every finite uniquely decodable encoder has a prefix code with exactly
+the same symbol lengths (the boxed assertion in Chapter 14, Section 14.1). -/
+theorem exists_prefixCode_of_uniquelyDecodable
+    {α : Type*} [Fintype α] (c : α → List Bool) (hinj : Function.Injective c)
+    (hud : InformationTheory.UniquelyDecodable (Set.range c)) :
+    ∃ code : BinaryPrefixCode α, ∀ i, (code.encode i).length = (c i).length := by
+  classical
+  have hl (i : α) : 0 < (c i).length := by
+    have hn : c i ≠ [] := fun h => hud.epsilon_not_mem ⟨i, h⟩
+    exact List.length_pos_iff.mpr hn
+  have hset : ((Finset.univ.image c : Finset (List Bool)) : Set (List Bool)) =
+      Set.range c := by ext w; simp
+  have hk := InformationTheory.kraft_mcmillan_inequality (S := Finset.univ.image c)
+    (hset.symm ▸ hud)
+  have hki : (∑ i, (1 / 2 : ℝ) ^ (c i).length) ≤ 1 := by
+    simpa only [Fintype.card_bool, Nat.cast_ofNat,
+      Finset.sum_image (fun i _ j _ h => hinj h)] using hk
+  exact exists_binaryPrefixCode_of_kraft_le_one (fun i => (c i).length) hl hki
 
 /-- A realizable finite prefix code attains the one-bit entropy sandwich.
 This proves existence, not Huffman's algorithm or optimality. -/

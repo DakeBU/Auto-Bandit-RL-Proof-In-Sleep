@@ -26,3 +26,24 @@ and its typed Exchange canary. It is now explicit in the evidence matrix.
 
 Whole-chapter promotion remains unproved after the arithmetic-identity gate:
 the boxed assertion also needs its compiled local adapter and canary.
+
+Retrieval packet: MLIB-KRAFT-MCMILLAN and TXT-LATTIMORE-SZEPESVARI-2020;
+search-memory kraft and list-lean-decls exists_binaryPrefixCode_of_kraft
+--statement confirm only the strict local converse. Installed Mathlib exposes
+UniquelyDecodable.epsilon_not_mem and kraft_mcmillan_inequality for a finite
+codeword set. Use Finset.sum_erase_add to prove the residual strict bound and
+Finset.sum_image with encoder injectivity to transfer Kraft to symbol lengths.
+No proof weapon, extra import, or external theorem assumption is needed.
+
+Implementation: exists_prefix_encoding_of_kraft_le_one and its BinaryPrefixCode
+packaging now compile, retaining strict versions as compatibility wrappers.
+exists_prefixCode_of_uniquelyDecodable derives positive lengths from
+epsilon_not_mem, transfers the finite codebook Kraft sum by injectivity and
+constructs a prefix code with every original length. No nonempty-word or strict
+Kraft premise was added to the source adapter. Focused build: 2673 jobs.
+Root-import canary initially could not run in the long-path workspace because
+BanditRLProof.olean is absent; this is a build-artifact failure, not a proof
+failure. The original root import is retained for the short-path full gate.
+Direct-module typed checks pass for both the equality-budget Bool example
+and arbitrary finite uniquely decodable encoder. All three new declarations
+report only propext, Classical.choice and Quot.sound.

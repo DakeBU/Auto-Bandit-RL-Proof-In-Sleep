@@ -51,3 +51,24 @@ example : ∃ code : BinaryPrefixCode Bool,
 #print axioms LowerBounds.exists_binaryPrefixCode_entropy_sandwich
 
 end BanditRLProof.TextbookPartIVChapter14PrefixConstructionCanary
+
+namespace BanditRLProof.TextbookPartIVChapter14PrefixConstructionCanary
+
+open LowerBounds
+
+-- Equality in Kraft is allowed: two one-bit words occupy the entire tree.
+example : ∃ code : BinaryPrefixCode Bool, ∀ b, (code.encode b).length = 1 := by
+  apply exists_binaryPrefixCode_of_kraft_le_one (fun _ => 1)
+  · intro b; omega
+  · norm_num [Fintype.sum_bool]
+
+example {α : Type*} [Fintype α] (c : α → List Bool) (hi : Function.Injective c)
+    (hu : InformationTheory.UniquelyDecodable (Set.range c)) :
+    ∃ code : BinaryPrefixCode α, ∀ i, (code.encode i).length = (c i).length :=
+  exists_prefixCode_of_uniquelyDecodable c hi hu
+
+#print axioms LowerBounds.exists_prefix_encoding_of_kraft_le_one
+#print axioms LowerBounds.exists_binaryPrefixCode_of_kraft_le_one
+#print axioms LowerBounds.exists_prefixCode_of_uniquelyDecodable
+
+end BanditRLProof.TextbookPartIVChapter14PrefixConstructionCanary
