@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
-  "generated": "2026-09-05T06:34:44+00:00",
+  "generated": "2026-09-05T06:38:30+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -32747,6 +32747,38 @@
       "file": "BanditRLProof/Algorithms/MOSSHistory.lean",
       "line": 58,
       "statement": "theorem historyAction_index_max {k : ℕ} (hk : 0 < k) (n t : ℕ) (history : History.FinitePairHistory (Fin k) ℝ t) (ht : k ≤ t + 1) (a : Fin k) : index n (ETC.realHistoryEmpMean t history) (ETC.realHistoryPullCount t history) a ≤ index n (ETC.realHistoryEmpMean t history) (ETC.realHistoryPullCount t history) (historyAction hk n t history)"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonical_initialPair_map",
+      "full_name": "BanditRLProof.MOSS.canonical_initialPair_map",
+      "file": "BanditRLProof/Algorithms/MOSSHistoryLaw.lean",
+      "line": 8,
+      "statement": "theorem canonical_initialPair_map {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν] : (UCB.armStreamMeasure ν).map (fun table => (canonicalAction hk n mean table 0, canonicalReward hk n mean table 0)) = (historyAlgorithm hk n).initialAction.compProd ν"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonical_action_condDistrib",
+      "full_name": "BanditRLProof.MOSS.canonical_action_condDistrib",
+      "file": "BanditRLProof/Algorithms/MOSSHistoryLaw.lean",
+      "line": 25,
+      "statement": "theorem canonical_action_condDistrib {k : ℕ} [NeZero k] (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ) (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν] : Filter.EventuallyEq (ae ((UCB.armStreamMeasure ν).map (fun table => canonicalHistory hk n mean table t))) (condDistrib (fun table => canonicalAction hk n mean table (t+1)) (fun table => canonicalHistory hk n mean table t) (UCB.armStreamMeasure ν)) ((historyAlgorithm hk n).policy t)"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonical_historySequence",
+      "full_name": "BanditRLProof.MOSS.canonical_historySequence",
+      "file": "BanditRLProof/Algorithms/MOSSHistoryLaw.lean",
+      "line": 40,
+      "statement": "theorem canonical_historySequence {k : ℕ} [NeZero k] (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν] : Thompson.IsHistoryAlgorithmEnvironmentSequence (UCB.armStreamMeasure ν) (canonicalAction hk n mean) (canonicalReward hk n mean) (historyAlgorithm hk n) (LowerBounds.stationaryBanditHistoryEnvironment ν) where"
+    },
+    {
+      "kind": "theorem",
+      "name": "map_canonicalHistory_eq",
+      "full_name": "BanditRLProof.MOSS.map_canonicalHistory_eq",
+      "file": "BanditRLProof/Algorithms/MOSSHistoryLaw.lean",
+      "line": 62,
+      "statement": "theorem map_canonicalHistory_eq {k : ℕ} [NeZero k] (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν] (t : ℕ) : (UCB.armStreamMeasure ν).map (fun table => canonicalHistory hk n mean table t) = LowerBounds.canonicalBanditHistoryMeasure (historyAlgorithm hk n) ν t"
     },
     {
       "kind": "def",
@@ -96362,6 +96394,45 @@
       "target_fingerprint": "",
       "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
       "time": "2026-09-05T06:30:54+00:00",
+      "verifier_evidence": [],
+      "worker_id": ""
+    },
+    {
+      "attempt_id": "",
+      "changed_files": [],
+      "dag_depth": 0,
+      "dag_nodes": 0,
+      "elapsed_seconds": 0.0,
+      "error_signature": "",
+      "experiment_id": "",
+      "harness": "",
+      "input_tokens": 0,
+      "kind": "build",
+      "lean": "BanditRLProof/Algorithms/MOSSConditionalReward.lean",
+      "lean_check_seconds": 0.0,
+      "new_declarations": [
+        "BanditRLProof.MOSS.map_condition_reward_eq_compProd",
+        "BanditRLProof.MOSS.canonicalReward_condDistrib"
+      ],
+      "notes": "Compiled branch-restricted actual joint law, countable partition sum, and actual successor reward conditional law. Canary standard axioms. Initial joint law and common history-law induction remain open; chapter partial.",
+      "obligations_after": 0,
+      "obligations_before": 0,
+      "output_tokens": 0,
+      "parent_id": "",
+      "progress_class": "compiled-leaf",
+      "prompt_chars": 0,
+      "reused_declarations": [],
+      "reviewer_validated": false,
+      "role": "lower",
+      "route_fingerprint": "",
+      "route_packet_hash": "",
+      "run_id": "",
+      "source": "",
+      "statement_hash": "",
+      "status": "compiled",
+      "target_fingerprint": "",
+      "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+      "time": "2026-09-05T06:34:50+00:00",
       "verifier_evidence": [],
       "worker_id": ""
     }

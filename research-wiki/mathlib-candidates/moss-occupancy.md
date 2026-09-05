@@ -290,3 +290,20 @@ joint law and inductively identify the canonical histories with the common
 MOSS.historyAlgorithm law, then transport the constant39 expected regret.
 Full e2479fb validation passed: root, Tests (8919 jobs), ProofGraphExport,
 400 Python tests in 196.650 seconds, 7 skipped. Later changes need fresh check.
+
+Common history-law route: use LowerBounds.canonicalBanditHistoryMeasure_zero
+and _succ, and Thompson.IsHistoryAlgorithmEnvironmentSequence. Initial action
+is arm zero, first reward table(1,zero) has its prescribed arm law. Deterministic
+historyAction gives the action condDistrib via condDistrib_comp_self; combine
+with the proved successor feedback conditional law using RewardKernel's split
+pair producer. Then map singleton/successor measurable equivalences and induct
+on inclusive time. This matches Chapter13's existing history functional.
+
+Compiled `MOSSHistoryLaw.map_canonicalHistory_eq`: for every inclusive time,
+the reward-table history pushforward equals LowerBounds.canonicalBanditHistoryMeasure
+for the actual MOSS.historyAlgorithm and arbitrary stationary arm kernel.
+The initial pair law, deterministic policy conditional law and full common
+process contract are compiled producers, not premises. Next transport the
+expected regret using this equality with the exact finite-history gap
+functional, then discharge the broader-class near-minimax consequence and
+perform the chapter evidence/review/export/site completion audit.

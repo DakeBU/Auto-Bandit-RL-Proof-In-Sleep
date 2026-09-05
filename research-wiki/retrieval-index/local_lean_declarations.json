@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T06:34:33+00:00",
+  "generated": "2026-09-05T06:38:18+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -3736,6 +3736,38 @@
       "file": "BanditRLProof/Algorithms/MOSSHistory.lean",
       "line": 58,
       "statement": "theorem historyAction_index_max {k : \u2115} (hk : 0 < k) (n t : \u2115) (history : History.FinitePairHistory (Fin k) \u211d t) (ht : k \u2264 t + 1) (a : Fin k) : index n (ETC.realHistoryEmpMean t history) (ETC.realHistoryPullCount t history) a \u2264 index n (ETC.realHistoryEmpMean t history) (ETC.realHistoryPullCount t history) (historyAction hk n t history)"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonical_initialPair_map",
+      "full_name": "BanditRLProof.MOSS.canonical_initialPair_map",
+      "file": "BanditRLProof/Algorithms/MOSSHistoryLaw.lean",
+      "line": 8,
+      "statement": "theorem canonical_initialPair_map {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (\u03bd : Kernel (Fin k) \u211d) [IsMarkovKernel \u03bd] : (UCB.armStreamMeasure \u03bd).map (fun table => (canonicalAction hk n mean table 0, canonicalReward hk n mean table 0)) = (historyAlgorithm hk n).initialAction.compProd \u03bd"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonical_action_condDistrib",
+      "full_name": "BanditRLProof.MOSS.canonical_action_condDistrib",
+      "file": "BanditRLProof/Algorithms/MOSSHistoryLaw.lean",
+      "line": 25,
+      "statement": "theorem canonical_action_condDistrib {k : \u2115} [NeZero k] (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (t : \u2115) (\u03bd : Kernel (Fin k) \u211d) [IsMarkovKernel \u03bd] : Filter.EventuallyEq (ae ((UCB.armStreamMeasure \u03bd).map (fun table => canonicalHistory hk n mean table t))) (condDistrib (fun table => canonicalAction hk n mean table (t+1)) (fun table => canonicalHistory hk n mean table t) (UCB.armStreamMeasure \u03bd)) ((historyAlgorithm hk n).policy t)"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonical_historySequence",
+      "full_name": "BanditRLProof.MOSS.canonical_historySequence",
+      "file": "BanditRLProof/Algorithms/MOSSHistoryLaw.lean",
+      "line": 40,
+      "statement": "theorem canonical_historySequence {k : \u2115} [NeZero k] (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (\u03bd : Kernel (Fin k) \u211d) [IsMarkovKernel \u03bd] : Thompson.IsHistoryAlgorithmEnvironmentSequence (UCB.armStreamMeasure \u03bd) (canonicalAction hk n mean) (canonicalReward hk n mean) (historyAlgorithm hk n) (LowerBounds.stationaryBanditHistoryEnvironment \u03bd) where"
+    },
+    {
+      "kind": "theorem",
+      "name": "map_canonicalHistory_eq",
+      "full_name": "BanditRLProof.MOSS.map_canonicalHistory_eq",
+      "file": "BanditRLProof/Algorithms/MOSSHistoryLaw.lean",
+      "line": 62,
+      "statement": "theorem map_canonicalHistory_eq {k : \u2115} [NeZero k] (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (\u03bd : Kernel (Fin k) \u211d) [IsMarkovKernel \u03bd] (t : \u2115) : (UCB.armStreamMeasure \u03bd).map (fun table => canonicalHistory hk n mean table t) = LowerBounds.canonicalBanditHistoryMeasure (historyAlgorithm hk n) \u03bd t"
     },
     {
       "kind": "def",

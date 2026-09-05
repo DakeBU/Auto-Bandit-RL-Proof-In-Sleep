@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T06:34:39+00:00`
+Generated: `2026-09-05T06:38:25+00:00`
 
 ## Source Task
 
@@ -33848,6 +33848,38 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/Algorithms/MOSSHistory.lean",
     "line": 58,
     "statement": "theorem historyAction_index_max {k : \u2115} (hk : 0 < k) (n t : \u2115) (history : History.FinitePairHistory (Fin k) \u211d t) (ht : k \u2264 t + 1) (a : Fin k) : index n (ETC.realHistoryEmpMean t history) (ETC.realHistoryPullCount t history) a \u2264 index n (ETC.realHistoryEmpMean t history) (ETC.realHistoryPullCount t history) (historyAction hk n t history)"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonical_initialPair_map",
+    "full_name": "BanditRLProof.MOSS.canonical_initialPair_map",
+    "file": "BanditRLProof/Algorithms/MOSSHistoryLaw.lean",
+    "line": 8,
+    "statement": "theorem canonical_initialPair_map {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (\u03bd : Kernel (Fin k) \u211d) [IsMarkovKernel \u03bd] : (UCB.armStreamMeasure \u03bd).map (fun table => (canonicalAction hk n mean table 0, canonicalReward hk n mean table 0)) = (historyAlgorithm hk n).initialAction.compProd \u03bd"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonical_action_condDistrib",
+    "full_name": "BanditRLProof.MOSS.canonical_action_condDistrib",
+    "file": "BanditRLProof/Algorithms/MOSSHistoryLaw.lean",
+    "line": 25,
+    "statement": "theorem canonical_action_condDistrib {k : \u2115} [NeZero k] (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (t : \u2115) (\u03bd : Kernel (Fin k) \u211d) [IsMarkovKernel \u03bd] : Filter.EventuallyEq (ae ((UCB.armStreamMeasure \u03bd).map (fun table => canonicalHistory hk n mean table t))) (condDistrib (fun table => canonicalAction hk n mean table (t+1)) (fun table => canonicalHistory hk n mean table t) (UCB.armStreamMeasure \u03bd)) ((historyAlgorithm hk n).policy t)"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonical_historySequence",
+    "full_name": "BanditRLProof.MOSS.canonical_historySequence",
+    "file": "BanditRLProof/Algorithms/MOSSHistoryLaw.lean",
+    "line": 40,
+    "statement": "theorem canonical_historySequence {k : \u2115} [NeZero k] (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (\u03bd : Kernel (Fin k) \u211d) [IsMarkovKernel \u03bd] : Thompson.IsHistoryAlgorithmEnvironmentSequence (UCB.armStreamMeasure \u03bd) (canonicalAction hk n mean) (canonicalReward hk n mean) (historyAlgorithm hk n) (LowerBounds.stationaryBanditHistoryEnvironment \u03bd) where"
+  },
+  {
+    "kind": "theorem",
+    "name": "map_canonicalHistory_eq",
+    "full_name": "BanditRLProof.MOSS.map_canonicalHistory_eq",
+    "file": "BanditRLProof/Algorithms/MOSSHistoryLaw.lean",
+    "line": 62,
+    "statement": "theorem map_canonicalHistory_eq {k : \u2115} [NeZero k] (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (\u03bd : Kernel (Fin k) \u211d) [IsMarkovKernel \u03bd] (t : \u2115) : (UCB.armStreamMeasure \u03bd).map (fun table => canonicalHistory hk n mean table t) = LowerBounds.canonicalBanditHistoryMeasure (historyAlgorithm hk n) \u03bd t"
   },
   {
     "kind": "def",
@@ -96738,42 +96770,6 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "experiment_id": "",
     "harness": "",
     "input_tokens": 0,
-    "kind": "proposal",
-    "lean": "",
-    "lean_check_seconds": 0.0,
-    "new_declarations": [],
-    "notes": "Registered CH13-MOSS-UPPER source-constant Algorithm 7 dependency; exact Gaussian Eq13.1 locally compiled at 1203c63; full gate running.",
-    "obligations_after": 0,
-    "obligations_before": 0,
-    "output_tokens": 0,
-    "parent_id": "",
-    "progress_class": "unreviewed",
-    "prompt_chars": 0,
-    "reused_declarations": [],
-    "reviewer_validated": false,
-    "role": "reviewer",
-    "route_fingerprint": "",
-    "route_packet_hash": "",
-    "run_id": "",
-    "source": "",
-    "statement_hash": "",
-    "status": "queued",
-    "target_fingerprint": "",
-    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
-    "time": "2026-09-05T04:50:59+00:00",
-    "verifier_evidence": [],
-    "worker_id": ""
-  },
-  {
-    "attempt_id": "",
-    "changed_files": [],
-    "dag_depth": 0,
-    "dag_nodes": 0,
-    "elapsed_seconds": 0.0,
-    "error_signature": "",
-    "experiment_id": "",
-    "harness": "",
-    "input_tokens": 0,
     "kind": "build",
     "lean": "",
     "lean_check_seconds": 0.0,
@@ -97468,6 +97464,45 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "target_fingerprint": "",
     "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
     "time": "2026-09-05T06:30:54+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "build",
+    "lean": "BanditRLProof/Algorithms/MOSSConditionalReward.lean",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [
+      "BanditRLProof.MOSS.map_condition_reward_eq_compProd",
+      "BanditRLProof.MOSS.canonicalReward_condDistrib"
+    ],
+    "notes": "Compiled branch-restricted actual joint law, countable partition sum, and actual successor reward conditional law. Canary standard axioms. Initial joint law and common history-law induction remain open; chapter partial.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "compiled-leaf",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "lower",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "compiled",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T06:34:50+00:00",
     "verifier_evidence": [],
     "worker_id": ""
   }

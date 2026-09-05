@@ -5,6 +5,7 @@ import BanditRLProof.Algorithms.MOSSCanonicalReward
 import BanditRLProof.Algorithms.MOSSCanonicalHistory
 import BanditRLProof.Algorithms.MOSSUnusedCoordinate
 import BanditRLProof.Algorithms.MOSSConditionalReward
+import BanditRLProof.Algorithms.MOSSHistoryLaw
 
 open BanditRLProof
 
@@ -85,3 +86,13 @@ example {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ)
 #print axioms MOSS.map_condition_reward_restrict_branch
 #print axioms MOSS.map_condition_reward_eq_compProd
 #print axioms MOSS.canonicalReward_condDistrib
+
+example {k : ℕ} [NeZero k] (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ)
+    (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν] (t : ℕ) :
+    (UCB.armStreamMeasure ν).map (fun table => MOSS.canonicalHistory hk n mean table t) =
+      LowerBounds.canonicalBanditHistoryMeasure (MOSS.historyAlgorithm hk n) ν t :=
+  MOSS.map_canonicalHistory_eq hk n mean ν t
+
+#print axioms MOSS.canonical_initialPair_map
+#print axioms MOSS.canonical_historySequence
+#print axioms MOSS.map_canonicalHistory_eq
