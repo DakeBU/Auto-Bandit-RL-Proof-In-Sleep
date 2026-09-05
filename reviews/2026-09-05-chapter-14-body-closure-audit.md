@@ -69,3 +69,11 @@ Bernoulli asymmetry at 0 versus 1/2, and Gaussian triangle failure for means
 0,1,2 with common variance 1. The latter has three finite KL values. See
 `reviews/2026-09-05-chapter-14-metric-route.md`. This resolves the identified
 local proof gap for item 5, but not its pending aggregate/export verification.
+
+## Follow-up: cross entropy and zero limit
+
+CrossEntropy now provides focused-compiled `relativeEntropy_finite_crossEntropy`
+and `entropyTerm_tendsto_zero_right`, resolving the local proof gaps in items
+3 and 4. The real cross-entropy identity has the required support/AC premise;
+it does not apply to singular infinite KL and does not claim an exact rounded
+code-length difference. Aggregate and export synchronization remain pending.

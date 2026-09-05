@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE",
-  "generated": "2026-09-05T06:45:53+00:00",
+  "generated": "2026-09-05T06:47:52+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -57635,6 +57635,38 @@
       "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
       "line": 379,
       "statement": "theorem klDiv_historyStep_samePolicy_eq_iterated_lintegral_armKL_general {History Reward : Type*} {K : Nat} [MeasurableSpace History] [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (historyLaw : Measure History) [IsFiniteMeasure historyLaw] (policy : Kernel History (Fin K)) [IsMarkovKernel policy] (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] : InformationTheory.klDiv (historyLaw ⊗ₘ (policy ⊗ₖ armLaw.comap Prod.snd measurable_snd)) (historyLaw ⊗ₘ (policy ⊗ₖ referenceArmLaw.comap Prod.snd measurable_snd)) = ∫⁻ history, ∫⁻ arm, InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm) ∂policy history ∂historyLaw"
+    },
+    {
+      "kind": "def",
+      "name": "discreteCrossEntropy",
+      "full_name": "BanditRLProof.LowerBounds.discreteCrossEntropy",
+      "file": "BanditRLProof/LowerBounds/CrossEntropy.lean",
+      "line": 8,
+      "statement": "noncomputable def discreteCrossEntropy {α : Type*} [Fintype α] (p q : α → ℝ) : ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "discreteCrossEntropy_sub_entropy",
+      "full_name": "BanditRLProof.LowerBounds.discreteCrossEntropy_sub_entropy",
+      "file": "BanditRLProof/LowerBounds/CrossEntropy.lean",
+      "line": 12,
+      "statement": "theorem discreteCrossEntropy_sub_entropy {α : Type*} [Fintype α] (p q : α → ℝ) (hsupport : ∀ i, p i ≠ 0 → q i ≠ 0) : discreteCrossEntropy p q - discreteEntropy Finset.univ p = ∑ i, p i * Real.log (p i / q i)"
+    },
+    {
+      "kind": "theorem",
+      "name": "relativeEntropy_finite_crossEntropy",
+      "full_name": "BanditRLProof.LowerBounds.relativeEntropy_finite_crossEntropy",
+      "file": "BanditRLProof/LowerBounds/CrossEntropy.lean",
+      "line": 24,
+      "statement": "theorem relativeEntropy_finite_crossEntropy {α : Type*} [Fintype α] [MeasurableSpace α] [MeasurableSingletonClass α] (P Q : Measure α) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] (h : P ≪ Q) : relativeEntropy P Q = ENNReal.ofReal (discreteCrossEntropy (fun i => (P {i}).toReal) (fun i => (Q {i}).toReal) - discreteEntropy Finset.univ (fun i => (P {i}).toReal))"
+    },
+    {
+      "kind": "theorem",
+      "name": "entropyTerm_tendsto_zero_right",
+      "full_name": "BanditRLProof.LowerBounds.entropyTerm_tendsto_zero_right",
+      "file": "BanditRLProof/LowerBounds/CrossEntropy.lean",
+      "line": 38,
+      "statement": "theorem entropyTerm_tendsto_zero_right : Filter.Tendsto (fun x : ℝ => x * Real.log x⁻¹) (nhdsWithin 0 (Set.Ioi 0)) (nhds 0)"
     },
     {
       "kind": "def",
