@@ -2,9 +2,11 @@
 
 Task id: `TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE`
 
-Status: `partial` whole-chapter contract; compiled Gaussian lower/testing
-route and broader-class MOSS near-minimax theorem. Integration, review and
-publication gates remain pending.
+Status: `complete` frozen main-text contract, including the compiled
+Gaussian lower/testing route and broader-class MOSS near-minimax theorem.
+PR #105, main run 33953476610, Pages job 101275173069 and live b38630c
+desktop/mobile checks pass. Optional Notes/Exercises remain unformalized.
+Publication of this updated status record is a separate follow-up.
 
 ## Model and notation
 
@@ -84,7 +86,7 @@ arithmetic mean to exactly this law.
 - `LowerBounds.gaussianSampleMeanThresholdRisk_le_exp`
 - `LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt`
 
-## Required blockers and optional boundary
+## Compiled dependencies and optional boundary
 
 ### MOSS policy integration
 
@@ -204,8 +206,8 @@ Exact additional declaration names (under `BanditRLProof`):
   single-turning-point error comparison for the upper integral; Gaussian
   density standardization and square-root rescaling for the probability.
   These are independent of the weaker Chernoff companion.
-- The broader-class connected claim is compiled. Remaining gates are the
-  current full harness, export/site verification, structured review, PR,
-  authoritative-main Actions, Pages deployment and live-page checks.
+- The broader-class connected claim is compiled. Full harness, rendered
+  export/site verification, structured self-review, PR, authoritative-main
+  Actions, Pages deployment and live-page checks pass for b38630c.
 - Optional: Notes 13.2 and Exercises 13.1--13.2 are not formalized and do not
   block the frozen whole-main-text contract.

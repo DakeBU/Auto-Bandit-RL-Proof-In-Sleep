@@ -6,6 +6,13 @@ Kind: `theoremFormalization`
 
 Status: `accepted`
 
+Chapter completion contract: `complete` for the frozen required main text.
+Evidence: PR #105 at 90b1c07, authoritative-main b38630c / run 33953476610,
+Pages job 101275173069, and live desktop/mobile acceptance in
+`reviews/2026-09-05-ch13-moss-closeout-audit.md`. Notes/Exercises remain
+optional and unformalized. Final status-record publication is tracked
+separately; this does not claim that the updated label is already live.
+
 Harness: `hierarchical`
 
 ## Goal
@@ -58,10 +65,10 @@ source node.
 | worst-case and minimax regret; minimax-optimal policy | required main text | explicit classes and fixed-horizon regret functional; attainment predicate | compiled |
 | Theorem 13.1 | required main theorem | unit-Gaussian `[0,1]^k` minimax lower bound for `k>1`, `n>=k` | compiled through Chapter 15 with `c=1/54` |
 | Section 13.1 two-point Gaussian test and midpoint decision | required main text | derive the empirical mean law `N(mu,1/n)` from `n` independent `N(mu,1)` observations; exact midpoint error events | compiled for the canonical finite product law |
-| Eq. (13.1) | required displayed result | both explicit Mills-ratio bounds with the printed constants | compiled by `gaussianSampleMeanZeroErrorProbability_source_bounds`; final integration gate pending |
+| Eq. (13.1) | required displayed result | both explicit Mills-ratio bounds with the printed constants | compiled by `gaussianSampleMeanZeroErrorProbability_source_bounds`; integration verified |
 | competition/similarity trade-off | required source mapping | narrative route to the precise two-environment nodes; no invented standalone proposition | mapped |
 | Eqs. (13.2)--(13.3), least-explored arm, one-coordinate change, `Delta` tuning, information bridge | required main text | exact identities/inequalities and the Chapter 14--15 same-policy history-law route | compiled locally or through Chapter 15 |
-| Algorithm 7 / Theorem 9.1 near-minimax claim for the broader 1-subgaussian class | required connected main-text claim | Gaussian-subclass lower transfer plus a compiled MOSS upper theorem on the stated broader class | compiled broad-class near-minimax endpoint; full integration and publication gates pending |
+| Algorithm 7 / Theorem 9.1 near-minimax claim for the broader 1-subgaussian class | required connected main-text claim | Gaussian-subclass lower transfer plus a compiled MOSS upper theorem on the stated broader class | compiled broad-class near-minimax endpoint; integration and publication gates verified |
 | Section 13.2 Notes | optional enrichment | itemized mapping if attempted; never used to hide a main-text gap | optional, unformalized |
 | Section 13.3 Bibliographic Remarks / Eq. (13.4) | source support for Eq. (13.1) | Abramowitz--Stegun Mills-ratio source and exact integral leaf | both exact integral bounds compiled in `GaussianMillsRatio.lean` |
 | Section 13.4 Exercises 13.1--13.2 | optional exercises | separate exercise contracts if attempted | optional, unformalized |
@@ -176,8 +183,10 @@ LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt
 - [x] The earlier dependency-slice PR #9, remote Actions run `31942624241`, merge commit `44c3e153`,
   Pages deployment job `95156292456`, and the live desktop/mobile Chapter 13
   page pass.
-- [ ] The current Chapter 15 downstream Theorem 13.1 consumer passes its own
+- [x] The current Chapter 15 downstream Theorem 13.1 consumer passes its own
   PR, authoritative-main Actions, Pages deployment, and live Chapter 13 check.
+  The current combined extension is accepted through PR #105 and main run
+  33953476610, with Pages job 101275173069 and live b38630c verification.
 - [x] The main-prose broader-class near-minimax consequence has a compiled
   MOSS/Algorithm 7 upper theorem for the stated 1-subgaussian class.
 
@@ -224,6 +233,9 @@ LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt
   distinct MOSS/Chapter 9 dependency.
 
 ## Failure policy
+
+The dated progress notes below are historical. Their running/pending/partial
+observations are superseded by the accepted completion evidence above.
 
 ### 2026-09-05 Broader-class near-minimax consumer
 

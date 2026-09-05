@@ -1,8 +1,19 @@
 # Chapter 13 MOSS evidence closeout audit
 
-This is an in-branch self-audit, not an independent review or completion
-certificate. Current PR-validated tree: 90b1c07, merged as b38630c.
-Chapter status remains partial pending main/deployment/live acceptance.
+This combines an in-branch self-audit with authoritative acceptance evidence;
+it is not an independent review. Current accepted tree: 90b1c07, merged and
+deployed as b38630c. The frozen main-text completion contract is satisfied.
+The final synchronized status-record publication remains to be verified.
+
+Final status synchronization updates only Chapter 13's frozen main-text
+contract to complete (website enum compiled); optional sections and other
+chapters retain their original scope/status. The regenerated site passes
+all checks: 686 pages, 8453 declarations, 118 highlights, and a derived
+summary of one compiled / four partial chapter contracts. The updated
+two-page export compiles without overfull/underfull warnings and both
+rendered pages were inspected. The heading now describes compiled
+dependencies rather than obsolete required blockers. No Lean source or
+theorem target changes are included in this status-publication follow-up.
 
 ## PR acceptance
 
