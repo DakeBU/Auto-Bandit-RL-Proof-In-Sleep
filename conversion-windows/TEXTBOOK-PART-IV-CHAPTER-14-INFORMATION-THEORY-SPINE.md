@@ -143,4 +143,6 @@ with `D(Q,P)` is also valid.
 - [ ] Block/arithmetic source-coding achievability and converse.
 - [x] Eq. (14.4) for an arbitrary finite alphabet, with exact support dichotomy and zero-mass terms.
 - [x] Eq. (14.5) finite-discretisation supremum equivalence to RN KL, including singular and nonintegrable branches.
-- [ ] General common-density, Gaussian-variance/application, and measure-overlap proof nodes.
+- [x] Eq. (14.6) general common-density formula; full harness passed at `78846b8`.
+- [ ] Measure-overlap root integration and source affinity/KL Jensen intermediate (Eqs. (14.8)--(14.9) focused build passed).
+- [ ] General Gaussian-variance/application proof nodes.

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T05:12:06+00:00",
+  "generated": "2026-09-05T05:21:28+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -28024,6 +28024,102 @@
       "file": "BanditRLProof/LowerBounds/CommonDensityKL.lean",
       "line": 68,
       "statement": "theorem relativeEntropy_commonDensity_klFun {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) (hPQ : P \u226a Q) : relativeEntropy P Q = \u222b\u207b x, Q.rnDeriv \u03bc x * ENNReal.ofReal (InformationTheory.klFun ((P.rnDeriv \u03bc x / Q.rnDeriv \u03bc x).toReal)) \u2202\u03bc"
+    },
+    {
+      "kind": "theorem",
+      "name": "memLp_sqrt_of_integrable_nonneg",
+      "full_name": "BanditRLProof.LowerBounds.memLp_sqrt_of_integrable_nonneg",
+      "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+      "line": 14,
+      "statement": "theorem memLp_sqrt_of_integrable_nonneg {\u03b1 : Type*} [MeasurableSpace \u03b1] {\u03bc : Measure \u03b1} {f : \u03b1 \u2192 \u211d} (hf : Integrable f \u03bc) (hpos : \u2200 x, 0 \u2264 f x) : MemLp (fun x => Real.sqrt (f x)) 2 \u03bc"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_sqrt_mul_sq_le",
+      "full_name": "BanditRLProof.LowerBounds.integral_sqrt_mul_sq_le",
+      "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+      "line": 25,
+      "statement": "theorem integral_sqrt_mul_sq_le {\u03b1 : Type*} [MeasurableSpace \u03b1] {\u03bc : Measure \u03b1} {p q : \u03b1 \u2192 \u211d} (hp : Integrable p \u03bc) (hq : Integrable q \u03bc) (hp0 : \u2200 x, 0 \u2264 p x) (hq0 : \u2200 x, 0 \u2264 q x) : (\u222b x, Real.sqrt (p x * q x) \u2202\u03bc) ^ 2 \u2264 (\u222b x, p x \u2202\u03bc) * \u222b x, q x \u2202\u03bc"
+    },
+    {
+      "kind": "def",
+      "name": "commonDensityOverlap",
+      "full_name": "BanditRLProof.LowerBounds.commonDensityOverlap",
+      "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+      "line": 51,
+      "statement": "def commonDensityOverlap {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) : \u211d"
+    },
+    {
+      "kind": "def",
+      "name": "commonDensityAffinity",
+      "full_name": "BanditRLProof.LowerBounds.commonDensityAffinity",
+      "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+      "line": 55,
+      "statement": "def commonDensityAffinity {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) : \u211d"
+    },
+    {
+      "kind": "theorem",
+      "name": "integrable_commonDensityAffinity",
+      "full_name": "BanditRLProof.LowerBounds.integrable_commonDensityAffinity",
+      "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+      "line": 58,
+      "statement": "theorem integrable_commonDensityAffinity {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] : Integrable (fun x => Real.sqrt ((P.rnDeriv \u03bc x).toReal * (Q.rnDeriv \u03bc x).toReal)) \u03bc"
+    },
+    {
+      "kind": "theorem",
+      "name": "half_commonDensityAffinity_sq_le_overlap",
+      "full_name": "BanditRLProof.LowerBounds.half_commonDensityAffinity_sq_le_overlap",
+      "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+      "line": 75,
+      "statement": "theorem half_commonDensityAffinity_sq_le_overlap {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) : (1 / 2 : \u211d) * commonDensityAffinity P Q \u03bc ^ 2 \u2264 commonDensityOverlap P Q \u03bc"
+    },
+    {
+      "kind": "def",
+      "name": "commonDensityComparisonEvent",
+      "full_name": "BanditRLProof.LowerBounds.commonDensityComparisonEvent",
+      "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+      "line": 109,
+      "statement": "def commonDensityComparisonEvent {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) : Set \u03b1"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurableSet_commonDensityComparisonEvent",
+      "full_name": "BanditRLProof.LowerBounds.measurableSet_commonDensityComparisonEvent",
+      "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+      "line": 113,
+      "statement": "theorem measurableSet_commonDensityComparisonEvent {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) : MeasurableSet (commonDensityComparisonEvent P Q \u03bc)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integrable_min_commonDensity",
+      "full_name": "BanditRLProof.LowerBounds.integrable_min_commonDensity",
+      "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+      "line": 118,
+      "statement": "theorem integrable_min_commonDensity {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] : Integrable (fun x => min (P.rnDeriv \u03bc x).toReal (Q.rnDeriv \u03bc x).toReal) \u03bc"
+    },
+    {
+      "kind": "theorem",
+      "name": "commonDensityOverlap_nonneg",
+      "full_name": "BanditRLProof.LowerBounds.commonDensityOverlap_nonneg",
+      "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+      "line": 124,
+      "statement": "theorem commonDensityOverlap_nonneg {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) : 0 \u2264 commonDensityOverlap P Q \u03bc"
+    },
+    {
+      "kind": "theorem",
+      "name": "commonDensityOverlap_eq_testingError",
+      "full_name": "BanditRLProof.LowerBounds.commonDensityOverlap_eq_testingError",
+      "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+      "line": 130,
+      "statement": "theorem commonDensityOverlap_eq_testingError {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) : commonDensityOverlap P Q \u03bc = P.real (commonDensityComparisonEvent P Q \u03bc) + Q.real (commonDensityComparisonEvent P Q \u03bc)\u1d9c"
+    },
+    {
+      "kind": "theorem",
+      "name": "bretagnolleHuberScale_le_commonDensityOverlap",
+      "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_le_commonDensityOverlap",
+      "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+      "line": 155,
+      "statement": "theorem bretagnolleHuberScale_le_commonDensityOverlap {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) : bretagnolleHuberScale (relativeEntropy P Q) \u2264 commonDensityOverlap P Q \u03bc"
     },
     {
       "kind": "theorem",

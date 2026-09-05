@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T05:12:54+00:00`
+Generated: `2026-09-05T05:21:39+00:00`
 
 ## Source Task
 
@@ -66,13 +66,13 @@ mapped local adapter before they count as chapter evidence.
 | Eq. (14.4) | arbitrary finite-alphabet discrete relative entropy with exact zero/support endpoints | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, and `relativeEntropy_finite_eq_top_iff` compile; root-import finite/singular three-symbol canaries pass | compiled |
 | Eq. (14.5) | relative entropy as the supremum over all finite measurable discretisations | `finitePartitionRelativeEntropy_eq_relativeEntropy` compiles for arbitrary finite measures, using finite encodings of the concrete density filtration; root and aggregate Tests pass | compiled |
 | Theorem 14.1 | Eq. (14.5) equals the RN/log-likelihood formula, including the singular and nonintegrable branches | full supremum/RN equality and exact RN branch adapters compile; no finite-KL or AC premise on the equality; root and aggregate Tests pass | compiled |
-| Eq. (14.6) | common-dominating-measure density formula | `relativeEntropy_commonDensity_eq_if` and the nonnegative `klFun` formula compile with focused canaries for arbitrary sigma-finite domination; root/aggregate gate pending | partial (integration pending) |
+| Eq. (14.6) | common-dominating-measure density formula | `relativeEntropy_commonDensity_eq_if` and the nonnegative `klFun` formula; root/aggregate/full harness passed at `78846b8` for arbitrary sigma-finite domination | compiled |
 | §14.2 metric properties | nonnegativity and `D(P,Q)=0 ↔ P=Q`, with asymmetry/non-triangle statements treated as explanatory nonclaims | order nonnegativity is intrinsic to `ENNReal`; `relativeEntropy_eq_zero_iff` compiles | compiled |
 | Gaussian example | common-variance Gaussian KL formula | unit-variance specialization compiles in Chapter 15; arbitrary positive variance is absent | partial |
 | Bernoulli example | endpoint-complete binary KL formula | `bernoulliRelativeEntropy` and endpoint lemmas compile | compiled |
 | Theorem 14.2 / Eq. (14.7) | unconditional Bretagnolle--Huber event inequality in direction `D(P,Q)` | exact local terminal compiles | compiled |
-| Eq. (14.8) | measure-level overlap lower bound used in the source proof | only a binary specialization is compiled | partial |
-| Eq. (14.9) | measure-level Le Cam affinity/overlap inequality | only a binary specialization is compiled | partial |
+| Eq. (14.8) | measure-level overlap lower bound used in the source proof | `bretagnolleHuberScale_le_commonDensityOverlap` via the attaining likelihood event; focused build passed; root integration pending; source Jensen intermediate remains open | partial (integration pending) |
+| Eq. (14.9) | measure-level Le Cam affinity/overlap inequality | `half_commonDensityAffinity_sq_le_overlap` via L2 Cauchy--Schwarz, with integrability proved separately; focused build passed; root integration pending | partial (integration pending) |
 | Gaussian testing application | the displayed Gaussian error bound and the `3/10`, `3/20` consequences under `Δ²/σ²≤1` | not exposed as Chapter 14 declarations | planned |
 
 Optional rows are §14.3 Notes, §14.4 Bibliographic Remarks, and Exercises
@@ -104,15 +104,8 @@ LowerBounds.relativeEntropy_trim_le
 LowerBounds.bernoulliRelativeEntropy_event_le
 LowerBounds.binaryBretagnolleHuber
 LowerBounds.bretagnolleHuberScale
-LowerBounds.bretagnolleHuber
-```
 
-The public terminal uses a real-valued scale `0` when `D(P,Q)=∞`, and
-`exp (-(D(P,Q)).toReal)/2` otherwise. This is the explicit Lean encoding of
-the source convention `exp(-∞)=0`; no finiteness assumption is added to
-Theorem 14.2.
-
-<!-- 1841 characters omitted from the middle of this snapshot. -->
+<!-- 2108 characters omitted from the middle of this snapshot. -->
 
 page are verified before this task becomes accepted.
 
@@ -362,7 +355,9 @@ with `D(Q,P)` is also valid.
 - [ ] Block/arithmetic source-coding achievability and converse.
 - [x] Eq. (14.4) for an arbitrary finite alphabet, with exact support dichotomy and zero-mass terms.
 - [x] Eq. (14.5) finite-discretisation supremum equivalence to RN KL, including singular and nonintegrable branches.
-- [ ] General common-density, Gaussian-variance/application, and measure-overlap proof nodes.
+- [x] Eq. (14.6) general common-density formula; full harness passed at `78846b8`.
+- [ ] Measure-overlap root integration and source affinity/KL Jensen intermediate (Eqs. (14.8)--(14.9) focused build passed).
+- [ ] General Gaussian-variance/application proof nodes.
 
 
 ## Obligation Snapshot
@@ -401,10 +396,10 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH14-SOURCE-CODING` | arithmetic/block-code achievability and converse | product distributions, uniquely decodable block codes, asymptotics | formal source-coding theorem | none | chapter terminal | blocked |
 | `CH14-FINITE-DISCRETE-KL` | Eq. (14.4) for an arbitrary finite alphabet | finite sums, support endpoints | atomwise AC equivalence, RN density ratio, finite LLR integrability, and finite integral sum; singular atom forces infinity | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, `relativeEntropy_finite_eq_top_iff` | focused Lean and root-import canary passed | compiled |
 | `CH14-DISCRETISATION-SUP` | Eq. (14.5) and equality with RN KL in Theorem 14.1 | finite measurable quotients/partitions, supremum | finite-cell Jensen upper bound; binary singular witness; density filtration recovery by conditional-expectation convergence/Fatou; finite-range coding of each layer | `finitePartitionRelativeEntropy_eq_relativeEntropy` and its finite-partition/filtration/encoding helpers | root, aggregate Tests, and full harness pass at 40c56ca | compiled |
-| `CH14-COMMON-DENSITY` | Eq. (14.6) under a common σ-finite dominating measure | RN ratio, integral transport | transfer log-density equality to P-a.e.; transport integrability and integral; retain singular/nonintegrable infinity branches | `relativeEntropy_commonDensity_eq_if`, `relativeEntropy_commonDensity_klFun` and helpers | focused module and canary passed; root/aggregate pending | partial (integration pending) |
+| `CH14-COMMON-DENSITY` | Eq. (14.6) under a common σ-finite dominating measure | RN ratio, integral transport | transfer log-density equality to P-a.e.; transport integrability and integral; retain singular/nonintegrable infinity branches | `relativeEntropy_commonDensity_eq_if`, `relativeEntropy_commonDensity_klFun` and helpers | root/aggregate/full harness passed at `78846b8` | compiled |
 | `CH14-KL-SEPARATION` | nonnegativity and zero iff equality | Mathlib KL | `ENNReal` order plus thin source-mapped equality adapter | `relativeEntropy_eq_zero_iff` | focused Lean | compiled |
 | `CH14-GAUSSIAN-EXAMPLE` | common positive variance formula | Gaussian RN/KL and scaling | generalize the compiled unit-variance Chapter 15 leaf | unit-variance declaration only | focused Lean | partial |
-| `CH14-MEASURE-OVERLAP` | source Eqs. (14.8)--(14.9) | common density, Cauchy--Schwarz, Jensen | measure-level overlap and affinity route | binary specializations only | focused Lean | partial |
+| `CH14-MEASURE-OVERLAP` | source Eqs. (14.8)--(14.9) | common density, Cauchy--Schwarz, Jensen | attaining likelihood event and L2 Cauchy--Schwarz | `bretagnolleHuberScale_le_commonDensityOverlap`, `half_commonDensityAffinity_sq_le_overlap` | focused build passed; root integration and source measure-level affinity/KL Jensen intermediate pending | partial |
 | `CH14-GAUSSIAN-TESTING-APPLICATION` | displayed error, `3/10`, and max-error `3/20` consequences | general Gaussian KL, Theorem 14.2, scalar exp bound | direct source application | none | focused Lean | planned |
 | `CH14-EX14-10-FULL-DPI` | KL monotonicity after restriction to any sub-σ-algebra | `Measure.trim`, `toReal_rnDeriv_trim`, conditional expectation and Jensen | split infinite KL; identify the trimmed RN density as a conditional expectation and integrate Jensen; event DPI remains a specialization | `relativeEntropy_trim_le` | optional focused Lean | compiled |
 
@@ -58043,6 +58038,102 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/CommonDensityKL.lean",
     "line": 68,
     "statement": "theorem relativeEntropy_commonDensity_klFun {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) (hPQ : P \u226a Q) : relativeEntropy P Q = \u222b\u207b x, Q.rnDeriv \u03bc x * ENNReal.ofReal (InformationTheory.klFun ((P.rnDeriv \u03bc x / Q.rnDeriv \u03bc x).toReal)) \u2202\u03bc"
+  },
+  {
+    "kind": "theorem",
+    "name": "memLp_sqrt_of_integrable_nonneg",
+    "full_name": "BanditRLProof.LowerBounds.memLp_sqrt_of_integrable_nonneg",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 14,
+    "statement": "theorem memLp_sqrt_of_integrable_nonneg {\u03b1 : Type*} [MeasurableSpace \u03b1] {\u03bc : Measure \u03b1} {f : \u03b1 \u2192 \u211d} (hf : Integrable f \u03bc) (hpos : \u2200 x, 0 \u2264 f x) : MemLp (fun x => Real.sqrt (f x)) 2 \u03bc"
+  },
+  {
+    "kind": "theorem",
+    "name": "integral_sqrt_mul_sq_le",
+    "full_name": "BanditRLProof.LowerBounds.integral_sqrt_mul_sq_le",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 25,
+    "statement": "theorem integral_sqrt_mul_sq_le {\u03b1 : Type*} [MeasurableSpace \u03b1] {\u03bc : Measure \u03b1} {p q : \u03b1 \u2192 \u211d} (hp : Integrable p \u03bc) (hq : Integrable q \u03bc) (hp0 : \u2200 x, 0 \u2264 p x) (hq0 : \u2200 x, 0 \u2264 q x) : (\u222b x, Real.sqrt (p x * q x) \u2202\u03bc) ^ 2 \u2264 (\u222b x, p x \u2202\u03bc) * \u222b x, q x \u2202\u03bc"
+  },
+  {
+    "kind": "def",
+    "name": "commonDensityOverlap",
+    "full_name": "BanditRLProof.LowerBounds.commonDensityOverlap",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 51,
+    "statement": "def commonDensityOverlap {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) : \u211d"
+  },
+  {
+    "kind": "def",
+    "name": "commonDensityAffinity",
+    "full_name": "BanditRLProof.LowerBounds.commonDensityAffinity",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 55,
+    "statement": "def commonDensityAffinity {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) : \u211d"
+  },
+  {
+    "kind": "theorem",
+    "name": "integrable_commonDensityAffinity",
+    "full_name": "BanditRLProof.LowerBounds.integrable_commonDensityAffinity",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 58,
+    "statement": "theorem integrable_commonDensityAffinity {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] : Integrable (fun x => Real.sqrt ((P.rnDeriv \u03bc x).toReal * (Q.rnDeriv \u03bc x).toReal)) \u03bc"
+  },
+  {
+    "kind": "theorem",
+    "name": "half_commonDensityAffinity_sq_le_overlap",
+    "full_name": "BanditRLProof.LowerBounds.half_commonDensityAffinity_sq_le_overlap",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 75,
+    "statement": "theorem half_commonDensityAffinity_sq_le_overlap {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) : (1 / 2 : \u211d) * commonDensityAffinity P Q \u03bc ^ 2 \u2264 commonDensityOverlap P Q \u03bc"
+  },
+  {
+    "kind": "def",
+    "name": "commonDensityComparisonEvent",
+    "full_name": "BanditRLProof.LowerBounds.commonDensityComparisonEvent",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 109,
+    "statement": "def commonDensityComparisonEvent {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) : Set \u03b1"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurableSet_commonDensityComparisonEvent",
+    "full_name": "BanditRLProof.LowerBounds.measurableSet_commonDensityComparisonEvent",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 113,
+    "statement": "theorem measurableSet_commonDensityComparisonEvent {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) : MeasurableSet (commonDensityComparisonEvent P Q \u03bc)"
+  },
+  {
+    "kind": "theorem",
+    "name": "integrable_min_commonDensity",
+    "full_name": "BanditRLProof.LowerBounds.integrable_min_commonDensity",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 118,
+    "statement": "theorem integrable_min_commonDensity {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] : Integrable (fun x => min (P.rnDeriv \u03bc x).toReal (Q.rnDeriv \u03bc x).toReal) \u03bc"
+  },
+  {
+    "kind": "theorem",
+    "name": "commonDensityOverlap_nonneg",
+    "full_name": "BanditRLProof.LowerBounds.commonDensityOverlap_nonneg",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 124,
+    "statement": "theorem commonDensityOverlap_nonneg {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) : 0 \u2264 commonDensityOverlap P Q \u03bc"
+  },
+  {
+    "kind": "theorem",
+    "name": "commonDensityOverlap_eq_testingError",
+    "full_name": "BanditRLProof.LowerBounds.commonDensityOverlap_eq_testingError",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 130,
+    "statement": "theorem commonDensityOverlap_eq_testingError {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) : commonDensityOverlap P Q \u03bc = P.real (commonDensityComparisonEvent P Q \u03bc) + Q.real (commonDensityComparisonEvent P Q \u03bc)\u1d9c"
+  },
+  {
+    "kind": "theorem",
+    "name": "bretagnolleHuberScale_le_commonDensityOverlap",
+    "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_le_commonDensityOverlap",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 155,
+    "statement": "theorem bretagnolleHuberScale_le_commonDensityOverlap {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) : bretagnolleHuberScale (relativeEntropy P Q) \u2264 commonDensityOverlap P Q \u03bc"
   },
   {
     "kind": "theorem",

@@ -42,3 +42,12 @@ the corresponding full harness/site gates remain pending for this leaf.
 The module and its canary have now been added to the root library and aggregate
 Tests target; the canary now imports `BanditRLProof`. This prepares a new
 integration snapshot but is not itself proof that those aggregate gates pass.
+
+## Integration gate result
+
+At commit `78846b8`, `python tools/bandit.py check` in the short validation
+checkout `C:/a14` passed: root library, aggregate Tests (8,903 jobs), proof
+graph export, placeholder scan, and 400 Python tests (7 skipped, 185.055s).
+Log: `C:/a14/tmp/ch14-common-density-full-check.log`. This closes the Lean
+integration gate for Eq. (14.6), not the remaining Chapter 14 body claims.
+Website rebuild/publication and detailed export synchronization remain separate.
