@@ -117,3 +117,27 @@ full-support assumption on p or q is imposed. A total Huffman fallback is
 used only on zero-mass messages. This is not a claim about an executable or
 finite-precision arithmetic implementation. SourceBlock/list conversion and
 the asymptotic rate terminal still need connecting; aggregate check pending.
+
+Block-rate route: recursively convert SourceBlock to a List, proving exact
+length, injectivity, and probability-product agreement. Instantiate the
+zero-safe arithmetic constructor for SourceBlock (Fin k) n. Name the resulting
+tagged arithmetic code family, retain its explicit construction, and derive
+n*H2 <= expected length <= n*H2+3. For n+1 symbols squeeze the normalized
+rate between H2 and H2+3/(n+1). Reuse the universal prefix-code converse,
+not the previous arbitrary-code achievability theorem.
+
+Block-rate result: ArithmeticBlockCoding builds (2686 jobs). The named
+`arithmeticBlockCode` is the previously constructed interval-address/support-
+tag code, not a choice from the generic entropy-sandwich existence theorem.
+`arithmeticBlockCode_rate_tendsto_entropy` proves its expected rate converges
+to H2 for every normalized nonnegative distribution on Fin k, zeros included.
+The finite-n bound has total overhead 3, and the universal prefix-code
+converse supplies the matching lower limit. Initial failures were the
+empty-block instance and an unconstrained PUnit universe; exposing PUnit and
+pinning this finite alphabet block to universe zero fixed elaboration without
+changing the mathematical scope. All arithmetic modules and canaries are
+now aggregate-imported; a full gate and source/export audit remain required.
+
+Typed block-rate canary passed. SourceBlock/list injectivity has no axioms;
+the finite length/rate and convergence audits use only propext,
+Classical.choice and Quot.sound. Retrieval/task-memory/blueprint refreshed.

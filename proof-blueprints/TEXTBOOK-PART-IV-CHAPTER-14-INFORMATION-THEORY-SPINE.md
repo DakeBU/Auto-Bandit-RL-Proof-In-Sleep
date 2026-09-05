@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T06:38:04+00:00`
+Generated: `2026-09-05T06:40:56+00:00`
 
 ## Source Task
 
@@ -61,7 +61,7 @@ mapped local adapter before they count as chapter evidence.
 | §14.1 code model | binary codewords, injectivity, prefix freedom, codeword length, and expected length | `BinaryPrefixCode`, its uniquely-decodable range, finite codebook, Kraft adapter, and `expectedCodeLength` compile; the explicit nonempty-codeword contract is recorded | partial |
 | Eq. (14.1) | optimal expected-length objective over valid prefix codes | no local optimum/existence theorem | blocked |
 | Eq. (14.2) | Huffman optimum satisfies `H₂(P) ≤ L* ≤ H₂(P)+1` | `huffmanOptimalCode` recursively merges two least weights; global optimality and entropy sandwich for finite alphabets, ties/zeros included; classical real-weight construction, not an executable encoder; full gate passed at dff13cb | compiled |
-| §14.1 asymptotic statement | arithmetic coding approaches entropy and no code improves the asymptotic rate | no block-code/asymptotic coding model | blocked |
+| §14.1 asymptotic statement | arithmetic coding approaches entropy and no code improves the asymptotic rate | named interval-address arithmetic block code with zero-mass escape tag; rate tends to entropy on Fin k, matching universal prefix-code converse; focused build/canary passed, full gate and source audit pending | partial |
 | Eqs. (14.2)--(14.3) definitions | finite discrete base-two entropy, natural entropy, and exact unit conversion | `discreteEntropy`, `discreteEntropyBaseTwo`, their exact conversion, and nonnegativity compile | compiled |
 | Eq. (14.4) | arbitrary finite-alphabet discrete relative entropy with exact zero/support endpoints | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, and `relativeEntropy_finite_eq_top_iff` compile; root-import finite/singular three-symbol canaries pass | compiled |
 | Eq. (14.5) | relative entropy as the supremum over all finite measurable discretisations | `finitePartitionRelativeEntropy_eq_relativeEntropy` compiles for arbitrary finite measures, using finite encodings of the concrete density filtration; root and aggregate Tests pass | compiled |
@@ -98,12 +98,8 @@ LowerBounds.BinaryPrefixCode
 LowerBounds.BinaryPrefixCode.kraft_inequality
 LowerBounds.discreteEntropy
 LowerBounds.discreteEntropyBaseTwo
-LowerBounds.expectedCodeLength
-LowerBounds.bernoulliRelativeEntropy
-LowerBounds.relativeEntropy_trim_le
-LowerBounds.bernoulliRelativeEntropy_event_le
 
-<!-- 2177 characters omitted from the middle of this snapshot. -->
+<!-- 2327 characters omitted from the middle of this snapshot. -->
 
 page are verified before this task becomes accepted.
 
@@ -391,7 +387,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH14-CODE-MODEL` | typed finite binary prefix-code surface and expected length | lists, finite sums, Mathlib Kraft--McMillan | define injective/prefix-free/nonempty codes; prove range uniquely decodable and expose finite Kraft adapter | `BinaryPrefixCode`, `BinaryPrefixCode.uniquelyDecodable_range`, `BinaryPrefixCode.kraft_inequality`, `expectedCodeLength` | focused Lean | compiled |
 | `CH14-ENTROPY-DEFINITIONS` | Eqs. (14.2)--(14.3) entropy definitions, nonnegativity, and nats/bits conversion | finite sums, real log | exact finite support convention; term at zero is zero | `discreteEntropy`, `discreteEntropyBaseTwo`, `discreteEntropyBaseTwo_eq_div_log_two`, `discreteEntropy_nonneg` | focused Lean | compiled |
 | `CH14-HUFFMAN-BOUND` | Eq. (14.2), including existence/optimality of a prefix code | Kraft--McMillan, least-weight sibling exchange, cardinality recursion | recursive Huffman merge/expand construction with proved global optimality and entropy sandwich; finite nonnegative real weights, ties/zeros admitted; classical noncomputable construction | root-integrated `huffmanOptimalCode`, `huffmanCode_optimal`, `huffmanCode_entropy_sandwich`; full gate passed at dff13cb (400 tests, 7 skipped) | chapter terminal | compiled |
-| `CH14-SOURCE-CODING` | arithmetic/block-code achievability and converse | product distributions, block prefix codes, asymptotics | exact n-fold entropy, finite-n rate sandwich, code-family convergence and universal limit converse; arithmetic algorithm remains open | `exists_sourceBlock_code_family_tendsto_entropy`, `sourceBlock_code_family_limit_ge_entropy` and finite-n leaves focused-build/canary passed; aggregate pending | chapter terminal | partial |
+| `CH14-SOURCE-CODING` | arithmetic/block-code achievability and converse | product distributions, recursive arithmetic intervals, dyadic addresses, asymptotics | named arithmetic block code (classical exact-real construction) including zero-mass escape tag; nH2<=E length<=nH2+3 and rate convergence, with universal prefix-code converse | `arithmeticBlockCode_rate_tendsto_entropy`, `arithmeticBlockCode_rate_sandwich`, `sourceBlock_code_family_limit_ge_entropy`; focused build/canary passed, arithmetic aggregate/source audit pending | chapter terminal | partial |
 | `CH14-FINITE-DISCRETE-KL` | Eq. (14.4) for an arbitrary finite alphabet | finite sums, support endpoints | atomwise AC equivalence, RN density ratio, finite LLR integrability, and finite integral sum; singular atom forces infinity | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, `relativeEntropy_finite_eq_top_iff` | focused Lean and root-import canary passed | compiled |
 | `CH14-DISCRETISATION-SUP` | Eq. (14.5) and equality with RN KL in Theorem 14.1 | finite measurable quotients/partitions, supremum | finite-cell Jensen upper bound; binary singular witness; density filtration recovery by conditional-expectation convergence/Fatou; finite-range coding of each layer | `finitePartitionRelativeEntropy_eq_relativeEntropy` and its finite-partition/filtration/encoding helpers | root, aggregate Tests, and full harness pass at 40c56ca | compiled |
 | `CH14-COMMON-DENSITY` | Eq. (14.6) under a common σ-finite dominating measure | RN ratio, integral transport | transfer log-density equality to P-a.e.; transport integrability and integral; retain singular/nonintegrable infinity branches | `relativeEntropy_commonDensity_eq_if`, `relativeEntropy_commonDensity_klFun` and helpers | root/aggregate/full harness passed at `78846b8` | compiled |
@@ -57708,6 +57704,78 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
     "line": 91,
     "statement": "theorem bretagnolleHuberScale_le_half_commonDensityAffinity_sq {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite \u03bc] (hQ : Q \u226a \u03bc) : bretagnolleHuberScale (relativeEntropy P Q) \u2264 (1 / 2 : \u211d) * commonDensityAffinity P Q \u03bc ^ 2"
+  },
+  {
+    "kind": "def",
+    "name": "sourceBlockList",
+    "full_name": "BanditRLProof.LowerBounds.sourceBlockList",
+    "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+    "line": 5,
+    "statement": "def sourceBlockList {\u03b1 : Type*} : (n : \u2115) \u2192 SourceBlock \u03b1 n \u2192 List \u03b1 | 0, _ => [] | n + 1, x => x.1 :: sourceBlockList n x.2"
+  },
+  {
+    "kind": "theorem",
+    "name": "sourceBlockList_length",
+    "full_name": "BanditRLProof.LowerBounds.sourceBlockList_length",
+    "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+    "line": 9,
+    "statement": "theorem sourceBlockList_length {\u03b1 : Type*} (n : \u2115) (x : SourceBlock \u03b1 n) : (sourceBlockList n x).length = n"
+  },
+  {
+    "kind": "theorem",
+    "name": "sourceBlockList_injective",
+    "full_name": "BanditRLProof.LowerBounds.sourceBlockList_injective",
+    "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+    "line": 15,
+    "statement": "theorem sourceBlockList_injective {\u03b1 : Type*} (n : \u2115) : Function.Injective (sourceBlockList (\u03b1 := \u03b1) n)"
+  },
+  {
+    "kind": "theorem",
+    "name": "sourceBlockList_mass",
+    "full_name": "BanditRLProof.LowerBounds.sourceBlockList_mass",
+    "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+    "line": 27,
+    "statement": "theorem sourceBlockList_mass {\u03b1 : Type*} (p : \u03b1 \u2192 \u211d) (n : \u2115) (x : SourceBlock \u03b1 n) : ((sourceBlockList n x).map p).prod = sourceBlockMass p n x"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_arithmeticBlockSupport",
+    "full_name": "BanditRLProof.LowerBounds.exists_arithmeticBlockSupport",
+    "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+    "line": 33,
+    "statement": "theorem exists_arithmeticBlockSupport {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) : \u2203 positive : BinaryPrefixCode {x : SourceBlock.{0,0} (Fin k) n // 0 < sourceBlockMass p n x}, (\u2200 x, (positive.encode x).length = arithmeticLength (sourceBlockMass p n x.val)) \u2227 expectedCodeLength (sourceBlockMass p n) (positive.extendZeroMass (sourceBlockMass p n) (huffmanCode (sourceBlockMass p n) (sourceBlockMass_nonneg p hp n))) \u2264 n * discreteEntropyBaseTwo Finset.univ p + 3"
+  },
+  {
+    "kind": "def",
+    "name": "arithmeticBlockCode",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticBlockCode",
+    "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+    "line": 49,
+    "statement": "noncomputable def arithmeticBlockCode {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) : BinaryPrefixCode (SourceBlock.{0,0} (Fin k) n)"
+  },
+  {
+    "kind": "theorem",
+    "name": "arithmeticBlockCode_expected_length_le",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticBlockCode_expected_length_le",
+    "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+    "line": 55,
+    "statement": "theorem arithmeticBlockCode_expected_length_le {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) : expectedCodeLength (sourceBlockMass p n) (arithmeticBlockCode p hp hs n) \u2264 n * discreteEntropyBaseTwo Finset.univ p + 3"
+  },
+  {
+    "kind": "theorem",
+    "name": "arithmeticBlockCode_rate_sandwich",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticBlockCode_rate_sandwich",
+    "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+    "line": 61,
+    "statement": "theorem arithmeticBlockCode_rate_sandwich {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) (hn : 0 < n) : discreteEntropyBaseTwo Finset.univ p \u2264 expectedCodeLength (sourceBlockMass p n) (arithmeticBlockCode p hp hs n) / n \u2227 expectedCodeLength (sourceBlockMass p n) (arithmeticBlockCode p hp hs n) / n \u2264 discreteEntropyBaseTwo Finset.univ p + 3 / n"
+  },
+  {
+    "kind": "theorem",
+    "name": "arithmeticBlockCode_rate_tendsto_entropy",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticBlockCode_rate_tendsto_entropy",
+    "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+    "line": 77,
+    "statement": "theorem arithmeticBlockCode_rate_tendsto_entropy {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) : Filter.Tendsto (fun n : \u2115 => expectedCodeLength (sourceBlockMass p (n + 1)) (arithmeticBlockCode p hp hs (n + 1)) / (n + 1)) Filter.atTop (nhds (discreteEntropyBaseTwo Finset.univ p))"
   },
   {
     "kind": "def",

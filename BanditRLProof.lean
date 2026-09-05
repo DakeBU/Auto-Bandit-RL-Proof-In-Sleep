@@ -55,6 +55,11 @@ import BanditRLProof.LowerBounds.PrefixCodeGreedy
 import BanditRLProof.LowerBounds.HuffmanStep
 import BanditRLProof.LowerBounds.HuffmanAlphabet
 import BanditRLProof.LowerBounds.HuffmanConstruction
+import BanditRLProof.LowerBounds.ArithmeticIntervals
+import BanditRLProof.LowerBounds.DyadicAddresses
+import BanditRLProof.LowerBounds.ArithmeticPrefixCode
+import BanditRLProof.LowerBounds.ArithmeticZeroExtension
+import BanditRLProof.LowerBounds.ArithmeticBlockCoding
 import BanditRLProof.LowerBounds.Minimax
 import BanditRLProof.LowerBounds.ConditionalKernelKL
 import BanditRLProof.LowerBounds.BanditHistoryKL

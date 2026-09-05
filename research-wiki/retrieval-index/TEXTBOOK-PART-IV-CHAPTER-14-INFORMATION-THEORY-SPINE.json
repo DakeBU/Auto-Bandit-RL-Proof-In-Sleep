@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE",
-  "generated": "2026-09-05T06:37:58+00:00",
+  "generated": "2026-09-05T06:40:51+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -56707,6 +56707,78 @@
       "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
       "line": 91,
       "statement": "theorem bretagnolleHuberScale_le_half_commonDensityAffinity_sq {α : Type*} [MeasurableSpace α] (P Q μ : Measure α) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite μ] (hQ : Q ≪ μ) : bretagnolleHuberScale (relativeEntropy P Q) ≤ (1 / 2 : ℝ) * commonDensityAffinity P Q μ ^ 2"
+    },
+    {
+      "kind": "def",
+      "name": "sourceBlockList",
+      "full_name": "BanditRLProof.LowerBounds.sourceBlockList",
+      "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+      "line": 5,
+      "statement": "def sourceBlockList {α : Type*} : (n : ℕ) → SourceBlock α n → List α | 0, _ => [] | n + 1, x => x.1 :: sourceBlockList n x.2"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceBlockList_length",
+      "full_name": "BanditRLProof.LowerBounds.sourceBlockList_length",
+      "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+      "line": 9,
+      "statement": "theorem sourceBlockList_length {α : Type*} (n : ℕ) (x : SourceBlock α n) : (sourceBlockList n x).length = n"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceBlockList_injective",
+      "full_name": "BanditRLProof.LowerBounds.sourceBlockList_injective",
+      "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+      "line": 15,
+      "statement": "theorem sourceBlockList_injective {α : Type*} (n : ℕ) : Function.Injective (sourceBlockList (α := α) n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceBlockList_mass",
+      "full_name": "BanditRLProof.LowerBounds.sourceBlockList_mass",
+      "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+      "line": 27,
+      "statement": "theorem sourceBlockList_mass {α : Type*} (p : α → ℝ) (n : ℕ) (x : SourceBlock α n) : ((sourceBlockList n x).map p).prod = sourceBlockMass p n x"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_arithmeticBlockSupport",
+      "full_name": "BanditRLProof.LowerBounds.exists_arithmeticBlockSupport",
+      "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+      "line": 33,
+      "statement": "theorem exists_arithmeticBlockSupport {k : ℕ} (p : Fin k → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) (n : ℕ) : ∃ positive : BinaryPrefixCode {x : SourceBlock.{0,0} (Fin k) n // 0 < sourceBlockMass p n x}, (∀ x, (positive.encode x).length = arithmeticLength (sourceBlockMass p n x.val)) ∧ expectedCodeLength (sourceBlockMass p n) (positive.extendZeroMass (sourceBlockMass p n) (huffmanCode (sourceBlockMass p n) (sourceBlockMass_nonneg p hp n))) ≤ n * discreteEntropyBaseTwo Finset.univ p + 3"
+    },
+    {
+      "kind": "def",
+      "name": "arithmeticBlockCode",
+      "full_name": "BanditRLProof.LowerBounds.arithmeticBlockCode",
+      "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+      "line": 49,
+      "statement": "noncomputable def arithmeticBlockCode {k : ℕ} (p : Fin k → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) (n : ℕ) : BinaryPrefixCode (SourceBlock.{0,0} (Fin k) n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "arithmeticBlockCode_expected_length_le",
+      "full_name": "BanditRLProof.LowerBounds.arithmeticBlockCode_expected_length_le",
+      "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+      "line": 55,
+      "statement": "theorem arithmeticBlockCode_expected_length_le {k : ℕ} (p : Fin k → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) (n : ℕ) : expectedCodeLength (sourceBlockMass p n) (arithmeticBlockCode p hp hs n) ≤ n * discreteEntropyBaseTwo Finset.univ p + 3"
+    },
+    {
+      "kind": "theorem",
+      "name": "arithmeticBlockCode_rate_sandwich",
+      "full_name": "BanditRLProof.LowerBounds.arithmeticBlockCode_rate_sandwich",
+      "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+      "line": 61,
+      "statement": "theorem arithmeticBlockCode_rate_sandwich {k : ℕ} (p : Fin k → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) (n : ℕ) (hn : 0 < n) : discreteEntropyBaseTwo Finset.univ p ≤ expectedCodeLength (sourceBlockMass p n) (arithmeticBlockCode p hp hs n) / n ∧ expectedCodeLength (sourceBlockMass p n) (arithmeticBlockCode p hp hs n) / n ≤ discreteEntropyBaseTwo Finset.univ p + 3 / n"
+    },
+    {
+      "kind": "theorem",
+      "name": "arithmeticBlockCode_rate_tendsto_entropy",
+      "full_name": "BanditRLProof.LowerBounds.arithmeticBlockCode_rate_tendsto_entropy",
+      "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+      "line": 77,
+      "statement": "theorem arithmeticBlockCode_rate_tendsto_entropy {k : ℕ} (p : Fin k → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) : Filter.Tendsto (fun n : ℕ => expectedCodeLength (sourceBlockMass p (n + 1)) (arithmeticBlockCode p hp hs (n + 1)) / (n + 1)) Filter.atTop (nhds (discreteEntropyBaseTwo Finset.univ p))"
     },
     {
       "kind": "def",
