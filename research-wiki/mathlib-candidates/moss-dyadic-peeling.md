@@ -53,3 +53,27 @@ dyadic coverage uses `Nat.pow_log_le_self` and `Nat.lt_pow_succ_log_self`.
 Finally normalize the scaled event to the actual empirical-mean/radius event.
 All mean-zero, independence and subgaussian assumptions stay explicit until
 instantiated by the centered arm-stream model. No tail premise is assumed.
+
+## Finite-horizon optimism deficit consumer
+
+Next project-local leaf defines the nonnegative maximum of the negative
+centered MOSS indices over sample counts 1 through n. Recursive finite maxima
+give exact positive-threshold event equivalence, strong measurability, and
+integrability from the coordinate contracts; no integrability premise is
+assumed for the derived maximum. The event embeds into `meanBadEvent`, hence
+the compiled Lemma 9.3 supplies its tail. APIs: `StronglyMeasurable.finset_sum`,
+`Integrable.finset_sum`, division by constants, addition, negation and max.
+Cards: `MLIB-MEASURE-INTEGRAL`, `MLIB-FINSET-SUMS`; textbook source unchanged.
+Search for optimism found unrelated RL optimism leaves, not this deficit.
+The subsequent tail integration target is 2*sqrt(15*delta); it is not yet proved.
+
+Status: `Algorithms/MOSSOptimism.lean` compiles (3496 focused build jobs).
+The finite maximum, positive-threshold event equivalence, strong measurability,
+integrability, source tail bound, and layer-cake identity are proved. The latter
+uses `Mathlib.MeasureTheory.Integral.Layercake`; integrability is derived from
+coordinate MGF contracts, not postulated for the maximum. Initial API repairs
+were `sup` versus `max`, strong-measurable division, and explicit equality of
+finite sums of functions with pointwise finite sums; the route is unchanged.
+Next analytic APIs: `integral_Ioi_rpow_of_lt` and
+`integrableOn_Ioi_rpow_of_lt` at exponent -2, finite interval constant integral,
+and splitting the positive half-line at sqrt(15*delta).

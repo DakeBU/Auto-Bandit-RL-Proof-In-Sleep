@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T05:22:57+00:00`
+Generated: `2026-09-05T05:27:20+00:00`
 
 ## Source Task
 
@@ -33596,6 +33596,86 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/Algorithms/MOSSHistory.lean",
     "line": 58,
     "statement": "theorem historyAction_index_max {k : \u2115} (hk : 0 < k) (n t : \u2115) (history : History.FinitePairHistory (Fin k) \u211d t) (ht : k \u2264 t + 1) (a : Fin k) : index n (ETC.realHistoryEmpMean t history) (ETC.realHistoryPullCount t history) a \u2264 index n (ETC.realHistoryEmpMean t history) (ETC.realHistoryPullCount t history) (historyAction hk n t history)"
+  },
+  {
+    "kind": "def",
+    "name": "centeredIndex",
+    "full_name": "BanditRLProof.MOSS.centeredIndex",
+    "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+    "line": 10,
+    "statement": "def centeredIndex (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03b4 : \u211d) (s : \u2115) (\u03c9 : \u03a9) : \u211d"
+  },
+  {
+    "kind": "def",
+    "name": "optimismDeficit",
+    "full_name": "BanditRLProof.MOSS.optimismDeficit",
+    "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+    "line": 14,
+    "statement": "def optimismDeficit (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03b4 : \u211d) : \u2115 \u2192 \u03a9 \u2192 \u211d | 0, _ => 0 | n+1, \u03c9 => max (optimismDeficit X \u03b4 n \u03c9) (-centeredIndex X \u03b4 (n+1) \u03c9)"
+  },
+  {
+    "kind": "theorem",
+    "name": "optimismDeficit_nonneg",
+    "full_name": "BanditRLProof.MOSS.optimismDeficit_nonneg",
+    "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+    "line": 18,
+    "statement": "theorem optimismDeficit_nonneg (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03b4 : \u211d) (n : \u2115) (\u03c9 : \u03a9) : 0 \u2264 optimismDeficit X \u03b4 n \u03c9"
+  },
+  {
+    "kind": "theorem",
+    "name": "le_optimismDeficit_iff",
+    "full_name": "BanditRLProof.MOSS.le_optimismDeficit_iff",
+    "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+    "line": 24,
+    "statement": "theorem le_optimismDeficit_iff (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03b4 gap : \u211d) (hg : 0 < gap) (n : \u2115) (\u03c9 : \u03a9) : gap \u2264 optimismDeficit X \u03b4 n \u03c9 \u2194 \u2203 s : \u2115, 0 < s \u2227 s \u2264 n \u2227 centeredIndex X \u03b4 s \u03c9 + gap \u2264 0"
+  },
+  {
+    "kind": "theorem",
+    "name": "stronglyMeasurable_centeredIndex",
+    "full_name": "BanditRLProof.MOSS.stronglyMeasurable_centeredIndex",
+    "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+    "line": 42,
+    "statement": "theorem stronglyMeasurable_centeredIndex (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hX : \u2200 i, StronglyMeasurable (X i)) (\u03b4 : \u211d) (s : \u2115) : StronglyMeasurable (centeredIndex X \u03b4 s)"
+  },
+  {
+    "kind": "theorem",
+    "name": "integrable_centeredIndex",
+    "full_name": "BanditRLProof.MOSS.integrable_centeredIndex",
+    "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+    "line": 52,
+    "statement": "theorem integrable_centeredIndex [IsFiniteMeasure \u03bc] (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hX : \u2200 i, Integrable (X i) \u03bc) (\u03b4 : \u211d) (s : \u2115) : Integrable (centeredIndex X \u03b4 s) \u03bc"
+  },
+  {
+    "kind": "theorem",
+    "name": "stronglyMeasurable_optimismDeficit",
+    "full_name": "BanditRLProof.MOSS.stronglyMeasurable_optimismDeficit",
+    "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+    "line": 59,
+    "statement": "theorem stronglyMeasurable_optimismDeficit (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hX : \u2200 i, StronglyMeasurable (X i)) (\u03b4 : \u211d) (n : \u2115) : StronglyMeasurable (optimismDeficit X \u03b4 n)"
+  },
+  {
+    "kind": "theorem",
+    "name": "integrable_optimismDeficit",
+    "full_name": "BanditRLProof.MOSS.integrable_optimismDeficit",
+    "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+    "line": 66,
+    "statement": "theorem integrable_optimismDeficit [IsFiniteMeasure \u03bc] (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hX : \u2200 i, Integrable (X i) \u03bc) (\u03b4 : \u211d) (n : \u2115) : Integrable (optimismDeficit X \u03b4 n) \u03bc"
+  },
+  {
+    "kind": "theorem",
+    "name": "measure_optimismDeficit_ge_le",
+    "full_name": "BanditRLProof.MOSS.measure_optimismDeficit_ge_le",
+    "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+    "line": 73,
+    "statement": "theorem measure_optimismDeficit_ge_le [IsProbabilityMeasure \u03bc] (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) (n : \u2115) : \u03bc {\u03c9 | gap \u2264 optimismDeficit X \u03b4 n \u03c9} \u2264 ENNReal.ofReal (15*\u03b4/gap^2)"
+  },
+  {
+    "kind": "theorem",
+    "name": "integral_optimismDeficit_eq_integral_tail",
+    "full_name": "BanditRLProof.MOSS.integral_optimismDeficit_eq_integral_tail",
+    "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+    "line": 87,
+    "statement": "theorem integral_optimismDeficit_eq_integral_tail [IsProbabilityMeasure \u03bc] (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (\u03b4 : \u211d) (n : \u2115) : \u222b \u03c9, optimismDeficit X \u03b4 n \u03c9 \u2202\u03bc = \u222b gap in Set.Ioi 0, \u03bc.real {\u03c9 | gap \u2264 optimismDeficit X \u03b4 n \u03c9}"
   },
   {
     "kind": "theorem",
@@ -95885,6 +95965,42 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "target_fingerprint": "",
     "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
     "time": "2026-09-05T05:13:18+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "build",
+    "lean": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [],
+    "notes": "Source Lemma 9.3 actual mean event with constant 15 compiled; dyadic telescoping intermediate 12; 3495 focused jobs and baseline axioms. Full 511062a gate passed 400 tests with 7 skips. MOSS regret remains pending.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "compiled-leaf",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "lower",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "compiled",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T05:23:07+00:00",
     "verifier_evidence": [],
     "worker_id": ""
   }

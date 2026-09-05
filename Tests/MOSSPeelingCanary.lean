@@ -1,4 +1,5 @@
 import BanditRLProof.Algorithms.MOSSPeeling
+import BanditRLProof.Algorithms.MOSSOptimism
 
 open BanditRLProof MeasureTheory ProbabilityTheory Real
 open scoped ENNReal NNReal
@@ -17,3 +18,14 @@ example {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasur
 #print axioms MOSS.measure_blockBadEvent_le
 #print axioms MOSS.measure_scaledBadEvent_le_fifteen
 #print axioms MOSS.measure_meanBadEvent_le_fifteen
+
+example {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (X : ℕ → Ω → ℝ) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ)
+    (δ : ℝ) (n : ℕ) :
+    ∫ ω, MOSS.optimismDeficit X δ n ω ∂μ =
+      ∫ gap in Set.Ioi 0, μ.real {ω | gap ≤ MOSS.optimismDeficit X δ n ω} :=
+  MOSS.integral_optimismDeficit_eq_integral_tail X hsubG δ n
+
+#print axioms MOSS.integrable_optimismDeficit
+#print axioms MOSS.measure_optimismDeficit_ge_le
+#print axioms MOSS.integral_optimismDeficit_eq_integral_tail
