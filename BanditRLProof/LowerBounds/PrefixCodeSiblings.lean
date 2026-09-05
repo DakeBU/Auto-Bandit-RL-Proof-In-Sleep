@@ -64,4 +64,90 @@ theorem expectedCodeLength_expandSibling
     Fintype.sum_sum_type, Fintype.sum_option, Nat.cast_add, Nat.cast_one]
   ring
 
+theorem sibling_parent_not_prefix_other
+    {α : Type*} (code : BinaryPrefixCode (α ⊕ Bool)) (w : List Bool)
+    (hs : ∀ b, code.encode (.inr b) = w ++ [b]) (a : α) :
+    ¬ w <+: code.encode (.inl a) := by
+  rintro ⟨t, ht⟩
+  cases t with
+  | nil =>
+    have he : w = code.encode (.inl a) := by simpa using ht
+    have hp : code.encode (.inl a) <+: code.encode (.inr false) := by
+      rw [hs false, ← he]
+      exact List.prefix_append _ _
+    have h := code.prefixFree hp
+    contradiction
+  | cons b t =>
+    have hp : code.encode (.inr b) <+: code.encode (.inl a) := by
+      rw [hs b]
+      exact ⟨t, by simpa [List.append_assoc] using ht⟩
+    have h := code.prefixFree hp
+    contradiction
+
+def siblingContractedWord {α : Type*} (code : BinaryPrefixCode (α ⊕ Bool)) (w : List Bool) :
+    Option α → List Bool
+  | none => w
+  | some a => code.encode (.inl a)
+
+theorem siblingContractedWord_prefixFree
+    {α : Type*} (code : BinaryPrefixCode (α ⊕ Bool)) (w : List Bool)
+    (hs : ∀ b, code.encode (.inr b) = w ++ [b]) {a b : Option α}
+    (h : siblingContractedWord code w a <+: siblingContractedWord code w b) : a = b := by
+  cases a with
+  | none =>
+    cases b with
+    | none => rfl
+    | some b => exact (sibling_parent_not_prefix_other code w hs b h).elim
+  | some a =>
+    cases b with
+    | none =>
+      have hp : code.encode (.inl a) <+: code.encode (.inr false) := by
+        rw [hs false]
+        exact h.trans (List.prefix_append _ _)
+      have he := code.prefixFree hp
+      contradiction
+    | some b =>
+      exact congrArg some (Sum.inl.inj (code.prefixFree h))
+
+/-- Merge two actual sibling leaves whose parent is nonempty. -/
+def BinaryPrefixCode.contractSibling
+    {α : Type*} (code : BinaryPrefixCode (α ⊕ Bool)) (w : List Bool) (hw : w ≠ [])
+    (hs : ∀ b, code.encode (.inr b) = w ++ [b]) : BinaryPrefixCode (Option α) where
+  encode := siblingContractedWord code w
+  injective := fun a b h => siblingContractedWord_prefixFree code w hs (by rw [h])
+  nonempty := by
+    intro a
+    cases a with
+    | none => exact hw
+    | some a => exact code.nonempty (.inl a)
+  prefixFree := siblingContractedWord_prefixFree code w hs
+
+theorem expectedCodeLength_contractSibling
+    {α : Type*} [Fintype α] (code : BinaryPrefixCode (α ⊕ Bool))
+    (w : List Bool) (hw : w ≠ []) (hs : ∀ b, code.encode (.inr b) = w ++ [b])
+    (p : α → ℝ) (q r : ℝ) :
+    expectedCodeLength (fun a => a.elim (q + r) p) (code.contractSibling w hw hs) + q + r =
+      expectedCodeLength (Sum.elim p (fun b => if b then r else q)) code := by
+  simp [expectedCodeLength, BinaryPrefixCode.contractSibling, siblingContractedWord,
+    Fintype.sum_sum_type, Fintype.sum_option, hs, Nat.cast_add, Nat.cast_one]
+  ring
+
+/-- The two-symbol root code, avoiding an invalid empty parent codeword. -/
+def binaryRootPrefixCode : BinaryPrefixCode Bool where
+  encode := fun b => [b]
+  injective := fun _ _ h => List.singleton_inj.mp h
+  nonempty := fun _ => by simp
+  prefixFree := by
+    intro a b h
+    cases a <;> cases b <;> simp_all
+
+theorem binaryRootPrefixCode_optimal (p : Bool → ℝ)
+    (hp : ∀ b, 0 ≤ p b) (hs : ∑ b, p b = 1) :
+    IsOptimalPrefixCode p binaryRootPrefixCode := by
+  intro other
+  have he : expectedCodeLength p binaryRootPrefixCode = 1 := by
+    simpa [expectedCodeLength, binaryRootPrefixCode] using hs
+  rw [he]
+  exact one_le_expectedCodeLength p hp hs other
+
 end BanditRLProof.LowerBounds

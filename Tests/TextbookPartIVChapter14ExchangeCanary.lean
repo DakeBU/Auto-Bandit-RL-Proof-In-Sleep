@@ -1,4 +1,4 @@
-import BanditRLProof.LowerBounds.PrefixCodeExchange
+import BanditRLProof
 
 namespace BanditRLProof.TextbookPartIVChapter14ExchangeCanary
 

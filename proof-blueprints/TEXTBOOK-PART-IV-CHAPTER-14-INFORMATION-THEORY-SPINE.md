@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T06:04:33+00:00`
+Generated: `2026-09-05T06:06:57+00:00`
 
 ## Source Task
 
@@ -59974,6 +59974,62 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
     "line": 58,
     "statement": "theorem expectedCodeLength_expandSibling {\u03b1 : Type*} [Fintype \u03b1] (code : BinaryPrefixCode (Option \u03b1)) (p : \u03b1 \u2192 \u211d) (q r : \u211d) : expectedCodeLength (Sum.elim p (fun b => if b then r else q)) code.expandSibling = expectedCodeLength (fun a => a.elim (q + r) p) code + q + r"
+  },
+  {
+    "kind": "theorem",
+    "name": "sibling_parent_not_prefix_other",
+    "full_name": "BanditRLProof.LowerBounds.sibling_parent_not_prefix_other",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+    "line": 67,
+    "statement": "theorem sibling_parent_not_prefix_other {\u03b1 : Type*} (code : BinaryPrefixCode (\u03b1 \u2295 Bool)) (w : List Bool) (hs : \u2200 b, code.encode (.inr b) = w ++ [b]) (a : \u03b1) : \u00ac w <+: code.encode (.inl a)"
+  },
+  {
+    "kind": "def",
+    "name": "siblingContractedWord",
+    "full_name": "BanditRLProof.LowerBounds.siblingContractedWord",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+    "line": 87,
+    "statement": "def siblingContractedWord {\u03b1 : Type*} (code : BinaryPrefixCode (\u03b1 \u2295 Bool)) (w : List Bool) : Option \u03b1 \u2192 List Bool | none => w | some a => code.encode (.inl a)"
+  },
+  {
+    "kind": "theorem",
+    "name": "siblingContractedWord_prefixFree",
+    "full_name": "BanditRLProof.LowerBounds.siblingContractedWord_prefixFree",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+    "line": 92,
+    "statement": "theorem siblingContractedWord_prefixFree {\u03b1 : Type*} (code : BinaryPrefixCode (\u03b1 \u2295 Bool)) (w : List Bool) (hs : \u2200 b, code.encode (.inr b) = w ++ [b]) {a b : Option \u03b1} (h : siblingContractedWord code w a <+: siblingContractedWord code w b) : a = b"
+  },
+  {
+    "kind": "def",
+    "name": "BinaryPrefixCode.contractSibling",
+    "full_name": "BanditRLProof.LowerBounds.BinaryPrefixCode.contractSibling",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+    "line": 113,
+    "statement": "def BinaryPrefixCode.contractSibling {\u03b1 : Type*} (code : BinaryPrefixCode (\u03b1 \u2295 Bool)) (w : List Bool) (hw : w \u2260 []) (hs : \u2200 b, code.encode (.inr b) = w ++ [b]) : BinaryPrefixCode (Option \u03b1) where"
+  },
+  {
+    "kind": "theorem",
+    "name": "expectedCodeLength_contractSibling",
+    "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_contractSibling",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+    "line": 125,
+    "statement": "theorem expectedCodeLength_contractSibling {\u03b1 : Type*} [Fintype \u03b1] (code : BinaryPrefixCode (\u03b1 \u2295 Bool)) (w : List Bool) (hw : w \u2260 []) (hs : \u2200 b, code.encode (.inr b) = w ++ [b]) (p : \u03b1 \u2192 \u211d) (q r : \u211d) : expectedCodeLength (fun a => a.elim (q + r) p) (code.contractSibling w hw hs) + q + r = expectedCodeLength (Sum.elim p (fun b => if b then r else q)) code"
+  },
+  {
+    "kind": "def",
+    "name": "binaryRootPrefixCode",
+    "full_name": "BanditRLProof.LowerBounds.binaryRootPrefixCode",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+    "line": 136,
+    "statement": "def binaryRootPrefixCode : BinaryPrefixCode Bool where"
+  },
+  {
+    "kind": "theorem",
+    "name": "binaryRootPrefixCode_optimal",
+    "full_name": "BanditRLProof.LowerBounds.binaryRootPrefixCode_optimal",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeSiblings.lean",
+    "line": 144,
+    "statement": "theorem binaryRootPrefixCode_optimal (p : Bool \u2192 \u211d) (hp : \u2200 b, 0 \u2264 p b) (hs : \u2211 b, p b = 1) : IsOptimalPrefixCode p binaryRootPrefixCode"
   },
   {
     "kind": "theorem",

@@ -47,3 +47,9 @@ The focused typed canary passed; all eight reported axiom sets are standard
 propext/Classical.choice/Quot.sound only. BlockEntropy and its root-import
 canary are now registered for aggregate verification. The ongoing 2ce1976
 check predates this module and must not be cited as its integration evidence.
+
+Full integration at d256f27 passed: root/Tests (8,917 jobs), exporter and
+placeholder checks, 400 Python tests (7 skipped, 208.383s). Log:
+C:/a14/tmp/ch14-block-coding-full-check.log. Thus the finite and asymptotic
+block-code results are integrated; the separately named arithmetic coder
+and Huffman algorithm are not established by this gate.

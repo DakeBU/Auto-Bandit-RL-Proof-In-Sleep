@@ -43,3 +43,21 @@ uses standard propext/Classical.choice/Quot.sound. There are no own warnings.
 The merged leaf is nonempty under the existing code structure; the special
 two-symbol root case still needs its separate treatment when assembling
 Huffman induction. No root/aggregate integration is claimed for this module.
+
+Contraction route: given two actual sibling words w++[false], w++[true]
+in a code on alpha+Bool, replace them by w as the none leaf of Option alpha.
+Require w nonempty to respect the local code contract. If w prefixes another
+word, inspect the suffix's first bit: either that word equals w and prefixes
+a child, or one child prefixes that word. Both contradict original prefix
+freedom. The reverse prefix direction follows by extension to either child.
+Then prove the reverse exact cost recurrence. Empty-root/two-symbol handling
+remains separate; no hidden nonempty assumption is introduced in that case.
+
+Contraction and the two-symbol root optimum now focused-build (2,675 jobs)
+and pass typed canaries, including a zero-probability child at the root.
+Prefix proofs use propext only; cost/root-optimum proofs use the standard
+propext/Classical.choice/Quot.sound set. No own warnings remain. The explicit
+one-bit root code supplies the exceptional two-symbol base without an empty
+codeword. Exchange and sibling modules/canaries are now registered with the
+root/Tests target for the next full gate; the general least-weight-sibling
+normalization and Huffman induction remain open.
