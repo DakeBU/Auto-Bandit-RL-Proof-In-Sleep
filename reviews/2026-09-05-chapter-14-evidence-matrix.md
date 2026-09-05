@@ -15,14 +15,14 @@ accepted/task/site status does not independently certify the expanded body.
 | Eq.14.5 / RN equivalence | FinitePartitionKLRecovery | finitePartitionRelativeEntropy_eq_relativeEntropy | Recovery | 40c56ca |
 | Eq.14.6 common density | CommonDensityKL | relativeEntropy_commonDensity_eq_if | CommonDensity | 78846b8 |
 | Theorem14.2 / Eq.14.7 | InformationTheory | bretagnolleHuber | (empty) | existing spine + subsequent gates |
-| Eq.14.8 source Jensen step | AffinityKL | bretagnolleHuberScale_le_half_commonDensityAffinity_sq | Affinity | b8325c2 |
+| Eq.14.8 overlap terminal and source Jensen step | CommonDensityOverlap; AffinityKL | bretagnolleHuberScale_le_commonDensityOverlap; bretagnolleHuberScale_le_half_commonDensityAffinity_sq | Overlap; Affinity | b8325c2 |
 | Eq.14.9 Le Cam bound | CommonDensityOverlap | half_commonDensityAffinity_sq_le_overlap | Overlap | b8325c2 |
 | Gaussian KL and testing constants | GaussianTesting | klDiv_gaussianReal_same_variance; gaussian_testing_max_error_three_twentieths | Gaussian | 1e8af14 |
 | non-metric counterexamples | RelativeEntropyNonMetric | bernoulliRelativeEntropy_asymmetry; relativeEntropy_triangle_counterexample | NonMetric | d325147 passed |
 | cross entropy and zero-mass limit | CrossEntropy | relativeEntropy_finite_crossEntropy; entropyTerm_tendsto_zero_right | CrossEntropy | d325147 passed |
 | ceiling-log fixed-length construction | FixedLengthCoding | exists_ceilingLogPrefixCode | FixedCode | d325147 passed |
-| precise uniform-law qualification | UniformCoding | fixedLength_uniformPowerTwo_optimal; uniform_three_fixedLength_not_optimal | UniformCode | pending after d325147 |
-| common domination and finite-KL iff | CommonDomination | exists_commonSigmaFiniteDominatingMeasure; relativeEntropy_finite_lt_top_iff_ac | Domination | pending after d325147 |
+| precise uniform-law qualification | UniformCoding | fixedLength_uniformPowerTwo_optimal; uniform_three_fixedLength_not_optimal | UniformCode | a47106a passed |
+| common domination and finite-KL iff | CommonDomination | exists_commonSigmaFiniteDominatingMeasure; relativeEntropy_finite_lt_top_iff_ac | Domination | a47106a passed |
 
 Intermediate construction canaries remain in the aggregate: CodingBound,
 Shannon, PrefixConstruction, Exchange, Sibling, Pruning, Greedy, HuffmanStep,
@@ -46,18 +46,18 @@ main Chapter14 canary; Chapter15 history KL is not a Chapter14 theorem.
 
 ## Non-proof gates still required
 
-Final aggregate including UniformCoding/CommonDomination; current full-body
-source declaration/canary audit; synchronized conversion/obligation status;
-Markdown/LaTeX build and visual QA; site content/build/browser verification;
-any required remote publication evidence. The LaTeX fragment now compiles
-with the temporary article wrapper, but this alone is not visual QA.
+Current full-body source declaration/canary audit; final synchronization of
+conversion/obligation/export/site status; browser verification and any required
+remote publication evidence. Markdown/LaTeX compilation and three-page visual
+QA have passed for the export snapshot described below. Expanded-body site
+content/build/static checks passed as recorded in the site-sync review.
 Whole chapter remains partial while these checks are pending.
 
 Export build check: the synchronized LaTeX fragment compiled with installed
 TeX Live 2025 using tmp/ch14-export-check.tex. Three overfull identifier lines
 were repaired using discretionary breaks; the final log has no overfull boxes
 or LaTeX errors and produces a three-page PDF. Log:
-tmp/ch14-export-build/ch14-export-check.log. Visual page review remains pending;
+tmp/ch14-export-build/ch14-export-check.log. Visual page review is recorded below;
 temporary wrapper/build outputs are not committed source artifacts.
 
 PDF visual QA: rendered and inspected all three pages of the current export
@@ -70,4 +70,9 @@ not for any future edit or website page. No PDF source was rewritten during QA.
 Adapter gate d325147 completed successfully: aggregate Tests 8947 jobs,
 400 Python tests, 7 skipped, 211.215s. Log:
 C:/a14/tmp/ch14-body-adapters-full-check.log. The final source-inclusive gate
-at a47106a is next and includes UniformCoding/CommonDomination as well.
+at a47106a also passed: aggregate Tests 8951 jobs, 400 Python tests,
+7 skipped, 226.925s. Log: C:/a14/tmp/ch14-final-body-full-check.log.
+This includes UniformCoding/CommonDomination and every earlier Chapter 14
+module/canary. No later Lean source changes were present when the result
+was collected. The target-drift template's UNSET diagnostic is a fixture
+readiness report inside the passing suite, not a Chapter 14 proof blocker.

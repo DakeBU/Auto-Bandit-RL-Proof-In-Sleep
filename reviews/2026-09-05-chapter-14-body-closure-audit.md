@@ -107,3 +107,14 @@ the distinction from general-space absolute continuity. All six follow-up
 items now have local proof evidence or an explicit proved source-qualification
 boundary. This is not yet a completion audit: aggregate gates, the full exact
 declaration/canary map, synchronized exports and site verification remain.
+
+## Follow-up: final aggregate and current site evidence
+
+The a47106a full gate passed with 8951 Lean jobs and 400 Python tests
+(7 skipped, 226.925s). It includes all six supporting-assertion resolutions.
+The local site content and static checks passed, with the exact-real,
+singleton, uniform-cardinality and finite-alphabet qualifications visible.
+Current task and conversion statuses have been corrected; historical review
+and browser/publication evidence is now explicitly scoped to the old §14.2
+milestone. This supersedes the pending aggregate statements above, not the
+final source audit and current browser/publication requirements.

@@ -18,8 +18,8 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH14-HISTORY-KL` | adaptive same-policy history divergence decomposition | Chapter 14 measure leaves and kernel chain rule | Chapter 15 bandit history model | compiled Chapter 15 conditional-KL theorem | Chapter 15 iterative construction | common randomized policy, measurability, countably generated rewards | downstream source theorem | `banditHistoryRelativeEntropy_eq_expectedPulls_sum` | Chapter 15 | compiled outside Chapter 14 gate |
 | `CH14-TYPED-CANARY` | root-import applications to finite and singular cases, all axioms printed | compiled Chapter 14 declarations | root import | local declarations | exact full-conclusion examples | explicit probability measures/events | project-local | `Tests/TextbookPartIVChapter14Canary.lean` | Tests | verified |
 | `CH14-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | path/tooling failures distinguished from proofs | repository | n/a | full check | verified locally |
-| `CH14-EVIDENCE-SITE` | proof export, indexes, results/highlights/readings/maps/README/site agree | compiled chapter surface | harness/site scripts | repository | generated evidence plus maintained content | only compiled/gated declarations labelled compiled | repository | n/a | site/browser | verified locally |
-| `CH14-REVIEW` | independent theorem/Lean audit | all artifacts | source, Lean, site | all above | check KL direction, AC, endpoints, quantifiers | no unresolved P0--P3 | repository | n/a | independent review | verified |
+| `CH14-EVIDENCE-SITE` | proof export, indexes, results/highlights/readings/maps/README/site agree | compiled chapter surface | harness/site scripts | repository | generated evidence plus maintained content | only compiled/gated declarations labelled compiled | repository | n/a | site/browser | historical §14.2 verified; expanded-body local site check passed in 8578e2a, browser/current publication not yet verified |
+| `CH14-REVIEW` | independent theorem/Lean audit | all artifacts | source, Lean, site | all above | check KL direction, AC, endpoints, quantifiers | no unresolved P0--P3 | repository | n/a | independent review | verified for historical §14.2 only; expanded-body completion audit remains open |
 | `CH14-REMOTE` | PR, main Actions, Pages and live Chapter 14 | accepted local chapter | GitHub workflow | repository | branch PR, never direct main push | PR #11; merge `194aca9`; main run `31949303227`; deploy job `95172626370`; live desktop/mobile | repository | n/a | deployment | verified for the historical §14.2 milestone; the 2026-09-04 extension awaits its own PR |
 
 ## Whole-chapter extension obligations
@@ -38,6 +38,17 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH14-MEASURE-OVERLAP` | source Eqs. (14.8)--(14.9) | common density, Cauchy--Schwarz, Jensen | integral exponential Jensen, RN affinity transport, L2 Cauchy--Schwarz; alternative attaining-event proof | `bretagnolleHuberScale_le_half_commonDensityAffinity_sq`, `bretagnolleHuberScale_le_commonDensityOverlap`, `half_commonDensityAffinity_sq_le_overlap` | full gate b8325c2 passed, including source Jensen intermediate | compiled |
 | `CH14-GAUSSIAN-TESTING-APPLICATION` | displayed error, `3/10`, and max-error `3/20` consequences | general Gaussian KL, Theorem 14.2, scalar exp bound | direct source application with certified rational constant | `gaussian_testing_error_lower_bound`, `gaussian_testing_error_three_tenths`, `gaussian_testing_max_error_three_twentieths` | full gate 1e8af14 passed | compiled |
 | `CH14-EX14-10-FULL-DPI` | KL monotonicity after restriction to any sub-σ-algebra | `Measure.trim`, `toReal_rnDeriv_trim`, conditional expectation and Jensen | split infinite KL; identify the trimmed RN density as a conditional expectation and integrate Jensen; event DPI remains a specialization | `relativeEntropy_trim_le` | optional focused Lean | compiled |
+
+## Current whole-body gate snapshot
+
+The final source-inclusive a47106a gate passed: Tests 8951 jobs, 400 Python
+tests, 7 skipped, 226.925s (C:/a14/tmp/ch14-final-body-full-check.log).
+This includes NonMetric, CrossEntropy, FixedLengthCoding, UniformCoding and
+CommonDomination, not just the historical spine. The exact source/module/
+terminal/canary matrix is reviews/2026-09-05-chapter-14-evidence-matrix.md.
+Local site checks passed in the site-sync review; historical independent
+review and remote publication do not cover this expanded body. Whole-chapter
+status remains partial until the final source and evidence audit is complete.
 
 ## Failure classification
 

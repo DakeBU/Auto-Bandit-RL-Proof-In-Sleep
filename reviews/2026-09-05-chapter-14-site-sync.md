@@ -38,5 +38,6 @@ Tests, both root imports, lakefile.toml and lean-toolchain. Rebuilding with
 internal links/anchors, mathematical fallbacks and Pages workflow checks pass.
 This validates the content committed in 93f1610, although the preview build
 started before that commit and still records its predecessor with dirty source.
-Remaining full-harness tests, browser verification and remote publication
-are not claimed. Do not promote the chapter based only on this synchronization.
+The full-harness tests subsequently passed at a47106a (400 tests, 7 skipped,
+226.925s). Browser verification and remote publication are not claimed.
+Do not promote the chapter based only on this synchronization.

@@ -34,7 +34,8 @@ separate dependency leaf.
   conditional lemma, or prose mapping alone cannot promote the chapter.
 - Current decision: `partial`. Main Huffman, common-density, overlap and
   Gaussian terminals are compiled and fully gated. The constructed arithmetic
-  code rate theorem is focused-validated and awaiting its aggregate gate.
+  code rate theorem passed its full gate at 2a31a01. Supporting non-metric,
+  cross-entropy and fixed-length adapters passed the d325147 gate.
   Additional body assertions and current export/site closure are audited in
   `reviews/2026-09-05-chapter-14-body-closure-audit.md`; historical site/review
   rows below do not certify this expanded scope.
@@ -48,7 +49,7 @@ is the probability-weighted codeword length.  Natural entropy is
 surface proves the induced codebook uniquely decodable and hence its Kraft
 inequality. The recursive Huffman constructor is globally optimal. A named
 arithmetic interval-address block-code family with a zero-mass escape tag
-has expected rate tending to entropy; its aggregate validation is pending.
+has expected rate tending to entropy; its full gate passed at 2a31a01.
 
 For probability measures `P,Q` on `(Ω,F)`, relative entropy is infinite when
 `P` is not absolutely continuous with respect to `Q`. In the finite regular
@@ -70,18 +71,18 @@ with `D(Q,P)` is also valid.
 | Kraft inequality | codeword lengths satisfy the binary Kraft bound | `BinaryPrefixCode.kraft_inequality` | Mathlib uniquely-decodable adapter | compiled |
 | `H(P),H₂(P)` | finite natural/base-two entropy and unit conversion | `discreteEntropy`, `discreteEntropyBaseTwo`, `discreteEntropyBaseTwo_eq_div_log_two` | exact finite-sum definitions | compiled |
 | `E[ℓ(c(X))]` | expected codeword length objective | `expectedCodeLength` | exact finite-sum definition | compiled |
-| `D(P,Q)` | extended-real relative entropy | `LowerBounds.relativeEntropy P Q` | `ENNReal`, alias of `InformationTheory.klDiv` | target |
+| `D(P,Q)` | extended-real relative entropy | `LowerBounds.relativeEntropy P Q` | `ENNReal`, alias of `InformationTheory.klDiv` | compiled |
 | `log(dP/dQ)` | log likelihood ratio | `MeasureTheory.llr P Q` | measurable real function | imported |
-| Theorem 14.1 finite branch | RN/LLR integral formula | `relativeEntropy_of_absolutelyContinuous_of_integrable` | equality in `ENNReal` | target |
-| Theorem 14.1 singular branch | non-AC gives infinity | `relativeEntropy_eq_top_of_not_absolutelyContinuous` | endpoint equality | target |
-| finite KL contract | AC and LLR integrability | `relativeEntropy_ne_top_iff` | exact iff | target |
+| Theorem 14.1 finite branch | RN/LLR integral formula | `relativeEntropy_of_absolutelyContinuous_of_integrable` | equality in `ENNReal` | compiled |
+| Theorem 14.1 singular branch | non-AC gives infinity | `relativeEntropy_eq_top_of_not_absolutelyContinuous` | endpoint equality | compiled |
+| finite KL contract | AC and LLR integrability | `relativeEntropy_ne_top_iff` | exact iff | compiled |
 | `D(P,Q)=0 ↔ P=Q` | separation for finite measures | `relativeEntropy_eq_zero_iff` | exact iff | compiled |
 | Exercise 14.10 | KL after restriction to arbitrary `m ≤ m₀` | `relativeEntropy_trim_le` | finite-measure data processing | compiled |
-| `d(p,q)` | Bernoulli relative entropy | `LowerBounds.bernoulliRelativeEntropy` reusing `KLUCB.bernoulliKL` | `ENNReal` with exact endpoints | target adapter |
-| Exercise 14.10 at event sigma-algebra | binary KL cannot exceed measure KL | `bernoulliRelativeEntropy_event_le` | dependency theorem | target leaf |
-| binary testing inequality | two-atom Bretagnolle--Huber | `binaryBretagnolleHuber` | real inequality | target leaf |
-| `exp(-D)/2` including `D=∞` | source RHS | `bretagnolleHuberScale` | real nonnegative scale | target definition |
-| Theorem 14.2 / Eq. (14.7) | `P(A)+Q(Aᶜ)` lower bound | `bretagnolleHuber` | exact measure/event terminal | target |
+| `d(p,q)` | Bernoulli relative entropy | `LowerBounds.bernoulliRelativeEntropy` reusing `KLUCB.bernoulliKL` | `ENNReal` with exact endpoints | compiled |
+| Exercise 14.10 at event sigma-algebra | binary KL cannot exceed measure KL | `bernoulliRelativeEntropy_event_le` | dependency theorem | compiled |
+| binary testing inequality | two-atom Bretagnolle--Huber | `binaryBretagnolleHuber` | real inequality | compiled |
+| `exp(-D)/2` including `D=∞` | source RHS | `bretagnolleHuberScale` | real nonnegative scale | compiled |
+| Theorem 14.2 / Eq. (14.7) | `P(A)+Q(Aᶜ)` lower bound | `bretagnolleHuber` | exact measure/event terminal | compiled |
 | history relative entropy | adaptive bandit history law | `banditHistoryRelativeEntropy_eq_expectedPulls_sum` | compiled Chapter 15 consumer | compiled outside Chapter 14 gate |
 
 ## Assumption ledger
@@ -129,8 +130,8 @@ with `D(Q,P)` is also valid.
 | `CH14-HISTORY-KL` | same-policy adaptive history decomposition | kernel chain rule plus policy/history model | `banditHistoryRelativeEntropy_eq_expectedPulls_sum` | compiled Chapter 15 | Chapter 15 | compiled outside Chapter 14 gate |
 | `CH14-TYPED-CANARY` | full conclusions including finite and singular examples | all compiled declarations | `Tests/TextbookPartIVChapter14Canary.lean` | project-local | Tests | verified |
 | `CH14-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | full check | verified locally |
-| `CH14-EVIDENCE-SITE` | task/DAG/export/index/site agreement | compiled chapter surface | repository artifacts | repository | lean-verified/site/browser | verified locally |
-| `CH14-REVIEW` | independent source/Lean/evidence audit | all local artifacts | review record | repository | independent review | verified |
+| `CH14-EVIDENCE-SITE` | task/DAG/export/index/site agreement | compiled chapter surface | repository artifacts | repository | lean-verified/site/browser | historical §14.2 verified; expanded-body local site check passed in 8578e2a, browser/current publication not yet verified |
+| `CH14-REVIEW` | independent source/Lean/evidence audit | all local artifacts | review record | repository | independent review | historical §14.2 only; expanded-body completion audit remains open |
 | `CH14-REMOTE` | PR, main Actions, Pages and live page | accepted local chapter | PR #11; run `31949303227`; Pages job `95172626370`; live desktop/mobile | repository | deployment | verified for the historical §14.2 milestone; the 2026-09-04 extension awaits its own PR |
 
 ## Gaps
@@ -142,7 +143,7 @@ with `D(Q,P)` is also valid.
 - [x] Full arbitrary-sub-sigma-algebra data processing (Exercise 14.10).
 - [x] Chapter 15 same-policy history-law construction and divergence decomposition (compiled in its own gate).
 - [x] Huffman optimality and the one-bit entropy sandwich; full gate dff13cb.
-- [ ] Arithmetic source-coding aggregate validation and source audit (rate and converse compiled).
+- [x] Arithmetic source-coding aggregate validation at 2a31a01 (named rate and converse compiled); final whole-body source audit is tracked separately below.
 - [x] Eq. (14.4) for an arbitrary finite alphabet, with exact support dichotomy and zero-mass terms.
 - [x] Eq. (14.5) finite-discretisation supremum equivalence to RN KL, including singular and nonintegrable branches.
 - [x] Eq. (14.6) general common-density formula; full harness passed at `78846b8`.
