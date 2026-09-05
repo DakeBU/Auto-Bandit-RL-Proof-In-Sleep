@@ -141,6 +141,13 @@ example (x : ℝ) (hx : 0 ≤ x) :
 #print axioms LowerBounds.gaussianMills_lower_integral
 
 example (x : ℝ) (hx : 0 ≤ x) :
+    (∫ t in Set.Ioi x, Real.exp (-t ^ 2)) ≤
+      Real.exp (-x ^ 2) / (x + Real.sqrt (x ^ 2 + 4 / Real.pi)) :=
+  gaussianMills_upper_integral hx
+
+#print axioms LowerBounds.gaussianMills_upper_integral
+
+example (x : ℝ) (hx : 0 ≤ x) :
     0 ≤ gaussianMillsErrorDerivative (4 / Real.pi) x ↔
       x ≤ (4 / Real.pi - 1) / Real.sqrt (2 - 4 / Real.pi) :=
   gaussianMillsErrorDerivative_source_nonneg_iff hx

@@ -6,7 +6,7 @@ import Mathlib.MeasureTheory.Integral.IntegralEqImproper
 import Mathlib.Tactic
 
 /-! Analytic comparison functions for Chapter 13 Eq. (13.4).
-The exact lower improper-integral bound compiles; the upper bound remains open. -/
+Both exact improper-integral bounds compile. Probability rescaling is separate. -/
 
 namespace BanditRLProof.LowerBounds
 
@@ -193,5 +193,91 @@ theorem hasDerivAt_gaussianMillsError {c x : ℝ} (hc : 0 < c) :
   convert ((hasDerivAt_gaussianMillsComparison hc).add hi).sub_const
     (Real.sqrt Real.pi / 2) using 1; dsimp [gaussianMillsError, gaussianMillsErrorDerivative]
   ring
+
+theorem gaussianMillsError_source_zero : gaussianMillsError (4 / Real.pi) 0 = 0 := by
+  have hp := Real.sqrt_pos.mpr Real.pi_pos
+  simp only [gaussianMillsError, gaussianMillsComparison, zero_pow (by norm_num : 2 ≠ 0),
+    neg_zero, Real.exp_zero, zero_add, intervalIntegral.integral_same, add_zero]
+  rw [Real.sqrt_div (by norm_num : (0 : ℝ) ≤ 4)]
+  norm_num
+
+theorem tendsto_gaussianMillsError {c : ℝ} (hc : 0 < c) :
+    Tendsto (gaussianMillsError c) atTop (𝓝 0) := by
+  have hg : Integrable (fun t : ℝ => Real.exp (-t ^ 2)) := by
+    simpa using integrable_exp_neg_mul_sq (b := (1 : ℝ)) (by norm_num)
+  have hi := intervalIntegral_tendsto_integral_Ioi (0 : ℝ) hg.integrableOn tendsto_id
+  have hv : (∫ t in Ioi (0 : ℝ), Real.exp (-t ^ 2)) = Real.sqrt Real.pi / 2 := by
+    simpa using integral_gaussian_Ioi (1 : ℝ)
+  rw [hv] at hi
+  have h := ((tendsto_gaussianMillsComparison hc).add hi).sub_const (Real.sqrt Real.pi / 2)
+  simpa [gaussianMillsError] using h
+
+theorem gaussianMillsError_source_nonneg {x : ℝ} (hx : 0 ≤ x) :
+    0 ≤ gaussianMillsError (4 / Real.pi) x := by
+  let a := (4 / Real.pi - 1) / Real.sqrt (2 - 4 / Real.pi)
+  have hc : 0 < (4 : ℝ) / Real.pi := div_pos (by norm_num) Real.pi_pos
+  have ha : 0 ≤ a := by
+    dsimp [a]
+    apply div_nonneg _ (Real.sqrt_nonneg _)
+    have h : (1 : ℝ) < 4 / Real.pi := by
+      rw [lt_div_iff₀ Real.pi_pos]
+      nlinarith [Real.pi_lt_four]
+    linarith
+  have hd := fun t => hasDerivAt_gaussianMillsError (x := t) hc
+  have hcont : Continuous (gaussianMillsError (4 / Real.pi)) :=
+    continuous_iff_continuousAt.mpr (fun t => (hd t).continuousAt)
+  by_cases hxa : x ≤ a
+  · have hm : MonotoneOn (gaussianMillsError (4 / Real.pi)) (Icc 0 a) := by
+      apply monotoneOn_of_hasDerivWithinAt_nonneg (convex_Icc 0 a) hcont.continuousOn
+        (fun t _ => (hd t).hasDerivWithinAt)
+      intro t ht
+      have ht' : t ∈ Icc 0 a := interior_subset ht
+      exact (gaussianMillsErrorDerivative_source_nonneg_iff ht'.1).2 ht'.2
+    have h := hm ⟨le_rfl, ha⟩ ⟨hx, hxa⟩ hx
+    simpa [gaussianMillsError_source_zero] using h
+  · have hm : AntitoneOn (gaussianMillsError (4 / Real.pi)) (Ici a) := by
+      apply antitoneOn_of_hasDerivWithinAt_nonpos (convex_Ici a) hcont.continuousOn
+        (fun t _ => (hd t).hasDerivWithinAt)
+      intro t ht
+      have ht' : a < t := by simpa only [interior_Ici, mem_Ioi] using ht
+      have ht0 : 0 ≤ t := le_trans ha ht'.le
+      have hn : ¬ 0 ≤ gaussianMillsErrorDerivative (4 / Real.pi) t := by
+        rw [gaussianMillsErrorDerivative_source_nonneg_iff ht0]
+        exact not_le.mpr ht'
+      exact (lt_of_not_ge hn).le
+    apply le_of_tendsto (tendsto_gaussianMillsError hc)
+    filter_upwards [eventually_ge_atTop x] with t ht
+    exact hm (le_of_not_ge hxa) (le_trans (le_of_not_ge hxa) ht) ht
+
+theorem gaussian_integral_split (x : ℝ) :
+    (∫ t in (0 : ℝ)..x, Real.exp (-t ^ 2)) +
+      (∫ t in Ioi x, Real.exp (-t ^ 2)) = Real.sqrt Real.pi / 2 := by
+  have hg : Integrable (fun t : ℝ => Real.exp (-t ^ 2)) := by
+    simpa using integrable_exp_neg_mul_sq (b := (1 : ℝ)) (by norm_num)
+  have hc : Continuous (fun t : ℝ => Real.exp (-t ^ 2)) := by fun_prop
+  have h0 := intervalIntegral_tendsto_integral_Ioi (0 : ℝ) hg.integrableOn tendsto_id
+  have hx := intervalIntegral_tendsto_integral_Ioi x hg.integrableOn tendsto_id
+  have hv : (∫ t in Ioi (0 : ℝ), Real.exp (-t ^ 2)) = Real.sqrt Real.pi / 2 := by
+    simpa using integral_gaussian_Ioi (1 : ℝ)
+  rw [hv] at h0
+  have hs := Tendsto.add (tendsto_const_nhds (x := ∫ t in (0 : ℝ)..x, Real.exp (-t ^ 2))) hx
+  have he : (fun b => (∫ t in (0 : ℝ)..x, Real.exp (-t ^ 2)) +
+      ∫ t in x..b, Real.exp (-t ^ 2)) =
+      (fun b => ∫ t in (0 : ℝ)..b, Real.exp (-t ^ 2)) := by
+    funext b
+    exact intervalIntegral.integral_add_adjacent_intervals
+      (hc.intervalIntegrable _ _) (hc.intervalIntegrable _ _)
+  simp only [id_eq] at hs h0
+  rw [he] at hs
+  exact tendsto_nhds_unique hs h0
+
+/-- The exact upper half of Lattimore--Szepesvari Eq. (13.4). -/
+theorem gaussianMills_upper_integral {x : ℝ} (hx : 0 ≤ x) :
+    (∫ t in Ioi x, Real.exp (-t ^ 2)) ≤
+      Real.exp (-x ^ 2) / (x + Real.sqrt (x ^ 2 + 4 / Real.pi)) := by
+  have hn := gaussianMillsError_source_nonneg hx
+  have hs := gaussian_integral_split x
+  dsimp [gaussianMillsError, gaussianMillsComparison] at hn
+  linarith
 
 end BanditRLProof.LowerBounds

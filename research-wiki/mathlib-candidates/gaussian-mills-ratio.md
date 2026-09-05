@@ -1,7 +1,7 @@
 # Gaussian Mills-Ratio Tail Bounds
 
-Status: in-progress Mathlib-candidate analytic leaf; exact lower integral bound
-passes focused Lean, upper integral bound and probability rescaling remain open.
+Status: both exact integral bounds pass focused Lean and module build;
+probability rescaling and full integration validation remain open.
 
 Task: `TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE`
 
@@ -76,13 +76,14 @@ is connected by `hasDerivAt_gaussianMillsError` to the finite-integral error
 `F_c(x) + integral_0^x exp(-t^2) dt - sqrt(pi)/2`.
 `gaussianMillsErrorDerivative_source_nonneg_iff` specializes the threshold
 to `c=4/pi`, using `Analysis.Real.Pi.Bounds`. The complete module build
-passes (3345 jobs). Identification with the improper-tail difference,
-endpoint values, and the resulting upper inequality remain open.
+passes (3345 jobs). `gaussianMillsError_source_zero`,
+`tendsto_gaussianMillsError`, and `gaussianMillsError_source_nonneg` now
+close the endpoint and piecewise monotonicity argument.
+`gaussian_integral_split` identifies the finite plus improper integrals.
+`gaussianMills_upper_integral` proves the exact upper half of Eq. (13.4).
 
-Next Lean leaf: use the zero-at-zero and zero-at-infinity endpoints to prove
-the error's nonnegativity from the derivative sign pattern,
-then rescale both integral bounds to Eq. (13.1). Full integration gates remain
-pending.
+Next Lean leaf: rescale both integral bounds to Eq. (13.1), preserving the
+printed square-root denominators. Full integration gates remain pending.
 
 ## Retrieval audit
 
