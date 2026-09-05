@@ -39,6 +39,19 @@ measures; expand the integral using `integral_fintype`; and use probability
 normalization to remove Mathlib's finite-measure mass correction.
 The singular branch must be proved from an actual positive-P/zero-Q atom.
 
-Status: retrieval/proof-route record only; no new Lean theorem is claimed.
+Initial status: retrieval/proof-route record only.
 Classification: Mathlib-candidate generic identity, with a thin Chapter 14
 adapter. The conversion-window and obligation target are unchanged.
+
+## Local proof progress
+
+`BanditRLProof/LowerBounds/FiniteDiscreteKL.lean` now passes direct
+`lake env lean` checking. It proves the RN atom identity, the density ratio
+on nonzero reference atoms, the singular support-mismatch branch, the finite
+`klFun` sum, and the probability-measure sum of `p log(p/q)` under absolute
+continuity. Integrability follows from `SimpleFunc.ofFinite`; zero source
+atoms are simplified separately, without a strict-positivity assumption.
+
+This is focused evidence only. The atomwise-support/absolute-continuity
+equivalence, regression canary, root integration, full harness and synchronized
+chapter evidence are still pending. Whole-chapter status remains partial.
