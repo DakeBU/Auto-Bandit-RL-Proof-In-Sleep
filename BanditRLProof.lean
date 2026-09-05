@@ -576,3 +576,4 @@ import BanditRLProof.ConcentrationGaussianOccupancy
 import BanditRLProof.ConcentrationIndexOccupancy
 import BanditRLProof.Algorithms.MOSSExpectedOccupancy
 import BanditRLProof.Algorithms.MOSSStream
+import BanditRLProof.Algorithms.MOSSRegret

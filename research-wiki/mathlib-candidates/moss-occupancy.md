@@ -175,3 +175,20 @@ and deficit bounds, and identify this centered-table execution with the
 common history law for arbitrary finite-arm unit-subgaussian rewards.
 Full check at c8f4106 passed: root build, Tests (8912 jobs), ProofGraphExport,
 400 Python tests in 209.945 seconds, 7 skipped. Newer commits need fresh checks.
+
+Regret assembly route (project-local, MLIB-FINSET-SUMS): use existing
+finset_sum_pullCount_eq_time and RealMeanRegretPullCount, retrieved with
+search-memory/list-lean-decls sum_pullCount. Pointwise split each gap at
+8*sqrt(delta) and 2Z. Small gaps cost at most (8*sqrt(delta)+2Z)*T_i;
+the remaining arms use the concrete streamTrace count bound. Retain the
+deterministic large-gap filter so integration uses the sharp expectation
+bound only where gap>=8*sqrt(delta). All gaps nonnegative via best-arm premise.
+
+Compiled: `MOSSRegret.streamTrace_realMeanRegret_le` proves the pathwise
+decomposition for the actual recursive execution. `integrable_indexExceedanceCount`
+supplies finite-indicator integrability without tail assumptions.
+`integral_largeGapCountSum_le` bounds the filtered expectation by
+sum gaps + k*15/sqrt(delta), using the sharp bound and only one initialization
+gap per arm. Next prove measurable stream execution/integrable regret, then
+combine with the deficit term and normalize delta=k/n to obtain constant 39.
+The centered-table/history-law bridge and broader-class conclusion remain open.

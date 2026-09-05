@@ -21,6 +21,19 @@ theorem fixedLogExceedanceCount_eq_fixedRadiusCount (X : ℕ → Ω → ℝ)
   simp only [Set.indicator_apply, Concentration.fixedRadiusMeanEvent, Set.mem_setOf_eq,
     streamMean, peelingSum, fixedLogRadius, hr]
 
+/-- Finite measurable indicator counts are integrable, without tail assumptions. -/
+theorem integrable_indexExceedanceCount (X : ℕ → Ω → ℝ)
+    (hXm : ∀ i, StronglyMeasurable (X i)) (δ gap : ℝ) (n : ℕ) :
+    Integrable (fun ω => indexExceedanceCount (streamMean X ω) δ gap n) μ := by
+  classical
+  unfold indexExceedanceCount
+  apply integrable_finset_sum
+  intro s _
+  have hm : MeasurableSet {ω | gap/2 ≤ centeredIndex X δ (s+1) ω} :=
+    measurableSet_le measurable_const (stronglyMeasurable_centeredIndex X hXm δ (s+1)).measurable
+  have hi := (integrable_const (1 : ℝ) : Integrable (fun _ : Ω => (1 : ℝ)) μ).indicator hm
+  simpa only [Set.indicator_apply, Set.mem_setOf_eq, centeredIndex, streamMean] using hi
+
 theorem integral_indexExceedanceCount_le_sharp (X : ℕ → Ω → ℝ)
     (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ)
     (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ)

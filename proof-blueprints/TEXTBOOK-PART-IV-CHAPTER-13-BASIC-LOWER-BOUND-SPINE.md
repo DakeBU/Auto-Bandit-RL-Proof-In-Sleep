@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T06:11:56+00:00`
+Generated: `2026-09-05T06:15:43+00:00`
 
 ## Source Task
 
@@ -33603,10 +33603,18 @@ These cards are planning inspiration only.  They do not certify any theorem.
   },
   {
     "kind": "theorem",
+    "name": "integrable_indexExceedanceCount",
+    "full_name": "BanditRLProof.MOSS.integrable_indexExceedanceCount",
+    "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
+    "line": 25,
+    "statement": "theorem integrable_indexExceedanceCount (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (\u03b4 gap : \u211d) (n : \u2115) : Integrable (fun \u03c9 => indexExceedanceCount (streamMean X \u03c9) \u03b4 gap n) \u03bc"
+  },
+  {
+    "kind": "theorem",
     "name": "integral_indexExceedanceCount_le_sharp",
     "full_name": "BanditRLProof.MOSS.integral_indexExceedanceCount_le_sharp",
     "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
-    "line": 24,
+    "line": 37,
     "statement": "theorem integral_indexExceedanceCount_le_sharp (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) (hlarge : \u03b4 < gap^2) (n : \u2115) : (\u222b \u03c9, indexExceedanceCount (streamMean X \u03c9) \u03b4 gap n \u2202\u03bc) \u2264 1/gap^2 + (8/gap^2)*(2*logPlus (gap^2/\u03b4)+sqrt (Real.pi*(2*logPlus (gap^2/\u03b4)))+1)"
   },
   {
@@ -33614,7 +33622,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "integral_indexExceedanceCount_le",
     "full_name": "BanditRLProof.MOSS.integral_indexExceedanceCount_le",
     "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
-    "line": 55,
+    "line": 68,
     "statement": "theorem integral_indexExceedanceCount_le (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) (hlarge : \u03b4 < gap^2) (n : \u2115) : (\u222b \u03c9, indexExceedanceCount (streamMean X \u03c9) \u03b4 gap n \u2202\u03bc) \u2264 1/gap^2 + 1 + (8/gap^2)*(2*logPlus (gap^2/\u03b4)+sqrt (Real.pi*(2*logPlus (gap^2/\u03b4)))+1)"
   },
   {
@@ -33622,7 +33630,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gap_mul_integral_indexExceedanceCount_le_sharp",
     "full_name": "BanditRLProof.MOSS.gap_mul_integral_indexExceedanceCount_le_sharp",
     "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
-    "line": 64,
+    "line": 77,
     "statement": "theorem gap_mul_integral_indexExceedanceCount_le_sharp (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) (hlarge : 8*sqrt \u03b4 \u2264 gap) (n : \u2115) : gap*(\u222b \u03c9, indexExceedanceCount (streamMean X \u03c9) \u03b4 gap n \u2202\u03bc) \u2264 15/sqrt \u03b4"
   },
   {
@@ -33630,7 +33638,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gap_mul_integral_indexExceedanceCount_le",
     "full_name": "BanditRLProof.MOSS.gap_mul_integral_indexExceedanceCount_le",
     "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
-    "line": 77,
+    "line": 90,
     "statement": "theorem gap_mul_integral_indexExceedanceCount_le (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) (hlarge : 8*sqrt \u03b4 \u2264 gap) (n : \u2115) : gap*(\u222b \u03c9, indexExceedanceCount (streamMean X \u03c9) \u03b4 gap n \u2202\u03bc) \u2264 gap+15/sqrt \u03b4"
   },
   {
@@ -33976,6 +33984,30 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
     "line": 167,
     "statement": "theorem measure_meanBadEvent_le_fifteen (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) : \u03bc (meanBadEvent X \u03b4 gap) \u2264 ENNReal.ofReal (15*\u03b4/gap^2)"
+  },
+  {
+    "kind": "theorem",
+    "name": "streamTrace_gapSum_le",
+    "full_name": "BanditRLProof.MOSS.streamTrace_gapSum_le",
+    "file": "BanditRLProof/Algorithms/MOSSRegret.lean",
+    "line": 10,
+    "statement": "theorem streamTrace_gapSum_le {\u03a9 : Type*} [MeasurableSpace \u03a9] {k : \u2115} (hk : 0 < k) (n : \u2115) (hkn : k \u2264 n) (mean : Fin k \u2192 \u211d) (X : Fin k \u2192 \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03c9 : \u03a9) (best : Fin k) (hbest : \u2200 a, mean a \u2264 mean best) : (\u2211 a, (mean best - mean a) * (pullCount (streamTrace hk n mean X \u03c9) a n : \u211d)) \u2264 (8*sqrt ((k : \u211d)/(n : \u211d)) + 2*optimismDeficit (X best) ((k : \u211d)/(n : \u211d)) n \u03c9)*(n : \u211d) + \u2211 a, if 8*sqrt ((k : \u211d)/(n : \u211d)) \u2264 mean best - mean a then (mean best - mean a) * (1 + indexExceedanceCount (streamMean (X a) \u03c9) ((k : \u211d)/(n : \u211d)) (mean best - mean a) n) else 0"
+  },
+  {
+    "kind": "theorem",
+    "name": "streamTrace_realMeanRegret_le",
+    "full_name": "BanditRLProof.MOSS.streamTrace_realMeanRegret_le",
+    "file": "BanditRLProof/Algorithms/MOSSRegret.lean",
+    "line": 59,
+    "statement": "theorem streamTrace_realMeanRegret_le {\u03a9 : Type*} [MeasurableSpace \u03a9] {k : \u2115} (hk : 0 < k) (n : \u2115) (hkn : k \u2264 n) (mean : Fin k \u2192 \u211d) (X : Fin k \u2192 \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03c9 : \u03a9) (best : Fin k) (hbest : \u2200 a, mean a \u2264 mean best) : realMeanRegret mean (streamTrace hk n mean X \u03c9) n \u2264 (8*sqrt ((k : \u211d)/(n : \u211d)) + 2*optimismDeficit (X best) ((k : \u211d)/(n : \u211d)) n \u03c9)*(n : \u211d) + \u2211 a, if 8*sqrt ((k : \u211d)/(n : \u211d)) \u2264 mean best - mean a then (mean best - mean a) * (1 + indexExceedanceCount (streamMean (X a) \u03c9) ((k : \u211d)/(n : \u211d)) (mean best - mean a) n) else 0"
+  },
+  {
+    "kind": "theorem",
+    "name": "integral_largeGapCountSum_le",
+    "full_name": "BanditRLProof.MOSS.integral_largeGapCountSum_le",
+    "file": "BanditRLProof/Algorithms/MOSSRegret.lean",
+    "line": 76,
+    "statement": "theorem integral_largeGapCountSum_le {\u03a9 : Type*} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] {k : \u2115} (mean : Fin k \u2192 \u211d) (X : Fin k \u2192 \u2115 \u2192 \u03a9 \u2192 \u211d) (best : Fin k) (hbest : \u2200 a, mean a \u2264 mean best) (hXm : \u2200 a i, StronglyMeasurable (X a i)) (hind : \u2200 a, iIndepFun (X a) \u03bc) (hmean : \u2200 a i, \u222b \u03c9, X a i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 a i, HasSubgaussianMGF (X a i) 1 \u03bc) (\u03b4 : \u211d) (h\u03b4 : 0 < \u03b4) (n : \u2115) : (\u222b \u03c9, \u2211 a, if 8*sqrt \u03b4 \u2264 mean best - mean a then (mean best - mean a)*(1+indexExceedanceCount (streamMean (X a) \u03c9) \u03b4 (mean best-mean a) n) else 0 \u2202\u03bc) \u2264 (\u2211 a, (mean best-mean a)) + (k : \u211d)*(15/sqrt \u03b4)"
   },
   {
     "kind": "theorem",
@@ -96841,6 +96873,45 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "target_fingerprint": "",
     "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
     "time": "2026-09-05T06:08:20+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "build",
+    "lean": "BanditRLProof/Algorithms/MOSSStream.lean",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [
+      "BanditRLProof.MOSS.streamTrace_pullCount_le",
+      "BanditRLProof.MOSS.pullCount_streamTrace"
+    ],
+    "notes": "Concrete recursive MOSS stream execution and initialization-safe count bound compiled with canary; no policy-equation or selected-event oracle in final pathwise leaf. Need regret split, expectation assembly and history-law identification. Full c8f4106 check passed, 400 tests 7 skips.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "compiled-leaf",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "lower",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "compiled",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T06:12:06+00:00",
     "verifier_evidence": [],
     "worker_id": ""
   }
