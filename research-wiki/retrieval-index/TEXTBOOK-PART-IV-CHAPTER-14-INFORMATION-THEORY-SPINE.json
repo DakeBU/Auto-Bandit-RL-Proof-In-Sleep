@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE",
-  "generated": "2026-09-05T06:33:18+00:00",
+  "generated": "2026-09-05T06:35:36+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -56795,6 +56795,46 @@
       "file": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
       "line": 124,
       "statement": "theorem exists_grid_cell_inside (L U δ : ℝ) (hL : 0 ≤ L) (hδ : 0 < δ) (hwidth : 2 * δ ≤ U - L) : ∃ m : ℕ, L ≤ (m : ℝ) * δ ∧ ((m : ℝ) + 1) * δ < U"
+    },
+    {
+      "kind": "theorem",
+      "name": "arithmeticAddress_prefix_forces_eq",
+      "full_name": "BanditRLProof.LowerBounds.arithmeticAddress_prefix_forces_eq",
+      "file": "BanditRLProof/LowerBounds/ArithmeticPrefixCode.lean",
+      "line": 5,
+      "statement": "theorem arithmeticAddress_prefix_forces_eq {k : ℕ} (p : Fin k → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) (u v : List (Fin k)) (hlen : u.length = v.length) (cu cv : List Bool) (huL : (arithmeticInterval p u).1 ≤ dyadicAddressLower cu) (huU : dyadicAddressUpper cu < (arithmeticInterval p u).2) (hvL : (arithmeticInterval p v).1 ≤ dyadicAddressLower cv) (hvU : dyadicAddressUpper cv < (arithmeticInterval p v).2) (hprefix : cu <+: cv) : u = v"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_arithmeticPrefixCode",
+      "full_name": "BanditRLProof.LowerBounds.exists_arithmeticPrefixCode",
+      "file": "BanditRLProof/LowerBounds/ArithmeticPrefixCode.lean",
+      "line": 22,
+      "statement": "theorem exists_arithmeticPrefixCode {α : Type*} {k : ℕ} (p : Fin k → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) (message : α → List (Fin k)) (hinj : Function.Injective message) (hlen : ∀ a b, (message a).length = (message b).length) (bits : α → ℕ) (hbudget : ∀ a, 2 * (1 / (2 : ℝ) ^ bits a) ≤ (arithmeticInterval p (message a)).2 - (arithmeticInterval p (message a)).1) : ∃ code : BinaryPrefixCode α, (∀ a, (code.encode a).length = bits a) ∧ ∀ a, (arithmeticInterval p (message a)).1 ≤ dyadicAddressLower (code.encode a) ∧ dyadicAddressUpper (code.encode a) < (arithmeticInterval p (message a)).2"
+    },
+    {
+      "kind": "def",
+      "name": "arithmeticLength",
+      "full_name": "BanditRLProof.LowerBounds.arithmeticLength",
+      "file": "BanditRLProof/LowerBounds/ArithmeticPrefixCode.lean",
+      "line": 57,
+      "statement": "noncomputable def arithmeticLength (mass : ℝ) : ℕ"
+    },
+    {
+      "kind": "theorem",
+      "name": "arithmeticLength_width_budget",
+      "full_name": "BanditRLProof.LowerBounds.arithmeticLength_width_budget",
+      "file": "BanditRLProof/LowerBounds/ArithmeticPrefixCode.lean",
+      "line": 59,
+      "statement": "theorem arithmeticLength_width_budget {mass : ℝ} (hm : 0 < mass) : 2 * (1 / (2 : ℝ) ^ arithmeticLength mass) < mass"
+    },
+    {
+      "kind": "theorem",
+      "name": "arithmeticLength_le_information_add_two",
+      "full_name": "BanditRLProof.LowerBounds.arithmeticLength_le_information_add_two",
+      "file": "BanditRLProof/LowerBounds/ArithmeticPrefixCode.lean",
+      "line": 68,
+      "statement": "theorem arithmeticLength_le_information_add_two {mass : ℝ} (hm : 0 < mass) (hm1 : mass ≤ 1) : (arithmeticLength mass : ℝ) ≤ Real.log mass⁻¹ / Real.log 2 + 2"
     },
     {
       "kind": "def",

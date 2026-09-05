@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T06:33:23+00:00`
+Generated: `2026-09-05T06:35:43+00:00`
 
 ## Source Task
 
@@ -60,7 +60,7 @@ mapped local adapter before they count as chapter evidence.
 | opening motivation | information-theory/KL role in generalising Chapter 13 | maintained source map; no theorem claim | mapped |
 | §14.1 code model | binary codewords, injectivity, prefix freedom, codeword length, and expected length | `BinaryPrefixCode`, its uniquely-decodable range, finite codebook, Kraft adapter, and `expectedCodeLength` compile; the explicit nonempty-codeword contract is recorded | partial |
 | Eq. (14.1) | optimal expected-length objective over valid prefix codes | no local optimum/existence theorem | blocked |
-| Eq. (14.2) | Huffman optimum satisfies `H₂(P) ≤ L* ≤ H₂(P)+1` | `huffmanOptimalCode` recursively merges two least weights; `huffmanCode_optimal` and `huffmanCode_entropy_sandwich` compiled for finite alphabets, ties/zeros included; classical real-weight construction, not an executable encoder; aggregate validation pending | partial |
+| Eq. (14.2) | Huffman optimum satisfies `H₂(P) ≤ L* ≤ H₂(P)+1` | `huffmanOptimalCode` recursively merges two least weights; global optimality and entropy sandwich for finite alphabets, ties/zeros included; classical real-weight construction, not an executable encoder; full gate passed at dff13cb | compiled |
 | §14.1 asymptotic statement | arithmetic coding approaches entropy and no code improves the asymptotic rate | no block-code/asymptotic coding model | blocked |
 | Eqs. (14.2)--(14.3) definitions | finite discrete base-two entropy, natural entropy, and exact unit conversion | `discreteEntropy`, `discreteEntropyBaseTwo`, their exact conversion, and nonnegativity compile | compiled |
 | Eq. (14.4) | arbitrary finite-alphabet discrete relative entropy with exact zero/support endpoints | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, and `relativeEntropy_finite_eq_top_iff` compile; root-import finite/singular three-symbol canaries pass | compiled |
@@ -390,7 +390,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | --- | --- | --- | --- | --- | --- | --- |
 | `CH14-CODE-MODEL` | typed finite binary prefix-code surface and expected length | lists, finite sums, Mathlib Kraft--McMillan | define injective/prefix-free/nonempty codes; prove range uniquely decodable and expose finite Kraft adapter | `BinaryPrefixCode`, `BinaryPrefixCode.uniquelyDecodable_range`, `BinaryPrefixCode.kraft_inequality`, `expectedCodeLength` | focused Lean | compiled |
 | `CH14-ENTROPY-DEFINITIONS` | Eqs. (14.2)--(14.3) entropy definitions, nonnegativity, and nats/bits conversion | finite sums, real log | exact finite support convention; term at zero is zero | `discreteEntropy`, `discreteEntropyBaseTwo`, `discreteEntropyBaseTwo_eq_div_log_two`, `discreteEntropy_nonneg` | focused Lean | compiled |
-| `CH14-HUFFMAN-BOUND` | Eq. (14.2), including existence/optimality of a prefix code | Kraft--McMillan, least-weight sibling exchange, cardinality recursion | recursive Huffman merge/expand construction with proved global optimality and entropy sandwich; finite nonnegative real weights, ties/zeros admitted; classical noncomputable construction | `huffmanOptimalCode`, `huffmanCode_optimal`, `huffmanCode_entropy_sandwich` focused-build; aggregate gate pending | chapter terminal | partial |
+| `CH14-HUFFMAN-BOUND` | Eq. (14.2), including existence/optimality of a prefix code | Kraft--McMillan, least-weight sibling exchange, cardinality recursion | recursive Huffman merge/expand construction with proved global optimality and entropy sandwich; finite nonnegative real weights, ties/zeros admitted; classical noncomputable construction | root-integrated `huffmanOptimalCode`, `huffmanCode_optimal`, `huffmanCode_entropy_sandwich`; full gate passed at dff13cb (400 tests, 7 skipped) | chapter terminal | compiled |
 | `CH14-SOURCE-CODING` | arithmetic/block-code achievability and converse | product distributions, block prefix codes, asymptotics | exact n-fold entropy, finite-n rate sandwich, code-family convergence and universal limit converse; arithmetic algorithm remains open | `exists_sourceBlock_code_family_tendsto_entropy`, `sourceBlock_code_family_limit_ge_entropy` and finite-n leaves focused-build/canary passed; aggregate pending | chapter terminal | partial |
 | `CH14-FINITE-DISCRETE-KL` | Eq. (14.4) for an arbitrary finite alphabet | finite sums, support endpoints | atomwise AC equivalence, RN density ratio, finite LLR integrability, and finite integral sum; singular atom forces infinity | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, `relativeEntropy_finite_eq_top_iff` | focused Lean and root-import canary passed | compiled |
 | `CH14-DISCRETISATION-SUP` | Eq. (14.5) and equality with RN KL in Theorem 14.1 | finite measurable quotients/partitions, supremum | finite-cell Jensen upper bound; binary singular witness; density filtration recovery by conditional-expectation convergence/Fatou; finite-range coding of each layer | `finitePartitionRelativeEntropy_eq_relativeEntropy` and its finite-partition/filtration/encoding helpers | root, aggregate Tests, and full harness pass at 40c56ca | compiled |
@@ -57796,6 +57796,46 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
     "line": 124,
     "statement": "theorem exists_grid_cell_inside (L U \u03b4 : \u211d) (hL : 0 \u2264 L) (h\u03b4 : 0 < \u03b4) (hwidth : 2 * \u03b4 \u2264 U - L) : \u2203 m : \u2115, L \u2264 (m : \u211d) * \u03b4 \u2227 ((m : \u211d) + 1) * \u03b4 < U"
+  },
+  {
+    "kind": "theorem",
+    "name": "arithmeticAddress_prefix_forces_eq",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticAddress_prefix_forces_eq",
+    "file": "BanditRLProof/LowerBounds/ArithmeticPrefixCode.lean",
+    "line": 5,
+    "statement": "theorem arithmeticAddress_prefix_forces_eq {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (u v : List (Fin k)) (hlen : u.length = v.length) (cu cv : List Bool) (huL : (arithmeticInterval p u).1 \u2264 dyadicAddressLower cu) (huU : dyadicAddressUpper cu < (arithmeticInterval p u).2) (hvL : (arithmeticInterval p v).1 \u2264 dyadicAddressLower cv) (hvU : dyadicAddressUpper cv < (arithmeticInterval p v).2) (hprefix : cu <+: cv) : u = v"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_arithmeticPrefixCode",
+    "full_name": "BanditRLProof.LowerBounds.exists_arithmeticPrefixCode",
+    "file": "BanditRLProof/LowerBounds/ArithmeticPrefixCode.lean",
+    "line": 22,
+    "statement": "theorem exists_arithmeticPrefixCode {\u03b1 : Type*} {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (message : \u03b1 \u2192 List (Fin k)) (hinj : Function.Injective message) (hlen : \u2200 a b, (message a).length = (message b).length) (bits : \u03b1 \u2192 \u2115) (hbudget : \u2200 a, 2 * (1 / (2 : \u211d) ^ bits a) \u2264 (arithmeticInterval p (message a)).2 - (arithmeticInterval p (message a)).1) : \u2203 code : BinaryPrefixCode \u03b1, (\u2200 a, (code.encode a).length = bits a) \u2227 \u2200 a, (arithmeticInterval p (message a)).1 \u2264 dyadicAddressLower (code.encode a) \u2227 dyadicAddressUpper (code.encode a) < (arithmeticInterval p (message a)).2"
+  },
+  {
+    "kind": "def",
+    "name": "arithmeticLength",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticLength",
+    "file": "BanditRLProof/LowerBounds/ArithmeticPrefixCode.lean",
+    "line": 57,
+    "statement": "noncomputable def arithmeticLength (mass : \u211d) : \u2115"
+  },
+  {
+    "kind": "theorem",
+    "name": "arithmeticLength_width_budget",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticLength_width_budget",
+    "file": "BanditRLProof/LowerBounds/ArithmeticPrefixCode.lean",
+    "line": 59,
+    "statement": "theorem arithmeticLength_width_budget {mass : \u211d} (hm : 0 < mass) : 2 * (1 / (2 : \u211d) ^ arithmeticLength mass) < mass"
+  },
+  {
+    "kind": "theorem",
+    "name": "arithmeticLength_le_information_add_two",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticLength_le_information_add_two",
+    "file": "BanditRLProof/LowerBounds/ArithmeticPrefixCode.lean",
+    "line": 68,
+    "statement": "theorem arithmeticLength_le_information_add_two {mass : \u211d} (hm : 0 < mass) (hm1 : mass \u2264 1) : (arithmeticLength mass : \u211d) \u2264 Real.log mass\u207b\u00b9 / Real.log 2 + 2"
   },
   {
     "kind": "def",

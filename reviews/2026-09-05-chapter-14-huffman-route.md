@@ -197,3 +197,9 @@ Full-gate result at 7daa2b9: complete check passed, Tests 8927 jobs,
 greedy and induction-step aggregate. The next full gate is running at
 dff13cb for Alphabet/Construction, with log
 `C:/a14/tmp/ch14-huffman-construction-full-check.log`.
+
+Full-gate result at dff13cb: complete check passed, including 400 Python tests
+(7 skipped, 183.908s). This validates the root-integrated recursive Huffman
+constructor, global optimum and Eq. (14.2) sandwich, plus Alphabet canary.
+Log: `C:/a14/tmp/ch14-huffman-construction-full-check.log`. Arithmetic modules
+added later remain outside this gate. Whole Chapter 14 remains partial.

@@ -69,3 +69,29 @@ Bool list whose cell is inside [L,U], under the explicit twice-grid-width
 budget. Real endpoint definitions are noncomputable; natural address values
 are computable. No arithmetic prefix-code/rate terminal is claimed yet.
 This focused-only module remains outside the running dff13cb full gate.
+
+Prefix-code assembly route: for an injectively labeled family of equal-length
+messages with assigned bit lengths satisfying the dyadic width budget, choose
+the actual binary address in each arithmetic cell. If one address prefixes
+another, the midpoint of the latter cell lies strictly inside both source
+cells, so interval uniqueness forces equal messages and equal labels. The
+strict upper endpoint bound excludes the empty binary word (whose upper
+endpoint is 1). This produces a BinaryPrefixCode with exact assigned lengths.
+The width-budget hypothesis is an intermediate interface, not a new premise
+for the final source theorem; later length allocation/support handling must
+discharge it for arbitrary distributions including zero masses.
+
+Length-allocation route: `arithmeticLength mass = shannonLength mass + 1`.
+The extra bit changes the twice-grid-width budget into the existing strict
+Shannon Kraft-weight inequality. For 0<mass<=1 the pointwise code length is
+at most log2(1/mass)+2. This positive-cell leaf will be applied on the support;
+the final distribution theorem must explicitly cover zero-mass messages.
+
+Assembly/length result: ArithmeticPrefixCode compiled (2677 jobs), its typed
+canary passed, and all four audited declarations use only standard axioms.
+The chosen cell addresses form an actual BinaryPrefixCode with exact assigned
+lengths under the width interface. `arithmeticLength_width_budget` discharges
+that interface for positive mass; `arithmeticLength_le_information_add_two`
+gives the constant-two pointwise overhead. The nonempty-codeword condition
+is proved, not assumed. Still required: support/zero-mass extension and
+product-source expected-length/rate terminal. These leaves are focused-only.
