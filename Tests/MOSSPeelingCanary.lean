@@ -2,6 +2,7 @@ import BanditRLProof.Algorithms.MOSSPeeling
 import BanditRLProof.Algorithms.MOSSOptimism
 import BanditRLProof.Algorithms.MOSSOccupancy
 import BanditRLProof.ConcentrationGaussianOccupancy
+import BanditRLProof.ConcentrationIndexOccupancy
 
 open BanditRLProof MeasureTheory ProbabilityTheory Real
 open scoped ENNReal NNReal
@@ -69,3 +70,15 @@ example (a ε r : ℝ) (ha : 0 < a) (hε : 0 < ε) (hr : 2*a/ε^2 ≤ r) (N : �
 #print axioms Concentration.integral_occupancyTail
 #print axioms Concentration.integrableOn_occupancyTail
 #print axioms Concentration.sum_occupancyTail_shift_le
+
+example {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ)
+    (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ)
+    (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) (n : ℕ) :
+    (∫ ω, Concentration.fixedRadiusCount X a ε n ω ∂μ) ≤
+      1+(2/ε^2)*(a+sqrt (Real.pi*a)+1) :=
+  Concentration.integral_fixedRadiusCount_le X hXm hind hmean hsubG a ε ha hε n
+
+#print axioms Concentration.sum_le_occupancy_bound
+#print axioms Concentration.measure_fixedRadiusMeanEvent_le
+#print axioms Concentration.integral_fixedRadiusCount_le

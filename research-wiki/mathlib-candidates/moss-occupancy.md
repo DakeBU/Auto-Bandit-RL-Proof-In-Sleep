@@ -63,3 +63,22 @@ The import `SumIntegralComparisons` supplies the monotone integral comparison;
 the tail's nonnegativity and integrability justify enlarging the integration set.
 Remaining: integer cutoff accounting and subgaussian probability/count
 consumer, then source MOSS constants and concrete history connection.
+
+Integer cutoff route: m=ceil(2a/epsilon^2). For n<=m use probability<=1;
+otherwise split the first m entries and the remaining n-m entries. The latter
+start at m+1 and are bounded by sum_occupancyTail_shift_le. Since m<u+1,
+the combined bound is 1+2/epsilon^2*(a+sqrt(pi*a)+1), exactly the source.
+This generic numeric aggregation lemma must subsequently consume proved
+pointwise subgaussian event bounds, not be called the probability theorem itself.
+
+Update: integer cutoff aggregation and the actual source expected-count
+conclusion now compile in `ConcentrationGaussianOccupancy` and
+`ConcentrationIndexOccupancy`. The latter derives the fixed-radius empirical
+mean tail from the compiled independent maximal bound, proves measurability,
+expands the finite indicator-count integral, and obtains
+E[kappa]<=1+2/epsilon^2*(a+sqrt(pi*a)+1). Strong measurability, independence,
+zero means and unit-subgaussian MGF contracts are explicit; no tail premise
+is assumed in the final theorem. This covers the expected-count conclusion,
+not a separate formal definition/comparison of the source auxiliary kappa-prime.
+Next required MOSS step is substituting a=2*logPlus(gap^2/delta), epsilon=gap/2,
+then proving the large-gap constant 15 and connecting actual selected counts.

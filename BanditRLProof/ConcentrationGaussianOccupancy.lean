@@ -162,4 +162,45 @@ theorem sum_occupancyTail_shift_le (a ε r : ℝ) (ha : 0 < a) (hε : 0 < ε)
         (Eventually.of_forall (fun t ht => hr.trans_lt ht.1))
     _ = _ := integral_occupancyTail a ε ha hε
 
+/-- Integer cutoff aggregation with the exact source Lemma 8.2 constants. -/
+theorem sum_le_occupancy_bound (p : ℕ → ℝ) (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε)
+    (h1 : ∀ s, p s ≤ 1)
+    (htail : ∀ s : ℕ, 2*a/ε^2 < (s : ℝ) → p s ≤ occupancyTail a ε s) (n : ℕ) :
+    (∑ i ∈ Finset.range n, p (i+1)) ≤ 1+(2/ε^2)*(a+sqrt (Real.pi*a)+1) := by
+  let u := 2*a/ε^2
+  let m : ℕ := ⌈u⌉₊
+  have hu : 0 ≤ u := by dsimp [u]; positivity
+  have hm : u ≤ (m : ℝ) := Nat.le_ceil u
+  have hm1 : (m : ℝ) ≤ u+1 := (Nat.ceil_lt_add_one hu).le
+  have hbasic (N : ℕ) : (∑ i ∈ Finset.range N, p (i+1)) ≤ (N : ℝ) := by
+    calc
+      _ ≤ ∑ _i ∈ Finset.range N, (1 : ℝ) := Finset.sum_le_sum (fun i _ => h1 (i+1))
+      _ = _ := by simp
+  have hnon : 0 ≤ (2/ε^2)*(1+sqrt (Real.pi*a)) := by positivity
+  have hformula : 1+(2/ε^2)*(a+sqrt (Real.pi*a)+1) =
+      2*a/ε^2+1+(2/ε^2)*(1+sqrt (Real.pi*a)) := by ring
+  rw [hformula]
+  by_cases hnm : n ≤ m
+  · have hn := (hbasic n).trans ((Nat.cast_le.mpr hnm).trans hm1)
+    dsimp [u] at hn
+    nlinarith
+  · have hmn : m ≤ n := by omega
+    have hsplit : n = m+(n-m) := (Nat.add_sub_of_le hmn).symm
+    rw [hsplit, Finset.sum_range_add]
+    have ht : (∑ i ∈ Finset.range (n-m), p (m+i+1)) ≤
+        (2/ε^2)*(1+sqrt (Real.pi*a)) := by
+      calc
+        _ ≤ ∑ i ∈ Finset.range (n-m), occupancyTail a ε ((m : ℝ)+(i+1 : ℕ)) := by
+          apply Finset.sum_le_sum
+          intro i hi
+          have hlarge : 2*a/ε^2 < ((m+i+1 : ℕ) : ℝ) := by
+            push_cast
+            dsimp [u] at hm
+            linarith [Nat.cast_nonneg i (α := ℝ)]
+          simpa [Nat.cast_add, Nat.cast_one, add_assoc] using htail (m+i+1) hlarge
+        _ ≤ _ := sum_occupancyTail_shift_le a ε m ha hε hm (n-m)
+    have hb := hbasic m
+    dsimp [u] at hm1
+    nlinarith
+
 end BanditRLProof.Concentration

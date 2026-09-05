@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T05:45:20+00:00`
+Generated: `2026-09-05T05:49:27+00:00`
 
 ## Source Task
 
@@ -44579,6 +44579,62 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
     "line": 149,
     "statement": "theorem sum_occupancyTail_shift_le (a \u03b5 r : \u211d) (ha : 0 < a) (h\u03b5 : 0 < \u03b5) (hr : 2*a/\u03b5^2 \u2264 r) (N : \u2115) : (\u2211 i \u2208 Finset.range N, occupancyTail a \u03b5 (r+(i+1 : \u2115))) \u2264 (2/\u03b5^2)*(1+sqrt (Real.pi*a))"
+  },
+  {
+    "kind": "theorem",
+    "name": "sum_le_occupancy_bound",
+    "full_name": "BanditRLProof.Concentration.sum_le_occupancy_bound",
+    "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+    "line": 166,
+    "statement": "theorem sum_le_occupancy_bound (p : \u2115 \u2192 \u211d) (a \u03b5 : \u211d) (ha : 0 < a) (h\u03b5 : 0 < \u03b5) (h1 : \u2200 s, p s \u2264 1) (htail : \u2200 s : \u2115, 2*a/\u03b5^2 < (s : \u211d) \u2192 p s \u2264 occupancyTail a \u03b5 s) (n : \u2115) : (\u2211 i \u2208 Finset.range n, p (i+1)) \u2264 1+(2/\u03b5^2)*(a+sqrt (Real.pi*a)+1)"
+  },
+  {
+    "kind": "def",
+    "name": "fixedRadiusMeanEvent",
+    "full_name": "BanditRLProof.Concentration.fixedRadiusMeanEvent",
+    "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
+    "line": 10,
+    "statement": "def fixedRadiusMeanEvent (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (a \u03b5 : \u211d) (s : \u2115) : Set \u03a9"
+  },
+  {
+    "kind": "theorem",
+    "name": "measure_fixedRadiusMeanEvent_le",
+    "full_name": "BanditRLProof.Concentration.measure_fixedRadiusMeanEvent_le",
+    "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
+    "line": 13,
+    "statement": "theorem measure_fixedRadiusMeanEvent_le (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (a \u03b5 : \u211d) (ha : 0 < a) (h\u03b5 : 0 < \u03b5) (s : \u2115) (hs : 2*a/\u03b5^2 < (s : \u211d)) : \u03bc (fixedRadiusMeanEvent X a \u03b5 s) \u2264 ENNReal.ofReal (occupancyTail a \u03b5 s)"
+  },
+  {
+    "kind": "theorem",
+    "name": "sum_measureReal_fixedRadiusMeanEvent_le",
+    "full_name": "BanditRLProof.Concentration.sum_measureReal_fixedRadiusMeanEvent_le",
+    "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
+    "line": 51,
+    "statement": "theorem sum_measureReal_fixedRadiusMeanEvent_le (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (a \u03b5 : \u211d) (ha : 0 < a) (h\u03b5 : 0 < \u03b5) (n : \u2115) : (\u2211 i \u2208 range n, \u03bc.real (fixedRadiusMeanEvent X a \u03b5 (i+1))) \u2264 1+(2/\u03b5^2)*(a+sqrt (Real.pi*a)+1)"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurableSet_fixedRadiusMeanEvent",
+    "full_name": "BanditRLProof.Concentration.measurableSet_fixedRadiusMeanEvent",
+    "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
+    "line": 64,
+    "statement": "theorem measurableSet_fixedRadiusMeanEvent (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (a \u03b5 : \u211d) (s : \u2115) : MeasurableSet (fixedRadiusMeanEvent X a \u03b5 s)"
+  },
+  {
+    "kind": "def",
+    "name": "fixedRadiusCount",
+    "full_name": "BanditRLProof.Concentration.fixedRadiusCount",
+    "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
+    "line": 72,
+    "statement": "def fixedRadiusCount (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (a \u03b5 : \u211d) (n : \u2115) (\u03c9 : \u03a9) : \u211d"
+  },
+  {
+    "kind": "theorem",
+    "name": "integral_fixedRadiusCount_le",
+    "full_name": "BanditRLProof.Concentration.integral_fixedRadiusCount_le",
+    "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
+    "line": 76,
+    "statement": "theorem integral_fixedRadiusCount_le (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (a \u03b5 : \u211d) (ha : 0 < a) (h\u03b5 : 0 < \u03b5) (n : \u2115) : (\u222b \u03c9, fixedRadiusCount X a \u03b5 n \u03c9 \u2202\u03bc) \u2264 1+(2/\u03b5^2)*(a+sqrt (Real.pi*a)+1)"
   },
   {
     "kind": "theorem",
@@ -96336,6 +96392,42 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "target_fingerprint": "",
     "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
     "time": "2026-09-05T05:40:55+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "build",
+    "lean": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [],
+    "notes": "Inverse change of variables, original occupancy-tail integral, derived integrability, and shifted finite sum bound compiled. External canary 3518 jobs/baseline axioms passed. Integer cutoff and probability count consumer remain pending.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "compiled-leaf",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "lower",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "compiled",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T05:45:32+00:00",
     "verifier_evidence": [],
     "worker_id": ""
   }
