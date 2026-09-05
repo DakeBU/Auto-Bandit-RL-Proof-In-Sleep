@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T07:52:24+00:00`
+Generated: `2026-09-05T07:57:46+00:00`
 
 ## Source Task
 
@@ -58560,10 +58560,18 @@ These cards are planning inspiration only.  They do not certify any theorem.
   },
   {
     "kind": "theorem",
+    "name": "commonDensityOverlap_le_testingError",
+    "full_name": "BanditRLProof.LowerBounds.commonDensityOverlap_le_testingError",
+    "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+    "line": 155,
+    "statement": "theorem commonDensityOverlap_le_testingError {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) {A : Set \u03b1} (hA : MeasurableSet A) : commonDensityOverlap P Q \u03bc \u2264 P.real A + Q.real A\u1d9c"
+  },
+  {
+    "kind": "theorem",
     "name": "bretagnolleHuberScale_le_commonDensityOverlap",
     "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_le_commonDensityOverlap",
     "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
-    "line": 155,
+    "line": 174,
     "statement": "theorem bretagnolleHuberScale_le_commonDensityOverlap {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) : bretagnolleHuberScale (relativeEntropy P Q) \u2264 commonDensityOverlap P Q \u03bc"
   },
   {

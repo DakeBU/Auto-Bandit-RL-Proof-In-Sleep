@@ -278,3 +278,15 @@ unique decodability; no strict Kraft assumption is imposed on the encoder.
 The full 3d7c9a1 gate passed, including the root-import canary (400 Python
 tests, 7 skipped). `IsOptimalPrefixCode.length_antitone` separately
 formalizes the body observation about more likely symbols in an optimal code.
+
+## Arbitrary-event source proof closure
+
+`commonDensityOverlap_le_testingError` proves overlap ≤ P(A)+Q(Aᶜ) for every
+measurable event, finite P,Q and sigma-finite common domination. It splits the
+minimum-density integral over A and its complement, bounds each minimum by
+the corresponding density and applies the RN set-integral identity. The
+Affinity canary chains the source Jensen, squared-affinity and overlap bounds
+all the way to arbitrary-event testing error. It also checks the reversed-KL
+remark by swapping P,Q and complementing A. Independent source review accepted
+this repair; exact aggregate validation is recorded in the independent-source
+review. This does not certify current-main integration or publication.

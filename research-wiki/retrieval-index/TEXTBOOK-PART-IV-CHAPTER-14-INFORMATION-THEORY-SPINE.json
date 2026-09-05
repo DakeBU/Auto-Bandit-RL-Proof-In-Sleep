@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE",
-  "generated": "2026-09-05T07:52:18+00:00",
+  "generated": "2026-09-05T07:57:36+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -57558,10 +57558,18 @@
     },
     {
       "kind": "theorem",
+      "name": "commonDensityOverlap_le_testingError",
+      "full_name": "BanditRLProof.LowerBounds.commonDensityOverlap_le_testingError",
+      "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
+      "line": 155,
+      "statement": "theorem commonDensityOverlap_le_testingError {α : Type*} [MeasurableSpace α] (P Q μ : Measure α) [IsFiniteMeasure P] [IsFiniteMeasure Q] [SigmaFinite μ] (hP : P ≪ μ) (hQ : Q ≪ μ) {A : Set α} (hA : MeasurableSet A) : commonDensityOverlap P Q μ ≤ P.real A + Q.real Aᶜ"
+    },
+    {
+      "kind": "theorem",
       "name": "bretagnolleHuberScale_le_commonDensityOverlap",
       "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_le_commonDensityOverlap",
       "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
-      "line": 155,
+      "line": 174,
       "statement": "theorem bretagnolleHuberScale_le_commonDensityOverlap {α : Type*} [MeasurableSpace α] (P Q μ : Measure α) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite μ] (hP : P ≪ μ) (hQ : Q ≪ μ) : bretagnolleHuberScale (relativeEntropy P Q) ≤ commonDensityOverlap P Q μ"
     },
     {
