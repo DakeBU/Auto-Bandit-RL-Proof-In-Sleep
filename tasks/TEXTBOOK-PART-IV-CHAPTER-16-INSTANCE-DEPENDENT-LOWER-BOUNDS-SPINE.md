@@ -161,7 +161,7 @@ LowerBounds.gaussianExpectedPullCount_ge_finiteTimeInstanceDependent
 LowerBounds.gaussianExpectedRegret_ge_finiteTimeInstanceDependent
 ```
 
-Reserved source terminals, with no declaration claimed:
+Compiled asymptotic source terminals:
 
 ```lean
 LowerBounds.consistentPolicy_liminf_expectedPull_div_log_ge_inv_dInf
@@ -276,10 +276,10 @@ upgrades that terminal to Theorem 16.4.
   authoritative-main Actions run `32554151109`, Pages deployment, and live
   checks at merge `08c1470`.
 
-## Remote verification evidence
+## Historical remote verification evidence
 
-The current fifteen-declaration extension is remotely verified without
-promoting the blocked source terminals.
+The earlier fifteen-declaration extension was remotely verified with its
+then-blocked source terminals. This history is not evidence for the new PR.
 
 - PR #40 passed `Lean and documentation / build` in run `32553086838` and the
   result-free lifecycle probe in run `32553086905`; it was merged through the
@@ -353,7 +353,7 @@ remains `partial`, and all three source terminals retain their blocked status.
 | history information constraint | compiled Chapter 15 history law and Chapter 14 BH | specialize Lemma 15.1 to one changed arm and the exact majority event | same stochastic policy; first-law expectation | compiled project-local |
 | event-to-regret producers | canonical finite-history law and gap-times-pull-count pseudo-regret | bound the original and changed majority-event errors by exact charges and apply the factor-`1/4` logarithmic consumer | nonnegative gap vectors, positive original gap and changed margin, source horizon convention | compiled project-local conditional interface |
 | source mean-to-gap bridge | finite arm-law integral means and certified optima | identify the canonical gap vectors with the source environments' actual mean gaps | finite means; original/changed optimal-arm certificates | compiled project-local |
-| asymptotic terminal | finite-time information inequality plus consistency log leaf | divide by log horizon and take liminf | positive gap/information; zero/infinite branches | blocked source terminal |
+| asymptotic terminal | finite-time information inequality plus consistency log leaf | divide by log horizon and take liminf | positive gap/information; zero/infinite branches | compiled source terminal |
 | finite-time Gaussian terminal | Lemma 16.3, Gaussian KL, regret decomposition | choose mean shift `Delta_i(1+epsilon)`, sum positive parts | exact local class and horizon quantifiers | compiled source terminal |
 
 ## Retrieval cards

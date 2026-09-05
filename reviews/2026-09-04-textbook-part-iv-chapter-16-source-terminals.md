@@ -41,17 +41,21 @@ the requested four-item main-text scope.
 
 ## Verification
 
-- Focused module: passed, 3584 jobs.
+- Focused module: passed after rebase, 3590 jobs.
 - Updated Chapter 16 canary: passed; standard axiom set only.
 - Full library/test build within harness: passed, 8852/8894 jobs.
-- Full Python harness suite: passed, 400 tests, 7 skipped; `check passed`.
-- Site build and check: passed, 658 HTML pages, 604 modules, 8266 declarations,
-  9035 Lean source links; internal links and anchors valid.
+- Full Python harness suite: passed after rebase, 400 tests, 7 skipped;
+  `check passed` (250.530 seconds for Python tests).
+- Site build and check: passed after rebase, 658 HTML pages, 604 modules,
+  8279 declarations, 9051 Lean source links; internal links and anchors valid.
 - Browser: desktop 1280x800 and mobile 390x844 inspected. Mobile reload
   resolved the transient cropped capture; title, body, source links, and
   compiled status display correctly. No whole-page horizontal overflow or
   broken images. Temporary viewport override reset.
-- Final commit/PR and current-main comparison: pending.
+- Rebased on main `5c0ba47`, including Chapter 14 PR #103. Source changes
+  merged cleanly; generated indexes were regenerated from both chapters.
+  Delivery PR: <https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/pull/104>.
+  Remote CI status is tracked on the PR; no merge is authorized here.
 
 Windows validation temporarily used `buildDir := "E:/abrl16-build"`, a
 junction to this worktree's `.lake/build`, to avoid a pre-existing long RL
@@ -60,13 +64,12 @@ passing full gate; `lakefile.lean` matches the original tracked configuration.
 
 ## Reusable continuation prompt
 
-Finish the delivery audit for this Chapter 16 task. The exact three source
-theorems and Definition 16.1 compile; do not redo or weaken them. Read the
-current verification logs, finish the full harness run, refresh index,
-Blueprint, memory, frontier-shadow and trial summary after final edits,
-ensure all current docs/site/export statuses agree, remove the temporary
-Windows buildDir workaround, inspect the diff, and create the authorized
-commit and PR. Preserve the exact paper title:
+Review PR #104 for this Chapter 16 task. The exact three source theorems and
+Definition 16.1 compile; do not redo or weaken them. The post-rebase full
+harness, site, and desktop/mobile checks passed; the temporary Windows
+buildDir workaround was removed. Inspect remote CI and the exact statements,
+especially inverse-infimum branches and finite-count Fatou. Preserve the
+exact paper title:
 ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for
 Bandit and Reinforcement Learning Theory.
 Do not merge this PR.
