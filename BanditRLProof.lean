@@ -38,6 +38,7 @@ import BanditRLProof.ExpectationRegretPullCount
 import BanditRLProof.RealMeanRegretPullCount
 import BanditRLProof.LowerBounds.BasicIdeas
 import BanditRLProof.LowerBounds.GaussianHypothesisTesting
+import BanditRLProof.LowerBounds.GaussianMillsRatio
 import BanditRLProof.LowerBounds.InformationTheory
 import BanditRLProof.LowerBounds.Minimax
 import BanditRLProof.LowerBounds.ConditionalKernelKL

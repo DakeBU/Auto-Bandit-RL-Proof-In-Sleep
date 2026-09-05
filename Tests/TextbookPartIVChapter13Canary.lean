@@ -121,6 +121,25 @@ example :
 
 end GaussianTwoPointTesting
 
+example (c x : ℝ) (hc : 0 < c) :
+    HasDerivAt (gaussianMillsComparison c)
+      (-gaussianMillsComparison c x * (2 * x + 1 / Real.sqrt (x ^ 2 + c))) x :=
+  hasDerivAt_gaussianMillsComparison hc
+
+example (x : ℝ) :
+    gaussianMillsComparison 2 x * (2 * x + 1 / Real.sqrt (x ^ 2 + 2)) ≤
+      Real.exp (-x ^ 2) := gaussianMillsComparison_lower_derivative_bound x
+
+#print axioms LowerBounds.hasDerivAt_gaussianMillsComparison
+#print axioms LowerBounds.gaussianMillsComparison_lower_derivative_bound
+
+example (x : ℝ) (hx : 0 ≤ x) :
+    Real.exp (-x ^ 2) / (x + Real.sqrt (x ^ 2 + 2)) ≤
+      ∫ t in Set.Ioi x, Real.exp (-t ^ 2) := gaussianMills_lower_integral hx
+
+#print axioms LowerBounds.tendsto_gaussianMillsComparison
+#print axioms LowerBounds.gaussianMills_lower_integral
+
 #print axioms LowerBounds.worstCaseExpectedRegret
 #print axioms LowerBounds.minimaxExpectedRegret
 #print axioms LowerBounds.IsMinimaxOptimal

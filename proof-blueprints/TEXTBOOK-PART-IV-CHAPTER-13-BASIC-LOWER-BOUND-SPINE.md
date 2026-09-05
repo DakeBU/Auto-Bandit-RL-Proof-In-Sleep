@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T04:27:07+00:00`
+Generated: `2026-09-05T04:32:56+00:00`
 
 ## Source Task
 
@@ -403,6 +403,18 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH13-EVIDENCE-SITE` | proof export, indexes, readings/highlights/results/implementation map/README and Part IV site agree | local full gate | harness and website scripts | repository | generated evidence plus maintained source data | only gate-passing declarations marked compiled | repository | n/a | lean-verified build/site check/browser review | verified locally |
 | `CH13-REVIEW` | structured in-branch source/theorem/Lean/evidence consistency audit | all local artifacts | source, declarations, generated site | all above | check source inventory, quantifiers, probability-law direction, regularity, status labels, and order claims | no unresolved P0--P3; website-status-enum P3 corrected | repository | n/a | review | verified |
 | `CH13-REMOTE` | current Chapter 15 downstream extension PR, Actions, Pages deployment and live Chapter 13 verification | accepted local chapter; earlier dependency-slice PR is historical evidence only | GitHub/Pages workflow | repository | branch PR; never direct push to main | remote state must be current | repository | n/a | remote deployment | pending current extension |
+
+## 2026-09-05 Mills-ratio lower branch
+
+`LowerBounds.gaussianMills_lower_integral` passes focused Lean and the module
+build with the exact lower half of Eq. (13.4), for `x>=0`. Its dependencies
+`hasDerivAt_gaussianMillsComparison`,
+`gaussianMillsComparison_lower_derivative_bound`, and
+`tendsto_gaussianMillsComparison` also compile. The general comparison
+function uses only `c>0`; no tail-integrability assumption is supplied by
+the caller. Root canary and full integration validation are pending for this
+new extension. `CH13-EQ-13-1` remains blocked until the exact upper integral
+bound and Gaussian probability rescaling have been proved.
 
 ## Failure classification
 
@@ -58282,6 +58294,62 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
     "line": 245,
     "statement": "theorem gaussianSampleMeanThresholdRisk_le_exp (sampleSize : Nat) (gap : Real) (hgap : 0 < gap) : gaussianSampleMeanThresholdRisk sampleSize gap \u2264 Real.exp (-(sampleSize : Real) * gap ^ 2 / 8)"
+  },
+  {
+    "kind": "def",
+    "name": "gaussianMillsComparison",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMillsComparison",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 12,
+    "statement": "noncomputable def gaussianMillsComparison (c x : \u211d) : \u211d"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianMillsComparison_denominator_pos",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMillsComparison_denominator_pos",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 15,
+    "statement": "theorem gaussianMillsComparison_denominator_pos {c x : \u211d} (hc : 0 < c) : 0 < x + Real.sqrt (x ^ 2 + c)"
+  },
+  {
+    "kind": "theorem",
+    "name": "hasDerivAt_gaussianMillsComparison",
+    "full_name": "BanditRLProof.LowerBounds.hasDerivAt_gaussianMillsComparison",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 22,
+    "statement": "theorem hasDerivAt_gaussianMillsComparison {c x : \u211d} (hc : 0 < c) : HasDerivAt (gaussianMillsComparison c) (-gaussianMillsComparison c x * (2 * x + 1 / Real.sqrt (x ^ 2 + c))) x"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianMillsComparison_lower_derivative_bound",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMillsComparison_lower_derivative_bound",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 35,
+    "statement": "theorem gaussianMillsComparison_lower_derivative_bound (x : \u211d) : gaussianMillsComparison 2 x * (2 * x + 1 / Real.sqrt (x ^ 2 + 2)) \u2264 Real.exp (-x ^ 2)"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianMillsComparison_pos",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMillsComparison_pos",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 57,
+    "statement": "theorem gaussianMillsComparison_pos {c : \u211d} (hc : 0 < c) (x : \u211d) : 0 < gaussianMillsComparison c x"
+  },
+  {
+    "kind": "theorem",
+    "name": "tendsto_gaussianMillsComparison",
+    "full_name": "BanditRLProof.LowerBounds.tendsto_gaussianMillsComparison",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 61,
+    "statement": "theorem tendsto_gaussianMillsComparison {c : \u211d} (hc : 0 < c) : Tendsto (gaussianMillsComparison c) atTop (\ud835\udcdd 0)"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianMills_lower_integral",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMills_lower_integral",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 77,
+    "statement": "theorem gaussianMills_lower_integral {x : \u211d} (hx : 0 \u2264 x) : Real.exp (-x ^ 2) / (x + Real.sqrt (x ^ 2 + 2)) \u2264 \u222b t in Ioi x, Real.exp (-t ^ 2)"
   },
   {
     "kind": "def",

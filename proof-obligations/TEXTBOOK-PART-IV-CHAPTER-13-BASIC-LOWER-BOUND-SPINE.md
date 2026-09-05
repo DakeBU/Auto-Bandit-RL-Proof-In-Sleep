@@ -27,6 +27,18 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH13-REVIEW` | structured in-branch source/theorem/Lean/evidence consistency audit | all local artifacts | source, declarations, generated site | all above | check source inventory, quantifiers, probability-law direction, regularity, status labels, and order claims | no unresolved P0--P3; website-status-enum P3 corrected | repository | n/a | review | verified |
 | `CH13-REMOTE` | current Chapter 15 downstream extension PR, Actions, Pages deployment and live Chapter 13 verification | accepted local chapter; earlier dependency-slice PR is historical evidence only | GitHub/Pages workflow | repository | branch PR; never direct push to main | remote state must be current | repository | n/a | remote deployment | pending current extension |
 
+## 2026-09-05 Mills-ratio lower branch
+
+`LowerBounds.gaussianMills_lower_integral` passes focused Lean and the module
+build with the exact lower half of Eq. (13.4), for `x>=0`. Its dependencies
+`hasDerivAt_gaussianMillsComparison`,
+`gaussianMillsComparison_lower_derivative_bound`, and
+`tendsto_gaussianMillsComparison` also compile. The general comparison
+function uses only `c>0`; no tail-integrability assumption is supplied by
+the caller. Root canary and full integration validation are pending for this
+new extension. `CH13-EQ-13-1` remains blocked until the exact upper integral
+bound and Gaussian probability rescaling have been proved.
+
 ## Failure classification
 
 Use exactly one:

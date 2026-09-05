@@ -1,6 +1,7 @@
 # Gaussian Mills-Ratio Tail Bounds
 
-Status: blocked Mathlib-candidate analytic leaf.
+Status: in-progress Mathlib-candidate analytic leaf; exact lower integral bound
+passes focused Lean, upper integral bound and probability rescaling remain open.
 
 Task: `TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE`
 
@@ -52,9 +53,22 @@ derivative inequality in the same direction is false at zero. In fact
 and at infinity; its derivative changes sign once. Proving that sign pattern
 and the endpoint limits is a candidate route, not a compiled result.
 
-Next Lean leaf: the derivative identity and nonnegative denominator facts
-for arbitrary `c>0`; then the `c=2` derivative comparison and exact lower
-integral bound. The upper bound must retain its separate sign-change proof.
+The first focused Lean check of `LowerBounds/GaussianMillsRatio.lean` passed:
+`gaussianMillsComparison_denominator_pos` and
+`hasDerivAt_gaussianMillsComparison` retain only `c>0` and work for every real
+`x`. The `c=2` comparison `gaussianMillsComparison_lower_derivative_bound`
+also holds for every real `x`. Root export and external canaries have been
+added; their full integration gate is still pending for this extension.
+
+`tendsto_gaussianMillsComparison` now proves `F_c -> 0` for `c>0` by
+squeezing against `1/x` on the eventual positive half-line.
+`gaussianMills_lower_integral` passes focused Lean with the exact source
+lower expression and the sole premise `x>=0`. Its proof obtains derivative
+integrability from the nonpositive derivative and limit, evaluates that
+integral, and compares its negative with the integrable Gaussian kernel.
+
+Next Lean leaf: the upper bound with its separate sign-change proof, followed
+by rescaling both halves to Eq. (13.1). Full integration gates remain pending.
 
 ## Retrieval audit
 
