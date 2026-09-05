@@ -13,7 +13,7 @@ Notes. No row below substitutes a narrower accepted historical milestone.
 | KL, density, source affinity/overlap and Gaussian claims | exact terminals/canaries in evidence matrix, included in b5e21b8 full check | compiled; preserve all source/model qualifications |
 | Supporting body claims | finite cross entropy, zero limit, non-metric, uniform qualification and domination canaries | included in b5e21b8 full check |
 | Markdown/LaTeX current snapshot | synchronized new boxed-code paragraph; fbd6997 fragment rebuilt and all three pages inspected | current snapshot visual QA passed; future edits invalidate it |
-| Current site content and browser | earlier local static check passed; new arithmetic identity and boxed code not yet synchronized | incomplete; no current browser claim |
+| Current site content and browser | 24aa742 static check passed; current desktop content and direct theorem-anchor navigation verified | click navigation unconfirmed; see browser checkpoint; no remote claim |
 | Independent whole-body review | historical independent review covers only old Section 14.2 | no current independent-review evidence |
 | Current PR and remote/publication evidence | read-only gh pr list for exact current branch returned [] | no current PR; historical PR #11/Pages does not cover this branch |
 
