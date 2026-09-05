@@ -1,4 +1,4 @@
-import BanditRLProof.LowerBounds.CommonDensityKL
+import BanditRLProof
 
 /-! Focused common-density checks; the dominating measure need not be finite. -/
 

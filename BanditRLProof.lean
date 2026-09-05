@@ -40,6 +40,7 @@ import BanditRLProof.LowerBounds.BasicIdeas
 import BanditRLProof.LowerBounds.InformationTheory
 import BanditRLProof.LowerBounds.FiniteDiscreteKL
 import BanditRLProof.LowerBounds.FinitePartitionKLRecovery
+import BanditRLProof.LowerBounds.CommonDensityKL
 import BanditRLProof.LowerBounds.Minimax
 import BanditRLProof.LowerBounds.ConditionalKernelKL
 import BanditRLProof.LowerBounds.BanditHistoryKL

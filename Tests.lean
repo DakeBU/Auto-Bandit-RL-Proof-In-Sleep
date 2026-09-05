@@ -42,3 +42,4 @@ import Tests.StochasticGradientBanditTheoremFourContractAuditCanary
 import Tests.TextbookPartIVChapter14PartitionCanary
 import Tests.TextbookPartIVChapter14FiltrationCanary
 import Tests.TextbookPartIVChapter14RecoveryCanary
+import Tests.TextbookPartIVChapter14CommonDensityCanary

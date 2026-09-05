@@ -5,8 +5,8 @@
 The code/entropy definitions, Kraft adapter, finite-measure sub-$\sigma$-
 algebra data-processing inequality, and the existing Bretagnolle--Huber spine
 compile locally. Whole-chapter coverage remains \texttt{partial}: Huffman
-optimality, the one-bit entropy sandwich, asymptotic source coding, the finite-discretisation supremum
-equivalence, the common-density/measure-overlap route, and the general-variance
+optimality, the one-bit entropy sandwich, asymptotic source coding,
+the common-density/measure-overlap route, and the general-variance
 Gaussian application are not claimed.
 
 \paragraph{Lean declarations.}
@@ -56,7 +56,33 @@ the infinite branch. The local declarations are
 \texttt{relativeEntropy\_finite\_eq\_top\_iff}.
 The convex-integrand identity also applies to finite measures.
 No strict positivity or extra log-integrability premise is assumed in the
-probability formula. The Eq.~(14.5) supremum equivalence remains unproved.
+probability formula.
+
+For Eq.~(14.5), let $D_{\mathrm{fin}}(P,Q)$ be the supremum of the
+divergences of $P\circ f^{-1}$ and $Q\circ f^{-1}$ over all measurable
+$f:\Omega\to\operatorname{Fin}(n)$ and all $n$. Fiberwise Jensen and integral
+decomposition give $D_{\mathrm{fin}}(P,Q)\le D(P\Vert Q)$. In the singular
+case, a measurable $Q$-null set of positive $P$ mass supplies a binary
+observation with infinite divergence. Under $P\ll Q$, simple approximants
+generate a filtration resolving the RN density. Upward conditional-expectation
+convergence, continuity of the convex KL integrand, and Fatou recover the
+original divergence as the supremum of the trimmed divergences. Each stage's
+joint simple-approximant values have finite range and can be encoded in
+$\operatorname{Fin}(n)$. The observation/comap identity and trim monotonicity
+therefore give the reverse bound, proving
+\[
+ D_{\mathrm{fin}}(P,Q)=D(P\Vert Q).
+\]
+The terminal is \texttt{finitePartitionRelativeEntropy\_eq\_relativeEntropy}.
+Its principal bridges are \texttt{relativeEntropy\_finite\_map\_le},
+\texttt{relativeEntropy\_eq\_iSup\_densityApproximation\_trim},
+\texttt{exists\_fin\_observation\_densityApproximation},
+\texttt{relativeEntropy\_map\_eq\_trim\_of\_absolutelyContinuous}, and
+\texttt{relativeEntropy\_trim\_mono}; the synchronized Markdown declaration
+list names every helper. The equality holds for finite measures on arbitrary
+measurable spaces, without finite-KL, AC, or countable-generation premises.
+The probability specialization and existing RN branch adapters retain the
+singular and nonintegrable infinity cases in Theorem~14.1.
 
 For finite measures on $\mathcal F$ and $\mathcal G\subseteq\mathcal F$,
 the infinite-KL branch is immediate. In the finite branch, the RN derivative

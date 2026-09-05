@@ -34,7 +34,7 @@ separate dependency leaf.
   conditional lemma, or prose mapping alone cannot promote the chapter.
 - Current decision: `partial`.  The Section 14.1 Huffman/source-coding
   terminals,
-  Eq. (14.5)-to-RN equivalence, common-density formula, full measure-level
+  common-density formula, full measure-level
   overlap proof nodes, and general-variance Gaussian/application surface are
   not all locally compiled.
 
@@ -142,5 +142,5 @@ with `D(Q,P)` is also valid.
 - [ ] Huffman optimality and the one-bit entropy sandwich in Eq. (14.2).
 - [ ] Block/arithmetic source-coding achievability and converse.
 - [x] Eq. (14.4) for an arbitrary finite alphabet, with exact support dichotomy and zero-mass terms.
-- [ ] Eq. (14.5) finite-discretisation supremum equivalence to RN KL.
+- [x] Eq. (14.5) finite-discretisation supremum equivalence to RN KL, including singular and nonintegrable branches.
 - [ ] General common-density, Gaussian-variance/application, and measure-overlap proof nodes.

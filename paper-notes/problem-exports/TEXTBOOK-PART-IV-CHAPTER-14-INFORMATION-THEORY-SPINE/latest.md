@@ -4,7 +4,7 @@ Task id: `TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE`
 
 Status: the declarations listed below compile locally. Whole-chapter coverage
 remains `partial`: this export does not claim Huffman optimality, the one-bit
-entropy sandwich, asymptotic source coding, the finite-discretisation supremum equivalence, the full
+entropy sandwich, asymptotic source coding, the full
 common-density/measure-overlap route, or the general-variance Gaussian testing
 application.
 
@@ -28,6 +28,27 @@ application.
 - `LowerBounds.relativeEntropy_finite_sum_log`
 - `LowerBounds.relativeEntropy_finite_eq_if`
 - `LowerBounds.relativeEntropy_finite_eq_top_iff`
+- `LowerBounds.finitePartitionRelativeEntropy`
+- `LowerBounds.totalMass_klFun_le_relativeEntropy`
+- `LowerBounds.sum_relativeEntropy_restrict_fibers`
+- `LowerBounds.relativeEntropy_finite_map_le`
+- `LowerBounds.finitePartitionRelativeEntropy_le_relativeEntropy`
+- `LowerBounds.relativeEntropy_map_le_finitePartitionRelativeEntropy`
+- `LowerBounds.finitePartitionRelativeEntropy_fin_eq`
+- `LowerBounds.relativeEntropy_finite_map_eq_if`
+- `LowerBounds.exists_binary_map_relativeEntropy_eq_top_of_event`
+- `LowerBounds.finitePartitionRelativeEntropy_eq_top_of_not_absolutelyContinuous`
+- `LowerBounds.finitePartitionRelativeEntropy_eq_relativeEntropy_of_not_absolutelyContinuous`
+- `LowerBounds.relativeEntropy_trim_eq_lintegral_condExp`
+- `LowerBounds.relativeEntropy_map_eq_trim_of_absolutelyContinuous`
+- `LowerBounds.relativeEntropy_eq_iSup_trim_of_density_measurable`
+- `LowerBounds.densityApproximationFiltration`
+- `LowerBounds.measurable_density_iSup_approximationFiltration`
+- `LowerBounds.relativeEntropy_eq_iSup_densityApproximation_trim`
+- `LowerBounds.exists_fin_encoding_of_finite_range`
+- `LowerBounds.exists_fin_observation_densityApproximation`
+- `LowerBounds.relativeEntropy_trim_mono`
+- `LowerBounds.finitePartitionRelativeEntropy_eq_relativeEntropy`
 - `LowerBounds.relativeEntropy_of_absolutelyContinuous_of_integrable`
 - `LowerBounds.relativeEntropy_of_probability_absolutelyContinuous_of_integrable`
 - `LowerBounds.relativeEntropy_eq_top_of_not_absolutelyContinuous`
@@ -90,8 +111,40 @@ Zero source atoms contribute zero. In the second branch an actual atom of
 positive source mass and zero reference mass witnesses non-absolute-continuity.
 No strict positivity or additional log-integrability premise is imposed.
 The finite-measure `klFun` identity is also exposed, separately from the
-probability-normalized logarithmic formula. This does not prove Eq. (14.5)'s
-finite-discretisation supremum equivalence on arbitrary measurable spaces.
+probability-normalized logarithmic formula.
+
+### Finite-discretisation supremum and Theorem 14.1
+
+For each natural number `n` and measurable map `f : alpha -> Fin n`, the
+singleton preimages give a finite measurable partition. Define
+`finitePartitionRelativeEntropy P Q` as the supremum of the KL values of
+`P.map f` and `Q.map f` over all such observations. Empty cells contribute zero.
+
+The upper bound follows by splitting the RN convex-integrand lower integral
+over the fibers of `f` and applying Jensen's total-mass bound on each fiber.
+If `P` is not absolutely continuous with respect to `Q`, a measurable Q-null
+set of positive P mass gives a binary observation with infinite KL, proving
+equality in that branch.
+
+For `P << Q`, the real RN density is integrable even when KL is infinite.
+The natural filtration of its finite-valued simple approximants resolves the
+density in its limiting sigma-algebra. The upward conditional-expectation
+convergence theorem, continuity of `klFun`, and Fatou recover original KL as
+the supremum of the trimmed KL values. Each finite stage's joint approximant
+values have finite range; encoding that range into `Fin n` supplies an actual
+finite observation whose generated sigma-algebra contains the stage. Trim
+monotonicity and the equality between observation KL and comap-trim KL then
+bound every recovered stage by the finite-partition supremum. Hence
+
+```text
+finitePartitionRelativeEntropy P Q = relativeEntropy P Q.
+```
+
+The compiled equality assumes only finite measures on an arbitrary measurable
+space, so in particular proves Eq. (14.5) and its RN identification for
+probability measures. It does not assume absolute continuity, finite KL, or
+countable generation of the ambient sigma-algebra. Combining it with the
+existing RN branch adapters retains both singular and nonintegrable infinity.
 
 Define `relativeEntropy P Q` as Mathlib's extended-real `klDiv P Q`. Its
 finite branch requires `P << Q` and integrability of the log likelihood ratio;

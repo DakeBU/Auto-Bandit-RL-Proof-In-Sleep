@@ -38,3 +38,7 @@ The only initial compiler error was missing classical decidability for the
 if-condition in the theorem statement; a local `open Classical in` resolved
 it. No mathematical assumption changed. Root/aggregate integration and
 the corresponding full harness/site gates remain pending for this leaf.
+
+The module and its canary have now been added to the root library and aggregate
+Tests target; the canary now imports `BanditRLProof`. This prepares a new
+integration snapshot but is not itself proof that those aggregate gates pass.

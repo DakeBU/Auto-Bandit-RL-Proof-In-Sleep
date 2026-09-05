@@ -184,3 +184,19 @@ the full Tests target (8,901 jobs), including the new root-import recovery
 canary and all four terminal/encoding axiom reports. No nonstandard axioms
 were reported. The remaining exporter/placeholder/Python stages are still
 being observed; full-check completion is not yet claimed at this checkpoint.
+
+The maintained Markdown/LaTeX exports now explain the complete finite-cell
+Jensen, singular witness, density-filtration/Fatou, and finite-range encoding
+route. README, source cards, theory tree, conversion window, and website
+source have removed the obsolete Eq. (14.5) gap while retaining other body
+gaps. This is source synchronization; the generated website is not yet
+refreshed for this slice.
+
+## Completed integration gate for Eq. (14.5)
+
+The `40c56ca` full check finished with exit 0: root library (8,856 jobs),
+Tests (8,901 jobs), proof-graph exporter compilation, forbidden-placeholder
+scan, and 400 Python tests (7 skipped; 193.840 seconds). This supersedes the
+in-progress checkpoints above. The common-density integration added afterward
+still needs its own gate. Generated-site and remote publication evidence for
+these new nodes is not yet claimed.
