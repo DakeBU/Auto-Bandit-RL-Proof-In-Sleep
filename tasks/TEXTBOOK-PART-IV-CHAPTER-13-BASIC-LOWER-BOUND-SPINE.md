@@ -58,12 +58,12 @@ source node.
 | worst-case and minimax regret; minimax-optimal policy | required main text | explicit classes and fixed-horizon regret functional; attainment predicate | compiled |
 | Theorem 13.1 | required main theorem | unit-Gaussian `[0,1]^k` minimax lower bound for `k>1`, `n>=k` | compiled through Chapter 15 with `c=1/54` |
 | Section 13.1 two-point Gaussian test and midpoint decision | required main text | derive the empirical mean law `N(mu,1/n)` from `n` independent `N(mu,1)` observations; exact midpoint error events | compiled for the canonical finite product law |
-| Eq. (13.1) | required displayed result | both explicit Mills-ratio bounds with the printed constants | blocked; Chernoff upper companion compiled, exact lower/upper pair absent |
+| Eq. (13.1) | required displayed result | both explicit Mills-ratio bounds with the printed constants | compiled by `gaussianSampleMeanZeroErrorProbability_source_bounds`; final integration gate pending |
 | competition/similarity trade-off | required source mapping | narrative route to the precise two-environment nodes; no invented standalone proposition | mapped |
 | Eqs. (13.2)--(13.3), least-explored arm, one-coordinate change, `Delta` tuning, information bridge | required main text | exact identities/inequalities and the Chapter 14--15 same-policy history-law route | compiled locally or through Chapter 15 |
 | Algorithm 7 / Theorem 9.1 near-minimax claim for the broader 1-subgaussian class | required connected main-text claim | Gaussian-subclass lower transfer plus a compiled MOSS upper theorem on the stated broader class | partial; lower side compiled, MOSS upper side absent |
 | Section 13.2 Notes | optional enrichment | itemized mapping if attempted; never used to hide a main-text gap | optional, unformalized |
-| Section 13.3 Bibliographic Remarks / Eq. (13.4) | source support for Eq. (13.1) | Abramowitz--Stegun Mills-ratio source and exact integral leaf | mapped source; exact leaf is the Eq. (13.1) blocker |
+| Section 13.3 Bibliographic Remarks / Eq. (13.4) | source support for Eq. (13.1) | Abramowitz--Stegun Mills-ratio source and exact integral leaf | both exact integral bounds compiled in `GaussianMillsRatio.lean` |
 | Section 13.4 Exercises 13.1--13.2 | optional exercises | separate exercise contracts if attempted | optional, unformalized |
 
 The currently compiled core uses these interfaces:
@@ -157,15 +157,17 @@ LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt
 - [x] Centered/reflected Gaussian sub-Gaussian bridges and the source-shaped
   `exp(-n*Delta^2/8)` Chernoff upper bound compile for both hypotheses and
   their worst-case threshold risk.
-- [ ] The exact two-sided Mills-ratio Eq. (13.1) compiles with its printed
+- [x] The exact two-sided Mills-ratio Eq. (13.1) compiles with its printed
   constants.
 - [x] Alternative-arm averaging leaves compile from the exact pull budget.
 - [x] Conditional two-environment algebra leaves compile without a statistical
   nonclaim being promoted.
-- [x] Root import, focused build, typed canary, Tests, axiom scan, full harness
-  check, proof export, evidence indexes, documentation, and website pass.
-- [x] Structured in-branch source/Lean/evidence review finds no unresolved
-  P0--P3 issue; its website-status-enum P3 was corrected before the final gate.
+- [ ] Re-run integration for the exact Mills-ratio extension: root import,
+  typed canary, Tests, axiom scan, full harness, synchronized exports/indexes,
+  documentation and website. The earlier Chernoff-only baseline passed;
+  that historical gate does not certify this extension.
+- [ ] Refresh the structured source/Lean/evidence review for the exact-bound
+  extension. The earlier review's website-status-enum P3 was corrected.
 - [x] The earlier dependency-slice PR #9, remote Actions run `31942624241`, merge commit `44c3e153`,
   Pages deployment job `95156292456`, and the live desktop/mobile Chapter 13
   page pass.
@@ -182,7 +184,7 @@ LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt
 | minimax-optimality | compiled minimax surface, equality | package admissibility and attainment without assuming an infimum is attained | fixed policy/environment classes and horizon-indexed regret functional | project-local |
 | Gaussian test upper tail | Mathlib `gaussianReal`, exact Gaussian MGF, `HasSubgaussianMGF.measure_ge_le` | identify both midpoint error events and apply the one-sided Chernoff bound at variance `1/n` on each side | positive gap; positive sample size is compiled separately for the nondegenerate source interpretation | compiled project-local consequence |
 | Gaussian empirical-mean law | `Measure.pi`, `charFun_map_sum_pi_eq_prod`, `charFun_gaussianReal`, `gaussianReal_map_div_const` | identify the exact sum law on the canonical finite iid product, then scale by `1/n` | `n>0`; coordinate law `N(mu,1)` | compiled project bridge |
-| exact Eq. (13.1) | Gaussian density/set integral plus Eq. (13.4) Mills-ratio bounds | prove the printed lower and upper denominator constants, then rescale to variance `1/n` | `n>0`, `Delta>0`, measurable midpoint event | blocked Mathlib-candidate analytic leaf |
+| exact Eq. (13.1) | Gaussian density/set integral plus Eq. (13.4) Mills-ratio bounds | prove the printed lower and upper denominator constants, then rescale to variance `1/n` | `n>0`, `Delta>0`, measurable midpoint event | locally compiled Mathlib-candidate analytic leaf |
 | finite average | `Fin.sum_univ_succ`, `Finset.exists_le_of_sum_le`, `Fintype.card_fin` | split arm zero, bound alternative sum, compare with constant average | `0 < m`, every expected pull nonnegative, exact total expected-pull identity | mathlib-composed project leaf |
 | two-environment algebra | ordered-field arithmetic, `max`, `nlinarith` | combine base and changed lower expressions under a named upper bound on `E_nu[T_0]-E_nu'[T_0]` | `0 <= Delta`; the quantitative cross-law discrepancy is explicit and remains unproved here | project-local |
 | history change of measure | compiled Chapter 15 Lemma 15.1 | Chapter 14 KL plus the Chapter 15 randomized-history construction | measurability, common randomized policy, countably generated rewards | compiled downstream dependency |

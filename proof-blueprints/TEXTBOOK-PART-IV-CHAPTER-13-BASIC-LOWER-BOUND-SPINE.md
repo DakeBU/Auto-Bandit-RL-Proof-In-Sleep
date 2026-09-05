@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T04:32:56+00:00`
+Generated: `2026-09-05T04:53:31+00:00`
 
 ## Source Task
 
@@ -64,12 +64,12 @@ source node.
 | worst-case and minimax regret; minimax-optimal policy | required main text | explicit classes and fixed-horizon regret functional; attainment predicate | compiled |
 | Theorem 13.1 | required main theorem | unit-Gaussian `[0,1]^k` minimax lower bound for `k>1`, `n>=k` | compiled through Chapter 15 with `c=1/54` |
 | Section 13.1 two-point Gaussian test and midpoint decision | required main text | derive the empirical mean law `N(mu,1/n)` from `n` independent `N(mu,1)` observations; exact midpoint error events | compiled for the canonical finite product law |
-| Eq. (13.1) | required displayed result | both explicit Mills-ratio bounds with the printed constants | blocked; Chernoff upper companion compiled, exact lower/upper pair absent |
+| Eq. (13.1) | required displayed result | both explicit Mills-ratio bounds with the printed constants | compiled by `gaussianSampleMeanZeroErrorProbability_source_bounds`; final integration gate pending |
 | competition/similarity trade-off | required source mapping | narrative route to the precise two-environment nodes; no invented standalone proposition | mapped |
 | Eqs. (13.2)--(13.3), least-explored arm, one-coordinate change, `Delta` tuning, information bridge | required main text | exact identities/inequalities and the Chapter 14--15 same-policy history-law route | compiled locally or through Chapter 15 |
 | Algorithm 7 / Theorem 9.1 near-minimax claim for the broader 1-subgaussian class | required connected main-text claim | Gaussian-subclass lower transfer plus a compiled MOSS upper theorem on the stated broader class | partial; lower side compiled, MOSS upper side absent |
 | Section 13.2 Notes | optional enrichment | itemized mapping if attempted; never used to hide a main-text gap | optional, unformalized |
-| Section 13.3 Bibliographic Remarks / Eq. (13.4) | source support for Eq. (13.1) | Abramowitz--Stegun Mills-ratio source and exact integral leaf | mapped source; exact leaf is the Eq. (13.1) blocker |
+| Section 13.3 Bibliographic Remarks / Eq. (13.4) | source support for Eq. (13.1) | Abramowitz--Stegun Mills-ratio source and exact integral leaf | both exact integral bounds compiled in `GaussianMillsRatio.lean` |
 | Section 13.4 Exercises 13.1--13.2 | optional exercises | separate exercise contracts if attempted | optional, unformalized |
 
 The currently compiled core uses these interfaces:
@@ -123,13 +123,9 @@ LowerBounds.exists_leastExploredAlternative
 LowerBounds.baseEnvironmentRegret
 LowerBounds.changedEnvironmentRegretLowerBound
 LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error
-LowerBounds.max_base_changed_regretLowerBound_ge_half
 
-<!-- 431 characters omitted from the middle of this snapshot. -->
+<!-- 637 characters omitted from the middle of this snapshot. -->
 
-LowerBounds.gaussianSampleMeanZeroErrorProbability
-LowerBounds.gaussianSampleMeanGapErrorProbability
-LowerBounds.hasSubgaussianMGF_id_gaussianReal_zero
 LowerBounds.hasSubgaussianMGF_gap_sub_id_gaussianReal
 LowerBounds.gaussianReal_zero_Ici_le_exp_neg_sq_div_two_variance
 LowerBounds.gaussianReal_gap_Iio_half_le_exp_neg_sq_div_two_variance
@@ -156,15 +152,17 @@ LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt
 - [x] Centered/reflected Gaussian sub-Gaussian bridges and the source-shaped
   `exp(-n*Delta^2/8)` Chernoff upper bound compile for both hypotheses and
   their worst-case threshold risk.
-- [ ] The exact two-sided Mills-ratio Eq. (13.1) compiles with its printed
+- [x] The exact two-sided Mills-ratio Eq. (13.1) compiles with its printed
   constants.
 - [x] Alternative-arm averaging leaves compile from the exact pull budget.
 - [x] Conditional two-environment algebra leaves compile without a statistical
   nonclaim being promoted.
-- [x] Root import, focused build, typed canary, Tests, axiom scan, full harness
-  check, proof export, evidence indexes, documentation, and website pass.
-- [x] Structured in-branch source/Lean/evidence review finds no unresolved
-  P0--P3 issue; its website-status-enum P3 was corrected before the final gate.
+- [ ] Re-run integration for the exact Mills-ratio extension: root import,
+  typed canary, Tests, axiom scan, full harness, synchronized exports/indexes,
+  documentation and website. The earlier Chernoff-only baseline passed;
+  that historical gate does not certify this extension.
+- [ ] Refresh the structured source/Lean/evidence review for the exact-bound
+  extension. The earlier review's website-status-enum P3 was corrected.
 - [x] The earlier dependency-slice PR #9, remote Actions run `31942624241`, merge commit `44c3e153`,
   Pages deployment job `95156292456`, and the live desktop/mobile Chapter 13
   page pass.
@@ -181,7 +179,7 @@ LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt
 | minimax-optimality | compiled minimax surface, equality | package admissibility and attainment without assuming an infimum is attained | fixed policy/environment classes and horizon-indexed regret functional | project-local |
 | Gaussian test upper tail | Mathlib `gaussianReal`, exact Gaussian MGF, `HasSubgaussianMGF.measure_ge_le` | identify both midpoint error events and apply the one-sided Chernoff bound at variance `1/n` on each side | positive gap; positive sample size is compiled separately for the nondegenerate source interpretation | compiled project-local consequence |
 | Gaussian empirical-mean law | `Measure.pi`, `charFun_map_sum_pi_eq_prod`, `charFun_gaussianReal`, `gaussianReal_map_div_const` | identify the exact sum law on the canonical finite iid product, then scale by `1/n` | `n>0`; coordinate law `N(mu,1)` | compiled project bridge |
-| exact Eq. (13.1) | Gaussian density/set integral plus Eq. (13.4) Mills-ratio bounds | prove the printed lower and upper denominator constants, then rescale to variance `1/n` | `n>0`, `Delta>0`, measurable midpoint event | blocked Mathlib-candidate analytic leaf |
+| exact Eq. (13.1) | Gaussian density/set integral plus Eq. (13.4) Mills-ratio bounds | prove the printed lower and upper denominator constants, then rescale to variance `1/n` | `n>0`, `Delta>0`, measurable midpoint event | locally compiled Mathlib-candidate analytic leaf |
 | finite average | `Fin.sum_univ_succ`, `Finset.exists_le_of_sum_le`, `Fintype.card_fin` | split arm zero, bound alternative sum, compare with constant average | `0 < m`, every expected pull nonnegative, exact total expected-pull identity | mathlib-composed project leaf |
 | two-environment algebra | ordered-field arithmetic, `max`, `nlinarith` | combine base and changed lower expressions under a named upper bound on `E_nu[T_0]-E_nu'[T_0]` | `0 <= Delta`; the quantitative cross-law discrepancy is explicit and remains unproved here | project-local |
 | history change of measure | compiled Chapter 15 Lemma 15.1 | Chapter 14 KL plus the Chapter 15 randomized-history construction | measurability, common randomized policy, countably generated rewards | compiled downstream dependency |
@@ -258,7 +256,7 @@ the stated Algorithm 7/Theorem 9.1 near-minimax consequence for the broader
 1-subgaussian class.  Notes 13.2 and Exercises 13.1--13.2 are optional;
 Bibliographic Remarks 13.3 is source evidence for the required Eq. (13.1), not
 an excuse to omit it.  Therefore the chapter remains `partial` while the
-exact Mills-ratio display and the broader-class MOSS upper side are open.
+broader-class MOSS upper side remains open. Exact Eq. (13.1) now compiles.
 
 ## Natural-language statements
 
@@ -275,9 +273,8 @@ zero-mean `N(0,1/n)` law, its error event is exactly `[Delta/2,infinity)`.  The
 local probability layer constructs the canonical finite iid product of
 `N(mu,1)` coordinates, proves that its arithmetic-mean pushforward is exactly
 `N(mu,1/n)`, and proves the honest Chernoff consequence
-`max_mu P_mu(error) <= exp(-n*Delta^2/8)` for the two hypotheses.  It does not
-yet prove the sharper lower and upper Mills-ratio expressions printed in
-Eq. (13.1).
+`max_mu P_mu(error) <= exp(-n*Delta^2/8)` for the two hypotheses.  It additionally proves both exact Mills-ratio expressions printed in
+Eq. (13.1) through `gaussianSampleMeanZeroErrorProbability_source_bounds`.
 
 For `k = m+1` arms, distinguish arm zero and identify the other `m` arms with
 `Fin m`. If every expected pull count is nonnegative and their sum is the
@@ -304,7 +301,7 @@ the `Delta*n/2` statement is retained only as the zero-error corollary.
 | empirical mean Gaussian law | the average of `n>0` independent `N(mu,1)` observations has law `N(mu,1/n)` | `LowerBounds.gaussianIIDSampleMeanLaw` | exact pushforward of the canonical finite iid product measure | compiled |
 | zero-mean test error | `P_0(sampleMean >= Delta/2)` under `N(0,1/n)` | `LowerBounds.gaussianSampleMeanZeroErrorProbability` | distribution-level probability | compiled definition and event identity |
 | Chernoff companion to Eq. (13.1) | `max_mu P_mu(error) <= exp(-n*Delta^2/8)` | `LowerBounds.gaussianSampleMeanThresholdRisk_le_exp` | two-hypothesis Gaussian/sub-Gaussian tail | compiled; not the exact displayed equation |
-| Eq. (13.1) | printed two-sided Gaussian tail bounds with explicit square-root denominators | no local declaration | exact Mills-ratio target | blocked |
+| Eq. (13.1) | printed two-sided Gaussian tail bounds with explicit square-root denominators | `gaussianSampleMeanZeroErrorProbability_source_bounds` | exact Mills-ratio target | compiled; final integration gate pending |
 | arm `1` in the printed one-based notation | distinguished base arm | `0 : Fin (m+1)` | finite-arm index | typed |
 | arms `2,...,k` | alternative arms | `i.succ`, `i : Fin m` | finite-arm embedding | typed |
 | `E_nu[T_i(n)] <= n/(k-1)` | least-explored alternative | `LowerBounds.exists_leastExploredAlternative` | finite averaging theorem | target |
@@ -320,9 +317,8 @@ the `Delta*n/2` statement is retained only as the zero-error corollary.
 | --- | --- | --- | --- |
 | explicit policy and environment classes | subtype arguments | avoids silently quantifying over a different model class | no |
 | `ENNReal` regret codomain | typed | supplies complete-lattice sup/inf without a hidden boundedness premise | no |
-| class nonemptiness | not built into definitions; explicit in meaningful canary/consumers | empty sup/inf retains standard lattice behavior | no |
 
-<!-- 3033 characters omitted from the middle of this snapshot. -->
+<!-- 3190 characters omitted from the middle of this snapshot. -->
 
 | empirical mean law | `Measure.pi`, `charFun_map_sum_pi_eq_prod`, `charFun_gaussianReal`, `gaussianReal_map_div_const` | `MLIB-GAUSSIAN-REAL-TAIL`, `MLIB-PROBABILITY-INDEPENDENCE` | identify the exact finite-product sum characteristic function, then scale by `1/n` | keep `n>0` explicit and the canonical product-law interpretation visible |
 | exact Eq. (13.1) | Gaussian density/set integral; source Eq. (13.4) | new `MLIB-GAUSSIAN-MILLS-RATIO` candidate | establish the exact upper and lower Mills-ratio integral bounds, then rescale the centered unit Gaussian | do not replace the source lower bound with Chernoff |
@@ -340,7 +336,7 @@ the `Delta*n/2` statement is retained only as the zero-error corollary.
 | `CH13-GAUSSIAN-TEST-DECISION` | midpoint decision and exact zero/gap error events | ordered-field comparison; `Delta>0` | `twoPointGaussianThresholdDecision_zero_error_event`, `twoPointGaussianThresholdDecision_gap_error_event` | project-local | focused Lean | compiled |
 | `CH13-GAUSSIAN-SAMPLE-MEAN-LAW` | empirical mean of `n>0` independent unit-variance Gaussians has law `N(mu,1/n)` | finite product measure, characteristic-function product, Gaussian scaling | `gaussianIIDObservationLaw`, `gaussianCoordinateAverage`, `gaussianIIDSumLaw`, `gaussianIIDSampleMeanLaw` | project-local bridge | focused Lean | compiled |
 | `CH13-GAUSSIAN-TEST-CHERNOFF` | both `N(0,1/n)` and `N(Delta,1/n)` midpoint errors, and their maximum, are at most `exp(-n*Delta^2/8)` | exact Gaussian MGF, reflection, and Mathlib Chernoff | `hasSubgaussianMGF_id_gaussianReal_zero`, `hasSubgaussianMGF_gap_sub_id_gaussianReal`, `gaussianSampleMeanThresholdRisk_le_exp` | project-local consequence | focused Lean | compiled |
-| `CH13-EQ-13-1` | exact printed two-sided Mills-ratio bounds | Eq. (13.4) integral inequalities and Gaussian rescaling | none | mathlib-candidate | focused Lean | blocked |
+| `CH13-EQ-13-1` | exact printed two-sided Mills-ratio bounds | Eq. (13.4) integral inequalities and Gaussian rescaling | `gaussianSampleMeanZeroErrorProbability_source_bounds` | locally compiled mathlib-candidate | focused Lean | compiled |
 | `CH13-ALTERNATIVE-BUDGET` | alternative sum at most total horizon | full expected-pull identity, nonnegativity | internal/public budget lemma | mathlib-composed project leaf | focused Lean | compiled |
 | `CH13-LEAST-EXPLORED` | some `i.succ` has count at most `n/m` | alternative budget, finite averaging | `exists_leastExploredAlternative` | mathlib-composed project leaf | focused Lean | compiled |
 | `CH13-TWO-ENV-ALGEBRA` | quantitative `Delta*(n-error)/2` max bound | nonnegative gap, explicit upper bound on the cross-law pull discrepancy | `max_base_changed_regretLowerBound_ge_half_sub_error`; zero-error corollary `max_base_changed_regretLowerBound_ge_half` | project-local | focused Lean | compiled |
@@ -353,7 +349,7 @@ the `Delta*n/2` statement is retained only as the zero-error corollary.
 
 ## Gaps
 
-- [ ] Prove the exact Mills-ratio integral bounds of source Eq. (13.4) and
+- [x] Prove the exact Mills-ratio integral bounds of source Eq. (13.4) and
   rescale them to both sides of Eq. (13.1).  The first executable leaf is a
   real-analysis lemma bounding `integral (fun t => exp (-t^2))` over
   `Set.Ioi x` for `x>=0` by the two printed rational denominators.
@@ -391,7 +387,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH13-GAUSSIAN-TEST-DECISION` | midpoint rule and exact error events under the two point hypotheses | ordered real comparison | `if`, `Set.Ici`, `Set.Iio` | `MLIB-ORDER-ALGEBRA` | split on `Delta/2 <= observation` | `Delta>0`; tie assigned to positive hypothesis | project-local | `LowerBounds.twoPointGaussianThresholdDecision_zero_error_event`, `LowerBounds.twoPointGaussianThresholdDecision_gap_error_event` | focused Lean | compiled |
 | `CH13-GAUSSIAN-SAMPLE-MEAN-LAW` | the average of `n>0` independent `N(mu,1)` observations has law `N(mu,1/n)` | canonical finite product measure and Gaussian scaling | `Measure.pi`, `charFun_map_sum_pi_eq_prod`, `charFun_gaussianReal`, `gaussianReal_map_div_const` | `MLIB-GAUSSIAN-REAL-TAIL`, `MLIB-PROBABILITY-INDEPENDENCE` | identify the product-law sum by characteristic functions, then map its arithmetic mean by division by `n` | `n>0`; every coordinate has exact `N(mu,1)` law by construction | project-local bridge | `LowerBounds.gaussianIIDObservationLaw`, `LowerBounds.gaussianCoordinateAverage`, `LowerBounds.gaussianIIDSumLaw`, `LowerBounds.gaussianIIDSampleMeanLaw` | focused Lean | compiled |
 | `CH13-GAUSSIAN-TEST-CHERNOFF` | under the declared zero/positive `N(mu,1/n)` laws, both midpoint errors and their maximum are at most `exp(-n*Delta^2/8)` | exact Gaussian MGF, reflection, and midpoint events | `gaussianReal`, `gaussianReal_map_const_sub`, `mgf_id_gaussianReal`, `HasSubgaussianMGF.measure_ge_le` | `MLIB-GAUSSIAN-REAL-TAIL`, `MLIB-PROBABILITY-SUBGAUSSIAN`, `MLIB-MEASURE-INTEGRAL`, `MLIB-REAL-LOG-SQRT` | derive centered and reflected sub-Gaussianity, apply one-sided Chernoff to both error rays, normalize variance `1/n`, take `max` | `Delta>0`; `n>0` is explicit in the compiled iid empirical-mean producer | project-local consequence | `LowerBounds.hasSubgaussianMGF_id_gaussianReal_zero`, `LowerBounds.hasSubgaussianMGF_gap_sub_id_gaussianReal`, `LowerBounds.gaussianSampleMeanZeroErrorProbability_le_exp`, `LowerBounds.gaussianSampleMeanGapErrorProbability_le_exp`, `LowerBounds.gaussianSampleMeanThresholdRisk_le_exp` | focused Lean | compiled |
-| `CH13-EQ-13-1` | exact printed lower and upper Gaussian midpoint-error bounds | source Eq. (13.4), Gaussian density and rescaling | no local exact Mills-ratio leaf | `MLIB-MEASURE-INTEGRAL`, proposed `MLIB-GAUSSIAN-MILLS-RATIO` | first prove both source integral bounds for `x>=0`, then specialize `x=sqrt(n)*Delta/(2*sqrt 2)` | `n>0`, `Delta>0`; exact constants and both inequality directions | mathlib-candidate analytic leaf | none | focused Lean | blocked |
+| `CH13-EQ-13-1` | exact printed lower and upper Gaussian midpoint-error bounds | both exact Eq. (13.4) integrals, Gaussian density, scaling, and denominator normalization | `GaussianMillsRatio.lean`, `GaussianHypothesisTesting.lean` | `MLIB-MEASURE-INTEGRAL`, `MLIB-GAUSSIAN-REAL-TAIL` | derivative comparison for lower bound; one sign change and endpoints for upper bound; Gaussian density change of variable | `n>0`, `Delta>0`; constants 16 and 32/pi | locally compiled Mathlib-candidate and project consumer | `gaussianSampleMeanZeroErrorProbability_source_bounds` | focused build and external typed canary; full gate pending | compiled |
 | `CH13-ALTERNATIVE-BUDGET` | sum of alternative expected pulls is at most horizon | exact total sum and base nonnegativity | `Fin.sum_univ_succ`, ordered field | `MLIB-FINSET-SUMS`, `MLIB-FINTYPE-FIN` | rewrite the full sum as base plus tail, then linear arithmetic | all expected pulls nonnegative | mathlib-composed project leaf | `LowerBounds.alternativeExpectedPullBudget_le` | focused Lean | compiled |
 | `CH13-LEAST-EXPLORED` | some alternative has expected pulls at most `n/m` | alternative budget, `0 < m` | `Finset.exists_le_of_sum_le`, constant sum | `MLIB-FINSET-SUMS`, `MLIB-FINTYPE-FIN`, `MLIB-ORDER-ALGEBRA` | finite average comparison | `0 < m`; exact expected-pull total | mathlib-composed project leaf | `LowerBounds.exists_alternative_le_average`, `LowerBounds.exists_leastExploredAlternative` | focused Lean | compiled |
 | `CH13-TWO-ENV-ALGEBRA` | max of base and changed expressions is at least `Delta*(n-error)/2` under an explicit pull-discrepancy bound | equations (13.2)--(13.3) expressions | real ordered-field algebra, `max`, `nlinarith` | `MLIB-ORDER-ALGEBRA` | show their sum is at least `Delta*(n-error)`, then use max/average | `0 <= Delta`; visible `baseFirstPulls-changedFirstPulls <= error` bridge | project-local | `LowerBounds.baseEnvironmentRegret`, `LowerBounds.changedEnvironmentRegretLowerBound`, `LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error`; zero-error corollary `LowerBounds.max_base_changed_regretLowerBound_ge_half` | focused Lean | compiled |
@@ -399,22 +395,20 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH13-THEOREM-13-1` | Gaussian finite-arm minimax lower bound `>= c*sqrt(k*n)` | Chapter 13 deterministic leaves, Chapter 14 information theory, Chapter 15 minimax construction | compiled Gaussian/history APIs | source card plus compiled local declarations | base/changed instances, least arm, testing bound, Delta tuning, inf/sup extraction | unit variance; means in `[0,1]^k`; `k>1`; `n>=k`; explicit `c=1/54` | source-order endpoint | `LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt` | Chapter 15 | compiled |
 | `CH13-BROADER-SUBGAUSSIAN-NEAR-MINIMAX` | Algorithm 7 is constant-factor minimax for finite-arm 1-subgaussian bandits with gaps in `[0,1]` | Theorem 13.1 Gaussian-subclass lower transfer and source Theorem 9.1 MOSS upper bound | compiled lower terminal; no local MOSS upper theorem | textbook source; local MOSS roadmap only | identify the Gaussian subclass, transport the lower bound to the broader class, combine with generated-policy MOSS upper bound | exact broader environment class and regret notion; common horizon/arm indexing | connected blocker | none | Chapter 9 plus Chapter 13 | partial |
 | `CH13-TYPED-CANARY` | external root-import applications and a three-arm numeric witness | compiled Chapter 13 declarations | root `BanditRLProof` import | local declaration index | exact full-conclusion examples plus `#print axioms` | nonempty policy/environment subsets; nonnegative vector summing to horizon | project-local | `Tests/TextbookPartIVChapter13Canary.lean` | dedicated/root Tests | verified |
-| `CH13-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | Windows long-path workaround must not be mistaken for a Lean proof failure | repository | n/a | `python3 tools/bandit.py check` | verified |
-| `CH13-EVIDENCE-SITE` | proof export, indexes, readings/highlights/results/implementation map/README and Part IV site agree | local full gate | harness and website scripts | repository | generated evidence plus maintained source data | only gate-passing declarations marked compiled | repository | n/a | lean-verified build/site check/browser review | verified locally |
-| `CH13-REVIEW` | structured in-branch source/theorem/Lean/evidence consistency audit | all local artifacts | source, declarations, generated site | all above | check source inventory, quantifiers, probability-law direction, regularity, status labels, and order claims | no unresolved P0--P3; website-status-enum P3 corrected | repository | n/a | review | verified |
+| `CH13-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | Windows long-path workaround must not be mistaken for a Lean proof failure | repository | n/a | `python3 tools/bandit.py check` | baseline verified; exact-bound extension pending |
+| `CH13-EVIDENCE-SITE` | proof export, indexes, readings/highlights/results/implementation map/README and Part IV site agree | local full gate | harness and website scripts | repository | generated evidence plus maintained source data | only gate-passing declarations marked compiled | repository | n/a | lean-verified build/site check/browser review | baseline verified; exact-bound extension pending |
+| `CH13-REVIEW` | structured in-branch source/theorem/Lean/evidence consistency audit | all local artifacts | source, declarations, generated site | all above | check source inventory, quantifiers, probability-law direction, regularity, status labels, and order claims | no unresolved P0--P3; website-status-enum P3 corrected | repository | n/a | review | baseline verified; exact-bound extension pending |
 | `CH13-REMOTE` | current Chapter 15 downstream extension PR, Actions, Pages deployment and live Chapter 13 verification | accepted local chapter; earlier dependency-slice PR is historical evidence only | GitHub/Pages workflow | repository | branch PR; never direct push to main | remote state must be current | repository | n/a | remote deployment | pending current extension |
 
-## 2026-09-05 Mills-ratio lower branch
+## 2026-09-05 Exact Gaussian testing closure
 
-`LowerBounds.gaussianMills_lower_integral` passes focused Lean and the module
-build with the exact lower half of Eq. (13.4), for `x>=0`. Its dependencies
-`hasDerivAt_gaussianMillsComparison`,
-`gaussianMillsComparison_lower_derivative_bound`, and
-`tendsto_gaussianMillsComparison` also compile. The general comparison
-function uses only `c>0`; no tail-integrability assumption is supplied by
-the caller. Root canary and full integration validation are pending for this
-new extension. `CH13-EQ-13-1` remains blocked until the exact upper integral
-bound and Gaussian probability rescaling have been proved.
+Both source Eq. (13.4) integrals and the exact printed Eq. (13.1) now
+compile. `gaussianSampleMeanZeroErrorProbability_source_bounds` has only
+`n>0` and `Delta>0` as premises and preserves constants 16 and 32/pi.
+Focused module builds and an independent full-statement canary pass; all
+reported axioms are baseline-only. Full integration validation for commit
+`1203c63` is running in the short-path worktree. Chapter-wide website/export
+synchronization remains pending until that gate completes.
 
 ## Failure classification
 
@@ -437,8 +431,7 @@ Use exactly one:
 - The Chapter 13 module compiles semantic and deterministic scaffolding; the
   project-level Theorem 13.1 endpoint is the compiled Chapter 15 consumer.
 - The Gaussian testing module compiles the exact midpoint error events and a
-  Chernoff upper companion.  It does not compile either side of the sharper
-  Mills-ratio Eq. (13.1) as an equality of source obligations.
+  Chernoff companion plus both exact printed Mills-ratio bounds of Eq. (13.1).
 - `gaussianSampleMeanLaw` is connected to an explicit arithmetic average on
   the canonical finite iid Gaussian product by `gaussianIIDSampleMeanLaw`;
   the positive sample-size premise is explicit.
@@ -453,8 +446,8 @@ Use exactly one:
   inferred from deterministic algebra or a theorem card.
 - Theorem 13.1 is represented by the caller-free Chapter 15 minimax consumer
   with explicit `c=1/54`; broader classes or constants require separate gates.
-- The chapter remains `partial`: Eq. (13.1) and the main-prose broader-class
-  MOSS consequence are required by the frozen contract, while Notes 13.2 and
+- The chapter remains `partial`: the main-prose broader-class MOSS upper
+  consequence remains open under the frozen contract, while Notes 13.2 and
   Exercises 13.1--13.2 are optional and do not block completion.
 
 ## Failure policy
@@ -58140,7 +58133,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gaussianSampleMeanVariance",
     "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanVariance",
     "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-    "line": 30,
+    "line": 31,
     "statement": "def gaussianSampleMeanVariance (sampleSize : Nat) : NNReal"
   },
   {
@@ -58148,7 +58141,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gaussianSampleMeanVariance_pos",
     "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanVariance_pos",
     "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-    "line": 34,
+    "line": 35,
     "statement": "theorem gaussianSampleMeanVariance_pos (sampleSize : Nat) (hsampleSize : 0 < sampleSize) : 0 < gaussianSampleMeanVariance sampleSize"
   },
   {
@@ -58156,7 +58149,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gaussianSampleMeanLaw",
     "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanLaw",
     "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-    "line": 41,
+    "line": 42,
     "statement": "noncomputable def gaussianSampleMeanLaw (sampleSize : Nat) (mean : Real) : Measure Real"
   },
   {
@@ -58164,7 +58157,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gaussianIIDObservationLaw",
     "full_name": "BanditRLProof.LowerBounds.gaussianIIDObservationLaw",
     "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-    "line": 46,
+    "line": 47,
     "statement": "noncomputable def gaussianIIDObservationLaw (sampleSize : Nat) (mean : Real) : Measure (Fin sampleSize \u2192 Real)"
   },
   {
@@ -58172,7 +58165,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gaussianCoordinateAverage",
     "full_name": "BanditRLProof.LowerBounds.gaussianCoordinateAverage",
     "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-    "line": 51,
+    "line": 52,
     "statement": "def gaussianCoordinateAverage (sampleSize : Nat) (observations : Fin sampleSize \u2192 Real) : Real"
   },
   {
@@ -58180,7 +58173,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gaussianIIDSumLaw",
     "full_name": "BanditRLProof.LowerBounds.gaussianIIDSumLaw",
     "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-    "line": 56,
+    "line": 57,
     "statement": "theorem gaussianIIDSumLaw (sampleSize : Nat) (mean : Real) : (gaussianIIDObservationLaw sampleSize mean).map (fun observations => \u2211 i, observations i) = gaussianReal ((sampleSize : Real) * mean) (sampleSize : NNReal)"
   },
   {
@@ -58188,7 +58181,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gaussianIIDSampleMeanLaw",
     "full_name": "BanditRLProof.LowerBounds.gaussianIIDSampleMeanLaw",
     "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-    "line": 76,
+    "line": 77,
     "statement": "theorem gaussianIIDSampleMeanLaw (sampleSize : Nat) (mean : Real) (hsampleSize : 0 < sampleSize) : (gaussianIIDObservationLaw sampleSize mean).map (gaussianCoordinateAverage sampleSize) = gaussianSampleMeanLaw sampleSize mean"
   },
   {
@@ -58196,7 +58189,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoPointGaussianThresholdDecision",
     "full_name": "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision",
     "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-    "line": 100,
+    "line": 101,
     "statement": "def twoPointGaussianThresholdDecision (gap observation : Real) : Real"
   },
   {
@@ -58204,7 +58197,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoPointGaussianThresholdDecision_zero_error_event",
     "full_name": "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision_zero_error_event",
     "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-    "line": 104,
+    "line": 105,
     "statement": "theorem twoPointGaussianThresholdDecision_zero_error_event {gap : Real} (hgap : 0 < gap) : {observation | twoPointGaussianThresholdDecision gap observation \u2260 0} = Set.Ici (gap / 2)"
   },
   {
@@ -58212,7 +58205,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "twoPointGaussianThresholdDecision_gap_error_event",
     "full_name": "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision_gap_error_event",
     "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-    "line": 114,
+    "line": 115,
     "statement": "theorem twoPointGaussianThresholdDecision_gap_error_event {gap : Real} (hgap : 0 < gap) : {observation | twoPointGaussianThresholdDecision gap observation \u2260 gap} = Set.Iio (gap / 2)"
   },
   {
@@ -58220,7 +58213,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gaussianSampleMeanZeroErrorProbability",
     "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability",
     "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-    "line": 130,
+    "line": 131,
     "statement": "noncomputable def gaussianSampleMeanZeroErrorProbability (sampleSize : Nat) (gap : Real) : Real"
   },
   {
@@ -58228,7 +58221,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gaussianSampleMeanGapErrorProbability",
     "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanGapErrorProbability",
     "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-    "line": 136,
+    "line": 137,
     "statement": "noncomputable def gaussianSampleMeanGapErrorProbability (sampleSize : Nat) (gap : Real) : Real"
   },
   {
@@ -58236,7 +58229,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "hasSubgaussianMGF_id_gaussianReal_zero",
     "full_name": "BanditRLProof.LowerBounds.hasSubgaussianMGF_id_gaussianReal_zero",
     "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-    "line": 142,
+    "line": 143,
     "statement": "theorem hasSubgaussianMGF_id_gaussianReal_zero (variance : NNReal) : HasSubgaussianMGF id variance (gaussianReal 0 variance)"
   },
   {
@@ -58244,7 +58237,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "hasSubgaussianMGF_gap_sub_id_gaussianReal",
     "full_name": "BanditRLProof.LowerBounds.hasSubgaussianMGF_gap_sub_id_gaussianReal",
     "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-    "line": 152,
+    "line": 153,
     "statement": "theorem hasSubgaussianMGF_gap_sub_id_gaussianReal (gap : Real) (variance : NNReal) : HasSubgaussianMGF (fun observation => gap - observation) variance (gaussianReal gap variance)"
   },
   {
@@ -58252,7 +58245,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gaussianReal_zero_Ici_le_exp_neg_sq_div_two_variance",
     "full_name": "BanditRLProof.LowerBounds.gaussianReal_zero_Ici_le_exp_neg_sq_div_two_variance",
     "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-    "line": 161,
+    "line": 162,
     "statement": "theorem gaussianReal_zero_Ici_le_exp_neg_sq_div_two_variance (variance : NNReal) (threshold : Real) (hthreshold : 0 \u2264 threshold) : (gaussianReal 0 variance).real (Set.Ici threshold) \u2264 Real.exp (-threshold ^ 2 / (2 * (variance : Real)))"
   },
   {
@@ -58260,7 +58253,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gaussianReal_gap_Iio_half_le_exp_neg_sq_div_two_variance",
     "full_name": "BanditRLProof.LowerBounds.gaussianReal_gap_Iio_half_le_exp_neg_sq_div_two_variance",
     "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-    "line": 169,
+    "line": 170,
     "statement": "theorem gaussianReal_gap_Iio_half_le_exp_neg_sq_div_two_variance (gap : Real) (variance : NNReal) (hgap : 0 < gap) : (gaussianReal gap variance).real (Set.Iio (gap / 2)) \u2264 Real.exp (-(gap / 2) ^ 2 / (2 * (variance : Real)))"
   },
   {
@@ -58268,7 +58261,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gaussianSampleMeanZeroErrorProbability_le_exp",
     "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability_le_exp",
     "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-    "line": 193,
+    "line": 194,
     "statement": "theorem gaussianSampleMeanZeroErrorProbability_le_exp (sampleSize : Nat) (gap : Real) (hgap : 0 < gap) : gaussianSampleMeanZeroErrorProbability sampleSize gap \u2264 Real.exp (-(sampleSize : Real) * gap ^ 2 / 8)"
   },
   {
@@ -58276,7 +58269,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gaussianSampleMeanGapErrorProbability_le_exp",
     "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanGapErrorProbability_le_exp",
     "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-    "line": 218,
+    "line": 219,
     "statement": "theorem gaussianSampleMeanGapErrorProbability_le_exp (sampleSize : Nat) (gap : Real) (hgap : 0 < gap) : gaussianSampleMeanGapErrorProbability sampleSize gap \u2264 Real.exp (-(sampleSize : Real) * gap ^ 2 / 8)"
   },
   {
@@ -58284,7 +58277,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gaussianSampleMeanThresholdRisk",
     "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanThresholdRisk",
     "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-    "line": 239,
+    "line": 240,
     "statement": "noncomputable def gaussianSampleMeanThresholdRisk (sampleSize : Nat) (gap : Real) : Real"
   },
   {
@@ -58292,15 +58285,31 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gaussianSampleMeanThresholdRisk_le_exp",
     "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanThresholdRisk_le_exp",
     "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-    "line": 245,
+    "line": 246,
     "statement": "theorem gaussianSampleMeanThresholdRisk_le_exp (sampleSize : Nat) (gap : Real) (hgap : 0 < gap) : gaussianSampleMeanThresholdRisk sampleSize gap \u2264 Real.exp (-(sampleSize : Real) * gap ^ 2 / 8)"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianSampleMeanZeroErrorProbability_mills_bounds",
+    "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability_mills_bounds",
+    "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+    "line": 255,
+    "statement": "theorem gaussianSampleMeanZeroErrorProbability_mills_bounds (sampleSize : Nat) (hsampleSize : 0 < sampleSize) (gap : Real) (hgap : 0 < gap) : let z := (gap / 2) / Real.sqrt (2 * (gaussianSampleMeanVariance sampleSize : Real)) Real.exp (-z ^ 2) / (z + Real.sqrt (z ^ 2 + 2)) / Real.sqrt Real.pi \u2264 gaussianSampleMeanZeroErrorProbability sampleSize gap \u2227 gaussianSampleMeanZeroErrorProbability sampleSize gap \u2264 Real.exp (-z ^ 2) / (z + Real.sqrt (z ^ 2 + 4 / Real.pi)) / Real.sqrt Real.pi"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianSampleMeanZeroErrorProbability_source_bounds",
+    "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability_source_bounds",
+    "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+    "line": 270,
+    "statement": "theorem gaussianSampleMeanZeroErrorProbability_source_bounds (sampleSize : Nat) (hsampleSize : 0 < sampleSize) (gap : Real) (hgap : 0 < gap) : let q := (sampleSize : Real) * gap ^ 2 Real.sqrt (8 / Real.pi) * Real.exp (-q / 8) / (Real.sqrt q + Real.sqrt (q + 16)) \u2264 gaussianSampleMeanZeroErrorProbability sampleSize gap \u2227 gaussianSampleMeanZeroErrorProbability sampleSize gap \u2264 Real.sqrt (8 / Real.pi) * Real.exp (-q / 8) / (Real.sqrt q + Real.sqrt (q + 32 / Real.pi))"
   },
   {
     "kind": "def",
     "name": "gaussianMillsComparison",
     "full_name": "BanditRLProof.LowerBounds.gaussianMillsComparison",
     "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
-    "line": 12,
+    "line": 14,
     "statement": "noncomputable def gaussianMillsComparison (c x : \u211d) : \u211d"
   },
   {
@@ -58308,7 +58317,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gaussianMillsComparison_denominator_pos",
     "full_name": "BanditRLProof.LowerBounds.gaussianMillsComparison_denominator_pos",
     "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
-    "line": 15,
+    "line": 17,
     "statement": "theorem gaussianMillsComparison_denominator_pos {c x : \u211d} (hc : 0 < c) : 0 < x + Real.sqrt (x ^ 2 + c)"
   },
   {
@@ -58316,7 +58325,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "hasDerivAt_gaussianMillsComparison",
     "full_name": "BanditRLProof.LowerBounds.hasDerivAt_gaussianMillsComparison",
     "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
-    "line": 22,
+    "line": 24,
     "statement": "theorem hasDerivAt_gaussianMillsComparison {c x : \u211d} (hc : 0 < c) : HasDerivAt (gaussianMillsComparison c) (-gaussianMillsComparison c x * (2 * x + 1 / Real.sqrt (x ^ 2 + c))) x"
   },
   {
@@ -58324,7 +58333,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gaussianMillsComparison_lower_derivative_bound",
     "full_name": "BanditRLProof.LowerBounds.gaussianMillsComparison_lower_derivative_bound",
     "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
-    "line": 35,
+    "line": 37,
     "statement": "theorem gaussianMillsComparison_lower_derivative_bound (x : \u211d) : gaussianMillsComparison 2 x * (2 * x + 1 / Real.sqrt (x ^ 2 + 2)) \u2264 Real.exp (-x ^ 2)"
   },
   {
@@ -58332,7 +58341,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gaussianMillsComparison_pos",
     "full_name": "BanditRLProof.LowerBounds.gaussianMillsComparison_pos",
     "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
-    "line": 57,
+    "line": 59,
     "statement": "theorem gaussianMillsComparison_pos {c : \u211d} (hc : 0 < c) (x : \u211d) : 0 < gaussianMillsComparison c x"
   },
   {
@@ -58340,7 +58349,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "tendsto_gaussianMillsComparison",
     "full_name": "BanditRLProof.LowerBounds.tendsto_gaussianMillsComparison",
     "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
-    "line": 61,
+    "line": 63,
     "statement": "theorem tendsto_gaussianMillsComparison {c : \u211d} (hc : 0 < c) : Tendsto (gaussianMillsComparison c) atTop (\ud835\udcdd 0)"
   },
   {
@@ -58348,8 +58357,160 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "gaussianMills_lower_integral",
     "full_name": "BanditRLProof.LowerBounds.gaussianMills_lower_integral",
     "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
-    "line": 77,
+    "line": 79,
     "statement": "theorem gaussianMills_lower_integral {x : \u211d} (hx : 0 \u2264 x) : Real.exp (-x ^ 2) / (x + Real.sqrt (x ^ 2 + 2)) \u2264 \u222b t in Ioi x, Real.exp (-t ^ 2)"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianMills_sign_iff",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMills_sign_iff",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 107,
+    "statement": "theorem gaussianMills_sign_iff {c x : \u211d} (hc : 1 < c) (hx : 0 \u2264 x) : 0 \u2264 x ^ 2 + c - 1 - x * Real.sqrt (x ^ 2 + c) \u2194 x ^ 2 * (2 - c) \u2264 (c - 1) ^ 2"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianMills_sign_threshold",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMills_sign_threshold",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 126,
+    "statement": "theorem gaussianMills_sign_threshold {c x : \u211d} (hc : 1 < c) (hc2 : c < 2) (hx : 0 \u2264 x) : 0 \u2264 x ^ 2 + c - 1 - x * Real.sqrt (x ^ 2 + c) \u2194 x \u2264 (c - 1) / Real.sqrt (2 - c)"
+  },
+  {
+    "kind": "def",
+    "name": "gaussianMillsErrorDerivative",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMillsErrorDerivative",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 144,
+    "statement": "noncomputable def gaussianMillsErrorDerivative (c x : \u211d) : \u211d"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianMillsErrorDerivative_factor",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMillsErrorDerivative_factor",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 148,
+    "statement": "theorem gaussianMillsErrorDerivative_factor {c x : \u211d} (hc : 0 < c) : gaussianMillsErrorDerivative c x = Real.exp (-x ^ 2) * (x ^ 2 + c - 1 - x * Real.sqrt (x ^ 2 + c)) / ((x + Real.sqrt (x ^ 2 + c)) * Real.sqrt (x ^ 2 + c))"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianMillsErrorDerivative_nonneg_iff",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMillsErrorDerivative_nonneg_iff",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 160,
+    "statement": "theorem gaussianMillsErrorDerivative_nonneg_iff {c x : \u211d} (hc : 1 < c) (hc2 : c < 2) (hx : 0 \u2264 x) : 0 \u2264 gaussianMillsErrorDerivative c x \u2194 x \u2264 (c - 1) / Real.sqrt (2 - c)"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianMillsErrorDerivative_source_nonneg_iff",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMillsErrorDerivative_source_nonneg_iff",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 174,
+    "statement": "theorem gaussianMillsErrorDerivative_source_nonneg_iff {x : \u211d} (hx : 0 \u2264 x) : 0 \u2264 gaussianMillsErrorDerivative (4 / Real.pi) x \u2194 x \u2264 (4 / Real.pi - 1) / Real.sqrt (2 - 4 / Real.pi)"
+  },
+  {
+    "kind": "def",
+    "name": "gaussianMillsError",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMillsError",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 184,
+    "statement": "noncomputable def gaussianMillsError (c x : \u211d) : \u211d"
+  },
+  {
+    "kind": "theorem",
+    "name": "hasDerivAt_gaussianMillsError",
+    "full_name": "BanditRLProof.LowerBounds.hasDerivAt_gaussianMillsError",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 188,
+    "statement": "theorem hasDerivAt_gaussianMillsError {c x : \u211d} (hc : 0 < c) : HasDerivAt (gaussianMillsError c) (gaussianMillsErrorDerivative c x) x"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianMillsError_source_zero",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMillsError_source_zero",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 198,
+    "statement": "theorem gaussianMillsError_source_zero : gaussianMillsError (4 / Real.pi) 0 = 0"
+  },
+  {
+    "kind": "theorem",
+    "name": "tendsto_gaussianMillsError",
+    "full_name": "BanditRLProof.LowerBounds.tendsto_gaussianMillsError",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 205,
+    "statement": "theorem tendsto_gaussianMillsError {c : \u211d} (hc : 0 < c) : Tendsto (gaussianMillsError c) atTop (\ud835\udcdd 0)"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianMillsError_source_nonneg",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMillsError_source_nonneg",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 216,
+    "statement": "theorem gaussianMillsError_source_nonneg {x : \u211d} (hx : 0 \u2264 x) : 0 \u2264 gaussianMillsError (4 / Real.pi) x"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussian_integral_split",
+    "full_name": "BanditRLProof.LowerBounds.gaussian_integral_split",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 253,
+    "statement": "theorem gaussian_integral_split (x : \u211d) : (\u222b t in (0 : \u211d)..x, Real.exp (-t ^ 2)) + (\u222b t in Ioi x, Real.exp (-t ^ 2)) = Real.sqrt Real.pi / 2"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianMills_upper_integral",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMills_upper_integral",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 276,
+    "statement": "theorem gaussianMills_upper_integral {x : \u211d} (hx : 0 \u2264 x) : (\u222b t in Ioi x, Real.exp (-t ^ 2)) \u2264 Real.exp (-x ^ 2) / (x + Real.sqrt (x ^ 2 + 4 / Real.pi))"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianReal_zero_tail_integral",
+    "full_name": "BanditRLProof.LowerBounds.gaussianReal_zero_tail_integral",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 288,
+    "statement": "theorem gaussianReal_zero_tail_integral (v : \u211d\u22650) (hv : 0 < v) (a : \u211d) : (gaussianReal 0 v).real (Ici a) = (Real.sqrt (2 * Real.pi * (v : \u211d)))\u207b\u00b9 * \u222b t in Ioi a, Real.exp (-t ^ 2 / (2 * (v : \u211d)))"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianReal_half_tail_integral",
+    "full_name": "BanditRLProof.LowerBounds.gaussianReal_half_tail_integral",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 299,
+    "statement": "theorem gaussianReal_half_tail_integral (a : \u211d) : (gaussianReal 0 (1 / 2 : \u211d\u22650)).real (Ici a) = (\u222b t in Ioi a, Real.exp (-t ^ 2)) / Real.sqrt Real.pi"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianReal_half_mills_bounds",
+    "full_name": "BanditRLProof.LowerBounds.gaussianReal_half_mills_bounds",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 307,
+    "statement": "theorem gaussianReal_half_mills_bounds {a : \u211d} (ha : 0 \u2264 a) : Real.exp (-a ^ 2) / (a + Real.sqrt (a ^ 2 + 2)) / Real.sqrt Real.pi \u2264 (gaussianReal 0 (1 / 2 : \u211d\u22650)).real (Ici a) \u2227 (gaussianReal 0 (1 / 2 : \u211d\u22650)).real (Ici a) \u2264 Real.exp (-a ^ 2) / (a + Real.sqrt (a ^ 2 + 4 / Real.pi)) / Real.sqrt Real.pi"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianReal_zero_standardized_tail",
+    "full_name": "BanditRLProof.LowerBounds.gaussianReal_zero_standardized_tail",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 316,
+    "statement": "theorem gaussianReal_zero_standardized_tail (v : \u211d\u22650) (hv : 0 < v) (a : \u211d) : (gaussianReal 0 v).real (Ici a) = (\u222b t in Ioi (a / Real.sqrt (2 * (v : \u211d))), Real.exp (-t ^ 2)) / Real.sqrt Real.pi"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianReal_zero_mills_bounds",
+    "full_name": "BanditRLProof.LowerBounds.gaussianReal_zero_mills_bounds",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 342,
+    "statement": "theorem gaussianReal_zero_mills_bounds (v : \u211d\u22650) (hv : 0 < v) (a : \u211d) (ha : 0 \u2264 a) : let z := a / Real.sqrt (2 * (v : \u211d)) Real.exp (-z ^ 2) / (z + Real.sqrt (z ^ 2 + 2)) / Real.sqrt Real.pi \u2264 (gaussianReal 0 v).real (Ici a) \u2227 (gaussianReal 0 v).real (Ici a) \u2264 Real.exp (-z ^ 2) / (z + Real.sqrt (z ^ 2 + 4 / Real.pi)) / Real.sqrt Real.pi"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussianMills_expression_rescale",
+    "full_name": "BanditRLProof.LowerBounds.gaussianMills_expression_rescale",
+    "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+    "line": 356,
+    "statement": "theorem gaussianMills_expression_rescale {z c q : \u211d} (hz : 0 \u2264 z) (hc : 0 < c) (hq : q = 8 * z ^ 2) : Real.exp (-z ^ 2) / (z + Real.sqrt (z ^ 2 + c)) / Real.sqrt Real.pi = Real.sqrt (8 / Real.pi) * Real.exp (-q / 8) / (Real.sqrt q + Real.sqrt (q + 8 * c))"
   },
   {
     "kind": "def",
@@ -95213,7 +95374,44 @@ These cards are planning inspiration only.  They do not certify any theorem.
 ## Recent Trials
 
 ```json
-[]
+[
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "proposal",
+    "lean": "",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [],
+    "notes": "Registered CH13-MOSS-UPPER source-constant Algorithm 7 dependency; exact Gaussian Eq13.1 locally compiled at 1203c63; full gate running.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "unreviewed",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "reviewer",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "queued",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T04:50:59+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  }
+]
 ```
 
 ## Reviewer Gate

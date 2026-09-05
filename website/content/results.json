@@ -714,17 +714,17 @@
       "depends_on": [],
       "missing": [
         "The Chapter 14 event-testing foundation and Chapter 15 same-policy adaptive-history KL identity compile.",
-        "The separate compiled Chapter 15 consumer closes Theorem 13.1 with c=1/54, but whole-Chapter-13 completion also requires exact Eq. (13.1) and the broader-class MOSS upper consequence."
+        "The separate Chapter 15 consumer closes Theorem 13.1 with c=1/54 and GaussianHypothesisTesting closes exact Eq. (13.1); whole-Chapter-13 completion still requires the broader-class MOSS upper consequence."
       ],
       "evidence": "BanditRLProof/LowerBounds/BasicIdeas.lean; Tests/TextbookPartIVChapter13Canary.lean"
     },
     {
       "id": "TEXTBOOK-PART-IV-CH13-GAUSSIAN-TESTING-COMPANION",
-      "title": "Chapter 13 Gaussian midpoint testing companion",
+      "title": "Chapter 13 exact Gaussian testing bounds and Chernoff companion",
       "chapter": "foundations",
       "textbook_spine": "chapter-13-basic-ideas",
       "status": "compiled",
-      "informal": "For the two Gaussian mean-observation laws N(0,1/n) and N(Delta,1/n), the source midpoint decision has the exact upper- and lower-ray error events. The exact Gaussian MGF and reflection prove that both errors, and hence their maximum, are at most exp(-n Delta^2/8). This is a compiled two-hypothesis Chernoff theorem, not the sharper two-sided Mills-ratio Eq. (13.1).",
+      "informal": "The canonical iid Gaussian empirical mean has law N(mu,1/n). Both midpoint error events and their maximum-risk Chernoff upper bound compile. Separately, the exact lower and upper Mills-ratio integrals of Eq. (13.4) give the printed Eq. (13.1) bounds for the zero-mean error, with denominator constants 16 and 32/pi, for n>0 and Delta>0.",
       "declarations": [
         "BanditRLProof.LowerBounds.gaussianSampleMeanVariance",
         "BanditRLProof.LowerBounds.gaussianSampleMeanVariance_pos",
@@ -745,13 +745,14 @@
         "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability_le_exp",
         "BanditRLProof.LowerBounds.gaussianSampleMeanGapErrorProbability_le_exp",
         "BanditRLProof.LowerBounds.gaussianSampleMeanThresholdRisk",
-        "BanditRLProof.LowerBounds.gaussianSampleMeanThresholdRisk_le_exp"
+        "BanditRLProof.LowerBounds.gaussianSampleMeanThresholdRisk_le_exp",
+        "BanditRLProof.LowerBounds.gaussianMills_lower_integral",
+        "BanditRLProof.LowerBounds.gaussianMills_upper_integral",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability_source_bounds"
       ],
       "depends_on": [],
-      "missing": [
-        "The exact lower and sharpened upper Mills-ratio constants printed in Eq. (13.1)."
-      ],
-      "evidence": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean; Tests/TextbookPartIVChapter13Canary.lean"
+      "missing": [],
+      "evidence": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean; BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean; Tests/TextbookPartIVChapter13Canary.lean"
     },
     {
       "id": "TEXTBOOK-PART-IV-CH14-INFORMATION-THEORY-LEAN-SPINE",
@@ -1051,7 +1052,7 @@
         "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum"
       ],
       "missing": [
-        "This compiled main order theorem does not discharge the separate exact Eq. (13.1) Mills-ratio bounds or the broader-class MOSS upper consequence in Chapter 13's main prose.",
+        "Exact Eq. (13.1) is separately compiled in GaussianHypothesisTesting; the broader-class MOSS upper consequence in Chapter 13's main prose remains open.",
         "Notes 13.2 and Exercises 13.1–13.2 are optional and are not implied by the theorem."
       ],
       "evidence": "BanditRLProof/LowerBounds/GaussianMinimax.lean; Tests/TextbookPartIVChapter15Canary.lean; tasks/TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE.md; tasks/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE.md"

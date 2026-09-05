@@ -85,9 +85,18 @@ arithmetic mean to exactly this law.
 
 ## Required blockers and optional boundary
 
-- Required: prove both printed Mills-ratio bounds in Eq. (13.4) and rescale
-  them to the exact two-sided Eq. (13.1). The Chernoff theorem is not a
-  substitute for this node.
+- Compiled: both printed Mills-ratio bounds in Eq. (13.4) and their exact
+  Eq. (13.1) rescaling. Public endpoints are
+  `LowerBounds.gaussianMills_lower_integral`,
+  `LowerBounds.gaussianMills_upper_integral`, and
+  `LowerBounds.gaussianSampleMeanZeroErrorProbability_source_bounds`.
+  The latter assumes n>0 and Delta>0, sets q=n*Delta^2, and bounds the
+  zero-mean midpoint error between sqrt(8/pi)*exp(-q/8) divided by
+  sqrt(q)+sqrt(q+16) (lower) and sqrt(q)+sqrt(q+32/pi) (upper).
+  Proof: derivative comparison and improper FTC for the lower integral;
+  single-turning-point error comparison for the upper integral; Gaussian
+  density standardization and square-root rescaling for the probability.
+  These are independent of the weaker Chernoff companion.
 - Required connected claim: compile the MOSS/Algorithm 7 upper theorem on the
   stated finite-arm 1-subgaussian class before claiming the main-prose
   constant-factor near-minimax consequence.

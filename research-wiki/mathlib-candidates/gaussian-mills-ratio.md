@@ -111,7 +111,7 @@ Full integration gates and chapter-wide evidence synchronization remain pending.
 - Result: the exact Mills-ratio inequalities were not found.  The compiled
   Chernoff upper bound is weaker and cannot discharge the source display.
 
-## First executable leaf
+## Original first executable leaf (now compiled)
 
 Prove a generic real-analysis theorem for `x >= 0` bounding
 `integral (fun t : Real => Real.exp (-t^2))` over `Set.Ioi x` in both source
@@ -121,6 +121,6 @@ normal-tail version and finally the `N(0,1/n)` midpoint specialization.
 ## Regularity and nonclaims
 
 The integrand's measurability and integrability are available from Mathlib's
-Gaussian integral development.  This card is not a theorem and does not make
-Eq. (13.1) locally compiled.  Do not substitute the Chernoff inequality for
-the missing lower bound or the printed sharpened upper bound.
+Gaussian integral development. This card is not itself proof evidence;
+the compiled declarations identified above establish Eq. (13.1).
+The Chernoff companion remains distinct from both exact source bounds.

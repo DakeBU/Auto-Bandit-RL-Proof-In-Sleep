@@ -14,7 +14,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH13-GAUSSIAN-TEST-DECISION` | midpoint rule and exact error events under the two point hypotheses | ordered real comparison | `if`, `Set.Ici`, `Set.Iio` | `MLIB-ORDER-ALGEBRA` | split on `Delta/2 <= observation` | `Delta>0`; tie assigned to positive hypothesis | project-local | `LowerBounds.twoPointGaussianThresholdDecision_zero_error_event`, `LowerBounds.twoPointGaussianThresholdDecision_gap_error_event` | focused Lean | compiled |
 | `CH13-GAUSSIAN-SAMPLE-MEAN-LAW` | the average of `n>0` independent `N(mu,1)` observations has law `N(mu,1/n)` | canonical finite product measure and Gaussian scaling | `Measure.pi`, `charFun_map_sum_pi_eq_prod`, `charFun_gaussianReal`, `gaussianReal_map_div_const` | `MLIB-GAUSSIAN-REAL-TAIL`, `MLIB-PROBABILITY-INDEPENDENCE` | identify the product-law sum by characteristic functions, then map its arithmetic mean by division by `n` | `n>0`; every coordinate has exact `N(mu,1)` law by construction | project-local bridge | `LowerBounds.gaussianIIDObservationLaw`, `LowerBounds.gaussianCoordinateAverage`, `LowerBounds.gaussianIIDSumLaw`, `LowerBounds.gaussianIIDSampleMeanLaw` | focused Lean | compiled |
 | `CH13-GAUSSIAN-TEST-CHERNOFF` | under the declared zero/positive `N(mu,1/n)` laws, both midpoint errors and their maximum are at most `exp(-n*Delta^2/8)` | exact Gaussian MGF, reflection, and midpoint events | `gaussianReal`, `gaussianReal_map_const_sub`, `mgf_id_gaussianReal`, `HasSubgaussianMGF.measure_ge_le` | `MLIB-GAUSSIAN-REAL-TAIL`, `MLIB-PROBABILITY-SUBGAUSSIAN`, `MLIB-MEASURE-INTEGRAL`, `MLIB-REAL-LOG-SQRT` | derive centered and reflected sub-Gaussianity, apply one-sided Chernoff to both error rays, normalize variance `1/n`, take `max` | `Delta>0`; `n>0` is explicit in the compiled iid empirical-mean producer | project-local consequence | `LowerBounds.hasSubgaussianMGF_id_gaussianReal_zero`, `LowerBounds.hasSubgaussianMGF_gap_sub_id_gaussianReal`, `LowerBounds.gaussianSampleMeanZeroErrorProbability_le_exp`, `LowerBounds.gaussianSampleMeanGapErrorProbability_le_exp`, `LowerBounds.gaussianSampleMeanThresholdRisk_le_exp` | focused Lean | compiled |
-| `CH13-EQ-13-1` | exact printed lower and upper Gaussian midpoint-error bounds | source Eq. (13.4), Gaussian density and rescaling | no local exact Mills-ratio leaf | `MLIB-MEASURE-INTEGRAL`, proposed `MLIB-GAUSSIAN-MILLS-RATIO` | first prove both source integral bounds for `x>=0`, then specialize `x=sqrt(n)*Delta/(2*sqrt 2)` | `n>0`, `Delta>0`; exact constants and both inequality directions | mathlib-candidate analytic leaf | none | focused Lean | blocked |
+| `CH13-EQ-13-1` | exact printed lower and upper Gaussian midpoint-error bounds | both exact Eq. (13.4) integrals, Gaussian density, scaling, and denominator normalization | `GaussianMillsRatio.lean`, `GaussianHypothesisTesting.lean` | `MLIB-MEASURE-INTEGRAL`, `MLIB-GAUSSIAN-REAL-TAIL` | derivative comparison for lower bound; one sign change and endpoints for upper bound; Gaussian density change of variable | `n>0`, `Delta>0`; constants 16 and 32/pi | locally compiled Mathlib-candidate and project consumer | `gaussianSampleMeanZeroErrorProbability_source_bounds` | focused build and external typed canary; full gate pending | compiled |
 | `CH13-ALTERNATIVE-BUDGET` | sum of alternative expected pulls is at most horizon | exact total sum and base nonnegativity | `Fin.sum_univ_succ`, ordered field | `MLIB-FINSET-SUMS`, `MLIB-FINTYPE-FIN` | rewrite the full sum as base plus tail, then linear arithmetic | all expected pulls nonnegative | mathlib-composed project leaf | `LowerBounds.alternativeExpectedPullBudget_le` | focused Lean | compiled |
 | `CH13-LEAST-EXPLORED` | some alternative has expected pulls at most `n/m` | alternative budget, `0 < m` | `Finset.exists_le_of_sum_le`, constant sum | `MLIB-FINSET-SUMS`, `MLIB-FINTYPE-FIN`, `MLIB-ORDER-ALGEBRA` | finite average comparison | `0 < m`; exact expected-pull total | mathlib-composed project leaf | `LowerBounds.exists_alternative_le_average`, `LowerBounds.exists_leastExploredAlternative` | focused Lean | compiled |
 | `CH13-TWO-ENV-ALGEBRA` | max of base and changed expressions is at least `Delta*(n-error)/2` under an explicit pull-discrepancy bound | equations (13.2)--(13.3) expressions | real ordered-field algebra, `max`, `nlinarith` | `MLIB-ORDER-ALGEBRA` | show their sum is at least `Delta*(n-error)`, then use max/average | `0 <= Delta`; visible `baseFirstPulls-changedFirstPulls <= error` bridge | project-local | `LowerBounds.baseEnvironmentRegret`, `LowerBounds.changedEnvironmentRegretLowerBound`, `LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error`; zero-error corollary `LowerBounds.max_base_changed_regretLowerBound_ge_half` | focused Lean | compiled |
@@ -22,22 +22,20 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH13-THEOREM-13-1` | Gaussian finite-arm minimax lower bound `>= c*sqrt(k*n)` | Chapter 13 deterministic leaves, Chapter 14 information theory, Chapter 15 minimax construction | compiled Gaussian/history APIs | source card plus compiled local declarations | base/changed instances, least arm, testing bound, Delta tuning, inf/sup extraction | unit variance; means in `[0,1]^k`; `k>1`; `n>=k`; explicit `c=1/54` | source-order endpoint | `LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt` | Chapter 15 | compiled |
 | `CH13-BROADER-SUBGAUSSIAN-NEAR-MINIMAX` | Algorithm 7 is constant-factor minimax for finite-arm 1-subgaussian bandits with gaps in `[0,1]` | Theorem 13.1 Gaussian-subclass lower transfer and source Theorem 9.1 MOSS upper bound | compiled lower terminal; no local MOSS upper theorem | textbook source; local MOSS roadmap only | identify the Gaussian subclass, transport the lower bound to the broader class, combine with generated-policy MOSS upper bound | exact broader environment class and regret notion; common horizon/arm indexing | connected blocker | none | Chapter 9 plus Chapter 13 | partial |
 | `CH13-TYPED-CANARY` | external root-import applications and a three-arm numeric witness | compiled Chapter 13 declarations | root `BanditRLProof` import | local declaration index | exact full-conclusion examples plus `#print axioms` | nonempty policy/environment subsets; nonnegative vector summing to horizon | project-local | `Tests/TextbookPartIVChapter13Canary.lean` | dedicated/root Tests | verified |
-| `CH13-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | Windows long-path workaround must not be mistaken for a Lean proof failure | repository | n/a | `python3 tools/bandit.py check` | verified |
-| `CH13-EVIDENCE-SITE` | proof export, indexes, readings/highlights/results/implementation map/README and Part IV site agree | local full gate | harness and website scripts | repository | generated evidence plus maintained source data | only gate-passing declarations marked compiled | repository | n/a | lean-verified build/site check/browser review | verified locally |
-| `CH13-REVIEW` | structured in-branch source/theorem/Lean/evidence consistency audit | all local artifacts | source, declarations, generated site | all above | check source inventory, quantifiers, probability-law direction, regularity, status labels, and order claims | no unresolved P0--P3; website-status-enum P3 corrected | repository | n/a | review | verified |
+| `CH13-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | Windows long-path workaround must not be mistaken for a Lean proof failure | repository | n/a | `python3 tools/bandit.py check` | baseline verified; exact-bound extension pending |
+| `CH13-EVIDENCE-SITE` | proof export, indexes, readings/highlights/results/implementation map/README and Part IV site agree | local full gate | harness and website scripts | repository | generated evidence plus maintained source data | only gate-passing declarations marked compiled | repository | n/a | lean-verified build/site check/browser review | baseline verified; exact-bound extension pending |
+| `CH13-REVIEW` | structured in-branch source/theorem/Lean/evidence consistency audit | all local artifacts | source, declarations, generated site | all above | check source inventory, quantifiers, probability-law direction, regularity, status labels, and order claims | no unresolved P0--P3; website-status-enum P3 corrected | repository | n/a | review | baseline verified; exact-bound extension pending |
 | `CH13-REMOTE` | current Chapter 15 downstream extension PR, Actions, Pages deployment and live Chapter 13 verification | accepted local chapter; earlier dependency-slice PR is historical evidence only | GitHub/Pages workflow | repository | branch PR; never direct push to main | remote state must be current | repository | n/a | remote deployment | pending current extension |
 
-## 2026-09-05 Mills-ratio lower branch
+## 2026-09-05 Exact Gaussian testing closure
 
-`LowerBounds.gaussianMills_lower_integral` passes focused Lean and the module
-build with the exact lower half of Eq. (13.4), for `x>=0`. Its dependencies
-`hasDerivAt_gaussianMillsComparison`,
-`gaussianMillsComparison_lower_derivative_bound`, and
-`tendsto_gaussianMillsComparison` also compile. The general comparison
-function uses only `c>0`; no tail-integrability assumption is supplied by
-the caller. Root canary and full integration validation are pending for this
-new extension. `CH13-EQ-13-1` remains blocked until the exact upper integral
-bound and Gaussian probability rescaling have been proved.
+Both source Eq. (13.4) integrals and the exact printed Eq. (13.1) now
+compile. `gaussianSampleMeanZeroErrorProbability_source_bounds` has only
+`n>0` and `Delta>0` as premises and preserves constants 16 and 32/pi.
+Focused module builds and an independent full-statement canary pass; all
+reported axioms are baseline-only. Full integration validation for commit
+`1203c63` is running in the short-path worktree. Chapter-wide website/export
+synchronization remains pending until that gate completes.
 
 ## Failure classification
 
@@ -60,8 +58,7 @@ Use exactly one:
 - The Chapter 13 module compiles semantic and deterministic scaffolding; the
   project-level Theorem 13.1 endpoint is the compiled Chapter 15 consumer.
 - The Gaussian testing module compiles the exact midpoint error events and a
-  Chernoff upper companion.  It does not compile either side of the sharper
-  Mills-ratio Eq. (13.1) as an equality of source obligations.
+  Chernoff companion plus both exact printed Mills-ratio bounds of Eq. (13.1).
 - `gaussianSampleMeanLaw` is connected to an explicit arithmetic average on
   the canonical finite iid Gaussian product by `gaussianIIDSampleMeanLaw`;
   the positive sample-size premise is explicit.
@@ -76,8 +73,8 @@ Use exactly one:
   inferred from deterministic algebra or a theorem card.
 - Theorem 13.1 is represented by the caller-free Chapter 15 minimax consumer
   with explicit `c=1/54`; broader classes or constants require separate gates.
-- The chapter remains `partial`: Eq. (13.1) and the main-prose broader-class
-  MOSS consequence are required by the frozen contract, while Notes 13.2 and
+- The chapter remains `partial`: the main-prose broader-class MOSS upper
+  consequence remains open under the frozen contract, while Notes 13.2 and
   Exercises 13.1--13.2 are optional and do not block completion.
 
 ## Failure policy

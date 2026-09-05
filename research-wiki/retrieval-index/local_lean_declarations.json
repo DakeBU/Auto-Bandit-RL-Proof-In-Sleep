@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-04T03:56:24+00:00",
+  "generated": "2026-09-05T04:53:37+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -28094,7 +28094,7 @@
       "name": "gaussianSampleMeanVariance",
       "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanVariance",
       "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-      "line": 30,
+      "line": 31,
       "statement": "def gaussianSampleMeanVariance (sampleSize : Nat) : NNReal"
     },
     {
@@ -28102,7 +28102,7 @@
       "name": "gaussianSampleMeanVariance_pos",
       "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanVariance_pos",
       "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-      "line": 34,
+      "line": 35,
       "statement": "theorem gaussianSampleMeanVariance_pos (sampleSize : Nat) (hsampleSize : 0 < sampleSize) : 0 < gaussianSampleMeanVariance sampleSize"
     },
     {
@@ -28110,7 +28110,7 @@
       "name": "gaussianSampleMeanLaw",
       "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanLaw",
       "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-      "line": 41,
+      "line": 42,
       "statement": "noncomputable def gaussianSampleMeanLaw (sampleSize : Nat) (mean : Real) : Measure Real"
     },
     {
@@ -28118,7 +28118,7 @@
       "name": "gaussianIIDObservationLaw",
       "full_name": "BanditRLProof.LowerBounds.gaussianIIDObservationLaw",
       "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-      "line": 46,
+      "line": 47,
       "statement": "noncomputable def gaussianIIDObservationLaw (sampleSize : Nat) (mean : Real) : Measure (Fin sampleSize \u2192 Real)"
     },
     {
@@ -28126,7 +28126,7 @@
       "name": "gaussianCoordinateAverage",
       "full_name": "BanditRLProof.LowerBounds.gaussianCoordinateAverage",
       "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-      "line": 51,
+      "line": 52,
       "statement": "def gaussianCoordinateAverage (sampleSize : Nat) (observations : Fin sampleSize \u2192 Real) : Real"
     },
     {
@@ -28134,7 +28134,7 @@
       "name": "gaussianIIDSumLaw",
       "full_name": "BanditRLProof.LowerBounds.gaussianIIDSumLaw",
       "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-      "line": 56,
+      "line": 57,
       "statement": "theorem gaussianIIDSumLaw (sampleSize : Nat) (mean : Real) : (gaussianIIDObservationLaw sampleSize mean).map (fun observations => \u2211 i, observations i) = gaussianReal ((sampleSize : Real) * mean) (sampleSize : NNReal)"
     },
     {
@@ -28142,7 +28142,7 @@
       "name": "gaussianIIDSampleMeanLaw",
       "full_name": "BanditRLProof.LowerBounds.gaussianIIDSampleMeanLaw",
       "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-      "line": 76,
+      "line": 77,
       "statement": "theorem gaussianIIDSampleMeanLaw (sampleSize : Nat) (mean : Real) (hsampleSize : 0 < sampleSize) : (gaussianIIDObservationLaw sampleSize mean).map (gaussianCoordinateAverage sampleSize) = gaussianSampleMeanLaw sampleSize mean"
     },
     {
@@ -28150,7 +28150,7 @@
       "name": "twoPointGaussianThresholdDecision",
       "full_name": "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision",
       "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-      "line": 100,
+      "line": 101,
       "statement": "def twoPointGaussianThresholdDecision (gap observation : Real) : Real"
     },
     {
@@ -28158,7 +28158,7 @@
       "name": "twoPointGaussianThresholdDecision_zero_error_event",
       "full_name": "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision_zero_error_event",
       "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-      "line": 104,
+      "line": 105,
       "statement": "theorem twoPointGaussianThresholdDecision_zero_error_event {gap : Real} (hgap : 0 < gap) : {observation | twoPointGaussianThresholdDecision gap observation \u2260 0} = Set.Ici (gap / 2)"
     },
     {
@@ -28166,7 +28166,7 @@
       "name": "twoPointGaussianThresholdDecision_gap_error_event",
       "full_name": "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision_gap_error_event",
       "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-      "line": 114,
+      "line": 115,
       "statement": "theorem twoPointGaussianThresholdDecision_gap_error_event {gap : Real} (hgap : 0 < gap) : {observation | twoPointGaussianThresholdDecision gap observation \u2260 gap} = Set.Iio (gap / 2)"
     },
     {
@@ -28174,7 +28174,7 @@
       "name": "gaussianSampleMeanZeroErrorProbability",
       "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability",
       "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-      "line": 130,
+      "line": 131,
       "statement": "noncomputable def gaussianSampleMeanZeroErrorProbability (sampleSize : Nat) (gap : Real) : Real"
     },
     {
@@ -28182,7 +28182,7 @@
       "name": "gaussianSampleMeanGapErrorProbability",
       "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanGapErrorProbability",
       "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-      "line": 136,
+      "line": 137,
       "statement": "noncomputable def gaussianSampleMeanGapErrorProbability (sampleSize : Nat) (gap : Real) : Real"
     },
     {
@@ -28190,7 +28190,7 @@
       "name": "hasSubgaussianMGF_id_gaussianReal_zero",
       "full_name": "BanditRLProof.LowerBounds.hasSubgaussianMGF_id_gaussianReal_zero",
       "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-      "line": 142,
+      "line": 143,
       "statement": "theorem hasSubgaussianMGF_id_gaussianReal_zero (variance : NNReal) : HasSubgaussianMGF id variance (gaussianReal 0 variance)"
     },
     {
@@ -28198,7 +28198,7 @@
       "name": "hasSubgaussianMGF_gap_sub_id_gaussianReal",
       "full_name": "BanditRLProof.LowerBounds.hasSubgaussianMGF_gap_sub_id_gaussianReal",
       "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-      "line": 152,
+      "line": 153,
       "statement": "theorem hasSubgaussianMGF_gap_sub_id_gaussianReal (gap : Real) (variance : NNReal) : HasSubgaussianMGF (fun observation => gap - observation) variance (gaussianReal gap variance)"
     },
     {
@@ -28206,7 +28206,7 @@
       "name": "gaussianReal_zero_Ici_le_exp_neg_sq_div_two_variance",
       "full_name": "BanditRLProof.LowerBounds.gaussianReal_zero_Ici_le_exp_neg_sq_div_two_variance",
       "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-      "line": 161,
+      "line": 162,
       "statement": "theorem gaussianReal_zero_Ici_le_exp_neg_sq_div_two_variance (variance : NNReal) (threshold : Real) (hthreshold : 0 \u2264 threshold) : (gaussianReal 0 variance).real (Set.Ici threshold) \u2264 Real.exp (-threshold ^ 2 / (2 * (variance : Real)))"
     },
     {
@@ -28214,7 +28214,7 @@
       "name": "gaussianReal_gap_Iio_half_le_exp_neg_sq_div_two_variance",
       "full_name": "BanditRLProof.LowerBounds.gaussianReal_gap_Iio_half_le_exp_neg_sq_div_two_variance",
       "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-      "line": 169,
+      "line": 170,
       "statement": "theorem gaussianReal_gap_Iio_half_le_exp_neg_sq_div_two_variance (gap : Real) (variance : NNReal) (hgap : 0 < gap) : (gaussianReal gap variance).real (Set.Iio (gap / 2)) \u2264 Real.exp (-(gap / 2) ^ 2 / (2 * (variance : Real)))"
     },
     {
@@ -28222,7 +28222,7 @@
       "name": "gaussianSampleMeanZeroErrorProbability_le_exp",
       "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability_le_exp",
       "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-      "line": 193,
+      "line": 194,
       "statement": "theorem gaussianSampleMeanZeroErrorProbability_le_exp (sampleSize : Nat) (gap : Real) (hgap : 0 < gap) : gaussianSampleMeanZeroErrorProbability sampleSize gap \u2264 Real.exp (-(sampleSize : Real) * gap ^ 2 / 8)"
     },
     {
@@ -28230,7 +28230,7 @@
       "name": "gaussianSampleMeanGapErrorProbability_le_exp",
       "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanGapErrorProbability_le_exp",
       "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-      "line": 218,
+      "line": 219,
       "statement": "theorem gaussianSampleMeanGapErrorProbability_le_exp (sampleSize : Nat) (gap : Real) (hgap : 0 < gap) : gaussianSampleMeanGapErrorProbability sampleSize gap \u2264 Real.exp (-(sampleSize : Real) * gap ^ 2 / 8)"
     },
     {
@@ -28238,7 +28238,7 @@
       "name": "gaussianSampleMeanThresholdRisk",
       "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanThresholdRisk",
       "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-      "line": 239,
+      "line": 240,
       "statement": "noncomputable def gaussianSampleMeanThresholdRisk (sampleSize : Nat) (gap : Real) : Real"
     },
     {
@@ -28246,8 +28246,232 @@
       "name": "gaussianSampleMeanThresholdRisk_le_exp",
       "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanThresholdRisk_le_exp",
       "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
-      "line": 245,
+      "line": 246,
       "statement": "theorem gaussianSampleMeanThresholdRisk_le_exp (sampleSize : Nat) (gap : Real) (hgap : 0 < gap) : gaussianSampleMeanThresholdRisk sampleSize gap \u2264 Real.exp (-(sampleSize : Real) * gap ^ 2 / 8)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianSampleMeanZeroErrorProbability_mills_bounds",
+      "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability_mills_bounds",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 255,
+      "statement": "theorem gaussianSampleMeanZeroErrorProbability_mills_bounds (sampleSize : Nat) (hsampleSize : 0 < sampleSize) (gap : Real) (hgap : 0 < gap) : let z := (gap / 2) / Real.sqrt (2 * (gaussianSampleMeanVariance sampleSize : Real)) Real.exp (-z ^ 2) / (z + Real.sqrt (z ^ 2 + 2)) / Real.sqrt Real.pi \u2264 gaussianSampleMeanZeroErrorProbability sampleSize gap \u2227 gaussianSampleMeanZeroErrorProbability sampleSize gap \u2264 Real.exp (-z ^ 2) / (z + Real.sqrt (z ^ 2 + 4 / Real.pi)) / Real.sqrt Real.pi"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianSampleMeanZeroErrorProbability_source_bounds",
+      "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability_source_bounds",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 270,
+      "statement": "theorem gaussianSampleMeanZeroErrorProbability_source_bounds (sampleSize : Nat) (hsampleSize : 0 < sampleSize) (gap : Real) (hgap : 0 < gap) : let q := (sampleSize : Real) * gap ^ 2 Real.sqrt (8 / Real.pi) * Real.exp (-q / 8) / (Real.sqrt q + Real.sqrt (q + 16)) \u2264 gaussianSampleMeanZeroErrorProbability sampleSize gap \u2227 gaussianSampleMeanZeroErrorProbability sampleSize gap \u2264 Real.sqrt (8 / Real.pi) * Real.exp (-q / 8) / (Real.sqrt q + Real.sqrt (q + 32 / Real.pi))"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianMillsComparison",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMillsComparison",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 14,
+      "statement": "noncomputable def gaussianMillsComparison (c x : \u211d) : \u211d"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMillsComparison_denominator_pos",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMillsComparison_denominator_pos",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 17,
+      "statement": "theorem gaussianMillsComparison_denominator_pos {c x : \u211d} (hc : 0 < c) : 0 < x + Real.sqrt (x ^ 2 + c)"
+    },
+    {
+      "kind": "theorem",
+      "name": "hasDerivAt_gaussianMillsComparison",
+      "full_name": "BanditRLProof.LowerBounds.hasDerivAt_gaussianMillsComparison",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 24,
+      "statement": "theorem hasDerivAt_gaussianMillsComparison {c x : \u211d} (hc : 0 < c) : HasDerivAt (gaussianMillsComparison c) (-gaussianMillsComparison c x * (2 * x + 1 / Real.sqrt (x ^ 2 + c))) x"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMillsComparison_lower_derivative_bound",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMillsComparison_lower_derivative_bound",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 37,
+      "statement": "theorem gaussianMillsComparison_lower_derivative_bound (x : \u211d) : gaussianMillsComparison 2 x * (2 * x + 1 / Real.sqrt (x ^ 2 + 2)) \u2264 Real.exp (-x ^ 2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMillsComparison_pos",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMillsComparison_pos",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 59,
+      "statement": "theorem gaussianMillsComparison_pos {c : \u211d} (hc : 0 < c) (x : \u211d) : 0 < gaussianMillsComparison c x"
+    },
+    {
+      "kind": "theorem",
+      "name": "tendsto_gaussianMillsComparison",
+      "full_name": "BanditRLProof.LowerBounds.tendsto_gaussianMillsComparison",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 63,
+      "statement": "theorem tendsto_gaussianMillsComparison {c : \u211d} (hc : 0 < c) : Tendsto (gaussianMillsComparison c) atTop (\ud835\udcdd 0)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMills_lower_integral",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMills_lower_integral",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 79,
+      "statement": "theorem gaussianMills_lower_integral {x : \u211d} (hx : 0 \u2264 x) : Real.exp (-x ^ 2) / (x + Real.sqrt (x ^ 2 + 2)) \u2264 \u222b t in Ioi x, Real.exp (-t ^ 2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMills_sign_iff",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMills_sign_iff",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 107,
+      "statement": "theorem gaussianMills_sign_iff {c x : \u211d} (hc : 1 < c) (hx : 0 \u2264 x) : 0 \u2264 x ^ 2 + c - 1 - x * Real.sqrt (x ^ 2 + c) \u2194 x ^ 2 * (2 - c) \u2264 (c - 1) ^ 2"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMills_sign_threshold",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMills_sign_threshold",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 126,
+      "statement": "theorem gaussianMills_sign_threshold {c x : \u211d} (hc : 1 < c) (hc2 : c < 2) (hx : 0 \u2264 x) : 0 \u2264 x ^ 2 + c - 1 - x * Real.sqrt (x ^ 2 + c) \u2194 x \u2264 (c - 1) / Real.sqrt (2 - c)"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianMillsErrorDerivative",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMillsErrorDerivative",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 144,
+      "statement": "noncomputable def gaussianMillsErrorDerivative (c x : \u211d) : \u211d"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMillsErrorDerivative_factor",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMillsErrorDerivative_factor",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 148,
+      "statement": "theorem gaussianMillsErrorDerivative_factor {c x : \u211d} (hc : 0 < c) : gaussianMillsErrorDerivative c x = Real.exp (-x ^ 2) * (x ^ 2 + c - 1 - x * Real.sqrt (x ^ 2 + c)) / ((x + Real.sqrt (x ^ 2 + c)) * Real.sqrt (x ^ 2 + c))"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMillsErrorDerivative_nonneg_iff",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMillsErrorDerivative_nonneg_iff",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 160,
+      "statement": "theorem gaussianMillsErrorDerivative_nonneg_iff {c x : \u211d} (hc : 1 < c) (hc2 : c < 2) (hx : 0 \u2264 x) : 0 \u2264 gaussianMillsErrorDerivative c x \u2194 x \u2264 (c - 1) / Real.sqrt (2 - c)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMillsErrorDerivative_source_nonneg_iff",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMillsErrorDerivative_source_nonneg_iff",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 174,
+      "statement": "theorem gaussianMillsErrorDerivative_source_nonneg_iff {x : \u211d} (hx : 0 \u2264 x) : 0 \u2264 gaussianMillsErrorDerivative (4 / Real.pi) x \u2194 x \u2264 (4 / Real.pi - 1) / Real.sqrt (2 - 4 / Real.pi)"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianMillsError",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMillsError",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 184,
+      "statement": "noncomputable def gaussianMillsError (c x : \u211d) : \u211d"
+    },
+    {
+      "kind": "theorem",
+      "name": "hasDerivAt_gaussianMillsError",
+      "full_name": "BanditRLProof.LowerBounds.hasDerivAt_gaussianMillsError",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 188,
+      "statement": "theorem hasDerivAt_gaussianMillsError {c x : \u211d} (hc : 0 < c) : HasDerivAt (gaussianMillsError c) (gaussianMillsErrorDerivative c x) x"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMillsError_source_zero",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMillsError_source_zero",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 198,
+      "statement": "theorem gaussianMillsError_source_zero : gaussianMillsError (4 / Real.pi) 0 = 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "tendsto_gaussianMillsError",
+      "full_name": "BanditRLProof.LowerBounds.tendsto_gaussianMillsError",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 205,
+      "statement": "theorem tendsto_gaussianMillsError {c : \u211d} (hc : 0 < c) : Tendsto (gaussianMillsError c) atTop (\ud835\udcdd 0)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMillsError_source_nonneg",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMillsError_source_nonneg",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 216,
+      "statement": "theorem gaussianMillsError_source_nonneg {x : \u211d} (hx : 0 \u2264 x) : 0 \u2264 gaussianMillsError (4 / Real.pi) x"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussian_integral_split",
+      "full_name": "BanditRLProof.LowerBounds.gaussian_integral_split",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 253,
+      "statement": "theorem gaussian_integral_split (x : \u211d) : (\u222b t in (0 : \u211d)..x, Real.exp (-t ^ 2)) + (\u222b t in Ioi x, Real.exp (-t ^ 2)) = Real.sqrt Real.pi / 2"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMills_upper_integral",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMills_upper_integral",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 276,
+      "statement": "theorem gaussianMills_upper_integral {x : \u211d} (hx : 0 \u2264 x) : (\u222b t in Ioi x, Real.exp (-t ^ 2)) \u2264 Real.exp (-x ^ 2) / (x + Real.sqrt (x ^ 2 + 4 / Real.pi))"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianReal_zero_tail_integral",
+      "full_name": "BanditRLProof.LowerBounds.gaussianReal_zero_tail_integral",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 288,
+      "statement": "theorem gaussianReal_zero_tail_integral (v : \u211d\u22650) (hv : 0 < v) (a : \u211d) : (gaussianReal 0 v).real (Ici a) = (Real.sqrt (2 * Real.pi * (v : \u211d)))\u207b\u00b9 * \u222b t in Ioi a, Real.exp (-t ^ 2 / (2 * (v : \u211d)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianReal_half_tail_integral",
+      "full_name": "BanditRLProof.LowerBounds.gaussianReal_half_tail_integral",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 299,
+      "statement": "theorem gaussianReal_half_tail_integral (a : \u211d) : (gaussianReal 0 (1 / 2 : \u211d\u22650)).real (Ici a) = (\u222b t in Ioi a, Real.exp (-t ^ 2)) / Real.sqrt Real.pi"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianReal_half_mills_bounds",
+      "full_name": "BanditRLProof.LowerBounds.gaussianReal_half_mills_bounds",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 307,
+      "statement": "theorem gaussianReal_half_mills_bounds {a : \u211d} (ha : 0 \u2264 a) : Real.exp (-a ^ 2) / (a + Real.sqrt (a ^ 2 + 2)) / Real.sqrt Real.pi \u2264 (gaussianReal 0 (1 / 2 : \u211d\u22650)).real (Ici a) \u2227 (gaussianReal 0 (1 / 2 : \u211d\u22650)).real (Ici a) \u2264 Real.exp (-a ^ 2) / (a + Real.sqrt (a ^ 2 + 4 / Real.pi)) / Real.sqrt Real.pi"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianReal_zero_standardized_tail",
+      "full_name": "BanditRLProof.LowerBounds.gaussianReal_zero_standardized_tail",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 316,
+      "statement": "theorem gaussianReal_zero_standardized_tail (v : \u211d\u22650) (hv : 0 < v) (a : \u211d) : (gaussianReal 0 v).real (Ici a) = (\u222b t in Ioi (a / Real.sqrt (2 * (v : \u211d))), Real.exp (-t ^ 2)) / Real.sqrt Real.pi"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianReal_zero_mills_bounds",
+      "full_name": "BanditRLProof.LowerBounds.gaussianReal_zero_mills_bounds",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 342,
+      "statement": "theorem gaussianReal_zero_mills_bounds (v : \u211d\u22650) (hv : 0 < v) (a : \u211d) (ha : 0 \u2264 a) : let z := a / Real.sqrt (2 * (v : \u211d)) Real.exp (-z ^ 2) / (z + Real.sqrt (z ^ 2 + 2)) / Real.sqrt Real.pi \u2264 (gaussianReal 0 v).real (Ici a) \u2227 (gaussianReal 0 v).real (Ici a) \u2264 Real.exp (-z ^ 2) / (z + Real.sqrt (z ^ 2 + 4 / Real.pi)) / Real.sqrt Real.pi"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMills_expression_rescale",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMills_expression_rescale",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 356,
+      "statement": "theorem gaussianMills_expression_rescale {z c q : \u211d} (hz : 0 \u2264 z) (hc : 0 < c) (hq : q = 8 * z ^ 2) : Real.exp (-z ^ 2) / (z + Real.sqrt (z ^ 2 + c)) / Real.sqrt Real.pi = Real.sqrt (8 / Real.pi) * Real.exp (-q / 8) / (Real.sqrt q + Real.sqrt (q + 8 * c))"
     },
     {
       "kind": "def",

@@ -954,9 +954,9 @@
       "math": "\u005cmax_{\u005cmu\u005cin\u005c{0,\u005cDelta\u005c}}\u005cmathbb P_{\u005cmathcal N(\u005cmu,1/n)}(\u005chat\u005cmu\u005cneq\u005cmu)\u005cle\u005cexp(-n\u005cDelta^2/8).",
       "intuition": "A larger sample size or a wider separation makes the two Gaussian hypotheses exponentially easier to distinguish.",
       "why": "It adds a real two-hypothesis probability theorem for the opening of Section 13.1 while leaving the sharper source display auditable.",
-      "position": "This is a symmetric Chernoff companion. It is not the exact two-sided Mills-ratio Eq. (13.1) and does not replace that blocked source node.",
+      "position": "This is a symmetric Chernoff companion, distinct from the separately compiled exact two-sided Mills-ratio Eq. (13.1).",
       "proof_idea": "Identify both midpoint error events, derive centered Gaussian sub-Gaussianity from Mathlib's exact MGF, reflect the positive-mean lower tail, apply one-sided Chernoff on each side, and take their maximum.",
-      "lean_notes": "The module proves that the arithmetic-mean pushforward of the canonical finite iid N(mu,1) product is N(mu,1/n). The exact Eq. (13.1) constants remain a separate obligation.",
+      "lean_notes": "The module proves the canonical iid Gaussian empirical-mean law and, using GaussianMillsRatio, the exact Eq. (13.1) constants in gaussianSampleMeanZeroErrorProbability_source_bounds.",
       "dependencies": [
         "BanditRLProof.LowerBounds.gaussianIIDSampleMeanLaw",
         "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision_zero_error_event",
