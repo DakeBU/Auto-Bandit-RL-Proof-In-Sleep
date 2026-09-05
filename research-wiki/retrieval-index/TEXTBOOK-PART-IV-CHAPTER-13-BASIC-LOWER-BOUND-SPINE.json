@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
-  "generated": "2026-09-05T05:27:27+00:00",
+  "generated": "2026-09-05T05:32:04+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -32513,7 +32513,7 @@
       "name": "centeredIndex",
       "full_name": "BanditRLProof.MOSS.centeredIndex",
       "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
-      "line": 10,
+      "line": 11,
       "statement": "def centeredIndex (X : ℕ → Ω → ℝ) (δ : ℝ) (s : ℕ) (ω : Ω) : ℝ"
     },
     {
@@ -32521,7 +32521,7 @@
       "name": "optimismDeficit",
       "full_name": "BanditRLProof.MOSS.optimismDeficit",
       "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
-      "line": 14,
+      "line": 15,
       "statement": "def optimismDeficit (X : ℕ → Ω → ℝ) (δ : ℝ) : ℕ → Ω → ℝ | 0, _ => 0 | n+1, ω => max (optimismDeficit X δ n ω) (-centeredIndex X δ (n+1) ω)"
     },
     {
@@ -32529,7 +32529,7 @@
       "name": "optimismDeficit_nonneg",
       "full_name": "BanditRLProof.MOSS.optimismDeficit_nonneg",
       "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
-      "line": 18,
+      "line": 19,
       "statement": "theorem optimismDeficit_nonneg (X : ℕ → Ω → ℝ) (δ : ℝ) (n : ℕ) (ω : Ω) : 0 ≤ optimismDeficit X δ n ω"
     },
     {
@@ -32537,7 +32537,7 @@
       "name": "le_optimismDeficit_iff",
       "full_name": "BanditRLProof.MOSS.le_optimismDeficit_iff",
       "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
-      "line": 24,
+      "line": 25,
       "statement": "theorem le_optimismDeficit_iff (X : ℕ → Ω → ℝ) (δ gap : ℝ) (hg : 0 < gap) (n : ℕ) (ω : Ω) : gap ≤ optimismDeficit X δ n ω ↔ ∃ s : ℕ, 0 < s ∧ s ≤ n ∧ centeredIndex X δ s ω + gap ≤ 0"
     },
     {
@@ -32545,7 +32545,7 @@
       "name": "stronglyMeasurable_centeredIndex",
       "full_name": "BanditRLProof.MOSS.stronglyMeasurable_centeredIndex",
       "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
-      "line": 42,
+      "line": 43,
       "statement": "theorem stronglyMeasurable_centeredIndex (X : ℕ → Ω → ℝ) (hX : ∀ i, StronglyMeasurable (X i)) (δ : ℝ) (s : ℕ) : StronglyMeasurable (centeredIndex X δ s)"
     },
     {
@@ -32553,7 +32553,7 @@
       "name": "integrable_centeredIndex",
       "full_name": "BanditRLProof.MOSS.integrable_centeredIndex",
       "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
-      "line": 52,
+      "line": 53,
       "statement": "theorem integrable_centeredIndex [IsFiniteMeasure μ] (X : ℕ → Ω → ℝ) (hX : ∀ i, Integrable (X i) μ) (δ : ℝ) (s : ℕ) : Integrable (centeredIndex X δ s) μ"
     },
     {
@@ -32561,7 +32561,7 @@
       "name": "stronglyMeasurable_optimismDeficit",
       "full_name": "BanditRLProof.MOSS.stronglyMeasurable_optimismDeficit",
       "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
-      "line": 59,
+      "line": 60,
       "statement": "theorem stronglyMeasurable_optimismDeficit (X : ℕ → Ω → ℝ) (hX : ∀ i, StronglyMeasurable (X i)) (δ : ℝ) (n : ℕ) : StronglyMeasurable (optimismDeficit X δ n)"
     },
     {
@@ -32569,7 +32569,7 @@
       "name": "integrable_optimismDeficit",
       "full_name": "BanditRLProof.MOSS.integrable_optimismDeficit",
       "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
-      "line": 66,
+      "line": 67,
       "statement": "theorem integrable_optimismDeficit [IsFiniteMeasure μ] (X : ℕ → Ω → ℝ) (hX : ∀ i, Integrable (X i) μ) (δ : ℝ) (n : ℕ) : Integrable (optimismDeficit X δ n) μ"
     },
     {
@@ -32577,7 +32577,7 @@
       "name": "measure_optimismDeficit_ge_le",
       "full_name": "BanditRLProof.MOSS.measure_optimismDeficit_ge_le",
       "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
-      "line": 73,
+      "line": 74,
       "statement": "theorem measure_optimismDeficit_ge_le [IsProbabilityMeasure μ] (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (n : ℕ) : μ {ω | gap ≤ optimismDeficit X δ n ω} ≤ ENNReal.ofReal (15*δ/gap^2)"
     },
     {
@@ -32585,8 +32585,24 @@
       "name": "integral_optimismDeficit_eq_integral_tail",
       "full_name": "BanditRLProof.MOSS.integral_optimismDeficit_eq_integral_tail",
       "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
-      "line": 87,
+      "line": 88,
       "statement": "theorem integral_optimismDeficit_eq_integral_tail [IsProbabilityMeasure μ] (X : ℕ → Ω → ℝ) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (δ : ℝ) (n : ℕ) : ∫ ω, optimismDeficit X δ n ω ∂μ = ∫ gap in Set.Ioi 0, μ.real {ω | gap ≤ optimismDeficit X δ n ω}"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_optimismDeficit_le_two_sqrt",
+      "full_name": "BanditRLProof.MOSS.integral_optimismDeficit_le_two_sqrt",
+      "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+      "line": 97,
+      "statement": "theorem integral_optimismDeficit_le_two_sqrt [IsProbabilityMeasure μ] (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (δ : ℝ) (hδ : 0 < δ) (n : ℕ) : ∫ ω, optimismDeficit X δ n ω ∂μ ≤ 2*sqrt (15*δ)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twice_horizon_mul_integral_optimismDeficit_le",
+      "full_name": "BanditRLProof.MOSS.twice_horizon_mul_integral_optimismDeficit_le",
+      "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+      "line": 115,
+      "statement": "theorem twice_horizon_mul_integral_optimismDeficit_le [IsProbabilityMeasure μ] (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (n k : ℕ) (hn : 0 < n) (hk : 0 < k) : 2*(n : ℝ)*(∫ ω, optimismDeficit X ((k : ℝ)/n) n ω ∂μ) ≤ 16*sqrt ((n : ℝ)*k)"
     },
     {
       "kind": "theorem",
@@ -43651,6 +43667,14 @@
       "file": "BanditRLProof/ConcentrationSubGaussian.lean",
       "line": 1227,
       "statement": "theorem condSubGaussian_indicator_sum_abs_tail_predictableVariance_delta {Omega : Type u} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] {mu : Measure Omega} [IsProbabilityMeasure mu] (F : Filtration Nat mOmega) (X : Nat -> Omega -> Real) (c : Nat -> NNReal) (s : Nat -> Set Omega) (hY : StronglyAdapted F (fun t omega => match t with | 0 => 0 | i + 1 => (s i).indicator (X i) omega)) (hV : StronglyAdapted F (fun t omega => match t with | 0 => 0 | i + 1 => (s i).indicator (fun _ => (((c i : NNReal) : Real))) omega)) (hs : forall i, @MeasurableSet Omega (F i) (s i)) (n : Nat) (h_subG : forall i, i < n - 1 -> ProbabilityTheory.HasCondSubgaussianMGF (F i) (F.le i) (X i) (c i) mu) (varianceBudget delta : Real) (hvarianceBudget : 0 < varianceBudget) (hdelta : 0 < delta) : mu {omega | subGaussianPredictableVarianceRadius varianceBudget delta <= |(Finset.range n).sum (fun t => match t with | 0 => 0 | i + 1 => (s i).indicator (X i) omega)| ∧ (Finset.range n).sum (fun t => match t with | 0 => 0 | i + 1 => (s i).indicator (fun _ => (((c i : NNReal) : Real))) omega) <= varianceBudget} <= ENNReal.ofReal delta"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_positive_tail_le_two_sqrt",
+      "full_name": "BanditRLProof.Concentration.integral_positive_tail_le_two_sqrt",
+      "file": "BanditRLProof/ConcentrationTailIntegration.lean",
+      "line": 9,
+      "statement": "theorem integral_positive_tail_le_two_sqrt (f : ℝ → ℝ) (hf : Measurable f) (hn : ∀ t, 0 ≤ f t) (h1 : ∀ t, f t ≤ 1) (c : ℝ) (hc : 0 < c) (ht : ∀ t, 0 < t → f t ≤ c/t^2) : ∫ t in Ioi 0, f t ≤ 2*sqrt c"
     },
     {
       "kind": "theorem",
@@ -94907,6 +94931,42 @@
       "target_fingerprint": "",
       "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
       "time": "2026-09-05T05:23:07+00:00",
+      "verifier_evidence": [],
+      "worker_id": ""
+    },
+    {
+      "attempt_id": "",
+      "changed_files": [],
+      "dag_depth": 0,
+      "dag_nodes": 0,
+      "elapsed_seconds": 0.0,
+      "error_signature": "",
+      "experiment_id": "",
+      "harness": "",
+      "input_tokens": 0,
+      "kind": "build",
+      "lean": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+      "lean_check_seconds": 0.0,
+      "new_declarations": [],
+      "notes": "Finite-horizon nonnegative optimism deficit, event equivalence, strong measurability, derived integrability, Lemma 9.3 tail consumer and layer-cake identity compiled. External canary 3497 jobs passed with baseline axioms. Numerical expected bound and complete MOSS regret remain pending.",
+      "obligations_after": 0,
+      "obligations_before": 0,
+      "output_tokens": 0,
+      "parent_id": "",
+      "progress_class": "compiled-leaf",
+      "prompt_chars": 0,
+      "reused_declarations": [],
+      "reviewer_validated": false,
+      "role": "lower",
+      "route_fingerprint": "",
+      "route_packet_hash": "",
+      "run_id": "",
+      "source": "",
+      "statement_hash": "",
+      "status": "compiled",
+      "target_fingerprint": "",
+      "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+      "time": "2026-09-05T05:27:30+00:00",
       "verifier_evidence": [],
       "worker_id": ""
     }

@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T05:27:20+00:00`
+Generated: `2026-09-05T05:31:58+00:00`
 
 ## Source Task
 
@@ -421,9 +421,8 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH13-TWO-ENV-ALGEBRA` | max of base and changed expressions is at least `Delta*(n-error)/2` under an explicit pull-discrepancy bound | equations (13.2)--(13.3) expressions | real ordered-field algebra, `max`, `nlinarith` | `MLIB-ORDER-ALGEBRA` | show their sum is at least `Delta*(n-error)`, then use max/average | `0 <= Delta`; visible `baseFirstPulls-changedFirstPulls <= error` bridge | project-local | `LowerBounds.baseEnvironmentRegret`, `LowerBounds.changedEnvironmentRegretLowerBound`, `LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error`; zero-error corollary `LowerBounds.max_base_changed_regretLowerBound_ge_half` | focused Lean | compiled |
 | `CH13-HISTORY-TRANSPORT` | same-policy history-law comparison supplies the cross-law event inequality | Chapter 14 information theory and Chapter 15 history KL | compiled Gaussian/history APIs | local declarations; weapon card inspiration only | likelihood ratio, KL chain rule, direction-correct event inequality | measurability, policy consistency, exact KL direction | project-local | `LowerBounds.base_event_probability_lower_bound`, `LowerBounds.changed_complement_probability_lower_bound` | Chapter 15 | compiled |
 
-<!-- 1151 characters omitted from the middle of this snapshot. -->
+<!-- 1560 characters omitted from the middle of this snapshot. -->
 
-| `CH13-TYPED-CANARY` | external root-import applications and a three-arm numeric witness | compiled Chapter 13 declarations | root `BanditRLProof` import | local declaration index | exact full-conclusion examples plus `#print axioms` | nonempty policy/environment subsets; nonnegative vector summing to horizon | project-local | `Tests/TextbookPartIVChapter13Canary.lean` | dedicated/root Tests | verified |
 | `CH13-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | Windows long-path workaround must not be mistaken for a Lean proof failure | repository | n/a | `python3 tools/bandit.py check` | baseline verified; exact-bound extension pending |
 | `CH13-EVIDENCE-SITE` | proof export, indexes, readings/highlights/results/implementation map/README and Part IV site agree | local full gate | harness and website scripts | repository | generated evidence plus maintained source data | only gate-passing declarations marked compiled | repository | n/a | lean-verified build/site check/browser review | baseline verified; exact-bound extension pending |
 | `CH13-REVIEW` | structured in-branch source/theorem/Lean/evidence consistency audit | all local artifacts | source, declarations, generated site | all above | check source inventory, quantifiers, probability-law direction, regularity, status labels, and order claims | no unresolved P0--P3; website-status-enum P3 corrected | repository | n/a | review | baseline verified; exact-bound extension pending |
@@ -453,8 +452,16 @@ in the dated integration review. New MOSS additions require a fresh gate.
   They implement the no-cardinality-loss source Theorem 9.2 route, with
   explicit independent centered subgaussian coordinate assumptions.
   Dedicated external canary passes (3473-job build, baseline axioms only);
-  fresh full integration remains pending.
-  Source Lemma 9.3 is now the next missing concentration node.
+  full integration at `50ea833` passed root, Tests (8904 jobs),
+  ProofGraphExport and 400 Python tests (7 skipped, 203.163 seconds).
+- `measure_meanBadEvent_le_fifteen` now proves source Lemma 9.3 for
+  independent centered strongly measurable unit-subgaussian coordinates.
+- `integral_optimismDeficit_le_two_sqrt` derives the numerical expected
+  deficit bound from the tail, with integrability proved from MGF contracts.
+  `twice_horizon_mul_integral_optimismDeficit_le` gives the printed
+  16*sqrt(n*k) contribution. These later expectation additions require
+  fresh full integration. Large-gap occupancy (Lemma 8.2 route), actual
+  arm-stream instantiation, and concrete regret assembly remain open.
 
 - `MOSS.logPlus`, `radius`, `index`, `action`: exact source index and
   zero-based initialization; `radius_sq` retains the factor four.
@@ -469,7 +476,7 @@ in the dated integration review. New MOSS additions require a fresh gate.
 - Both policy modules pass focused build (2951 jobs); typed canary passes
   with baseline axioms only. Full integration at `1eb5af0` passed: root 8856
   jobs, Tests 8899 jobs, ProofGraphExport and 400 Python tests (7 skipped).
-  Lemma 9.3, actual reward-stream instantiation, and regret
+  Actual reward-stream instantiation, large-gap occupancy, and regret
   assembly remain open. Do not promote this policy constructor to the
   MOSS upper theorem.
 
@@ -33602,7 +33609,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "centeredIndex",
     "full_name": "BanditRLProof.MOSS.centeredIndex",
     "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
-    "line": 10,
+    "line": 11,
     "statement": "def centeredIndex (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03b4 : \u211d) (s : \u2115) (\u03c9 : \u03a9) : \u211d"
   },
   {
@@ -33610,7 +33617,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "optimismDeficit",
     "full_name": "BanditRLProof.MOSS.optimismDeficit",
     "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
-    "line": 14,
+    "line": 15,
     "statement": "def optimismDeficit (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03b4 : \u211d) : \u2115 \u2192 \u03a9 \u2192 \u211d | 0, _ => 0 | n+1, \u03c9 => max (optimismDeficit X \u03b4 n \u03c9) (-centeredIndex X \u03b4 (n+1) \u03c9)"
   },
   {
@@ -33618,7 +33625,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "optimismDeficit_nonneg",
     "full_name": "BanditRLProof.MOSS.optimismDeficit_nonneg",
     "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
-    "line": 18,
+    "line": 19,
     "statement": "theorem optimismDeficit_nonneg (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03b4 : \u211d) (n : \u2115) (\u03c9 : \u03a9) : 0 \u2264 optimismDeficit X \u03b4 n \u03c9"
   },
   {
@@ -33626,7 +33633,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "le_optimismDeficit_iff",
     "full_name": "BanditRLProof.MOSS.le_optimismDeficit_iff",
     "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
-    "line": 24,
+    "line": 25,
     "statement": "theorem le_optimismDeficit_iff (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03b4 gap : \u211d) (hg : 0 < gap) (n : \u2115) (\u03c9 : \u03a9) : gap \u2264 optimismDeficit X \u03b4 n \u03c9 \u2194 \u2203 s : \u2115, 0 < s \u2227 s \u2264 n \u2227 centeredIndex X \u03b4 s \u03c9 + gap \u2264 0"
   },
   {
@@ -33634,7 +33641,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "stronglyMeasurable_centeredIndex",
     "full_name": "BanditRLProof.MOSS.stronglyMeasurable_centeredIndex",
     "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
-    "line": 42,
+    "line": 43,
     "statement": "theorem stronglyMeasurable_centeredIndex (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hX : \u2200 i, StronglyMeasurable (X i)) (\u03b4 : \u211d) (s : \u2115) : StronglyMeasurable (centeredIndex X \u03b4 s)"
   },
   {
@@ -33642,7 +33649,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "integrable_centeredIndex",
     "full_name": "BanditRLProof.MOSS.integrable_centeredIndex",
     "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
-    "line": 52,
+    "line": 53,
     "statement": "theorem integrable_centeredIndex [IsFiniteMeasure \u03bc] (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hX : \u2200 i, Integrable (X i) \u03bc) (\u03b4 : \u211d) (s : \u2115) : Integrable (centeredIndex X \u03b4 s) \u03bc"
   },
   {
@@ -33650,7 +33657,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "stronglyMeasurable_optimismDeficit",
     "full_name": "BanditRLProof.MOSS.stronglyMeasurable_optimismDeficit",
     "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
-    "line": 59,
+    "line": 60,
     "statement": "theorem stronglyMeasurable_optimismDeficit (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hX : \u2200 i, StronglyMeasurable (X i)) (\u03b4 : \u211d) (n : \u2115) : StronglyMeasurable (optimismDeficit X \u03b4 n)"
   },
   {
@@ -33658,7 +33665,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "integrable_optimismDeficit",
     "full_name": "BanditRLProof.MOSS.integrable_optimismDeficit",
     "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
-    "line": 66,
+    "line": 67,
     "statement": "theorem integrable_optimismDeficit [IsFiniteMeasure \u03bc] (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hX : \u2200 i, Integrable (X i) \u03bc) (\u03b4 : \u211d) (n : \u2115) : Integrable (optimismDeficit X \u03b4 n) \u03bc"
   },
   {
@@ -33666,7 +33673,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "measure_optimismDeficit_ge_le",
     "full_name": "BanditRLProof.MOSS.measure_optimismDeficit_ge_le",
     "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
-    "line": 73,
+    "line": 74,
     "statement": "theorem measure_optimismDeficit_ge_le [IsProbabilityMeasure \u03bc] (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) (n : \u2115) : \u03bc {\u03c9 | gap \u2264 optimismDeficit X \u03b4 n \u03c9} \u2264 ENNReal.ofReal (15*\u03b4/gap^2)"
   },
   {
@@ -33674,8 +33681,24 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "integral_optimismDeficit_eq_integral_tail",
     "full_name": "BanditRLProof.MOSS.integral_optimismDeficit_eq_integral_tail",
     "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
-    "line": 87,
+    "line": 88,
     "statement": "theorem integral_optimismDeficit_eq_integral_tail [IsProbabilityMeasure \u03bc] (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (\u03b4 : \u211d) (n : \u2115) : \u222b \u03c9, optimismDeficit X \u03b4 n \u03c9 \u2202\u03bc = \u222b gap in Set.Ioi 0, \u03bc.real {\u03c9 | gap \u2264 optimismDeficit X \u03b4 n \u03c9}"
+  },
+  {
+    "kind": "theorem",
+    "name": "integral_optimismDeficit_le_two_sqrt",
+    "full_name": "BanditRLProof.MOSS.integral_optimismDeficit_le_two_sqrt",
+    "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+    "line": 97,
+    "statement": "theorem integral_optimismDeficit_le_two_sqrt [IsProbabilityMeasure \u03bc] (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (\u03b4 : \u211d) (h\u03b4 : 0 < \u03b4) (n : \u2115) : \u222b \u03c9, optimismDeficit X \u03b4 n \u03c9 \u2202\u03bc \u2264 2*sqrt (15*\u03b4)"
+  },
+  {
+    "kind": "theorem",
+    "name": "twice_horizon_mul_integral_optimismDeficit_le",
+    "full_name": "BanditRLProof.MOSS.twice_horizon_mul_integral_optimismDeficit_le",
+    "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+    "line": 115,
+    "statement": "theorem twice_horizon_mul_integral_optimismDeficit_le [IsProbabilityMeasure \u03bc] (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (n k : \u2115) (hn : 0 < n) (hk : 0 < k) : 2*(n : \u211d)*(\u222b \u03c9, optimismDeficit X ((k : \u211d)/n) n \u03c9 \u2202\u03bc) \u2264 16*sqrt ((n : \u211d)*k)"
   },
   {
     "kind": "theorem",
@@ -44740,6 +44763,14 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/ConcentrationSubGaussian.lean",
     "line": 1227,
     "statement": "theorem condSubGaussian_indicator_sum_abs_tail_predictableVariance_delta {Omega : Type u} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] {mu : Measure Omega} [IsProbabilityMeasure mu] (F : Filtration Nat mOmega) (X : Nat -> Omega -> Real) (c : Nat -> NNReal) (s : Nat -> Set Omega) (hY : StronglyAdapted F (fun t omega => match t with | 0 => 0 | i + 1 => (s i).indicator (X i) omega)) (hV : StronglyAdapted F (fun t omega => match t with | 0 => 0 | i + 1 => (s i).indicator (fun _ => (((c i : NNReal) : Real))) omega)) (hs : forall i, @MeasurableSet Omega (F i) (s i)) (n : Nat) (h_subG : forall i, i < n - 1 -> ProbabilityTheory.HasCondSubgaussianMGF (F i) (F.le i) (X i) (c i) mu) (varianceBudget delta : Real) (hvarianceBudget : 0 < varianceBudget) (hdelta : 0 < delta) : mu {omega | subGaussianPredictableVarianceRadius varianceBudget delta <= |(Finset.range n).sum (fun t => match t with | 0 => 0 | i + 1 => (s i).indicator (X i) omega)| \u2227 (Finset.range n).sum (fun t => match t with | 0 => 0 | i + 1 => (s i).indicator (fun _ => (((c i : NNReal) : Real))) omega) <= varianceBudget} <= ENNReal.ofReal delta"
+  },
+  {
+    "kind": "theorem",
+    "name": "integral_positive_tail_le_two_sqrt",
+    "full_name": "BanditRLProof.Concentration.integral_positive_tail_le_two_sqrt",
+    "file": "BanditRLProof/ConcentrationTailIntegration.lean",
+    "line": 9,
+    "statement": "theorem integral_positive_tail_le_two_sqrt (f : \u211d \u2192 \u211d) (hf : Measurable f) (hn : \u2200 t, 0 \u2264 f t) (h1 : \u2200 t, f t \u2264 1) (c : \u211d) (hc : 0 < c) (ht : \u2200 t, 0 < t \u2192 f t \u2264 c/t^2) : \u222b t in Ioi 0, f t \u2264 2*sqrt c"
   },
   {
     "kind": "theorem",
@@ -96001,6 +96032,42 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "target_fingerprint": "",
     "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
     "time": "2026-09-05T05:23:07+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "build",
+    "lean": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [],
+    "notes": "Finite-horizon nonnegative optimism deficit, event equivalence, strong measurability, derived integrability, Lemma 9.3 tail consumer and layer-cake identity compiled. External canary 3497 jobs passed with baseline axioms. Numerical expected bound and complete MOSS regret remain pending.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "compiled-leaf",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "lower",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "compiled",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T05:27:30+00:00",
     "verifier_evidence": [],
     "worker_id": ""
   }

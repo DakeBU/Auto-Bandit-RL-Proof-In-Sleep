@@ -51,8 +51,16 @@ in the dated integration review. New MOSS additions require a fresh gate.
   They implement the no-cardinality-loss source Theorem 9.2 route, with
   explicit independent centered subgaussian coordinate assumptions.
   Dedicated external canary passes (3473-job build, baseline axioms only);
-  fresh full integration remains pending.
-  Source Lemma 9.3 is now the next missing concentration node.
+  full integration at `50ea833` passed root, Tests (8904 jobs),
+  ProofGraphExport and 400 Python tests (7 skipped, 203.163 seconds).
+- `measure_meanBadEvent_le_fifteen` now proves source Lemma 9.3 for
+  independent centered strongly measurable unit-subgaussian coordinates.
+- `integral_optimismDeficit_le_two_sqrt` derives the numerical expected
+  deficit bound from the tail, with integrability proved from MGF contracts.
+  `twice_horizon_mul_integral_optimismDeficit_le` gives the printed
+  16*sqrt(n*k) contribution. These later expectation additions require
+  fresh full integration. Large-gap occupancy (Lemma 8.2 route), actual
+  arm-stream instantiation, and concrete regret assembly remain open.
 
 - `MOSS.logPlus`, `radius`, `index`, `action`: exact source index and
   zero-based initialization; `radius_sq` retains the factor four.
@@ -67,7 +75,7 @@ in the dated integration review. New MOSS additions require a fresh gate.
 - Both policy modules pass focused build (2951 jobs); typed canary passes
   with baseline axioms only. Full integration at `1eb5af0` passed: root 8856
   jobs, Tests 8899 jobs, ProofGraphExport and 400 Python tests (7 skipped).
-  Lemma 9.3, actual reward-stream instantiation, and regret
+  Actual reward-stream instantiation, large-gap occupancy, and regret
   assembly remain open. Do not promote this policy constructor to the
   MOSS upper theorem.
 

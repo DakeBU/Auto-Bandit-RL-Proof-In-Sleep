@@ -29,3 +29,14 @@ example {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasur
 #print axioms MOSS.integrable_optimismDeficit
 #print axioms MOSS.measure_optimismDeficit_ge_le
 #print axioms MOSS.integral_optimismDeficit_eq_integral_tail
+
+example {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ)
+    (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ)
+    (δ : ℝ) (hδ : 0 < δ) (n : ℕ) :
+    ∫ ω, MOSS.optimismDeficit X δ n ω ∂μ ≤ 2*sqrt (15*δ) :=
+  MOSS.integral_optimismDeficit_le_two_sqrt X hXm hind hmean hsubG δ hδ n
+
+#print axioms Concentration.integral_positive_tail_le_two_sqrt
+#print axioms MOSS.integral_optimismDeficit_le_two_sqrt
+#print axioms MOSS.twice_horizon_mul_integral_optimismDeficit_le

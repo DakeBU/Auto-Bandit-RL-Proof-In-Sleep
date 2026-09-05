@@ -1,5 +1,6 @@
 import BanditRLProof.Algorithms.MOSSPeeling
 import Mathlib.MeasureTheory.Integral.Layercake
+import BanditRLProof.ConcentrationTailIntegration
 
 noncomputable section
 open MeasureTheory ProbabilityTheory Real Finset
@@ -91,5 +92,46 @@ theorem integral_optimismDeficit_eq_integral_tail [IsProbabilityMeasure μ]
       ∫ gap in Set.Ioi 0, μ.real {ω | gap ≤ optimismDeficit X δ n ω} :=
   (integrable_optimismDeficit X (fun i => (hsubG i).integrable) δ n).integral_eq_integral_meas_le
     (Filter.Eventually.of_forall (optimismDeficit_nonneg X δ n))
+
+/-- Source expected optimism-deficit bound, derived from the uniform tail. -/
+theorem integral_optimismDeficit_le_two_sqrt [IsProbabilityMeasure μ]
+    (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i))
+    (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0)
+    (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ)
+    (δ : ℝ) (hδ : 0 < δ) (n : ℕ) :
+    ∫ ω, optimismDeficit X δ n ω ∂μ ≤ 2*sqrt (15*δ) := by
+  rw [integral_optimismDeficit_eq_integral_tail X hsubG δ n]
+  have hm : Antitone (fun gap => μ.real {ω | gap ≤ optimismDeficit X δ n ω}) := by
+    intro a b hab
+    exact measureReal_mono (fun ω hω => hab.trans hω)
+  apply Concentration.integral_positive_tail_le_two_sqrt _ hm.measurable
+    (fun _ => measureReal_nonneg) (fun _ => measureReal_le_one) (15*δ) (by positivity)
+  intro gap hg
+  have h := ENNReal.toReal_mono ENNReal.ofReal_ne_top
+    (measure_optimismDeficit_ge_le X hXm hind hmean hsubG δ gap hδ hg n)
+  simpa only [ENNReal.toReal_ofReal (by positivity : 0 ≤ 15*δ/gap^2)] using h
+
+/-- The printed 16*sqrt(n*k) optimism contribution in Theorem 9.1. -/
+theorem twice_horizon_mul_integral_optimismDeficit_le [IsProbabilityMeasure μ]
+    (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i))
+    (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0)
+    (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ)
+    (n k : ℕ) (hn : 0 < n) (hk : 0 < k) :
+    2*(n : ℝ)*(∫ ω, optimismDeficit X ((k : ℝ)/n) n ω ∂μ) ≤
+      16*sqrt ((n : ℝ)*k) := by
+  have hnR : 0 < (n : ℝ) := Nat.cast_pos.mpr hn
+  have hkR : 0 < (k : ℝ) := Nat.cast_pos.mpr hk
+  have h := mul_le_mul_of_nonneg_left
+    (integral_optimismDeficit_le_two_sqrt X hXm hind hmean hsubG
+      ((k : ℝ)/n) (div_pos hkR hnR) n) (by positivity : 0 ≤ 2*(n : ℝ))
+  have heq : (n : ℝ)*sqrt (15*((k : ℝ)/n)) = sqrt 15*sqrt ((n : ℝ)*k) := by
+    calc
+      _ = sqrt ((n : ℝ)^2)*sqrt (15*((k : ℝ)/n)) := by rw [sqrt_sq hnR.le]
+      _ = sqrt ((n : ℝ)^2*(15*((k : ℝ)/n))) := (sqrt_mul (sq_nonneg _) _).symm
+      _ = sqrt (15*((n : ℝ)*k)) := by congr 1; field_simp
+      _ = _ := sqrt_mul (by norm_num) _
+  have h15 : sqrt (15 : ℝ) ≤ 4 := (sqrt_le_iff).mpr ⟨by norm_num, by norm_num⟩
+  nlinarith [sqrt_nonneg ((n : ℝ)*k),
+    mul_le_mul_of_nonneg_right h15 (sqrt_nonneg ((n : ℝ)*k))]
 
 end BanditRLProof.MOSS

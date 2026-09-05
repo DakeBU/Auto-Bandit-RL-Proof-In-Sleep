@@ -65,7 +65,9 @@ the compiled Lemma 9.3 supplies its tail. APIs: `StronglyMeasurable.finset_sum`,
 `Integrable.finset_sum`, division by constants, addition, negation and max.
 Cards: `MLIB-MEASURE-INTEGRAL`, `MLIB-FINSET-SUMS`; textbook source unchanged.
 Search for optimism found unrelated RL optimism leaves, not this deficit.
-The subsequent tail integration target is 2*sqrt(15*delta); it is not yet proved.
+The subsequent tail integration target 2*sqrt(15*delta) is now compiled
+as `integral_optimismDeficit_le_two_sqrt`. Its source substitution gives
+the printed 16*sqrt(n*k) optimism contribution. Full MOSS regret is pending.
 
 Status: `Algorithms/MOSSOptimism.lean` compiles (3496 focused build jobs).
 The finite maximum, positive-threshold event equivalence, strong measurability,
@@ -77,3 +79,10 @@ finite sums of functions with pointwise finite sums; the route is unchanged.
 Next analytic APIs: `integral_Ioi_rpow_of_lt` and
 `integrableOn_Ioi_rpow_of_lt` at exponent -2, finite interval constant integral,
 and splitting the positive half-line at sqrt(15*delta).
+
+The compiled numerical integration leaf takes a measurable nonnegative tail
+function bounded by 1 and c/t^2 for t>0, c>0. Split at a=sqrt(c).
+Derive integrability separately on (0,a] by domination by 1 and on (a,infinity)
+by c*t^(-2); join the two sets, integrate, and use a+c/a=2*sqrt(c).
+The generic analytic leaf is a mathlib-candidate; the MOSS wrapper supplies
+measurability by antitonicity of event probabilities and the compiled tail.
