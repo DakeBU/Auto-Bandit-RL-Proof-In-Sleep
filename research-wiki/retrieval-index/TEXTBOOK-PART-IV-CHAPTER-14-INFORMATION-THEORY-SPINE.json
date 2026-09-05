@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE",
-  "generated": "2026-09-05T06:06:52+00:00",
+  "generated": "2026-09-05T06:09:58+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -58931,6 +58931,54 @@
       "file": "BanditRLProof/LowerBounds/PrefixCodeExchange.lean",
       "line": 97,
       "statement": "theorem singletonPrefixCode_optimal {α : Type*} [Fintype α] [Subsingleton α] (p : α → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) : IsOptimalPrefixCode p (singletonPrefixCode α)"
+    },
+    {
+      "kind": "theorem",
+      "name": "deepest_parent_incomparable",
+      "full_name": "BanditRLProof.LowerBounds.deepest_parent_incomparable",
+      "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+      "line": 6,
+      "statement": "theorem deepest_parent_incomparable {α : Type*} (code : BinaryPrefixCode α) (a : α) (w : List Bool) (b : Bool) (ha : code.encode a = w ++ [b]) (hmax : ∀ i, (code.encode i).length ≤ (code.encode a).length) (hmissing : ∀ i, code.encode i ≠ w ++ [!b]) : ∀ i, i ≠ a → (¬ code.encode i <+: w) ∧ (¬ w <+: code.encode i)"
+    },
+    {
+      "kind": "def",
+      "name": "BinaryPrefixCode.replaceWord",
+      "full_name": "BanditRLProof.LowerBounds.BinaryPrefixCode.replaceWord",
+      "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+      "line": 38,
+      "statement": "def BinaryPrefixCode.replaceWord {α : Type*} [DecidableEq α] (code : BinaryPrefixCode α) (a : α) (w : List Bool) (hw : w ≠ []) (hsep : ∀ i, i ≠ a → (¬ code.encode i <+: w) ∧ (¬ w <+: code.encode i)) : BinaryPrefixCode α"
+    },
+    {
+      "kind": "def",
+      "name": "BinaryPrefixCode.pruneDeepest",
+      "full_name": "BanditRLProof.LowerBounds.BinaryPrefixCode.pruneDeepest",
+      "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+      "line": 58,
+      "statement": "def BinaryPrefixCode.pruneDeepest {α : Type*} [DecidableEq α] (code : BinaryPrefixCode α) (a : α) (w : List Bool) (b : Bool) (hw : w ≠ []) (ha : code.encode a = w ++ [b]) (hmax : ∀ i, (code.encode i).length ≤ (code.encode a).length) (hmissing : ∀ i, code.encode i ≠ w ++ [!b]) : BinaryPrefixCode α"
+    },
+    {
+      "kind": "theorem",
+      "name": "expectedCodeLength_replaceWord",
+      "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_replaceWord",
+      "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+      "line": 65,
+      "statement": "theorem expectedCodeLength_replaceWord {α : Type*} [Fintype α] [DecidableEq α] (p : α → ℝ) (code : BinaryPrefixCode α) (a : α) (w : List Bool) (hw : w ≠ []) (hsep : ∀ i, i ≠ a → (¬ code.encode i <+: w) ∧ (¬ w <+: code.encode i)) : expectedCodeLength p (code.replaceWord a w hw hsep) = expectedCodeLength p code + p a * (w.length - (code.encode a).length : ℝ)"
+    },
+    {
+      "kind": "theorem",
+      "name": "expectedCodeLength_pruneDeepest",
+      "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_pruneDeepest",
+      "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+      "line": 82,
+      "statement": "theorem expectedCodeLength_pruneDeepest {α : Type*} [Fintype α] [DecidableEq α] (p : α → ℝ) (code : BinaryPrefixCode α) (a : α) (w : List Bool) (b : Bool) (hw : w ≠ []) (ha : code.encode a = w ++ [b]) (hmax : ∀ i, (code.encode i).length ≤ (code.encode a).length) (hmissing : ∀ i, code.encode i ≠ w ++ [!b]) : expectedCodeLength p (code.pruneDeepest a w b hw ha hmax hmissing) = expectedCodeLength p code - p a"
+    },
+    {
+      "kind": "theorem",
+      "name": "expectedCodeLength_pruneDeepest_le",
+      "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_pruneDeepest_le",
+      "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+      "line": 95,
+      "statement": "theorem expectedCodeLength_pruneDeepest_le {α : Type*} [Fintype α] [DecidableEq α] (p : α → ℝ) (code : BinaryPrefixCode α) (a : α) (w : List Bool) (b : Bool) (hp : 0 ≤ p a) (hw : w ≠ []) (ha : code.encode a = w ++ [b]) (hmax : ∀ i, (code.encode i).length ≤ (code.encode a).length) (hmissing : ∀ i, code.encode i ≠ w ++ [!b]) : expectedCodeLength p (code.pruneDeepest a w b hw ha hmax hmissing) ≤ expectedCodeLength p code"
     },
     {
       "kind": "theorem",

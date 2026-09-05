@@ -61,3 +61,21 @@ one-bit root code supplies the exceptional two-symbol base without an empty
 codeword. Exchange and sibling modules/canaries are now registered with the
 root/Tests target for the next full gate; the general least-weight-sibling
 normalization and Huffman induction remain open.
+
+Deepest-leaf normalization route: write a maximum-length word as parent++[b].
+If the other child parent++[!b] is absent, no other codeword can extend the
+parent: maximality bounds the remaining suffix to length at most one, and
+the only two children are either the original leaf or its absent sibling.
+Nor can any other word prefix the parent, since it would prefix the original
+leaf. Thus replacing the deepest word by its nonempty parent preserves
+prefix freedom and reduces expected length by its nonnegative weight.
+Root/singleton exceptions stay explicit. This is preparation for normalizing
+an arbitrary competitor, not an assumption that an optimum already exists.
+
+The deepest-parent incomparability, legal word replacement/pruning, exact
+cost decrement p(a), and nonincreasing-cost result now focused-build
+(2,676 jobs). Zero weights are explicitly permitted; no strict probability
+premise is used. Parent nonemptiness and longest-word/absent-sibling
+conditions remain explicit. The next termination measure is total natural
+codeword length, so zero-cost pruning still makes structural progress.
+The current full gate at 7b8e73f does not include this new pruning module.

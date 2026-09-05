@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T06:06:57+00:00`
+Generated: `2026-09-05T06:10:06+00:00`
 
 ## Source Task
 
@@ -59934,6 +59934,54 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/PrefixCodeExchange.lean",
     "line": 97,
     "statement": "theorem singletonPrefixCode_optimal {\u03b1 : Type*} [Fintype \u03b1] [Subsingleton \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) : IsOptimalPrefixCode p (singletonPrefixCode \u03b1)"
+  },
+  {
+    "kind": "theorem",
+    "name": "deepest_parent_incomparable",
+    "full_name": "BanditRLProof.LowerBounds.deepest_parent_incomparable",
+    "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+    "line": 6,
+    "statement": "theorem deepest_parent_incomparable {\u03b1 : Type*} (code : BinaryPrefixCode \u03b1) (a : \u03b1) (w : List Bool) (b : Bool) (ha : code.encode a = w ++ [b]) (hmax : \u2200 i, (code.encode i).length \u2264 (code.encode a).length) (hmissing : \u2200 i, code.encode i \u2260 w ++ [!b]) : \u2200 i, i \u2260 a \u2192 (\u00ac code.encode i <+: w) \u2227 (\u00ac w <+: code.encode i)"
+  },
+  {
+    "kind": "def",
+    "name": "BinaryPrefixCode.replaceWord",
+    "full_name": "BanditRLProof.LowerBounds.BinaryPrefixCode.replaceWord",
+    "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+    "line": 38,
+    "statement": "def BinaryPrefixCode.replaceWord {\u03b1 : Type*} [DecidableEq \u03b1] (code : BinaryPrefixCode \u03b1) (a : \u03b1) (w : List Bool) (hw : w \u2260 []) (hsep : \u2200 i, i \u2260 a \u2192 (\u00ac code.encode i <+: w) \u2227 (\u00ac w <+: code.encode i)) : BinaryPrefixCode \u03b1"
+  },
+  {
+    "kind": "def",
+    "name": "BinaryPrefixCode.pruneDeepest",
+    "full_name": "BanditRLProof.LowerBounds.BinaryPrefixCode.pruneDeepest",
+    "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+    "line": 58,
+    "statement": "def BinaryPrefixCode.pruneDeepest {\u03b1 : Type*} [DecidableEq \u03b1] (code : BinaryPrefixCode \u03b1) (a : \u03b1) (w : List Bool) (b : Bool) (hw : w \u2260 []) (ha : code.encode a = w ++ [b]) (hmax : \u2200 i, (code.encode i).length \u2264 (code.encode a).length) (hmissing : \u2200 i, code.encode i \u2260 w ++ [!b]) : BinaryPrefixCode \u03b1"
+  },
+  {
+    "kind": "theorem",
+    "name": "expectedCodeLength_replaceWord",
+    "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_replaceWord",
+    "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+    "line": 65,
+    "statement": "theorem expectedCodeLength_replaceWord {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (code : BinaryPrefixCode \u03b1) (a : \u03b1) (w : List Bool) (hw : w \u2260 []) (hsep : \u2200 i, i \u2260 a \u2192 (\u00ac code.encode i <+: w) \u2227 (\u00ac w <+: code.encode i)) : expectedCodeLength p (code.replaceWord a w hw hsep) = expectedCodeLength p code + p a * (w.length - (code.encode a).length : \u211d)"
+  },
+  {
+    "kind": "theorem",
+    "name": "expectedCodeLength_pruneDeepest",
+    "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_pruneDeepest",
+    "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+    "line": 82,
+    "statement": "theorem expectedCodeLength_pruneDeepest {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (code : BinaryPrefixCode \u03b1) (a : \u03b1) (w : List Bool) (b : Bool) (hw : w \u2260 []) (ha : code.encode a = w ++ [b]) (hmax : \u2200 i, (code.encode i).length \u2264 (code.encode a).length) (hmissing : \u2200 i, code.encode i \u2260 w ++ [!b]) : expectedCodeLength p (code.pruneDeepest a w b hw ha hmax hmissing) = expectedCodeLength p code - p a"
+  },
+  {
+    "kind": "theorem",
+    "name": "expectedCodeLength_pruneDeepest_le",
+    "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_pruneDeepest_le",
+    "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+    "line": 95,
+    "statement": "theorem expectedCodeLength_pruneDeepest_le {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (code : BinaryPrefixCode \u03b1) (a : \u03b1) (w : List Bool) (b : Bool) (hp : 0 \u2264 p a) (hw : w \u2260 []) (ha : code.encode a = w ++ [b]) (hmax : \u2200 i, (code.encode i).length \u2264 (code.encode a).length) (hmissing : \u2200 i, code.encode i \u2260 w ++ [!b]) : expectedCodeLength p (code.pruneDeepest a w b hw ha hmax hmissing) \u2264 expectedCodeLength p code"
   },
   {
     "kind": "theorem",
