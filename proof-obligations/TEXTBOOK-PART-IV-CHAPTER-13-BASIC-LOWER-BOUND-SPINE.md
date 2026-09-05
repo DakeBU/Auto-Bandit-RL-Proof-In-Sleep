@@ -34,10 +34,31 @@ compile. `gaussianSampleMeanZeroErrorProbability_source_bounds` has only
 `n>0` and `Delta>0` as premises and preserves constants 16 and 32/pi.
 Focused module builds and an independent full-statement canary pass; all
 reported axioms are baseline-only. Full integration validation for commit
-`1203c63` is running in the short-path worktree. Chapter-wide website/export
-synchronization remains pending until that gate completes.
+`1203c63` passed in the short-path worktree: root 8854 jobs, Tests 8896 jobs,
+ProofGraphExport, and 400 Python tests (7 skipped), with exit code zero.
+Website/export records were synchronized at `370068b`; the clean site build
+and static check passed. Mobile visual QA remains inconclusive as recorded
+in the dated integration review. New MOSS additions require a fresh gate.
 
 ## Failure classification
+
+### MOSS dependency progress
+
+- `MOSS.logPlus`, `radius`, `index`, `action`: exact source index and
+  zero-based initialization; `radius_sq` retains the factor four.
+- `action_initial_arm` and `action_index_max`: initialization and
+  post-initialization argmax certificates.
+- `selected_index_gt_mean_add_half_gap`: deterministic Theorem 9.1 proof
+  step under a visible optimism-deficit premise, not a probabilistic bound.
+- `historyAction`, `measurable_historyAction`, `historyAlgorithm`,
+  `historyAlgorithm_policy_apply`, `historyAction_initialization`,
+  `historyAction_index_max`: concrete measurable common-interface policy,
+  with inclusive history at t feeding the next action at t+1.
+- Both modules pass focused build (2951 jobs); typed canary passes with
+  baseline axioms only. The full new integration gate is pending.
+  Theorem 9.2 / Lemma 9.3 and regret
+  assembly remain open. Do not promote this policy constructor to the
+  MOSS upper theorem.
 
 Use exactly one:
 

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T04:53:37+00:00",
+  "generated": "2026-09-05T05:03:28+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -3352,6 +3352,150 @@
       "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
       "line": 1442,
       "statement": "theorem measurable_generatedAction {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) (hreward : forall t : Nat, Measurable (fun omega : Omega => reward omega t)) (t : Nat) : Measurable (fun omega => generatedAction hK sigma2 delta margin defaultAction reward omega t)"
+    },
+    {
+      "kind": "def",
+      "name": "logPlus",
+      "full_name": "BanditRLProof.MOSS.logPlus",
+      "file": "BanditRLProof/Algorithms/MOSS.lean",
+      "line": 15,
+      "statement": "noncomputable def logPlus (x : \u211d) : \u211d"
+    },
+    {
+      "kind": "def",
+      "name": "radius",
+      "full_name": "BanditRLProof.MOSS.radius",
+      "file": "BanditRLProof/Algorithms/MOSS.lean",
+      "line": 19,
+      "statement": "noncomputable def radius (n k s : \u2115) : \u211d"
+    },
+    {
+      "kind": "def",
+      "name": "index",
+      "full_name": "BanditRLProof.MOSS.index",
+      "file": "BanditRLProof/Algorithms/MOSS.lean",
+      "line": 23,
+      "statement": "noncomputable def index {k : \u2115} (n : \u2115) (empiricalMean : Fin k \u2192 \u211d) (pulls : Fin k \u2192 \u2115) (a : Fin k) : \u211d"
+    },
+    {
+      "kind": "def",
+      "name": "action",
+      "full_name": "BanditRLProof.MOSS.action",
+      "file": "BanditRLProof/Algorithms/MOSS.lean",
+      "line": 30,
+      "statement": "noncomputable def action {k : \u2115} (hk : 0 < k) (n t : \u2115) (empiricalMean : Fin k \u2192 \u211d) (pulls : Fin k \u2192 \u2115) : Fin k"
+    },
+    {
+      "kind": "theorem",
+      "name": "logPlus_nonneg",
+      "full_name": "BanditRLProof.MOSS.logPlus_nonneg",
+      "file": "BanditRLProof/Algorithms/MOSS.lean",
+      "line": 34,
+      "statement": "theorem logPlus_nonneg (x : \u211d) : 0 \u2264 logPlus x"
+    },
+    {
+      "kind": "theorem",
+      "name": "radius_nonneg",
+      "full_name": "BanditRLProof.MOSS.radius_nonneg",
+      "file": "BanditRLProof/Algorithms/MOSS.lean",
+      "line": 37,
+      "statement": "theorem radius_nonneg (n k s : \u2115) : 0 \u2264 radius n k s"
+    },
+    {
+      "kind": "theorem",
+      "name": "radius_zero",
+      "full_name": "BanditRLProof.MOSS.radius_zero",
+      "file": "BanditRLProof/Algorithms/MOSS.lean",
+      "line": 40,
+      "statement": "@[simp] theorem radius_zero (n k : \u2115) : radius n k 0 = 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "radius_sq",
+      "full_name": "BanditRLProof.MOSS.radius_sq",
+      "file": "BanditRLProof/Algorithms/MOSS.lean",
+      "line": 44,
+      "statement": "theorem radius_sq (n k s : \u2115) : radius n k s ^ 2 = 4 / (s : \u211d) * logPlus ((n : \u211d) / ((k : \u211d) * (s : \u211d)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "action_of_lt",
+      "full_name": "BanditRLProof.MOSS.action_of_lt",
+      "file": "BanditRLProof/Algorithms/MOSS.lean",
+      "line": 51,
+      "statement": "@[simp] theorem action_of_lt {k : \u2115} (hk : 0 < k) (n t : \u2115) (empiricalMean : Fin k \u2192 \u211d) (pulls : Fin k \u2192 \u2115) (ht : t < k) : action hk n t empiricalMean pulls = \u27e8t, ht\u27e9"
+    },
+    {
+      "kind": "theorem",
+      "name": "action_initial_arm",
+      "full_name": "BanditRLProof.MOSS.action_initial_arm",
+      "file": "BanditRLProof/Algorithms/MOSS.lean",
+      "line": 57,
+      "statement": "theorem action_initial_arm {k : \u2115} (hk : 0 < k) (n : \u2115) (empiricalMean : Fin k \u2192 \u211d) (pulls : Fin k \u2192 \u2115) (a : Fin k) : action hk n a.val empiricalMean pulls = a"
+    },
+    {
+      "kind": "theorem",
+      "name": "action_index_max",
+      "full_name": "BanditRLProof.MOSS.action_index_max",
+      "file": "BanditRLProof/Algorithms/MOSS.lean",
+      "line": 62,
+      "statement": "theorem action_index_max {k : \u2115} (hk : 0 < k) (n t : \u2115) (empiricalMean : Fin k \u2192 \u211d) (pulls : Fin k \u2192 \u2115) (ht : k \u2264 t) (a : Fin k) : index n empiricalMean pulls a \u2264 index n empiricalMean pulls (action hk n t empiricalMean pulls)"
+    },
+    {
+      "kind": "theorem",
+      "name": "selected_index_gt_mean_add_half_gap",
+      "full_name": "BanditRLProof.MOSS.selected_index_gt_mean_add_half_gap",
+      "file": "BanditRLProof/Algorithms/MOSS.lean",
+      "line": 72,
+      "statement": "theorem selected_index_gt_mean_add_half_gap {k : \u2115} (hk : 0 < k) (n t : \u2115) (mean empiricalMean : Fin k \u2192 \u211d) (pulls : Fin k \u2192 \u2115) (best chosen : Fin k) (deficit : \u211d) (ht : k \u2264 t) (hselected : action hk n t empiricalMean pulls = chosen) (hoptimism : mean best - deficit \u2264 index n empiricalMean pulls best) (hgap : 2 * deficit < mean best - mean chosen) : mean chosen + (mean best - mean chosen) / 2 < index n empiricalMean pulls chosen"
+    },
+    {
+      "kind": "def",
+      "name": "historyAction",
+      "full_name": "BanditRLProof.MOSS.historyAction",
+      "file": "BanditRLProof/Algorithms/MOSSHistory.lean",
+      "line": 18,
+      "statement": "noncomputable def historyAction {k : \u2115} (hk : 0 < k) (n t : \u2115) (history : History.FinitePairHistory (Fin k) \u211d t) : Fin k"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_historyAction",
+      "full_name": "BanditRLProof.MOSS.measurable_historyAction",
+      "file": "BanditRLProof/Algorithms/MOSSHistory.lean",
+      "line": 23,
+      "statement": "theorem measurable_historyAction {k : \u2115} (hk : 0 < k) (n t : \u2115) : Measurable (historyAction hk n t)"
+    },
+    {
+      "kind": "def",
+      "name": "historyAlgorithm",
+      "full_name": "BanditRLProof.MOSS.historyAlgorithm",
+      "file": "BanditRLProof/Algorithms/MOSSHistory.lean",
+      "line": 39,
+      "statement": "noncomputable def historyAlgorithm {k : \u2115} (hk : 0 < k) (n : \u2115) : Thompson.HistoryAlgorithm (Fin k) \u211d where"
+    },
+    {
+      "kind": "theorem",
+      "name": "historyAlgorithm_policy_apply",
+      "full_name": "BanditRLProof.MOSS.historyAlgorithm_policy_apply",
+      "file": "BanditRLProof/Algorithms/MOSSHistory.lean",
+      "line": 45,
+      "statement": "@[simp] theorem historyAlgorithm_policy_apply {k : \u2115} (hk : 0 < k) (n t : \u2115) (history : History.FinitePairHistory (Fin k) \u211d t) : (historyAlgorithm hk n).policy t history = Measure.dirac (historyAction hk n t history)"
+    },
+    {
+      "kind": "theorem",
+      "name": "historyAction_initialization",
+      "full_name": "BanditRLProof.MOSS.historyAction_initialization",
+      "file": "BanditRLProof/Algorithms/MOSSHistory.lean",
+      "line": 52,
+      "statement": "theorem historyAction_initialization {k : \u2115} (hk : 0 < k) (n t : \u2115) (history : History.FinitePairHistory (Fin k) \u211d t) (ht : t + 1 < k) : historyAction hk n t history = \u27e8t + 1, ht\u27e9"
+    },
+    {
+      "kind": "theorem",
+      "name": "historyAction_index_max",
+      "full_name": "BanditRLProof.MOSS.historyAction_index_max",
+      "file": "BanditRLProof/Algorithms/MOSSHistory.lean",
+      "line": 58,
+      "statement": "theorem historyAction_index_max {k : \u2115} (hk : 0 < k) (n t : \u2115) (history : History.FinitePairHistory (Fin k) \u211d t) (ht : k \u2264 t + 1) (a : Fin k) : index n (ETC.realHistoryEmpMean t history) (ETC.realHistoryPullCount t history) a \u2264 index n (ETC.realHistoryEmpMean t history) (ETC.realHistoryPullCount t history) (historyAction hk n t history)"
     },
     {
       "kind": "def",

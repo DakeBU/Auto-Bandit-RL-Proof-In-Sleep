@@ -10,9 +10,9 @@ This is an in-branch self-review, not an independent-agent review.
   theorem requires n>0 and Delta>0; denominator constants are 16 and 32/pi.
 - Full root library build passed in `C:\abrl13-d9682b8` at `1203c63`:
   8,854 jobs. Full Tests build passed: 8,896 jobs.
-- `tools/ProofGraphExport.lean` passed. The Python unit-test stage of
-  `python tools/bandit.py check` is still running; do not report the whole
-  harness as passed until its final exit status is collected.
+- `tools/ProofGraphExport.lean` passed. The Python unit-test stage completed:
+  400 tests in 182.324 seconds, OK with 7 skips. The complete command
+  returned exit code zero and `check passed` for `1203c63`.
 - Maintained task, conversion window, proof obligations, Markdown/LaTeX
   export, textbook/Mathlib cards, theory tree, README and website records
   now distinguish compiled exact Mills bounds from the open MOSS dependency.
@@ -32,8 +32,10 @@ This is an in-branch self-review, not an independent-agent review.
   despite these measurements (devicePixelRatio=1.5). Mobile visual QA is
   inconclusive, not passed; resolve the capture/layout discrepancy before
   claiming a clean mobile preview. Temporary viewport overrides were reset.
-- Full harness Python tests, final clean-commit site rebuild, PR/remote
-  gates and deployment checks remain pending.
+- The clean-commit site rebuild at `370068b` and its static check passed.
+  PR/remote gates and deployment checks remain pending. Later MOSS source
+  additions require their own integration check; this audit certifies the
+  exact-Gaussian extension, not future Lean changes.
 - Mathematical completion still requires Algorithm 7 / Theorem 9.1's
   broader-class MOSS upper side. Its exact source target, assumptions,
   no-extra-log concentration route and next deterministic leaf are recorded

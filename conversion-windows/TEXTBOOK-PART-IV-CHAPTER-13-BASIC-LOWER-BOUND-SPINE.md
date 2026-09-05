@@ -142,6 +142,35 @@ the `Delta*n/2` statement is retained only as the zero-error corollary.
 
 ## Gaps
 
+### Active MOSS leaf (2026-09-05)
+
+Source: Algorithm 7 / Theorem 9.1, `TXT-LATTIMORE-SZEPESVARI-2020`.
+Project-local module `Algorithms/MOSS.lean` will define logPlus as
+`log(max 1 x)`, radius `sqrt(4/s * logPlus(n/(k*s)))`, the real score,
+and zero-based initialization followed by the existing `UCB.scoreArgmax`.
+The first k actions select their matching `Fin k` indices. The algebraic
+consumer assumes t>=k, an explicit best-index lower bound `muBest-deficit`,
+and gap>2*deficit; it concludes selected index>selected mean+gap/2.
+No stochastic optimism or regret bound is assumed or claimed.
+
+Retrieval: `search-memory MOSS`, `list-lean-decls confidenceScoreArgmaxAction
+--statement`; `UCB.scoreArgmax_spec` is already compiled. Cards
+`MLIB-REAL-LOG-SQRT`, `MLIB-FINTYPE-FIN`, `MLIB-ORDER-ALGEBRA` supply
+the direct log/sqrt/Fin and linear-arithmetic route. Import the existing
+UCB module; no dependency changes or generic Mathlib lemma are needed.
+The zero-pull radius is totalized by Lean real division, but the source
+interpretation requires initialized histories; do not claim this alone
+proves history consistency, measurability, peeling, or expected regret.
+
+Next history leaf: reuse `UCB.measurable_realHistoryPullCount` and
+`UCB.measurable_realHistoryEmpMean`, with the existing inclusive pair history
+at index t representing t+1 observations. The next action is therefore at
+time t+1. `ETC.realArgmaxCommit` is definitionally the same fold as
+`UCB.scoreArgmax`; its compiled coordinatewise measurability theorem supplies
+the selector gate. Natural-count radius measurability follows by composition
+with `measurable_of_countable`. Package only this concrete history selector
+and its deterministic kernel; stochastic regret remains a separate target.
+
 - [x] Prove the exact Mills-ratio integral bounds of source Eq. (13.4) and
   rescale them to both sides of Eq. (13.1).  The first executable leaf is a
   real-analysis lemma bounding `integral (fun t => exp (-t^2))` over

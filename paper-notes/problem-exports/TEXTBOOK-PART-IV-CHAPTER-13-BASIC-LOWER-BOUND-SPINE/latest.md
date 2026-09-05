@@ -85,6 +85,32 @@ arithmetic mean to exactly this law.
 
 ## Required blockers and optional boundary
 
+### MOSS source-policy layer (focused compilation)
+
+Write L(x)=log(max(1,x)) and b(n,k,s)=sqrt(4 L(n/(ks))/s).
+The new `MOSS` namespace defines `logPlus`, `radius`, `index`, `action`,
+`historyAction` and `historyAlgorithm`. At zero-based times t<k, the action
+is arm t; afterward it maximizes empiricalMean+b using the existing real
+argmax. Inclusive history at t supplies the action at t+1.
+`measurable_historyAction` composes measurable history means/counts with
+the count-indexed radius and existing measurable finite argmax; the
+deterministic kernels and initial Dirac arm form the common history policy.
+
+`radius_sq` retains the exact source factor four.
+`action_initial_arm`, `action_index_max`, `historyAction_initialization`,
+`historyAction_index_max`, and `historyAlgorithm_policy_apply` certify
+these equations. `selected_index_gt_mean_add_half_gap` proves the
+source proof step: from bestIndex >= bestMean-d and gap>2d, maximality
+implies selectedIndex > selectedMean+gap/2, by linear arithmetic.
+`logPlus_nonneg`, `radius_nonneg`, `radius_zero`, and `action_of_lt`
+cover basic and initialization branches.
+
+These modules and `Tests/MOSSCanary.lean` compile with baseline axioms only.
+The new root/Tests integration run is separate from the completed exact
+Gaussian gate. No expected-regret theorem follows yet: the probabilistic
+optimism-deficit bound, maximal inequality/peeling and occupancy integration
+remain required.
+
 - Compiled: both printed Mills-ratio bounds in Eq. (13.4) and their exact
   Eq. (13.1) rescaling. Public endpoints are
   `LowerBounds.gaussianMills_lower_integral`,

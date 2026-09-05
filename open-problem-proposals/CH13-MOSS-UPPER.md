@@ -29,9 +29,14 @@ this into sqrt(k*n). A Gaussian-subclass lower transfer alone is insufficient.
 
 ## Current Lean status and retrieval boundary
 
-As of 2026-09-05, no MOSS-named algorithm or upper endpoint was found in
-`BanditRLProof`. Existing UCB modules are candidates for policy selection,
-arm-stream laws, and regret decomposition; they are not MOSS theorems.
+The initial 2026-09-05 search found no MOSS algorithm or upper endpoint.
+The source index, initialization, argmax maximality and large-gap selection
+implication now compile in `Algorithms/MOSS.lean`. `MOSSHistory.lean` adds
+the measurable finite-history action and a concrete
+`Thompson.HistoryAlgorithm` on the same policy interface as the lower bound.
+Focused build: 2951 jobs. No MOSS expected-regret upper endpoint exists yet.
+Existing UCB arm-stream laws and regret decomposition remain retrieval
+candidates, not MOSS upper theorems.
 In particular, `ConcentrationQuadraticMaximal.lean` explicitly uses a finite
 union bound and is not the no-extra-log Doob bound needed by Theorem 9.2.
 The exact Gaussian Eq. (13.1) is separately compiled at commit `1203c63`
@@ -48,8 +53,9 @@ and distinguish probability prerequisites from algorithm/history integration.
    placeholder score as the algorithm.
 2. Prove the deterministic selection implication: if the optimal arm's index
    is at least `muStar - deficit` and the selected arm has gap greater than
-   `2*deficit`, its index exceeds its own mean plus half its gap. This is the
-   next smallest leaf; it is not an expected-regret theorem.
+   `2*deficit`, its index exceeds its own mean plus half its gap. This is now
+   compiled as `selected_index_gt_mean_add_half_gap`; it is not an
+   expected-regret theorem.
 3. Theorem 9.2: derive the finite-time maximal subgaussian partial-sum tail
    via an exponential submartingale/Doob argument, without a union-bound
    cardinality factor. Explicitly include positive variance and threshold.
@@ -64,6 +70,15 @@ and distinguish probability prerequisites from algorithm/history integration.
    upper bound to the Chapter 13 broader-class minimax consumer.
 
 ## Acceptance gate
+
+Next concentration retrieval: pinned Mathlib
+`Probability/Martingale/OptionalStopping.lean:157` provides
+`MeasureTheory.maximal_ineq` for a nonnegative submartingale, with NNReal
+threshold times the finite-sup event probability bounded by its terminal
+restricted integral. The next producer must establish the exponential
+partial-sum submartingale (or an equivalent valid no-log route) from the
+source independent subgaussian increments; do not assume that producer.
+This is an import candidate, not a newly compiled MOSS tail theorem.
 
 Typed external canaries for the concrete algorithm, maximal tail, peeling,
 and source-constant regret endpoint; root and Tests build; axiom scan;

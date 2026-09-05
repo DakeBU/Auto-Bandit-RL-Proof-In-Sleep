@@ -1,4 +1,5 @@
 import Tests.Basic
+import Tests.MOSSCanary
 import Tests.CurvatureNoiseGapGeometry
 import Tests.ConditionalRewardPartialTrajectoryGeometricAllTimeCanary
 import Tests.ConditionalRewardPartialTrajectoryTelescopingAllTimeCanary

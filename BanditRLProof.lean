@@ -1,4 +1,5 @@
 import BanditRLProof.Core
+import BanditRLProof.Algorithms.MOSSHistory
 import BanditRLProof.FiniteBanditModelInvariants
 import BanditRLProof.ScalarENNReal
 import BanditRLProof.ScalarPseudoRegret

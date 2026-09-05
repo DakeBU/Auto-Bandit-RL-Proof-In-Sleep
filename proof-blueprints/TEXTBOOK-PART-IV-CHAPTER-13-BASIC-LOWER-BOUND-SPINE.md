@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T04:53:31+00:00`
+Generated: `2026-09-05T05:03:57+00:00`
 
 ## Source Task
 
@@ -67,7 +67,7 @@ source node.
 | Eq. (13.1) | required displayed result | both explicit Mills-ratio bounds with the printed constants | compiled by `gaussianSampleMeanZeroErrorProbability_source_bounds`; final integration gate pending |
 | competition/similarity trade-off | required source mapping | narrative route to the precise two-environment nodes; no invented standalone proposition | mapped |
 | Eqs. (13.2)--(13.3), least-explored arm, one-coordinate change, `Delta` tuning, information bridge | required main text | exact identities/inequalities and the Chapter 14--15 same-policy history-law route | compiled locally or through Chapter 15 |
-| Algorithm 7 / Theorem 9.1 near-minimax claim for the broader 1-subgaussian class | required connected main-text claim | Gaussian-subclass lower transfer plus a compiled MOSS upper theorem on the stated broader class | partial; lower side compiled, MOSS upper side absent |
+| Algorithm 7 / Theorem 9.1 near-minimax claim for the broader 1-subgaussian class | required connected main-text claim | Gaussian-subclass lower transfer plus a compiled MOSS upper theorem on the stated broader class | partial; lower side and concrete measurable MOSS history policy compile, expected-regret upper side absent |
 | Section 13.2 Notes | optional enrichment | itemized mapping if attempted; never used to hide a main-text gap | optional, unformalized |
 | Section 13.3 Bibliographic Remarks / Eq. (13.4) | source support for Eq. (13.1) | Abramowitz--Stegun Mills-ratio source and exact integral leaf | both exact integral bounds compiled in `GaussianMillsRatio.lean` |
 | Section 13.4 Exercises 13.1--13.2 | optional exercises | separate exercise contracts if attempted | optional, unformalized |
@@ -122,9 +122,8 @@ LowerBounds.alternativeExpectedPullBudget_le
 LowerBounds.exists_leastExploredAlternative
 LowerBounds.baseEnvironmentRegret
 LowerBounds.changedEnvironmentRegretLowerBound
-LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error
 
-<!-- 637 characters omitted from the middle of this snapshot. -->
+<!-- 701 characters omitted from the middle of this snapshot. -->
 
 LowerBounds.hasSubgaussianMGF_gap_sub_id_gaussianReal
 LowerBounds.gaussianReal_zero_Ici_le_exp_neg_sq_div_two_variance
@@ -318,14 +317,7 @@ the `Delta*n/2` statement is retained only as the zero-error corollary.
 | explicit policy and environment classes | subtype arguments | avoids silently quantifying over a different model class | no |
 | `ENNReal` regret codomain | typed | supplies complete-lattice sup/inf without a hidden boundedness premise | no |
 
-<!-- 3190 characters omitted from the middle of this snapshot. -->
-
-| empirical mean law | `Measure.pi`, `charFun_map_sum_pi_eq_prod`, `charFun_gaussianReal`, `gaussianReal_map_div_const` | `MLIB-GAUSSIAN-REAL-TAIL`, `MLIB-PROBABILITY-INDEPENDENCE` | identify the exact finite-product sum characteristic function, then scale by `1/n` | keep `n>0` explicit and the canonical product-law interpretation visible |
-| exact Eq. (13.1) | Gaussian density/set integral; source Eq. (13.4) | new `MLIB-GAUSSIAN-MILLS-RATIO` candidate | establish the exact upper and lower Mills-ratio integral bounds, then rescale the centered unit Gaussian | do not replace the source lower bound with Chernoff |
-| alternative budget | `Fin.sum_univ_succ`, ordered-field algebra | `MLIB-FINSET-SUMS`, `MLIB-FINTYPE-FIN`, `MLIB-ORDER-ALGEBRA` | split the full finite sum into base plus alternatives | if simplification fails, expose a separate sum-splitting lemma; do not assume the desired alternative bound |
-| finite average | `Finset.exists_le_of_sum_le`, constant finite sum | same Mathlib cards | compare alternative sum to `m` copies of `n/m` | if API mismatch persists, prove by contradiction using `Finset.card_nsmul_le_sum` |
-| algebra reduction | `max`, ordered-field arithmetic, `nlinarith` | `MLIB-ORDER-ALGEBRA` | add the two expressions under an explicit upper bound on the cross-law pull discrepancy | split product monotonicity from linear half-max lemma if automation is fragile |
-| information bridge | `banditHistoryRelativeEntropy_eq_expectedPulls_sum`, `exists_gaussianMinimax_historyKL_le_half` | compiled local route; weapon card remains inspiration only | Chapter 14 testing plus Chapter 15 history KL/change-of-measure surface | preserve first-law expectation and KL direction |
+<!-- 4901 characters omitted from the middle of this snapshot. -->
 
 ## Proof DAG
 
@@ -348,6 +340,35 @@ the `Delta*n/2` statement is retained only as the zero-error corollary.
 | `CH13-REMOTE` | current Chapter 15 downstream extension PR, Actions, Pages, live page | accepted local chapter; earlier dependency-slice PR remains historical evidence only | remote workflow | repository | deployment | pending current extension |
 
 ## Gaps
+
+### Active MOSS leaf (2026-09-05)
+
+Source: Algorithm 7 / Theorem 9.1, `TXT-LATTIMORE-SZEPESVARI-2020`.
+Project-local module `Algorithms/MOSS.lean` will define logPlus as
+`log(max 1 x)`, radius `sqrt(4/s * logPlus(n/(k*s)))`, the real score,
+and zero-based initialization followed by the existing `UCB.scoreArgmax`.
+The first k actions select their matching `Fin k` indices. The algebraic
+consumer assumes t>=k, an explicit best-index lower bound `muBest-deficit`,
+and gap>2*deficit; it concludes selected index>selected mean+gap/2.
+No stochastic optimism or regret bound is assumed or claimed.
+
+Retrieval: `search-memory MOSS`, `list-lean-decls confidenceScoreArgmaxAction
+--statement`; `UCB.scoreArgmax_spec` is already compiled. Cards
+`MLIB-REAL-LOG-SQRT`, `MLIB-FINTYPE-FIN`, `MLIB-ORDER-ALGEBRA` supply
+the direct log/sqrt/Fin and linear-arithmetic route. Import the existing
+UCB module; no dependency changes or generic Mathlib lemma are needed.
+The zero-pull radius is totalized by Lean real division, but the source
+interpretation requires initialized histories; do not claim this alone
+proves history consistency, measurability, peeling, or expected regret.
+
+Next history leaf: reuse `UCB.measurable_realHistoryPullCount` and
+`UCB.measurable_realHistoryEmpMean`, with the existing inclusive pair history
+at index t representing t+1 observations. The next action is therefore at
+time t+1. `ETC.realArgmaxCommit` is definitionally the same fold as
+`UCB.scoreArgmax`; its compiled coordinatewise measurability theorem supplies
+the selector gate. Natural-count radius measurability follows by composition
+with `measurable_of_countable`. Package only this concrete history selector
+and its deterministic kernel; stochastic regret remains a separate target.
 
 - [x] Prove the exact Mills-ratio integral bounds of source Eq. (13.4) and
   rescale them to both sides of Eq. (13.1).  The first executable leaf is a
@@ -407,10 +428,31 @@ compile. `gaussianSampleMeanZeroErrorProbability_source_bounds` has only
 `n>0` and `Delta>0` as premises and preserves constants 16 and 32/pi.
 Focused module builds and an independent full-statement canary pass; all
 reported axioms are baseline-only. Full integration validation for commit
-`1203c63` is running in the short-path worktree. Chapter-wide website/export
-synchronization remains pending until that gate completes.
+`1203c63` passed in the short-path worktree: root 8854 jobs, Tests 8896 jobs,
+ProofGraphExport, and 400 Python tests (7 skipped), with exit code zero.
+Website/export records were synchronized at `370068b`; the clean site build
+and static check passed. Mobile visual QA remains inconclusive as recorded
+in the dated integration review. New MOSS additions require a fresh gate.
 
 ## Failure classification
+
+### MOSS dependency progress
+
+- `MOSS.logPlus`, `radius`, `index`, `action`: exact source index and
+  zero-based initialization; `radius_sq` retains the factor four.
+- `action_initial_arm` and `action_index_max`: initialization and
+  post-initialization argmax certificates.
+- `selected_index_gt_mean_add_half_gap`: deterministic Theorem 9.1 proof
+  step under a visible optimism-deficit premise, not a probabilistic bound.
+- `historyAction`, `measurable_historyAction`, `historyAlgorithm`,
+  `historyAlgorithm_policy_apply`, `historyAction_initialization`,
+  `historyAction_index_max`: concrete measurable common-interface policy,
+  with inclusive history at t feeding the next action at t+1.
+- Both modules pass focused build (2951 jobs); typed canary passes with
+  baseline axioms only. The full new integration gate is pending.
+  Theorem 9.2 / Lemma 9.3 and regret
+  assembly remain open. Do not promote this policy constructor to the
+  MOSS upper theorem.
 
 Use exactly one:
 
@@ -33391,6 +33433,150 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean",
     "line": 1442,
     "statement": "theorem measurable_generatedAction {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : 0 < K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -> RewardTrace Rat) (hreward : forall t : Nat, Measurable (fun omega : Omega => reward omega t)) (t : Nat) : Measurable (fun omega => generatedAction hK sigma2 delta margin defaultAction reward omega t)"
+  },
+  {
+    "kind": "def",
+    "name": "logPlus",
+    "full_name": "BanditRLProof.MOSS.logPlus",
+    "file": "BanditRLProof/Algorithms/MOSS.lean",
+    "line": 15,
+    "statement": "noncomputable def logPlus (x : \u211d) : \u211d"
+  },
+  {
+    "kind": "def",
+    "name": "radius",
+    "full_name": "BanditRLProof.MOSS.radius",
+    "file": "BanditRLProof/Algorithms/MOSS.lean",
+    "line": 19,
+    "statement": "noncomputable def radius (n k s : \u2115) : \u211d"
+  },
+  {
+    "kind": "def",
+    "name": "index",
+    "full_name": "BanditRLProof.MOSS.index",
+    "file": "BanditRLProof/Algorithms/MOSS.lean",
+    "line": 23,
+    "statement": "noncomputable def index {k : \u2115} (n : \u2115) (empiricalMean : Fin k \u2192 \u211d) (pulls : Fin k \u2192 \u2115) (a : Fin k) : \u211d"
+  },
+  {
+    "kind": "def",
+    "name": "action",
+    "full_name": "BanditRLProof.MOSS.action",
+    "file": "BanditRLProof/Algorithms/MOSS.lean",
+    "line": 30,
+    "statement": "noncomputable def action {k : \u2115} (hk : 0 < k) (n t : \u2115) (empiricalMean : Fin k \u2192 \u211d) (pulls : Fin k \u2192 \u2115) : Fin k"
+  },
+  {
+    "kind": "theorem",
+    "name": "logPlus_nonneg",
+    "full_name": "BanditRLProof.MOSS.logPlus_nonneg",
+    "file": "BanditRLProof/Algorithms/MOSS.lean",
+    "line": 34,
+    "statement": "theorem logPlus_nonneg (x : \u211d) : 0 \u2264 logPlus x"
+  },
+  {
+    "kind": "theorem",
+    "name": "radius_nonneg",
+    "full_name": "BanditRLProof.MOSS.radius_nonneg",
+    "file": "BanditRLProof/Algorithms/MOSS.lean",
+    "line": 37,
+    "statement": "theorem radius_nonneg (n k s : \u2115) : 0 \u2264 radius n k s"
+  },
+  {
+    "kind": "theorem",
+    "name": "radius_zero",
+    "full_name": "BanditRLProof.MOSS.radius_zero",
+    "file": "BanditRLProof/Algorithms/MOSS.lean",
+    "line": 40,
+    "statement": "@[simp] theorem radius_zero (n k : \u2115) : radius n k 0 = 0"
+  },
+  {
+    "kind": "theorem",
+    "name": "radius_sq",
+    "full_name": "BanditRLProof.MOSS.radius_sq",
+    "file": "BanditRLProof/Algorithms/MOSS.lean",
+    "line": 44,
+    "statement": "theorem radius_sq (n k s : \u2115) : radius n k s ^ 2 = 4 / (s : \u211d) * logPlus ((n : \u211d) / ((k : \u211d) * (s : \u211d)))"
+  },
+  {
+    "kind": "theorem",
+    "name": "action_of_lt",
+    "full_name": "BanditRLProof.MOSS.action_of_lt",
+    "file": "BanditRLProof/Algorithms/MOSS.lean",
+    "line": 51,
+    "statement": "@[simp] theorem action_of_lt {k : \u2115} (hk : 0 < k) (n t : \u2115) (empiricalMean : Fin k \u2192 \u211d) (pulls : Fin k \u2192 \u2115) (ht : t < k) : action hk n t empiricalMean pulls = \u27e8t, ht\u27e9"
+  },
+  {
+    "kind": "theorem",
+    "name": "action_initial_arm",
+    "full_name": "BanditRLProof.MOSS.action_initial_arm",
+    "file": "BanditRLProof/Algorithms/MOSS.lean",
+    "line": 57,
+    "statement": "theorem action_initial_arm {k : \u2115} (hk : 0 < k) (n : \u2115) (empiricalMean : Fin k \u2192 \u211d) (pulls : Fin k \u2192 \u2115) (a : Fin k) : action hk n a.val empiricalMean pulls = a"
+  },
+  {
+    "kind": "theorem",
+    "name": "action_index_max",
+    "full_name": "BanditRLProof.MOSS.action_index_max",
+    "file": "BanditRLProof/Algorithms/MOSS.lean",
+    "line": 62,
+    "statement": "theorem action_index_max {k : \u2115} (hk : 0 < k) (n t : \u2115) (empiricalMean : Fin k \u2192 \u211d) (pulls : Fin k \u2192 \u2115) (ht : k \u2264 t) (a : Fin k) : index n empiricalMean pulls a \u2264 index n empiricalMean pulls (action hk n t empiricalMean pulls)"
+  },
+  {
+    "kind": "theorem",
+    "name": "selected_index_gt_mean_add_half_gap",
+    "full_name": "BanditRLProof.MOSS.selected_index_gt_mean_add_half_gap",
+    "file": "BanditRLProof/Algorithms/MOSS.lean",
+    "line": 72,
+    "statement": "theorem selected_index_gt_mean_add_half_gap {k : \u2115} (hk : 0 < k) (n t : \u2115) (mean empiricalMean : Fin k \u2192 \u211d) (pulls : Fin k \u2192 \u2115) (best chosen : Fin k) (deficit : \u211d) (ht : k \u2264 t) (hselected : action hk n t empiricalMean pulls = chosen) (hoptimism : mean best - deficit \u2264 index n empiricalMean pulls best) (hgap : 2 * deficit < mean best - mean chosen) : mean chosen + (mean best - mean chosen) / 2 < index n empiricalMean pulls chosen"
+  },
+  {
+    "kind": "def",
+    "name": "historyAction",
+    "full_name": "BanditRLProof.MOSS.historyAction",
+    "file": "BanditRLProof/Algorithms/MOSSHistory.lean",
+    "line": 18,
+    "statement": "noncomputable def historyAction {k : \u2115} (hk : 0 < k) (n t : \u2115) (history : History.FinitePairHistory (Fin k) \u211d t) : Fin k"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_historyAction",
+    "full_name": "BanditRLProof.MOSS.measurable_historyAction",
+    "file": "BanditRLProof/Algorithms/MOSSHistory.lean",
+    "line": 23,
+    "statement": "theorem measurable_historyAction {k : \u2115} (hk : 0 < k) (n t : \u2115) : Measurable (historyAction hk n t)"
+  },
+  {
+    "kind": "def",
+    "name": "historyAlgorithm",
+    "full_name": "BanditRLProof.MOSS.historyAlgorithm",
+    "file": "BanditRLProof/Algorithms/MOSSHistory.lean",
+    "line": 39,
+    "statement": "noncomputable def historyAlgorithm {k : \u2115} (hk : 0 < k) (n : \u2115) : Thompson.HistoryAlgorithm (Fin k) \u211d where"
+  },
+  {
+    "kind": "theorem",
+    "name": "historyAlgorithm_policy_apply",
+    "full_name": "BanditRLProof.MOSS.historyAlgorithm_policy_apply",
+    "file": "BanditRLProof/Algorithms/MOSSHistory.lean",
+    "line": 45,
+    "statement": "@[simp] theorem historyAlgorithm_policy_apply {k : \u2115} (hk : 0 < k) (n t : \u2115) (history : History.FinitePairHistory (Fin k) \u211d t) : (historyAlgorithm hk n).policy t history = Measure.dirac (historyAction hk n t history)"
+  },
+  {
+    "kind": "theorem",
+    "name": "historyAction_initialization",
+    "full_name": "BanditRLProof.MOSS.historyAction_initialization",
+    "file": "BanditRLProof/Algorithms/MOSSHistory.lean",
+    "line": 52,
+    "statement": "theorem historyAction_initialization {k : \u2115} (hk : 0 < k) (n t : \u2115) (history : History.FinitePairHistory (Fin k) \u211d t) (ht : t + 1 < k) : historyAction hk n t history = \u27e8t + 1, ht\u27e9"
+  },
+  {
+    "kind": "theorem",
+    "name": "historyAction_index_max",
+    "full_name": "BanditRLProof.MOSS.historyAction_index_max",
+    "file": "BanditRLProof/Algorithms/MOSSHistory.lean",
+    "line": 58,
+    "statement": "theorem historyAction_index_max {k : \u2115} (hk : 0 < k) (n t : \u2115) (history : History.FinitePairHistory (Fin k) \u211d t) (ht : k \u2264 t + 1) (a : Fin k) : index n (ETC.realHistoryEmpMean t history) (ETC.realHistoryPullCount t history) a \u2264 index n (ETC.realHistoryEmpMean t history) (ETC.realHistoryPullCount t history) (historyAction hk n t history)"
   },
   {
     "kind": "def",
@@ -95408,6 +95594,42 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "target_fingerprint": "",
     "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
     "time": "2026-09-05T04:50:59+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "build",
+    "lean": "",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [],
+    "notes": "MOSS source index and measurable history policy: focused 2951-job build and typed canary passed with baseline axioms; expected regret remains open.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "unreviewed",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "reviewer",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "compiled",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T05:03:43+00:00",
     "verifier_evidence": [],
     "worker_id": ""
   }
