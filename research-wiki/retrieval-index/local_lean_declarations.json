@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T05:57:44+00:00",
+  "generated": "2026-09-05T06:01:41+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -29848,6 +29848,78 @@
       "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
       "line": 239,
       "statement": "theorem exists_binaryPrefixCode_entropy_sandwich {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) : \u2203 code : BinaryPrefixCode \u03b1, discreteEntropyBaseTwo Finset.univ p \u2264 expectedCodeLength p code \u2227 expectedCodeLength p code \u2264 discreteEntropyBaseTwo Finset.univ p + 1"
+    },
+    {
+      "kind": "def",
+      "name": "BinaryPrefixCode.relabel",
+      "full_name": "BanditRLProof.LowerBounds.BinaryPrefixCode.relabel",
+      "file": "BanditRLProof/LowerBounds/PrefixCodeExchange.lean",
+      "line": 5,
+      "statement": "def BinaryPrefixCode.relabel {\u03b1 \u03b2 : Type*} (code : BinaryPrefixCode \u03b1) (e : \u03b2 \u2243 \u03b1) : BinaryPrefixCode \u03b2 where"
+    },
+    {
+      "kind": "def",
+      "name": "IsOptimalPrefixCode",
+      "full_name": "BanditRLProof.LowerBounds.IsOptimalPrefixCode",
+      "file": "BanditRLProof/LowerBounds/PrefixCodeExchange.lean",
+      "line": 13,
+      "statement": "def IsOptimalPrefixCode {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (code : BinaryPrefixCode \u03b1) : Prop"
+    },
+    {
+      "kind": "theorem",
+      "name": "expectedCodeLength_swap",
+      "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_swap",
+      "file": "BanditRLProof/LowerBounds/PrefixCodeExchange.lean",
+      "line": 16,
+      "statement": "theorem expectedCodeLength_swap {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (code : BinaryPrefixCode \u03b1) (a b : \u03b1) (hab : a \u2260 b) : expectedCodeLength p (code.relabel (Equiv.swap a b)) = expectedCodeLength p code + (p a - p b) * ((code.encode b).length - (code.encode a).length : \u211d)"
+    },
+    {
+      "kind": "theorem",
+      "name": "expectedCodeLength_swap_le",
+      "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_swap_le",
+      "file": "BanditRLProof/LowerBounds/PrefixCodeExchange.lean",
+      "line": 41,
+      "statement": "theorem expectedCodeLength_swap_le {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (code : BinaryPrefixCode \u03b1) (a b : \u03b1) (hab : a \u2260 b) (hp : p a \u2264 p b) (hl : (code.encode a).length \u2264 (code.encode b).length) : expectedCodeLength p (code.relabel (Equiv.swap a b)) \u2264 expectedCodeLength p code"
+    },
+    {
+      "kind": "theorem",
+      "name": "IsOptimalPrefixCode.length_antitone",
+      "full_name": "BanditRLProof.LowerBounds.IsOptimalPrefixCode.length_antitone",
+      "file": "BanditRLProof/LowerBounds/PrefixCodeExchange.lean",
+      "line": 52,
+      "statement": "theorem IsOptimalPrefixCode.length_antitone {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] {p : \u03b1 \u2192 \u211d} {code : BinaryPrefixCode \u03b1} (hopt : IsOptimalPrefixCode p code) (a b : \u03b1) (hp : p a < p b) : (code.encode b).length \u2264 (code.encode a).length"
+    },
+    {
+      "kind": "theorem",
+      "name": "IsOptimalPrefixCode.entropy_sandwich",
+      "full_name": "BanditRLProof.LowerBounds.IsOptimalPrefixCode.entropy_sandwich",
+      "file": "BanditRLProof/LowerBounds/PrefixCodeExchange.lean",
+      "line": 66,
+      "statement": "theorem IsOptimalPrefixCode.entropy_sandwich {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] {p : \u03b1 \u2192 \u211d} {code : BinaryPrefixCode \u03b1} (hopt : IsOptimalPrefixCode p code) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) : discreteEntropyBaseTwo Finset.univ p \u2264 expectedCodeLength p code \u2227 expectedCodeLength p code \u2264 discreteEntropyBaseTwo Finset.univ p + 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "one_le_expectedCodeLength",
+      "full_name": "BanditRLProof.LowerBounds.one_le_expectedCodeLength",
+      "file": "BanditRLProof/LowerBounds/PrefixCodeExchange.lean",
+      "line": 75,
+      "statement": "theorem one_le_expectedCodeLength {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (code : BinaryPrefixCode \u03b1) : 1 \u2264 expectedCodeLength p code"
+    },
+    {
+      "kind": "def",
+      "name": "singletonPrefixCode",
+      "full_name": "BanditRLProof.LowerBounds.singletonPrefixCode",
+      "file": "BanditRLProof/LowerBounds/PrefixCodeExchange.lean",
+      "line": 90,
+      "statement": "def singletonPrefixCode (\u03b1 : Type*) [Subsingleton \u03b1] : BinaryPrefixCode \u03b1 where"
+    },
+    {
+      "kind": "theorem",
+      "name": "singletonPrefixCode_optimal",
+      "full_name": "BanditRLProof.LowerBounds.singletonPrefixCode_optimal",
+      "file": "BanditRLProof/LowerBounds/PrefixCodeExchange.lean",
+      "line": 97,
+      "statement": "theorem singletonPrefixCode_optimal {\u03b1 : Type*} [Fintype \u03b1] [Subsingleton \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) : IsOptimalPrefixCode p (singletonPrefixCode \u03b1)"
     },
     {
       "kind": "theorem",
