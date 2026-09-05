@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T05:33:22+00:00`
+Generated: `2026-09-05T05:37:11+00:00`
 
 ## Source Task
 
@@ -59687,6 +59687,54 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
     "line": 115,
     "statement": "theorem relativeEntropy_eq_iSup_densityApproximation_trim {\u03b1 : Type*} [m : MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h : P \u226a Q) : relativeEntropy P Q = \u2a06 n, @relativeEntropy \u03b1 (densityApproximationFiltration (P.rnDeriv Q) n) (P.trim ((densityApproximationFiltration (P.rnDeriv Q)).le n)) (Q.trim ((densityApproximationFiltration (P.rnDeriv Q)).le n))"
+  },
+  {
+    "kind": "def",
+    "name": "shannonLength",
+    "full_name": "BanditRLProof.LowerBounds.shannonLength",
+    "file": "BanditRLProof/LowerBounds/ShannonLengths.lean",
+    "line": 9,
+    "statement": "def shannonLength (p : \u211d) : \u2115"
+  },
+  {
+    "kind": "theorem",
+    "name": "shannonLength_pos",
+    "full_name": "BanditRLProof.LowerBounds.shannonLength_pos",
+    "file": "BanditRLProof/LowerBounds/ShannonLengths.lean",
+    "line": 11,
+    "statement": "theorem shannonLength_pos (p : \u211d) : 0 < shannonLength p"
+  },
+  {
+    "kind": "theorem",
+    "name": "shannonLength_kraft_weight_lt",
+    "full_name": "BanditRLProof.LowerBounds.shannonLength_kraft_weight_lt",
+    "file": "BanditRLProof/LowerBounds/ShannonLengths.lean",
+    "line": 15,
+    "statement": "theorem shannonLength_kraft_weight_lt {p : \u211d} (hp : 0 < p) : (1 / 2 : \u211d) ^ shannonLength p < p"
+  },
+  {
+    "kind": "theorem",
+    "name": "shannonLength_le_information_add_one",
+    "full_name": "BanditRLProof.LowerBounds.shannonLength_le_information_add_one",
+    "file": "BanditRLProof/LowerBounds/ShannonLengths.lean",
+    "line": 28,
+    "statement": "theorem shannonLength_le_information_add_one {p : \u211d} (hp : 0 < p) (hp1 : p \u2264 1) : (shannonLength p : \u211d) \u2264 Real.log p\u207b\u00b9 / Real.log 2 + 1"
+  },
+  {
+    "kind": "theorem",
+    "name": "weighted_shannonLength_le",
+    "full_name": "BanditRLProof.LowerBounds.weighted_shannonLength_le",
+    "file": "BanditRLProof/LowerBounds/ShannonLengths.lean",
+    "line": 36,
+    "statement": "theorem weighted_shannonLength_le {p : \u211d} (hp : 0 \u2264 p) (hp1 : p \u2264 1) : p * shannonLength p \u2264 p * (Real.log p\u207b\u00b9 / Real.log 2) + p"
+  },
+  {
+    "kind": "theorem",
+    "name": "sum_weighted_shannonLength_le_entropy_add_one",
+    "full_name": "BanditRLProof.LowerBounds.sum_weighted_shannonLength_le_entropy_add_one",
+    "file": "BanditRLProof/LowerBounds/ShannonLengths.lean",
+    "line": 45,
+    "statement": "theorem sum_weighted_shannonLength_le_entropy_add_one {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) : (\u2211 i, p i * shannonLength (p i)) \u2264 discreteEntropyBaseTwo Finset.univ p + 1"
   },
   {
     "kind": "structure",
