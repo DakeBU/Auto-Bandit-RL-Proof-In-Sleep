@@ -63,6 +63,8 @@ import BanditRLProof.LowerBounds.ArithmeticBlockCoding
 import BanditRLProof.LowerBounds.RelativeEntropyNonMetric
 import BanditRLProof.LowerBounds.CrossEntropy
 import BanditRLProof.LowerBounds.FixedLengthCoding
+import BanditRLProof.LowerBounds.UniformCoding
+import BanditRLProof.LowerBounds.CommonDomination
 import BanditRLProof.LowerBounds.Minimax
 import BanditRLProof.LowerBounds.ConditionalKernelKL
 import BanditRLProof.LowerBounds.BanditHistoryKL

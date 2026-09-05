@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T06:52:13+00:00`
+Generated: `2026-09-05T06:54:17+00:00`
 
 ## Source Task
 
@@ -58552,6 +58552,30 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
     "line": 155,
     "statement": "theorem bretagnolleHuberScale_le_commonDensityOverlap {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) : bretagnolleHuberScale (relativeEntropy P Q) \u2264 commonDensityOverlap P Q \u03bc"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_commonFiniteDominatingMeasure",
+    "full_name": "BanditRLProof.LowerBounds.exists_commonFiniteDominatingMeasure",
+    "file": "BanditRLProof/LowerBounds/CommonDomination.lean",
+    "line": 8,
+    "statement": "theorem exists_commonFiniteDominatingMeasure {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] : \u2203 \u03bc : Measure \u03b1, IsFiniteMeasure \u03bc \u2227 P \u226a \u03bc \u2227 Q \u226a \u03bc"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_commonSigmaFiniteDominatingMeasure",
+    "full_name": "BanditRLProof.LowerBounds.exists_commonSigmaFiniteDominatingMeasure",
+    "file": "BanditRLProof/LowerBounds/CommonDomination.lean",
+    "line": 19,
+    "statement": "theorem exists_commonSigmaFiniteDominatingMeasure {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] : \u2203 \u03bc : Measure \u03b1, SigmaFinite \u03bc \u2227 P \u226a \u03bc \u2227 Q \u226a \u03bc"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_finite_lt_top_iff_ac",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_finite_lt_top_iff_ac",
+    "file": "BanditRLProof/LowerBounds/CommonDomination.lean",
+    "line": 27,
+    "statement": "theorem relativeEntropy_finite_lt_top_iff_ac {\u03b1 : Type*} [Fintype \u03b1] [MeasurableSpace \u03b1] [MeasurableSingletonClass \u03b1] (P Q : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] : relativeEntropy P Q < \u22a4 \u2194 P \u226a Q"
   },
   {
     "kind": "theorem",

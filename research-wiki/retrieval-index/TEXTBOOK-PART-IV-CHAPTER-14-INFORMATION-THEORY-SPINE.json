@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE",
-  "generated": "2026-09-05T06:52:04+00:00",
+  "generated": "2026-09-05T06:54:10+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -57555,6 +57555,30 @@
       "file": "BanditRLProof/LowerBounds/CommonDensityOverlap.lean",
       "line": 155,
       "statement": "theorem bretagnolleHuberScale_le_commonDensityOverlap {α : Type*} [MeasurableSpace α] (P Q μ : Measure α) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite μ] (hP : P ≪ μ) (hQ : Q ≪ μ) : bretagnolleHuberScale (relativeEntropy P Q) ≤ commonDensityOverlap P Q μ"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_commonFiniteDominatingMeasure",
+      "full_name": "BanditRLProof.LowerBounds.exists_commonFiniteDominatingMeasure",
+      "file": "BanditRLProof/LowerBounds/CommonDomination.lean",
+      "line": 8,
+      "statement": "theorem exists_commonFiniteDominatingMeasure {α : Type*} [MeasurableSpace α] (P Q : Measure α) [IsFiniteMeasure P] [IsFiniteMeasure Q] : ∃ μ : Measure α, IsFiniteMeasure μ ∧ P ≪ μ ∧ Q ≪ μ"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_commonSigmaFiniteDominatingMeasure",
+      "full_name": "BanditRLProof.LowerBounds.exists_commonSigmaFiniteDominatingMeasure",
+      "file": "BanditRLProof/LowerBounds/CommonDomination.lean",
+      "line": 19,
+      "statement": "theorem exists_commonSigmaFiniteDominatingMeasure {α : Type*} [MeasurableSpace α] (P Q : Measure α) [IsFiniteMeasure P] [IsFiniteMeasure Q] : ∃ μ : Measure α, SigmaFinite μ ∧ P ≪ μ ∧ Q ≪ μ"
+    },
+    {
+      "kind": "theorem",
+      "name": "relativeEntropy_finite_lt_top_iff_ac",
+      "full_name": "BanditRLProof.LowerBounds.relativeEntropy_finite_lt_top_iff_ac",
+      "file": "BanditRLProof/LowerBounds/CommonDomination.lean",
+      "line": 27,
+      "statement": "theorem relativeEntropy_finite_lt_top_iff_ac {α : Type*} [Fintype α] [MeasurableSpace α] [MeasurableSingletonClass α] (P Q : Measure α) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] : relativeEntropy P Q < ⊤ ↔ P ≪ Q"
     },
     {
       "kind": "theorem",

@@ -97,3 +97,13 @@ constant-two-bit optimality. The final source map must state this qualification
 as a source exposition boundary, not mark the false broad reading as proved.
 No full-alphabet uniform-length theorem is silently assumed. Aggregate and
 export evidence for these two new conclusions remains pending.
+
+## Follow-up: common domination and finite KL
+
+CommonDomination now supplies focused local adapters for a common finite
+(hence sigma-finite) dominating measure P+Q and for finite-alphabet KL<top
+iff absolute continuity. This resolves item 6's local mapping gap, preserving
+the distinction from general-space absolute continuity. All six follow-up
+items now have local proof evidence or an explicit proved source-qualification
+boundary. This is not yet a completion audit: aggregate gates, the full exact
+declaration/canary map, synchronized exports and site verification remain.

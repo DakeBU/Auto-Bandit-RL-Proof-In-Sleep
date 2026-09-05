@@ -65,3 +65,5 @@ import Tests.TextbookPartIVChapter14ArithmeticBlockCanary
 import Tests.TextbookPartIVChapter14NonMetricCanary
 import Tests.TextbookPartIVChapter14CrossEntropyCanary
 import Tests.TextbookPartIVChapter14FixedCodeCanary
+import Tests.TextbookPartIVChapter14UniformCodeCanary
+import Tests.TextbookPartIVChapter14DominationCanary
