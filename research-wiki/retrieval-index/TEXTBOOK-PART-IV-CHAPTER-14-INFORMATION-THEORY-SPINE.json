@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE",
-  "generated": "2026-09-05T08:03:53+00:00",
+  "generated": "2026-09-05T08:11:38+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -32366,6 +32366,1046 @@
     },
     {
       "kind": "def",
+      "name": "logPlus",
+      "full_name": "BanditRLProof.MOSS.logPlus",
+      "file": "BanditRLProof/Algorithms/MOSS.lean",
+      "line": 15,
+      "statement": "noncomputable def logPlus (x : ℝ) : ℝ"
+    },
+    {
+      "kind": "def",
+      "name": "radius",
+      "full_name": "BanditRLProof.MOSS.radius",
+      "file": "BanditRLProof/Algorithms/MOSS.lean",
+      "line": 19,
+      "statement": "noncomputable def radius (n k s : ℕ) : ℝ"
+    },
+    {
+      "kind": "def",
+      "name": "index",
+      "full_name": "BanditRLProof.MOSS.index",
+      "file": "BanditRLProof/Algorithms/MOSS.lean",
+      "line": 23,
+      "statement": "noncomputable def index {k : ℕ} (n : ℕ) (empiricalMean : Fin k → ℝ) (pulls : Fin k → ℕ) (a : Fin k) : ℝ"
+    },
+    {
+      "kind": "def",
+      "name": "action",
+      "full_name": "BanditRLProof.MOSS.action",
+      "file": "BanditRLProof/Algorithms/MOSS.lean",
+      "line": 30,
+      "statement": "noncomputable def action {k : ℕ} (hk : 0 < k) (n t : ℕ) (empiricalMean : Fin k → ℝ) (pulls : Fin k → ℕ) : Fin k"
+    },
+    {
+      "kind": "theorem",
+      "name": "logPlus_nonneg",
+      "full_name": "BanditRLProof.MOSS.logPlus_nonneg",
+      "file": "BanditRLProof/Algorithms/MOSS.lean",
+      "line": 34,
+      "statement": "theorem logPlus_nonneg (x : ℝ) : 0 ≤ logPlus x"
+    },
+    {
+      "kind": "theorem",
+      "name": "radius_nonneg",
+      "full_name": "BanditRLProof.MOSS.radius_nonneg",
+      "file": "BanditRLProof/Algorithms/MOSS.lean",
+      "line": 37,
+      "statement": "theorem radius_nonneg (n k s : ℕ) : 0 ≤ radius n k s"
+    },
+    {
+      "kind": "theorem",
+      "name": "radius_zero",
+      "full_name": "BanditRLProof.MOSS.radius_zero",
+      "file": "BanditRLProof/Algorithms/MOSS.lean",
+      "line": 40,
+      "statement": "@[simp] theorem radius_zero (n k : ℕ) : radius n k 0 = 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "radius_sq",
+      "full_name": "BanditRLProof.MOSS.radius_sq",
+      "file": "BanditRLProof/Algorithms/MOSS.lean",
+      "line": 44,
+      "statement": "theorem radius_sq (n k s : ℕ) : radius n k s ^ 2 = 4 / (s : ℝ) * logPlus ((n : ℝ) / ((k : ℝ) * (s : ℝ)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "action_of_lt",
+      "full_name": "BanditRLProof.MOSS.action_of_lt",
+      "file": "BanditRLProof/Algorithms/MOSS.lean",
+      "line": 51,
+      "statement": "@[simp] theorem action_of_lt {k : ℕ} (hk : 0 < k) (n t : ℕ) (empiricalMean : Fin k → ℝ) (pulls : Fin k → ℕ) (ht : t < k) : action hk n t empiricalMean pulls = ⟨t, ht⟩"
+    },
+    {
+      "kind": "theorem",
+      "name": "action_initial_arm",
+      "full_name": "BanditRLProof.MOSS.action_initial_arm",
+      "file": "BanditRLProof/Algorithms/MOSS.lean",
+      "line": 57,
+      "statement": "theorem action_initial_arm {k : ℕ} (hk : 0 < k) (n : ℕ) (empiricalMean : Fin k → ℝ) (pulls : Fin k → ℕ) (a : Fin k) : action hk n a.val empiricalMean pulls = a"
+    },
+    {
+      "kind": "theorem",
+      "name": "action_index_max",
+      "full_name": "BanditRLProof.MOSS.action_index_max",
+      "file": "BanditRLProof/Algorithms/MOSS.lean",
+      "line": 62,
+      "statement": "theorem action_index_max {k : ℕ} (hk : 0 < k) (n t : ℕ) (empiricalMean : Fin k → ℝ) (pulls : Fin k → ℕ) (ht : k ≤ t) (a : Fin k) : index n empiricalMean pulls a ≤ index n empiricalMean pulls (action hk n t empiricalMean pulls)"
+    },
+    {
+      "kind": "theorem",
+      "name": "selected_index_gt_mean_add_half_gap",
+      "full_name": "BanditRLProof.MOSS.selected_index_gt_mean_add_half_gap",
+      "file": "BanditRLProof/Algorithms/MOSS.lean",
+      "line": 72,
+      "statement": "theorem selected_index_gt_mean_add_half_gap {k : ℕ} (hk : 0 < k) (n t : ℕ) (mean empiricalMean : Fin k → ℝ) (pulls : Fin k → ℕ) (best chosen : Fin k) (deficit : ℝ) (ht : k ≤ t) (hselected : action hk n t empiricalMean pulls = chosen) (hoptimism : mean best - deficit ≤ index n empiricalMean pulls best) (hgap : 2 * deficit < mean best - mean chosen) : mean chosen + (mean best - mean chosen) / 2 < index n empiricalMean pulls chosen"
+    },
+    {
+      "kind": "def",
+      "name": "canonicalAction",
+      "full_name": "BanditRLProof.MOSS.canonicalAction",
+      "file": "BanditRLProof/Algorithms/MOSSCanonicalHistory.lean",
+      "line": 7,
+      "statement": "def canonicalAction {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ)"
+    },
+    {
+      "kind": "def",
+      "name": "canonicalReward",
+      "full_name": "BanditRLProof.MOSS.canonicalReward",
+      "file": "BanditRLProof/Algorithms/MOSSCanonicalHistory.lean",
+      "line": 11,
+      "statement": "def canonicalReward {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ)"
+    },
+    {
+      "kind": "def",
+      "name": "canonicalHistory",
+      "full_name": "BanditRLProof.MOSS.canonicalHistory",
+      "file": "BanditRLProof/Algorithms/MOSSCanonicalHistory.lean",
+      "line": 15,
+      "statement": "def canonicalHistory {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (table : UCB.ArmRewardStream k) (t : ℕ)"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalHistory_pullCount",
+      "full_name": "BanditRLProof.MOSS.canonicalHistory_pullCount",
+      "file": "BanditRLProof/Algorithms/MOSSCanonicalHistory.lean",
+      "line": 20,
+      "statement": "theorem canonicalHistory_pullCount {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (table : UCB.ArmRewardStream k) (t : ℕ) (a : Fin k) : ETC.realHistoryPullCount t (canonicalHistory hk n mean table t) a = pullCount (canonicalAction hk n mean table) a (t+1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalHistory_empiricalMean",
+      "full_name": "BanditRLProof.MOSS.canonicalHistory_empiricalMean",
+      "file": "BanditRLProof/Algorithms/MOSSCanonicalHistory.lean",
+      "line": 26,
+      "statement": "theorem canonicalHistory_empiricalMean {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (table : UCB.ArmRewardStream k) (t : ℕ) (a : Fin k) : ETC.realHistoryEmpMean t (canonicalHistory hk n mean table t) a = (∑ j ∈ Finset.range (pullCount (canonicalAction hk n mean table) a (t+1)), table (j+1) a) / (pullCount (canonicalAction hk n mean table) a (t+1) : ℝ)"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalAction_succ_eq_historyAction",
+      "full_name": "BanditRLProof.MOSS.canonicalAction_succ_eq_historyAction",
+      "file": "BanditRLProof/Algorithms/MOSSCanonicalHistory.lean",
+      "line": 36,
+      "statement": "theorem canonicalAction_succ_eq_historyAction {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (table : UCB.ArmRewardStream k) (t : ℕ) : canonicalAction hk n mean table (t+1) = historyAction hk n t (canonicalHistory hk n mean table t)"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalAction_zero",
+      "full_name": "BanditRLProof.MOSS.canonicalAction_zero",
+      "file": "BanditRLProof/Algorithms/MOSSCanonicalHistory.lean",
+      "line": 51,
+      "statement": "theorem canonicalAction_zero {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (table : UCB.ArmRewardStream k) : canonicalAction hk n mean table 0 = ⟨0, hk⟩"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_canonicalAction",
+      "full_name": "BanditRLProof.MOSS.measurable_canonicalAction",
+      "file": "BanditRLProof/Algorithms/MOSSCanonicalHistory.lean",
+      "line": 56,
+      "statement": "theorem measurable_canonicalAction {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ) : Measurable (fun table => canonicalAction hk n mean table t)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_canonicalReward",
+      "full_name": "BanditRLProof.MOSS.measurable_canonicalReward",
+      "file": "BanditRLProof/Algorithms/MOSSCanonicalHistory.lean",
+      "line": 64,
+      "statement": "theorem measurable_canonicalReward {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ) : Measurable (fun table => canonicalReward hk n mean table t)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_canonicalHistory",
+      "full_name": "BanditRLProof.MOSS.measurable_canonicalHistory",
+      "file": "BanditRLProof/Algorithms/MOSSCanonicalHistory.lean",
+      "line": 76,
+      "statement": "theorem measurable_canonicalHistory {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ) : Measurable (fun table => canonicalHistory hk n mean table t)"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalHistory_succ",
+      "full_name": "BanditRLProof.MOSS.canonicalHistory_succ",
+      "file": "BanditRLProof/Algorithms/MOSSCanonicalHistory.lean",
+      "line": 81,
+      "statement": "theorem canonicalHistory_succ {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (table : UCB.ArmRewardStream k) (t : ℕ) : canonicalHistory hk n mean table (t+1) = History.extendPairHistorySucc (canonicalHistory hk n mean table t) (historyAction hk n t (canonicalHistory hk n mean table t), table (ETC.realHistoryPullCount t (canonicalHistory hk n mean table t) (historyAction hk n t (canonicalHistory hk n mean table t))+1) (historyAction hk n t (canonicalHistory hk n mean table t)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalHistory_eq_of_eq_consumed",
+      "full_name": "BanditRLProof.MOSS.canonicalHistory_eq_of_eq_consumed",
+      "file": "BanditRLProof/Algorithms/MOSSCanonicalHistory.lean",
+      "line": 98,
+      "statement": "theorem canonicalHistory_eq_of_eq_consumed {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (table table' : UCB.ArmRewardStream k) (t : ℕ) (hagrees : ∀ a j, j < pullCount (canonicalAction hk n mean table) a (t+1) → table (j+1) a = table' (j+1) a) : canonicalHistory hk n mean table t = canonicalHistory hk n mean table' t"
+    },
+    {
+      "kind": "def",
+      "name": "centeredRewardTable",
+      "full_name": "BanditRLProof.MOSS.centeredRewardTable",
+      "file": "BanditRLProof/Algorithms/MOSSCanonicalReward.lean",
+      "line": 9,
+      "statement": "def centeredRewardTable {k : ℕ} (mean : Fin k → ℝ) : Fin k → ℕ → UCB.ArmRewardStream k → ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_canonicalReward_regret_le",
+      "full_name": "BanditRLProof.MOSS.integral_canonicalReward_regret_le",
+      "file": "BanditRLProof/Algorithms/MOSSCanonicalReward.lean",
+      "line": 14,
+      "statement": "theorem integral_canonicalReward_regret_le {k : ℕ} (hk : 0 < k) (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν] (n : ℕ) (hkn : k ≤ n) (mean : Fin k → ℝ) (best : Fin k) (hbest : ∀ a, mean a ≤ mean best) (hmean : ∀ a, ∫ r, r ∂ν a = mean a) (hsubG : ∀ a, HasSubgaussianMGF (fun r => r-mean a) 1 (ν a)) : (∫ table, realMeanRegret mean (streamTrace hk n mean (centeredRewardTable mean) table) n ∂UCB.armStreamMeasure ν) ≤ 39*Real.sqrt ((n : ℝ)*k) + ∑ a, (mean best-mean a)"
+    },
+    {
+      "kind": "theorem",
+      "name": "mean_add_centeredRewardTable_average",
+      "full_name": "BanditRLProof.MOSS.mean_add_centeredRewardTable_average",
+      "file": "BanditRLProof/Algorithms/MOSSCanonicalReward.lean",
+      "line": 43,
+      "statement": "theorem mean_add_centeredRewardTable_average {k : ℕ} (mean : Fin k → ℝ) (table : UCB.ArmRewardStream k) (a : Fin k) (s : ℕ) (hs : 0 < s) : mean a + streamMean (centeredRewardTable mean a) table s = (∑ j ∈ Finset.range s, table (j+1) a)/(s : ℝ)"
+    },
+    {
+      "kind": "theorem",
+      "name": "streamTrace_pullCount_pos",
+      "full_name": "BanditRLProof.MOSS.streamTrace_pullCount_pos",
+      "file": "BanditRLProof/Algorithms/MOSSCanonicalReward.lean",
+      "line": 54,
+      "statement": "theorem streamTrace_pullCount_pos {Ω : Type*} {k : ℕ} (hk : 0 < k) (n t : ℕ) (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) (a : Fin k) (ht : k ≤ t) : 0 < pullCount (streamTrace hk n mean X ω) a t"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalReward_action_eq_raw",
+      "full_name": "BanditRLProof.MOSS.canonicalReward_action_eq_raw",
+      "file": "BanditRLProof/Algorithms/MOSSCanonicalReward.lean",
+      "line": 62,
+      "statement": "theorem canonicalReward_action_eq_raw {k : ℕ} (hk : 0 < k) (n t : ℕ) (mean : Fin k → ℝ) (table : UCB.ArmRewardStream k) : streamTrace hk n mean (centeredRewardTable mean) table t = action hk n t (fun a => (∑ j ∈ Finset.range (pullCount (streamTrace hk n mean (centeredRewardTable mean) table) a t), table (j+1) a)/(pullCount (streamTrace hk n mean (centeredRewardTable mean) table) a t : ℝ)) (fun a => pullCount (streamTrace hk n mean (centeredRewardTable mean) table) a t)"
+    },
+    {
+      "kind": "theorem",
+      "name": "map_condition_reward_eq_compProd",
+      "full_name": "BanditRLProof.MOSS.map_condition_reward_eq_compProd",
+      "file": "BanditRLProof/Algorithms/MOSSConditionalReward.lean",
+      "line": 7,
+      "statement": "theorem map_condition_reward_eq_compProd {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ) (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν] : Measure.map (fun table => (canonicalCondition hk n mean t table, canonicalReward hk n mean table (t+1))) (UCB.armStreamMeasure ν) = (Measure.map (canonicalCondition hk n mean t) (UCB.armStreamMeasure ν)).compProd (UCB.armStreamSelectedRewardKernel t ν)"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalReward_condDistrib",
+      "full_name": "BanditRLProof.MOSS.canonicalReward_condDistrib",
+      "file": "BanditRLProof/Algorithms/MOSSConditionalReward.lean",
+      "line": 71,
+      "statement": "theorem canonicalReward_condDistrib {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ) (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν] : Filter.EventuallyEq (ae ((UCB.armStreamMeasure ν).map (canonicalCondition hk n mean t))) (condDistrib (fun table => canonicalReward hk n mean table (t+1)) (canonicalCondition hk n mean t) (UCB.armStreamMeasure ν)) (UCB.armStreamSelectedRewardKernel t ν)"
+    },
+    {
+      "kind": "theorem",
+      "name": "log_sixtyFour_le",
+      "full_name": "BanditRLProof.MOSS.log_sixtyFour_le",
+      "file": "BanditRLProof/Algorithms/MOSSConstants.lean",
+      "line": 11,
+      "statement": "theorem log_sixtyFour_le : log (64 : ℝ) ≤ 17/4"
+    },
+    {
+      "kind": "theorem",
+      "name": "largeGap_constant_fifteen",
+      "full_name": "BanditRLProof.MOSS.largeGap_constant_fifteen",
+      "file": "BanditRLProof/Algorithms/MOSSConstants.lean",
+      "line": 17,
+      "statement": "theorem largeGap_constant_fifteen (q : ℝ) (hq : 64 ≤ q) : (1+8*(2*log q+sqrt (Real.pi*(2*log q))+1))/sqrt q ≤ 15"
+    },
+    {
+      "kind": "theorem",
+      "name": "largeGap_scaled_constant_fifteen",
+      "full_name": "BanditRLProof.MOSS.largeGap_scaled_constant_fifteen",
+      "file": "BanditRLProof/Algorithms/MOSSConstants.lean",
+      "line": 54,
+      "statement": "theorem largeGap_scaled_constant_fifteen (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (hlarge : 8*sqrt δ ≤ gap) : gap*(1/gap^2+1+(8/gap^2)*(2*logPlus (gap^2/δ)+ sqrt (Real.pi*(2*logPlus (gap^2/δ)))+1)) ≤ gap+15/sqrt δ"
+    },
+    {
+      "kind": "def",
+      "name": "streamMean",
+      "full_name": "BanditRLProof.MOSS.streamMean",
+      "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
+      "line": 10,
+      "statement": "def streamMean (X : ℕ → Ω → ℝ) (ω : Ω) (s : ℕ) : ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "fixedLogExceedanceCount_eq_fixedRadiusCount",
+      "full_name": "BanditRLProof.MOSS.fixedLogExceedanceCount_eq_fixedRadiusCount",
+      "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
+      "line": 12,
+      "statement": "theorem fixedLogExceedanceCount_eq_fixedRadiusCount (X : ℕ → Ω → ℝ) (δ gap : ℝ) (n : ℕ) (ω : Ω) : fixedLogExceedanceCount (streamMean X ω) δ gap n = Concentration.fixedRadiusCount X (2*logPlus (gap^2/δ)) (gap/2) n ω"
+    },
+    {
+      "kind": "theorem",
+      "name": "integrable_indexExceedanceCount",
+      "full_name": "BanditRLProof.MOSS.integrable_indexExceedanceCount",
+      "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
+      "line": 25,
+      "statement": "theorem integrable_indexExceedanceCount (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (δ gap : ℝ) (n : ℕ) : Integrable (fun ω => indexExceedanceCount (streamMean X ω) δ gap n) μ"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_indexExceedanceCount_le_sharp",
+      "full_name": "BanditRLProof.MOSS.integral_indexExceedanceCount_le_sharp",
+      "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
+      "line": 37,
+      "statement": "theorem integral_indexExceedanceCount_le_sharp (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (hlarge : δ < gap^2) (n : ℕ) : (∫ ω, indexExceedanceCount (streamMean X ω) δ gap n ∂μ) ≤ 1/gap^2 + (8/gap^2)*(2*logPlus (gap^2/δ)+sqrt (Real.pi*(2*logPlus (gap^2/δ)))+1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_indexExceedanceCount_le",
+      "full_name": "BanditRLProof.MOSS.integral_indexExceedanceCount_le",
+      "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
+      "line": 68,
+      "statement": "theorem integral_indexExceedanceCount_le (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (hlarge : δ < gap^2) (n : ℕ) : (∫ ω, indexExceedanceCount (streamMean X ω) δ gap n ∂μ) ≤ 1/gap^2 + 1 + (8/gap^2)*(2*logPlus (gap^2/δ)+sqrt (Real.pi*(2*logPlus (gap^2/δ)))+1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gap_mul_integral_indexExceedanceCount_le_sharp",
+      "full_name": "BanditRLProof.MOSS.gap_mul_integral_indexExceedanceCount_le_sharp",
+      "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
+      "line": 77,
+      "statement": "theorem gap_mul_integral_indexExceedanceCount_le_sharp (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (hlarge : 8*sqrt δ ≤ gap) (n : ℕ) : gap*(∫ ω, indexExceedanceCount (streamMean X ω) δ gap n ∂μ) ≤ 15/sqrt δ"
+    },
+    {
+      "kind": "theorem",
+      "name": "gap_mul_integral_indexExceedanceCount_le",
+      "full_name": "BanditRLProof.MOSS.gap_mul_integral_indexExceedanceCount_le",
+      "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
+      "line": 90,
+      "statement": "theorem gap_mul_integral_indexExceedanceCount_le (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (hlarge : 8*sqrt δ ≤ gap) (n : ℕ) : gap*(∫ ω, indexExceedanceCount (streamMean X ω) δ gap n ∂μ) ≤ gap+15/sqrt δ"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_streamTrace_regret_le",
+      "full_name": "BanditRLProof.MOSS.integral_streamTrace_regret_le",
+      "file": "BanditRLProof/Algorithms/MOSSExpectedRegret.lean",
+      "line": 9,
+      "statement": "theorem integral_streamTrace_regret_le {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] {k : ℕ} (hk : 0 < k) (n : ℕ) (hkn : k ≤ n) (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (best : Fin k) (hbest : ∀ a, mean a ≤ mean best) (hXm : ∀ a i, StronglyMeasurable (X a i)) (hind : ∀ a, iIndepFun (X a) μ) (hmean : ∀ a i, ∫ ω, X a i ω ∂μ = 0) (hsubG : ∀ a i, HasSubgaussianMGF (X a i) 1 μ) : (∫ ω, realMeanRegret mean (streamTrace hk n mean X ω) n ∂μ) ≤ 39*sqrt ((n : ℝ)*k) + ∑ a, (mean best-mean a)"
+    },
+    {
+      "kind": "def",
+      "name": "historyAction",
+      "full_name": "BanditRLProof.MOSS.historyAction",
+      "file": "BanditRLProof/Algorithms/MOSSHistory.lean",
+      "line": 18,
+      "statement": "noncomputable def historyAction {k : ℕ} (hk : 0 < k) (n t : ℕ) (history : History.FinitePairHistory (Fin k) ℝ t) : Fin k"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_historyAction",
+      "full_name": "BanditRLProof.MOSS.measurable_historyAction",
+      "file": "BanditRLProof/Algorithms/MOSSHistory.lean",
+      "line": 23,
+      "statement": "theorem measurable_historyAction {k : ℕ} (hk : 0 < k) (n t : ℕ) : Measurable (historyAction hk n t)"
+    },
+    {
+      "kind": "def",
+      "name": "historyAlgorithm",
+      "full_name": "BanditRLProof.MOSS.historyAlgorithm",
+      "file": "BanditRLProof/Algorithms/MOSSHistory.lean",
+      "line": 39,
+      "statement": "noncomputable def historyAlgorithm {k : ℕ} (hk : 0 < k) (n : ℕ) : Thompson.HistoryAlgorithm (Fin k) ℝ where"
+    },
+    {
+      "kind": "theorem",
+      "name": "historyAlgorithm_policy_apply",
+      "full_name": "BanditRLProof.MOSS.historyAlgorithm_policy_apply",
+      "file": "BanditRLProof/Algorithms/MOSSHistory.lean",
+      "line": 45,
+      "statement": "@[simp] theorem historyAlgorithm_policy_apply {k : ℕ} (hk : 0 < k) (n t : ℕ) (history : History.FinitePairHistory (Fin k) ℝ t) : (historyAlgorithm hk n).policy t history = Measure.dirac (historyAction hk n t history)"
+    },
+    {
+      "kind": "theorem",
+      "name": "historyAction_initialization",
+      "full_name": "BanditRLProof.MOSS.historyAction_initialization",
+      "file": "BanditRLProof/Algorithms/MOSSHistory.lean",
+      "line": 52,
+      "statement": "theorem historyAction_initialization {k : ℕ} (hk : 0 < k) (n t : ℕ) (history : History.FinitePairHistory (Fin k) ℝ t) (ht : t + 1 < k) : historyAction hk n t history = ⟨t + 1, ht⟩"
+    },
+    {
+      "kind": "theorem",
+      "name": "historyAction_index_max",
+      "full_name": "BanditRLProof.MOSS.historyAction_index_max",
+      "file": "BanditRLProof/Algorithms/MOSSHistory.lean",
+      "line": 58,
+      "statement": "theorem historyAction_index_max {k : ℕ} (hk : 0 < k) (n t : ℕ) (history : History.FinitePairHistory (Fin k) ℝ t) (ht : k ≤ t + 1) (a : Fin k) : index n (ETC.realHistoryEmpMean t history) (ETC.realHistoryPullCount t history) a ≤ index n (ETC.realHistoryEmpMean t history) (ETC.realHistoryPullCount t history) (historyAction hk n t history)"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonical_initialPair_map",
+      "full_name": "BanditRLProof.MOSS.canonical_initialPair_map",
+      "file": "BanditRLProof/Algorithms/MOSSHistoryLaw.lean",
+      "line": 8,
+      "statement": "theorem canonical_initialPair_map {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν] : (UCB.armStreamMeasure ν).map (fun table => (canonicalAction hk n mean table 0, canonicalReward hk n mean table 0)) = (historyAlgorithm hk n).initialAction.compProd ν"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonical_action_condDistrib",
+      "full_name": "BanditRLProof.MOSS.canonical_action_condDistrib",
+      "file": "BanditRLProof/Algorithms/MOSSHistoryLaw.lean",
+      "line": 25,
+      "statement": "theorem canonical_action_condDistrib {k : ℕ} [NeZero k] (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ) (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν] : Filter.EventuallyEq (ae ((UCB.armStreamMeasure ν).map (fun table => canonicalHistory hk n mean table t))) (condDistrib (fun table => canonicalAction hk n mean table (t+1)) (fun table => canonicalHistory hk n mean table t) (UCB.armStreamMeasure ν)) ((historyAlgorithm hk n).policy t)"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonical_historySequence",
+      "full_name": "BanditRLProof.MOSS.canonical_historySequence",
+      "file": "BanditRLProof/Algorithms/MOSSHistoryLaw.lean",
+      "line": 40,
+      "statement": "theorem canonical_historySequence {k : ℕ} [NeZero k] (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν] : Thompson.IsHistoryAlgorithmEnvironmentSequence (UCB.armStreamMeasure ν) (canonicalAction hk n mean) (canonicalReward hk n mean) (historyAlgorithm hk n) (LowerBounds.stationaryBanditHistoryEnvironment ν) where"
+    },
+    {
+      "kind": "theorem",
+      "name": "map_canonicalHistory_eq",
+      "full_name": "BanditRLProof.MOSS.map_canonicalHistory_eq",
+      "file": "BanditRLProof/Algorithms/MOSSHistoryLaw.lean",
+      "line": 62,
+      "statement": "theorem map_canonicalHistory_eq {k : ℕ} [NeZero k] (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν] (t : ℕ) : (UCB.armStreamMeasure ν).map (fun table => canonicalHistory hk n mean table t) = LowerBounds.canonicalBanditHistoryMeasure (historyAlgorithm hk n) ν t"
+    },
+    {
+      "kind": "theorem",
+      "name": "finiteHistoryPullCountENNReal_trace",
+      "full_name": "BanditRLProof.finiteHistoryPullCountENNReal_trace",
+      "file": "BanditRLProof/Algorithms/MOSSHistoryRegret.lean",
+      "line": 10,
+      "statement": "theorem finiteHistoryPullCountENNReal_trace {k : ℕ} {Reward : Type*} (action : ActionTrace (Fin k)) (reward : RewardTrace Reward) (t : ℕ) (a : Fin k) : LowerBounds.finiteHistoryPullCountENNReal t (History.finitePairHistoryOfTrace action reward t) a = (pullCount action a (t+1) : ℝ≥0∞)"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalHistory_gapRegret_toReal",
+      "full_name": "BanditRLProof.MOSS.canonicalHistory_gapRegret_toReal",
+      "file": "BanditRLProof/Algorithms/MOSSHistoryRegret.lean",
+      "line": 28,
+      "statement": "theorem canonicalHistory_gapRegret_toReal {k : ℕ} (hk : 0 < k) (n t : ℕ) (mean : Fin k → ℝ) (best : Fin k) (hbest : ∀ a, mean a ≤ mean best) (table : UCB.ArmRewardStream k) : (LowerBounds.finiteHistoryGapPseudoRegret (fun a => mean best-mean a) t (canonicalHistory hk n mean table t)).toReal = realMeanRegret mean (canonicalAction hk n mean table) (t+1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalGapExpectedRegret_eq_integral",
+      "full_name": "BanditRLProof.MOSS.canonicalGapExpectedRegret_eq_integral",
+      "file": "BanditRLProof/Algorithms/MOSSHistoryRegret.lean",
+      "line": 45,
+      "statement": "theorem canonicalGapExpectedRegret_eq_integral {k : ℕ} [NeZero k] (hk : 0 < k) (n t : ℕ) (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν] (mean : Fin k → ℝ) (best : Fin k) (hbest : ∀ a, mean a ≤ mean best) : LowerBounds.canonicalGapExpectedPseudoRegretReal (historyAlgorithm hk n) ν (fun a => mean best-mean a) t = ∫ table, realMeanRegret mean (canonicalAction hk n mean table) (t+1) ∂UCB.armStreamMeasure ν"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalGapExpectedRegret_le",
+      "full_name": "BanditRLProof.MOSS.canonicalGapExpectedRegret_le",
+      "file": "BanditRLProof/Algorithms/MOSSHistoryRegret.lean",
+      "line": 64,
+      "statement": "theorem canonicalGapExpectedRegret_le {k : ℕ} [NeZero k] (hk : 0 < k) (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν] (t : ℕ) (hkt : k ≤ t+1) (mean : Fin k → ℝ) (best : Fin k) (hbest : ∀ a, mean a ≤ mean best) (hmean : ∀ a, ∫ r, r ∂ν a = mean a) (hsubG : ∀ a, HasSubgaussianMGF (fun r => r-mean a) 1 (ν a)) : LowerBounds.canonicalGapExpectedPseudoRegretReal (historyAlgorithm hk (t+1)) ν (fun a => mean best-mean a) t ≤ 39*Real.sqrt (((t+1 : ℕ) : ℝ)*k) + ∑ a, (mean best-mean a)"
+    },
+    {
+      "kind": "def",
+      "name": "fixedLogRadius",
+      "full_name": "BanditRLProof.MOSS.fixedLogRadius",
+      "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
+      "line": 8,
+      "statement": "def fixedLogRadius (δ gap : ℝ) (s : ℕ) : ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "sampleRadius_le_fixedLogRadius",
+      "full_name": "BanditRLProof.MOSS.sampleRadius_le_fixedLogRadius",
+      "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
+      "line": 11,
+      "statement": "theorem sampleRadius_le_fixedLogRadius (δ gap : ℝ) (s : ℕ) (hδ : 0 < δ) (hg : 0 < gap) (hs : 0 < s) (hlarge : 1 ≤ (s : ℝ)*gap^2) : sqrt (4/(s : ℝ)*logPlus (1/((s : ℝ)*δ))) ≤ fixedLogRadius δ gap s"
+    },
+    {
+      "kind": "def",
+      "name": "indexExceedanceCount",
+      "full_name": "BanditRLProof.MOSS.indexExceedanceCount",
+      "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
+      "line": 20,
+      "statement": "def indexExceedanceCount (mean : ℕ → ℝ) (δ gap : ℝ) (n : ℕ) : ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "pullCount_le_one_add_indexExceedanceCount",
+      "full_name": "BanditRLProof.MOSS.pullCount_le_one_add_indexExceedanceCount",
+      "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
+      "line": 25,
+      "statement": "theorem pullCount_le_one_add_indexExceedanceCount {Action : Type*} [DecidableEq Action] (action : ActionTrace Action) (a : Action) (mean : ℕ → ℝ) (δ gap : ℝ) (n : ℕ) (hselected : ∀ t < n, action t = a → 0 < pullCount action a t → gap/2 ≤ mean (pullCount action a t) + sqrt (4/(pullCount action a t : ℝ)*logPlus (1/((pullCount action a t : ℝ)*δ)))) : (pullCount action a n : ℝ) ≤ 1 + indexExceedanceCount mean δ gap n"
+    },
+    {
+      "kind": "def",
+      "name": "fixedLogExceedanceCount",
+      "full_name": "BanditRLProof.MOSS.fixedLogExceedanceCount",
+      "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
+      "line": 35,
+      "statement": "def fixedLogExceedanceCount (mean : ℕ → ℝ) (δ gap : ℝ) (n : ℕ) : ℝ"
+    },
+    {
+      "kind": "def",
+      "name": "smallSampleCount",
+      "full_name": "BanditRLProof.MOSS.smallSampleCount",
+      "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
+      "line": 38,
+      "statement": "def smallSampleCount (gap : ℝ) (n : ℕ) : ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "indexExceedanceCount_le_small_add_fixed",
+      "full_name": "BanditRLProof.MOSS.indexExceedanceCount_le_small_add_fixed",
+      "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
+      "line": 42,
+      "statement": "theorem indexExceedanceCount_le_small_add_fixed (mean : ℕ → ℝ) (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (n : ℕ) : indexExceedanceCount mean δ gap n ≤ smallSampleCount gap n + fixedLogExceedanceCount mean δ gap n"
+    },
+    {
+      "kind": "theorem",
+      "name": "smallSampleCount_le_horizon",
+      "full_name": "BanditRLProof.MOSS.smallSampleCount_le_horizon",
+      "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
+      "line": 58,
+      "statement": "theorem smallSampleCount_le_horizon (gap : ℝ) (n : ℕ) : smallSampleCount gap n ≤ (n : ℝ)"
+    },
+    {
+      "kind": "theorem",
+      "name": "smallSampleCount_le_inv_sq",
+      "full_name": "BanditRLProof.MOSS.smallSampleCount_le_inv_sq",
+      "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
+      "line": 65,
+      "statement": "theorem smallSampleCount_le_inv_sq (gap : ℝ) (hg : 0 < gap) (n : ℕ) : smallSampleCount gap n ≤ 1/gap^2"
+    },
+    {
+      "kind": "theorem",
+      "name": "indexExceedanceCount_le_inv_sq_add_fixed",
+      "full_name": "BanditRLProof.MOSS.indexExceedanceCount_le_inv_sq_add_fixed",
+      "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
+      "line": 79,
+      "statement": "theorem indexExceedanceCount_le_inv_sq_add_fixed (mean : ℕ → ℝ) (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (n : ℕ) : indexExceedanceCount mean δ gap n ≤ 1/gap^2 + fixedLogExceedanceCount mean δ gap n"
+    },
+    {
+      "kind": "def",
+      "name": "centeredIndex",
+      "full_name": "BanditRLProof.MOSS.centeredIndex",
+      "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+      "line": 11,
+      "statement": "def centeredIndex (X : ℕ → Ω → ℝ) (δ : ℝ) (s : ℕ) (ω : Ω) : ℝ"
+    },
+    {
+      "kind": "def",
+      "name": "optimismDeficit",
+      "full_name": "BanditRLProof.MOSS.optimismDeficit",
+      "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+      "line": 15,
+      "statement": "def optimismDeficit (X : ℕ → Ω → ℝ) (δ : ℝ) : ℕ → Ω → ℝ | 0, _ => 0 | n+1, ω => max (optimismDeficit X δ n ω) (-centeredIndex X δ (n+1) ω)"
+    },
+    {
+      "kind": "theorem",
+      "name": "optimismDeficit_nonneg",
+      "full_name": "BanditRLProof.MOSS.optimismDeficit_nonneg",
+      "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+      "line": 19,
+      "statement": "theorem optimismDeficit_nonneg (X : ℕ → Ω → ℝ) (δ : ℝ) (n : ℕ) (ω : Ω) : 0 ≤ optimismDeficit X δ n ω"
+    },
+    {
+      "kind": "theorem",
+      "name": "le_optimismDeficit_iff",
+      "full_name": "BanditRLProof.MOSS.le_optimismDeficit_iff",
+      "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+      "line": 25,
+      "statement": "theorem le_optimismDeficit_iff (X : ℕ → Ω → ℝ) (δ gap : ℝ) (hg : 0 < gap) (n : ℕ) (ω : Ω) : gap ≤ optimismDeficit X δ n ω ↔ ∃ s : ℕ, 0 < s ∧ s ≤ n ∧ centeredIndex X δ s ω + gap ≤ 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "stronglyMeasurable_centeredIndex",
+      "full_name": "BanditRLProof.MOSS.stronglyMeasurable_centeredIndex",
+      "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+      "line": 43,
+      "statement": "theorem stronglyMeasurable_centeredIndex (X : ℕ → Ω → ℝ) (hX : ∀ i, StronglyMeasurable (X i)) (δ : ℝ) (s : ℕ) : StronglyMeasurable (centeredIndex X δ s)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integrable_centeredIndex",
+      "full_name": "BanditRLProof.MOSS.integrable_centeredIndex",
+      "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+      "line": 53,
+      "statement": "theorem integrable_centeredIndex [IsFiniteMeasure μ] (X : ℕ → Ω → ℝ) (hX : ∀ i, Integrable (X i) μ) (δ : ℝ) (s : ℕ) : Integrable (centeredIndex X δ s) μ"
+    },
+    {
+      "kind": "theorem",
+      "name": "stronglyMeasurable_optimismDeficit",
+      "full_name": "BanditRLProof.MOSS.stronglyMeasurable_optimismDeficit",
+      "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+      "line": 60,
+      "statement": "theorem stronglyMeasurable_optimismDeficit (X : ℕ → Ω → ℝ) (hX : ∀ i, StronglyMeasurable (X i)) (δ : ℝ) (n : ℕ) : StronglyMeasurable (optimismDeficit X δ n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integrable_optimismDeficit",
+      "full_name": "BanditRLProof.MOSS.integrable_optimismDeficit",
+      "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+      "line": 67,
+      "statement": "theorem integrable_optimismDeficit [IsFiniteMeasure μ] (X : ℕ → Ω → ℝ) (hX : ∀ i, Integrable (X i) μ) (δ : ℝ) (n : ℕ) : Integrable (optimismDeficit X δ n) μ"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_optimismDeficit_ge_le",
+      "full_name": "BanditRLProof.MOSS.measure_optimismDeficit_ge_le",
+      "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+      "line": 74,
+      "statement": "theorem measure_optimismDeficit_ge_le [IsProbabilityMeasure μ] (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (n : ℕ) : μ {ω | gap ≤ optimismDeficit X δ n ω} ≤ ENNReal.ofReal (15*δ/gap^2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_optimismDeficit_eq_integral_tail",
+      "full_name": "BanditRLProof.MOSS.integral_optimismDeficit_eq_integral_tail",
+      "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+      "line": 88,
+      "statement": "theorem integral_optimismDeficit_eq_integral_tail [IsProbabilityMeasure μ] (X : ℕ → Ω → ℝ) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (δ : ℝ) (n : ℕ) : ∫ ω, optimismDeficit X δ n ω ∂μ = ∫ gap in Set.Ioi 0, μ.real {ω | gap ≤ optimismDeficit X δ n ω}"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_optimismDeficit_le_two_sqrt",
+      "full_name": "BanditRLProof.MOSS.integral_optimismDeficit_le_two_sqrt",
+      "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+      "line": 97,
+      "statement": "theorem integral_optimismDeficit_le_two_sqrt [IsProbabilityMeasure μ] (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (δ : ℝ) (hδ : 0 < δ) (n : ℕ) : ∫ ω, optimismDeficit X δ n ω ∂μ ≤ 2*sqrt (15*δ)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twice_horizon_mul_integral_optimismDeficit_le",
+      "full_name": "BanditRLProof.MOSS.twice_horizon_mul_integral_optimismDeficit_le",
+      "file": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+      "line": 115,
+      "statement": "theorem twice_horizon_mul_integral_optimismDeficit_le [IsProbabilityMeasure μ] (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (n k : ℕ) (hn : 0 < n) (hk : 0 < k) : 2*(n : ℝ)*(∫ ω, optimismDeficit X ((k : ℝ)/n) n ω ∂μ) ≤ 16*sqrt ((n : ℝ)*k)"
+    },
+    {
+      "kind": "theorem",
+      "name": "logPlus_mono",
+      "full_name": "BanditRLProof.MOSS.logPlus_mono",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 16,
+      "statement": "theorem logPlus_mono {x y : ℝ} (hxy : x ≤ y) : logPlus x ≤ logPlus y"
+    },
+    {
+      "kind": "theorem",
+      "name": "exp_neg_logPlus_inv_le",
+      "full_name": "BanditRLProof.MOSS.exp_neg_logPlus_inv_le",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 19,
+      "statement": "theorem exp_neg_logPlus_inv_le (x : ℝ) (hx : 0 < x) : exp (-logPlus (1 / x)) ≤ x"
+    },
+    {
+      "kind": "def",
+      "name": "peelingBarrier",
+      "full_name": "BanditRLProof.MOSS.peelingBarrier",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 27,
+      "statement": "noncomputable def peelingBarrier (δ gap s : ℝ) : ℝ"
+    },
+    {
+      "kind": "def",
+      "name": "blockBarrier",
+      "full_name": "BanditRLProof.MOSS.blockBarrier",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 31,
+      "statement": "noncomputable def blockBarrier (δ gap m : ℝ) : ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "blockBarrier_pos",
+      "full_name": "BanditRLProof.MOSS.blockBarrier_pos",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 34,
+      "statement": "theorem blockBarrier_pos (δ gap m : ℝ) (hm : 0 < m) (hg : 0 < gap) : 0 < blockBarrier δ gap m"
+    },
+    {
+      "kind": "theorem",
+      "name": "blockBarrier_le_peelingBarrier",
+      "full_name": "BanditRLProof.MOSS.blockBarrier_le_peelingBarrier",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 39,
+      "statement": "theorem blockBarrier_le_peelingBarrier (δ gap m s : ℝ) (hδ : 0 < δ) (hg : 0 ≤ gap) (hm : 0 < m) (hms : m ≤ s) (hsm : s ≤ 2*m) : blockBarrier δ gap m ≤ peelingBarrier δ gap s"
+    },
+    {
+      "kind": "theorem",
+      "name": "exp_neg_blockBarrier_sq_le",
+      "full_name": "BanditRLProof.MOSS.exp_neg_blockBarrier_sq_le",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 53,
+      "statement": "theorem exp_neg_blockBarrier_sq_le (δ gap m : ℝ) (hδ : 0 < δ) (hg : 0 ≤ gap) (hm : 0 < m) : exp (-(blockBarrier δ gap m)^2 / (4*m)) ≤ (2*m*δ) * exp (-(m*gap^2/4))"
+    },
+    {
+      "kind": "def",
+      "name": "peelingSum",
+      "full_name": "BanditRLProof.MOSS.peelingSum",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 77,
+      "statement": "noncomputable def peelingSum {Ω : Type*} (X : ℕ → Ω → ℝ) (s : ℕ) (ω : Ω) : ℝ"
+    },
+    {
+      "kind": "def",
+      "name": "blockBadEvent",
+      "full_name": "BanditRLProof.MOSS.blockBadEvent",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 81,
+      "statement": "def blockBadEvent {Ω : Type*} (X : ℕ → Ω → ℝ) (δ gap : ℝ) (m : ℕ) : Set Ω"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_blockBadEvent_le",
+      "full_name": "BanditRLProof.MOSS.measure_blockBadEvent_le",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 86,
+      "statement": "theorem measure_blockBadEvent_le (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (m : ℕ) (hm : 0 < m) : μ (blockBadEvent X δ gap m) ≤ ENNReal.ofReal ((2*(m : ℝ)*δ) * exp (-((m : ℝ)*gap^2/4)))"
+    },
+    {
+      "kind": "def",
+      "name": "scaledBadEvent",
+      "full_name": "BanditRLProof.MOSS.scaledBadEvent",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 113,
+      "statement": "def scaledBadEvent (X : ℕ → Ω → ℝ) (δ gap : ℝ) : Set Ω"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_scaledBadEvent_le_fifteen",
+      "full_name": "BanditRLProof.MOSS.measure_scaledBadEvent_le_fifteen",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 117,
+      "statement": "theorem measure_scaledBadEvent_le_fifteen (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) : μ (scaledBadEvent X δ gap) ≤ ENNReal.ofReal (15*δ/gap^2)"
+    },
+    {
+      "kind": "def",
+      "name": "meanBadEvent",
+      "full_name": "BanditRLProof.MOSS.meanBadEvent",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 142,
+      "statement": "def meanBadEvent (X : ℕ → Ω → ℝ) (δ gap : ℝ) : Set Ω"
+    },
+    {
+      "kind": "theorem",
+      "name": "meanBadEvent_subset_scaledBadEvent",
+      "full_name": "BanditRLProof.MOSS.meanBadEvent_subset_scaledBadEvent",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 146,
+      "statement": "theorem meanBadEvent_subset_scaledBadEvent (X : ℕ → Ω → ℝ) (δ gap : ℝ) : meanBadEvent X δ gap ⊆ scaledBadEvent X δ gap"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_meanBadEvent_le_fifteen",
+      "full_name": "BanditRLProof.MOSS.measure_meanBadEvent_le_fifteen",
+      "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
+      "line": 167,
+      "statement": "theorem measure_meanBadEvent_le_fifteen (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) : μ (meanBadEvent X δ gap) ≤ ENNReal.ofReal (15*δ/gap^2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "streamTrace_gapSum_le",
+      "full_name": "BanditRLProof.MOSS.streamTrace_gapSum_le",
+      "file": "BanditRLProof/Algorithms/MOSSRegret.lean",
+      "line": 10,
+      "statement": "theorem streamTrace_gapSum_le {Ω : Type*} [MeasurableSpace Ω] {k : ℕ} (hk : 0 < k) (n : ℕ) (hkn : k ≤ n) (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) (best : Fin k) (hbest : ∀ a, mean a ≤ mean best) : (∑ a, (mean best - mean a) * (pullCount (streamTrace hk n mean X ω) a n : ℝ)) ≤ (8*sqrt ((k : ℝ)/(n : ℝ)) + 2*optimismDeficit (X best) ((k : ℝ)/(n : ℝ)) n ω)*(n : ℝ) + ∑ a, if 8*sqrt ((k : ℝ)/(n : ℝ)) ≤ mean best - mean a then (mean best - mean a) * (1 + indexExceedanceCount (streamMean (X a) ω) ((k : ℝ)/(n : ℝ)) (mean best - mean a) n) else 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "streamTrace_realMeanRegret_le",
+      "full_name": "BanditRLProof.MOSS.streamTrace_realMeanRegret_le",
+      "file": "BanditRLProof/Algorithms/MOSSRegret.lean",
+      "line": 59,
+      "statement": "theorem streamTrace_realMeanRegret_le {Ω : Type*} [MeasurableSpace Ω] {k : ℕ} (hk : 0 < k) (n : ℕ) (hkn : k ≤ n) (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) (best : Fin k) (hbest : ∀ a, mean a ≤ mean best) : realMeanRegret mean (streamTrace hk n mean X ω) n ≤ (8*sqrt ((k : ℝ)/(n : ℝ)) + 2*optimismDeficit (X best) ((k : ℝ)/(n : ℝ)) n ω)*(n : ℝ) + ∑ a, if 8*sqrt ((k : ℝ)/(n : ℝ)) ≤ mean best - mean a then (mean best - mean a) * (1 + indexExceedanceCount (streamMean (X a) ω) ((k : ℝ)/(n : ℝ)) (mean best - mean a) n) else 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_largeGapCountSum_le",
+      "full_name": "BanditRLProof.MOSS.integral_largeGapCountSum_le",
+      "file": "BanditRLProof/Algorithms/MOSSRegret.lean",
+      "line": 76,
+      "statement": "theorem integral_largeGapCountSum_le {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ] {k : ℕ} (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (best : Fin k) (hbest : ∀ a, mean a ≤ mean best) (hXm : ∀ a i, StronglyMeasurable (X a i)) (hind : ∀ a, iIndepFun (X a) μ) (hmean : ∀ a i, ∫ ω, X a i ω ∂μ = 0) (hsubG : ∀ a i, HasSubgaussianMGF (X a i) 1 μ) (δ : ℝ) (hδ : 0 < δ) (n : ℕ) : (∫ ω, ∑ a, if 8*sqrt δ ≤ mean best - mean a then (mean best - mean a)*(1+indexExceedanceCount (streamMean (X a) ω) δ (mean best-mean a) n) else 0 ∂μ) ≤ (∑ a, (mean best-mean a)) + (k : ℝ)*(15/sqrt δ)"
+    },
+    {
+      "kind": "def",
+      "name": "conditionCoordinate",
+      "full_name": "BanditRLProof.MOSS.conditionCoordinate",
+      "file": "BanditRLProof/Algorithms/MOSSRewardBranch.lean",
+      "line": 7,
+      "statement": "def conditionCoordinate {k : ℕ} (t : ℕ) (c : History.FinitePairHistory (Fin k) ℝ t × Fin k) : ℕ × Fin k"
+    },
+    {
+      "kind": "def",
+      "name": "conditionBranch",
+      "full_name": "BanditRLProof.MOSS.conditionBranch",
+      "file": "BanditRLProof/Algorithms/MOSSRewardBranch.lean",
+      "line": 11,
+      "statement": "def conditionBranch {k : ℕ} (t : ℕ) (target : ℕ × Fin k)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_conditionCoordinate",
+      "full_name": "BanditRLProof.MOSS.measurable_conditionCoordinate",
+      "file": "BanditRLProof/Algorithms/MOSSRewardBranch.lean",
+      "line": 14,
+      "statement": "theorem measurable_conditionCoordinate {k : ℕ} (t : ℕ) : Measurable (conditionCoordinate (k := k) t)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurableSet_conditionBranch",
+      "full_name": "BanditRLProof.MOSS.measurableSet_conditionBranch",
+      "file": "BanditRLProof/Algorithms/MOSSRewardBranch.lean",
+      "line": 22,
+      "statement": "theorem measurableSet_conditionBranch {k : ℕ} (t : ℕ) (target : ℕ × Fin k) : MeasurableSet (conditionBranch t target)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_canonicalNextCoordinate",
+      "full_name": "BanditRLProof.MOSS.measurable_canonicalNextCoordinate",
+      "file": "BanditRLProof/Algorithms/MOSSRewardBranch.lean",
+      "line": 26,
+      "statement": "theorem measurable_canonicalNextCoordinate {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ) : Measurable (canonicalNextCoordinate hk n mean t)"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalReward_succ_eq_coordinate",
+      "full_name": "BanditRLProof.MOSS.canonicalReward_succ_eq_coordinate",
+      "file": "BanditRLProof/Algorithms/MOSSRewardBranch.lean",
+      "line": 30,
+      "statement": "theorem canonicalReward_succ_eq_coordinate {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ) (table : UCB.ArmRewardStream k) : canonicalReward hk n mean table (t+1) = UCB.armStreamCoordinate (canonicalNextCoordinate hk n mean t table) table"
+    },
+    {
+      "kind": "theorem",
+      "name": "rebuilt_mem_conditionBranch_iff",
+      "full_name": "BanditRLProof.MOSS.rebuilt_mem_conditionBranch_iff",
+      "file": "BanditRLProof/Algorithms/MOSSRewardBranch.lean",
+      "line": 38,
+      "statement": "theorem rebuilt_mem_conditionBranch_iff {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ) (target : ℕ × Fin k) (v : ℝ) (table : UCB.ArmRewardStream k) : canonicalConditionWithout hk n mean t target v (UCB.armStreamWithoutCoordinate target table) ∈ conditionBranch t target ↔ canonicalNextCoordinate hk n mean t table = target"
+    },
+    {
+      "kind": "theorem",
+      "name": "map_rebuilt_restrict_conditionBranch",
+      "full_name": "BanditRLProof.MOSS.map_rebuilt_restrict_conditionBranch",
+      "file": "BanditRLProof/Algorithms/MOSSRewardBranch.lean",
+      "line": 44,
+      "statement": "theorem map_rebuilt_restrict_conditionBranch {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ) (target : ℕ × Fin k) (v : ℝ) (μ : Measure (UCB.ArmRewardStream k)) : (Measure.map (fun table => canonicalConditionWithout hk n mean t target v (UCB.armStreamWithoutCoordinate target table)) μ).restrict (conditionBranch t target) = (Measure.map (canonicalCondition hk n mean t) μ).restrict (conditionBranch t target)"
+    },
+    {
+      "kind": "theorem",
+      "name": "map_condition_reward_restrict_branch",
+      "full_name": "BanditRLProof.MOSS.map_condition_reward_restrict_branch",
+      "file": "BanditRLProof/Algorithms/MOSSRewardBranch.lean",
+      "line": 66,
+      "statement": "theorem map_condition_reward_restrict_branch {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ) (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν] (target : ℕ × Fin k) (v : ℝ) : Measure.map (fun table => (canonicalCondition hk n mean t table, canonicalReward hk n mean table (t+1))) ((UCB.armStreamMeasure ν).restrict {table | canonicalNextCoordinate hk n mean t table = target}) = ((Measure.map (canonicalCondition hk n mean t) (UCB.armStreamMeasure ν)).restrict (conditionBranch t target)).prod (ν target.2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "neg_optimismDeficit_le_centeredIndex",
+      "full_name": "BanditRLProof.MOSS.neg_optimismDeficit_le_centeredIndex",
+      "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+      "line": 7,
+      "statement": "theorem neg_optimismDeficit_le_centeredIndex {Ω : Type*} [MeasurableSpace Ω] (X : ℕ → Ω → ℝ) (δ : ℝ) (n s : ℕ) (ω : Ω) (hs : 0 < s) (hsn : s ≤ n) : -optimismDeficit X δ n ω ≤ centeredIndex X δ s ω"
+    },
+    {
+      "kind": "theorem",
+      "name": "radius_eq_streamRadius",
+      "full_name": "BanditRLProof.MOSS.radius_eq_streamRadius",
+      "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+      "line": 22,
+      "statement": "theorem radius_eq_streamRadius (n k s : ℕ) (hn : 0 < n) (hk : 0 < k) : radius n k s = sqrt (4/(s : ℝ)*logPlus (1/((s : ℝ)*((k : ℝ)/(n : ℝ)))))"
+    },
+    {
+      "kind": "def",
+      "name": "streamEmpirical",
+      "full_name": "BanditRLProof.MOSS.streamEmpirical",
+      "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+      "line": 34,
+      "statement": "def streamEmpirical {Ω : Type*} {k : ℕ} (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) (trace : ActionTrace (Fin k)) (t : ℕ) (a : Fin k) : ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "pullCount_le_of_stream_policy",
+      "full_name": "BanditRLProof.MOSS.pullCount_le_of_stream_policy",
+      "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+      "line": 41,
+      "statement": "theorem pullCount_le_of_stream_policy {Ω : Type*} [MeasurableSpace Ω] {k : ℕ} (hk : 0 < k) (n : ℕ) (hkn : k ≤ n) (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) (trace : ActionTrace (Fin k)) (hpolicy : ∀ t < n, trace t = action hk n t (streamEmpirical mean X ω trace t) (fun a => pullCount trace a t)) (best chosen : Fin k) (hgap : 2 * optimismDeficit (X best) ((k : ℝ)/(n : ℝ)) n ω < mean best - mean chosen) : (pullCount trace chosen n : ℝ) ≤ 1 + indexExceedanceCount (streamMean (X chosen) ω) ((k : ℝ)/(n : ℝ)) (mean best - mean chosen) n"
+    },
+    {
+      "kind": "def",
+      "name": "streamCounts",
+      "full_name": "BanditRLProof.MOSS.streamCounts",
+      "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+      "line": 100,
+      "statement": "def streamCounts {Ω : Type*} {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) : ℕ → Fin k → ℕ | 0 => fun _ => 0 | t+1 => fun a => let counts := streamCounts hk n mean X ω t counts a + if action hk n t (fun b => mean b + streamMean (X b) ω (counts b)) counts = a then 1 else 0"
+    },
+    {
+      "kind": "def",
+      "name": "streamTrace",
+      "full_name": "BanditRLProof.MOSS.streamTrace",
+      "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+      "line": 108,
+      "statement": "def streamTrace {Ω : Type*} {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) : ActionTrace (Fin k)"
+    },
+    {
+      "kind": "theorem",
+      "name": "pullCount_streamTrace",
+      "full_name": "BanditRLProof.MOSS.pullCount_streamTrace",
+      "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+      "line": 114,
+      "statement": "theorem pullCount_streamTrace {Ω : Type*} {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) (t : ℕ) (a : Fin k) : pullCount (streamTrace hk n mean X ω) a t = streamCounts hk n mean X ω t a"
+    },
+    {
+      "kind": "theorem",
+      "name": "streamTrace_policy",
+      "full_name": "BanditRLProof.MOSS.streamTrace_policy",
+      "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+      "line": 123,
+      "statement": "theorem streamTrace_policy {Ω : Type*} {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) (t : ℕ) : streamTrace hk n mean X ω t = action hk n t (streamEmpirical mean X ω (streamTrace hk n mean X ω) t) (fun a => pullCount (streamTrace hk n mean X ω) a t)"
+    },
+    {
+      "kind": "theorem",
+      "name": "streamTrace_pullCount_le",
+      "full_name": "BanditRLProof.MOSS.streamTrace_pullCount_le",
+      "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+      "line": 133,
+      "statement": "theorem streamTrace_pullCount_le {Ω : Type*} [MeasurableSpace Ω] {k : ℕ} (hk : 0 < k) (n : ℕ) (hkn : k ≤ n) (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) (best chosen : Fin k) (hgap : 2 * optimismDeficit (X best) ((k : ℝ)/(n : ℝ)) n ω < mean best - mean chosen) : (pullCount (streamTrace hk n mean X ω) chosen n : ℝ) ≤ 1 + indexExceedanceCount (streamMean (X chosen) ω) ((k : ℝ)/(n : ℝ)) (mean best - mean chosen) n"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_streamMean_at_count",
+      "full_name": "BanditRLProof.MOSS.measurable_streamMean_at_count",
+      "file": "BanditRLProof/Algorithms/MOSSStreamMeasurable.lean",
+      "line": 10,
+      "statement": "theorem measurable_streamMean_at_count (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (c : Ω → ℕ) (hc : Measurable c) : Measurable (fun ω => streamMean X ω (c ω))"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_action_of_state",
+      "full_name": "BanditRLProof.MOSS.measurable_action_of_state",
+      "file": "BanditRLProof/Algorithms/MOSSStreamMeasurable.lean",
+      "line": 21,
+      "statement": "theorem measurable_action_of_state {k : ℕ} (hk : 0 < k) (n t : ℕ) (emp : Ω → Fin k → ℝ) (counts : Ω → Fin k → ℕ) (he : ∀ a, Measurable (fun ω => emp ω a)) (hc : ∀ a, Measurable (fun ω => counts ω a)) : Measurable (fun ω => action hk n t (emp ω) (counts ω))"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_streamCounts",
+      "full_name": "BanditRLProof.MOSS.measurable_streamCounts",
+      "file": "BanditRLProof/Algorithms/MOSSStreamMeasurable.lean",
+      "line": 34,
+      "statement": "theorem measurable_streamCounts {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (hXm : ∀ a i, StronglyMeasurable (X a i)) (t : ℕ) (a : Fin k) : Measurable (fun ω => streamCounts hk n mean X ω t a)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_streamTrace",
+      "full_name": "BanditRLProof.MOSS.measurable_streamTrace",
+      "file": "BanditRLProof/Algorithms/MOSSStreamMeasurable.lean",
+      "line": 51,
+      "statement": "theorem measurable_streamTrace {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (hXm : ∀ a i, StronglyMeasurable (X a i)) (t : ℕ) : Measurable (fun ω => streamTrace hk n mean X ω t)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integrable_streamTrace_regret",
+      "full_name": "BanditRLProof.MOSS.integrable_streamTrace_regret",
+      "file": "BanditRLProof/Algorithms/MOSSStreamMeasurable.lean",
+      "line": 61,
+      "statement": "theorem integrable_streamTrace_regret (μ : Measure Ω) [IsFiniteMeasure μ] {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (hXm : ∀ a i, StronglyMeasurable (X a i)) : Integrable (fun ω => realMeanRegret mean (streamTrace hk n mean X ω) n) μ"
+    },
+    {
+      "kind": "def",
+      "name": "canonicalCondition",
+      "full_name": "BanditRLProof.MOSS.canonicalCondition",
+      "file": "BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean",
+      "line": 8,
+      "statement": "def canonicalCondition {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ) (table : UCB.ArmRewardStream k)"
+    },
+    {
+      "kind": "def",
+      "name": "canonicalNextCoordinate",
+      "full_name": "BanditRLProof.MOSS.canonicalNextCoordinate",
+      "file": "BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean",
+      "line": 12,
+      "statement": "def canonicalNextCoordinate {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ) (table : UCB.ArmRewardStream k) : ℕ × Fin k"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalNextCoordinate_count",
+      "full_name": "BanditRLProof.MOSS.canonicalNextCoordinate_count",
+      "file": "BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean",
+      "line": 17,
+      "statement": "theorem canonicalNextCoordinate_count {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ) (table : UCB.ArmRewardStream k) : (canonicalNextCoordinate hk n mean t table).1 = pullCount (canonicalAction hk n mean table) (canonicalNextCoordinate hk n mean t table).2 (t+1)+1"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalHistory_eq_of_complement_eq",
+      "full_name": "BanditRLProof.MOSS.canonicalHistory_eq_of_complement_eq",
+      "file": "BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean",
+      "line": 23,
+      "statement": "theorem canonicalHistory_eq_of_complement_eq {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ) (target : ℕ × Fin k) (table table' : UCB.ArmRewardStream k) (hc : UCB.armStreamWithoutCoordinate target table = UCB.armStreamWithoutCoordinate target table') (hf : pullCount (canonicalAction hk n mean table) target.2 (t+1) < target.1) : canonicalHistory hk n mean table t = canonicalHistory hk n mean table' t"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalNextCoordinate_eq_iff_insert",
+      "full_name": "BanditRLProof.MOSS.canonicalNextCoordinate_eq_iff_insert",
+      "file": "BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean",
+      "line": 39,
+      "statement": "theorem canonicalNextCoordinate_eq_iff_insert {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ) (target : ℕ × Fin k) (v : ℝ) (table : UCB.ArmRewardStream k) : canonicalNextCoordinate hk n mean t table = target ↔ canonicalNextCoordinate hk n mean t (UCB.armStreamInsertCoordinate target v (UCB.armStreamWithoutCoordinate target table)) = target"
+    },
+    {
+      "kind": "def",
+      "name": "canonicalConditionWithout",
+      "full_name": "BanditRLProof.MOSS.canonicalConditionWithout",
+      "file": "BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean",
+      "line": 63,
+      "statement": "def canonicalConditionWithout {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ) (target : ℕ × Fin k) (v : ℝ)"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalCondition_eq_without",
+      "full_name": "BanditRLProof.MOSS.canonicalCondition_eq_without",
+      "file": "BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean",
+      "line": 67,
+      "statement": "theorem canonicalCondition_eq_without {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ) (target : ℕ × Fin k) (v : ℝ) (table : UCB.ArmRewardStream k) (hnext : canonicalNextCoordinate hk n mean t table = target) : canonicalCondition hk n mean t table = canonicalConditionWithout hk n mean t target v (UCB.armStreamWithoutCoordinate target table)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_canonicalCondition",
+      "full_name": "BanditRLProof.MOSS.measurable_canonicalCondition",
+      "file": "BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean",
+      "line": 79,
+      "statement": "theorem measurable_canonicalCondition {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ) : Measurable (canonicalCondition hk n mean t)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_canonicalConditionWithout",
+      "full_name": "BanditRLProof.MOSS.measurable_canonicalConditionWithout",
+      "file": "BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean",
+      "line": 84,
+      "statement": "theorem measurable_canonicalConditionWithout {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ) (target : ℕ × Fin k) (v : ℝ) : Measurable (canonicalConditionWithout hk n mean t target v)"
+    },
+    {
+      "kind": "theorem",
+      "name": "indepFun_coordinate_canonicalConditionWithout",
+      "full_name": "BanditRLProof.MOSS.indepFun_coordinate_canonicalConditionWithout",
+      "file": "BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean",
+      "line": 90,
+      "statement": "theorem indepFun_coordinate_canonicalConditionWithout {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ) (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν] (target : ℕ × Fin k) (v : ℝ) : IndepFun (UCB.armStreamCoordinate target) (fun table => canonicalConditionWithout hk n mean t target v (UCB.armStreamWithoutCoordinate target table)) (UCB.armStreamMeasure ν)"
+    },
+    {
+      "kind": "theorem",
+      "name": "map_canonicalConditionWithout_coordinate",
+      "full_name": "BanditRLProof.MOSS.map_canonicalConditionWithout_coordinate",
+      "file": "BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean",
+      "line": 100,
+      "statement": "theorem map_canonicalConditionWithout_coordinate {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ) (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν] (target : ℕ × Fin k) (v : ℝ) : Measure.map (fun table => (canonicalConditionWithout hk n mean t target v (UCB.armStreamWithoutCoordinate target table), UCB.armStreamCoordinate target table)) (UCB.armStreamMeasure ν) = (Measure.map (fun table => canonicalConditionWithout hk n mean t target v (UCB.armStreamWithoutCoordinate target table)) (UCB.armStreamMeasure ν)).prod (ν target.2)"
+    },
+    {
+      "kind": "def",
       "name": "softmaxDenominator",
       "full_name": "BanditRLProof.StochasticGradientBandit.softmaxDenominator",
       "file": "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
@@ -42726,6 +43766,46 @@
     },
     {
       "kind": "def",
+      "name": "cappedOccupancyTail",
+      "full_name": "BanditRLProof.Concentration.cappedOccupancyTail",
+      "file": "BanditRLProof/ConcentrationCappedOccupancy.lean",
+      "line": 7,
+      "statement": "def cappedOccupancyTail (a ε t : ℝ) : ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "cappedOccupancyTail_nonneg",
+      "full_name": "BanditRLProof.Concentration.cappedOccupancyTail_nonneg",
+      "file": "BanditRLProof/ConcentrationCappedOccupancy.lean",
+      "line": 10,
+      "statement": "theorem cappedOccupancyTail_nonneg (a ε t : ℝ) : 0 ≤ cappedOccupancyTail a ε t"
+    },
+    {
+      "kind": "theorem",
+      "name": "cappedOccupancyTail_antitone",
+      "full_name": "BanditRLProof.Concentration.cappedOccupancyTail_antitone",
+      "file": "BanditRLProof/ConcentrationCappedOccupancy.lean",
+      "line": 14,
+      "statement": "theorem cappedOccupancyTail_antitone (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) : Antitone (cappedOccupancyTail a ε)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_cappedOccupancyTail",
+      "full_name": "BanditRLProof.Concentration.integral_cappedOccupancyTail",
+      "file": "BanditRLProof/ConcentrationCappedOccupancy.lean",
+      "line": 28,
+      "statement": "theorem integral_cappedOccupancyTail (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) : IntegrableOn (cappedOccupancyTail a ε) (Ioi 0) ∧ (∫ t in Ioi 0, cappedOccupancyTail a ε t) = (2/ε^2)*(a+sqrt (Real.pi*a)+1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_le_occupancy_bound_sharp",
+      "full_name": "BanditRLProof.Concentration.sum_le_occupancy_bound_sharp",
+      "file": "BanditRLProof/ConcentrationCappedOccupancy.lean",
+      "line": 54,
+      "statement": "theorem sum_le_occupancy_bound_sharp (p : ℕ → ℝ) (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) (h1 : ∀ s, p s ≤ 1) (htail : ∀ s : ℕ, 2*a/ε^2 < (s : ℝ) → p s ≤ occupancyTail a ε s) (n : ℕ) : (∑ i ∈ Finset.range n, p (i+1)) ≤ (2/ε^2)*(a+sqrt (Real.pi*a)+1)"
+    },
+    {
+      "kind": "def",
       "name": "geometricConfidenceShare",
       "full_name": "BanditRLProof.Concentration.geometricConfidenceShare",
       "file": "BanditRLProof/ConcentrationConfidenceSchedule.lean",
@@ -42822,6 +43902,54 @@
     },
     {
       "kind": "theorem",
+      "name": "mul_exp_neg_le_exp_difference",
+      "full_name": "BanditRLProof.Concentration.mul_exp_neg_le_exp_difference",
+      "file": "BanditRLProof/ConcentrationDyadicExponential.lean",
+      "line": 17,
+      "statement": "theorem mul_exp_neg_le_exp_difference (x : ℝ) (hx : 0 ≤ x) : x * exp (-x) ≤ (3 / 2 : ℝ) * (exp (-(2 * x / 3)) - exp (-(4 * x / 3)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_dyadic_mul_exp_neg_le",
+      "full_name": "BanditRLProof.Concentration.sum_dyadic_mul_exp_neg_le",
+      "file": "BanditRLProof/ConcentrationDyadicExponential.lean",
+      "line": 37,
+      "statement": "theorem sum_dyadic_mul_exp_neg_le (a : ℝ) (ha : 0 < a) (N : ℕ) : ∑ j ∈ range N, (2 : ℝ) ^ j * exp (-(a * 2 ^ j)) ≤ 3 / (2 * a) * (exp (-(2 * a / 3)) - exp (-(2 * (a * 2 ^ N) / 3)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_dyadic_mul_exp_neg_le_three_div_two",
+      "full_name": "BanditRLProof.Concentration.sum_dyadic_mul_exp_neg_le_three_div_two",
+      "file": "BanditRLProof/ConcentrationDyadicExponential.lean",
+      "line": 58,
+      "statement": "theorem sum_dyadic_mul_exp_neg_le_three_div_two (a : ℝ) (ha : 0 < a) (N : ℕ) : ∑ j ∈ range N, (2 : ℝ) ^ j * exp (-(a * 2 ^ j)) ≤ 3 / (2 * a)"
+    },
+    {
+      "kind": "theorem",
+      "name": "tsum_dyadic_mul_exp_neg_le",
+      "full_name": "BanditRLProof.Concentration.tsum_dyadic_mul_exp_neg_le",
+      "file": "BanditRLProof/ConcentrationDyadicExponential.lean",
+      "line": 67,
+      "statement": "theorem tsum_dyadic_mul_exp_neg_le (a : ℝ) (ha : 0 < a) : (∑' j : ℕ, ENNReal.ofReal ((2 : ℝ) ^ j * exp (-(a * 2 ^ j)))) ≤ ENNReal.ofReal (3 / (2 * a))"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_moss_peeling_exponential_le_twelve",
+      "full_name": "BanditRLProof.Concentration.sum_moss_peeling_exponential_le_twelve",
+      "file": "BanditRLProof/ConcentrationDyadicExponential.lean",
+      "line": 76,
+      "statement": "theorem sum_moss_peeling_exponential_le_twelve (δ gap : ℝ) (hδ : 0 ≤ δ) (hgap : 0 < gap) (N : ℕ) : ∑ j ∈ range N, δ * (2 : ℝ) ^ (j+1) * exp (-(gap ^ 2 / 4 * 2 ^ j)) ≤ 12 * δ / gap ^ 2"
+    },
+    {
+      "kind": "theorem",
+      "name": "tsum_moss_peeling_exponential_le_fifteen",
+      "full_name": "BanditRLProof.Concentration.tsum_moss_peeling_exponential_le_fifteen",
+      "file": "BanditRLProof/ConcentrationDyadicExponential.lean",
+      "line": 95,
+      "statement": "theorem tsum_moss_peeling_exponential_le_fifteen (δ gap : ℝ) (hδ : 0 ≤ δ) (hgap : 0 < gap) : (∑' j : ℕ, ENNReal.ofReal (δ * (2 : ℝ) ^ (j+1) * exp (-(gap ^ 2 / 4 * 2 ^ j)))) ≤ ENNReal.ofReal (15 * δ / gap ^ 2)"
+    },
+    {
+      "kind": "theorem",
       "name": "measure_iUnion_iUnion_fintype_le_tsum_of_uniform",
       "full_name": "BanditRLProof.Concentration.measure_iUnion_iUnion_fintype_le_tsum_of_uniform",
       "file": "BanditRLProof/ConcentrationFintypeGeometricAllTime.lean",
@@ -42915,6 +44043,198 @@
       "file": "BanditRLProof/ConcentrationFixedMGF.lean",
       "line": 333,
       "statement": "theorem measure_sum_ge_inter_sum_le_of_compensated_hasCondMGFUpperBoundAt [IsZeroOrProbabilityMeasure μ] (Y V : ℕ → Ω → ℝ) (n : ℕ) (tilt varianceCoeff threshold varianceBudget : ℝ) (h_adapted : StronglyAdapted ℱ (fun i ω => tilt * Y i ω - varianceCoeff * V i ω)) (h0 : HasMGFUpperBoundAt (fun ω => tilt * Y 0 ω - varianceCoeff * V 0 ω) 1 0 μ) (h_mgf : ∀ i < n - 1, HasCondMGFUpperBoundAt (ℱ i) (ℱ.le i) (fun ω => tilt * Y (i + 1) ω - varianceCoeff * V (i + 1) ω) 1 0 μ) (htilt : 0 ≤ tilt) (hvarianceCoeff : 0 ≤ varianceCoeff) : μ {ω | threshold ≤ ∑ i ∈ Finset.range n, Y i ω ∧ (∑ i ∈ Finset.range n, V i ω) ≤ varianceBudget} ≤ ENNReal.ofReal (Real.exp (-tilt * threshold + varianceCoeff * varianceBudget))"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_mul_exp_neg_mul_sq_Ioi",
+      "full_name": "BanditRLProof.Concentration.integral_mul_exp_neg_mul_sq_Ioi",
+      "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+      "line": 11,
+      "statement": "theorem integral_mul_exp_neg_mul_sq_Ioi (b : ℝ) (hb : 0 < b) : ∫ x : ℝ in Ioi 0, x*exp (-b*x^2) = (2*b)⁻¹"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_transformed_occupancy_tail",
+      "full_name": "BanditRLProof.Concentration.integral_transformed_occupancy_tail",
+      "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+      "line": 27,
+      "statement": "theorem integral_transformed_occupancy_tail (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) : ∫ z : ℝ in Ioi 0, (2/ε^2)*(z+sqrt (2*a))*exp (-(1/2 : ℝ)*z^2) = (2/ε^2)*(1+sqrt (Real.pi*a))"
+    },
+    {
+      "kind": "def",
+      "name": "occupancyTail",
+      "full_name": "BanditRLProof.Concentration.occupancyTail",
+      "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+      "line": 47,
+      "statement": "def occupancyTail (a ε t : ℝ) : ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "occupancyTail_antitoneOn",
+      "full_name": "BanditRLProof.Concentration.occupancyTail_antitoneOn",
+      "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+      "line": 49,
+      "statement": "theorem occupancyTail_antitoneOn (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) : AntitoneOn (occupancyTail a ε) (Ici (2*a/ε^2))"
+    },
+    {
+      "kind": "def",
+      "name": "occupancySubstitution",
+      "full_name": "BanditRLProof.Concentration.occupancySubstitution",
+      "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+      "line": 66,
+      "statement": "def occupancySubstitution (a ε z : ℝ) : ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "occupancySubstitution_image",
+      "full_name": "BanditRLProof.Concentration.occupancySubstitution_image",
+      "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+      "line": 68,
+      "statement": "theorem occupancySubstitution_image (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) : occupancySubstitution a ε '' Ioi 0 = Ioi (2*a/ε^2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "occupancySubstitution_injOn",
+      "full_name": "BanditRLProof.Concentration.occupancySubstitution_injOn",
+      "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+      "line": 90,
+      "statement": "theorem occupancySubstitution_injOn (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) : InjOn (occupancySubstitution a ε) (Ioi 0)"
+    },
+    {
+      "kind": "theorem",
+      "name": "hasDerivAt_occupancySubstitution",
+      "full_name": "BanditRLProof.Concentration.hasDerivAt_occupancySubstitution",
+      "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+      "line": 103,
+      "statement": "theorem hasDerivAt_occupancySubstitution (a ε z : ℝ) : HasDerivAt (occupancySubstitution a ε) ((2/ε^2)*(z+sqrt (2*a))) z"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_occupancyTail",
+      "full_name": "BanditRLProof.Concentration.integral_occupancyTail",
+      "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+      "line": 109,
+      "statement": "theorem integral_occupancyTail (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) : ∫ t in Ioi (2*a/ε^2), occupancyTail a ε t = (2/ε^2)*(1+sqrt (Real.pi*a))"
+    },
+    {
+      "kind": "theorem",
+      "name": "integrableOn_occupancyTail",
+      "full_name": "BanditRLProof.Concentration.integrableOn_occupancyTail",
+      "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+      "line": 128,
+      "statement": "theorem integrableOn_occupancyTail (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) : IntegrableOn (occupancyTail a ε) (Ioi (2*a/ε^2))"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_occupancyTail_shift_le",
+      "full_name": "BanditRLProof.Concentration.sum_occupancyTail_shift_le",
+      "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+      "line": 149,
+      "statement": "theorem sum_occupancyTail_shift_le (a ε r : ℝ) (ha : 0 < a) (hε : 0 < ε) (hr : 2*a/ε^2 ≤ r) (N : ℕ) : (∑ i ∈ Finset.range N, occupancyTail a ε (r+(i+1 : ℕ))) ≤ (2/ε^2)*(1+sqrt (Real.pi*a))"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_le_occupancy_bound",
+      "full_name": "BanditRLProof.Concentration.sum_le_occupancy_bound",
+      "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+      "line": 166,
+      "statement": "theorem sum_le_occupancy_bound (p : ℕ → ℝ) (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) (h1 : ∀ s, p s ≤ 1) (htail : ∀ s : ℕ, 2*a/ε^2 < (s : ℝ) → p s ≤ occupancyTail a ε s) (n : ℕ) : (∑ i ∈ Finset.range n, p (i+1)) ≤ 1+(2/ε^2)*(a+sqrt (Real.pi*a)+1)"
+    },
+    {
+      "kind": "def",
+      "name": "fixedRadiusMeanEvent",
+      "full_name": "BanditRLProof.Concentration.fixedRadiusMeanEvent",
+      "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
+      "line": 11,
+      "statement": "def fixedRadiusMeanEvent (X : ℕ → Ω → ℝ) (a ε : ℝ) (s : ℕ) : Set Ω"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_fixedRadiusMeanEvent_le",
+      "full_name": "BanditRLProof.Concentration.measure_fixedRadiusMeanEvent_le",
+      "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
+      "line": 14,
+      "statement": "theorem measure_fixedRadiusMeanEvent_le (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) (s : ℕ) (hs : 2*a/ε^2 < (s : ℝ)) : μ (fixedRadiusMeanEvent X a ε s) ≤ ENNReal.ofReal (occupancyTail a ε s)"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_measureReal_fixedRadiusMeanEvent_le",
+      "full_name": "BanditRLProof.Concentration.sum_measureReal_fixedRadiusMeanEvent_le",
+      "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
+      "line": 52,
+      "statement": "theorem sum_measureReal_fixedRadiusMeanEvent_le (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) (n : ℕ) : (∑ i ∈ range n, μ.real (fixedRadiusMeanEvent X a ε (i+1))) ≤ 1+(2/ε^2)*(a+sqrt (Real.pi*a)+1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurableSet_fixedRadiusMeanEvent",
+      "full_name": "BanditRLProof.Concentration.measurableSet_fixedRadiusMeanEvent",
+      "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
+      "line": 65,
+      "statement": "theorem measurableSet_fixedRadiusMeanEvent (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (a ε : ℝ) (s : ℕ) : MeasurableSet (fixedRadiusMeanEvent X a ε s)"
+    },
+    {
+      "kind": "def",
+      "name": "fixedRadiusCount",
+      "full_name": "BanditRLProof.Concentration.fixedRadiusCount",
+      "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
+      "line": 73,
+      "statement": "def fixedRadiusCount (X : ℕ → Ω → ℝ) (a ε : ℝ) (n : ℕ) (ω : Ω) : ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "integrable_fixedRadiusCount",
+      "full_name": "BanditRLProof.Concentration.integrable_fixedRadiusCount",
+      "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
+      "line": 76,
+      "statement": "theorem integrable_fixedRadiusCount (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (a ε : ℝ) (n : ℕ) : Integrable (fixedRadiusCount X a ε n) μ"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_fixedRadiusCount_le",
+      "full_name": "BanditRLProof.Concentration.integral_fixedRadiusCount_le",
+      "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
+      "line": 83,
+      "statement": "theorem integral_fixedRadiusCount_le (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) (n : ℕ) : (∫ ω, fixedRadiusCount X a ε n ω ∂μ) ≤ 1+(2/ε^2)*(a+sqrt (Real.pi*a)+1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_fixedRadiusCount_le_sharp",
+      "full_name": "BanditRLProof.Concentration.integral_fixedRadiusCount_le_sharp",
+      "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
+      "line": 102,
+      "statement": "theorem integral_fixedRadiusCount_le_sharp (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) (n : ℕ) : (∫ ω, fixedRadiusCount X a ε n ω ∂μ) ≤ (2/ε^2)*(a+sqrt (Real.pi*a)+1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "submartingale_exp_of_martingale",
+      "full_name": "BanditRLProof.Concentration.submartingale_exp_of_martingale",
+      "file": "BanditRLProof/ConcentrationMartingaleMaximal.lean",
+      "line": 25,
+      "statement": "theorem submartingale_exp_of_martingale (hS : Martingale S F μ) (hint : ∀ i, Integrable (fun ω => exp (S i ω)) μ) : Submartingale (fun i ω => exp (S i ω)) F μ"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_exists_le_martingale_ge_le_exp",
+      "full_name": "BanditRLProof.Concentration.measure_exists_le_martingale_ge_le_exp",
+      "file": "BanditRLProof/ConcentrationMartingaleMaximal.lean",
+      "line": 38,
+      "statement": "theorem measure_exists_le_martingale_ge_le_exp (hS : Martingale S F μ) (hint : ∀ i t, Integrable (fun ω => exp (t * S i ω)) μ) (n : ℕ) (c : ℝ≥0) (hmgf : HasSubgaussianMGF (S n) c μ) (ε t : ℝ) (ht : 0 < t) : μ {ω | ∃ i, i ≤ n ∧ ε ≤ S i ω} ≤ ENNReal.ofReal (exp (-t * ε + (c : ℝ) * t ^ 2 / 2))"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_exists_le_martingale_ge_le_subgaussian",
+      "full_name": "BanditRLProof.Concentration.measure_exists_le_martingale_ge_le_subgaussian",
+      "file": "BanditRLProof/ConcentrationMartingaleMaximal.lean",
+      "line": 74,
+      "statement": "theorem measure_exists_le_martingale_ge_le_subgaussian (hS : Martingale S F μ) (hint : ∀ i t, Integrable (fun ω => exp (t * S i ω)) μ) (n : ℕ) (c : ℝ≥0) (hc : 0 < (c : ℝ)) (hmgf : HasSubgaussianMGF (S n) c μ) (ε : ℝ) (hε : 0 < ε) : μ {ω | ∃ i, i ≤ n ∧ ε ≤ S i ω} ≤ ENNReal.ofReal (exp (-(ε ^ 2) / (2 * (c : ℝ))))"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_exists_le_independent_partialSum_ge_le_subgaussian",
+      "full_name": "BanditRLProof.Concentration.measure_exists_le_independent_partialSum_ge_le_subgaussian",
+      "file": "BanditRLProof/ConcentrationMartingaleMaximal.lean",
+      "line": 91,
+      "statement": "theorem measure_exists_le_independent_partialSum_ge_le_subgaussian (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (c : ℝ≥0) (hc : 0 < (c : ℝ)) (hsubG : ∀ i, HasSubgaussianMGF (X i) c μ) (n : ℕ) (hn : 0 < n) (ε : ℝ) (hε : 0 < ε) : μ {ω | ∃ i, i ≤ n ∧ ε ≤ ∑ j ∈ range i, X (j + 1) ω} ≤ ENNReal.ofReal (exp (-(ε ^ 2) / (2 * (n : ℝ) * (c : ℝ))))"
     },
     {
       "kind": "theorem",
@@ -43227,6 +44547,14 @@
       "file": "BanditRLProof/ConcentrationSubGaussian.lean",
       "line": 1227,
       "statement": "theorem condSubGaussian_indicator_sum_abs_tail_predictableVariance_delta {Omega : Type u} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] {mu : Measure Omega} [IsProbabilityMeasure mu] (F : Filtration Nat mOmega) (X : Nat -> Omega -> Real) (c : Nat -> NNReal) (s : Nat -> Set Omega) (hY : StronglyAdapted F (fun t omega => match t with | 0 => 0 | i + 1 => (s i).indicator (X i) omega)) (hV : StronglyAdapted F (fun t omega => match t with | 0 => 0 | i + 1 => (s i).indicator (fun _ => (((c i : NNReal) : Real))) omega)) (hs : forall i, @MeasurableSet Omega (F i) (s i)) (n : Nat) (h_subG : forall i, i < n - 1 -> ProbabilityTheory.HasCondSubgaussianMGF (F i) (F.le i) (X i) (c i) mu) (varianceBudget delta : Real) (hvarianceBudget : 0 < varianceBudget) (hdelta : 0 < delta) : mu {omega | subGaussianPredictableVarianceRadius varianceBudget delta <= |(Finset.range n).sum (fun t => match t with | 0 => 0 | i + 1 => (s i).indicator (X i) omega)| ∧ (Finset.range n).sum (fun t => match t with | 0 => 0 | i + 1 => (s i).indicator (fun _ => (((c i : NNReal) : Real))) omega) <= varianceBudget} <= ENNReal.ofReal delta"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_positive_tail_le_two_sqrt",
+      "full_name": "BanditRLProof.Concentration.integral_positive_tail_le_two_sqrt",
+      "file": "BanditRLProof/ConcentrationTailIntegration.lean",
+      "line": 9,
+      "statement": "theorem integral_positive_tail_le_two_sqrt (f : ℝ → ℝ) (hf : Measurable f) (hn : ∀ t, 0 ≤ f t) (h1 : ∀ t, f t ≤ 1) (c : ℝ) (hc : 0 < c) (ht : ∀ t, 0 < t → f t ≤ c/t^2) : ∫ t in Ioi 0, f t ≤ 2*sqrt c"
     },
     {
       "kind": "theorem",
@@ -57229,11 +58557,35 @@
       "statement": "noncomputable def minimaxExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -> Environment -> ENNReal) (policyClass : Set Policy) (environmentClass : Set Environment) : ENNReal"
     },
     {
+      "kind": "def",
+      "name": "IsMinimaxOptimal",
+      "full_name": "BanditRLProof.LowerBounds.IsMinimaxOptimal",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 65,
+      "statement": "def IsMinimaxOptimal {Policy : Type u} {Environment : Type v} (regret : Policy -> Environment -> ENNReal) (policyClass : Set Policy) (environmentClass : Set Environment) (policy : Policy) : Prop"
+    },
+    {
+      "kind": "theorem",
+      "name": "IsMinimaxOptimal.mem_policyClass",
+      "full_name": "BanditRLProof.LowerBounds.IsMinimaxOptimal.mem_policyClass",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 75,
+      "statement": "theorem IsMinimaxOptimal.mem_policyClass {Policy : Type u} {Environment : Type v} {regret : Policy -> Environment -> ENNReal} {policyClass : Set Policy} {environmentClass : Set Environment} {policy : Policy} (hpolicy : IsMinimaxOptimal regret policyClass environmentClass policy) : policy ∈ policyClass"
+    },
+    {
+      "kind": "theorem",
+      "name": "IsMinimaxOptimal.eq_minimaxExpectedRegret",
+      "full_name": "BanditRLProof.LowerBounds.IsMinimaxOptimal.eq_minimaxExpectedRegret",
+      "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
+      "line": 85,
+      "statement": "theorem IsMinimaxOptimal.eq_minimaxExpectedRegret {Policy : Type u} {Environment : Type v} {regret : Policy -> Environment -> ENNReal} {policyClass : Set Policy} {environmentClass : Set Environment} {policy : Policy} (hpolicy : IsMinimaxOptimal regret policyClass environmentClass policy) : worstCaseExpectedRegret regret environmentClass policy = minimaxExpectedRegret regret policyClass environmentClass"
+    },
+    {
       "kind": "theorem",
       "name": "expectedRegret_le_worstCaseExpectedRegret",
       "full_name": "BanditRLProof.LowerBounds.expectedRegret_le_worstCaseExpectedRegret",
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
-      "line": 58,
+      "line": 96,
       "statement": "theorem expectedRegret_le_worstCaseExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -> Environment -> ENNReal) (environmentClass : Set Environment) (policy : Policy) (environment : Environment) (henvironment : environment ∈ environmentClass) : regret policy environment ≤ worstCaseExpectedRegret regret environmentClass policy"
     },
     {
@@ -57241,7 +58593,7 @@
       "name": "minimaxExpectedRegret_le_worstCaseExpectedRegret",
       "full_name": "BanditRLProof.LowerBounds.minimaxExpectedRegret_le_worstCaseExpectedRegret",
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
-      "line": 71,
+      "line": 109,
       "statement": "theorem minimaxExpectedRegret_le_worstCaseExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -> Environment -> ENNReal) (policyClass : Set Policy) (environmentClass : Set Environment) (policy : Policy) (hpolicy : policy ∈ policyClass) : minimaxExpectedRegret regret policyClass environmentClass ≤ worstCaseExpectedRegret regret environmentClass policy"
     },
     {
@@ -57249,7 +58601,7 @@
       "name": "le_minimaxExpectedRegret",
       "full_name": "BanditRLProof.LowerBounds.le_minimaxExpectedRegret",
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
-      "line": 82,
+      "line": 120,
       "statement": "theorem le_minimaxExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -> Environment -> ENNReal) (policyClass : Set Policy) (environmentClass : Set Environment) (lower : ENNReal) (hlower : ∀ policy : policyClass, lower ≤ worstCaseExpectedRegret regret environmentClass policy.1) : lower ≤ minimaxExpectedRegret regret policyClass environmentClass"
     },
     {
@@ -57257,7 +58609,7 @@
       "name": "exists_alternative_le_average",
       "full_name": "BanditRLProof.LowerBounds.exists_alternative_le_average",
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
-      "line": 100,
+      "line": 138,
       "statement": "theorem exists_alternative_le_average {m : Nat} (hm : 0 < m) (alternativeExpectedPulls : Fin m -> Real) (budget : Real) (hbudget : ∑ i : Fin m, alternativeExpectedPulls i ≤ budget) : ∃ i : Fin m, alternativeExpectedPulls i ≤ budget / (m : Real)"
     },
     {
@@ -57265,7 +58617,7 @@
       "name": "alternativeExpectedPullBudget_le",
       "full_name": "BanditRLProof.LowerBounds.alternativeExpectedPullBudget_le",
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
-      "line": 126,
+      "line": 164,
       "statement": "theorem alternativeExpectedPullBudget_le {m : Nat} (expectedPulls : Fin (m + 1) -> Real) (budget : Real) (hnonneg : ∀ arm, 0 ≤ expectedPulls arm) (htotal : ∑ arm : Fin (m + 1), expectedPulls arm = budget) : (∑ i : Fin m, expectedPulls i.succ) ≤ budget"
     },
     {
@@ -57273,7 +58625,7 @@
       "name": "exists_leastExploredAlternative",
       "full_name": "BanditRLProof.LowerBounds.exists_leastExploredAlternative",
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
-      "line": 143,
+      "line": 181,
       "statement": "theorem exists_leastExploredAlternative {m : Nat} (hm : 0 < m) (expectedPulls : Fin (m + 1) -> Real) (horizon : Nat) (hnonneg : ∀ arm, 0 ≤ expectedPulls arm) (htotal : ∑ arm : Fin (m + 1), expectedPulls arm = (horizon : Real)) : ∃ i : Fin m, expectedPulls i.succ ≤ (horizon : Real) / (m : Real)"
     },
     {
@@ -57281,7 +58633,7 @@
       "name": "baseEnvironmentRegret",
       "full_name": "BanditRLProof.LowerBounds.baseEnvironmentRegret",
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
-      "line": 156,
+      "line": 194,
       "statement": "def baseEnvironmentRegret (horizon : Nat) (gap baseFirstExpectedPulls : Real) : Real"
     },
     {
@@ -57289,7 +58641,7 @@
       "name": "changedEnvironmentRegretLowerBound",
       "full_name": "BanditRLProof.LowerBounds.changedEnvironmentRegretLowerBound",
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
-      "line": 161,
+      "line": 199,
       "statement": "def changedEnvironmentRegretLowerBound (gap changedFirstExpectedPulls : Real) : Real"
     },
     {
@@ -57297,7 +58649,7 @@
       "name": "max_base_changed_regretLowerBound_ge_half_sub_error",
       "full_name": "BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error",
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
-      "line": 173,
+      "line": 211,
       "statement": "theorem max_base_changed_regretLowerBound_ge_half_sub_error (horizon : Nat) (gap baseFirstExpectedPulls changedFirstExpectedPulls error : Real) (hgap : 0 ≤ gap) (hpullDifference : baseFirstExpectedPulls - changedFirstExpectedPulls ≤ error) : gap * ((horizon : Real) - error) / 2 ≤ max (baseEnvironmentRegret horizon gap baseFirstExpectedPulls) (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls)"
     },
     {
@@ -57305,7 +58657,7 @@
       "name": "max_base_changed_regretLowerBound_ge_half",
       "full_name": "BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half",
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
-      "line": 205,
+      "line": 243,
       "statement": "theorem max_base_changed_regretLowerBound_ge_half (horizon : Nat) (gap baseFirstExpectedPulls changedFirstExpectedPulls : Real) (hgap : 0 ≤ gap) (htransport : baseFirstExpectedPulls ≤ changedFirstExpectedPulls) : gap * (horizon : Real) / 2 ≤ max (baseEnvironmentRegret horizon gap baseFirstExpectedPulls) (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls)"
     },
     {
@@ -58003,6 +59355,390 @@
       "file": "BanditRLProof/LowerBounds/FixedLengthCoding.lean",
       "line": 45,
       "statement": "theorem expectedCodeLength_fixedLength {α : Type*} [Fintype α] (p : α → ℝ) (hs : ∑ a, p a = 1) (code : BinaryPrefixCode α) (n : ℕ) (hlen : ∀ a, (code.encode a).length = n) : expectedCodeLength p code = n"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianSampleMeanVariance",
+      "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanVariance",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 31,
+      "statement": "def gaussianSampleMeanVariance (sampleSize : Nat) : NNReal"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianSampleMeanVariance_pos",
+      "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanVariance_pos",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 35,
+      "statement": "theorem gaussianSampleMeanVariance_pos (sampleSize : Nat) (hsampleSize : 0 < sampleSize) : 0 < gaussianSampleMeanVariance sampleSize"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianSampleMeanLaw",
+      "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanLaw",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 42,
+      "statement": "noncomputable def gaussianSampleMeanLaw (sampleSize : Nat) (mean : Real) : Measure Real"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianIIDObservationLaw",
+      "full_name": "BanditRLProof.LowerBounds.gaussianIIDObservationLaw",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 47,
+      "statement": "noncomputable def gaussianIIDObservationLaw (sampleSize : Nat) (mean : Real) : Measure (Fin sampleSize → Real)"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianCoordinateAverage",
+      "full_name": "BanditRLProof.LowerBounds.gaussianCoordinateAverage",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 52,
+      "statement": "def gaussianCoordinateAverage (sampleSize : Nat) (observations : Fin sampleSize → Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianIIDSumLaw",
+      "full_name": "BanditRLProof.LowerBounds.gaussianIIDSumLaw",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 57,
+      "statement": "theorem gaussianIIDSumLaw (sampleSize : Nat) (mean : Real) : (gaussianIIDObservationLaw sampleSize mean).map (fun observations => ∑ i, observations i) = gaussianReal ((sampleSize : Real) * mean) (sampleSize : NNReal)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianIIDSampleMeanLaw",
+      "full_name": "BanditRLProof.LowerBounds.gaussianIIDSampleMeanLaw",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 77,
+      "statement": "theorem gaussianIIDSampleMeanLaw (sampleSize : Nat) (mean : Real) (hsampleSize : 0 < sampleSize) : (gaussianIIDObservationLaw sampleSize mean).map (gaussianCoordinateAverage sampleSize) = gaussianSampleMeanLaw sampleSize mean"
+    },
+    {
+      "kind": "def",
+      "name": "twoPointGaussianThresholdDecision",
+      "full_name": "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 101,
+      "statement": "def twoPointGaussianThresholdDecision (gap observation : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoPointGaussianThresholdDecision_zero_error_event",
+      "full_name": "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision_zero_error_event",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 105,
+      "statement": "theorem twoPointGaussianThresholdDecision_zero_error_event {gap : Real} (hgap : 0 < gap) : {observation | twoPointGaussianThresholdDecision gap observation ≠ 0} = Set.Ici (gap / 2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "twoPointGaussianThresholdDecision_gap_error_event",
+      "full_name": "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision_gap_error_event",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 115,
+      "statement": "theorem twoPointGaussianThresholdDecision_gap_error_event {gap : Real} (hgap : 0 < gap) : {observation | twoPointGaussianThresholdDecision gap observation ≠ gap} = Set.Iio (gap / 2)"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianSampleMeanZeroErrorProbability",
+      "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 131,
+      "statement": "noncomputable def gaussianSampleMeanZeroErrorProbability (sampleSize : Nat) (gap : Real) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianSampleMeanGapErrorProbability",
+      "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanGapErrorProbability",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 137,
+      "statement": "noncomputable def gaussianSampleMeanGapErrorProbability (sampleSize : Nat) (gap : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "hasSubgaussianMGF_id_gaussianReal_zero",
+      "full_name": "BanditRLProof.LowerBounds.hasSubgaussianMGF_id_gaussianReal_zero",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 143,
+      "statement": "theorem hasSubgaussianMGF_id_gaussianReal_zero (variance : NNReal) : HasSubgaussianMGF id variance (gaussianReal 0 variance)"
+    },
+    {
+      "kind": "theorem",
+      "name": "hasSubgaussianMGF_gap_sub_id_gaussianReal",
+      "full_name": "BanditRLProof.LowerBounds.hasSubgaussianMGF_gap_sub_id_gaussianReal",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 153,
+      "statement": "theorem hasSubgaussianMGF_gap_sub_id_gaussianReal (gap : Real) (variance : NNReal) : HasSubgaussianMGF (fun observation => gap - observation) variance (gaussianReal gap variance)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianReal_zero_Ici_le_exp_neg_sq_div_two_variance",
+      "full_name": "BanditRLProof.LowerBounds.gaussianReal_zero_Ici_le_exp_neg_sq_div_two_variance",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 162,
+      "statement": "theorem gaussianReal_zero_Ici_le_exp_neg_sq_div_two_variance (variance : NNReal) (threshold : Real) (hthreshold : 0 ≤ threshold) : (gaussianReal 0 variance).real (Set.Ici threshold) ≤ Real.exp (-threshold ^ 2 / (2 * (variance : Real)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianReal_gap_Iio_half_le_exp_neg_sq_div_two_variance",
+      "full_name": "BanditRLProof.LowerBounds.gaussianReal_gap_Iio_half_le_exp_neg_sq_div_two_variance",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 170,
+      "statement": "theorem gaussianReal_gap_Iio_half_le_exp_neg_sq_div_two_variance (gap : Real) (variance : NNReal) (hgap : 0 < gap) : (gaussianReal gap variance).real (Set.Iio (gap / 2)) ≤ Real.exp (-(gap / 2) ^ 2 / (2 * (variance : Real)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianSampleMeanZeroErrorProbability_le_exp",
+      "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability_le_exp",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 194,
+      "statement": "theorem gaussianSampleMeanZeroErrorProbability_le_exp (sampleSize : Nat) (gap : Real) (hgap : 0 < gap) : gaussianSampleMeanZeroErrorProbability sampleSize gap ≤ Real.exp (-(sampleSize : Real) * gap ^ 2 / 8)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianSampleMeanGapErrorProbability_le_exp",
+      "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanGapErrorProbability_le_exp",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 219,
+      "statement": "theorem gaussianSampleMeanGapErrorProbability_le_exp (sampleSize : Nat) (gap : Real) (hgap : 0 < gap) : gaussianSampleMeanGapErrorProbability sampleSize gap ≤ Real.exp (-(sampleSize : Real) * gap ^ 2 / 8)"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianSampleMeanThresholdRisk",
+      "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanThresholdRisk",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 240,
+      "statement": "noncomputable def gaussianSampleMeanThresholdRisk (sampleSize : Nat) (gap : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianSampleMeanThresholdRisk_le_exp",
+      "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanThresholdRisk_le_exp",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 246,
+      "statement": "theorem gaussianSampleMeanThresholdRisk_le_exp (sampleSize : Nat) (gap : Real) (hgap : 0 < gap) : gaussianSampleMeanThresholdRisk sampleSize gap ≤ Real.exp (-(sampleSize : Real) * gap ^ 2 / 8)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianSampleMeanZeroErrorProbability_mills_bounds",
+      "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability_mills_bounds",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 255,
+      "statement": "theorem gaussianSampleMeanZeroErrorProbability_mills_bounds (sampleSize : Nat) (hsampleSize : 0 < sampleSize) (gap : Real) (hgap : 0 < gap) : let z := (gap / 2) / Real.sqrt (2 * (gaussianSampleMeanVariance sampleSize : Real)) Real.exp (-z ^ 2) / (z + Real.sqrt (z ^ 2 + 2)) / Real.sqrt Real.pi ≤ gaussianSampleMeanZeroErrorProbability sampleSize gap ∧ gaussianSampleMeanZeroErrorProbability sampleSize gap ≤ Real.exp (-z ^ 2) / (z + Real.sqrt (z ^ 2 + 4 / Real.pi)) / Real.sqrt Real.pi"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianSampleMeanZeroErrorProbability_source_bounds",
+      "full_name": "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability_source_bounds",
+      "file": "BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean",
+      "line": 270,
+      "statement": "theorem gaussianSampleMeanZeroErrorProbability_source_bounds (sampleSize : Nat) (hsampleSize : 0 < sampleSize) (gap : Real) (hgap : 0 < gap) : let q := (sampleSize : Real) * gap ^ 2 Real.sqrt (8 / Real.pi) * Real.exp (-q / 8) / (Real.sqrt q + Real.sqrt (q + 16)) ≤ gaussianSampleMeanZeroErrorProbability sampleSize gap ∧ gaussianSampleMeanZeroErrorProbability sampleSize gap ≤ Real.sqrt (8 / Real.pi) * Real.exp (-q / 8) / (Real.sqrt q + Real.sqrt (q + 32 / Real.pi))"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianMillsComparison",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMillsComparison",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 14,
+      "statement": "noncomputable def gaussianMillsComparison (c x : ℝ) : ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMillsComparison_denominator_pos",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMillsComparison_denominator_pos",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 17,
+      "statement": "theorem gaussianMillsComparison_denominator_pos {c x : ℝ} (hc : 0 < c) : 0 < x + Real.sqrt (x ^ 2 + c)"
+    },
+    {
+      "kind": "theorem",
+      "name": "hasDerivAt_gaussianMillsComparison",
+      "full_name": "BanditRLProof.LowerBounds.hasDerivAt_gaussianMillsComparison",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 24,
+      "statement": "theorem hasDerivAt_gaussianMillsComparison {c x : ℝ} (hc : 0 < c) : HasDerivAt (gaussianMillsComparison c) (-gaussianMillsComparison c x * (2 * x + 1 / Real.sqrt (x ^ 2 + c))) x"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMillsComparison_lower_derivative_bound",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMillsComparison_lower_derivative_bound",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 37,
+      "statement": "theorem gaussianMillsComparison_lower_derivative_bound (x : ℝ) : gaussianMillsComparison 2 x * (2 * x + 1 / Real.sqrt (x ^ 2 + 2)) ≤ Real.exp (-x ^ 2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMillsComparison_pos",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMillsComparison_pos",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 59,
+      "statement": "theorem gaussianMillsComparison_pos {c : ℝ} (hc : 0 < c) (x : ℝ) : 0 < gaussianMillsComparison c x"
+    },
+    {
+      "kind": "theorem",
+      "name": "tendsto_gaussianMillsComparison",
+      "full_name": "BanditRLProof.LowerBounds.tendsto_gaussianMillsComparison",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 63,
+      "statement": "theorem tendsto_gaussianMillsComparison {c : ℝ} (hc : 0 < c) : Tendsto (gaussianMillsComparison c) atTop (𝓝 0)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMills_lower_integral",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMills_lower_integral",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 79,
+      "statement": "theorem gaussianMills_lower_integral {x : ℝ} (hx : 0 ≤ x) : Real.exp (-x ^ 2) / (x + Real.sqrt (x ^ 2 + 2)) ≤ ∫ t in Ioi x, Real.exp (-t ^ 2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMills_sign_iff",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMills_sign_iff",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 107,
+      "statement": "theorem gaussianMills_sign_iff {c x : ℝ} (hc : 1 < c) (hx : 0 ≤ x) : 0 ≤ x ^ 2 + c - 1 - x * Real.sqrt (x ^ 2 + c) ↔ x ^ 2 * (2 - c) ≤ (c - 1) ^ 2"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMills_sign_threshold",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMills_sign_threshold",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 126,
+      "statement": "theorem gaussianMills_sign_threshold {c x : ℝ} (hc : 1 < c) (hc2 : c < 2) (hx : 0 ≤ x) : 0 ≤ x ^ 2 + c - 1 - x * Real.sqrt (x ^ 2 + c) ↔ x ≤ (c - 1) / Real.sqrt (2 - c)"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianMillsErrorDerivative",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMillsErrorDerivative",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 144,
+      "statement": "noncomputable def gaussianMillsErrorDerivative (c x : ℝ) : ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMillsErrorDerivative_factor",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMillsErrorDerivative_factor",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 148,
+      "statement": "theorem gaussianMillsErrorDerivative_factor {c x : ℝ} (hc : 0 < c) : gaussianMillsErrorDerivative c x = Real.exp (-x ^ 2) * (x ^ 2 + c - 1 - x * Real.sqrt (x ^ 2 + c)) / ((x + Real.sqrt (x ^ 2 + c)) * Real.sqrt (x ^ 2 + c))"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMillsErrorDerivative_nonneg_iff",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMillsErrorDerivative_nonneg_iff",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 160,
+      "statement": "theorem gaussianMillsErrorDerivative_nonneg_iff {c x : ℝ} (hc : 1 < c) (hc2 : c < 2) (hx : 0 ≤ x) : 0 ≤ gaussianMillsErrorDerivative c x ↔ x ≤ (c - 1) / Real.sqrt (2 - c)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMillsErrorDerivative_source_nonneg_iff",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMillsErrorDerivative_source_nonneg_iff",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 174,
+      "statement": "theorem gaussianMillsErrorDerivative_source_nonneg_iff {x : ℝ} (hx : 0 ≤ x) : 0 ≤ gaussianMillsErrorDerivative (4 / Real.pi) x ↔ x ≤ (4 / Real.pi - 1) / Real.sqrt (2 - 4 / Real.pi)"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianMillsError",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMillsError",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 184,
+      "statement": "noncomputable def gaussianMillsError (c x : ℝ) : ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "hasDerivAt_gaussianMillsError",
+      "full_name": "BanditRLProof.LowerBounds.hasDerivAt_gaussianMillsError",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 188,
+      "statement": "theorem hasDerivAt_gaussianMillsError {c x : ℝ} (hc : 0 < c) : HasDerivAt (gaussianMillsError c) (gaussianMillsErrorDerivative c x) x"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMillsError_source_zero",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMillsError_source_zero",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 198,
+      "statement": "theorem gaussianMillsError_source_zero : gaussianMillsError (4 / Real.pi) 0 = 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "tendsto_gaussianMillsError",
+      "full_name": "BanditRLProof.LowerBounds.tendsto_gaussianMillsError",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 205,
+      "statement": "theorem tendsto_gaussianMillsError {c : ℝ} (hc : 0 < c) : Tendsto (gaussianMillsError c) atTop (𝓝 0)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMillsError_source_nonneg",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMillsError_source_nonneg",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 216,
+      "statement": "theorem gaussianMillsError_source_nonneg {x : ℝ} (hx : 0 ≤ x) : 0 ≤ gaussianMillsError (4 / Real.pi) x"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussian_integral_split",
+      "full_name": "BanditRLProof.LowerBounds.gaussian_integral_split",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 253,
+      "statement": "theorem gaussian_integral_split (x : ℝ) : (∫ t in (0 : ℝ)..x, Real.exp (-t ^ 2)) + (∫ t in Ioi x, Real.exp (-t ^ 2)) = Real.sqrt Real.pi / 2"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMills_upper_integral",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMills_upper_integral",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 276,
+      "statement": "theorem gaussianMills_upper_integral {x : ℝ} (hx : 0 ≤ x) : (∫ t in Ioi x, Real.exp (-t ^ 2)) ≤ Real.exp (-x ^ 2) / (x + Real.sqrt (x ^ 2 + 4 / Real.pi))"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianReal_zero_tail_integral",
+      "full_name": "BanditRLProof.LowerBounds.gaussianReal_zero_tail_integral",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 288,
+      "statement": "theorem gaussianReal_zero_tail_integral (v : ℝ≥0) (hv : 0 < v) (a : ℝ) : (gaussianReal 0 v).real (Ici a) = (Real.sqrt (2 * Real.pi * (v : ℝ)))⁻¹ * ∫ t in Ioi a, Real.exp (-t ^ 2 / (2 * (v : ℝ)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianReal_half_tail_integral",
+      "full_name": "BanditRLProof.LowerBounds.gaussianReal_half_tail_integral",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 299,
+      "statement": "theorem gaussianReal_half_tail_integral (a : ℝ) : (gaussianReal 0 (1 / 2 : ℝ≥0)).real (Ici a) = (∫ t in Ioi a, Real.exp (-t ^ 2)) / Real.sqrt Real.pi"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianReal_half_mills_bounds",
+      "full_name": "BanditRLProof.LowerBounds.gaussianReal_half_mills_bounds",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 307,
+      "statement": "theorem gaussianReal_half_mills_bounds {a : ℝ} (ha : 0 ≤ a) : Real.exp (-a ^ 2) / (a + Real.sqrt (a ^ 2 + 2)) / Real.sqrt Real.pi ≤ (gaussianReal 0 (1 / 2 : ℝ≥0)).real (Ici a) ∧ (gaussianReal 0 (1 / 2 : ℝ≥0)).real (Ici a) ≤ Real.exp (-a ^ 2) / (a + Real.sqrt (a ^ 2 + 4 / Real.pi)) / Real.sqrt Real.pi"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianReal_zero_standardized_tail",
+      "full_name": "BanditRLProof.LowerBounds.gaussianReal_zero_standardized_tail",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 316,
+      "statement": "theorem gaussianReal_zero_standardized_tail (v : ℝ≥0) (hv : 0 < v) (a : ℝ) : (gaussianReal 0 v).real (Ici a) = (∫ t in Ioi (a / Real.sqrt (2 * (v : ℝ))), Real.exp (-t ^ 2)) / Real.sqrt Real.pi"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianReal_zero_mills_bounds",
+      "full_name": "BanditRLProof.LowerBounds.gaussianReal_zero_mills_bounds",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 342,
+      "statement": "theorem gaussianReal_zero_mills_bounds (v : ℝ≥0) (hv : 0 < v) (a : ℝ) (ha : 0 ≤ a) : let z := a / Real.sqrt (2 * (v : ℝ)) Real.exp (-z ^ 2) / (z + Real.sqrt (z ^ 2 + 2)) / Real.sqrt Real.pi ≤ (gaussianReal 0 v).real (Ici a) ∧ (gaussianReal 0 v).real (Ici a) ≤ Real.exp (-z ^ 2) / (z + Real.sqrt (z ^ 2 + 4 / Real.pi)) / Real.sqrt Real.pi"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianMills_expression_rescale",
+      "full_name": "BanditRLProof.LowerBounds.gaussianMills_expression_rescale",
+      "file": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean",
+      "line": 356,
+      "statement": "theorem gaussianMills_expression_rescale {z c q : ℝ} (hz : 0 ≤ z) (hc : 0 < c) (hq : q = 8 * z ^ 2) : Real.exp (-z ^ 2) / (z + Real.sqrt (z ^ 2 + c)) / Real.sqrt Real.pi = Real.sqrt (8 / Real.pi) * Real.exp (-q / 8) / (Real.sqrt q + Real.sqrt (q + 8 * c))"
     },
     {
       "kind": "def",
@@ -59835,6 +61571,86 @@
       "file": "BanditRLProof/LowerBounds/ShannonLengths.lean",
       "line": 76,
       "statement": "theorem exists_lengths_kraft_lt_one_entropy_bound {α : Type*} [Fintype α] (p : α → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) : ∃ l : α → ℕ, (∀ i, 0 < l i) ∧ (∑ i, (1 / 2 : ℝ) ^ l i) < 1 ∧ (∑ i, p i * l i) ≤ discreteEntropyBaseTwo Finset.univ p + 1"
+    },
+    {
+      "kind": "structure",
+      "name": "UnitSubgaussianBanditEnvironment",
+      "full_name": "BanditRLProof.LowerBounds.UnitSubgaussianBanditEnvironment",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 10,
+      "statement": "structure UnitSubgaussianBanditEnvironment (k : ℕ) where"
+    },
+    {
+      "kind": "def",
+      "name": "UnitGaussianBanditEnvironment.toSubgaussian",
+      "full_name": "BanditRLProof.LowerBounds.UnitGaussianBanditEnvironment.toSubgaussian",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 22,
+      "statement": "def UnitGaussianBanditEnvironment.toSubgaussian {k : ℕ} (e : UnitGaussianBanditEnvironment k) : UnitSubgaussianBanditEnvironment k where"
+    },
+    {
+      "kind": "def",
+      "name": "subgaussianExpectedPseudoRegret",
+      "full_name": "BanditRLProof.LowerBounds.subgaussianExpectedPseudoRegret",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 38,
+      "statement": "def subgaussianExpectedPseudoRegret {k : ℕ} (algorithm : Thompson.HistoryAlgorithm (Fin k) ℝ) (e : UnitSubgaussianBanditEnvironment k) (t : ℕ) : ℝ≥0∞"
+    },
+    {
+      "kind": "def",
+      "name": "subgaussianWorstCaseExpectedPseudoRegret",
+      "full_name": "BanditRLProof.LowerBounds.subgaussianWorstCaseExpectedPseudoRegret",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 43,
+      "statement": "def subgaussianWorstCaseExpectedPseudoRegret (k : ℕ) (algorithm : Thompson.HistoryAlgorithm (Fin k) ℝ) (t : ℕ) : ℝ≥0∞"
+    },
+    {
+      "kind": "def",
+      "name": "subgaussianMinimaxExpectedPseudoRegret",
+      "full_name": "BanditRLProof.LowerBounds.subgaussianMinimaxExpectedPseudoRegret",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 47,
+      "statement": "def subgaussianMinimaxExpectedPseudoRegret (k t : ℕ) : ℝ≥0∞"
+    },
+    {
+      "kind": "theorem",
+      "name": "subgaussianExpectedPseudoRegret_gaussian",
+      "full_name": "BanditRLProof.LowerBounds.subgaussianExpectedPseudoRegret_gaussian",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 51,
+      "statement": "theorem subgaussianExpectedPseudoRegret_gaussian {k : ℕ} (algorithm : Thompson.HistoryAlgorithm (Fin k) ℝ) (e : UnitGaussianBanditEnvironment k) (t : ℕ) : subgaussianExpectedPseudoRegret algorithm e.toSubgaussian t = gaussianExpectedPseudoRegret algorithm e t"
+    },
+    {
+      "kind": "theorem",
+      "name": "unitGaussianMinimax_le_subgaussianMinimax",
+      "full_name": "BanditRLProof.LowerBounds.unitGaussianMinimax_le_subgaussianMinimax",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 58,
+      "statement": "theorem unitGaussianMinimax_le_subgaussianMinimax (k t : ℕ) : unitGaussianMinimaxExpectedPseudoRegret k t ≤ subgaussianMinimaxExpectedPseudoRegret k t"
+    },
+    {
+      "kind": "theorem",
+      "name": "moss_subgaussianExpectedPseudoRegret_le",
+      "full_name": "BanditRLProof.LowerBounds.moss_subgaussianExpectedPseudoRegret_le",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 67,
+      "statement": "theorem moss_subgaussianExpectedPseudoRegret_le {k : ℕ} [NeZero k] (hk : 0 < k) (t : ℕ) (hkt : k ≤ t+1) (e : UnitSubgaussianBanditEnvironment k) : subgaussianExpectedPseudoRegret (MOSS.historyAlgorithm hk (t+1)) e t ≤ ENNReal.ofReal (40*Real.sqrt ((k : ℝ)*(t+1)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "subgaussianMinimax_sandwich",
+      "full_name": "BanditRLProof.LowerBounds.subgaussianMinimax_sandwich",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 92,
+      "statement": "theorem subgaussianMinimax_sandwich {k : ℕ} [NeZero k] (hk : 1 < k) (t : ℕ) (hkt : k ≤ t+1) : ENNReal.ofReal ((1/54 : ℝ)*Real.sqrt ((k : ℝ)*(t+1))) ≤ subgaussianMinimaxExpectedPseudoRegret k t ∧ subgaussianMinimaxExpectedPseudoRegret k t ≤ subgaussianWorstCaseExpectedPseudoRegret k (MOSS.historyAlgorithm (by omega) (t+1)) t ∧ subgaussianWorstCaseExpectedPseudoRegret k (MOSS.historyAlgorithm (by omega) (t+1)) t ≤ ENNReal.ofReal (40*Real.sqrt ((k : ℝ)*(t+1)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "moss_nearMinimax",
+      "full_name": "BanditRLProof.LowerBounds.moss_nearMinimax",
+      "file": "BanditRLProof/LowerBounds/SubgaussianMinimax.lean",
+      "line": 107,
+      "statement": "theorem moss_nearMinimax {k : ℕ} [NeZero k] (hk : 1 < k) (t : ℕ) (hkt : k ≤ t+1) : subgaussianWorstCaseExpectedPseudoRegret k (MOSS.historyAlgorithm (by omega) (t+1)) t ≤ 2160 * subgaussianMinimaxExpectedPseudoRegret k t"
     },
     {
       "kind": "structure",
@@ -66427,6 +68243,22 @@
       "file": "BanditRLProof/PullCountDecomposition.lean",
       "line": 54,
       "statement": "theorem finset_sum_comp_pullCount {R : Type v} [AddCommMonoid R] (f : Nat -> R) : ∑ s ∈ Finset.range t, f (pullCount action (action s) s) = ∑ a : Action, ∑ j ∈ Finset.range (pullCount action a t), f j"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_selected_pullCount",
+      "full_name": "BanditRLProof.sum_selected_pullCount",
+      "file": "BanditRLProof/PullCountReindex.lean",
+      "line": 11,
+      "statement": "theorem sum_selected_pullCount {Action : Type*} [DecidableEq Action] (action : ActionTrace Action) (a : Action) (f : ℕ → ℝ) (T : ℕ) : (∑ t ∈ range T, if action t = a then f (pullCount action a t) else 0) = ∑ s ∈ range (pullCount action a T), f s"
+    },
+    {
+      "kind": "theorem",
+      "name": "pullCount_le_one_add_eventCount",
+      "full_name": "BanditRLProof.pullCount_le_one_add_eventCount",
+      "file": "BanditRLProof/PullCountReindex.lean",
+      "line": 25,
+      "statement": "theorem pullCount_le_one_add_eventCount {Action : Type*} [DecidableEq Action] (action : ActionTrace Action) (a : Action) (P : ℕ → Prop) [DecidablePred P] (T : ℕ) (hselected : ∀ t < T, action t = a → 0 < pullCount action a t → P (pullCount action a t)) : (pullCount action a T : ℝ) ≤ 1 + ∑ s ∈ range T, if P (s + 1) then (1 : ℝ) else 0"
     },
     {
       "kind": "theorem",

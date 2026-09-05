@@ -1,4 +1,6 @@
 import Tests.Basic
+import Tests.ConcentrationMartingaleMaximalCanary
+import Tests.MOSSCanary
 import Tests.CurvatureNoiseGapGeometry
 import Tests.ConditionalRewardPartialTrajectoryGeometricAllTimeCanary
 import Tests.ConditionalRewardPartialTrajectoryTelescopingAllTimeCanary
@@ -67,3 +69,6 @@ import Tests.TextbookPartIVChapter14CrossEntropyCanary
 import Tests.TextbookPartIVChapter14FixedCodeCanary
 import Tests.TextbookPartIVChapter14UniformCodeCanary
 import Tests.TextbookPartIVChapter14DominationCanary
+import Tests.MOSSPeelingCanary
+import Tests.MOSSStreamCanary
+import Tests.SubgaussianMinimaxCanary

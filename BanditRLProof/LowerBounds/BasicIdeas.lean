@@ -54,6 +54,44 @@ noncomputable def minimaxExpectedRegret
   ⨅ policy : policyClass,
     worstCaseExpectedRegret regret environmentClass policy.1
 
+/--
+A policy is minimax optimal for an explicit policy class, environment class,
+and fixed-horizon regret functional when it is admissible and its worst-case
+regret attains the minimax value.
+
+The horizon is carried by `regret`; keeping the two classes explicit records
+the source warning that minimax optimality is not a property of a policy alone.
+-/
+def IsMinimaxOptimal
+    {Policy : Type u} {Environment : Type v}
+    (regret : Policy -> Environment -> ENNReal)
+    (policyClass : Set Policy) (environmentClass : Set Environment)
+    (policy : Policy) : Prop :=
+  policy ∈ policyClass ∧
+    worstCaseExpectedRegret regret environmentClass policy =
+      minimaxExpectedRegret regret policyClass environmentClass
+
+/-- A minimax-optimal policy belongs to the policy class over which the infimum is taken. -/
+theorem IsMinimaxOptimal.mem_policyClass
+    {Policy : Type u} {Environment : Type v}
+    {regret : Policy -> Environment -> ENNReal}
+    {policyClass : Set Policy} {environmentClass : Set Environment}
+    {policy : Policy}
+    (hpolicy : IsMinimaxOptimal regret policyClass environmentClass policy) :
+    policy ∈ policyClass :=
+  hpolicy.1
+
+/-- A minimax-optimal policy attains the fixed-class minimax value. -/
+theorem IsMinimaxOptimal.eq_minimaxExpectedRegret
+    {Policy : Type u} {Environment : Type v}
+    {regret : Policy -> Environment -> ENNReal}
+    {policyClass : Set Policy} {environmentClass : Set Environment}
+    {policy : Policy}
+    (hpolicy : IsMinimaxOptimal regret policyClass environmentClass policy) :
+    worstCaseExpectedRegret regret environmentClass policy =
+      minimaxExpectedRegret regret policyClass environmentClass :=
+  hpolicy.2
+
 /-- One environment's regret is below the worst case over any class containing it. -/
 theorem expectedRegret_le_worstCaseExpectedRegret
     {Policy : Type u} {Environment : Type v}

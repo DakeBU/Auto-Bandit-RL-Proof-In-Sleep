@@ -19,7 +19,10 @@
       "slug": "chapter-13-basic-ideas",
       "title": "Lower Bounds: Basic Ideas",
       "status": "partial",
-      "status_note": "The Chapter 13 semantic and deterministic slice now feeds a compiled Chapter 15 Gaussian minimax theorem. The source's Theorem 13.1 order statement follows locally with the explicit universal constant 1/54; the chapter remains partial only because its notes and exercise set are not a completion target.",
+      "core_status": "compiled",
+      "core_status_label": "Compiled theorem route",
+      "chapter_status_label": "Whole main-text contract",
+      "status_note": "Theorem 13.1 compiles through Chapter 15 with c=1/54. Chapter 13 also compiles fixed-class minimax-optimality, the canonical iid Gaussian empirical-mean law, midpoint error events, the Chernoff companion, and both exact Mills-ratio bounds of Eq. (13.4) rescaled to the printed Eq. (13.1). The broader 1-subgaussian class with gaps in [0,1] now has a compiled fixed-horizon MOSS upper bound and constant-factor near-minimax theorem. The whole chapter remains partial pending current integration, export/site verification, review and deployment gates; Notes and Exercises are optional.",
       "print_pages": "155–159",
       "pdf_pages": "189–194",
       "pdf_page": 189,
@@ -29,8 +32,22 @@
         "§13.3 Bibliographic Remarks (CUP p. 158 / author-online p. 184 / PDF p. 193)",
         "§13.4 Exercises (CUP p. 159 / author-online pp. 184–185 / PDF pp. 193–194)"
       ],
+      "section_coverage": [
+        {"section": "Chapter opening and Theorem 13.1", "status": "compiled", "scope": "Worst-case/minimax semantics, fixed-class minimax-optimality, and the unit-Gaussian c=1/54 theorem endpoint compile."},
+        {"section": "§13.1 Main Ideas Underlying Minimax Lower Bounds", "status": "compiled", "scope": "The canonical iid Gaussian empirical-mean law, midpoint error events, exact two-sided Eq. (13.1), least-explored-arm selection, one-coordinate construction, regret identities, history transport, tuning, and the final lower terminal compile. The Chernoff maximum-risk companion remains separately labeled."},
+        {"section": "§13.2 Notes", "status": "source", "scope": "Game interpretation, flat-risk discussion, Pareto optimality, and rate terminology are indexed as optional enrichment and are not formalized."},
+        {"section": "§13.3 Bibliographic Remarks", "status": "source", "scope": "The Abramowitz–Stegun source is mapped; both exact integral bounds of Eq. (13.4) compile in GaussianMillsRatio.lean."},
+        {"section": "§13.4 Exercises", "status": "source", "scope": "Exercises 13.1 and 13.2 are indexed as explicitly optional and unformalized."}
+      ],
+      "completion_definition": "Complete means every precise mathematical item in the chapter opening and §13.1 has a source-faithful compiled endpoint, including the explicit iid empirical-mean Gaussian law and exact Eq. (13.1), and the stated broader-class Algorithm 7/Theorem 9.1 consequence has both its lower and MOSS upper sides. Notes and Exercises are optional but cannot be used to hide a main-text gap.",
+      "completion_blockers": [
+        "Finish current full checks, synchronized export/site verification, structured review, PR, authoritative-main Actions, Pages deployment and live-page checks."
+      ],
       "learning_goals": [
         "Read worst-case and minimax expected regret as explicit supremum and infimum operations.",
+        "Read minimax optimality as attainment relative to a policy class, environment class, and horizon-indexed regret functional.",
+        "Trace the canonical finite iid Gaussian product through summation and scaling to the exact N(mu,1/n) empirical-mean law.",
+        "Trace both compiled Mills-ratio integral bounds through Gaussian density standardization to the exact two-sided Eq. (13.1); distinguish the weaker Chernoff companion.",
         "Derive a least-explored alternative arm from the exact expected pull-count budget.",
         "Separate the deterministic two-environment regret algebra from the statistical change-of-measure bridge supplied in Chapters 14–15.",
         "Trace how the exact Chapter 15 factor 1/27 yields Theorem 13.1 with the explicit universal constant 1/54."
@@ -40,6 +57,18 @@
           "name": "Worst-case and minimax expected regret",
           "math": "R_n^*(\\mathcal E)=\\inf_{\\pi}\\sup_{\\nu\\in\\mathcal E}R_n(\\pi,\\nu).",
           "fallback": "The minimax value is the infimum over policies of their worst expected regret over the environment class.",
+          "status": "compiled"
+        },
+        {
+          "name": "Minimax-optimal policy",
+          "math": "\u005cpi\u005cin\u005cmathcal P,\u005cqquad R_n(\u005cpi,\u005cmathcal E)=R_n^*(\u005cmathcal P,\u005cmathcal E).",
+          "fallback": "A policy is minimax optimal only for fixed admissible classes and a fixed-horizon regret functional, and only if it attains the infimum.",
+          "status": "compiled"
+        },
+        {
+          "name": "Gaussian iid mean and midpoint test companion",
+          "math": "\u005coverline X_n\u005csim\u005cmathcal N(\u005cmu,1/n),\u005cqquad \u005cmax_{\u005cmu\u005cin\u005c{0,\u005cDelta\u005c}}\u005cmathbb P_{\u005cmathcal N(\u005cmu,1/n)}(\u005chat\u005cmu\u005cneq\u005cmu)\u005cle\u005cexp(-n\u005cDelta^2/8).",
+          "fallback": "The arithmetic mean under the canonical product of n independent unit-variance Gaussians has variance one over n, and the midpoint rule has the standard Chernoff maximum-error upper bound. The latter remains weaker than Eq. (13.1).",
           "status": "compiled"
         },
         {
@@ -75,8 +104,26 @@
         "boundary": "BanditRLProof.LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt compiles the source order statement for the same unit-cube, unit-variance Gaussian environment class with the explicit positive constant c=1/54. The local expected regret is an ENNReal lower integral on the canonical n-observation history law."
       },
       "lean_correspondence": [
+        {"name": "BanditRLProof.MOSS.canonicalGapExpectedRegret_le", "status": "compiled", "role": "Fixed-horizon Algorithm 7 bound 39 sqrt(nk) plus the gap sum on the actual canonical history law."},
+        {"name": "BanditRLProof.LowerBounds.subgaussianMinimax_sandwich", "status": "compiled", "role": "For unit-subgaussian arms with gaps in [0,1], lower constant 1/54 and MOSS upper constant 40, using identical policy and regret semantics."},
+        {"name": "BanditRLProof.LowerBounds.moss_nearMinimax", "status": "compiled", "role": "Main-prose constant-factor near-minimax consequence: MOSS worst-case regret is at most 2160 times minimax regret; k>1 and n>=k."},
+        {"name": "BanditRLProof.Concentration.measure_exists_le_independent_partialSum_ge_le_subgaussian", "status": "compiled", "role": "Finite maximal independent centered subgaussian bound with no cardinality loss, consumed by compiled MOSS peeling and regret integration."},
+        {"name": "BanditRLProof.MOSS.historyAlgorithm", "status": "compiled", "role": "Concrete measurable fixed-horizon Algorithm 7 history policy, used by the compiled common-history expected-regret theorem."},
+        {"name": "BanditRLProof.MOSS.selected_index_gt_mean_add_half_gap", "status": "compiled", "role": "Deterministic large-gap selection step under an explicit optimism-deficit premise, not a concentration bound."},
+        {"name": "BanditRLProof.LowerBounds.gaussianMills_lower_integral", "status": "compiled", "role": "Exact lower integral bound of Eq. (13.4)."},
+        {"name": "BanditRLProof.LowerBounds.gaussianMills_upper_integral", "status": "compiled", "role": "Exact upper integral bound of Eq. (13.4), with denominator constant 4/pi."},
+        {"name": "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability_source_bounds", "status": "compiled", "role": "Exact printed Eq. (13.1) for n>0 and Delta>0, with denominator constants 16 and 32/pi."},
         {"name": "BanditRLProof.LowerBounds.worstCaseExpectedRegret", "status": "compiled", "role": "Worst-case ENNReal supremum over an explicit environment class."},
         {"name": "BanditRLProof.LowerBounds.minimaxExpectedRegret", "status": "compiled", "role": "Minimax ENNReal infimum over an explicit policy class."},
+        {"name": "BanditRLProof.LowerBounds.IsMinimaxOptimal", "status": "compiled", "role": "Admissibility plus attainment for fixed policy/environment classes and a horizon-indexed regret functional."},
+        {"name": "BanditRLProof.LowerBounds.gaussianSampleMeanVariance_pos", "status": "compiled", "role": "Nondegenerate variance 1/n for a positive sample size."},
+        {"name": "BanditRLProof.LowerBounds.gaussianIIDObservationLaw", "status": "compiled", "role": "Canonical finite product law of independent N(mu,1) coordinates."},
+        {"name": "BanditRLProof.LowerBounds.gaussianIIDSumLaw", "status": "compiled", "role": "Exact N(n mu,n) law of the coordinate sum by characteristic-function factorization."},
+        {"name": "BanditRLProof.LowerBounds.gaussianIIDSampleMeanLaw", "status": "compiled", "role": "Exact N(mu,1/n) pushforward law of the arithmetic mean for n>0."},
+        {"name": "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision_zero_error_event", "status": "compiled", "role": "The zero-mean midpoint decision error is exactly the source event [Delta/2,infinity)."},
+        {"name": "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision_gap_error_event", "status": "compiled", "role": "The positive-mean midpoint decision error is exactly the symmetric lower-half event."},
+        {"name": "BanditRLProof.LowerBounds.hasSubgaussianMGF_id_gaussianReal_zero", "status": "compiled", "role": "Exact Gaussian MGF supplies the centered sub-Gaussian proxy."},
+        {"name": "BanditRLProof.LowerBounds.gaussianSampleMeanThresholdRisk_le_exp", "status": "compiled", "role": "Source-shaped two-hypothesis maximum-risk Chernoff companion exp(-n Delta^2/8), explicitly not Eq. (13.1)."},
         {"name": "BanditRLProof.LowerBounds.expectedRegret_le_worstCaseExpectedRegret", "status": "compiled", "role": "One member is below the class supremum."},
         {"name": "BanditRLProof.LowerBounds.minimaxExpectedRegret_le_worstCaseExpectedRegret", "status": "compiled", "role": "The infimum is below every admissible policy value."},
         {"name": "BanditRLProof.LowerBounds.le_minimaxExpectedRegret", "status": "compiled", "role": "A uniform policywise lower bound passes through the minimax infimum."},
@@ -91,21 +138,29 @@
       ],
       "dependency_nodes": [
         {"id": "minimax", "label": "minimax / worst-case semantics", "status": "compiled"},
+        {"id": "minimax-optimal", "label": "fixed-class minimax optimality", "status": "compiled"},
+        {"id": "gaussian-iid-mean", "label": "finite iid Gaussian empirical-mean law", "status": "compiled"},
+        {"id": "gaussian-test", "label": "midpoint Gaussian error events and Chernoff upper", "status": "compiled"},
+        {"id": "eq-13-1", "label": "exact two-sided Mills-ratio Eq. (13.1)", "status": "compiled"},
         {"id": "budget", "label": "expected pull budget", "status": "compiled"},
         {"id": "least", "label": "least-explored alternative", "status": "compiled"},
         {"id": "algebra", "label": "two-environment algebra", "status": "compiled"},
         {"id": "transport", "label": "same-policy history KL transport", "status": "compiled"},
-        {"id": "theorem-13-1", "label": "Gaussian minimax terminal", "status": "compiled"}
+        {"id": "theorem-13-1", "label": "Gaussian minimax terminal", "status": "compiled"},
+        {"id": "moss-upper", "label": "fixed-horizon MOSS common-history upper bound", "status": "compiled"},
+        {"id": "broad-near-minimax", "label": "broad-class near-minimax factor 2160", "status": "compiled"}
       ],
       "reading_path": [
         "Read the source statement and its explicit Chapter 15 proof deferral.",
-        "Inspect the minimax definitions before the averaging lemma.",
+        "Inspect the minimax definitions and minimax-optimality predicate before the averaging lemma.",
+        "Inspect the finite iid Gaussian mean-law bridge and midpoint error events, then trace the exact Mills-ratio Eq. (13.1) and the separate maximum-risk Chernoff companion.",
         "Check the Fin.succ indexing: source arms 2,…,k become Lean alternatives 0,…,m−1.",
         "Read the quantitative algebra theorem and locate its visible cross-environment error premise.",
         "Continue through the compiled Chapter 14 event-testing foundation and Chapter 15 Gaussian theorem, then inspect the c=1/54 order corollary."
       ],
       "gaps": [
-        "The optional notes and Chapter 13 exercise set are not formalized by this main-theorem gate."
+        "The broader finite-arm 1-subgaussian near-minimax consequence is compiled. Current whole-chapter integration, rendered export verification, review and publication checks remain pending.",
+        "Optional: Notes 13.2 and Exercises 13.1–13.2 are not formalized and do not block the chapter contract."
       ]
     },
     {
