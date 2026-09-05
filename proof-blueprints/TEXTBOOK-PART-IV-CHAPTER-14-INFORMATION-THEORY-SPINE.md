@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T05:26:25+00:00`
+Generated: `2026-09-05T05:30:27+00:00`
 
 ## Source Task
 
@@ -68,12 +68,12 @@ mapped local adapter before they count as chapter evidence.
 | Theorem 14.1 | Eq. (14.5) equals the RN/log-likelihood formula, including the singular and nonintegrable branches | full supremum/RN equality and exact RN branch adapters compile; no finite-KL or AC premise on the equality; root and aggregate Tests pass | compiled |
 | Eq. (14.6) | common-dominating-measure density formula | `relativeEntropy_commonDensity_eq_if` and the nonnegative `klFun` formula; root/aggregate/full harness passed at `78846b8` for arbitrary sigma-finite domination | compiled |
 | §14.2 metric properties | nonnegativity and `D(P,Q)=0 ↔ P=Q`, with asymmetry/non-triangle statements treated as explanatory nonclaims | order nonnegativity is intrinsic to `ENNReal`; `relativeEntropy_eq_zero_iff` compiles | compiled |
-| Gaussian example | common-variance Gaussian KL formula | unit-variance specialization compiles in Chapter 15; arbitrary positive variance is absent | partial |
+| Gaussian example | common-variance Gaussian KL formula | `klDiv_gaussianReal_same_variance` focused-builds for arbitrary positive variance; root/aggregate verification pending | partial (integration pending) |
 | Bernoulli example | endpoint-complete binary KL formula | `bernoulliRelativeEntropy` and endpoint lemmas compile | compiled |
 | Theorem 14.2 / Eq. (14.7) | unconditional Bretagnolle--Huber event inequality in direction `D(P,Q)` | exact local terminal compiles | compiled |
 | Eq. (14.8) | measure-level overlap lower bound used in the source proof | both the attaining-event proof and source integral-Jensen/Cauchy--Schwarz route compile; `bretagnolleHuberScale_le_half_commonDensityAffinity_sq` supplies the source intermediate; root/aggregate verification pending | partial (integration pending) |
 | Eq. (14.9) | measure-level Le Cam affinity/overlap inequality | `half_commonDensityAffinity_sq_le_overlap` via L2 Cauchy--Schwarz, with integrability proved separately; focused build passed; root integration pending | partial (integration pending) |
-| Gaussian testing application | the displayed Gaussian error bound and the `3/10`, `3/20` consequences under `Δ²/σ²≤1` | not exposed as Chapter 14 declarations | planned |
+| Gaussian testing application | the displayed Gaussian error bound and the `3/10`, `3/20` consequences under `Δ²/σ²≤1` | `gaussian_testing_error_lower_bound`, `gaussian_testing_error_three_tenths`, `gaussian_testing_max_error_three_twentieths` focused-build; root/aggregate verification pending | partial (integration pending) |
 
 Optional rows are §14.3 Notes, §14.4 Bibliographic Remarks, and Exercises
 14.1--14.15.  Exercise 14.10 is a high-value optional target: the existing
@@ -97,14 +97,8 @@ LowerBounds.relativeEntropy_eq_zero_iff
 LowerBounds.BinaryPrefixCode
 LowerBounds.BinaryPrefixCode.kraft_inequality
 LowerBounds.discreteEntropy
-LowerBounds.discreteEntropyBaseTwo
-LowerBounds.expectedCodeLength
-LowerBounds.bernoulliRelativeEntropy
-LowerBounds.relativeEntropy_trim_le
-LowerBounds.bernoulliRelativeEntropy_event_le
-LowerBounds.binaryBretagnolleHuber
 
-<!-- 2142 characters omitted from the middle of this snapshot. -->
+<!-- 2362 characters omitted from the middle of this snapshot. -->
 
 page are verified before this task becomes accepted.
 
@@ -397,9 +391,9 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH14-DISCRETISATION-SUP` | Eq. (14.5) and equality with RN KL in Theorem 14.1 | finite measurable quotients/partitions, supremum | finite-cell Jensen upper bound; binary singular witness; density filtration recovery by conditional-expectation convergence/Fatou; finite-range coding of each layer | `finitePartitionRelativeEntropy_eq_relativeEntropy` and its finite-partition/filtration/encoding helpers | root, aggregate Tests, and full harness pass at 40c56ca | compiled |
 | `CH14-COMMON-DENSITY` | Eq. (14.6) under a common σ-finite dominating measure | RN ratio, integral transport | transfer log-density equality to P-a.e.; transport integrability and integral; retain singular/nonintegrable infinity branches | `relativeEntropy_commonDensity_eq_if`, `relativeEntropy_commonDensity_klFun` and helpers | root/aggregate/full harness passed at `78846b8` | compiled |
 | `CH14-KL-SEPARATION` | nonnegativity and zero iff equality | Mathlib KL | `ENNReal` order plus thin source-mapped equality adapter | `relativeEntropy_eq_zero_iff` | focused Lean | compiled |
-| `CH14-GAUSSIAN-EXAMPLE` | common positive variance formula | Gaussian RN/KL and scaling | generalize the compiled unit-variance Chapter 15 leaf | unit-variance declaration only | focused Lean | partial |
+| `CH14-GAUSSIAN-EXAMPLE` | common positive variance formula | Gaussian RN/KL and integration | generalize the compiled unit-variance density-ratio/affine-LLR route | `klDiv_gaussianReal_same_variance` and helpers | focused build passed; root/aggregate pending | partial (integration pending) |
 | `CH14-MEASURE-OVERLAP` | source Eqs. (14.8)--(14.9) | common density, Cauchy--Schwarz, Jensen | integral exponential Jensen, RN affinity transport, L2 Cauchy--Schwarz; alternative attaining-event proof | `bretagnolleHuberScale_le_half_commonDensityAffinity_sq`, `bretagnolleHuberScale_le_commonDensityOverlap`, `half_commonDensityAffinity_sq_le_overlap` | focused builds passed, including source Jensen intermediate; root/aggregate verification pending | partial (integration pending) |
-| `CH14-GAUSSIAN-TESTING-APPLICATION` | displayed error, `3/10`, and max-error `3/20` consequences | general Gaussian KL, Theorem 14.2, scalar exp bound | direct source application | none | focused Lean | planned |
+| `CH14-GAUSSIAN-TESTING-APPLICATION` | displayed error, `3/10`, and max-error `3/20` consequences | general Gaussian KL, Theorem 14.2, scalar exp bound | direct source application with certified rational constant | `gaussian_testing_error_lower_bound`, `gaussian_testing_error_three_tenths`, `gaussian_testing_max_error_three_twentieths` | focused build passed; root/aggregate pending | partial (integration pending) |
 | `CH14-EX14-10-FULL-DPI` | KL monotonicity after restriction to any sub-σ-algebra | `Measure.trim`, `toReal_rnDeriv_trim`, conditional expectation and Jensen | split infinite KL; identify the trimmed RN density as a conditional expectation and integrate Jensen; event DPI remains a specialization | `relativeEntropy_trim_le` | optional focused Lean | compiled |
 
 ## Failure classification
@@ -58869,6 +58863,70 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
     "line": 922,
     "statement": "theorem unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt {k horizon : Nat} (hk : 1 < k) (hkhorizon : k \u2264 horizon) : ENNReal.ofReal ((1 / 54 : Real) * Real.sqrt ((k : Real) * (horizon : Real))) \u2264 unitGaussianMinimaxExpectedPseudoRegret k (horizon - 1)"
+  },
+  {
+    "kind": "theorem",
+    "name": "log_gaussianPDFReal_div_same_variance",
+    "full_name": "BanditRLProof.LowerBounds.log_gaussianPDFReal_div_same_variance",
+    "file": "BanditRLProof/LowerBounds/GaussianTesting.lean",
+    "line": 11,
+    "statement": "theorem log_gaussianPDFReal_div_same_variance (m n x : \u211d) (v : \u211d\u22650) (hv : v \u2260 0) : Real.log (gaussianPDFReal m v x / gaussianPDFReal n v x) = ((m - n) * x + (n ^ 2 - m ^ 2) / 2) / v"
+  },
+  {
+    "kind": "theorem",
+    "name": "llr_gaussianReal_same_variance_ae",
+    "full_name": "BanditRLProof.LowerBounds.llr_gaussianReal_same_variance_ae",
+    "file": "BanditRLProof/LowerBounds/GaussianTesting.lean",
+    "line": 22,
+    "statement": "theorem llr_gaussianReal_same_variance_ae (m n : \u211d) (v : \u211d\u22650) (hv : v \u2260 0) : llr (gaussianReal m v) (gaussianReal n v) =\u1d50[gaussianReal m v] fun x => ((m - n) * x + (n ^ 2 - m ^ 2) / 2) / v"
+  },
+  {
+    "kind": "theorem",
+    "name": "integrable_llr_gaussianReal_same_variance",
+    "full_name": "BanditRLProof.LowerBounds.integrable_llr_gaussianReal_same_variance",
+    "file": "BanditRLProof/LowerBounds/GaussianTesting.lean",
+    "line": 35,
+    "statement": "theorem integrable_llr_gaussianReal_same_variance (m n : \u211d) (v : \u211d\u22650) (hv : v \u2260 0) : Integrable (llr (gaussianReal m v) (gaussianReal n v)) (gaussianReal m v)"
+  },
+  {
+    "kind": "theorem",
+    "name": "klDiv_gaussianReal_same_variance",
+    "full_name": "BanditRLProof.LowerBounds.klDiv_gaussianReal_same_variance",
+    "file": "BanditRLProof/LowerBounds/GaussianTesting.lean",
+    "line": 44,
+    "statement": "theorem klDiv_gaussianReal_same_variance (m n : \u211d) (v : \u211d\u22650) (hv : v \u2260 0) : InformationTheory.klDiv (gaussianReal m v) (gaussianReal n v) = ENNReal.ofReal ((m - n) ^ 2 / (2 * v))"
+  },
+  {
+    "kind": "theorem",
+    "name": "three_fifths_le_exp_neg_half",
+    "full_name": "BanditRLProof.LowerBounds.three_fifths_le_exp_neg_half",
+    "file": "BanditRLProof/LowerBounds/GaussianTesting.lean",
+    "line": 63,
+    "statement": "theorem three_fifths_le_exp_neg_half : (3 / 5 : \u211d) \u2264 Real.exp (-(1 / 2 : \u211d))"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussian_testing_error_lower_bound",
+    "full_name": "BanditRLProof.LowerBounds.gaussian_testing_error_lower_bound",
+    "file": "BanditRLProof/LowerBounds/GaussianTesting.lean",
+    "line": 74,
+    "statement": "theorem gaussian_testing_error_lower_bound (\u0394 : \u211d) (v : \u211d\u22650) (hv : v \u2260 0) {A : Set \u211d} (hA : MeasurableSet A) : (1 / 2 : \u211d) * Real.exp (-(\u0394 ^ 2 / (2 * v))) \u2264 (gaussianReal 0 v).real A + (gaussianReal \u0394 v).real A\u1d9c"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussian_testing_error_three_tenths",
+    "full_name": "BanditRLProof.LowerBounds.gaussian_testing_error_three_tenths",
+    "file": "BanditRLProof/LowerBounds/GaussianTesting.lean",
+    "line": 85,
+    "statement": "theorem gaussian_testing_error_three_tenths (\u0394 : \u211d) (v : \u211d\u22650) (hv : v \u2260 0) (hsnr : \u0394 ^ 2 / (v : \u211d) \u2264 1) {A : Set \u211d} (hA : MeasurableSet A) : (3 / 10 : \u211d) \u2264 (gaussianReal 0 v).real A + (gaussianReal \u0394 v).real A\u1d9c"
+  },
+  {
+    "kind": "theorem",
+    "name": "gaussian_testing_max_error_three_twentieths",
+    "full_name": "BanditRLProof.LowerBounds.gaussian_testing_max_error_three_twentieths",
+    "file": "BanditRLProof/LowerBounds/GaussianTesting.lean",
+    "line": 98,
+    "statement": "theorem gaussian_testing_max_error_three_twentieths (\u0394 : \u211d) (v : \u211d\u22650) (hv : v \u2260 0) (hsnr : \u0394 ^ 2 / (v : \u211d) \u2264 1) {A : Set \u211d} (hA : MeasurableSet A) : (3 / 20 : \u211d) \u2264 max ((gaussianReal 0 v).real A) ((gaussianReal \u0394 v).real A\u1d9c)"
   },
   {
     "kind": "def",

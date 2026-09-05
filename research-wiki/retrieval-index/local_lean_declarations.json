@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T05:26:14+00:00",
+  "generated": "2026-09-05T05:30:15+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -28856,6 +28856,70 @@
       "file": "BanditRLProof/LowerBounds/GaussianMinimax.lean",
       "line": 922,
       "statement": "theorem unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt {k horizon : Nat} (hk : 1 < k) (hkhorizon : k \u2264 horizon) : ENNReal.ofReal ((1 / 54 : Real) * Real.sqrt ((k : Real) * (horizon : Real))) \u2264 unitGaussianMinimaxExpectedPseudoRegret k (horizon - 1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "log_gaussianPDFReal_div_same_variance",
+      "full_name": "BanditRLProof.LowerBounds.log_gaussianPDFReal_div_same_variance",
+      "file": "BanditRLProof/LowerBounds/GaussianTesting.lean",
+      "line": 11,
+      "statement": "theorem log_gaussianPDFReal_div_same_variance (m n x : \u211d) (v : \u211d\u22650) (hv : v \u2260 0) : Real.log (gaussianPDFReal m v x / gaussianPDFReal n v x) = ((m - n) * x + (n ^ 2 - m ^ 2) / 2) / v"
+    },
+    {
+      "kind": "theorem",
+      "name": "llr_gaussianReal_same_variance_ae",
+      "full_name": "BanditRLProof.LowerBounds.llr_gaussianReal_same_variance_ae",
+      "file": "BanditRLProof/LowerBounds/GaussianTesting.lean",
+      "line": 22,
+      "statement": "theorem llr_gaussianReal_same_variance_ae (m n : \u211d) (v : \u211d\u22650) (hv : v \u2260 0) : llr (gaussianReal m v) (gaussianReal n v) =\u1d50[gaussianReal m v] fun x => ((m - n) * x + (n ^ 2 - m ^ 2) / 2) / v"
+    },
+    {
+      "kind": "theorem",
+      "name": "integrable_llr_gaussianReal_same_variance",
+      "full_name": "BanditRLProof.LowerBounds.integrable_llr_gaussianReal_same_variance",
+      "file": "BanditRLProof/LowerBounds/GaussianTesting.lean",
+      "line": 35,
+      "statement": "theorem integrable_llr_gaussianReal_same_variance (m n : \u211d) (v : \u211d\u22650) (hv : v \u2260 0) : Integrable (llr (gaussianReal m v) (gaussianReal n v)) (gaussianReal m v)"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_gaussianReal_same_variance",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_gaussianReal_same_variance",
+      "file": "BanditRLProof/LowerBounds/GaussianTesting.lean",
+      "line": 44,
+      "statement": "theorem klDiv_gaussianReal_same_variance (m n : \u211d) (v : \u211d\u22650) (hv : v \u2260 0) : InformationTheory.klDiv (gaussianReal m v) (gaussianReal n v) = ENNReal.ofReal ((m - n) ^ 2 / (2 * v))"
+    },
+    {
+      "kind": "theorem",
+      "name": "three_fifths_le_exp_neg_half",
+      "full_name": "BanditRLProof.LowerBounds.three_fifths_le_exp_neg_half",
+      "file": "BanditRLProof/LowerBounds/GaussianTesting.lean",
+      "line": 63,
+      "statement": "theorem three_fifths_le_exp_neg_half : (3 / 5 : \u211d) \u2264 Real.exp (-(1 / 2 : \u211d))"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussian_testing_error_lower_bound",
+      "full_name": "BanditRLProof.LowerBounds.gaussian_testing_error_lower_bound",
+      "file": "BanditRLProof/LowerBounds/GaussianTesting.lean",
+      "line": 74,
+      "statement": "theorem gaussian_testing_error_lower_bound (\u0394 : \u211d) (v : \u211d\u22650) (hv : v \u2260 0) {A : Set \u211d} (hA : MeasurableSet A) : (1 / 2 : \u211d) * Real.exp (-(\u0394 ^ 2 / (2 * v))) \u2264 (gaussianReal 0 v).real A + (gaussianReal \u0394 v).real A\u1d9c"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussian_testing_error_three_tenths",
+      "full_name": "BanditRLProof.LowerBounds.gaussian_testing_error_three_tenths",
+      "file": "BanditRLProof/LowerBounds/GaussianTesting.lean",
+      "line": 85,
+      "statement": "theorem gaussian_testing_error_three_tenths (\u0394 : \u211d) (v : \u211d\u22650) (hv : v \u2260 0) (hsnr : \u0394 ^ 2 / (v : \u211d) \u2264 1) {A : Set \u211d} (hA : MeasurableSet A) : (3 / 10 : \u211d) \u2264 (gaussianReal 0 v).real A + (gaussianReal \u0394 v).real A\u1d9c"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussian_testing_max_error_three_twentieths",
+      "full_name": "BanditRLProof.LowerBounds.gaussian_testing_max_error_three_twentieths",
+      "file": "BanditRLProof/LowerBounds/GaussianTesting.lean",
+      "line": 98,
+      "statement": "theorem gaussian_testing_max_error_three_twentieths (\u0394 : \u211d) (v : \u211d\u22650) (hv : v \u2260 0) (hsnr : \u0394 ^ 2 / (v : \u211d) \u2264 1) {A : Set \u211d} (hA : MeasurableSet A) : (3 / 20 : \u211d) \u2264 max ((gaussianReal 0 v).real A) ((gaussianReal \u0394 v).real A\u1d9c)"
     },
     {
       "kind": "def",
