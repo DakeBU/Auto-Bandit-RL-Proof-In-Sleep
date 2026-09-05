@@ -72,6 +72,12 @@ theorem measurableSet_fixedRadiusMeanEvent (X : ℕ → Ω → ℝ)
 def fixedRadiusCount (X : ℕ → Ω → ℝ) (a ε : ℝ) (n : ℕ) (ω : Ω) : ℝ :=
   ∑ i ∈ range n, (fixedRadiusMeanEvent X a ε (i+1)).indicator (fun _ => (1 : ℝ)) ω
 
+theorem integrable_fixedRadiusCount (X : ℕ → Ω → ℝ)
+    (hXm : ∀ i, StronglyMeasurable (X i)) (a ε : ℝ) (n : ℕ) :
+    Integrable (fixedRadiusCount X a ε n) μ := by
+  exact integrable_finset_sum _ (fun i _ => (integrable_const (1 : ℝ)).indicator
+    (measurableSet_fixedRadiusMeanEvent X hXm a ε (i+1)))
+
 /-- Source Lemma 8.2 expected-count conclusion for centered unit-subgaussian coordinates. -/
 theorem integral_fixedRadiusCount_le (X : ℕ → Ω → ℝ)
     (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ)

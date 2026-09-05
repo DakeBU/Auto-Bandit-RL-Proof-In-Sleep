@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T05:49:27+00:00`
+Generated: `2026-09-05T05:52:51+00:00`
 
 ## Source Task
 
@@ -33558,6 +33558,30 @@ These cards are planning inspiration only.  They do not certify any theorem.
   },
   {
     "kind": "def",
+    "name": "streamMean",
+    "full_name": "BanditRLProof.MOSS.streamMean",
+    "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
+    "line": 9,
+    "statement": "def streamMean (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03c9 : \u03a9) (s : \u2115) : \u211d"
+  },
+  {
+    "kind": "theorem",
+    "name": "fixedLogExceedanceCount_eq_fixedRadiusCount",
+    "full_name": "BanditRLProof.MOSS.fixedLogExceedanceCount_eq_fixedRadiusCount",
+    "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
+    "line": 11,
+    "statement": "theorem fixedLogExceedanceCount_eq_fixedRadiusCount (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03b4 gap : \u211d) (n : \u2115) (\u03c9 : \u03a9) : fixedLogExceedanceCount (streamMean X \u03c9) \u03b4 gap n = Concentration.fixedRadiusCount X (2*logPlus (gap^2/\u03b4)) (gap/2) n \u03c9"
+  },
+  {
+    "kind": "theorem",
+    "name": "integral_indexExceedanceCount_le",
+    "full_name": "BanditRLProof.MOSS.integral_indexExceedanceCount_le",
+    "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
+    "line": 23,
+    "statement": "theorem integral_indexExceedanceCount_le (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) (hlarge : \u03b4 < gap^2) (n : \u2115) : (\u222b \u03c9, indexExceedanceCount (streamMean X \u03c9) \u03b4 gap n \u2202\u03bc) \u2264 1/gap^2 + 1 + (8/gap^2)*(2*logPlus (gap^2/\u03b4)+sqrt (Real.pi*(2*logPlus (gap^2/\u03b4)))+1)"
+  },
+  {
+    "kind": "def",
     "name": "historyAction",
     "full_name": "BanditRLProof.MOSS.historyAction",
     "file": "BanditRLProof/Algorithms/MOSSHistory.lean",
@@ -44630,10 +44654,18 @@ These cards are planning inspiration only.  They do not certify any theorem.
   },
   {
     "kind": "theorem",
+    "name": "integrable_fixedRadiusCount",
+    "full_name": "BanditRLProof.Concentration.integrable_fixedRadiusCount",
+    "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
+    "line": 75,
+    "statement": "theorem integrable_fixedRadiusCount (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (a \u03b5 : \u211d) (n : \u2115) : Integrable (fixedRadiusCount X a \u03b5 n) \u03bc"
+  },
+  {
+    "kind": "theorem",
     "name": "integral_fixedRadiusCount_le",
     "full_name": "BanditRLProof.Concentration.integral_fixedRadiusCount_le",
     "file": "BanditRLProof/ConcentrationIndexOccupancy.lean",
-    "line": 76,
+    "line": 82,
     "statement": "theorem integral_fixedRadiusCount_le (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (a \u03b5 : \u211d) (ha : 0 < a) (h\u03b5 : 0 < \u03b5) (n : \u2115) : (\u222b \u03c9, fixedRadiusCount X a \u03b5 n \u03c9 \u2202\u03bc) \u2264 1+(2/\u03b5^2)*(a+sqrt (Real.pi*a)+1)"
   },
   {
@@ -96428,6 +96460,42 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "target_fingerprint": "",
     "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
     "time": "2026-09-05T05:45:32+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "build",
+    "lean": "BanditRLProof/ConcentrationIndexOccupancy.lean",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [],
+    "notes": "Source Lemma 8.2 expected-count conclusion compiled from independent centered unit-subgaussian coordinates: integer cutoff, tail probability, measurable events, finite integral sum. Canary 3519 jobs baseline axioms. Full 783d436 check passed 400 tests/7 skips/177.988s. MOSS substitution and constant 15 remain pending.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "compiled-leaf",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "lower",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "compiled",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T05:49:38+00:00",
     "verifier_evidence": [],
     "worker_id": ""
   }

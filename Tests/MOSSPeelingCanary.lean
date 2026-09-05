@@ -3,6 +3,7 @@ import BanditRLProof.Algorithms.MOSSOptimism
 import BanditRLProof.Algorithms.MOSSOccupancy
 import BanditRLProof.ConcentrationGaussianOccupancy
 import BanditRLProof.ConcentrationIndexOccupancy
+import BanditRLProof.Algorithms.MOSSExpectedOccupancy
 
 open BanditRLProof MeasureTheory ProbabilityTheory Real
 open scoped ENNReal NNReal
@@ -82,3 +83,15 @@ example {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasur
 #print axioms Concentration.sum_le_occupancy_bound
 #print axioms Concentration.measure_fixedRadiusMeanEvent_le
 #print axioms Concentration.integral_fixedRadiusCount_le
+
+example {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ)
+    (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ)
+    (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (hlarge : δ < gap^2) (n : ℕ) :
+    (∫ ω, MOSS.indexExceedanceCount (MOSS.streamMean X ω) δ gap n ∂μ) ≤
+      1/gap^2 + 1 + (8/gap^2)*(2*MOSS.logPlus (gap^2/δ)+
+        sqrt (Real.pi*(2*MOSS.logPlus (gap^2/δ)))+1) :=
+  MOSS.integral_indexExceedanceCount_le X hXm hind hmean hsubG δ gap hδ hg hlarge n
+
+#print axioms MOSS.fixedLogExceedanceCount_eq_fixedRadiusCount
+#print axioms MOSS.integral_indexExceedanceCount_le

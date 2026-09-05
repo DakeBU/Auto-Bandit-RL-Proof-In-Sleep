@@ -82,3 +82,21 @@ is assumed in the final theorem. This covers the expected-count conclusion,
 not a separate formal definition/comparison of the source auxiliary kappa-prime.
 Next required MOSS step is substituting a=2*logPlus(gap^2/delta), epsilon=gap/2,
 then proving the large-gap constant 15 and connecting actual selected counts.
+
+MOSS expectation consumer route: identify the fixed-log count definition with
+fixedRadiusCount at a=2*logPlus(gap^2/delta), epsilon=gap/2; prove the derived
+fixed count integrable from measurable indicators; integrate the existing
+pointwise correction. Positivity of logPlus follows from delta<gap^2, which
+will be derived from the required large-gap condition, not assumed in the
+final regret statement. APIs: integral_mono_of_nonneg, integrable_finset_sum,
+integral_add and finite-measure constant integral. Source and constants unchanged.
+
+Compiled: `MOSSExpectedOccupancy.integral_indexExceedanceCount_le` (namespace
+MOSS) now yields the actual variable-radius count expectation bounded by
+gap^-2+1+8/gap^2*(2L+sqrt(2*pi*L)+1), L=logPlus(gap^2/delta).
+The fixed-count integrability producer is also compiled. This still requires
+the numerical large-gap simplification and actual selected-count connection.
+Next scalar route: q=gap^2/delta>=64, use Real.log_div_sqrt_antitoneOn and
+Real.log_div_self_antitoneOn (Log.Monotone), sqrt monotonicity, log_two_lt_d9,
+and pi_lt_d2. Bound log(64)<=17/4 and sqrt(2*pi*log(64))<=21/4;
+the resulting rational bound 119/8 is below 15. No change of source constant.
