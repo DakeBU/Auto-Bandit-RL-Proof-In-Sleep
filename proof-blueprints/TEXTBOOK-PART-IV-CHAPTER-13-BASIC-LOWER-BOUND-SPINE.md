@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T06:07:47+00:00`
+Generated: `2026-09-05T06:11:56+00:00`
 
 ## Source Task
 
@@ -33976,6 +33976,78 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
     "line": 167,
     "statement": "theorem measure_meanBadEvent_le_fifteen (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) : \u03bc (meanBadEvent X \u03b4 gap) \u2264 ENNReal.ofReal (15*\u03b4/gap^2)"
+  },
+  {
+    "kind": "theorem",
+    "name": "neg_optimismDeficit_le_centeredIndex",
+    "full_name": "BanditRLProof.MOSS.neg_optimismDeficit_le_centeredIndex",
+    "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+    "line": 7,
+    "statement": "theorem neg_optimismDeficit_le_centeredIndex {\u03a9 : Type*} [MeasurableSpace \u03a9] (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03b4 : \u211d) (n s : \u2115) (\u03c9 : \u03a9) (hs : 0 < s) (hsn : s \u2264 n) : -optimismDeficit X \u03b4 n \u03c9 \u2264 centeredIndex X \u03b4 s \u03c9"
+  },
+  {
+    "kind": "theorem",
+    "name": "radius_eq_streamRadius",
+    "full_name": "BanditRLProof.MOSS.radius_eq_streamRadius",
+    "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+    "line": 22,
+    "statement": "theorem radius_eq_streamRadius (n k s : \u2115) (hn : 0 < n) (hk : 0 < k) : radius n k s = sqrt (4/(s : \u211d)*logPlus (1/((s : \u211d)*((k : \u211d)/(n : \u211d)))))"
+  },
+  {
+    "kind": "def",
+    "name": "streamEmpirical",
+    "full_name": "BanditRLProof.MOSS.streamEmpirical",
+    "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+    "line": 34,
+    "statement": "def streamEmpirical {\u03a9 : Type*} {k : \u2115} (mean : Fin k \u2192 \u211d) (X : Fin k \u2192 \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03c9 : \u03a9) (trace : ActionTrace (Fin k)) (t : \u2115) (a : Fin k) : \u211d"
+  },
+  {
+    "kind": "theorem",
+    "name": "pullCount_le_of_stream_policy",
+    "full_name": "BanditRLProof.MOSS.pullCount_le_of_stream_policy",
+    "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+    "line": 41,
+    "statement": "theorem pullCount_le_of_stream_policy {\u03a9 : Type*} [MeasurableSpace \u03a9] {k : \u2115} (hk : 0 < k) (n : \u2115) (hkn : k \u2264 n) (mean : Fin k \u2192 \u211d) (X : Fin k \u2192 \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03c9 : \u03a9) (trace : ActionTrace (Fin k)) (hpolicy : \u2200 t < n, trace t = action hk n t (streamEmpirical mean X \u03c9 trace t) (fun a => pullCount trace a t)) (best chosen : Fin k) (hgap : 2 * optimismDeficit (X best) ((k : \u211d)/(n : \u211d)) n \u03c9 < mean best - mean chosen) : (pullCount trace chosen n : \u211d) \u2264 1 + indexExceedanceCount (streamMean (X chosen) \u03c9) ((k : \u211d)/(n : \u211d)) (mean best - mean chosen) n"
+  },
+  {
+    "kind": "def",
+    "name": "streamCounts",
+    "full_name": "BanditRLProof.MOSS.streamCounts",
+    "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+    "line": 100,
+    "statement": "def streamCounts {\u03a9 : Type*} {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (X : Fin k \u2192 \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03c9 : \u03a9) : \u2115 \u2192 Fin k \u2192 \u2115 | 0 => fun _ => 0 | t+1 => fun a => let counts := streamCounts hk n mean X \u03c9 t counts a + if action hk n t (fun b => mean b + streamMean (X b) \u03c9 (counts b)) counts = a then 1 else 0"
+  },
+  {
+    "kind": "def",
+    "name": "streamTrace",
+    "full_name": "BanditRLProof.MOSS.streamTrace",
+    "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+    "line": 108,
+    "statement": "def streamTrace {\u03a9 : Type*} {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (X : Fin k \u2192 \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03c9 : \u03a9) : ActionTrace (Fin k)"
+  },
+  {
+    "kind": "theorem",
+    "name": "pullCount_streamTrace",
+    "full_name": "BanditRLProof.MOSS.pullCount_streamTrace",
+    "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+    "line": 114,
+    "statement": "theorem pullCount_streamTrace {\u03a9 : Type*} {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (X : Fin k \u2192 \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03c9 : \u03a9) (t : \u2115) (a : Fin k) : pullCount (streamTrace hk n mean X \u03c9) a t = streamCounts hk n mean X \u03c9 t a"
+  },
+  {
+    "kind": "theorem",
+    "name": "streamTrace_policy",
+    "full_name": "BanditRLProof.MOSS.streamTrace_policy",
+    "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+    "line": 123,
+    "statement": "theorem streamTrace_policy {\u03a9 : Type*} {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (X : Fin k \u2192 \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03c9 : \u03a9) (t : \u2115) : streamTrace hk n mean X \u03c9 t = action hk n t (streamEmpirical mean X \u03c9 (streamTrace hk n mean X \u03c9) t) (fun a => pullCount (streamTrace hk n mean X \u03c9) a t)"
+  },
+  {
+    "kind": "theorem",
+    "name": "streamTrace_pullCount_le",
+    "full_name": "BanditRLProof.MOSS.streamTrace_pullCount_le",
+    "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+    "line": 133,
+    "statement": "theorem streamTrace_pullCount_le {\u03a9 : Type*} [MeasurableSpace \u03a9] {k : \u2115} (hk : 0 < k) (n : \u2115) (hkn : k \u2264 n) (mean : Fin k \u2192 \u211d) (X : Fin k \u2192 \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03c9 : \u03a9) (best chosen : Fin k) (hgap : 2 * optimismDeficit (X best) ((k : \u211d)/(n : \u211d)) n \u03c9 < mean best - mean chosen) : (pullCount (streamTrace hk n mean X \u03c9) chosen n : \u211d) \u2264 1 + indexExceedanceCount (streamMean (X chosen) \u03c9) ((k : \u211d)/(n : \u211d)) (mean best - mean chosen) n"
   },
   {
     "kind": "def",
@@ -96729,6 +96801,46 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "target_fingerprint": "",
     "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
     "time": "2026-09-05T06:01:10+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "build",
+    "lean": "BanditRLProof/PullCountReindex.lean",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [
+      "BanditRLProof.sum_selected_pullCount",
+      "BanditRLProof.pullCount_le_one_add_eventCount",
+      "BanditRLProof.MOSS.gap_mul_integral_indexExceedanceCount_le_sharp"
+    ],
+    "notes": "Compiled sharp MOSS expectation and exact selected-round reindexing. Initialization-safe count transport retains explicit selected-event premise; actual policy producer and final regret assembly remain open. Chapter partial.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "compiled-leaf",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "lower",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "compiled",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T06:08:20+00:00",
     "verifier_evidence": [],
     "worker_id": ""
   }

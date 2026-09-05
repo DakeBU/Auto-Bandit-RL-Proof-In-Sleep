@@ -149,3 +149,29 @@ The selected-event premise is explicit, not a completed algorithm theorem.
 Next derive this event from actual MOSS choices, count-consistent empirical
 streams, and the optimal-arm optimism deficit; then integrate and assemble
 the small/large-gap regret split. Chapter status remains partial.
+
+Policy-event producer route: project-local MOSS stream bridge, using the
+actual `MOSS.action` equality at each time (not an exceedance oracle), empirical
+means equal to mean plus centered stream averages at the realized pull count.
+First prove every positive prefix index is bounded below by minus the recursive
+optimism deficit; normalize delta=k/n in radius by field algebra. Initialization
+forces zero pre-pull counts for initial selections and positive best-arm counts
+after k. Apply the existing argmax selection lemma and initialization-safe
+count transport. Assumptions are n>=k>0 and pathwise policy consistency;
+stochastic stream/history law identification remains a separate obligation.
+
+The policy-equation count bound compiled. To discharge even this deterministic
+equation premise, construct a recursive vector of arm counts, choose using
+MOSS.action at that vector and the corresponding empirical stream averages,
+and prove by induction that the vector equals Core.pullCount for the generated
+trace. No change to probability contracts; this is a concrete algorithm producer.
+
+Compiled `MOSSStream`: prefix deficit control, radius normalization, exact
+stream-count state invariant, and `streamTrace_pullCount_le`. This last theorem
+constructs the algorithm and needs no exceedance/policy-equation oracle. It
+still has the pathwise large-gap condition gap>2Z. Next assemble the pathwise
+regret split at max(8*sqrt(k/n),2Z), integrate the already proved occupancy
+and deficit bounds, and identify this centered-table execution with the
+common history law for arbitrary finite-arm unit-subgaussian rewards.
+Full check at c8f4106 passed: root build, Tests (8912 jobs), ProofGraphExport,
+400 Python tests in 209.945 seconds, 7 skipped. Newer commits need fresh checks.

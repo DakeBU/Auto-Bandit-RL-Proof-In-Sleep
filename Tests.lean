@@ -42,3 +42,4 @@ import Tests.StochasticGradientBanditTheoremTwoNativePrefixCanary
 import Tests.StochasticGradientBanditTheoremTwoSelectedIIDCanary
 import Tests.StochasticGradientBanditTheoremFourContractAuditCanary
 import Tests.MOSSPeelingCanary
+import Tests.MOSSStreamCanary

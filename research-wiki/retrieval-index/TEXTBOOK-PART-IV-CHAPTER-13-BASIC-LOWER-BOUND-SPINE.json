@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
-  "generated": "2026-09-05T06:07:53+00:00",
+  "generated": "2026-09-05T06:12:01+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -32875,6 +32875,78 @@
       "file": "BanditRLProof/Algorithms/MOSSPeeling.lean",
       "line": 167,
       "statement": "theorem measure_meanBadEvent_le_fifteen (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) : μ (meanBadEvent X δ gap) ≤ ENNReal.ofReal (15*δ/gap^2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "neg_optimismDeficit_le_centeredIndex",
+      "full_name": "BanditRLProof.MOSS.neg_optimismDeficit_le_centeredIndex",
+      "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+      "line": 7,
+      "statement": "theorem neg_optimismDeficit_le_centeredIndex {Ω : Type*} [MeasurableSpace Ω] (X : ℕ → Ω → ℝ) (δ : ℝ) (n s : ℕ) (ω : Ω) (hs : 0 < s) (hsn : s ≤ n) : -optimismDeficit X δ n ω ≤ centeredIndex X δ s ω"
+    },
+    {
+      "kind": "theorem",
+      "name": "radius_eq_streamRadius",
+      "full_name": "BanditRLProof.MOSS.radius_eq_streamRadius",
+      "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+      "line": 22,
+      "statement": "theorem radius_eq_streamRadius (n k s : ℕ) (hn : 0 < n) (hk : 0 < k) : radius n k s = sqrt (4/(s : ℝ)*logPlus (1/((s : ℝ)*((k : ℝ)/(n : ℝ)))))"
+    },
+    {
+      "kind": "def",
+      "name": "streamEmpirical",
+      "full_name": "BanditRLProof.MOSS.streamEmpirical",
+      "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+      "line": 34,
+      "statement": "def streamEmpirical {Ω : Type*} {k : ℕ} (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) (trace : ActionTrace (Fin k)) (t : ℕ) (a : Fin k) : ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "pullCount_le_of_stream_policy",
+      "full_name": "BanditRLProof.MOSS.pullCount_le_of_stream_policy",
+      "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+      "line": 41,
+      "statement": "theorem pullCount_le_of_stream_policy {Ω : Type*} [MeasurableSpace Ω] {k : ℕ} (hk : 0 < k) (n : ℕ) (hkn : k ≤ n) (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) (trace : ActionTrace (Fin k)) (hpolicy : ∀ t < n, trace t = action hk n t (streamEmpirical mean X ω trace t) (fun a => pullCount trace a t)) (best chosen : Fin k) (hgap : 2 * optimismDeficit (X best) ((k : ℝ)/(n : ℝ)) n ω < mean best - mean chosen) : (pullCount trace chosen n : ℝ) ≤ 1 + indexExceedanceCount (streamMean (X chosen) ω) ((k : ℝ)/(n : ℝ)) (mean best - mean chosen) n"
+    },
+    {
+      "kind": "def",
+      "name": "streamCounts",
+      "full_name": "BanditRLProof.MOSS.streamCounts",
+      "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+      "line": 100,
+      "statement": "def streamCounts {Ω : Type*} {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) : ℕ → Fin k → ℕ | 0 => fun _ => 0 | t+1 => fun a => let counts := streamCounts hk n mean X ω t counts a + if action hk n t (fun b => mean b + streamMean (X b) ω (counts b)) counts = a then 1 else 0"
+    },
+    {
+      "kind": "def",
+      "name": "streamTrace",
+      "full_name": "BanditRLProof.MOSS.streamTrace",
+      "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+      "line": 108,
+      "statement": "def streamTrace {Ω : Type*} {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) : ActionTrace (Fin k)"
+    },
+    {
+      "kind": "theorem",
+      "name": "pullCount_streamTrace",
+      "full_name": "BanditRLProof.MOSS.pullCount_streamTrace",
+      "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+      "line": 114,
+      "statement": "theorem pullCount_streamTrace {Ω : Type*} {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) (t : ℕ) (a : Fin k) : pullCount (streamTrace hk n mean X ω) a t = streamCounts hk n mean X ω t a"
+    },
+    {
+      "kind": "theorem",
+      "name": "streamTrace_policy",
+      "full_name": "BanditRLProof.MOSS.streamTrace_policy",
+      "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+      "line": 123,
+      "statement": "theorem streamTrace_policy {Ω : Type*} {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) (t : ℕ) : streamTrace hk n mean X ω t = action hk n t (streamEmpirical mean X ω (streamTrace hk n mean X ω) t) (fun a => pullCount (streamTrace hk n mean X ω) a t)"
+    },
+    {
+      "kind": "theorem",
+      "name": "streamTrace_pullCount_le",
+      "full_name": "BanditRLProof.MOSS.streamTrace_pullCount_le",
+      "file": "BanditRLProof/Algorithms/MOSSStream.lean",
+      "line": 133,
+      "statement": "theorem streamTrace_pullCount_le {Ω : Type*} [MeasurableSpace Ω] {k : ℕ} (hk : 0 < k) (n : ℕ) (hkn : k ≤ n) (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) (best chosen : Fin k) (hgap : 2 * optimismDeficit (X best) ((k : ℝ)/(n : ℝ)) n ω < mean best - mean chosen) : (pullCount (streamTrace hk n mean X ω) chosen n : ℝ) ≤ 1 + indexExceedanceCount (streamMean (X chosen) ω) ((k : ℝ)/(n : ℝ)) (mean best - mean chosen) n"
     },
     {
       "kind": "def",
@@ -95623,6 +95695,46 @@
       "target_fingerprint": "",
       "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
       "time": "2026-09-05T06:01:10+00:00",
+      "verifier_evidence": [],
+      "worker_id": ""
+    },
+    {
+      "attempt_id": "",
+      "changed_files": [],
+      "dag_depth": 0,
+      "dag_nodes": 0,
+      "elapsed_seconds": 0.0,
+      "error_signature": "",
+      "experiment_id": "",
+      "harness": "",
+      "input_tokens": 0,
+      "kind": "build",
+      "lean": "BanditRLProof/PullCountReindex.lean",
+      "lean_check_seconds": 0.0,
+      "new_declarations": [
+        "BanditRLProof.sum_selected_pullCount",
+        "BanditRLProof.pullCount_le_one_add_eventCount",
+        "BanditRLProof.MOSS.gap_mul_integral_indexExceedanceCount_le_sharp"
+      ],
+      "notes": "Compiled sharp MOSS expectation and exact selected-round reindexing. Initialization-safe count transport retains explicit selected-event premise; actual policy producer and final regret assembly remain open. Chapter partial.",
+      "obligations_after": 0,
+      "obligations_before": 0,
+      "output_tokens": 0,
+      "parent_id": "",
+      "progress_class": "compiled-leaf",
+      "prompt_chars": 0,
+      "reused_declarations": [],
+      "reviewer_validated": false,
+      "role": "lower",
+      "route_fingerprint": "",
+      "route_packet_hash": "",
+      "run_id": "",
+      "source": "",
+      "statement_hash": "",
+      "status": "compiled",
+      "target_fingerprint": "",
+      "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+      "time": "2026-09-05T06:08:20+00:00",
       "verifier_evidence": [],
       "worker_id": ""
     }
