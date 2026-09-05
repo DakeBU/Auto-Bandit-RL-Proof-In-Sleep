@@ -44,6 +44,16 @@ in the dated integration review. New MOSS additions require a fresh gate.
 
 ### MOSS dependency progress
 
+- `Concentration.submartingale_exp_of_martingale`,
+  `measure_exists_le_martingale_ge_le_exp`,
+  `measure_exists_le_martingale_ge_le_subgaussian`, and
+  `measure_exists_le_independent_partialSum_ge_le_subgaussian` now compile.
+  They implement the no-cardinality-loss source Theorem 9.2 route, with
+  explicit independent centered subgaussian coordinate assumptions.
+  Dedicated external canary passes (3473-job build, baseline axioms only);
+  fresh full integration remains pending.
+  Source Lemma 9.3 is now the next missing concentration node.
+
 - `MOSS.logPlus`, `radius`, `index`, `action`: exact source index and
   zero-based initialization; `radius_sq` retains the factor four.
 - `action_initial_arm` and `action_index_max`: initialization and
@@ -54,9 +64,10 @@ in the dated integration review. New MOSS additions require a fresh gate.
   `historyAlgorithm_policy_apply`, `historyAction_initialization`,
   `historyAction_index_max`: concrete measurable common-interface policy,
   with inclusive history at t feeding the next action at t+1.
-- Both modules pass focused build (2951 jobs); typed canary passes with
-  baseline axioms only. The full new integration gate is pending.
-  Theorem 9.2 / Lemma 9.3 and regret
+- Both policy modules pass focused build (2951 jobs); typed canary passes
+  with baseline axioms only. Full integration at `1eb5af0` passed: root 8856
+  jobs, Tests 8899 jobs, ProofGraphExport and 400 Python tests (7 skipped).
+  Lemma 9.3, actual reward-stream instantiation, and regret
   assembly remain open. Do not promote this policy constructor to the
   MOSS upper theorem.
 

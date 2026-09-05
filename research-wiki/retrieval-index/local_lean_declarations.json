@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T05:03:28+00:00",
+  "generated": "2026-09-05T05:12:36+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -14048,6 +14048,38 @@
       "file": "BanditRLProof/ConcentrationFixedMGF.lean",
       "line": 333,
       "statement": "theorem measure_sum_ge_inter_sum_le_of_compensated_hasCondMGFUpperBoundAt [IsZeroOrProbabilityMeasure \u03bc] (Y V : \u2115 \u2192 \u03a9 \u2192 \u211d) (n : \u2115) (tilt varianceCoeff threshold varianceBudget : \u211d) (h_adapted : StronglyAdapted \u2131 (fun i \u03c9 => tilt * Y i \u03c9 - varianceCoeff * V i \u03c9)) (h0 : HasMGFUpperBoundAt (fun \u03c9 => tilt * Y 0 \u03c9 - varianceCoeff * V 0 \u03c9) 1 0 \u03bc) (h_mgf : \u2200 i < n - 1, HasCondMGFUpperBoundAt (\u2131 i) (\u2131.le i) (fun \u03c9 => tilt * Y (i + 1) \u03c9 - varianceCoeff * V (i + 1) \u03c9) 1 0 \u03bc) (htilt : 0 \u2264 tilt) (hvarianceCoeff : 0 \u2264 varianceCoeff) : \u03bc {\u03c9 | threshold \u2264 \u2211 i \u2208 Finset.range n, Y i \u03c9 \u2227 (\u2211 i \u2208 Finset.range n, V i \u03c9) \u2264 varianceBudget} \u2264 ENNReal.ofReal (Real.exp (-tilt * threshold + varianceCoeff * varianceBudget))"
+    },
+    {
+      "kind": "theorem",
+      "name": "submartingale_exp_of_martingale",
+      "full_name": "BanditRLProof.Concentration.submartingale_exp_of_martingale",
+      "file": "BanditRLProof/ConcentrationMartingaleMaximal.lean",
+      "line": 25,
+      "statement": "theorem submartingale_exp_of_martingale (hS : Martingale S F \u03bc) (hint : \u2200 i, Integrable (fun \u03c9 => exp (S i \u03c9)) \u03bc) : Submartingale (fun i \u03c9 => exp (S i \u03c9)) F \u03bc"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_exists_le_martingale_ge_le_exp",
+      "full_name": "BanditRLProof.Concentration.measure_exists_le_martingale_ge_le_exp",
+      "file": "BanditRLProof/ConcentrationMartingaleMaximal.lean",
+      "line": 38,
+      "statement": "theorem measure_exists_le_martingale_ge_le_exp (hS : Martingale S F \u03bc) (hint : \u2200 i t, Integrable (fun \u03c9 => exp (t * S i \u03c9)) \u03bc) (n : \u2115) (c : \u211d\u22650) (hmgf : HasSubgaussianMGF (S n) c \u03bc) (\u03b5 t : \u211d) (ht : 0 < t) : \u03bc {\u03c9 | \u2203 i, i \u2264 n \u2227 \u03b5 \u2264 S i \u03c9} \u2264 ENNReal.ofReal (exp (-t * \u03b5 + (c : \u211d) * t ^ 2 / 2))"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_exists_le_martingale_ge_le_subgaussian",
+      "full_name": "BanditRLProof.Concentration.measure_exists_le_martingale_ge_le_subgaussian",
+      "file": "BanditRLProof/ConcentrationMartingaleMaximal.lean",
+      "line": 74,
+      "statement": "theorem measure_exists_le_martingale_ge_le_subgaussian (hS : Martingale S F \u03bc) (hint : \u2200 i t, Integrable (fun \u03c9 => exp (t * S i \u03c9)) \u03bc) (n : \u2115) (c : \u211d\u22650) (hc : 0 < (c : \u211d)) (hmgf : HasSubgaussianMGF (S n) c \u03bc) (\u03b5 : \u211d) (h\u03b5 : 0 < \u03b5) : \u03bc {\u03c9 | \u2203 i, i \u2264 n \u2227 \u03b5 \u2264 S i \u03c9} \u2264 ENNReal.ofReal (exp (-(\u03b5 ^ 2) / (2 * (c : \u211d))))"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_exists_le_independent_partialSum_ge_le_subgaussian",
+      "full_name": "BanditRLProof.Concentration.measure_exists_le_independent_partialSum_ge_le_subgaussian",
+      "file": "BanditRLProof/ConcentrationMartingaleMaximal.lean",
+      "line": 91,
+      "statement": "theorem measure_exists_le_independent_partialSum_ge_le_subgaussian (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (c : \u211d\u22650) (hc : 0 < (c : \u211d)) (hsubG : \u2200 i, HasSubgaussianMGF (X i) c \u03bc) (n : \u2115) (hn : 0 < n) (\u03b5 : \u211d) (h\u03b5 : 0 < \u03b5) : \u03bc {\u03c9 | \u2203 i, i \u2264 n \u2227 \u03b5 \u2264 \u2211 j \u2208 range i, X (j + 1) \u03c9} \u2264 ENNReal.ofReal (exp (-(\u03b5 ^ 2) / (2 * (n : \u211d) * (c : \u211d))))"
     },
     {
       "kind": "theorem",

@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T05:03:57+00:00`
+Generated: `2026-09-05T05:13:18+00:00`
 
 ## Source Task
 
@@ -317,15 +317,8 @@ the `Delta*n/2` statement is retained only as the zero-error corollary.
 | explicit policy and environment classes | subtype arguments | avoids silently quantifying over a different model class | no |
 | `ENNReal` regret codomain | typed | supplies complete-lattice sup/inf without a hidden boundedness premise | no |
 
-<!-- 4901 characters omitted from the middle of this snapshot. -->
+<!-- 5721 characters omitted from the middle of this snapshot. -->
 
-## Proof DAG
-
-| Node | Interface | Dependencies | Lean declaration | Mathlib status | Gate | Status |
-| --- | --- | --- | --- | --- | --- | --- |
-| `CH13-MINIMAX-SURFACE` | explicit sup/inf expected-regret semantics | complete lattice | `worstCaseExpectedRegret`, `minimaxExpectedRegret` and order leaves | project-local | focused Lean | compiled |
-| `CH13-MINIMAX-OPTIMAL` | admissible policy attains the minimax value for fixed classes/horizon | minimax surface | `IsMinimaxOptimal` and projections | project-local | focused Lean | compiled |
-| `CH13-GAUSSIAN-TEST-DECISION` | midpoint decision and exact zero/gap error events | ordered-field comparison; `Delta>0` | `twoPointGaussianThresholdDecision_zero_error_event`, `twoPointGaussianThresholdDecision_gap_error_event` | project-local | focused Lean | compiled |
 | `CH13-GAUSSIAN-SAMPLE-MEAN-LAW` | empirical mean of `n>0` independent unit-variance Gaussians has law `N(mu,1/n)` | finite product measure, characteristic-function product, Gaussian scaling | `gaussianIIDObservationLaw`, `gaussianCoordinateAverage`, `gaussianIIDSumLaw`, `gaussianIIDSampleMeanLaw` | project-local bridge | focused Lean | compiled |
 | `CH13-GAUSSIAN-TEST-CHERNOFF` | both `N(0,1/n)` and `N(Delta,1/n)` midpoint errors, and their maximum, are at most `exp(-n*Delta^2/8)` | exact Gaussian MGF, reflection, and Mathlib Chernoff | `hasSubgaussianMGF_id_gaussianReal_zero`, `hasSubgaussianMGF_gap_sub_id_gaussianReal`, `gaussianSampleMeanThresholdRisk_le_exp` | project-local consequence | focused Lean | compiled |
 | `CH13-EQ-13-1` | exact printed two-sided Mills-ratio bounds | Eq. (13.4) integral inequalities and Gaussian rescaling | `gaussianSampleMeanZeroErrorProbability_source_bounds` | locally compiled mathlib-candidate | focused Lean | compiled |
@@ -340,6 +333,22 @@ the `Delta*n/2` statement is retained only as the zero-error corollary.
 | `CH13-REMOTE` | current Chapter 15 downstream extension PR, Actions, Pages, live page | accepted local chapter; earlier dependency-slice PR remains historical evidence only | remote workflow | repository | deployment | pending current extension |
 
 ## Gaps
+
+### Maximal concentration leaf
+
+`ConcentrationMartingaleMaximal.lean` now proves conditional-Jensen
+exponential submartingality, Doob finite maximal Chernoff and optimized
+subgaussian bounds, and an independent centered coordinate producer.
+For strongly measurable independent real X_i with zero integrals and common
+subgaussian proxy c>0, positive n and epsilon, the event
+`exists i<=n, epsilon<=sum_(j<i) X_(j+1)` has probability at most
+`exp(-epsilon^2/(2*n*c))`. This is one-sided and uniform over a finite time
+prefix, not a union-bound estimate. The natural filtration and partial-sum
+martingale are proved via the existing MartingaleDiff and Mathlib independence
+APIs; all exponential integrability follows from the sum-MGF producer.
+Source variance is c=sigma^2. MOSS's actual centered reward stream still
+must instantiate the explicit coordinate contracts; Lemma 9.3 peeling and
+Theorem 9.1 regret assembly remain unproved.
 
 ### Active MOSS leaf (2026-09-05)
 
@@ -413,8 +422,9 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH13-LEAST-EXPLORED` | some alternative has expected pulls at most `n/m` | alternative budget, `0 < m` | `Finset.exists_le_of_sum_le`, constant sum | `MLIB-FINSET-SUMS`, `MLIB-FINTYPE-FIN`, `MLIB-ORDER-ALGEBRA` | finite average comparison | `0 < m`; exact expected-pull total | mathlib-composed project leaf | `LowerBounds.exists_alternative_le_average`, `LowerBounds.exists_leastExploredAlternative` | focused Lean | compiled |
 | `CH13-TWO-ENV-ALGEBRA` | max of base and changed expressions is at least `Delta*(n-error)/2` under an explicit pull-discrepancy bound | equations (13.2)--(13.3) expressions | real ordered-field algebra, `max`, `nlinarith` | `MLIB-ORDER-ALGEBRA` | show their sum is at least `Delta*(n-error)`, then use max/average | `0 <= Delta`; visible `baseFirstPulls-changedFirstPulls <= error` bridge | project-local | `LowerBounds.baseEnvironmentRegret`, `LowerBounds.changedEnvironmentRegretLowerBound`, `LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error`; zero-error corollary `LowerBounds.max_base_changed_regretLowerBound_ge_half` | focused Lean | compiled |
 | `CH13-HISTORY-TRANSPORT` | same-policy history-law comparison supplies the cross-law event inequality | Chapter 14 information theory and Chapter 15 history KL | compiled Gaussian/history APIs | local declarations; weapon card inspiration only | likelihood ratio, KL chain rule, direction-correct event inequality | measurability, policy consistency, exact KL direction | project-local | `LowerBounds.base_event_probability_lower_bound`, `LowerBounds.changed_complement_probability_lower_bound` | Chapter 15 | compiled |
-| `CH13-THEOREM-13-1` | Gaussian finite-arm minimax lower bound `>= c*sqrt(k*n)` | Chapter 13 deterministic leaves, Chapter 14 information theory, Chapter 15 minimax construction | compiled Gaussian/history APIs | source card plus compiled local declarations | base/changed instances, least arm, testing bound, Delta tuning, inf/sup extraction | unit variance; means in `[0,1]^k`; `k>1`; `n>=k`; explicit `c=1/54` | source-order endpoint | `LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt` | Chapter 15 | compiled |
-| `CH13-BROADER-SUBGAUSSIAN-NEAR-MINIMAX` | Algorithm 7 is constant-factor minimax for finite-arm 1-subgaussian bandits with gaps in `[0,1]` | Theorem 13.1 Gaussian-subclass lower transfer and source Theorem 9.1 MOSS upper bound | compiled lower terminal; no local MOSS upper theorem | textbook source; local MOSS roadmap only | identify the Gaussian subclass, transport the lower bound to the broader class, combine with generated-policy MOSS upper bound | exact broader environment class and regret notion; common horizon/arm indexing | connected blocker | none | Chapter 9 plus Chapter 13 | partial |
+
+<!-- 1151 characters omitted from the middle of this snapshot. -->
+
 | `CH13-TYPED-CANARY` | external root-import applications and a three-arm numeric witness | compiled Chapter 13 declarations | root `BanditRLProof` import | local declaration index | exact full-conclusion examples plus `#print axioms` | nonempty policy/environment subsets; nonnegative vector summing to horizon | project-local | `Tests/TextbookPartIVChapter13Canary.lean` | dedicated/root Tests | verified |
 | `CH13-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | Windows long-path workaround must not be mistaken for a Lean proof failure | repository | n/a | `python3 tools/bandit.py check` | baseline verified; exact-bound extension pending |
 | `CH13-EVIDENCE-SITE` | proof export, indexes, readings/highlights/results/implementation map/README and Part IV site agree | local full gate | harness and website scripts | repository | generated evidence plus maintained source data | only gate-passing declarations marked compiled | repository | n/a | lean-verified build/site check/browser review | baseline verified; exact-bound extension pending |
@@ -438,6 +448,16 @@ in the dated integration review. New MOSS additions require a fresh gate.
 
 ### MOSS dependency progress
 
+- `Concentration.submartingale_exp_of_martingale`,
+  `measure_exists_le_martingale_ge_le_exp`,
+  `measure_exists_le_martingale_ge_le_subgaussian`, and
+  `measure_exists_le_independent_partialSum_ge_le_subgaussian` now compile.
+  They implement the no-cardinality-loss source Theorem 9.2 route, with
+  explicit independent centered subgaussian coordinate assumptions.
+  Dedicated external canary passes (3473-job build, baseline axioms only);
+  fresh full integration remains pending.
+  Source Lemma 9.3 is now the next missing concentration node.
+
 - `MOSS.logPlus`, `radius`, `index`, `action`: exact source index and
   zero-based initialization; `radius_sq` retains the factor four.
 - `action_initial_arm` and `action_index_max`: initialization and
@@ -448,9 +468,10 @@ in the dated integration review. New MOSS additions require a fresh gate.
   `historyAlgorithm_policy_apply`, `historyAction_initialization`,
   `historyAction_index_max`: concrete measurable common-interface policy,
   with inclusive history at t feeding the next action at t+1.
-- Both modules pass focused build (2951 jobs); typed canary passes with
-  baseline axioms only. The full new integration gate is pending.
-  Theorem 9.2 / Lemma 9.3 and regret
+- Both policy modules pass focused build (2951 jobs); typed canary passes
+  with baseline axioms only. Full integration at `1eb5af0` passed: root 8856
+  jobs, Tests 8899 jobs, ProofGraphExport and 400 Python tests (7 skipped).
+  Lemma 9.3, actual reward-stream instantiation, and regret
   assembly remain open. Do not promote this policy constructor to the
   MOSS upper theorem.
 
@@ -44129,6 +44150,38 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/ConcentrationFixedMGF.lean",
     "line": 333,
     "statement": "theorem measure_sum_ge_inter_sum_le_of_compensated_hasCondMGFUpperBoundAt [IsZeroOrProbabilityMeasure \u03bc] (Y V : \u2115 \u2192 \u03a9 \u2192 \u211d) (n : \u2115) (tilt varianceCoeff threshold varianceBudget : \u211d) (h_adapted : StronglyAdapted \u2131 (fun i \u03c9 => tilt * Y i \u03c9 - varianceCoeff * V i \u03c9)) (h0 : HasMGFUpperBoundAt (fun \u03c9 => tilt * Y 0 \u03c9 - varianceCoeff * V 0 \u03c9) 1 0 \u03bc) (h_mgf : \u2200 i < n - 1, HasCondMGFUpperBoundAt (\u2131 i) (\u2131.le i) (fun \u03c9 => tilt * Y (i + 1) \u03c9 - varianceCoeff * V (i + 1) \u03c9) 1 0 \u03bc) (htilt : 0 \u2264 tilt) (hvarianceCoeff : 0 \u2264 varianceCoeff) : \u03bc {\u03c9 | threshold \u2264 \u2211 i \u2208 Finset.range n, Y i \u03c9 \u2227 (\u2211 i \u2208 Finset.range n, V i \u03c9) \u2264 varianceBudget} \u2264 ENNReal.ofReal (Real.exp (-tilt * threshold + varianceCoeff * varianceBudget))"
+  },
+  {
+    "kind": "theorem",
+    "name": "submartingale_exp_of_martingale",
+    "full_name": "BanditRLProof.Concentration.submartingale_exp_of_martingale",
+    "file": "BanditRLProof/ConcentrationMartingaleMaximal.lean",
+    "line": 25,
+    "statement": "theorem submartingale_exp_of_martingale (hS : Martingale S F \u03bc) (hint : \u2200 i, Integrable (fun \u03c9 => exp (S i \u03c9)) \u03bc) : Submartingale (fun i \u03c9 => exp (S i \u03c9)) F \u03bc"
+  },
+  {
+    "kind": "theorem",
+    "name": "measure_exists_le_martingale_ge_le_exp",
+    "full_name": "BanditRLProof.Concentration.measure_exists_le_martingale_ge_le_exp",
+    "file": "BanditRLProof/ConcentrationMartingaleMaximal.lean",
+    "line": 38,
+    "statement": "theorem measure_exists_le_martingale_ge_le_exp (hS : Martingale S F \u03bc) (hint : \u2200 i t, Integrable (fun \u03c9 => exp (t * S i \u03c9)) \u03bc) (n : \u2115) (c : \u211d\u22650) (hmgf : HasSubgaussianMGF (S n) c \u03bc) (\u03b5 t : \u211d) (ht : 0 < t) : \u03bc {\u03c9 | \u2203 i, i \u2264 n \u2227 \u03b5 \u2264 S i \u03c9} \u2264 ENNReal.ofReal (exp (-t * \u03b5 + (c : \u211d) * t ^ 2 / 2))"
+  },
+  {
+    "kind": "theorem",
+    "name": "measure_exists_le_martingale_ge_le_subgaussian",
+    "full_name": "BanditRLProof.Concentration.measure_exists_le_martingale_ge_le_subgaussian",
+    "file": "BanditRLProof/ConcentrationMartingaleMaximal.lean",
+    "line": 74,
+    "statement": "theorem measure_exists_le_martingale_ge_le_subgaussian (hS : Martingale S F \u03bc) (hint : \u2200 i t, Integrable (fun \u03c9 => exp (t * S i \u03c9)) \u03bc) (n : \u2115) (c : \u211d\u22650) (hc : 0 < (c : \u211d)) (hmgf : HasSubgaussianMGF (S n) c \u03bc) (\u03b5 : \u211d) (h\u03b5 : 0 < \u03b5) : \u03bc {\u03c9 | \u2203 i, i \u2264 n \u2227 \u03b5 \u2264 S i \u03c9} \u2264 ENNReal.ofReal (exp (-(\u03b5 ^ 2) / (2 * (c : \u211d))))"
+  },
+  {
+    "kind": "theorem",
+    "name": "measure_exists_le_independent_partialSum_ge_le_subgaussian",
+    "full_name": "BanditRLProof.Concentration.measure_exists_le_independent_partialSum_ge_le_subgaussian",
+    "file": "BanditRLProof/ConcentrationMartingaleMaximal.lean",
+    "line": 91,
+    "statement": "theorem measure_exists_le_independent_partialSum_ge_le_subgaussian (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (c : \u211d\u22650) (hc : 0 < (c : \u211d)) (hsubG : \u2200 i, HasSubgaussianMGF (X i) c \u03bc) (n : \u2115) (hn : 0 < n) (\u03b5 : \u211d) (h\u03b5 : 0 < \u03b5) : \u03bc {\u03c9 | \u2203 i, i \u2264 n \u2227 \u03b5 \u2264 \u2211 j \u2208 range i, X (j + 1) \u03c9} \u2264 ENNReal.ofReal (exp (-(\u03b5 ^ 2) / (2 * (n : \u211d) * (c : \u211d))))"
   },
   {
     "kind": "theorem",
@@ -95630,6 +95683,42 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "target_fingerprint": "",
     "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
     "time": "2026-09-05T05:03:43+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "build",
+    "lean": "",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [],
+    "notes": "Independent centered subgaussian maximal partial-sum bound and Jensen/Doob route compiled; external full-statement canary 3473 jobs, baseline axioms. MOSS policy full check 1eb5af0 passed (400 Python tests, 7 skipped). Peeling remains open.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "unreviewed",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "reviewer",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "compiled",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T05:13:18+00:00",
     "verifier_evidence": [],
     "worker_id": ""
   }

@@ -1,4 +1,5 @@
 import Tests.Basic
+import Tests.ConcentrationMartingaleMaximalCanary
 import Tests.MOSSCanary
 import Tests.CurvatureNoiseGapGeometry
 import Tests.ConditionalRewardPartialTrajectoryGeometricAllTimeCanary

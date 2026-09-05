@@ -59,6 +59,10 @@ and distinguish probability prerequisites from algorithm/history integration.
 3. Theorem 9.2: derive the finite-time maximal subgaussian partial-sum tail
    via an exponential submartingale/Doob argument, without a union-bound
    cardinality factor. Explicitly include positive variance and threshold.
+   This route now compiles in `ConcentrationMartingaleMaximal.lean`, including
+   an independent centered coordinate producer on the natural filtration.
+   It has no assumed tail-probability premise. Instantiate it on the actual
+   centered reward stream during the remaining MOSS model integration.
 4. Lemma 9.3: dyadic peeling and its summation/integration estimate give
    `P(exists s>=1, mean_s + sqrt(4/s*logPlus(1/(s*delta))) + gap <= 0)
    <= 15*delta/gap^2`, for 0<delta<1 and gap>0. Finite-prefix versions may
@@ -71,14 +75,15 @@ and distinguish probability prerequisites from algorithm/history integration.
 
 ## Acceptance gate
 
-Next concentration retrieval: pinned Mathlib
+Concentration retrieval used by the now-compiled maximal bound: pinned Mathlib
 `Probability/Martingale/OptionalStopping.lean:157` provides
 `MeasureTheory.maximal_ineq` for a nonnegative submartingale, with NNReal
 threshold times the finite-sup event probability bounded by its terminal
-restricted integral. The next producer must establish the exponential
-partial-sum submartingale (or an equivalent valid no-log route) from the
-source independent subgaussian increments; do not assume that producer.
-This is an import candidate, not a newly compiled MOSS tail theorem.
+restricted integral. Conditional Jensen now produces the exponential
+submartingale, and the natural-filtration independence bridge produces the
+centered partial-sum martingale. The remaining Lemma 9.3 peeling theorem
+must consume this result and preserve its constants; the maximal bound
+alone is not the MOSS optimism-deficit tail theorem.
 
 Typed external canaries for the concrete algorithm, maximal tail, peeling,
 and source-constant regret endpoint; root and Tests build; axiom scan;

@@ -85,7 +85,33 @@ arithmetic mean to exactly this law.
 
 ## Required blockers and optional boundary
 
-### MOSS source-policy layer (focused compilation)
+### MOSS policy integration
+
+The policy layer's full integration at `1eb5af0` now passes: root 8856 jobs,
+Tests 8899 jobs, ProofGraphExport and 400 Python tests (7 skips).
+
+### MOSS maximal concentration dependency
+
+For a real martingale S with integrable exponentials,
+`Concentration.submartingale_exp_of_martingale` derives exponential
+submartingality by conditional Jensen.
+`measure_exists_le_martingale_ge_le_exp` applies Doob's finite supremum
+bound, dominates the restricted terminal integral by the full MGF, and divides
+by the positive exponential threshold.
+`measure_exists_le_martingale_ge_le_subgaussian` chooses tilt epsilon/c.
+`measure_exists_le_independent_partialSum_ge_le_subgaussian` constructs
+the partial-sum martingale on the natural filtration from independent,
+strongly measurable, zero-mean coordinates and their common subgaussian
+proxy c>0. The resulting probability is at most exp(-epsilon^2/(2*n*c)),
+for positive n and epsilon, uniformly over all partial sums X1 through Xi
+with i<=n. There is no union-bound factor n.
+
+These four declarations and their full-statement external canary pass focused
+build (3473 jobs) with baseline axioms only. Their fresh full integration is
+pending. Source Lemma 9.3 peeling, actual reward-stream instantiation and
+expected-regret assembly remain open; this is not a MOSS regret theorem.
+
+### MOSS source-policy definitions
 
 Write L(x)=log(max(1,x)) and b(n,k,s)=sqrt(4 L(n/(ks))/s).
 The new `MOSS` namespace defines `logPlus`, `radius`, `index`, `action`,

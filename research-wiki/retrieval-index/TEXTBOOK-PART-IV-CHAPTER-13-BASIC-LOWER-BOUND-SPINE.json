@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
-  "generated": "2026-09-05T05:04:03+00:00",
+  "generated": "2026-09-05T05:13:26+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -43059,6 +43059,38 @@
       "file": "BanditRLProof/ConcentrationFixedMGF.lean",
       "line": 333,
       "statement": "theorem measure_sum_ge_inter_sum_le_of_compensated_hasCondMGFUpperBoundAt [IsZeroOrProbabilityMeasure μ] (Y V : ℕ → Ω → ℝ) (n : ℕ) (tilt varianceCoeff threshold varianceBudget : ℝ) (h_adapted : StronglyAdapted ℱ (fun i ω => tilt * Y i ω - varianceCoeff * V i ω)) (h0 : HasMGFUpperBoundAt (fun ω => tilt * Y 0 ω - varianceCoeff * V 0 ω) 1 0 μ) (h_mgf : ∀ i < n - 1, HasCondMGFUpperBoundAt (ℱ i) (ℱ.le i) (fun ω => tilt * Y (i + 1) ω - varianceCoeff * V (i + 1) ω) 1 0 μ) (htilt : 0 ≤ tilt) (hvarianceCoeff : 0 ≤ varianceCoeff) : μ {ω | threshold ≤ ∑ i ∈ Finset.range n, Y i ω ∧ (∑ i ∈ Finset.range n, V i ω) ≤ varianceBudget} ≤ ENNReal.ofReal (Real.exp (-tilt * threshold + varianceCoeff * varianceBudget))"
+    },
+    {
+      "kind": "theorem",
+      "name": "submartingale_exp_of_martingale",
+      "full_name": "BanditRLProof.Concentration.submartingale_exp_of_martingale",
+      "file": "BanditRLProof/ConcentrationMartingaleMaximal.lean",
+      "line": 25,
+      "statement": "theorem submartingale_exp_of_martingale (hS : Martingale S F μ) (hint : ∀ i, Integrable (fun ω => exp (S i ω)) μ) : Submartingale (fun i ω => exp (S i ω)) F μ"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_exists_le_martingale_ge_le_exp",
+      "full_name": "BanditRLProof.Concentration.measure_exists_le_martingale_ge_le_exp",
+      "file": "BanditRLProof/ConcentrationMartingaleMaximal.lean",
+      "line": 38,
+      "statement": "theorem measure_exists_le_martingale_ge_le_exp (hS : Martingale S F μ) (hint : ∀ i t, Integrable (fun ω => exp (t * S i ω)) μ) (n : ℕ) (c : ℝ≥0) (hmgf : HasSubgaussianMGF (S n) c μ) (ε t : ℝ) (ht : 0 < t) : μ {ω | ∃ i, i ≤ n ∧ ε ≤ S i ω} ≤ ENNReal.ofReal (exp (-t * ε + (c : ℝ) * t ^ 2 / 2))"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_exists_le_martingale_ge_le_subgaussian",
+      "full_name": "BanditRLProof.Concentration.measure_exists_le_martingale_ge_le_subgaussian",
+      "file": "BanditRLProof/ConcentrationMartingaleMaximal.lean",
+      "line": 74,
+      "statement": "theorem measure_exists_le_martingale_ge_le_subgaussian (hS : Martingale S F μ) (hint : ∀ i t, Integrable (fun ω => exp (t * S i ω)) μ) (n : ℕ) (c : ℝ≥0) (hc : 0 < (c : ℝ)) (hmgf : HasSubgaussianMGF (S n) c μ) (ε : ℝ) (hε : 0 < ε) : μ {ω | ∃ i, i ≤ n ∧ ε ≤ S i ω} ≤ ENNReal.ofReal (exp (-(ε ^ 2) / (2 * (c : ℝ))))"
+    },
+    {
+      "kind": "theorem",
+      "name": "measure_exists_le_independent_partialSum_ge_le_subgaussian",
+      "full_name": "BanditRLProof.Concentration.measure_exists_le_independent_partialSum_ge_le_subgaussian",
+      "file": "BanditRLProof/ConcentrationMartingaleMaximal.lean",
+      "line": 91,
+      "statement": "theorem measure_exists_le_independent_partialSum_ge_le_subgaussian (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (c : ℝ≥0) (hc : 0 < (c : ℝ)) (hsubG : ∀ i, HasSubgaussianMGF (X i) c μ) (n : ℕ) (hn : 0 < n) (ε : ℝ) (hε : 0 < ε) : μ {ω | ∃ i, i ≤ n ∧ ε ≤ ∑ j ∈ range i, X (j + 1) ω} ≤ ENNReal.ofReal (exp (-(ε ^ 2) / (2 * (n : ℝ) * (c : ℝ))))"
     },
     {
       "kind": "theorem",
@@ -94555,6 +94587,42 @@
       "target_fingerprint": "",
       "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
       "time": "2026-09-05T05:03:43+00:00",
+      "verifier_evidence": [],
+      "worker_id": ""
+    },
+    {
+      "attempt_id": "",
+      "changed_files": [],
+      "dag_depth": 0,
+      "dag_nodes": 0,
+      "elapsed_seconds": 0.0,
+      "error_signature": "",
+      "experiment_id": "",
+      "harness": "",
+      "input_tokens": 0,
+      "kind": "build",
+      "lean": "",
+      "lean_check_seconds": 0.0,
+      "new_declarations": [],
+      "notes": "Independent centered subgaussian maximal partial-sum bound and Jensen/Doob route compiled; external full-statement canary 3473 jobs, baseline axioms. MOSS policy full check 1eb5af0 passed (400 Python tests, 7 skipped). Peeling remains open.",
+      "obligations_after": 0,
+      "obligations_before": 0,
+      "output_tokens": 0,
+      "parent_id": "",
+      "progress_class": "unreviewed",
+      "prompt_chars": 0,
+      "reused_declarations": [],
+      "reviewer_validated": false,
+      "role": "reviewer",
+      "route_fingerprint": "",
+      "route_packet_hash": "",
+      "run_id": "",
+      "source": "",
+      "statement_hash": "",
+      "status": "compiled",
+      "target_fingerprint": "",
+      "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+      "time": "2026-09-05T05:13:18+00:00",
       "verifier_evidence": [],
       "worker_id": ""
     }

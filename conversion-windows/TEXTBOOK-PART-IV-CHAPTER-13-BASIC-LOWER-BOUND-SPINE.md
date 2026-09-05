@@ -142,6 +142,22 @@ the `Delta*n/2` statement is retained only as the zero-error corollary.
 
 ## Gaps
 
+### Maximal concentration leaf
+
+`ConcentrationMartingaleMaximal.lean` now proves conditional-Jensen
+exponential submartingality, Doob finite maximal Chernoff and optimized
+subgaussian bounds, and an independent centered coordinate producer.
+For strongly measurable independent real X_i with zero integrals and common
+subgaussian proxy c>0, positive n and epsilon, the event
+`exists i<=n, epsilon<=sum_(j<i) X_(j+1)` has probability at most
+`exp(-epsilon^2/(2*n*c))`. This is one-sided and uniform over a finite time
+prefix, not a union-bound estimate. The natural filtration and partial-sum
+martingale are proved via the existing MartingaleDiff and Mathlib independence
+APIs; all exponential integrability follows from the sum-MGF producer.
+Source variance is c=sigma^2. MOSS's actual centered reward stream still
+must instantiate the explicit coordinate contracts; Lemma 9.3 peeling and
+Theorem 9.1 regret assembly remain unproved.
+
 ### Active MOSS leaf (2026-09-05)
 
 Source: Algorithm 7 / Theorem 9.1, `TXT-LATTIMORE-SZEPESVARI-2020`.
