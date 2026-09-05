@@ -28,6 +28,34 @@ certificate. Lean baseline: cdc3a51. Chapter status remains partial.
 
 ## Remaining completion evidence
 
+### Rendered proof-export gate
+
+Added a reproducible preview.tex wrapper alongside latest.tex. TeX Live
+latexmk compiled the two-page export. First rendering exposed an overfull
+Theorem 13.1 declaration name; putting that unchanged name in its own
+breakable quote resolved the defect. Final log has no overfull/underfull
+boxes. Both pages were rendered with pdftoppm and visually inspected:
+equations, constants, margins and declaration names are legible, with no
+clipping. The preview is QA output, not a chapter-completion certificate.
+
+### Main-text coverage reconciliation
+
+| Frozen requirement | Current mathematical evidence | Boundary |
+| --- | --- | --- |
+| Worst-case, minimax, optimality | BasicIdeas definitions and IsMinimaxOptimal | explicit same classes and horizon; no assumed attainment |
+| Theorem 13.1 | GaussianMinimax unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt | unit variance, means [0,1], k>1, n>=k |
+| iid Gaussian sample mean and test | GaussianHypothesisTesting gaussianIIDSampleMeanLaw and both midpoint error-event identities | canonical finite iid product, n>0 |
+| Exact Eq. (13.1) / (13.4) | gaussianSampleMeanZeroErrorProbability_source_bounds and both gaussianMills integral bounds | printed constants; not discharged by Chernoff |
+| Competition/similarity and Eqs. (13.2)--(13.3) | BasicIdeas algebra plus GaussianMinimax common-policy history construction and tuning | informal discussion mapped to precise downstream proof, not assumed cross-law equality |
+| Broader-class Algorithm 7 claim | MOSSHistoryRegret plus SubgaussianMinimax.moss_nearMinimax (namespace LowerBounds) | gaps [0,1], not bounded means; fixed horizon; actual arm-law means |
+| Notes/exercises | explicitly optional under frozen contract | not claimed formalized |
+
+This reconciliation finds no remaining named main-text mathematical node
+in the frozen contract without a compiled route. It does not discharge
+merged-tree validation, final review findings, mobile visual verification,
+or PR/main/deployment/live gates. In particular the earlier self-review's
+scope and old build evidence cannot substitute for these current gates.
+
 ### Website verification follow-up
 
 At clean commit 9fc6054, verified site build/check passed: 686 HTML pages,
