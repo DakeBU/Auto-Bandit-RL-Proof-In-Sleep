@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T05:31:58+00:00`
+Generated: `2026-09-05T05:35:48+00:00`
 
 ## Source Task
 
@@ -33603,6 +33603,78 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/Algorithms/MOSSHistory.lean",
     "line": 58,
     "statement": "theorem historyAction_index_max {k : \u2115} (hk : 0 < k) (n t : \u2115) (history : History.FinitePairHistory (Fin k) \u211d t) (ht : k \u2264 t + 1) (a : Fin k) : index n (ETC.realHistoryEmpMean t history) (ETC.realHistoryPullCount t history) a \u2264 index n (ETC.realHistoryEmpMean t history) (ETC.realHistoryPullCount t history) (historyAction hk n t history)"
+  },
+  {
+    "kind": "def",
+    "name": "fixedLogRadius",
+    "full_name": "BanditRLProof.MOSS.fixedLogRadius",
+    "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
+    "line": 7,
+    "statement": "def fixedLogRadius (\u03b4 gap : \u211d) (s : \u2115) : \u211d"
+  },
+  {
+    "kind": "theorem",
+    "name": "sampleRadius_le_fixedLogRadius",
+    "full_name": "BanditRLProof.MOSS.sampleRadius_le_fixedLogRadius",
+    "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
+    "line": 10,
+    "statement": "theorem sampleRadius_le_fixedLogRadius (\u03b4 gap : \u211d) (s : \u2115) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) (hs : 0 < s) (hlarge : 1 \u2264 (s : \u211d)*gap^2) : sqrt (4/(s : \u211d)*logPlus (1/((s : \u211d)*\u03b4))) \u2264 fixedLogRadius \u03b4 gap s"
+  },
+  {
+    "kind": "def",
+    "name": "indexExceedanceCount",
+    "full_name": "BanditRLProof.MOSS.indexExceedanceCount",
+    "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
+    "line": 19,
+    "statement": "def indexExceedanceCount (mean : \u2115 \u2192 \u211d) (\u03b4 gap : \u211d) (n : \u2115) : \u211d"
+  },
+  {
+    "kind": "def",
+    "name": "fixedLogExceedanceCount",
+    "full_name": "BanditRLProof.MOSS.fixedLogExceedanceCount",
+    "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
+    "line": 23,
+    "statement": "def fixedLogExceedanceCount (mean : \u2115 \u2192 \u211d) (\u03b4 gap : \u211d) (n : \u2115) : \u211d"
+  },
+  {
+    "kind": "def",
+    "name": "smallSampleCount",
+    "full_name": "BanditRLProof.MOSS.smallSampleCount",
+    "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
+    "line": 26,
+    "statement": "def smallSampleCount (gap : \u211d) (n : \u2115) : \u211d"
+  },
+  {
+    "kind": "theorem",
+    "name": "indexExceedanceCount_le_small_add_fixed",
+    "full_name": "BanditRLProof.MOSS.indexExceedanceCount_le_small_add_fixed",
+    "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
+    "line": 30,
+    "statement": "theorem indexExceedanceCount_le_small_add_fixed (mean : \u2115 \u2192 \u211d) (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) (n : \u2115) : indexExceedanceCount mean \u03b4 gap n \u2264 smallSampleCount gap n + fixedLogExceedanceCount mean \u03b4 gap n"
+  },
+  {
+    "kind": "theorem",
+    "name": "smallSampleCount_le_horizon",
+    "full_name": "BanditRLProof.MOSS.smallSampleCount_le_horizon",
+    "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
+    "line": 46,
+    "statement": "theorem smallSampleCount_le_horizon (gap : \u211d) (n : \u2115) : smallSampleCount gap n \u2264 (n : \u211d)"
+  },
+  {
+    "kind": "theorem",
+    "name": "smallSampleCount_le_inv_sq",
+    "full_name": "BanditRLProof.MOSS.smallSampleCount_le_inv_sq",
+    "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
+    "line": 53,
+    "statement": "theorem smallSampleCount_le_inv_sq (gap : \u211d) (hg : 0 < gap) (n : \u2115) : smallSampleCount gap n \u2264 1/gap^2"
+  },
+  {
+    "kind": "theorem",
+    "name": "indexExceedanceCount_le_inv_sq_add_fixed",
+    "full_name": "BanditRLProof.MOSS.indexExceedanceCount_le_inv_sq_add_fixed",
+    "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
+    "line": 67,
+    "statement": "theorem indexExceedanceCount_le_inv_sq_add_fixed (mean : \u2115 \u2192 \u211d) (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) (n : \u2115) : indexExceedanceCount mean \u03b4 gap n \u2264 1/gap^2 + fixedLogExceedanceCount mean \u03b4 gap n"
   },
   {
     "kind": "def",
@@ -96068,6 +96140,42 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "target_fingerprint": "",
     "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
     "time": "2026-09-05T05:27:30+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "build",
+    "lean": "BanditRLProof/Algorithms/MOSSOptimism.lean",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [],
+    "notes": "Numerical tail integration and MOSS expected deficit <=2sqrt(15delta), source 16sqrt(nk) contribution compiled; 3508 focused jobs and baseline axioms. Full 50ea833 gate passed 400 tests/7 skips/203.163s. Next large-gap occupancy and actual regret assembly.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "compiled-leaf",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "lower",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "compiled",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T05:32:08+00:00",
     "verifier_evidence": [],
     "worker_id": ""
   }

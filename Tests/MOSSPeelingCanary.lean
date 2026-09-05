@@ -1,5 +1,6 @@
 import BanditRLProof.Algorithms.MOSSPeeling
 import BanditRLProof.Algorithms.MOSSOptimism
+import BanditRLProof.Algorithms.MOSSOccupancy
 
 open BanditRLProof MeasureTheory ProbabilityTheory Real
 open scoped ENNReal NNReal
@@ -40,3 +41,12 @@ example {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasur
 #print axioms Concentration.integral_positive_tail_le_two_sqrt
 #print axioms MOSS.integral_optimismDeficit_le_two_sqrt
 #print axioms MOSS.twice_horizon_mul_integral_optimismDeficit_le
+
+example (mean : ℕ → ℝ) (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (n : ℕ) :
+    MOSS.indexExceedanceCount mean δ gap n ≤
+      1/gap^2 + MOSS.fixedLogExceedanceCount mean δ gap n :=
+  MOSS.indexExceedanceCount_le_inv_sq_add_fixed mean δ gap hδ hg n
+
+#print axioms MOSS.sampleRadius_le_fixedLogRadius
+#print axioms MOSS.smallSampleCount_le_inv_sq
+#print axioms MOSS.indexExceedanceCount_le_inv_sq_add_fixed
