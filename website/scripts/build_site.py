@@ -1054,7 +1054,10 @@ def validate_textbook_spine(
         for name in chapter.get("primary_declarations", []):
             if name not in decl_by_name:
                 raise ValueError(f"primary textbook declaration is not indexed: {name}")
-        if chapter["number"] > 13 and chapter.get("status") == "compiled":
+        # Chapters 13 and 14 have independently reviewed main-text acceptance;
+        # Chapter 14 evidence: reviews/2026-09-05-chapter-14-live-acceptance.md.
+        # Notes/exercises and the explicit source/model qualifications stay separate.
+        if chapter["number"] > 14 and chapter.get("status") == "compiled":
             raise ValueError("future Part IV chapters cannot be promoted before their gates")
 
 

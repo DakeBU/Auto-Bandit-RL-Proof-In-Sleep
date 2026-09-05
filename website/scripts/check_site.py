@@ -391,6 +391,27 @@ def check_current_evidence_surfaces(
         ):
             if stale in ch13_text:
                 errors.append(f"Chapter 13 contains stale proof boundary: {stale}")
+    ch14_path = output / "textbook-spine" / "chapter-14-information-theory" / "index.html"
+    if ch14_path.exists():
+        ch14_text = ch14_path.read_text(encoding="utf-8")
+        for required in (
+            "BanditRLProof.LowerBounds.exists_prefixCode_of_uniquelyDecodable",
+            "BanditRLProof.LowerBounds.arithmeticBlockCode_payload_interval",
+            "BanditRLProof.LowerBounds.commonDensityOverlap_le_testingError",
+            "power-of-two",
+            "nonempty",
+            "exact-real",
+            "finite-alphabet-only",
+            "unrounded",
+        ):
+            if required not in ch14_text:
+                errors.append(f"Chapter 14 missing acceptance declaration/qualification: {required}")
+        for stale in (
+            "Whole-chapter status remains partial pending",
+            "Whole-chapter promotion still requires final aggregate",
+        ):
+            if stale in ch14_text:
+                errors.append(f"Chapter 14 contains stale acceptance boundary: {stale}")
     comparison_path = ROOT / "runs" / "harness-comparison" / "latest.json"
     comparison_diagram_path = ROOT / "runs" / "harness-comparison" / "latest.mmd"
     gpt_review_path = ROOT / "runs" / "harness-comparison" / "latest.gpt-review.json"

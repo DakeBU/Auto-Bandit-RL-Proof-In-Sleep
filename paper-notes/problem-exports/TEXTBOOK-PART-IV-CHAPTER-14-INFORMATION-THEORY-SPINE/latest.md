@@ -2,11 +2,12 @@
 
 Task id: `TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE`
 
-Status: whole-chapter coverage remains `partial`. The original spine below
-is supplemented by the current terminal update at the end. Huffman,
-common-density, overlap and Gaussian terminals have full local gates;
-arithmetic coding has passed its full gate at 2a31a01. Additional
-body assertions and export/site closure remain open in the body-closure audit.
+Status: the frozen required body is `compiled` with explicit source/model
+qualifications. Independent source review, PR #106, main workflow 33959196451
+and live desktop/mobile acceptance passed. The original spine below is
+supplemented by the terminal updates at the end. Nonempty singleton words,
+power-of-two uniform optimality and exact-real arithmetic coding remain part
+of the boundary; optional Notes/Exercises are not claimed complete.
 
 ## Lean Declarations
 
@@ -193,8 +194,8 @@ same-policy history KL is a Chapter 15 consumer, not a Chapter 14 claim.
   event-DPI, endpoint, and measure-level testing declarations.
 - Imported Mathlib coding, conditional-expectation, and KL APIs are dependencies,
   not new local theorems.
-- Whole-chapter status is deliberately retained as `partial` until every body
-  row in the frozen completion contract compiles and is canaried.
+- Every required mathematical row in the frozen contract compiles and is
+  canaried; acceptance preserves the explicit source/model qualifications.
 
 ## Current terminal update
 
@@ -222,7 +223,7 @@ and `gaussian_testing_max_error_three_twentieths` cover common positive
 variance and the exact SNR constants (gate 1e8af14).
 
 All names above are in BanditRLProof.LowerBounds. Supporting exposition
-adapters are recorded below; their final aggregate/export/site audit is open.
+adapters below passed subsequent full-body compiler, independent and publication gates.
 No new unproved concentration or measurability premise is introduced.
 
 ## Supporting body assertions and source qualifications

@@ -32,13 +32,12 @@ separate dependency leaf.
 - Promotion rule: every required mathematical definition and claim must map to
   a compiled local declaration and typed canary.  A theorem card, imported API,
   conditional lemma, or prose mapping alone cannot promote the chapter.
-- Current decision: `partial`. Main Huffman, common-density, overlap and
-  Gaussian terminals are compiled and fully gated. The constructed arithmetic
-  code rate theorem passed its full gate at 2a31a01. Supporting non-metric,
-  cross-entropy and fixed-length adapters passed the d325147 gate.
-  Additional body assertions and current export/site closure are audited in
-  `reviews/2026-09-05-chapter-14-body-closure-audit.md`; historical site/review
-  rows below do not certify this expanded scope.
+- Current decision: `compiled` for the frozen required body with the explicit
+  singleton, uniform-source, exact-real coding and KL regularity qualifications.
+  Independent source review, current-main integration, PR #106, main workflow
+  33959196451 and live desktop/mobile acceptance passed. See
+  `reviews/2026-09-05-chapter-14-live-acceptance.md` for current evidence;
+  historical site/review rows below remain scoped to their original snapshots.
 
 ## Precise restatement
 
@@ -130,9 +129,9 @@ with `D(Q,P)` is also valid.
 | `CH14-HISTORY-KL` | same-policy adaptive history decomposition | kernel chain rule plus policy/history model | `banditHistoryRelativeEntropy_eq_expectedPulls_sum` | compiled Chapter 15 | Chapter 15 | compiled outside Chapter 14 gate |
 | `CH14-TYPED-CANARY` | full conclusions including finite and singular examples | all compiled declarations | `Tests/TextbookPartIVChapter14Canary.lean` | project-local | Tests | verified |
 | `CH14-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | full check | verified locally |
-| `CH14-EVIDENCE-SITE` | task/DAG/export/index/site agreement | compiled chapter surface | repository artifacts | repository | lean-verified/site/browser | expanded-body static check passed at 7b5b5f4; targeted desktop and mouse/keyboard anchors verified at 24aa742; current remote publication unverified |
+| `CH14-EVIDENCE-SITE` | task/DAG/export/index/site agreement | compiled chapter surface | repository artifacts | repository | lean-verified/site/browser | expanded-body main static gate, live desktop/mobile and keyboard theorem anchors verified at c48b98a; acceptance metadata synchronized separately |
 | `CH14-REVIEW` | independent source/Lean/evidence audit | all local artifacts | review record | repository | independent review | expanded-body source/statement audit passed after cf3ed1f arbitrary-event repair; final compiler evidence in independent-source review |
-| `CH14-REMOTE` | PR, main Actions, Pages and live page | accepted local chapter | PR #11; run `31949303227`; Pages job `95172626370`; live desktop/mobile | repository | deployment | verified for the historical §14.2 milestone; the 2026-09-04 extension awaits its own PR |
+| `CH14-REMOTE` | PR, main Actions, Pages and live page | accepted local chapter | PR #106; main run `33959196451`; Pages job `101291397123`; live desktop/mobile | repository | deployment | expanded required-body proof publication verified at c48b98a; subsequent acceptance metadata publication is separate |
 
 ## Gaps
 
@@ -149,7 +148,7 @@ with `D(Q,P)` is also valid.
 - [x] Eq. (14.6) general common-density formula; full harness passed at `78846b8`.
 - [x] Measure-overlap and source affinity/Jensen; full gate b8325c2.
 - [x] General Gaussian-variance/application; full gate 1e8af14.
-- [ ] Additional mathematical body assertions and evidence closure in the body audit.
+- [x] Additional mathematical body assertions, independent review, main compiler and live publication acceptance; see the current live-acceptance record.
 
 The boxed unique-decoding equivalence is now mapped to
 `exists_prefixCode_of_uniquelyDecodable`, preserving every length on a finite

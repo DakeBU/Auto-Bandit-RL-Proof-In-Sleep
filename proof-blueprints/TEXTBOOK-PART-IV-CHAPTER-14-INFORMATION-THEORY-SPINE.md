@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T09:21:29+00:00`
+Generated: `2026-09-05T10:35:31+00:00`
 
 ## Source Task
 
@@ -12,7 +12,12 @@ Kind: `theoremFormalization`
 
 Status: `accepted`
 
-Whole-chapter coverage: `partial`
+Whole-chapter coverage: `compiled` under the frozen required-body contract and explicit source/model qualifications.
+
+Acceptance: `reviews/2026-09-05-chapter-14-live-acceptance.md` records independent
+review, PR #106, main compiler/Pages success and live desktop/mobile acceptance.
+Notes/Exercises are optional; the unrestricted uniform fixed-length reading is
+refuted rather than asserted, and singleton codewords remain nonempty.
 
 Harness: `hierarchical`
 
@@ -62,7 +67,7 @@ mapped local adapter before they count as chapter evidence.
 | §14.1 code model | binary codewords, injectivity, prefix freedom, codeword length, and expected length | `BinaryPrefixCode`, its uniquely-decodable range, finite codebook, Kraft adapter, and `expectedCodeLength` compile; the explicit nonempty-codeword contract is recorded | compiled |
 | Eq. (14.1) | optimal expected-length objective over valid prefix codes | `huffmanOptimalCode`, `huffmanCode_optimal`; exact global minimization, full gate dff13cb | compiled |
 | Eq. (14.2) | Huffman optimum satisfies `H₂(P) ≤ L* ≤ H₂(P)+1` | `huffmanOptimalCode` recursively merges two least weights; global optimality and entropy sandwich for finite alphabets, ties/zeros included; classical real-weight construction, not an executable encoder; full gate passed at dff13cb | compiled |
-| §14.1 asymptotic statement | arithmetic coding approaches entropy and no code improves the asymptotic rate | named interval-address arithmetic block code with zero-mass escape tag; rate tends to entropy on Fin k, matching universal prefix-code converse; full gate passed at 2a31a01; whole-body source/export audit remains open | compiled |
+| §14.1 asymptotic statement | arithmetic coding approaches entropy and no code improves the asymptotic rate | named interval-address arithmetic block code with zero-mass escape tag; rate tends to entropy on Fin k, matching universal prefix-code converse; full gate passed at 2a31a01 and subsequent identity/full-body gates; current acceptance records source/export/publication closure | compiled |
 | Eqs. (14.2)--(14.3) definitions | finite discrete base-two entropy, natural entropy, and exact unit conversion | `discreteEntropy`, `discreteEntropyBaseTwo`, their exact conversion, and nonnegativity compile | compiled |
 | Eq. (14.4) | arbitrary finite-alphabet discrete relative entropy with exact zero/support endpoints | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, and `relativeEntropy_finite_eq_top_iff` compile; root-import finite/singular three-symbol canaries pass | compiled |
 | Eq. (14.5) | relative entropy as the supremum over all finite measurable discretisations | `finitePartitionRelativeEntropy_eq_relativeEntropy` compiles for arbitrary finite measures, using finite encodings of the concrete density filtration; root and aggregate Tests pass | compiled |
@@ -77,15 +82,8 @@ mapped local adapter before they count as chapter evidence.
 | Gaussian testing application | the displayed Gaussian error bound and the `3/10`, `3/20` consequences under `Δ²/σ²≤1` | exponential and both rational bounds; root/aggregate/full harness passed at `1e8af14` | compiled |
 
 Current audit qualification: the arithmetic-identity audit found that the
-earlier rate constructor dropped interval containment at its existence
-interface. The strengthened `arithmeticBlockCode_payload_interval` passed
-the b5e21b8 full gate for the actual named code. The later 3d7c9a1 full gate
-also includes the boxed code-equivalence theorem and its root canary.
-Exact evidence is tracked in the arithmetic-identity and boxed-code audits.
 
-Optional rows are §14.3 Notes, §14.4 Bibliographic Remarks, and Exercises
-
-<!-- 3266 characters omitted from the middle of this snapshot. -->
+<!-- 3709 characters omitted from the middle of this snapshot. -->
 
 - Detached short-path checkout `C:\a14` at `50dce67` passed the 2,670-job
   focused information-theory build, the root-import Chapter 14 typed canary,
@@ -222,13 +220,12 @@ separate dependency leaf.
 - Promotion rule: every required mathematical definition and claim must map to
   a compiled local declaration and typed canary.  A theorem card, imported API,
   conditional lemma, or prose mapping alone cannot promote the chapter.
-- Current decision: `partial`. Main Huffman, common-density, overlap and
-  Gaussian terminals are compiled and fully gated. The constructed arithmetic
-  code rate theorem passed its full gate at 2a31a01. Supporting non-metric,
-  cross-entropy and fixed-length adapters passed the d325147 gate.
-  Additional body assertions and current export/site closure are audited in
-  `reviews/2026-09-05-chapter-14-body-closure-audit.md`; historical site/review
-  rows below do not certify this expanded scope.
+- Current decision: `compiled` for the frozen required body with the explicit
+  singleton, uniform-source, exact-real coding and KL regularity qualifications.
+  Independent source review, current-main integration, PR #106, main workflow
+  33959196451 and live desktop/mobile acceptance passed. See
+  `reviews/2026-09-05-chapter-14-live-acceptance.md` for current evidence;
+  historical site/review rows below remain scoped to their original snapshots.
 
 ## Precise restatement
 
@@ -288,10 +285,8 @@ with `D(Q,P)` is also valid.
 | `D(P,Q)=∞` | explicit branch of `bretagnolleHuberScale` | implements `exp(-∞)=0` | no |
 | mutual AC | absent | not required by source | must remain absent |
 
-<!-- 478 characters omitted from the middle of this snapshot. -->
+<!-- 698 characters omitted from the middle of this snapshot. -->
 
-| --- | --- | --- | --- | --- |
-| KL definition/branches | `Mathlib.InformationTheory.KullbackLeibler.Basic` | installed Mathlib source | exact wrappers around `klDiv` branch lemmas | do not invent a second measure KL |
 | prefix coding | `InformationTheory.UniquelyDecodable`, `kraft_mcmillan_inequality` | installed Mathlib source | prove the finite range uniquely decodable from prefix freedom, then adapt Kraft | do not label Kraft as the missing Huffman/source-coding terminal |
 | arbitrary DPI | `Measure.trim`, `toReal_rnDeriv_trim`, `map_condExp_le`, `integral_condExp`, `integral_trim` | installed Mathlib source | finite/top split; conditional Jensen for the trimmed RN density | keep `m ≤ m₀` and finite-measure instances explicit |
 | Bernoulli KL | `KLUCB.bernoulliKL`, `bernoulliKLCore_eq_klFun`, endpoint lemmas | compiled local declarations | reuse the exact support convention | do not use totalized `Real.log 0` as a finite singular value |
@@ -315,9 +310,9 @@ with `D(Q,P)` is also valid.
 | `CH14-HISTORY-KL` | same-policy adaptive history decomposition | kernel chain rule plus policy/history model | `banditHistoryRelativeEntropy_eq_expectedPulls_sum` | compiled Chapter 15 | Chapter 15 | compiled outside Chapter 14 gate |
 | `CH14-TYPED-CANARY` | full conclusions including finite and singular examples | all compiled declarations | `Tests/TextbookPartIVChapter14Canary.lean` | project-local | Tests | verified |
 | `CH14-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | full check | verified locally |
-| `CH14-EVIDENCE-SITE` | task/DAG/export/index/site agreement | compiled chapter surface | repository artifacts | repository | lean-verified/site/browser | expanded-body static check passed at 7b5b5f4; targeted desktop and mouse/keyboard anchors verified at 24aa742; current remote publication unverified |
+| `CH14-EVIDENCE-SITE` | task/DAG/export/index/site agreement | compiled chapter surface | repository artifacts | repository | lean-verified/site/browser | expanded-body main static gate, live desktop/mobile and keyboard theorem anchors verified at c48b98a; acceptance metadata synchronized separately |
 | `CH14-REVIEW` | independent source/Lean/evidence audit | all local artifacts | review record | repository | independent review | expanded-body source/statement audit passed after cf3ed1f arbitrary-event repair; final compiler evidence in independent-source review |
-| `CH14-REMOTE` | PR, main Actions, Pages and live page | accepted local chapter | PR #11; run `31949303227`; Pages job `95172626370`; live desktop/mobile | repository | deployment | verified for the historical §14.2 milestone; the 2026-09-04 extension awaits its own PR |
+| `CH14-REMOTE` | PR, main Actions, Pages and live page | accepted local chapter | PR #106; main run `33959196451`; Pages job `101291397123`; live desktop/mobile | repository | deployment | expanded required-body proof publication verified at c48b98a; subsequent acceptance metadata publication is separate |
 
 ## Gaps
 
@@ -334,7 +329,7 @@ with `D(Q,P)` is also valid.
 - [x] Eq. (14.6) general common-density formula; full harness passed at `78846b8`.
 - [x] Measure-overlap and source affinity/Jensen; full gate b8325c2.
 - [x] General Gaussian-variance/application; full gate 1e8af14.
-- [ ] Additional mathematical body assertions and evidence closure in the body audit.
+- [x] Additional mathematical body assertions, independent review, main compiler and live publication acceptance; see the current live-acceptance record.
 
 The boxed unique-decoding equivalence is now mapped to
 `exists_prefixCode_of_uniquelyDecodable`, preserving every length on a finite
@@ -395,9 +390,12 @@ tests, 7 skipped, 226.925s (C:/a14/tmp/ch14-final-body-full-check.log).
 This includes NonMetric, CrossEntropy, FixedLengthCoding, UniformCoding and
 CommonDomination, not just the historical spine. The exact source/module/
 terminal/canary matrix is reviews/2026-09-05-chapter-14-evidence-matrix.md.
-Local site checks passed in the site-sync review; historical independent
-review and remote publication do not cover this expanded body. Whole-chapter
-status remains partial until the final source and evidence audit is complete.
+The later cf3ed1f source-route repair and complete gate passed. Expanded-body
+independent review and current-main integrations passed. PR #106 merged as
+c48b98a; main workflow 33959196451, Pages and live desktop/mobile acceptance
+passed. The frozen required body is compiled with explicit qualifications;
+see reviews/2026-09-05-chapter-14-live-acceptance.md. Historical gate rows above
+retain their original scope and are superseded by this current acceptance.
 
 ## Failure classification
 
