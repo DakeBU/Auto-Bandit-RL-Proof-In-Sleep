@@ -61,3 +61,11 @@ scope, not current whole-body verification. Detailed Markdown/LaTeX exports,
 site content/build/render and any required publication evidence must be
 synchronized after proof coverage is settled. No whole-chapter promotion is
 justified by this audit. Decision remains partial; goal remains active.
+
+## Follow-up: metric counterclaims
+
+RelativeEntropyNonMetric now supplies two focused-compiled source witnesses:
+Bernoulli asymmetry at 0 versus 1/2, and Gaussian triangle failure for means
+0,1,2 with common variance 1. The latter has three finite KL values. See
+`reviews/2026-09-05-chapter-14-metric-route.md`. This resolves the identified
+local proof gap for item 5, but not its pending aggregate/export verification.

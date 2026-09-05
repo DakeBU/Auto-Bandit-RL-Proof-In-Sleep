@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE",
-  "generated": "2026-09-05T06:43:09+00:00",
+  "generated": "2026-09-05T06:45:53+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -59635,6 +59635,22 @@
       "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
       "line": 115,
       "statement": "theorem relativeEntropy_eq_iSup_densityApproximation_trim {α : Type*} [m : MeasurableSpace α] (P Q : Measure α) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h : P ≪ Q) : relativeEntropy P Q = ⨆ n, @relativeEntropy α (densityApproximationFiltration (P.rnDeriv Q) n) (P.trim ((densityApproximationFiltration (P.rnDeriv Q)).le n)) (Q.trim ((densityApproximationFiltration (P.rnDeriv Q)).le n))"
+    },
+    {
+      "kind": "theorem",
+      "name": "relativeEntropy_triangle_counterexample",
+      "full_name": "BanditRLProof.LowerBounds.relativeEntropy_triangle_counterexample",
+      "file": "BanditRLProof/LowerBounds/RelativeEntropyNonMetric.lean",
+      "line": 9,
+      "statement": "theorem relativeEntropy_triangle_counterexample : relativeEntropy (gaussianReal 0 1) (gaussianReal 1 1) + relativeEntropy (gaussianReal 1 1) (gaussianReal 2 1) < relativeEntropy (gaussianReal 0 1) (gaussianReal 2 1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "bernoulliRelativeEntropy_asymmetry",
+      "full_name": "BanditRLProof.LowerBounds.bernoulliRelativeEntropy_asymmetry",
+      "file": "BanditRLProof/LowerBounds/RelativeEntropyNonMetric.lean",
+      "line": 19,
+      "statement": "theorem bernoulliRelativeEntropy_asymmetry : bernoulliRelativeEntropy 0 (1 / 2) ≠ bernoulliRelativeEntropy (1 / 2) 0"
     },
     {
       "kind": "def",

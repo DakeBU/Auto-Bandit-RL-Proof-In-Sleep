@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T06:43:17+00:00`
+Generated: `2026-09-05T06:46:02+00:00`
 
 ## Source Task
 
@@ -67,7 +67,7 @@ mapped local adapter before they count as chapter evidence.
 | Eq. (14.5) | relative entropy as the supremum over all finite measurable discretisations | `finitePartitionRelativeEntropy_eq_relativeEntropy` compiles for arbitrary finite measures, using finite encodings of the concrete density filtration; root and aggregate Tests pass | compiled |
 | Theorem 14.1 | Eq. (14.5) equals the RN/log-likelihood formula, including the singular and nonintegrable branches | full supremum/RN equality and exact RN branch adapters compile; no finite-KL or AC premise on the equality; root and aggregate Tests pass | compiled |
 | Eq. (14.6) | common-dominating-measure density formula | `relativeEntropy_commonDensity_eq_if` and the nonnegative `klFun` formula; root/aggregate/full harness passed at `78846b8` for arbitrary sigma-finite domination | compiled |
-| §14.2 metric properties | nonnegativity, `D(P,Q)=0 ↔ P=Q`, and counterexamples to symmetry/triangle inequality | zero/separation compiles; source-mapped counterexamples not yet identified; see body-closure audit | partial |
+| §14.2 metric properties | nonnegativity, `D(P,Q)=0 ↔ P=Q`, and counterexamples to symmetry/triangle inequality | zero/separation compiles; `bernoulliRelativeEntropy_asymmetry` and `relativeEntropy_triangle_counterexample` focused-build passed; aggregate pending | partial |
 | Gaussian example | common-variance Gaussian KL formula | `klDiv_gaussianReal_same_variance`; root/aggregate/full harness passed at `1e8af14` | compiled |
 | Bernoulli example | endpoint-complete binary KL formula | `bernoulliRelativeEntropy` and endpoint lemmas compile | compiled |
 | Theorem 14.2 / Eq. (14.7) | unconditional Bretagnolle--Huber event inequality in direction `D(P,Q)` | exact local terminal compiles | compiled |
@@ -95,9 +95,8 @@ LowerBounds.relativeEntropy_eq_top_of_not_absolutelyContinuous
 LowerBounds.relativeEntropy_ne_top_iff
 LowerBounds.relativeEntropy_eq_zero_iff
 LowerBounds.BinaryPrefixCode
-LowerBounds.BinaryPrefixCode.kraft_inequality
 
-<!-- 2390 characters omitted from the middle of this snapshot. -->
+<!-- 2436 characters omitted from the middle of this snapshot. -->
 
 page are verified before this task becomes accepted.
 
@@ -60633,6 +60632,22 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
     "line": 115,
     "statement": "theorem relativeEntropy_eq_iSup_densityApproximation_trim {\u03b1 : Type*} [m : MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h : P \u226a Q) : relativeEntropy P Q = \u2a06 n, @relativeEntropy \u03b1 (densityApproximationFiltration (P.rnDeriv Q) n) (P.trim ((densityApproximationFiltration (P.rnDeriv Q)).le n)) (Q.trim ((densityApproximationFiltration (P.rnDeriv Q)).le n))"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_triangle_counterexample",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_triangle_counterexample",
+    "file": "BanditRLProof/LowerBounds/RelativeEntropyNonMetric.lean",
+    "line": 9,
+    "statement": "theorem relativeEntropy_triangle_counterexample : relativeEntropy (gaussianReal 0 1) (gaussianReal 1 1) + relativeEntropy (gaussianReal 1 1) (gaussianReal 2 1) < relativeEntropy (gaussianReal 0 1) (gaussianReal 2 1)"
+  },
+  {
+    "kind": "theorem",
+    "name": "bernoulliRelativeEntropy_asymmetry",
+    "full_name": "BanditRLProof.LowerBounds.bernoulliRelativeEntropy_asymmetry",
+    "file": "BanditRLProof/LowerBounds/RelativeEntropyNonMetric.lean",
+    "line": 19,
+    "statement": "theorem bernoulliRelativeEntropy_asymmetry : bernoulliRelativeEntropy 0 (1 / 2) \u2260 bernoulliRelativeEntropy (1 / 2) 0"
   },
   {
     "kind": "def",
