@@ -50,3 +50,20 @@ zero masses. The three audited proof leaves use only propext, Classical.choice,
 and Quot.sound. `shannonLength_kraft_weight_lt` proves strict slack pointwise
 on positive masses. This module is not yet root-integrated and does not supply
 codewords, zero-mass allocation, or the missing optimality/source-coding claims.
+
+Next route: sum the positive-support strict weight bounds; normalization
+guarantees at least one positive mass, so total Kraft weight is strictly below
+one. Choose a common sufficiently large length for all zero-mass symbols
+using `exists_pow_lt_of_lt_one`, with the finite alphabet cardinality as a
+uniform bound on their count. This gives a complete positive length vector
+with Kraft sum below one and unchanged expectation. Prefix-code realization
+is still the separate Kraft-converse combinatorial leaf.
+
+Allocation result: `sum_positive_shannon_weights_lt_one` and
+`exists_lengths_kraft_lt_one_entropy_bound` now focused-build and pass the
+typed canary (2,672 jobs; only standard propext/Classical.choice/Quot.sound).
+The latter supplies strictly positive natural lengths for every symbol,
+strict Kraft inequality, and the H2+1 expectation bound, without removing
+zero masses. This closes numerical zero-mass allocation but not codeword
+realization or Huffman optimality. The current full gate at 1e8af14 predates
+these Shannon declarations, so their root/aggregate integration remains open.

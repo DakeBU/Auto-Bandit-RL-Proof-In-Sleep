@@ -53,5 +53,75 @@ theorem sum_weighted_shannonLength_le_entropy_add_one
     (fun i _ => weighted_shannonLength_le (hp i) (hp1 i))
   simpa only [Finset.sum_add_distrib, hs, discreteEntropyBaseTwo] using h
 
+/-- The positive support occupies strictly less than the available Kraft mass. -/
+theorem sum_positive_shannon_weights_lt_one
+    {α : Type*} [Fintype α] (p : α → ℝ)
+    (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) :
+    (∑ i, if 0 < p i then (1 / 2 : ℝ) ^ shannonLength (p i) else 0) < 1 := by
+  classical
+  have hex : ∃ i, 0 < p i := by
+    by_contra h
+    have hz (i) : p i = 0 := le_antisymm (not_lt.mp (not_exists.mp h i)) (hp i)
+    simp [hz] at hs
+  apply lt_of_lt_of_eq ?_ hs
+  apply Finset.sum_lt_sum
+  · intro i _
+    split_ifs with hi
+    · exact (shannonLength_kraft_weight_lt hi).le
+    · exact hp i
+  · obtain ⟨i, hi⟩ := hex
+    exact ⟨i, Finset.mem_univ i, by simpa [hi] using shannonLength_kraft_weight_lt hi⟩
+
+/-- Complete length assignment, including zero-mass symbols; codewords are not yet constructed. -/
+theorem exists_lengths_kraft_lt_one_entropy_bound
+    {α : Type*} [Fintype α] (p : α → ℝ)
+    (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) :
+    ∃ l : α → ℕ, (∀ i, 0 < l i) ∧
+      (∑ i, (1 / 2 : ℝ) ^ l i) < 1 ∧
+      (∑ i, p i * l i) ≤ discreteEntropyBaseTwo Finset.univ p + 1 := by
+  classical
+  let W := ∑ i, if 0 < p i then (1 / 2 : ℝ) ^ shannonLength (p i) else 0
+  have hW : W < 1 := sum_positive_shannon_weights_lt_one p hp hs
+  let C : ℝ := Fintype.card α + 1
+  have hC : 0 < C := by dsimp [C]; positivity
+  obtain ⟨n, hn⟩ := exists_pow_lt_of_lt_one
+    (div_pos (sub_pos.mpr hW) hC) (by norm_num : (1 / 2 : ℝ) < 1)
+  let l : α → ℕ := fun i => if 0 < p i then shannonLength (p i) else n + 1
+  refine ⟨l, ?_, ?_, ?_⟩
+  · intro i
+    dsimp [l]
+    split_ifs
+    · exact shannonLength_pos _
+    · exact Nat.succ_pos _
+  · have hsum : (∑ i, (1 / 2 : ℝ) ^ l i) ≤ W + Fintype.card α * (1 / 2 : ℝ) ^ (n + 1) := by
+      calc
+        _ ≤ ∑ i, ((if 0 < p i then (1 / 2 : ℝ) ^ shannonLength (p i) else 0) +
+            (1 / 2 : ℝ) ^ (n + 1)) := by
+          apply Finset.sum_le_sum
+          intro i _
+          dsimp [l]
+          split_ifs
+          · nlinarith [pow_pos (by norm_num : (0 : ℝ) < 1 / 2) (n + 1)]
+          · simp
+        _ = _ := by simp [W, Finset.sum_add_distrib]
+    have hpow : (1 / 2 : ℝ) ^ (n + 1) ≤ (1 / 2 : ℝ) ^ n := by
+      rw [pow_succ]
+      nlinarith [pow_nonneg (by norm_num : (0 : ℝ) ≤ 1 / 2) n]
+    have hmul := (lt_div_iff₀ hC).1 hn
+    have hbound := mul_le_mul_of_nonneg_left hpow (Nat.cast_nonneg (Fintype.card α) :
+      (0 : ℝ) ≤ Fintype.card α)
+    dsimp [C] at hmul
+    nlinarith [pow_pos (by norm_num : (0 : ℝ) < 1 / 2) n]
+  · have heq : (∑ i, p i * l i) = ∑ i, p i * shannonLength (p i) := by
+      apply Finset.sum_congr rfl
+      intro i _
+      dsimp [l]
+      split_ifs with hi
+      · rfl
+      · have hz : p i = 0 := le_antisymm (not_lt.mp hi) (hp i)
+        simp [hz]
+    rw [heq]
+    exact sum_weighted_shannonLength_le_entropy_add_one p hp hs
+
 end
 end BanditRLProof.LowerBounds
