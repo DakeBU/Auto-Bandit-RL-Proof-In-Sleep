@@ -46,3 +46,20 @@ Focused module build passed 3344 jobs. Repairs were explicit Ioi integration
 domains and scalar multiplication/division normalization. The original-variable
 integral equality, integer sum comparison and probability consumer are pending;
 the exact transformed integral alone is not Lemma 8.2.
+
+Change-of-variables route: use inverse map phi(z)=((z+sqrt(2a))/epsilon)^2
+on Ioi 0. Its image is Ioi(2a/epsilon^2), derivative
+2*(z+sqrt(2a))/epsilon^2>0, and it is injective there. Apply
+integral_image_eq_integral_abs_deriv_smul from JacobianOneDim; then normalize
+the composed kernel and consume the compiled transformed integral. No assumed
+integral identity or integrability is added; the change-of-variables theorem
+applies directly with derivative and injection evidence.
+
+Update: inverse-map image, injectivity, derivative, original-variable exact
+integral, integrability, and shifted finite tail-sum bound now compile.
+`sum_occupancyTail_shift_le` bounds sum_{i<N} tail(r+i+1) by
+(2/epsilon^2)*(1+sqrt(pi*a)) whenever r>=2a/epsilon^2.
+The import `SumIntegralComparisons` supplies the monotone integral comparison;
+the tail's nonnegativity and integrability justify enlarging the integration set.
+Remaining: integer cutoff accounting and subgaussian probability/count
+consumer, then source MOSS constants and concrete history connection.

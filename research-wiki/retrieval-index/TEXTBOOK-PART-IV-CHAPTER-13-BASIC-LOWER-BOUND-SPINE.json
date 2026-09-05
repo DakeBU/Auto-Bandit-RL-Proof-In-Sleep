@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
-  "generated": "2026-09-05T05:40:45+00:00",
+  "generated": "2026-09-05T05:45:26+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -43401,7 +43401,7 @@
       "name": "integral_mul_exp_neg_mul_sq_Ioi",
       "full_name": "BanditRLProof.Concentration.integral_mul_exp_neg_mul_sq_Ioi",
       "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
-      "line": 9,
+      "line": 11,
       "statement": "theorem integral_mul_exp_neg_mul_sq_Ioi (b : ℝ) (hb : 0 < b) : ∫ x : ℝ in Ioi 0, x*exp (-b*x^2) = (2*b)⁻¹"
     },
     {
@@ -43409,7 +43409,7 @@
       "name": "integral_transformed_occupancy_tail",
       "full_name": "BanditRLProof.Concentration.integral_transformed_occupancy_tail",
       "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
-      "line": 25,
+      "line": 27,
       "statement": "theorem integral_transformed_occupancy_tail (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) : ∫ z : ℝ in Ioi 0, (2/ε^2)*(z+sqrt (2*a))*exp (-(1/2 : ℝ)*z^2) = (2/ε^2)*(1+sqrt (Real.pi*a))"
     },
     {
@@ -43417,7 +43417,7 @@
       "name": "occupancyTail",
       "full_name": "BanditRLProof.Concentration.occupancyTail",
       "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
-      "line": 45,
+      "line": 47,
       "statement": "def occupancyTail (a ε t : ℝ) : ℝ"
     },
     {
@@ -43425,8 +43425,64 @@
       "name": "occupancyTail_antitoneOn",
       "full_name": "BanditRLProof.Concentration.occupancyTail_antitoneOn",
       "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
-      "line": 47,
+      "line": 49,
       "statement": "theorem occupancyTail_antitoneOn (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) : AntitoneOn (occupancyTail a ε) (Ici (2*a/ε^2))"
+    },
+    {
+      "kind": "def",
+      "name": "occupancySubstitution",
+      "full_name": "BanditRLProof.Concentration.occupancySubstitution",
+      "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+      "line": 66,
+      "statement": "def occupancySubstitution (a ε z : ℝ) : ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "occupancySubstitution_image",
+      "full_name": "BanditRLProof.Concentration.occupancySubstitution_image",
+      "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+      "line": 68,
+      "statement": "theorem occupancySubstitution_image (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) : occupancySubstitution a ε '' Ioi 0 = Ioi (2*a/ε^2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "occupancySubstitution_injOn",
+      "full_name": "BanditRLProof.Concentration.occupancySubstitution_injOn",
+      "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+      "line": 90,
+      "statement": "theorem occupancySubstitution_injOn (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) : InjOn (occupancySubstitution a ε) (Ioi 0)"
+    },
+    {
+      "kind": "theorem",
+      "name": "hasDerivAt_occupancySubstitution",
+      "full_name": "BanditRLProof.Concentration.hasDerivAt_occupancySubstitution",
+      "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+      "line": 103,
+      "statement": "theorem hasDerivAt_occupancySubstitution (a ε z : ℝ) : HasDerivAt (occupancySubstitution a ε) ((2/ε^2)*(z+sqrt (2*a))) z"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_occupancyTail",
+      "full_name": "BanditRLProof.Concentration.integral_occupancyTail",
+      "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+      "line": 109,
+      "statement": "theorem integral_occupancyTail (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) : ∫ t in Ioi (2*a/ε^2), occupancyTail a ε t = (2/ε^2)*(1+sqrt (Real.pi*a))"
+    },
+    {
+      "kind": "theorem",
+      "name": "integrableOn_occupancyTail",
+      "full_name": "BanditRLProof.Concentration.integrableOn_occupancyTail",
+      "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+      "line": 128,
+      "statement": "theorem integrableOn_occupancyTail (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) : IntegrableOn (occupancyTail a ε) (Ioi (2*a/ε^2))"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_occupancyTail_shift_le",
+      "full_name": "BanditRLProof.Concentration.sum_occupancyTail_shift_le",
+      "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+      "line": 149,
+      "statement": "theorem sum_occupancyTail_shift_le (a ε r : ℝ) (ha : 0 < a) (hε : 0 < ε) (hr : 2*a/ε^2 ≤ r) (N : ℕ) : (∑ i ∈ Finset.range N, occupancyTail a ε (r+(i+1 : ℕ))) ≤ (2/ε^2)*(1+sqrt (Real.pi*a))"
     },
     {
       "kind": "theorem",
@@ -95143,6 +95199,42 @@
       "target_fingerprint": "",
       "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
       "time": "2026-09-05T05:36:33+00:00",
+      "verifier_evidence": [],
+      "worker_id": ""
+    },
+    {
+      "attempt_id": "",
+      "changed_files": [],
+      "dag_depth": 0,
+      "dag_nodes": 0,
+      "elapsed_seconds": 0.0,
+      "error_signature": "",
+      "experiment_id": "",
+      "harness": "",
+      "input_tokens": 0,
+      "kind": "build",
+      "lean": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+      "lean_check_seconds": 0.0,
+      "new_declarations": [],
+      "notes": "Weighted Gaussian Ioi integral, exact transformed Lemma 8.2 integral, and tail antitonicity compiled. Canary 3517 jobs/baseline axioms. Full 951801c check passed 400 tests/7 skips/193.755s. Change of variables, discrete sum comparison, and expected count remain pending.",
+      "obligations_after": 0,
+      "obligations_before": 0,
+      "output_tokens": 0,
+      "parent_id": "",
+      "progress_class": "compiled-leaf",
+      "prompt_chars": 0,
+      "reused_declarations": [],
+      "reviewer_validated": false,
+      "role": "lower",
+      "route_fingerprint": "",
+      "route_packet_hash": "",
+      "run_id": "",
+      "source": "",
+      "statement_hash": "",
+      "status": "compiled",
+      "target_fingerprint": "",
+      "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+      "time": "2026-09-05T05:40:55+00:00",
       "verifier_evidence": [],
       "worker_id": ""
     }

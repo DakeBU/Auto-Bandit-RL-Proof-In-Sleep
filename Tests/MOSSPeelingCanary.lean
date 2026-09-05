@@ -60,3 +60,12 @@ example (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) :
 #print axioms Concentration.integral_mul_exp_neg_mul_sq_Ioi
 #print axioms Concentration.integral_transformed_occupancy_tail
 #print axioms Concentration.occupancyTail_antitoneOn
+
+example (a ε r : ℝ) (ha : 0 < a) (hε : 0 < ε) (hr : 2*a/ε^2 ≤ r) (N : ℕ) :
+    (∑ i ∈ Finset.range N, Concentration.occupancyTail a ε (r+(i+1 : ℕ))) ≤
+      (2/ε^2)*(1+sqrt (Real.pi*a)) :=
+  Concentration.sum_occupancyTail_shift_le a ε r ha hε hr N
+
+#print axioms Concentration.integral_occupancyTail
+#print axioms Concentration.integrableOn_occupancyTail
+#print axioms Concentration.sum_occupancyTail_shift_le

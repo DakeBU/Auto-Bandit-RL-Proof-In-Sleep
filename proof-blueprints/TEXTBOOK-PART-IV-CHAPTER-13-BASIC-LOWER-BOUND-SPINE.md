@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T05:40:39+00:00`
+Generated: `2026-09-05T05:45:20+00:00`
 
 ## Source Task
 
@@ -44497,7 +44497,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "integral_mul_exp_neg_mul_sq_Ioi",
     "full_name": "BanditRLProof.Concentration.integral_mul_exp_neg_mul_sq_Ioi",
     "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
-    "line": 9,
+    "line": 11,
     "statement": "theorem integral_mul_exp_neg_mul_sq_Ioi (b : \u211d) (hb : 0 < b) : \u222b x : \u211d in Ioi 0, x*exp (-b*x^2) = (2*b)\u207b\u00b9"
   },
   {
@@ -44505,7 +44505,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "integral_transformed_occupancy_tail",
     "full_name": "BanditRLProof.Concentration.integral_transformed_occupancy_tail",
     "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
-    "line": 25,
+    "line": 27,
     "statement": "theorem integral_transformed_occupancy_tail (a \u03b5 : \u211d) (ha : 0 < a) (h\u03b5 : 0 < \u03b5) : \u222b z : \u211d in Ioi 0, (2/\u03b5^2)*(z+sqrt (2*a))*exp (-(1/2 : \u211d)*z^2) = (2/\u03b5^2)*(1+sqrt (Real.pi*a))"
   },
   {
@@ -44513,7 +44513,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "occupancyTail",
     "full_name": "BanditRLProof.Concentration.occupancyTail",
     "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
-    "line": 45,
+    "line": 47,
     "statement": "def occupancyTail (a \u03b5 t : \u211d) : \u211d"
   },
   {
@@ -44521,8 +44521,64 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "occupancyTail_antitoneOn",
     "full_name": "BanditRLProof.Concentration.occupancyTail_antitoneOn",
     "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
-    "line": 47,
+    "line": 49,
     "statement": "theorem occupancyTail_antitoneOn (a \u03b5 : \u211d) (ha : 0 < a) (h\u03b5 : 0 < \u03b5) : AntitoneOn (occupancyTail a \u03b5) (Ici (2*a/\u03b5^2))"
+  },
+  {
+    "kind": "def",
+    "name": "occupancySubstitution",
+    "full_name": "BanditRLProof.Concentration.occupancySubstitution",
+    "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+    "line": 66,
+    "statement": "def occupancySubstitution (a \u03b5 z : \u211d) : \u211d"
+  },
+  {
+    "kind": "theorem",
+    "name": "occupancySubstitution_image",
+    "full_name": "BanditRLProof.Concentration.occupancySubstitution_image",
+    "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+    "line": 68,
+    "statement": "theorem occupancySubstitution_image (a \u03b5 : \u211d) (ha : 0 < a) (h\u03b5 : 0 < \u03b5) : occupancySubstitution a \u03b5 '' Ioi 0 = Ioi (2*a/\u03b5^2)"
+  },
+  {
+    "kind": "theorem",
+    "name": "occupancySubstitution_injOn",
+    "full_name": "BanditRLProof.Concentration.occupancySubstitution_injOn",
+    "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+    "line": 90,
+    "statement": "theorem occupancySubstitution_injOn (a \u03b5 : \u211d) (ha : 0 < a) (h\u03b5 : 0 < \u03b5) : InjOn (occupancySubstitution a \u03b5) (Ioi 0)"
+  },
+  {
+    "kind": "theorem",
+    "name": "hasDerivAt_occupancySubstitution",
+    "full_name": "BanditRLProof.Concentration.hasDerivAt_occupancySubstitution",
+    "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+    "line": 103,
+    "statement": "theorem hasDerivAt_occupancySubstitution (a \u03b5 z : \u211d) : HasDerivAt (occupancySubstitution a \u03b5) ((2/\u03b5^2)*(z+sqrt (2*a))) z"
+  },
+  {
+    "kind": "theorem",
+    "name": "integral_occupancyTail",
+    "full_name": "BanditRLProof.Concentration.integral_occupancyTail",
+    "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+    "line": 109,
+    "statement": "theorem integral_occupancyTail (a \u03b5 : \u211d) (ha : 0 < a) (h\u03b5 : 0 < \u03b5) : \u222b t in Ioi (2*a/\u03b5^2), occupancyTail a \u03b5 t = (2/\u03b5^2)*(1+sqrt (Real.pi*a))"
+  },
+  {
+    "kind": "theorem",
+    "name": "integrableOn_occupancyTail",
+    "full_name": "BanditRLProof.Concentration.integrableOn_occupancyTail",
+    "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+    "line": 128,
+    "statement": "theorem integrableOn_occupancyTail (a \u03b5 : \u211d) (ha : 0 < a) (h\u03b5 : 0 < \u03b5) : IntegrableOn (occupancyTail a \u03b5) (Ioi (2*a/\u03b5^2))"
+  },
+  {
+    "kind": "theorem",
+    "name": "sum_occupancyTail_shift_le",
+    "full_name": "BanditRLProof.Concentration.sum_occupancyTail_shift_le",
+    "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+    "line": 149,
+    "statement": "theorem sum_occupancyTail_shift_le (a \u03b5 r : \u211d) (ha : 0 < a) (h\u03b5 : 0 < \u03b5) (hr : 2*a/\u03b5^2 \u2264 r) (N : \u2115) : (\u2211 i \u2208 Finset.range N, occupancyTail a \u03b5 (r+(i+1 : \u2115))) \u2264 (2/\u03b5^2)*(1+sqrt (Real.pi*a))"
   },
   {
     "kind": "theorem",
@@ -96244,6 +96300,42 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "target_fingerprint": "",
     "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
     "time": "2026-09-05T05:36:33+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "build",
+    "lean": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [],
+    "notes": "Weighted Gaussian Ioi integral, exact transformed Lemma 8.2 integral, and tail antitonicity compiled. Canary 3517 jobs/baseline axioms. Full 951801c check passed 400 tests/7 skips/193.755s. Change of variables, discrete sum comparison, and expected count remain pending.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "compiled-leaf",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "lower",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "compiled",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T05:40:55+00:00",
     "verifier_evidence": [],
     "worker_id": ""
   }
