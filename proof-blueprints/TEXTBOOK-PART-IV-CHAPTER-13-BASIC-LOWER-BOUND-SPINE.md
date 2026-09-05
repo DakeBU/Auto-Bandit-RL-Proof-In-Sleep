@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T07:14:27+00:00`
+Generated: `2026-09-05T08:17:51+00:00`
 
 ## Source Task
 
@@ -11,6 +11,13 @@ Task id: `TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE`
 Kind: `theoremFormalization`
 
 Status: `accepted`
+
+Chapter completion contract: `complete` for the frozen required main text.
+Evidence: PR #105 at 90b1c07, authoritative-main b38630c / run 33953476610,
+Pages job 101275173069, and live desktop/mobile acceptance in
+`reviews/2026-09-05-ch13-moss-closeout-audit.md`. Notes/Exercises remain
+optional and unformalized. Final status-record publication is tracked
+separately; this does not claim that the updated label is already live.
 
 Harness: `hierarchical`
 
@@ -64,10 +71,10 @@ source node.
 | worst-case and minimax regret; minimax-optimal policy | required main text | explicit classes and fixed-horizon regret functional; attainment predicate | compiled |
 | Theorem 13.1 | required main theorem | unit-Gaussian `[0,1]^k` minimax lower bound for `k>1`, `n>=k` | compiled through Chapter 15 with `c=1/54` |
 | Section 13.1 two-point Gaussian test and midpoint decision | required main text | derive the empirical mean law `N(mu,1/n)` from `n` independent `N(mu,1)` observations; exact midpoint error events | compiled for the canonical finite product law |
-| Eq. (13.1) | required displayed result | both explicit Mills-ratio bounds with the printed constants | compiled by `gaussianSampleMeanZeroErrorProbability_source_bounds`; final integration gate pending |
+| Eq. (13.1) | required displayed result | both explicit Mills-ratio bounds with the printed constants | compiled by `gaussianSampleMeanZeroErrorProbability_source_bounds`; integration verified |
 | competition/similarity trade-off | required source mapping | narrative route to the precise two-environment nodes; no invented standalone proposition | mapped |
 | Eqs. (13.2)--(13.3), least-explored arm, one-coordinate change, `Delta` tuning, information bridge | required main text | exact identities/inequalities and the Chapter 14--15 same-policy history-law route | compiled locally or through Chapter 15 |
-| Algorithm 7 / Theorem 9.1 near-minimax claim for the broader 1-subgaussian class | required connected main-text claim | Gaussian-subclass lower transfer plus a compiled MOSS upper theorem on the stated broader class | compiled broad-class near-minimax endpoint; full integration and publication gates pending |
+| Algorithm 7 / Theorem 9.1 near-minimax claim for the broader 1-subgaussian class | required connected main-text claim | Gaussian-subclass lower transfer plus a compiled MOSS upper theorem on the stated broader class | compiled broad-class near-minimax endpoint; integration and publication gates verified |
 | Section 13.2 Notes | optional enrichment | itemized mapping if attempted; never used to hide a main-text gap | optional, unformalized |
 | Section 13.3 Bibliographic Remarks / Eq. (13.4) | source support for Eq. (13.1) | Abramowitz--Stegun Mills-ratio source and exact integral leaf | both exact integral bounds compiled in `GaussianMillsRatio.lean` |
 | Section 13.4 Exercises 13.1--13.2 | optional exercises | separate exercise contracts if attempted | optional, unformalized |
@@ -114,27 +121,16 @@ LowerBounds.minimaxExpectedRegret
 LowerBounds.IsMinimaxOptimal
 LowerBounds.IsMinimaxOptimal.mem_policyClass
 LowerBounds.IsMinimaxOptimal.eq_minimaxExpectedRegret
-LowerBounds.expectedRegret_le_worstCaseExpectedRegret
-LowerBounds.minimaxExpectedRegret_le_worstCaseExpectedRegret
-LowerBounds.le_minimaxExpectedRegret
-LowerBounds.exists_alternative_le_average
-LowerBounds.alternativeExpectedPullBudget_le
-LowerBounds.exists_leastExploredAlternative
-LowerBounds.baseEnvironmentRegret
-LowerBounds.changedEnvironmentRegretLowerBound
-LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error
 
-<!-- 2450 characters omitted from the middle of this snapshot. -->
+<!-- 3499 characters omitted from the middle of this snapshot. -->
 
-documentation and website. The earlier Chernoff-only baseline passed;
-  that historical gate does not certify this extension.
-- [ ] Refresh the structured source/Lean/evidence review for the exact-bound
-  extension. The earlier review's website-status-enum P3 was corrected.
 - [x] The earlier dependency-slice PR #9, remote Actions run `31942624241`, merge commit `44c3e153`,
   Pages deployment job `95156292456`, and the live desktop/mobile Chapter 13
   page pass.
-- [ ] The current Chapter 15 downstream Theorem 13.1 consumer passes its own
+- [x] The current Chapter 15 downstream Theorem 13.1 consumer passes its own
   PR, authoritative-main Actions, Pages deployment, and live Chapter 13 check.
+  The current combined extension is accepted through PR #105 and main run
+  33953476610, with Pages job 101275173069 and live b38630c verification.
 - [x] The main-prose broader-class near-minimax consequence has a compiled
   MOSS/Algorithm 7 upper theorem for the stated 1-subgaussian class.
 
@@ -181,6 +177,9 @@ documentation and website. The earlier Chernoff-only baseline passed;
   distinct MOSS/Chapter 9 dependency.
 
 ## Failure policy
+
+The dated progress notes below are historical. Their running/pending/partial
+observations are superseded by the accepted completion evidence above.
 
 ### 2026-09-05 Broader-class near-minimax consumer
 
@@ -252,9 +251,11 @@ definition, the Section 13.1 two-point Gaussian test and exact Eq. (13.1), and
 the stated Algorithm 7/Theorem 9.1 near-minimax consequence for the broader
 1-subgaussian class.  Notes 13.2 and Exercises 13.1--13.2 are optional;
 Bibliographic Remarks 13.3 is source evidence for the required Eq. (13.1), not
-an excuse to omit it.  Therefore the chapter remains `partial` while the
-integration/review/export/deployment gates remain open. Exact Eq. (13.1)
-and the broader-class MOSS near-minimax consumer now compile.
+an excuse to omit it. Exact Eq. (13.1) and the broader-class MOSS
+near-minimax consumer compile. The frozen main-text contract is complete:
+PR #105, main run 33953476610, Pages job 101275173069 and live b38630c
+desktop/mobile acceptance close the integration/review/export/deployment
+gates. Final status-record publication remains a separate follow-up.
 
 ## Natural-language statements
 
@@ -299,7 +300,7 @@ the `Delta*n/2` statement is retained only as the zero-error corollary.
 | empirical mean Gaussian law | the average of `n>0` independent `N(mu,1)` observations has law `N(mu,1/n)` | `LowerBounds.gaussianIIDSampleMeanLaw` | exact pushforward of the canonical finite iid product measure | compiled |
 | zero-mean test error | `P_0(sampleMean >= Delta/2)` under `N(0,1/n)` | `LowerBounds.gaussianSampleMeanZeroErrorProbability` | distribution-level probability | compiled definition and event identity |
 | Chernoff companion to Eq. (13.1) | `max_mu P_mu(error) <= exp(-n*Delta^2/8)` | `LowerBounds.gaussianSampleMeanThresholdRisk_le_exp` | two-hypothesis Gaussian/sub-Gaussian tail | compiled; not the exact displayed equation |
-| Eq. (13.1) | printed two-sided Gaussian tail bounds with explicit square-root denominators | `gaussianSampleMeanZeroErrorProbability_source_bounds` | exact Mills-ratio target | compiled; final integration gate pending |
+| Eq. (13.1) | printed two-sided Gaussian tail bounds with explicit square-root denominators | `gaussianSampleMeanZeroErrorProbability_source_bounds` | exact Mills-ratio target | compiled; integration verified |
 | arm `1` in the printed one-based notation | distinguished base arm | `0 : Fin (m+1)` | finite-arm index | typed |
 | arms `2,...,k` | alternative arms | `i.succ`, `i : Fin m` | finite-arm embedding | typed |
 | `E_nu[T_i(n)] <= n/(k-1)` | least-explored alternative | `LowerBounds.exists_leastExploredAlternative` | finite averaging theorem | target |
@@ -307,15 +308,14 @@ the `Delta*n/2` statement is retained only as the zero-error corollary.
 | equation (13.3) RHS | changed regret lower expression | `LowerBounds.changedEnvironmentRegretLowerBound` | deterministic real expression | target |
 | comparison of `T_0` under `nu,nu'` | statistical indistinguishability bridge | source event comparison in `GaussianMinimax.lean` | quantitative bridge contract | compiled Ch. 14--15 consumer |
 | Theorem 13.1 | Gaussian minimax lower bound | `unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt` | source-order endpoint with explicit `c=1/54` | compiled through Ch. 15 |
-| Algorithm 7 / Theorem 9.1 consequence | constant-factor near-minimax policy on the broader finite-arm 1-subgaussian class with gaps in `[0,1]` | `LowerBounds.moss_nearMinimax` | connected cross-chapter claim | compiled; integration gates pending |
+| Algorithm 7 / Theorem 9.1 consequence | constant-factor near-minimax policy on the broader finite-arm 1-subgaussian class with gaps in `[0,1]` | `LowerBounds.moss_nearMinimax` | connected cross-chapter claim | compiled; integration gates verified |
 
 ## Semantic signature and assumption ledger
 
 | Assumption | Lean status | Purpose | Blocking Chapter 13? |
 | --- | --- | --- | --- |
-| explicit policy and environment classes | subtype arguments | avoids silently quantifying over a different model class | no |
 
-<!-- 6268 characters omitted from the middle of this snapshot. -->
+<!-- 6397 characters omitted from the middle of this snapshot. -->
 
 | `CH13-GAUSSIAN-TEST-CHERNOFF` | both `N(0,1/n)` and `N(Delta,1/n)` midpoint errors, and their maximum, are at most `exp(-n*Delta^2/8)` | exact Gaussian MGF, reflection, and Mathlib Chernoff | `hasSubgaussianMGF_id_gaussianReal_zero`, `hasSubgaussianMGF_gap_sub_id_gaussianReal`, `gaussianSampleMeanThresholdRisk_le_exp` | project-local consequence | focused Lean | compiled |
 | `CH13-EQ-13-1` | exact printed two-sided Mills-ratio bounds | Eq. (13.4) integral inequalities and Gaussian rescaling | `gaussianSampleMeanZeroErrorProbability_source_bounds` | locally compiled mathlib-candidate | focused Lean | compiled |
@@ -324,10 +324,10 @@ the `Delta*n/2` statement is retained only as the zero-error corollary.
 | `CH13-TWO-ENV-ALGEBRA` | quantitative `Delta*(n-error)/2` max bound | nonnegative gap, explicit upper bound on the cross-law pull discrepancy | `max_base_changed_regretLowerBound_ge_half_sub_error`; zero-error corollary `max_base_changed_regretLowerBound_ge_half` | project-local | focused Lean | compiled |
 | `CH13-HISTORY-TRANSPORT` | derive cross-law event comparison | same policy/history law, Gaussian KL, history KL | `base_event_probability_lower_bound`, `changed_complement_probability_lower_bound` | project-local | Chapter 15 | compiled |
 | `CH13-THEOREM-13-1` | universal-constant Gaussian minimax `sqrt(k*n)` lower bound | Chapter 13 leaves plus Chapter 14 information theory and Chapter 15 packing/tuning | `unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt` | source-order endpoint | Chapter 15 | compiled |
-| `CH13-BROADER-SUBGAUSSIAN-NEAR-MINIMAX` | Algorithm 7 constant-factor near-minimax consequence on the stated 1-subgaussian class | Gaussian subclass transfer and Theorem 9.1 MOSS upper theorem | `LowerBounds.moss_nearMinimax` | connected dependency | Chapter 9 plus Chapter 13 | compiled; integration pending |
+| `CH13-BROADER-SUBGAUSSIAN-NEAR-MINIMAX` | Algorithm 7 constant-factor near-minimax consequence on the stated 1-subgaussian class | Gaussian subclass transfer and Theorem 9.1 MOSS upper theorem | `LowerBounds.moss_nearMinimax` | connected dependency | Chapter 9 plus Chapter 13 | compiled; integration verified |
 | `CH13-TYPED-CANARY` | full-conclusion applications and nondegenerate instance | compiled declarations | `Tests/TextbookPartIVChapter13Canary.lean` | project-local | Tests | verified |
 | `CH13-EVIDENCE-SITE` | task/window/DAG/export/index/site agreement | all local gates | repository artifacts | repository | site checks/review | verified locally |
-| `CH13-REMOTE` | current Chapter 15 downstream extension PR, Actions, Pages, live page | accepted local chapter; earlier dependency-slice PR remains historical evidence only | remote workflow | repository | deployment | pending current extension |
+| `CH13-REMOTE` | current Chapter 15 downstream extension PR, Actions, Pages, live page | accepted local chapter; earlier dependency-slice PR remains historical evidence only | remote workflow | repository | deployment | verified by PR #105, main run 33953476610 and live b38630c |
 
 ## Gaps
 
@@ -414,16 +414,16 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH13-GAUSSIAN-TEST-DECISION` | midpoint rule and exact error events under the two point hypotheses | ordered real comparison | `if`, `Set.Ici`, `Set.Iio` | `MLIB-ORDER-ALGEBRA` | split on `Delta/2 <= observation` | `Delta>0`; tie assigned to positive hypothesis | project-local | `LowerBounds.twoPointGaussianThresholdDecision_zero_error_event`, `LowerBounds.twoPointGaussianThresholdDecision_gap_error_event` | focused Lean | compiled |
 | `CH13-GAUSSIAN-SAMPLE-MEAN-LAW` | the average of `n>0` independent `N(mu,1)` observations has law `N(mu,1/n)` | canonical finite product measure and Gaussian scaling | `Measure.pi`, `charFun_map_sum_pi_eq_prod`, `charFun_gaussianReal`, `gaussianReal_map_div_const` | `MLIB-GAUSSIAN-REAL-TAIL`, `MLIB-PROBABILITY-INDEPENDENCE` | identify the product-law sum by characteristic functions, then map its arithmetic mean by division by `n` | `n>0`; every coordinate has exact `N(mu,1)` law by construction | project-local bridge | `LowerBounds.gaussianIIDObservationLaw`, `LowerBounds.gaussianCoordinateAverage`, `LowerBounds.gaussianIIDSumLaw`, `LowerBounds.gaussianIIDSampleMeanLaw` | focused Lean | compiled |
 | `CH13-GAUSSIAN-TEST-CHERNOFF` | under the declared zero/positive `N(mu,1/n)` laws, both midpoint errors and their maximum are at most `exp(-n*Delta^2/8)` | exact Gaussian MGF, reflection, and midpoint events | `gaussianReal`, `gaussianReal_map_const_sub`, `mgf_id_gaussianReal`, `HasSubgaussianMGF.measure_ge_le` | `MLIB-GAUSSIAN-REAL-TAIL`, `MLIB-PROBABILITY-SUBGAUSSIAN`, `MLIB-MEASURE-INTEGRAL`, `MLIB-REAL-LOG-SQRT` | derive centered and reflected sub-Gaussianity, apply one-sided Chernoff to both error rays, normalize variance `1/n`, take `max` | `Delta>0`; `n>0` is explicit in the compiled iid empirical-mean producer | project-local consequence | `LowerBounds.hasSubgaussianMGF_id_gaussianReal_zero`, `LowerBounds.hasSubgaussianMGF_gap_sub_id_gaussianReal`, `LowerBounds.gaussianSampleMeanZeroErrorProbability_le_exp`, `LowerBounds.gaussianSampleMeanGapErrorProbability_le_exp`, `LowerBounds.gaussianSampleMeanThresholdRisk_le_exp` | focused Lean | compiled |
-| `CH13-EQ-13-1` | exact printed lower and upper Gaussian midpoint-error bounds | both exact Eq. (13.4) integrals, Gaussian density, scaling, and denominator normalization | `GaussianMillsRatio.lean`, `GaussianHypothesisTesting.lean` | `MLIB-MEASURE-INTEGRAL`, `MLIB-GAUSSIAN-REAL-TAIL` | derivative comparison for lower bound; one sign change and endpoints for upper bound; Gaussian density change of variable | `n>0`, `Delta>0`; constants 16 and 32/pi | locally compiled Mathlib-candidate and project consumer | `gaussianSampleMeanZeroErrorProbability_source_bounds` | focused build and external typed canary; full gate pending | compiled |
+| `CH13-EQ-13-1` | exact printed lower and upper Gaussian midpoint-error bounds | both exact Eq. (13.4) integrals, Gaussian density, scaling, and denominator normalization | `GaussianMillsRatio.lean`, `GaussianHypothesisTesting.lean` | `MLIB-MEASURE-INTEGRAL`, `MLIB-GAUSSIAN-REAL-TAIL` | derivative comparison for lower bound; one sign change and endpoints for upper bound; Gaussian density change of variable | `n>0`, `Delta>0`; constants 16 and 32/pi | locally compiled Mathlib-candidate and project consumer | `gaussianSampleMeanZeroErrorProbability_source_bounds` | focused build, typed canary and full gate verified | compiled |
 | `CH13-ALTERNATIVE-BUDGET` | sum of alternative expected pulls is at most horizon | exact total sum and base nonnegativity | `Fin.sum_univ_succ`, ordered field | `MLIB-FINSET-SUMS`, `MLIB-FINTYPE-FIN` | rewrite the full sum as base plus tail, then linear arithmetic | all expected pulls nonnegative | mathlib-composed project leaf | `LowerBounds.alternativeExpectedPullBudget_le` | focused Lean | compiled |
 | `CH13-LEAST-EXPLORED` | some alternative has expected pulls at most `n/m` | alternative budget, `0 < m` | `Finset.exists_le_of_sum_le`, constant sum | `MLIB-FINSET-SUMS`, `MLIB-FINTYPE-FIN`, `MLIB-ORDER-ALGEBRA` | finite average comparison | `0 < m`; exact expected-pull total | mathlib-composed project leaf | `LowerBounds.exists_alternative_le_average`, `LowerBounds.exists_leastExploredAlternative` | focused Lean | compiled |
 | `CH13-TWO-ENV-ALGEBRA` | max of base and changed expressions is at least `Delta*(n-error)/2` under an explicit pull-discrepancy bound | equations (13.2)--(13.3) expressions | real ordered-field algebra, `max`, `nlinarith` | `MLIB-ORDER-ALGEBRA` | show their sum is at least `Delta*(n-error)`, then use max/average | `0 <= Delta`; visible `baseFirstPulls-changedFirstPulls <= error` bridge | project-local | `LowerBounds.baseEnvironmentRegret`, `LowerBounds.changedEnvironmentRegretLowerBound`, `LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error`; zero-error corollary `LowerBounds.max_base_changed_regretLowerBound_ge_half` | focused Lean | compiled |
 | `CH13-HISTORY-TRANSPORT` | same-policy history-law comparison supplies the cross-law event inequality | Chapter 14 information theory and Chapter 15 history KL | compiled Gaussian/history APIs | local declarations; weapon card inspiration only | likelihood ratio, KL chain rule, direction-correct event inequality | measurability, policy consistency, exact KL direction | project-local | `LowerBounds.base_event_probability_lower_bound`, `LowerBounds.changed_complement_probability_lower_bound` | Chapter 15 | compiled |
 
-<!-- 2356 characters omitted from the middle of this snapshot. -->
+<!-- 2337 characters omitted from the middle of this snapshot. -->
 
-| `CH13-REVIEW` | structured in-branch source/theorem/Lean/evidence consistency audit | all local artifacts | source, declarations, generated site | all above | check source inventory, quantifiers, probability-law direction, regularity, status labels, and order claims | no unresolved P0--P3; website-status-enum P3 corrected | repository | n/a | review | baseline verified; exact-bound extension pending |
-| `CH13-REMOTE` | current Chapter 15 downstream extension PR, Actions, Pages deployment and live Chapter 13 verification | accepted local chapter; earlier dependency-slice PR is historical evidence only | GitHub/Pages workflow | repository | branch PR; never direct push to main | remote state must be current | repository | n/a | remote deployment | pending current extension |
+| `CH13-REVIEW` | structured in-branch source/theorem/Lean/evidence consistency audit | all local artifacts | source, declarations, generated site | all above | check source inventory, quantifiers, probability-law direction, regularity, status labels, and order claims | no unresolved P0--P3; website-status-enum P3 corrected | repository | n/a | review | expanded Mills/MOSS extension verified |
+| `CH13-REMOTE` | current Chapter 15 downstream extension PR, Actions, Pages deployment and live Chapter 13 verification | accepted local chapter; earlier dependency-slice PR is historical evidence only | GitHub/Pages workflow | repository | branch PR; never direct push to main | remote state must be current | repository | n/a | remote deployment | verified by PR #105, main run 33953476610 and live b38630c |
 
 ## 2026-09-05 Exact Gaussian testing closure
 
@@ -518,9 +518,9 @@ Use exactly one:
   inferred from deterministic algebra or a theorem card.
 - Theorem 13.1 is represented by the caller-free Chapter 15 minimax consumer
   with explicit `c=1/54`; broader classes or constants require separate gates.
-- The chapter remains `partial`: the broader-class MOSS consequence now
-  compiles in `LowerBounds/SubgaussianMinimax.lean`, but whole-chapter
-  integration/review/export/deployment gates remain open. Notes 13.2 and
+- The frozen main-text contract is complete: the broader-class MOSS
+  consequence compiles in `LowerBounds/SubgaussianMinimax.lean`, and
+  integration/review/export/deployment/live gates pass for b38630c. Notes 13.2 and
   Exercises 13.1--13.2 are optional and do not block completion.
 
 ## Failure policy
@@ -96987,78 +96987,6 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "harness": "",
     "input_tokens": 0,
     "kind": "build",
-    "lean": "BanditRLProof/Algorithms/MOSSOptimism.lean",
-    "lean_check_seconds": 0.0,
-    "new_declarations": [],
-    "notes": "Finite-horizon nonnegative optimism deficit, event equivalence, strong measurability, derived integrability, Lemma 9.3 tail consumer and layer-cake identity compiled. External canary 3497 jobs passed with baseline axioms. Numerical expected bound and complete MOSS regret remain pending.",
-    "obligations_after": 0,
-    "obligations_before": 0,
-    "output_tokens": 0,
-    "parent_id": "",
-    "progress_class": "compiled-leaf",
-    "prompt_chars": 0,
-    "reused_declarations": [],
-    "reviewer_validated": false,
-    "role": "lower",
-    "route_fingerprint": "",
-    "route_packet_hash": "",
-    "run_id": "",
-    "source": "",
-    "statement_hash": "",
-    "status": "compiled",
-    "target_fingerprint": "",
-    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
-    "time": "2026-09-05T05:27:30+00:00",
-    "verifier_evidence": [],
-    "worker_id": ""
-  },
-  {
-    "attempt_id": "",
-    "changed_files": [],
-    "dag_depth": 0,
-    "dag_nodes": 0,
-    "elapsed_seconds": 0.0,
-    "error_signature": "",
-    "experiment_id": "",
-    "harness": "",
-    "input_tokens": 0,
-    "kind": "build",
-    "lean": "BanditRLProof/Algorithms/MOSSOptimism.lean",
-    "lean_check_seconds": 0.0,
-    "new_declarations": [],
-    "notes": "Numerical tail integration and MOSS expected deficit <=2sqrt(15delta), source 16sqrt(nk) contribution compiled; 3508 focused jobs and baseline axioms. Full 50ea833 gate passed 400 tests/7 skips/203.163s. Next large-gap occupancy and actual regret assembly.",
-    "obligations_after": 0,
-    "obligations_before": 0,
-    "output_tokens": 0,
-    "parent_id": "",
-    "progress_class": "compiled-leaf",
-    "prompt_chars": 0,
-    "reused_declarations": [],
-    "reviewer_validated": false,
-    "role": "lower",
-    "route_fingerprint": "",
-    "route_packet_hash": "",
-    "run_id": "",
-    "source": "",
-    "statement_hash": "",
-    "status": "compiled",
-    "target_fingerprint": "",
-    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
-    "time": "2026-09-05T05:32:08+00:00",
-    "verifier_evidence": [],
-    "worker_id": ""
-  },
-  {
-    "attempt_id": "",
-    "changed_files": [],
-    "dag_depth": 0,
-    "dag_nodes": 0,
-    "elapsed_seconds": 0.0,
-    "error_signature": "",
-    "experiment_id": "",
-    "harness": "",
-    "input_tokens": 0,
-    "kind": "build",
     "lean": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
     "lean_check_seconds": 0.0,
     "new_declarations": [],
@@ -97726,6 +97654,78 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "target_fingerprint": "",
     "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
     "time": "2026-09-05T06:48:02+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "review",
+    "lean": "",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [],
+    "notes": "Merged e218fc8 full check passed: library 8880, Tests 8927, ProofGraphExport, 400 Python tests in 214.613s, 7 skipped. Consumer self-review preserves common law, broad gap class and fixed horizon. PR105 draft mergeable; remote CI and main/Pages/live remain pending; chapter partial.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "unreviewed",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "reviewer",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "executed",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T07:15:07+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "review",
+    "lean": "",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [],
+    "notes": "PR105 latest head 90b1c07 passed CI33952076777 (Tests8927, 400 Python tests 90.845s, 3 skips) and merged as b38630c. Local integration and structured self-review gates checked; main run33953476610, deployment and live verification remain pending. Whole chapter partial.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "unreviewed",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "reviewer",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "executed",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T07:48:17+00:00",
     "verifier_evidence": [],
     "worker_id": ""
   }

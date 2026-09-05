@@ -1,9 +1,81 @@
 # Chapter 13 MOSS evidence closeout audit
 
-This is an in-branch self-audit, not an independent review or completion
-certificate. Current validated Lean baseline: e218fc8. Chapter status remains partial.
+This combines an in-branch self-audit with authoritative acceptance evidence;
+it is not an independent review. Current accepted tree: 90b1c07, merged and
+deployed as b38630c. The frozen main-text completion contract is satisfied.
+The final synchronized status-record publication remains to be verified.
+
+Final status synchronization updates only Chapter 13's frozen main-text
+contract to complete (website enum compiled); optional sections and other
+chapters retain their original scope/status. The regenerated site passes
+all checks: 686 pages, 8453 declarations, 118 highlights, and a derived
+summary of one compiled / four partial chapter contracts. The updated
+two-page export compiles without overfull/underfull warnings and both
+rendered pages were inspected. The heading now describes compiled
+dependencies rather than obsolete required blockers. No Lean source or
+theorem target changes are included in this status-publication follow-up.
+
+## PR acceptance
+
+### Authoritative-main and deployed-page acceptance
+
+Main run 33953476610 completed successfully on b38630c. Build job
+101272447506 passed library 8880 jobs, Tests 8927 jobs, ProofGraphExport,
+400 Python tests in 70.266 seconds (3 skipped), result-free protocol
+validation, public-snapshot site build/check and Pages artifact upload.
+Deployment job 101275173069 also passed. Live site-manifest.json reports
+source_commit b38630cb18c9724252432647443cfe3c031da4e5, source_dirty false,
+lean_verified true, public_snapshot true, 632 modules, 8453 declarations,
+zero placeholders, and generation time 2026-09-05T08:08:56+00:00.
+
+The deployed Chapter 13 page was inspected at desktop 1280x720 and mobile
+390x844. Desktop text is legible with zero broken images and document width
+1265. Mobile text and the minimax formula are legible after reload resolved
+the transient screenshot/layout scaling discrepancy; document width is 375,
+with zero broken images. The Lean correspondence region has client width
+341, content width 704 and overflow-x:auto. Actual horizontal scrolling
+moved scrollLeft from 0 to 350 and exposed the role/type columns without
+document-level overflow. The three MOSS/common-history/broad-class terminal
+links are present. Temporary viewport overrides were reset.
+
+The live page correctly retains its pre-promotion Partial main-text label
+and explicitly optional Notes/Exercises. This acceptance closes the
+publication gate for the mathematical extension; it does not claim that
+the subsequent status-summary edits or completion labels are deployed.
+Those final synchronized records still require publication and verification.
+
+PR #105 was marked ready after the local source/consumer/export/mobile
+review and merged at b38630cb18c9724252432647443cfe3c031da4e5. Its head
+90b1c0742cbfd3783dbf7cdf99c1f3b9d82f4223 passed all three workflows:
+Lean/documentation 33952076777, lifecycle 33952076768 and pinned-source
+preflight 33952076771. Build job 101268669875 completed the full harness,
+result-free protocol validation, verified website build and site checks.
+Logs confirm Tests 8927 jobs, 400 Python tests in 90.845 seconds with
+3 skipped, and 686 pages / 8453 declarations / 118 highlights. The Linux
+skip count is distinct from the local Windows run's 7 skips.
+
+No submitted reviews or inline review threads were present at the final
+pre-merge check. The in-branch structured review above is not represented
+as an independent approval. Git diff between the PR head and merge tree
+is empty. PR artifact upload and deployment were skipped by workflow
+design, so PR success is not deployment evidence.
+
+Authoritative-main run 33953476610 is now active on b38630c (build job
+101272447506). Its outcome, Pages deployment and live desktop/mobile
+verification remain unverified. Do not promote the chapter yet.
 
 ## Latest merged-tree verdict
+
+Publication follow-up: the primary textbook banner now derives the count
+of compiled chapter contracts from chapter status records, rather than
+hard-coding that Chapters 13--17 all remain partial. The site checker
+requires this derived count. An in-memory regression exercise verified
+both zero and one compiled contracts without changing the source JSON;
+all five chapter records remain partial at this stage. Python syntax
+checks passed. This prepares consistent status reporting, not an early
+promotion or proof-status change. The verified local rebuild and full
+site check passed (686 pages, 632 modules, 8453 declarations, 118 highlights,
+valid internal links and formula fallbacks); Lean sources were unchanged.
 
 Full `python tools/bandit.py check` at e218fc8 completed successfully in
 the clean short validation worktree C:/abrl13-d9682b8 (session 5092,

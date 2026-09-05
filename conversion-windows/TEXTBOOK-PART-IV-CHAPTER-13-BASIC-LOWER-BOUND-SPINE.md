@@ -28,9 +28,11 @@ definition, the Section 13.1 two-point Gaussian test and exact Eq. (13.1), and
 the stated Algorithm 7/Theorem 9.1 near-minimax consequence for the broader
 1-subgaussian class.  Notes 13.2 and Exercises 13.1--13.2 are optional;
 Bibliographic Remarks 13.3 is source evidence for the required Eq. (13.1), not
-an excuse to omit it.  Therefore the chapter remains `partial` while the
-integration/review/export/deployment gates remain open. Exact Eq. (13.1)
-and the broader-class MOSS near-minimax consumer now compile.
+an excuse to omit it. Exact Eq. (13.1) and the broader-class MOSS
+near-minimax consumer compile. The frozen main-text contract is complete:
+PR #105, main run 33953476610, Pages job 101275173069 and live b38630c
+desktop/mobile acceptance close the integration/review/export/deployment
+gates. Final status-record publication remains a separate follow-up.
 
 ## Natural-language statements
 
@@ -75,7 +77,7 @@ the `Delta*n/2` statement is retained only as the zero-error corollary.
 | empirical mean Gaussian law | the average of `n>0` independent `N(mu,1)` observations has law `N(mu,1/n)` | `LowerBounds.gaussianIIDSampleMeanLaw` | exact pushforward of the canonical finite iid product measure | compiled |
 | zero-mean test error | `P_0(sampleMean >= Delta/2)` under `N(0,1/n)` | `LowerBounds.gaussianSampleMeanZeroErrorProbability` | distribution-level probability | compiled definition and event identity |
 | Chernoff companion to Eq. (13.1) | `max_mu P_mu(error) <= exp(-n*Delta^2/8)` | `LowerBounds.gaussianSampleMeanThresholdRisk_le_exp` | two-hypothesis Gaussian/sub-Gaussian tail | compiled; not the exact displayed equation |
-| Eq. (13.1) | printed two-sided Gaussian tail bounds with explicit square-root denominators | `gaussianSampleMeanZeroErrorProbability_source_bounds` | exact Mills-ratio target | compiled; final integration gate pending |
+| Eq. (13.1) | printed two-sided Gaussian tail bounds with explicit square-root denominators | `gaussianSampleMeanZeroErrorProbability_source_bounds` | exact Mills-ratio target | compiled; integration verified |
 | arm `1` in the printed one-based notation | distinguished base arm | `0 : Fin (m+1)` | finite-arm index | typed |
 | arms `2,...,k` | alternative arms | `i.succ`, `i : Fin m` | finite-arm embedding | typed |
 | `E_nu[T_i(n)] <= n/(k-1)` | least-explored alternative | `LowerBounds.exists_leastExploredAlternative` | finite averaging theorem | target |
@@ -83,7 +85,7 @@ the `Delta*n/2` statement is retained only as the zero-error corollary.
 | equation (13.3) RHS | changed regret lower expression | `LowerBounds.changedEnvironmentRegretLowerBound` | deterministic real expression | target |
 | comparison of `T_0` under `nu,nu'` | statistical indistinguishability bridge | source event comparison in `GaussianMinimax.lean` | quantitative bridge contract | compiled Ch. 14--15 consumer |
 | Theorem 13.1 | Gaussian minimax lower bound | `unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt` | source-order endpoint with explicit `c=1/54` | compiled through Ch. 15 |
-| Algorithm 7 / Theorem 9.1 consequence | constant-factor near-minimax policy on the broader finite-arm 1-subgaussian class with gaps in `[0,1]` | `LowerBounds.moss_nearMinimax` | connected cross-chapter claim | compiled; integration gates pending |
+| Algorithm 7 / Theorem 9.1 consequence | constant-factor near-minimax policy on the broader finite-arm 1-subgaussian class with gaps in `[0,1]` | `LowerBounds.moss_nearMinimax` | connected cross-chapter claim | compiled; integration gates verified |
 
 ## Semantic signature and assumption ledger
 
@@ -104,7 +106,7 @@ the `Delta*n/2` statement is retained only as the zero-error corollary.
 | `n >= k` | explicit endpoint premise | exact Theorem 13.1 horizon domain | no for compiled endpoint |
 | concentration/stopping-time assumptions | no stopping-time premise; exact Gaussian MGF supplies a distribution-level one-sided Chernoff theorem | the minimax route uses information testing rather than concentration; the new Section 13.1 companion is a fixed-law tail bound | no for Theorem 13.1; exact Eq. (13.1) compiled separately |
 | positive Gaussian-test sample size and gap | explicit in the Chernoff theorem | makes variance `1/n` nondegenerate and the midpoint nonnegative | no for compiled upper consequence |
-| exact Mills-ratio inequalities | compiled | lower and sharpened upper halves of Eq. (13.1) | no mathematical blocker; integration pending |
+| exact Mills-ratio inequalities | compiled | lower and sharpened upper halves of Eq. (13.1) | no mathematical blocker; integration verified |
 | compiled MOSS upper theorem on the stated 1-subgaussian class | `MOSS.canonicalGapExpectedRegret_le`, `LowerBounds.moss_nearMinimax` | broader-class near-minimax consequence in the main prose | compiled; still requires whole-chapter integration |
 
 ## Local API and proof route
@@ -136,10 +138,10 @@ the `Delta*n/2` statement is retained only as the zero-error corollary.
 | `CH13-TWO-ENV-ALGEBRA` | quantitative `Delta*(n-error)/2` max bound | nonnegative gap, explicit upper bound on the cross-law pull discrepancy | `max_base_changed_regretLowerBound_ge_half_sub_error`; zero-error corollary `max_base_changed_regretLowerBound_ge_half` | project-local | focused Lean | compiled |
 | `CH13-HISTORY-TRANSPORT` | derive cross-law event comparison | same policy/history law, Gaussian KL, history KL | `base_event_probability_lower_bound`, `changed_complement_probability_lower_bound` | project-local | Chapter 15 | compiled |
 | `CH13-THEOREM-13-1` | universal-constant Gaussian minimax `sqrt(k*n)` lower bound | Chapter 13 leaves plus Chapter 14 information theory and Chapter 15 packing/tuning | `unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt` | source-order endpoint | Chapter 15 | compiled |
-| `CH13-BROADER-SUBGAUSSIAN-NEAR-MINIMAX` | Algorithm 7 constant-factor near-minimax consequence on the stated 1-subgaussian class | Gaussian subclass transfer and Theorem 9.1 MOSS upper theorem | `LowerBounds.moss_nearMinimax` | connected dependency | Chapter 9 plus Chapter 13 | compiled; integration pending |
+| `CH13-BROADER-SUBGAUSSIAN-NEAR-MINIMAX` | Algorithm 7 constant-factor near-minimax consequence on the stated 1-subgaussian class | Gaussian subclass transfer and Theorem 9.1 MOSS upper theorem | `LowerBounds.moss_nearMinimax` | connected dependency | Chapter 9 plus Chapter 13 | compiled; integration verified |
 | `CH13-TYPED-CANARY` | full-conclusion applications and nondegenerate instance | compiled declarations | `Tests/TextbookPartIVChapter13Canary.lean` | project-local | Tests | verified |
 | `CH13-EVIDENCE-SITE` | task/window/DAG/export/index/site agreement | all local gates | repository artifacts | repository | site checks/review | verified locally |
-| `CH13-REMOTE` | current Chapter 15 downstream extension PR, Actions, Pages, live page | accepted local chapter; earlier dependency-slice PR remains historical evidence only | remote workflow | repository | deployment | pending current extension |
+| `CH13-REMOTE` | current Chapter 15 downstream extension PR, Actions, Pages, live page | accepted local chapter; earlier dependency-slice PR remains historical evidence only | remote workflow | repository | deployment | verified by PR #105, main run 33953476610 and live b38630c |
 
 ## Gaps
 

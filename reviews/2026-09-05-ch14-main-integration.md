@@ -25,3 +25,11 @@ actionable integration defect was found. Compiler/CI are separate gates.
 GitHub confirms b470ca9 is MERGEABLE. Final validation progress/results are
 reported on PR #106; this file records the pre-validation integration audit,
 not a claim of passing CI or publication.
+
+Second pre-merge refresh: after user authorized PR merge and Pages verification,
+main advanced to 80c5413 (Chapter13 acceptance). Integrated that update while
+retaining main's Chapter13 completion and the Chapter14 evidence boundary.
+No Lean/library/test source changed relative to the CI-passing 1d0e120.
+README/theory-tree conflicts resolved per chapter, MANIFEST by union, indexes
+regenerated. Main's status-derived website banner is retained unchanged.
+Fresh PR validation and main publication must still be checked after this merge.
