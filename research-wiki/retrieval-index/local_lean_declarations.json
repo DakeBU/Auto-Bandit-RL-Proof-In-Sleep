@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T05:21:28+00:00",
+  "generated": "2026-09-05T05:26:14+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -27632,6 +27632,70 @@
       "file": "BanditRLProof/Literature.lean",
       "line": 31,
       "statement": "def lmlBanditDeclarationCards : List RegretBoundCard"
+    },
+    {
+      "kind": "theorem",
+      "name": "mul_exp_neg_half_log_eq_sqrt",
+      "full_name": "BanditRLProof.LowerBounds.mul_exp_neg_half_log_eq_sqrt",
+      "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
+      "line": 15,
+      "statement": "theorem mul_exp_neg_half_log_eq_sqrt {r : \u211d} (hr : 0 \u2264 r) : r * Real.exp (-Real.log r / 2) = Real.sqrt r"
+    },
+    {
+      "kind": "theorem",
+      "name": "integrable_sqrt_rnDeriv",
+      "full_name": "BanditRLProof.LowerBounds.integrable_sqrt_rnDeriv",
+      "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
+      "line": 25,
+      "statement": "theorem integrable_sqrt_rnDeriv {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] : Integrable (fun x => Real.sqrt (P.rnDeriv Q x).toReal) Q"
+    },
+    {
+      "kind": "theorem",
+      "name": "integrable_exp_neg_half_llr",
+      "full_name": "BanditRLProof.LowerBounds.integrable_exp_neg_half_llr",
+      "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
+      "line": 32,
+      "statement": "theorem integrable_exp_neg_half_llr {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] (hPQ : P \u226a Q) : Integrable (fun x => Real.exp (-llr P Q x / 2)) P"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_exp_neg_half_llr_eq",
+      "full_name": "BanditRLProof.LowerBounds.integral_exp_neg_half_llr_eq",
+      "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
+      "line": 40,
+      "statement": "theorem integral_exp_neg_half_llr_eq {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] (hPQ : P \u226a Q) : (\u222b x, Real.exp (-llr P Q x / 2) \u2202P) = \u222b x, Real.sqrt (P.rnDeriv Q x).toReal \u2202Q"
+    },
+    {
+      "kind": "theorem",
+      "name": "exp_neg_half_integral_llr_le_rnAffinity",
+      "full_name": "BanditRLProof.LowerBounds.exp_neg_half_integral_llr_le_rnAffinity",
+      "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
+      "line": 49,
+      "statement": "theorem exp_neg_half_integral_llr_le_rnAffinity {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] (hPQ : P \u226a Q) (hi : Integrable (llr P Q) P) : Real.exp (-(\u222b x, llr P Q x \u2202P) / 2) \u2264 \u222b x, Real.sqrt (P.rnDeriv Q x).toReal \u2202Q"
+    },
+    {
+      "kind": "theorem",
+      "name": "rnAffinity_eq_commonDensityAffinity",
+      "full_name": "BanditRLProof.LowerBounds.rnAffinity_eq_commonDensityAffinity",
+      "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
+      "line": 63,
+      "statement": "theorem rnAffinity_eq_commonDensityAffinity {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] [SigmaFinite \u03bc] (hPQ : P \u226a Q) (hQ : Q \u226a \u03bc) : (\u222b x, Real.sqrt (P.rnDeriv Q x).toReal \u2202Q) = commonDensityAffinity P Q \u03bc"
+    },
+    {
+      "kind": "theorem",
+      "name": "exp_neg_half_integral_llr_le_commonDensityAffinity",
+      "full_name": "BanditRLProof.LowerBounds.exp_neg_half_integral_llr_le_commonDensityAffinity",
+      "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
+      "line": 82,
+      "statement": "theorem exp_neg_half_integral_llr_le_commonDensityAffinity {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite \u03bc] (hPQ : P \u226a Q) (hQ : Q \u226a \u03bc) (hi : Integrable (llr P Q) P) : Real.exp (-(\u222b x, llr P Q x \u2202P) / 2) \u2264 commonDensityAffinity P Q \u03bc"
+    },
+    {
+      "kind": "theorem",
+      "name": "bretagnolleHuberScale_le_half_commonDensityAffinity_sq",
+      "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_le_half_commonDensityAffinity_sq",
+      "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
+      "line": 91,
+      "statement": "theorem bretagnolleHuberScale_le_half_commonDensityAffinity_sq {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite \u03bc] (hQ : Q \u226a \u03bc) : bretagnolleHuberScale (relativeEntropy P Q) \u2264 (1 / 2 : \u211d) * commonDensityAffinity P Q \u03bc ^ 2"
     },
     {
       "kind": "def",

@@ -1,4 +1,4 @@
-import BanditRLProof.LowerBounds.CommonDensityOverlap
+import BanditRLProof
 
 /-! Focused overlap/affinity checks, with no positive-density hypothesis. -/
 

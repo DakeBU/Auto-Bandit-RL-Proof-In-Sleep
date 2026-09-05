@@ -65,7 +65,7 @@ mapped local adapter before they count as chapter evidence.
 | Gaussian example | common-variance Gaussian KL formula | unit-variance specialization compiles in Chapter 15; arbitrary positive variance is absent | partial |
 | Bernoulli example | endpoint-complete binary KL formula | `bernoulliRelativeEntropy` and endpoint lemmas compile | compiled |
 | Theorem 14.2 / Eq. (14.7) | unconditional Bretagnolle--Huber event inequality in direction `D(P,Q)` | exact local terminal compiles | compiled |
-| Eq. (14.8) | measure-level overlap lower bound used in the source proof | `bretagnolleHuberScale_le_commonDensityOverlap` via the attaining likelihood event; focused build passed; root integration pending; source Jensen intermediate remains open | partial (integration pending) |
+| Eq. (14.8) | measure-level overlap lower bound used in the source proof | both the attaining-event proof and source integral-Jensen/Cauchy--Schwarz route compile; `bretagnolleHuberScale_le_half_commonDensityAffinity_sq` supplies the source intermediate; root/aggregate verification pending | partial (integration pending) |
 | Eq. (14.9) | measure-level Le Cam affinity/overlap inequality | `half_commonDensityAffinity_sq_le_overlap` via L2 Cauchy--Schwarz, with integrability proved separately; focused build passed; root integration pending | partial (integration pending) |
 | Gaussian testing application | the displayed Gaussian error bound and the `3/10`, `3/20` consequences under `Δ²/σ²≤1` | not exposed as Chapter 14 declarations | planned |
 

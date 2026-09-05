@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T05:21:39+00:00`
+Generated: `2026-09-05T05:26:25+00:00`
 
 ## Source Task
 
@@ -71,7 +71,7 @@ mapped local adapter before they count as chapter evidence.
 | Gaussian example | common-variance Gaussian KL formula | unit-variance specialization compiles in Chapter 15; arbitrary positive variance is absent | partial |
 | Bernoulli example | endpoint-complete binary KL formula | `bernoulliRelativeEntropy` and endpoint lemmas compile | compiled |
 | Theorem 14.2 / Eq. (14.7) | unconditional Bretagnolle--Huber event inequality in direction `D(P,Q)` | exact local terminal compiles | compiled |
-| Eq. (14.8) | measure-level overlap lower bound used in the source proof | `bretagnolleHuberScale_le_commonDensityOverlap` via the attaining likelihood event; focused build passed; root integration pending; source Jensen intermediate remains open | partial (integration pending) |
+| Eq. (14.8) | measure-level overlap lower bound used in the source proof | both the attaining-event proof and source integral-Jensen/Cauchy--Schwarz route compile; `bretagnolleHuberScale_le_half_commonDensityAffinity_sq` supplies the source intermediate; root/aggregate verification pending | partial (integration pending) |
 | Eq. (14.9) | measure-level Le Cam affinity/overlap inequality | `half_commonDensityAffinity_sq_le_overlap` via L2 Cauchy--Schwarz, with integrability proved separately; focused build passed; root integration pending | partial (integration pending) |
 | Gaussian testing application | the displayed Gaussian error bound and the `3/10`, `3/20` consequences under `Δ²/σ²≤1` | not exposed as Chapter 14 declarations | planned |
 
@@ -103,9 +103,8 @@ LowerBounds.bernoulliRelativeEntropy
 LowerBounds.relativeEntropy_trim_le
 LowerBounds.bernoulliRelativeEntropy_event_le
 LowerBounds.binaryBretagnolleHuber
-LowerBounds.bretagnolleHuberScale
 
-<!-- 2108 characters omitted from the middle of this snapshot. -->
+<!-- 2142 characters omitted from the middle of this snapshot. -->
 
 page are verified before this task becomes accepted.
 
@@ -356,7 +355,7 @@ with `D(Q,P)` is also valid.
 - [x] Eq. (14.4) for an arbitrary finite alphabet, with exact support dichotomy and zero-mass terms.
 - [x] Eq. (14.5) finite-discretisation supremum equivalence to RN KL, including singular and nonintegrable branches.
 - [x] Eq. (14.6) general common-density formula; full harness passed at `78846b8`.
-- [ ] Measure-overlap root integration and source affinity/KL Jensen intermediate (Eqs. (14.8)--(14.9) focused build passed).
+- [ ] Measure-overlap root/aggregate verification (Eqs. (14.8)--(14.9) and source affinity/KL Jensen intermediate focused-build passed).
 - [ ] General Gaussian-variance/application proof nodes.
 
 
@@ -399,7 +398,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH14-COMMON-DENSITY` | Eq. (14.6) under a common σ-finite dominating measure | RN ratio, integral transport | transfer log-density equality to P-a.e.; transport integrability and integral; retain singular/nonintegrable infinity branches | `relativeEntropy_commonDensity_eq_if`, `relativeEntropy_commonDensity_klFun` and helpers | root/aggregate/full harness passed at `78846b8` | compiled |
 | `CH14-KL-SEPARATION` | nonnegativity and zero iff equality | Mathlib KL | `ENNReal` order plus thin source-mapped equality adapter | `relativeEntropy_eq_zero_iff` | focused Lean | compiled |
 | `CH14-GAUSSIAN-EXAMPLE` | common positive variance formula | Gaussian RN/KL and scaling | generalize the compiled unit-variance Chapter 15 leaf | unit-variance declaration only | focused Lean | partial |
-| `CH14-MEASURE-OVERLAP` | source Eqs. (14.8)--(14.9) | common density, Cauchy--Schwarz, Jensen | attaining likelihood event and L2 Cauchy--Schwarz | `bretagnolleHuberScale_le_commonDensityOverlap`, `half_commonDensityAffinity_sq_le_overlap` | focused build passed; root integration and source measure-level affinity/KL Jensen intermediate pending | partial |
+| `CH14-MEASURE-OVERLAP` | source Eqs. (14.8)--(14.9) | common density, Cauchy--Schwarz, Jensen | integral exponential Jensen, RN affinity transport, L2 Cauchy--Schwarz; alternative attaining-event proof | `bretagnolleHuberScale_le_half_commonDensityAffinity_sq`, `bretagnolleHuberScale_le_commonDensityOverlap`, `half_commonDensityAffinity_sq_le_overlap` | focused builds passed, including source Jensen intermediate; root/aggregate verification pending | partial (integration pending) |
 | `CH14-GAUSSIAN-TESTING-APPLICATION` | displayed error, `3/10`, and max-error `3/20` consequences | general Gaussian KL, Theorem 14.2, scalar exp bound | direct source application | none | focused Lean | planned |
 | `CH14-EX14-10-FULL-DPI` | KL monotonicity after restriction to any sub-σ-algebra | `Measure.trim`, `toReal_rnDeriv_trim`, conditional expectation and Jensen | split infinite KL; identify the trimmed RN density as a conditional expectation and integrate Jensen; event DPI remains a specialization | `relativeEntropy_trim_le` | optional focused Lean | compiled |
 
@@ -57646,6 +57645,70 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/Literature.lean",
     "line": 31,
     "statement": "def lmlBanditDeclarationCards : List RegretBoundCard"
+  },
+  {
+    "kind": "theorem",
+    "name": "mul_exp_neg_half_log_eq_sqrt",
+    "full_name": "BanditRLProof.LowerBounds.mul_exp_neg_half_log_eq_sqrt",
+    "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
+    "line": 15,
+    "statement": "theorem mul_exp_neg_half_log_eq_sqrt {r : \u211d} (hr : 0 \u2264 r) : r * Real.exp (-Real.log r / 2) = Real.sqrt r"
+  },
+  {
+    "kind": "theorem",
+    "name": "integrable_sqrt_rnDeriv",
+    "full_name": "BanditRLProof.LowerBounds.integrable_sqrt_rnDeriv",
+    "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
+    "line": 25,
+    "statement": "theorem integrable_sqrt_rnDeriv {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] : Integrable (fun x => Real.sqrt (P.rnDeriv Q x).toReal) Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "integrable_exp_neg_half_llr",
+    "full_name": "BanditRLProof.LowerBounds.integrable_exp_neg_half_llr",
+    "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
+    "line": 32,
+    "statement": "theorem integrable_exp_neg_half_llr {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] (hPQ : P \u226a Q) : Integrable (fun x => Real.exp (-llr P Q x / 2)) P"
+  },
+  {
+    "kind": "theorem",
+    "name": "integral_exp_neg_half_llr_eq",
+    "full_name": "BanditRLProof.LowerBounds.integral_exp_neg_half_llr_eq",
+    "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
+    "line": 40,
+    "statement": "theorem integral_exp_neg_half_llr_eq {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] (hPQ : P \u226a Q) : (\u222b x, Real.exp (-llr P Q x / 2) \u2202P) = \u222b x, Real.sqrt (P.rnDeriv Q x).toReal \u2202Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "exp_neg_half_integral_llr_le_rnAffinity",
+    "full_name": "BanditRLProof.LowerBounds.exp_neg_half_integral_llr_le_rnAffinity",
+    "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
+    "line": 49,
+    "statement": "theorem exp_neg_half_integral_llr_le_rnAffinity {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] (hPQ : P \u226a Q) (hi : Integrable (llr P Q) P) : Real.exp (-(\u222b x, llr P Q x \u2202P) / 2) \u2264 \u222b x, Real.sqrt (P.rnDeriv Q x).toReal \u2202Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "rnAffinity_eq_commonDensityAffinity",
+    "full_name": "BanditRLProof.LowerBounds.rnAffinity_eq_commonDensityAffinity",
+    "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
+    "line": 63,
+    "statement": "theorem rnAffinity_eq_commonDensityAffinity {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] [SigmaFinite \u03bc] (hPQ : P \u226a Q) (hQ : Q \u226a \u03bc) : (\u222b x, Real.sqrt (P.rnDeriv Q x).toReal \u2202Q) = commonDensityAffinity P Q \u03bc"
+  },
+  {
+    "kind": "theorem",
+    "name": "exp_neg_half_integral_llr_le_commonDensityAffinity",
+    "full_name": "BanditRLProof.LowerBounds.exp_neg_half_integral_llr_le_commonDensityAffinity",
+    "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
+    "line": 82,
+    "statement": "theorem exp_neg_half_integral_llr_le_commonDensityAffinity {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite \u03bc] (hPQ : P \u226a Q) (hQ : Q \u226a \u03bc) (hi : Integrable (llr P Q) P) : Real.exp (-(\u222b x, llr P Q x \u2202P) / 2) \u2264 commonDensityAffinity P Q \u03bc"
+  },
+  {
+    "kind": "theorem",
+    "name": "bretagnolleHuberScale_le_half_commonDensityAffinity_sq",
+    "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_le_half_commonDensityAffinity_sq",
+    "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
+    "line": 91,
+    "statement": "theorem bretagnolleHuberScale_le_half_commonDensityAffinity_sq {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite \u03bc] (hQ : Q \u226a \u03bc) : bretagnolleHuberScale (relativeEntropy P Q) \u2264 (1 / 2 : \u211d) * commonDensityAffinity P Q \u03bc ^ 2"
   },
   {
     "kind": "def",

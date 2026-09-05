@@ -41,6 +41,8 @@ import BanditRLProof.LowerBounds.InformationTheory
 import BanditRLProof.LowerBounds.FiniteDiscreteKL
 import BanditRLProof.LowerBounds.FinitePartitionKLRecovery
 import BanditRLProof.LowerBounds.CommonDensityKL
+import BanditRLProof.LowerBounds.CommonDensityOverlap
+import BanditRLProof.LowerBounds.AffinityKL
 import BanditRLProof.LowerBounds.Minimax
 import BanditRLProof.LowerBounds.ConditionalKernelKL
 import BanditRLProof.LowerBounds.BanditHistoryKL

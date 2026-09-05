@@ -43,3 +43,5 @@ import Tests.TextbookPartIVChapter14PartitionCanary
 import Tests.TextbookPartIVChapter14FiltrationCanary
 import Tests.TextbookPartIVChapter14RecoveryCanary
 import Tests.TextbookPartIVChapter14CommonDensityCanary
+import Tests.TextbookPartIVChapter14OverlapCanary
+import Tests.TextbookPartIVChapter14AffinityCanary

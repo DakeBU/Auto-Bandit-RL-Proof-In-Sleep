@@ -51,3 +51,41 @@ The full harness pass at `78846b8` covers CommonDensityKL, not this new module.
 Overlap root/aggregate integration remains pending. In particular the source
 measure-level Jensen assertion relating affinity to exp(-KL/2) is still open;
 the alternate attaining-event proof of Eq. (14.8) is not evidence for it.
+
+## Jensen continuation route
+
+Use `ConvexOn.map_integral_le` from `Mathlib.Analysis.Convex.Integral`
+with `Real.convexOn_exp` on the whole real line, under P and with
+f=-LLR/2. First work relative to Q: the scalar identity
+r*exp(-log(r)/2)=sqrt(r) for nonnegative r (including zero) transports both
+integrability and the integral from Q to P via RN change of measure.
+Finite KL supplies LLR integrability and P<<Q; infinity stays a separate
+zero-scale branch. A common-dominator affinity identity is then needed to
+transport the result to arbitrary sigma-finite mu. Cards:
+MLIB-MEASURE-INTEGRAL, MLIB-EXP-LOG-INEQUALITIES, MLIB-REAL-LOG-SQRT,
+TXT-LATTIMORE-SZEPESVARI-2020. Searches for affinity found only the binary
+Jensen leaf and the new overlap module. The scalar adapter is a
+Mathlib-candidate; the source-mapped measure wrappers remain project-local.
+
+## Jensen focused proof result
+
+`AffinityKL.lean` now focused-builds (2,673 jobs) without own warnings.
+Its eight declarations supply the zero-safe scalar identity, square-root RN
+integrability, exponential LLR integrability and change of measure, integral
+Jensen under P, common-density affinity transport, and the unconditional
+`bretagnolleHuberScale_le_half_commonDensityAffinity_sq`. The top-KL branch
+has zero scale; the finite branch derives AC/integrability from finite KL.
+The terminal does not assume positive densities, mutual AC, or finite KL.
+Its Q-domination premise suffices: finite KL implies P<<Q<<mu, and at infinite
+KL the conclusion is just nonnegativity. The common-density transport uses
+`Measure.rnDeriv_mul_rnDeriv` and real square-root algebra.
+
+This supplies the previously missing source Jensen intermediate, not merely
+the alternative event proof. The canary composes this result with Eq. (14.9)
+to recover Eq. (14.8) through the source route. Root/aggregate verification
+for the overlap and affinity additions remains pending.
+
+The focused affinity canary passed before switching it to a root import;
+all eight printed axiom sets contain only `propext`, `Classical.choice`, and
+`Quot.sound`. Both new modules and both canaries are now registered with the
+root library and aggregate Tests, ready for the new full integration gate.
