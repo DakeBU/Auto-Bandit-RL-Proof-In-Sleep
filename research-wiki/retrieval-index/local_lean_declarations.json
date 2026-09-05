@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T05:50:18+00:00",
+  "generated": "2026-09-05T05:55:05+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -28048,6 +28048,94 @@
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
       "line": 205,
       "statement": "theorem max_base_changed_regretLowerBound_ge_half (horizon : Nat) (gap baseFirstExpectedPulls changedFirstExpectedPulls : Real) (hgap : 0 \u2264 gap) (htransport : baseFirstExpectedPulls \u2264 changedFirstExpectedPulls) : gap * (horizon : Real) / 2 \u2264 max (baseEnvironmentRegret horizon gap baseFirstExpectedPulls) (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls)"
+    },
+    {
+      "kind": "theorem",
+      "name": "entropy_product_term",
+      "full_name": "BanditRLProof.LowerBounds.entropy_product_term",
+      "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+      "line": 5,
+      "statement": "theorem entropy_product_term (p q : \u211d) : (p * q) * Real.log (p * q)\u207b\u00b9 = q * (p * Real.log p\u207b\u00b9) + p * (q * Real.log q\u207b\u00b9)"
+    },
+    {
+      "kind": "theorem",
+      "name": "discreteEntropy_prod",
+      "full_name": "BanditRLProof.LowerBounds.discreteEntropy_prod",
+      "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+      "line": 16,
+      "statement": "theorem discreteEntropy_prod {\u03b1 \u03b2 : Type*} [Fintype \u03b1] [Fintype \u03b2] (p : \u03b1 \u2192 \u211d) (q : \u03b2 \u2192 \u211d) : discreteEntropy Finset.univ (fun x : \u03b1 \u00d7 \u03b2 => p x.1 * q x.2) = (\u2211 j, q j) * discreteEntropy Finset.univ p + (\u2211 i, p i) * discreteEntropy Finset.univ q"
+    },
+    {
+      "kind": "theorem",
+      "name": "discreteEntropy_prod_probability",
+      "full_name": "BanditRLProof.LowerBounds.discreteEntropy_prod_probability",
+      "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+      "line": 26,
+      "statement": "theorem discreteEntropy_prod_probability {\u03b1 \u03b2 : Type*} [Fintype \u03b1] [Fintype \u03b2] (p : \u03b1 \u2192 \u211d) (q : \u03b2 \u2192 \u211d) (hp : \u2211 i, p i = 1) (hq : \u2211 j, q j = 1) : discreteEntropy Finset.univ (fun x : \u03b1 \u00d7 \u03b2 => p x.1 * q x.2) = discreteEntropy Finset.univ p + discreteEntropy Finset.univ q"
+    },
+    {
+      "kind": "theorem",
+      "name": "discreteEntropyBaseTwo_prod_probability",
+      "full_name": "BanditRLProof.LowerBounds.discreteEntropyBaseTwo_prod_probability",
+      "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+      "line": 33,
+      "statement": "theorem discreteEntropyBaseTwo_prod_probability {\u03b1 \u03b2 : Type*} [Fintype \u03b1] [Fintype \u03b2] (p : \u03b1 \u2192 \u211d) (q : \u03b2 \u2192 \u211d) (hp : \u2211 i, p i = 1) (hq : \u2211 j, q j = 1) : discreteEntropyBaseTwo Finset.univ (fun x : \u03b1 \u00d7 \u03b2 => p x.1 * q x.2) = discreteEntropyBaseTwo Finset.univ p + discreteEntropyBaseTwo Finset.univ q"
+    },
+    {
+      "kind": "def",
+      "name": "SourceBlock",
+      "full_name": "BanditRLProof.LowerBounds.SourceBlock",
+      "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+      "line": 42,
+      "statement": "def SourceBlock (\u03b1 : Type*) : \u2115 \u2192 Type _ | 0 => PUnit | n + 1 => \u03b1 \u00d7 SourceBlock \u03b1 n instance sourceBlockFintype {\u03b1 : Type*} [Fintype \u03b1] (n : \u2115) : Fintype (SourceBlock \u03b1 n)"
+    },
+    {
+      "kind": "def",
+      "name": "sourceBlockMass",
+      "full_name": "BanditRLProof.LowerBounds.sourceBlockMass",
+      "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+      "line": 58,
+      "statement": "def sourceBlockMass {\u03b1 : Type*} (p : \u03b1 \u2192 \u211d) : (n : \u2115) \u2192 SourceBlock \u03b1 n \u2192 \u211d | 0, _ => 1 | n + 1, x => p x.1 * sourceBlockMass p n x.2"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceBlockMass_nonneg",
+      "full_name": "BanditRLProof.LowerBounds.sourceBlockMass_nonneg",
+      "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+      "line": 62,
+      "statement": "theorem sourceBlockMass_nonneg {\u03b1 : Type*} (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (n : \u2115) (x : SourceBlock \u03b1 n) : 0 \u2264 sourceBlockMass p n x"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_sourceBlockMass",
+      "full_name": "BanditRLProof.LowerBounds.sum_sourceBlockMass",
+      "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+      "line": 68,
+      "statement": "theorem sum_sourceBlockMass {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2211 i, p i = 1) (n : \u2115) : \u2211 x, sourceBlockMass p n x = 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "discreteEntropyBaseTwo_sourceBlockMass",
+      "full_name": "BanditRLProof.LowerBounds.discreteEntropyBaseTwo_sourceBlockMass",
+      "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+      "line": 76,
+      "statement": "theorem discreteEntropyBaseTwo_sourceBlockMass {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2211 i, p i = 1) (n : \u2115) : discreteEntropyBaseTwo Finset.univ (sourceBlockMass p n) = n * discreteEntropyBaseTwo Finset.univ p"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_sourceBlock_code_rate_sandwich",
+      "full_name": "BanditRLProof.LowerBounds.exists_sourceBlock_code_rate_sandwich",
+      "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+      "line": 91,
+      "statement": "theorem exists_sourceBlock_code_rate_sandwich {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) (hn : 0 < n) : \u2203 code : BinaryPrefixCode (SourceBlock \u03b1 n), discreteEntropyBaseTwo Finset.univ p \u2264 expectedCodeLength (sourceBlockMass p n) code / n \u2227 expectedCodeLength (sourceBlockMass p n) code / n \u2264 discreteEntropyBaseTwo Finset.univ p + 1 / n"
+    },
+    {
+      "kind": "theorem",
+      "name": "sourceBlock_code_rate_lower_bound",
+      "full_name": "BanditRLProof.LowerBounds.sourceBlock_code_rate_lower_bound",
+      "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+      "line": 110,
+      "statement": "theorem sourceBlock_code_rate_lower_bound {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) (hn : 0 < n) (code : BinaryPrefixCode (SourceBlock \u03b1 n)) : discreteEntropyBaseTwo Finset.univ p \u2264 expectedCodeLength (sourceBlockMass p n) code / n"
     },
     {
       "kind": "theorem",
