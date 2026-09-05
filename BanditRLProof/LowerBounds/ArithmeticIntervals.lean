@@ -72,4 +72,65 @@ theorem arithmeticOffset_separated {k : ℕ} (p : Fin k → ℝ)
   · intro i _ _
     exact hp i
 
+theorem arithmeticInterval_head_separated {k : ℕ} (p : Fin k → ℝ)
+    (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1)
+    (a b : Fin k) (u v : List (Fin k)) (hab : a < b) :
+    (arithmeticInterval p (a :: u)).2 ≤ (arithmeticInterval p (b :: v)).1 := by
+  have hsep := arithmeticOffset_separated p hp a b hab
+  have hu := (arithmeticInterval_bounds p hp hs u).2.2
+  have hv := (arithmeticInterval_bounds p hp hs v).1
+  have hmul := mul_le_mul_of_nonneg_left hu (hp a)
+  have hnonneg := mul_nonneg (hp b) hv
+  simp only [arithmeticInterval]
+  nlinarith
+
+/-- Different equal-length messages occupy cells with disjoint interiors. -/
+theorem arithmeticInterval_separated {k : ℕ} (p : Fin k → ℝ)
+    (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1)
+    (u v : List (Fin k)) (hlen : u.length = v.length) (hne : u ≠ v) :
+    (arithmeticInterval p u).2 ≤ (arithmeticInterval p v).1 ∨
+      (arithmeticInterval p v).2 ≤ (arithmeticInterval p u).1 := by
+  induction u generalizing v with
+  | nil =>
+    have hv : v = [] := List.length_eq_zero_iff.mp hlen.symm
+    exact (hne hv.symm).elim
+  | cons a u ih =>
+    cases v with
+    | nil => simp at hlen
+    | cons b v =>
+      by_cases hab : a = b
+      · subst b
+        have ht : u ≠ v := by intro he; exact hne (congrArg (List.cons a) he)
+        have hl : u.length = v.length := by simpa using hlen
+        rcases ih v hl ht with huv | hvu
+        · exact Or.inl (add_le_add (le_refl _) (mul_le_mul_of_nonneg_left huv (hp a)))
+        · exact Or.inr (add_le_add (le_refl _) (mul_le_mul_of_nonneg_left hvu (hp a)))
+      · rcases lt_or_gt_of_ne hab with hab | hba
+        · exact Or.inl (arithmeticInterval_head_separated p hp hs a b u v hab)
+        · exact Or.inr (arithmeticInterval_head_separated p hp hs b a v u hba)
+
+/-- Any point strictly inside a message cell identifies that message uniquely
+among messages of the same length. -/
+theorem arithmeticInterval_interior_unique {k : ℕ} (p : Fin k → ℝ)
+    (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1)
+    (u v : List (Fin k)) (hlen : u.length = v.length) (x : ℝ)
+    (hu : (arithmeticInterval p u).1 < x ∧ x < (arithmeticInterval p u).2)
+    (hv : (arithmeticInterval p v).1 < x ∧ x < (arithmeticInterval p v).2) : u = v := by
+  by_contra hne
+  rcases arithmeticInterval_separated p hp hs u v hlen hne with h | h <;> linarith
+
+/-- A positive grid cell fits in any nonnegative interval at least twice as wide.
+Mathlib-candidate scalar rounding leaf for arithmetic-code dyadic selection. -/
+theorem exists_grid_cell_inside (L U δ : ℝ) (hL : 0 ≤ L) (hδ : 0 < δ)
+    (hwidth : 2 * δ ≤ U - L) :
+    ∃ m : ℕ, L ≤ (m : ℝ) * δ ∧ ((m : ℝ) + 1) * δ < U := by
+  refine ⟨⌈L / δ⌉₊, ?_, ?_⟩
+  · have h := mul_le_mul_of_nonneg_right (Nat.le_ceil (L / δ)) hδ.le
+    simpa [ne_of_gt hδ] using h
+  · have h := mul_lt_mul_of_pos_right (Nat.ceil_lt_add_one (div_nonneg hL hδ.le)) hδ
+    have he : (L / δ + 1) * δ = L + δ := by
+      rw [add_mul, div_mul_cancel₀ _ (ne_of_gt hδ), one_mul]
+    rw [he] at h
+    nlinarith
+
 end BanditRLProof.LowerBounds

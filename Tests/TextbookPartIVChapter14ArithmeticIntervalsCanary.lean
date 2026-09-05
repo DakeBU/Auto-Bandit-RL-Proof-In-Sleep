@@ -11,5 +11,8 @@ example {k : ℕ} (p : Fin k → ℝ) (w : List (Fin k)) :
 #print axioms LowerBounds.arithmeticInterval_width
 #print axioms LowerBounds.arithmeticInterval_bounds
 #print axioms LowerBounds.arithmeticOffset_separated
+#print axioms LowerBounds.arithmeticInterval_separated
+#print axioms LowerBounds.arithmeticInterval_interior_unique
+#print axioms LowerBounds.exists_grid_cell_inside
 
 end BanditRLProof.TextbookPartIVChapter14ArithmeticIntervalsCanary

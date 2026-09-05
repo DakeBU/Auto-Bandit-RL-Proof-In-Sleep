@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T06:28:25+00:00",
+  "generated": "2026-09-05T06:30:42+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -27752,6 +27752,38 @@
       "file": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
       "line": 57,
       "statement": "theorem arithmeticOffset_separated {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (a b : Fin k) (hab : a < b) : arithmeticOffset p a + p a \u2264 arithmeticOffset p b"
+    },
+    {
+      "kind": "theorem",
+      "name": "arithmeticInterval_head_separated",
+      "full_name": "BanditRLProof.LowerBounds.arithmeticInterval_head_separated",
+      "file": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
+      "line": 75,
+      "statement": "theorem arithmeticInterval_head_separated {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (a b : Fin k) (u v : List (Fin k)) (hab : a < b) : (arithmeticInterval p (a :: u)).2 \u2264 (arithmeticInterval p (b :: v)).1"
+    },
+    {
+      "kind": "theorem",
+      "name": "arithmeticInterval_separated",
+      "full_name": "BanditRLProof.LowerBounds.arithmeticInterval_separated",
+      "file": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
+      "line": 88,
+      "statement": "theorem arithmeticInterval_separated {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (u v : List (Fin k)) (hlen : u.length = v.length) (hne : u \u2260 v) : (arithmeticInterval p u).2 \u2264 (arithmeticInterval p v).1 \u2228 (arithmeticInterval p v).2 \u2264 (arithmeticInterval p u).1"
+    },
+    {
+      "kind": "theorem",
+      "name": "arithmeticInterval_interior_unique",
+      "full_name": "BanditRLProof.LowerBounds.arithmeticInterval_interior_unique",
+      "file": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
+      "line": 114,
+      "statement": "theorem arithmeticInterval_interior_unique {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (u v : List (Fin k)) (hlen : u.length = v.length) (x : \u211d) (hu : (arithmeticInterval p u).1 < x \u2227 x < (arithmeticInterval p u).2) (hv : (arithmeticInterval p v).1 < x \u2227 x < (arithmeticInterval p v).2) : u = v"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_grid_cell_inside",
+      "full_name": "BanditRLProof.LowerBounds.exists_grid_cell_inside",
+      "file": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
+      "line": 124,
+      "statement": "theorem exists_grid_cell_inside (L U \u03b4 : \u211d) (hL : 0 \u2264 L) (h\u03b4 : 0 < \u03b4) (hwidth : 2 * \u03b4 \u2264 U - L) : \u2203 m : \u2115, L \u2264 (m : \u211d) * \u03b4 \u2227 ((m : \u211d) + 1) * \u03b4 < U"
     },
     {
       "kind": "def",
