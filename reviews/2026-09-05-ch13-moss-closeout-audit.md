@@ -58,6 +58,24 @@ scope and old build evidence cannot substitute for these current gates.
 
 ### Website verification follow-up
 
+Mobile follow-up resolves the earlier visual discrepancy: resetting browser
+zoom with Ctrl+0 restored consistent screenshot scaling (devicePixelRatio
+1.5). At viewport 390x844, fresh normal screenshots now show complete body
+text and the minimax formula without right-edge clipping. Document scroll
+width is 375. The declaration table intentionally has a 341px viewport and
+704px content with overflow-x:auto; an actual horizontal scroll moved its
+scrollLeft to 350. This verifies access to the hidden columns without
+document-level overflow. No CSS change was made. Temporary viewport override
+was reset. Local mobile layout QA passes; post-deployment live QA remains
+a distinct gate.
+
+Merged-tree verified website build/check also passed: 686 pages, 632
+modules, 8453 declarations, 118 highlights, zero placeholders and valid
+internal links. The additional Chapter 14 declarations are present; this
+supersedes the pre-merge 8440-declaration site count. The old MOSS open-
+dependency packet is now marked mathematically compiled and explicitly
+retains integration/publication gates.
+
 At clean commit 9fc6054, verified site build/check passed: 686 HTML pages,
 632 modules, 8440 declarations, zero placeholders, valid internal links and
 formula fallbacks. Lean sources are identical to cdc3a51, whose library
