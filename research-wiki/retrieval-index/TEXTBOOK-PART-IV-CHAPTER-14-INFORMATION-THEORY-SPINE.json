@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE",
-  "generated": "2026-09-05T05:43:19+00:00",
+  "generated": "2026-09-05T05:46:12+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -58707,6 +58707,30 @@
       "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
       "line": 58,
       "statement": "theorem exists_binaryWord_avoiding_prefixes (S : Finset (List Bool)) (n : ℕ) (hlen : ∀ w ∈ S, w.length ≤ n) (hbudget : (∑ w ∈ S, 2 ^ (n - w.length)) < 2 ^ n) : ∃ v : List Bool, v.length = n ∧ ∀ w ∈ S, ¬ w <+: v"
+    },
+    {
+      "kind": "theorem",
+      "name": "binary_level_mul_kraft_weight",
+      "full_name": "BanditRLProof.LowerBounds.binary_level_mul_kraft_weight",
+      "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+      "line": 81,
+      "statement": "theorem binary_level_mul_kraft_weight {k n : ℕ} (h : k ≤ n) : (2 : ℝ) ^ n * (1 / 2 : ℝ) ^ k = 2 ^ (n - k)"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_binaryWord_of_kraft_lt_one",
+      "full_name": "BanditRLProof.LowerBounds.exists_binaryWord_of_kraft_lt_one",
+      "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+      "line": 89,
+      "statement": "theorem exists_binaryWord_of_kraft_lt_one (S : Finset (List Bool)) (n : ℕ) (hlen : ∀ w ∈ S, w.length ≤ n) (hk : (∑ w ∈ S, (1 / 2 : ℝ) ^ w.length) < 1) : ∃ v : List Bool, v.length = n ∧ ∀ w ∈ S, ¬ w <+: v"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_prefixFree_insert_of_kraft_lt_one",
+      "full_name": "BanditRLProof.LowerBounds.exists_prefixFree_insert_of_kraft_lt_one",
+      "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+      "line": 104,
+      "statement": "theorem exists_prefixFree_insert_of_kraft_lt_one (S : Finset (List Bool)) (n : ℕ) (hfree : ∀ a ∈ S, ∀ b ∈ S, a <+: b → a = b) (hlen : ∀ w ∈ S, w.length ≤ n) (hk : (∑ w ∈ S, (1 / 2 : ℝ) ^ w.length) < 1) : ∃ v : List Bool, v.length = n ∧ v ∉ S ∧ ∀ a ∈ insert v S, ∀ b ∈ insert v S, a <+: b → a = b"
     },
     {
       "kind": "theorem",

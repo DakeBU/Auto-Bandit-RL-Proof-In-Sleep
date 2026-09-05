@@ -78,4 +78,61 @@ theorem exists_binaryWord_avoiding_prefixes
   have := hlen w hw
   omega
 
+theorem binary_level_mul_kraft_weight {k n : ℕ} (h : k ≤ n) :
+    (2 : ℝ) ^ n * (1 / 2 : ℝ) ^ k = 2 ^ (n - k) := by
+  have hn : n = (n - k) + k := by omega
+  nth_rw 1 [hn]
+  rw [pow_add, one_div_pow]
+  field_simp
+
+/-- Real Kraft slack supplies the integer capacity needed to insert a word. -/
+theorem exists_binaryWord_of_kraft_lt_one
+    (S : Finset (List Bool)) (n : ℕ)
+    (hlen : ∀ w ∈ S, w.length ≤ n)
+    (hk : (∑ w ∈ S, (1 / 2 : ℝ) ^ w.length) < 1) :
+    ∃ v : List Bool, v.length = n ∧ ∀ w ∈ S, ¬ w <+: v := by
+  apply exists_binaryWord_avoiding_prefixes S n hlen
+  have h := mul_lt_mul_of_pos_left hk (pow_pos (by norm_num : (0 : ℝ) < 2) n)
+  rw [Finset.mul_sum, mul_one] at h
+  have he : (∑ w ∈ S, (2 : ℝ) ^ n * (1 / 2 : ℝ) ^ w.length) =
+      ∑ w ∈ S, (2 : ℝ) ^ (n - w.length) := by
+    exact Finset.sum_congr rfl fun w hw => binary_level_mul_kraft_weight (hlen w hw)
+  rw [he] at h
+  exact_mod_cast h
+
+/-- The greedy insertion preserves prefix freedom in both directions. -/
+theorem exists_prefixFree_insert_of_kraft_lt_one
+    (S : Finset (List Bool)) (n : ℕ)
+    (hfree : ∀ a ∈ S, ∀ b ∈ S, a <+: b → a = b)
+    (hlen : ∀ w ∈ S, w.length ≤ n)
+    (hk : (∑ w ∈ S, (1 / 2 : ℝ) ^ w.length) < 1) :
+    ∃ v : List Bool, v.length = n ∧ v ∉ S ∧
+      ∀ a ∈ insert v S, ∀ b ∈ insert v S, a <+: b → a = b := by
+  obtain ⟨v, hvlen, hv⟩ := exists_binaryWord_of_kraft_lt_one S n hlen hk
+  have hvnot : v ∉ S := by
+    intro h
+    exact hv v h (by rfl)
+  have hreverse : ∀ w ∈ S, ¬ v <+: w := by
+    intro w hw hpre
+    obtain ⟨t, rfl⟩ := hpre
+    have ht : t.length = 0 := by
+      have h := hlen (v ++ t) hw
+      simp only [List.length_append, hvlen] at h
+      omega
+    have ht' : t = [] := List.length_eq_zero_iff.mp ht
+    simp only [ht', List.append_nil] at hw
+    exact hvnot hw
+  refine ⟨v, hvlen, hvnot, ?_⟩
+  intro a ha b hb hab
+  by_cases hav : a = v
+  · subst a
+    by_cases hbv : b = v
+    · exact hbv.symm
+    · exact (hreverse b ((Finset.mem_insert.mp hb).resolve_left hbv) hab).elim
+  · have haS := (Finset.mem_insert.mp ha).resolve_left hav
+    by_cases hbv : b = v
+    · subst b
+      exact (hv a haS hab).elim
+    · exact hfree a haS b ((Finset.mem_insert.mp hb).resolve_left hbv) hab
+
 end BanditRLProof.LowerBounds

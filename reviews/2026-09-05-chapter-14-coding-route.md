@@ -92,3 +92,20 @@ the exact finite occupancy budget. The latter does not assume prefix freedom
 of the old set: the union-cardinality upper bound is sufficient. It does
 require all old lengths at most the new depth, as needed by the planned
 nondecreasing-length induction. No full Kraft converse is claimed yet.
+
+Next bridge: for old lengths k<=n, show 2^n*(1/2)^k=2^(n-k).
+Multiplying the strict Kraft sum by positive 2^n and casting the finite
+sum to naturals yields the exact occupancy budget of the fresh-word lemma.
+This permits a direct real-Kraft interface without assuming integer capacity.
+Then use finite-set induction by removing a maximum-length symbol; all
+previous lengths are at most the newly inserted depth. Preserve exact
+requested lengths and prove the prefix-free invariant, rather than merely
+injectivity. APIs: pow_add, Nat.sub_add_cancel, finite sum scalar transport.
+
+The real-Kraft capacity bridge and full prefix-free insertion invariant now
+focused-build (2,673 jobs) and pass the typed canary. All three new axiom
+reports contain only propext/Classical.choice/Quot.sound. The insertion
+returns exact length, nonmembership in the old codebook, and prefix freedom
+of the enlarged set. Both old-to-new and new-to-old prefix directions are
+checked; the latter uses the maximum-depth condition. The full finite-set
+induction and BinaryPrefixCode packaging remain unfinished.

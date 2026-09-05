@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T05:43:26+00:00`
+Generated: `2026-09-05T05:46:18+00:00`
 
 ## Source Task
 
@@ -59714,6 +59714,30 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
     "line": 58,
     "statement": "theorem exists_binaryWord_avoiding_prefixes (S : Finset (List Bool)) (n : \u2115) (hlen : \u2200 w \u2208 S, w.length \u2264 n) (hbudget : (\u2211 w \u2208 S, 2 ^ (n - w.length)) < 2 ^ n) : \u2203 v : List Bool, v.length = n \u2227 \u2200 w \u2208 S, \u00ac w <+: v"
+  },
+  {
+    "kind": "theorem",
+    "name": "binary_level_mul_kraft_weight",
+    "full_name": "BanditRLProof.LowerBounds.binary_level_mul_kraft_weight",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 81,
+    "statement": "theorem binary_level_mul_kraft_weight {k n : \u2115} (h : k \u2264 n) : (2 : \u211d) ^ n * (1 / 2 : \u211d) ^ k = 2 ^ (n - k)"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_binaryWord_of_kraft_lt_one",
+    "full_name": "BanditRLProof.LowerBounds.exists_binaryWord_of_kraft_lt_one",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 89,
+    "statement": "theorem exists_binaryWord_of_kraft_lt_one (S : Finset (List Bool)) (n : \u2115) (hlen : \u2200 w \u2208 S, w.length \u2264 n) (hk : (\u2211 w \u2208 S, (1 / 2 : \u211d) ^ w.length) < 1) : \u2203 v : List Bool, v.length = n \u2227 \u2200 w \u2208 S, \u00ac w <+: v"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_prefixFree_insert_of_kraft_lt_one",
+    "full_name": "BanditRLProof.LowerBounds.exists_prefixFree_insert_of_kraft_lt_one",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 104,
+    "statement": "theorem exists_prefixFree_insert_of_kraft_lt_one (S : Finset (List Bool)) (n : \u2115) (hfree : \u2200 a \u2208 S, \u2200 b \u2208 S, a <+: b \u2192 a = b) (hlen : \u2200 w \u2208 S, w.length \u2264 n) (hk : (\u2211 w \u2208 S, (1 / 2 : \u211d) ^ w.length) < 1) : \u2203 v : List Bool, v.length = n \u2227 v \u2209 S \u2227 \u2200 a \u2208 insert v S, \u2200 b \u2208 insert v S, a <+: b \u2192 a = b"
   },
   {
     "kind": "theorem",
