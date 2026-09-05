@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T06:30:45+00:00`
+Generated: `2026-09-05T06:34:39+00:00`
 
 ## Source Task
 
@@ -33699,6 +33699,22 @@ These cards are planning inspiration only.  They do not certify any theorem.
   },
   {
     "kind": "theorem",
+    "name": "map_condition_reward_eq_compProd",
+    "full_name": "BanditRLProof.MOSS.map_condition_reward_eq_compProd",
+    "file": "BanditRLProof/Algorithms/MOSSConditionalReward.lean",
+    "line": 7,
+    "statement": "theorem map_condition_reward_eq_compProd {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (t : \u2115) (\u03bd : Kernel (Fin k) \u211d) [IsMarkovKernel \u03bd] : Measure.map (fun table => (canonicalCondition hk n mean t table, canonicalReward hk n mean table (t+1))) (UCB.armStreamMeasure \u03bd) = (Measure.map (canonicalCondition hk n mean t) (UCB.armStreamMeasure \u03bd)).compProd (UCB.armStreamSelectedRewardKernel t \u03bd)"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonicalReward_condDistrib",
+    "full_name": "BanditRLProof.MOSS.canonicalReward_condDistrib",
+    "file": "BanditRLProof/Algorithms/MOSSConditionalReward.lean",
+    "line": 71,
+    "statement": "theorem canonicalReward_condDistrib {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (t : \u2115) (\u03bd : Kernel (Fin k) \u211d) [IsMarkovKernel \u03bd] : Filter.EventuallyEq (ae ((UCB.armStreamMeasure \u03bd).map (canonicalCondition hk n mean t))) (condDistrib (fun table => canonicalReward hk n mean table (t+1)) (canonicalCondition hk n mean t) (UCB.armStreamMeasure \u03bd)) (UCB.armStreamSelectedRewardKernel t \u03bd)"
+  },
+  {
+    "kind": "theorem",
     "name": "log_sixtyFour_le",
     "full_name": "BanditRLProof.MOSS.log_sixtyFour_le",
     "file": "BanditRLProof/Algorithms/MOSSConstants.lean",
@@ -34152,6 +34168,78 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/Algorithms/MOSSRegret.lean",
     "line": 76,
     "statement": "theorem integral_largeGapCountSum_le {\u03a9 : Type*} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] {k : \u2115} (mean : Fin k \u2192 \u211d) (X : Fin k \u2192 \u2115 \u2192 \u03a9 \u2192 \u211d) (best : Fin k) (hbest : \u2200 a, mean a \u2264 mean best) (hXm : \u2200 a i, StronglyMeasurable (X a i)) (hind : \u2200 a, iIndepFun (X a) \u03bc) (hmean : \u2200 a i, \u222b \u03c9, X a i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 a i, HasSubgaussianMGF (X a i) 1 \u03bc) (\u03b4 : \u211d) (h\u03b4 : 0 < \u03b4) (n : \u2115) : (\u222b \u03c9, \u2211 a, if 8*sqrt \u03b4 \u2264 mean best - mean a then (mean best - mean a)*(1+indexExceedanceCount (streamMean (X a) \u03c9) \u03b4 (mean best-mean a) n) else 0 \u2202\u03bc) \u2264 (\u2211 a, (mean best-mean a)) + (k : \u211d)*(15/sqrt \u03b4)"
+  },
+  {
+    "kind": "def",
+    "name": "conditionCoordinate",
+    "full_name": "BanditRLProof.MOSS.conditionCoordinate",
+    "file": "BanditRLProof/Algorithms/MOSSRewardBranch.lean",
+    "line": 7,
+    "statement": "def conditionCoordinate {k : \u2115} (t : \u2115) (c : History.FinitePairHistory (Fin k) \u211d t \u00d7 Fin k) : \u2115 \u00d7 Fin k"
+  },
+  {
+    "kind": "def",
+    "name": "conditionBranch",
+    "full_name": "BanditRLProof.MOSS.conditionBranch",
+    "file": "BanditRLProof/Algorithms/MOSSRewardBranch.lean",
+    "line": 11,
+    "statement": "def conditionBranch {k : \u2115} (t : \u2115) (target : \u2115 \u00d7 Fin k)"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_conditionCoordinate",
+    "full_name": "BanditRLProof.MOSS.measurable_conditionCoordinate",
+    "file": "BanditRLProof/Algorithms/MOSSRewardBranch.lean",
+    "line": 14,
+    "statement": "theorem measurable_conditionCoordinate {k : \u2115} (t : \u2115) : Measurable (conditionCoordinate (k := k) t)"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurableSet_conditionBranch",
+    "full_name": "BanditRLProof.MOSS.measurableSet_conditionBranch",
+    "file": "BanditRLProof/Algorithms/MOSSRewardBranch.lean",
+    "line": 22,
+    "statement": "theorem measurableSet_conditionBranch {k : \u2115} (t : \u2115) (target : \u2115 \u00d7 Fin k) : MeasurableSet (conditionBranch t target)"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_canonicalNextCoordinate",
+    "full_name": "BanditRLProof.MOSS.measurable_canonicalNextCoordinate",
+    "file": "BanditRLProof/Algorithms/MOSSRewardBranch.lean",
+    "line": 26,
+    "statement": "theorem measurable_canonicalNextCoordinate {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (t : \u2115) : Measurable (canonicalNextCoordinate hk n mean t)"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonicalReward_succ_eq_coordinate",
+    "full_name": "BanditRLProof.MOSS.canonicalReward_succ_eq_coordinate",
+    "file": "BanditRLProof/Algorithms/MOSSRewardBranch.lean",
+    "line": 30,
+    "statement": "theorem canonicalReward_succ_eq_coordinate {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (t : \u2115) (table : UCB.ArmRewardStream k) : canonicalReward hk n mean table (t+1) = UCB.armStreamCoordinate (canonicalNextCoordinate hk n mean t table) table"
+  },
+  {
+    "kind": "theorem",
+    "name": "rebuilt_mem_conditionBranch_iff",
+    "full_name": "BanditRLProof.MOSS.rebuilt_mem_conditionBranch_iff",
+    "file": "BanditRLProof/Algorithms/MOSSRewardBranch.lean",
+    "line": 38,
+    "statement": "theorem rebuilt_mem_conditionBranch_iff {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (t : \u2115) (target : \u2115 \u00d7 Fin k) (v : \u211d) (table : UCB.ArmRewardStream k) : canonicalConditionWithout hk n mean t target v (UCB.armStreamWithoutCoordinate target table) \u2208 conditionBranch t target \u2194 canonicalNextCoordinate hk n mean t table = target"
+  },
+  {
+    "kind": "theorem",
+    "name": "map_rebuilt_restrict_conditionBranch",
+    "full_name": "BanditRLProof.MOSS.map_rebuilt_restrict_conditionBranch",
+    "file": "BanditRLProof/Algorithms/MOSSRewardBranch.lean",
+    "line": 44,
+    "statement": "theorem map_rebuilt_restrict_conditionBranch {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (t : \u2115) (target : \u2115 \u00d7 Fin k) (v : \u211d) (\u03bc : Measure (UCB.ArmRewardStream k)) : (Measure.map (fun table => canonicalConditionWithout hk n mean t target v (UCB.armStreamWithoutCoordinate target table)) \u03bc).restrict (conditionBranch t target) = (Measure.map (canonicalCondition hk n mean t) \u03bc).restrict (conditionBranch t target)"
+  },
+  {
+    "kind": "theorem",
+    "name": "map_condition_reward_restrict_branch",
+    "full_name": "BanditRLProof.MOSS.map_condition_reward_restrict_branch",
+    "file": "BanditRLProof/Algorithms/MOSSRewardBranch.lean",
+    "line": 66,
+    "statement": "theorem map_condition_reward_restrict_branch {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (t : \u2115) (\u03bd : Kernel (Fin k) \u211d) [IsMarkovKernel \u03bd] (target : \u2115 \u00d7 Fin k) (v : \u211d) : Measure.map (fun table => (canonicalCondition hk n mean t table, canonicalReward hk n mean table (t+1))) ((UCB.armStreamMeasure \u03bd).restrict {table | canonicalNextCoordinate hk n mean t table = target}) = ((Measure.map (canonicalCondition hk n mean t) (UCB.armStreamMeasure \u03bd)).restrict (conditionBranch t target)).prod (\u03bd target.2)"
   },
   {
     "kind": "theorem",
@@ -97341,6 +97429,45 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "target_fingerprint": "",
     "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
     "time": "2026-09-05T06:27:33+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "build",
+    "lean": "BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [
+      "BanditRLProof.MOSS.canonicalNextCoordinate_eq_iff_insert",
+      "BanditRLProof.MOSS.map_canonicalConditionWithout_coordinate"
+    ],
+    "notes": "Compiled omitted-coordinate branch factorization and reconstructed condition product law. Canary standard axioms. Actual branch restriction and countable summation remain required for selected conditional law; chapter partial.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "compiled-leaf",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "lower",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "compiled",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T06:30:54+00:00",
     "verifier_evidence": [],
     "worker_id": ""
   }

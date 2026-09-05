@@ -581,3 +581,4 @@ import BanditRLProof.Algorithms.MOSSExpectedRegret
 import BanditRLProof.Algorithms.MOSSCanonicalReward
 import BanditRLProof.Algorithms.MOSSCanonicalHistory
 import BanditRLProof.Algorithms.MOSSUnusedCoordinate
+import BanditRLProof.Algorithms.MOSSConditionalReward

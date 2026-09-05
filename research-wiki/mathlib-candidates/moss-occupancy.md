@@ -273,3 +273,20 @@ timeout was repaired by congrArg on the history equality, without increasing
 heartbeats or changing the proof route. Next restrict the product law to each
 next-coordinate branch and sum the countable disjoint partition; this is still
 needed before claiming the actual selected reward conditional law.
+
+Branch restriction route: project-local adaptation of the compiled UCB proof,
+with the MOSS count+1 coordinate map. Use Measure.restrict_map and map_congr
+on the measurable branch, the insertion equivalence for reconstructed branch
+preimages, and restrict_prod_eq_prod_univ for the product law. No new stochastic
+assumption. Then sum the countable disjoint coordinate partition.
+
+Compiled `MOSSRewardBranch.map_condition_reward_restrict_branch` and
+`MOSSConditionalReward.map_condition_reward_eq_compProd`: the actual
+successor condition/reward pair has the condition marginal followed by the
+selected arm kernel. `canonicalReward_condDistrib` gives the corresponding
+almost-everywhere conditional law, without a conditional-law premise.
+This completes the successor unused-coordinate law; next prove the initial
+joint law and inductively identify the canonical histories with the common
+MOSS.historyAlgorithm law, then transport the constant39 expected regret.
+Full e2479fb validation passed: root, Tests (8919 jobs), ProofGraphExport,
+400 Python tests in 196.650 seconds, 7 skipped. Later changes need fresh check.
