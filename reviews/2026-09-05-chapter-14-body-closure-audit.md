@@ -77,3 +77,13 @@ and `entropyTerm_tendsto_zero_right`, resolving the local proof gaps in items
 3 and 4. The real cross-entropy identity has the required support/AC premise;
 it does not apply to singular infinite KL and does not claim an exact rounded
 code-length difference. Aggregate and export synchronization remain pending.
+
+## Follow-up: fixed-length coding and arithmetic gate
+
+FixedLengthCoding provides a focused-compiled cardinal-capacity constructor,
+the Nat.clog ceiling-log terminal for card>=2, and expected-length equality.
+This supplies item 1 apart from final aggregate/export mapping, with the
+singleton convention explicit. Item 2's uniform-law qualification still
+needs its exact statement/counterexample disposition. Arithmetic full gate
+2a31a01 has now passed (400 tests, 7 skipped, 203.363s); it does not cover
+the later NonMetric/CrossEntropy/FixedLengthCoding leaves.

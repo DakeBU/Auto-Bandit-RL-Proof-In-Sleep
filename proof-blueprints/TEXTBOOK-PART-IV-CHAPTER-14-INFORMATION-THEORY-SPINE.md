@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T06:47:58+00:00`
+Generated: `2026-09-05T06:49:55+00:00`
 
 ## Source Task
 
@@ -61,7 +61,7 @@ mapped local adapter before they count as chapter evidence.
 | §14.1 code model | binary codewords, injectivity, prefix freedom, codeword length, and expected length | `BinaryPrefixCode`, its uniquely-decodable range, finite codebook, Kraft adapter, and `expectedCodeLength` compile; the explicit nonempty-codeword contract is recorded | partial |
 | Eq. (14.1) | optimal expected-length objective over valid prefix codes | `huffmanOptimalCode`, `huffmanCode_optimal`; exact global minimization, full gate dff13cb | compiled |
 | Eq. (14.2) | Huffman optimum satisfies `H₂(P) ≤ L* ≤ H₂(P)+1` | `huffmanOptimalCode` recursively merges two least weights; global optimality and entropy sandwich for finite alphabets, ties/zeros included; classical real-weight construction, not an executable encoder; full gate passed at dff13cb | compiled |
-| §14.1 asymptotic statement | arithmetic coding approaches entropy and no code improves the asymptotic rate | named interval-address arithmetic block code with zero-mass escape tag; rate tends to entropy on Fin k, matching universal prefix-code converse; focused build/canary passed, full gate and source audit pending | partial |
+| §14.1 asymptotic statement | arithmetic coding approaches entropy and no code improves the asymptotic rate | named interval-address arithmetic block code with zero-mass escape tag; rate tends to entropy on Fin k, matching universal prefix-code converse; full gate passed at 2a31a01; whole-body source/export audit remains open | compiled |
 | Eqs. (14.2)--(14.3) definitions | finite discrete base-two entropy, natural entropy, and exact unit conversion | `discreteEntropy`, `discreteEntropyBaseTwo`, their exact conversion, and nonnegativity compile | compiled |
 | Eq. (14.4) | arbitrary finite-alphabet discrete relative entropy with exact zero/support endpoints | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, and `relativeEntropy_finite_eq_top_iff` compile; root-import finite/singular three-symbol canaries pass | compiled |
 | Eq. (14.5) | relative entropy as the supremum over all finite measurable discretisations | `finitePartitionRelativeEntropy_eq_relativeEntropy` compiles for arbitrary finite measures, using finite encodings of the concrete density filtration; root and aggregate Tests pass | compiled |
@@ -58936,6 +58936,30 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/FinitePartitionKLRecovery.lean",
     "line": 65,
     "statement": "theorem finitePartitionRelativeEntropy_eq_relativeEntropy {\u03b1 : Type*} [m : MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] : finitePartitionRelativeEntropy P Q = relativeEntropy P Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_fixedLengthPrefixCode",
+    "full_name": "BanditRLProof.LowerBounds.exists_fixedLengthPrefixCode",
+    "file": "BanditRLProof/LowerBounds/FixedLengthCoding.lean",
+    "line": 7,
+    "statement": "theorem exists_fixedLengthPrefixCode {\u03b1 : Type*} [Fintype \u03b1] (n : \u2115) (hn : 0 < n) (hcapacity : Fintype.card \u03b1 \u2264 2 ^ n) : \u2203 code : BinaryPrefixCode \u03b1, \u2200 a, (code.encode a).length = n"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_ceilingLogPrefixCode",
+    "full_name": "BanditRLProof.LowerBounds.exists_ceilingLogPrefixCode",
+    "file": "BanditRLProof/LowerBounds/FixedLengthCoding.lean",
+    "line": 34,
+    "statement": "theorem exists_ceilingLogPrefixCode {\u03b1 : Type*} [Fintype \u03b1] (hcard : 1 < Fintype.card \u03b1) : \u2203 code : BinaryPrefixCode \u03b1, \u2200 a, (code.encode a).length = Nat.clog 2 (Fintype.card \u03b1)"
+  },
+  {
+    "kind": "theorem",
+    "name": "expectedCodeLength_fixedLength",
+    "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_fixedLength",
+    "file": "BanditRLProof/LowerBounds/FixedLengthCoding.lean",
+    "line": 45,
+    "statement": "theorem expectedCodeLength_fixedLength {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (hs : \u2211 a, p a = 1) (code : BinaryPrefixCode \u03b1) (n : \u2115) (hlen : \u2200 a, (code.encode a).length = n) : expectedCodeLength p code = n"
   },
   {
     "kind": "def",

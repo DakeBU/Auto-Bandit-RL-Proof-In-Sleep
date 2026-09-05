@@ -60,6 +60,9 @@ import BanditRLProof.LowerBounds.DyadicAddresses
 import BanditRLProof.LowerBounds.ArithmeticPrefixCode
 import BanditRLProof.LowerBounds.ArithmeticZeroExtension
 import BanditRLProof.LowerBounds.ArithmeticBlockCoding
+import BanditRLProof.LowerBounds.RelativeEntropyNonMetric
+import BanditRLProof.LowerBounds.CrossEntropy
+import BanditRLProof.LowerBounds.FixedLengthCoding
 import BanditRLProof.LowerBounds.Minimax
 import BanditRLProof.LowerBounds.ConditionalKernelKL
 import BanditRLProof.LowerBounds.BanditHistoryKL

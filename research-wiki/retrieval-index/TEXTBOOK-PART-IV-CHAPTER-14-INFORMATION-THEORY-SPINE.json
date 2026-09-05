@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE",
-  "generated": "2026-09-05T06:47:52+00:00",
+  "generated": "2026-09-05T06:49:50+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -57939,6 +57939,30 @@
       "file": "BanditRLProof/LowerBounds/FinitePartitionKLRecovery.lean",
       "line": 65,
       "statement": "theorem finitePartitionRelativeEntropy_eq_relativeEntropy {α : Type*} [m : MeasurableSpace α] (P Q : Measure α) [IsFiniteMeasure P] [IsFiniteMeasure Q] : finitePartitionRelativeEntropy P Q = relativeEntropy P Q"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_fixedLengthPrefixCode",
+      "full_name": "BanditRLProof.LowerBounds.exists_fixedLengthPrefixCode",
+      "file": "BanditRLProof/LowerBounds/FixedLengthCoding.lean",
+      "line": 7,
+      "statement": "theorem exists_fixedLengthPrefixCode {α : Type*} [Fintype α] (n : ℕ) (hn : 0 < n) (hcapacity : Fintype.card α ≤ 2 ^ n) : ∃ code : BinaryPrefixCode α, ∀ a, (code.encode a).length = n"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_ceilingLogPrefixCode",
+      "full_name": "BanditRLProof.LowerBounds.exists_ceilingLogPrefixCode",
+      "file": "BanditRLProof/LowerBounds/FixedLengthCoding.lean",
+      "line": 34,
+      "statement": "theorem exists_ceilingLogPrefixCode {α : Type*} [Fintype α] (hcard : 1 < Fintype.card α) : ∃ code : BinaryPrefixCode α, ∀ a, (code.encode a).length = Nat.clog 2 (Fintype.card α)"
+    },
+    {
+      "kind": "theorem",
+      "name": "expectedCodeLength_fixedLength",
+      "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_fixedLength",
+      "file": "BanditRLProof/LowerBounds/FixedLengthCoding.lean",
+      "line": 45,
+      "statement": "theorem expectedCodeLength_fixedLength {α : Type*} [Fintype α] (p : α → ℝ) (hs : ∑ a, p a = 1) (code : BinaryPrefixCode α) (n : ℕ) (hlen : ∀ a, (code.encode a).length = n) : expectedCodeLength p code = n"
     },
     {
       "kind": "def",

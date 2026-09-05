@@ -141,3 +141,8 @@ now aggregate-imported; a full gate and source/export audit remain required.
 Typed block-rate canary passed. SourceBlock/list injectivity has no axioms;
 the finite length/rate and convergence audits use only propext,
 Classical.choice and Quot.sound. Retrieval/task-memory/blueprint refreshed.
+
+Full arithmetic gate at 2a31a01 passed: 400 Python tests, 7 skipped,
+203.363s, including root/aggregate Lean and all five arithmetic canaries.
+Log: `C:/a14/tmp/ch14-arithmetic-full-check.log`. This covers the zero-safe
+named arithmetic block-code rate terminal, not later exposition adapters.
