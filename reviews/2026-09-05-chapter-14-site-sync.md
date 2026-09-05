@@ -33,6 +33,10 @@ error was reported, but this first check did not pass.
 The a47106a gate subsequently completed its Lean aggregate successfully
 (8951 jobs). A current diff against that snapshot is empty for BanditRLProof,
 Tests, both root imports, lakefile.toml and lean-toolchain. Rebuilding with
-`--lean-verified` and rerunning the normal checker is now in progress.
+`--lean-verified` and rerunning the normal checker both succeeded:
+687 HTML pages, 633 modules, 8432 declarations, 9231 Lean source links;
+internal links/anchors, mathematical fallbacks and Pages workflow checks pass.
+This validates the content committed in 93f1610, although the preview build
+started before that commit and still records its predecessor with dirty source.
 Remaining full-harness tests, browser verification and remote publication
 are not claimed. Do not promote the chapter based only on this synchronization.
