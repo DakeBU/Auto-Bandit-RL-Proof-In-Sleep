@@ -4,6 +4,22 @@ Date: 2026-09-05
 
 Task: `TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE`
 
+## Integration follow-up (2026-09-05)
+
+The follow-up authorizes merging PR #104 after Chapter 15 PR #102, then
+verifying Pages. This supersedes the earlier no-merge handoff below.
+Main through `102c5cd` (accepted Chapter 13/14 updates) is integrated in
+`94574c8`. Ch16 source and canary are unchanged from the CI-passing version.
+Generated indexes were rebuilt; website conflicts preserve both mainline
+chapter acceptance and the five-declaration Ch16 gate.
+
+This intermediate integration passed the full harness: Lean library 8909
+jobs, Tests 8984 jobs, 400 Python tests in 190.980 seconds, 7 skipped.
+The verified site passed: 715 pages, 661 modules, 8721 declarations, and
+9552 source links. Temporary Windows short-path configuration and junction
+were removed. PR #102 was still open at this check; final post-#102
+integration, PR #104 merge, and deployed Pages verification remain pending.
+
 ## Source audit and compiled result
 
 Definition 16.1, the finite-mean source mean-to-gap producer, Theorem 16.2,
