@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T07:14:27+00:00`
+Generated: `2026-09-05T07:48:40+00:00`
 
 ## Source Task
 
@@ -124,12 +124,12 @@ LowerBounds.baseEnvironmentRegret
 LowerBounds.changedEnvironmentRegretLowerBound
 LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error
 
-<!-- 2450 characters omitted from the middle of this snapshot. -->
+<!-- 2794 characters omitted from the middle of this snapshot. -->
 
-documentation and website. The earlier Chernoff-only baseline passed;
-  that historical gate does not certify this extension.
-- [ ] Refresh the structured source/Lean/evidence review for the exact-bound
-  extension. The earlier review's website-status-enum P3 was corrected.
+- [x] Refresh the structured source/Lean/evidence review for the exact-bound
+  extension. The earlier review's website-status-enum P3 was corrected;
+  the exact-Mills audit and current source-coverage/consumer self-review
+  are recorded, without claiming independent approval.
 - [x] The earlier dependency-slice PR #9, remote Actions run `31942624241`, merge commit `44c3e153`,
   Pages deployment job `95156292456`, and the live desktop/mobile Chapter 13
   page pass.
@@ -96987,78 +96987,6 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "harness": "",
     "input_tokens": 0,
     "kind": "build",
-    "lean": "BanditRLProof/Algorithms/MOSSOptimism.lean",
-    "lean_check_seconds": 0.0,
-    "new_declarations": [],
-    "notes": "Finite-horizon nonnegative optimism deficit, event equivalence, strong measurability, derived integrability, Lemma 9.3 tail consumer and layer-cake identity compiled. External canary 3497 jobs passed with baseline axioms. Numerical expected bound and complete MOSS regret remain pending.",
-    "obligations_after": 0,
-    "obligations_before": 0,
-    "output_tokens": 0,
-    "parent_id": "",
-    "progress_class": "compiled-leaf",
-    "prompt_chars": 0,
-    "reused_declarations": [],
-    "reviewer_validated": false,
-    "role": "lower",
-    "route_fingerprint": "",
-    "route_packet_hash": "",
-    "run_id": "",
-    "source": "",
-    "statement_hash": "",
-    "status": "compiled",
-    "target_fingerprint": "",
-    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
-    "time": "2026-09-05T05:27:30+00:00",
-    "verifier_evidence": [],
-    "worker_id": ""
-  },
-  {
-    "attempt_id": "",
-    "changed_files": [],
-    "dag_depth": 0,
-    "dag_nodes": 0,
-    "elapsed_seconds": 0.0,
-    "error_signature": "",
-    "experiment_id": "",
-    "harness": "",
-    "input_tokens": 0,
-    "kind": "build",
-    "lean": "BanditRLProof/Algorithms/MOSSOptimism.lean",
-    "lean_check_seconds": 0.0,
-    "new_declarations": [],
-    "notes": "Numerical tail integration and MOSS expected deficit <=2sqrt(15delta), source 16sqrt(nk) contribution compiled; 3508 focused jobs and baseline axioms. Full 50ea833 gate passed 400 tests/7 skips/203.163s. Next large-gap occupancy and actual regret assembly.",
-    "obligations_after": 0,
-    "obligations_before": 0,
-    "output_tokens": 0,
-    "parent_id": "",
-    "progress_class": "compiled-leaf",
-    "prompt_chars": 0,
-    "reused_declarations": [],
-    "reviewer_validated": false,
-    "role": "lower",
-    "route_fingerprint": "",
-    "route_packet_hash": "",
-    "run_id": "",
-    "source": "",
-    "statement_hash": "",
-    "status": "compiled",
-    "target_fingerprint": "",
-    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
-    "time": "2026-09-05T05:32:08+00:00",
-    "verifier_evidence": [],
-    "worker_id": ""
-  },
-  {
-    "attempt_id": "",
-    "changed_files": [],
-    "dag_depth": 0,
-    "dag_nodes": 0,
-    "elapsed_seconds": 0.0,
-    "error_signature": "",
-    "experiment_id": "",
-    "harness": "",
-    "input_tokens": 0,
-    "kind": "build",
     "lean": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
     "lean_check_seconds": 0.0,
     "new_declarations": [],
@@ -97726,6 +97654,78 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "target_fingerprint": "",
     "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
     "time": "2026-09-05T06:48:02+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "review",
+    "lean": "",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [],
+    "notes": "Merged e218fc8 full check passed: library 8880, Tests 8927, ProofGraphExport, 400 Python tests in 214.613s, 7 skipped. Consumer self-review preserves common law, broad gap class and fixed horizon. PR105 draft mergeable; remote CI and main/Pages/live remain pending; chapter partial.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "unreviewed",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "reviewer",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "executed",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T07:15:07+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "review",
+    "lean": "",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [],
+    "notes": "PR105 latest head 90b1c07 passed CI33952076777 (Tests8927, 400 Python tests 90.845s, 3 skips) and merged as b38630c. Local integration and structured self-review gates checked; main run33953476610, deployment and live verification remain pending. Whole chapter partial.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "unreviewed",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "reviewer",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "executed",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T07:48:17+00:00",
     "verifier_evidence": [],
     "worker_id": ""
   }

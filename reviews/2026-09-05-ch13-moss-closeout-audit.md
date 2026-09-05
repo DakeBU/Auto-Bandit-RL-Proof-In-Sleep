@@ -1,7 +1,30 @@
 # Chapter 13 MOSS evidence closeout audit
 
 This is an in-branch self-audit, not an independent review or completion
-certificate. Current validated Lean baseline: e218fc8. Chapter status remains partial.
+certificate. Current PR-validated tree: 90b1c07, merged as b38630c.
+Chapter status remains partial pending main/deployment/live acceptance.
+
+## PR acceptance
+
+PR #105 was marked ready after the local source/consumer/export/mobile
+review and merged at b38630cb18c9724252432647443cfe3c031da4e5. Its head
+90b1c0742cbfd3783dbf7cdf99c1f3b9d82f4223 passed all three workflows:
+Lean/documentation 33952076777, lifecycle 33952076768 and pinned-source
+preflight 33952076771. Build job 101268669875 completed the full harness,
+result-free protocol validation, verified website build and site checks.
+Logs confirm Tests 8927 jobs, 400 Python tests in 90.845 seconds with
+3 skipped, and 686 pages / 8453 declarations / 118 highlights. The Linux
+skip count is distinct from the local Windows run's 7 skips.
+
+No submitted reviews or inline review threads were present at the final
+pre-merge check. The in-branch structured review above is not represented
+as an independent approval. Git diff between the PR head and merge tree
+is empty. PR artifact upload and deployment were skipped by workflow
+design, so PR success is not deployment evidence.
+
+Authoritative-main run 33953476610 is now active on b38630c (build job
+101272447506). Its outcome, Pages deployment and live desktop/mobile
+verification remain unverified. Do not promote the chapter yet.
 
 ## Latest merged-tree verdict
 

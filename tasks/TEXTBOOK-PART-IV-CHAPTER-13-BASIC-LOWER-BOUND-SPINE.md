@@ -162,12 +162,17 @@ LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt
 - [x] Alternative-arm averaging leaves compile from the exact pull budget.
 - [x] Conditional two-environment algebra leaves compile without a statistical
   nonclaim being promoted.
-- [ ] Re-run integration for the exact Mills-ratio extension: root import,
+- [x] Re-run integration for the exact Mills-ratio extension: root import,
   typed canary, Tests, axiom scan, full harness, synchronized exports/indexes,
   documentation and website. The earlier Chernoff-only baseline passed;
-  that historical gate does not certify this extension.
-- [ ] Refresh the structured source/Lean/evidence review for the exact-bound
-  extension. The earlier review's website-status-enum P3 was corrected.
+  that historical gate does not certify this extension. The expanded
+  Mills/MOSS tree now passes local e218fc8 full checks and PR #105's
+  latest-head run 33952076777, with rendered export and local site QA
+  recorded in `reviews/2026-09-05-ch13-moss-closeout-audit.md`.
+- [x] Refresh the structured source/Lean/evidence review for the exact-bound
+  extension. The earlier review's website-status-enum P3 was corrected;
+  the exact-Mills audit and current source-coverage/consumer self-review
+  are recorded, without claiming independent approval.
 - [x] The earlier dependency-slice PR #9, remote Actions run `31942624241`, merge commit `44c3e153`,
   Pages deployment job `95156292456`, and the live desktop/mobile Chapter 13
   page pass.
