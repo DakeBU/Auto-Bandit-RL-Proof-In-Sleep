@@ -25,3 +25,9 @@ This is a direct integration review. The checked public declarations and
 source contract support required-body completion; they do not close the
 optional stopping-time exercise. Current-commit CI and publication evidence
 will be linked in PR #102 after verification.
+
+Desktop (1440px) and mobile (390px) browser checks verified the explicit
+required-body and optional-exercise boundaries with no page-wide horizontal
+overflow. The overview dependency diagram was also synchronized: its stale
+Ch13--15 early-stage labels are replaced by required-body completion, while
+Ch16--17 remain unchanged pending their own integration gates.
