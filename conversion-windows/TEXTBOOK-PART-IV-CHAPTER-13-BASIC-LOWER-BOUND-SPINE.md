@@ -83,7 +83,7 @@ the `Delta*n/2` statement is retained only as the zero-error corollary.
 | equation (13.3) RHS | changed regret lower expression | `LowerBounds.changedEnvironmentRegretLowerBound` | deterministic real expression | target |
 | comparison of `T_0` under `nu,nu'` | statistical indistinguishability bridge | source event comparison in `GaussianMinimax.lean` | quantitative bridge contract | compiled Ch. 14--15 consumer |
 | Theorem 13.1 | Gaussian minimax lower bound | `unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt` | source-order endpoint with explicit `c=1/54` | compiled through Ch. 15 |
-| Algorithm 7 / Theorem 9.1 consequence | constant-factor near-minimax policy on the broader finite-arm 1-subgaussian class with gaps in `[0,1]` | `SubgaussianMinimax.moss_nearMinimax` (namespace `LowerBounds`) | connected cross-chapter claim | compiled; integration gates pending |
+| Algorithm 7 / Theorem 9.1 consequence | constant-factor near-minimax policy on the broader finite-arm 1-subgaussian class with gaps in `[0,1]` | `LowerBounds.moss_nearMinimax` | connected cross-chapter claim | compiled; integration gates pending |
 
 ## Semantic signature and assumption ledger
 
@@ -155,11 +155,11 @@ subgaussian proxy c>0, positive n and epsilon, the event
 prefix, not a union-bound estimate. The natural filtration and partial-sum
 martingale are proved via the existing MartingaleDiff and Mathlib independence
 APIs; all exponential integrability follows from the sum-MGF producer.
-Source variance is c=sigma^2. MOSS's actual centered reward stream still
-must instantiate the explicit coordinate contracts; Lemma 9.3 peeling and
-Theorem 9.1 regret assembly remain unproved.
+Source variance is c=sigma^2. MOSSCanonicalReward now instantiates the
+coordinate contracts; peeling, Theorem 9.1 common-history regret and the
+Chapter 13 broader-class near-minimax consequence all compile.
 
-### Active MOSS leaf (2026-09-05)
+### Historical MOSS policy route (2026-09-05; now compiled)
 
 Source: Algorithm 7 / Theorem 9.1, `TXT-LATTIMORE-SZEPESVARI-2020`.
 Project-local module `Algorithms/MOSS.lean` will define logPlus as

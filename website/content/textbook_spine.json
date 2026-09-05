@@ -22,7 +22,7 @@
       "core_status": "compiled",
       "core_status_label": "Compiled theorem route",
       "chapter_status_label": "Whole main-text contract",
-      "status_note": "Theorem 13.1 compiles through Chapter 15 with c=1/54. Chapter 13 also compiles fixed-class minimax-optimality, the canonical iid Gaussian empirical-mean law, midpoint error events, the Chernoff companion, and both exact Mills-ratio bounds of Eq. (13.4) rescaled to the printed Eq. (13.1). The whole chapter remains partial because the broader 1-subgaussian MOSS near-minimax consequence still lacks its upper theorem; Notes and Exercises are optional.",
+      "status_note": "Theorem 13.1 compiles through Chapter 15 with c=1/54. Chapter 13 also compiles fixed-class minimax-optimality, the canonical iid Gaussian empirical-mean law, midpoint error events, the Chernoff companion, and both exact Mills-ratio bounds of Eq. (13.4) rescaled to the printed Eq. (13.1). The broader 1-subgaussian class with gaps in [0,1] now has a compiled fixed-horizon MOSS upper bound and constant-factor near-minimax theorem. The whole chapter remains partial pending current integration, export/site verification, review and deployment gates; Notes and Exercises are optional.",
       "print_pages": "155–159",
       "pdf_pages": "189–194",
       "pdf_page": 189,
@@ -41,7 +41,7 @@
       ],
       "completion_definition": "Complete means every precise mathematical item in the chapter opening and §13.1 has a source-faithful compiled endpoint, including the explicit iid empirical-mean Gaussian law and exact Eq. (13.1), and the stated broader-class Algorithm 7/Theorem 9.1 consequence has both its lower and MOSS upper sides. Notes and Exercises are optional but cannot be used to hide a main-text gap.",
       "completion_blockers": [
-        "Compile the MOSS/Algorithm 7 upper theorem for the stated finite-arm 1-subgaussian class before claiming the main-prose constant-factor near-minimax consequence."
+        "Finish current full checks, synchronized export/site verification, structured review, PR, authoritative-main Actions, Pages deployment and live-page checks."
       ],
       "learning_goals": [
         "Read worst-case and minimax expected regret as explicit supremum and infimum operations.",
@@ -104,8 +104,11 @@
         "boundary": "BanditRLProof.LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt compiles the source order statement for the same unit-cube, unit-variance Gaussian environment class with the explicit positive constant c=1/54. The local expected regret is an ENNReal lower integral on the canonical n-observation history law."
       },
       "lean_correspondence": [
-        {"name": "BanditRLProof.Concentration.measure_exists_le_independent_partialSum_ge_le_subgaussian", "status": "compiled", "role": "Finite maximal independent centered subgaussian bound with no cardinality loss; MOSS peeling and regret integration remain open."},
-        {"name": "BanditRLProof.MOSS.historyAlgorithm", "status": "compiled", "role": "Concrete measurable Algorithm 7 history policy; no expected-regret upper theorem yet."},
+        {"name": "BanditRLProof.MOSS.canonicalGapExpectedRegret_le", "status": "compiled", "role": "Fixed-horizon Algorithm 7 bound 39 sqrt(nk) plus the gap sum on the actual canonical history law."},
+        {"name": "BanditRLProof.LowerBounds.subgaussianMinimax_sandwich", "status": "compiled", "role": "For unit-subgaussian arms with gaps in [0,1], lower constant 1/54 and MOSS upper constant 40, using identical policy and regret semantics."},
+        {"name": "BanditRLProof.LowerBounds.moss_nearMinimax", "status": "compiled", "role": "Main-prose constant-factor near-minimax consequence: MOSS worst-case regret is at most 2160 times minimax regret; k>1 and n>=k."},
+        {"name": "BanditRLProof.Concentration.measure_exists_le_independent_partialSum_ge_le_subgaussian", "status": "compiled", "role": "Finite maximal independent centered subgaussian bound with no cardinality loss, consumed by compiled MOSS peeling and regret integration."},
+        {"name": "BanditRLProof.MOSS.historyAlgorithm", "status": "compiled", "role": "Concrete measurable fixed-horizon Algorithm 7 history policy, used by the compiled common-history expected-regret theorem."},
         {"name": "BanditRLProof.MOSS.selected_index_gt_mean_add_half_gap", "status": "compiled", "role": "Deterministic large-gap selection step under an explicit optimism-deficit premise, not a concentration bound."},
         {"name": "BanditRLProof.LowerBounds.gaussianMills_lower_integral", "status": "compiled", "role": "Exact lower integral bound of Eq. (13.4)."},
         {"name": "BanditRLProof.LowerBounds.gaussianMills_upper_integral", "status": "compiled", "role": "Exact upper integral bound of Eq. (13.4), with denominator constant 4/pi."},

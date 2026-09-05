@@ -68,7 +68,7 @@ for independent strongly measurable zero-mean increments of common
 subgaussian proxy $c>0$, positive $n$ and $\epsilon$.
 The natural-filtration martingale and sum MGF are constructed, not assumed.
 All four declaration names are enumerated in the Markdown export.
-Their new full integration is pending; peeling and MOSS regret remain open.
+These dependencies are now consumed by the compiled MOSS regret route.
 
 The MOSS source-policy layer now compiles in focused checks.
 Set $L(x)=\log\max\{1,x\}$ and
@@ -80,8 +80,38 @@ construct its deterministic kernels on the common history-policy interface.
 If the best index is at least $\mu_* - d$ and the chosen gap exceeds $2d$,
 maximality gives chosen index greater than chosen mean plus half its gap.
 The exact declaration list is synchronized in the Markdown export.
-This is not Theorem~9.1: concentration, peeling and expected-regret assembly
-remain open, and the new root/Tests integration gate is separate.
+Theorem~9.1's fixed-horizon bound now compiles on the common history law.
+For stationary arms with actual means $\mu_a$ and centered unit-subgaussian
+MGFs, set $\Delta_a=\mu_*-\mu_a$. No bounded support or absolute-mean
+restriction is needed. The policy uses raw observed rewards, not unknown
+population means. Inclusive history $t$ contains $n=t+1$ observations.
+
+Geometric peeling supplies Lemma~9.3's $15\delta/\Delta^2$ tail.
+Small gaps, integrated optimism deficit and large-gap occupancy contribute
+$8\sqrt{nk}$, $16\sqrt{nk}$ and $15\sqrt{nk}+\sum_a\Delta_a$.
+Initialization requires $T_a\le1+\kappa_a$, correcting the source prose's
+omitted initial pull. A sharper fixed-log count expectation removes its
+loose additive one, preserving exactly one gap sum in the terminal bound.
+Consumed-prefix invariance and unused-coordinate independence prove the
+actual successor reward conditional law. Finite-history pushforward
+equality and integral transport yield
+\[
+ R_n(\mathrm{MOSS},\nu)\le39\sqrt{nk}+\sum_a\Delta_a.
+\]
+The exact additional declarations, including the common-history law and
+regret transports, are enumerated in the synchronized Markdown export.
+For the broad class $\mathcal E$ with gaps in $[0,1]$, not necessarily
+means in $[0,1]$, the sum of gaps is at most $k\le\sqrt{nk}$.
+The Gaussian unit-cube subclass embeds with identical regret. Thus for
+$k>1$ and $n\ge k$, \texttt{subgaussianMinimax\_sandwich} and
+\texttt{moss\_nearMinimax} prove
+\[
+ \frac{\sqrt{nk}}{54}\le R_n^*(\mathcal E)
+ \le R_n(\mathrm{MOSS},\mathcal E)\le40\sqrt{nk},\qquad
+ R_n(\mathrm{MOSS},\mathcal E)\le2160R_n^*(\mathcal E).
+\]
+These are constant-factor, fixed-horizon results, not optimal constants or
+an anytime MOSS theorem.
 
 Both exact Mills-ratio integral bounds of Eq.~(13.4) and their Gaussian
 rescaling to Eq.~(13.1) compile for positive sample size and gap.
@@ -90,6 +120,7 @@ $\sqrt{8/\pi}e^{-q/8}/(\sqrt q+\sqrt{q+16})$ and
 $\sqrt{8/\pi}e^{-q/8}/(\sqrt q+\sqrt{q+32/\pi})$.
 The proof uses improper FTC, a single-turning-point upper-error comparison,
 and Gaussian density standardization. The broader finite-arm
-1-subgaussian near-minimax statement still lacks its MOSS/Algorithm~7 upper
-theorem. Notes~13.2 and Exercises~13.1--13.2 are optional and do not block the
+1-subgaussian near-minimax statement is compiled. Current full checks,
+export/site verification, review, PR, authoritative-main Actions, Pages and
+live verification remain required. Notes~13.2 and Exercises~13.1--13.2 are optional and do not block the
 frozen whole-main-text contract.

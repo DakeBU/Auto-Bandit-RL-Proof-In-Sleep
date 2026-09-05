@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T06:48:08+00:00`
+Generated: `2026-09-05T06:52:35+00:00`
 
 ## Source Task
 
@@ -67,7 +67,7 @@ source node.
 | Eq. (13.1) | required displayed result | both explicit Mills-ratio bounds with the printed constants | compiled by `gaussianSampleMeanZeroErrorProbability_source_bounds`; final integration gate pending |
 | competition/similarity trade-off | required source mapping | narrative route to the precise two-environment nodes; no invented standalone proposition | mapped |
 | Eqs. (13.2)--(13.3), least-explored arm, one-coordinate change, `Delta` tuning, information bridge | required main text | exact identities/inequalities and the Chapter 14--15 same-policy history-law route | compiled locally or through Chapter 15 |
-| Algorithm 7 / Theorem 9.1 near-minimax claim for the broader 1-subgaussian class | required connected main-text claim | Gaussian-subclass lower transfer plus a compiled MOSS upper theorem on the stated broader class | partial; lower side and concrete measurable MOSS history policy compile, expected-regret upper side absent |
+| Algorithm 7 / Theorem 9.1 near-minimax claim for the broader 1-subgaussian class | required connected main-text claim | Gaussian-subclass lower transfer plus a compiled MOSS upper theorem on the stated broader class | compiled broad-class near-minimax endpoint; full integration and publication gates pending |
 | Section 13.2 Notes | optional enrichment | itemized mapping if attempted; never used to hide a main-text gap | optional, unformalized |
 | Section 13.3 Bibliographic Remarks / Eq. (13.4) | source support for Eq. (13.1) | Abramowitz--Stegun Mills-ratio source and exact integral leaf | both exact integral bounds compiled in `GaussianMillsRatio.lean` |
 | Section 13.4 Exercises 13.1--13.2 | optional exercises | separate exercise contracts if attempted | optional, unformalized |
@@ -122,8 +122,9 @@ LowerBounds.alternativeExpectedPullBudget_le
 LowerBounds.exists_leastExploredAlternative
 LowerBounds.baseEnvironmentRegret
 LowerBounds.changedEnvironmentRegretLowerBound
+LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error
 
-<!-- 2514 characters omitted from the middle of this snapshot. -->
+<!-- 2450 characters omitted from the middle of this snapshot. -->
 
 documentation and website. The earlier Chernoff-only baseline passed;
   that historical gate does not certify this extension.
@@ -306,7 +307,7 @@ the `Delta*n/2` statement is retained only as the zero-error corollary.
 | equation (13.3) RHS | changed regret lower expression | `LowerBounds.changedEnvironmentRegretLowerBound` | deterministic real expression | target |
 | comparison of `T_0` under `nu,nu'` | statistical indistinguishability bridge | source event comparison in `GaussianMinimax.lean` | quantitative bridge contract | compiled Ch. 14--15 consumer |
 | Theorem 13.1 | Gaussian minimax lower bound | `unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt` | source-order endpoint with explicit `c=1/54` | compiled through Ch. 15 |
-| Algorithm 7 / Theorem 9.1 consequence | constant-factor near-minimax policy on the broader finite-arm 1-subgaussian class with gaps in `[0,1]` | `SubgaussianMinimax.moss_nearMinimax` (namespace `LowerBounds`) | connected cross-chapter claim | compiled; integration gates pending |
+| Algorithm 7 / Theorem 9.1 consequence | constant-factor near-minimax policy on the broader finite-arm 1-subgaussian class with gaps in `[0,1]` | `LowerBounds.moss_nearMinimax` | connected cross-chapter claim | compiled; integration gates pending |
 
 ## Semantic signature and assumption ledger
 
@@ -314,9 +315,8 @@ the `Delta*n/2` statement is retained only as the zero-error corollary.
 | --- | --- | --- | --- |
 | explicit policy and environment classes | subtype arguments | avoids silently quantifying over a different model class | no |
 
-<!-- 5917 characters omitted from the middle of this snapshot. -->
+<!-- 6268 characters omitted from the middle of this snapshot. -->
 
-| `CH13-GAUSSIAN-SAMPLE-MEAN-LAW` | empirical mean of `n>0` independent unit-variance Gaussians has law `N(mu,1/n)` | finite product measure, characteristic-function product, Gaussian scaling | `gaussianIIDObservationLaw`, `gaussianCoordinateAverage`, `gaussianIIDSumLaw`, `gaussianIIDSampleMeanLaw` | project-local bridge | focused Lean | compiled |
 | `CH13-GAUSSIAN-TEST-CHERNOFF` | both `N(0,1/n)` and `N(Delta,1/n)` midpoint errors, and their maximum, are at most `exp(-n*Delta^2/8)` | exact Gaussian MGF, reflection, and Mathlib Chernoff | `hasSubgaussianMGF_id_gaussianReal_zero`, `hasSubgaussianMGF_gap_sub_id_gaussianReal`, `gaussianSampleMeanThresholdRisk_le_exp` | project-local consequence | focused Lean | compiled |
 | `CH13-EQ-13-1` | exact printed two-sided Mills-ratio bounds | Eq. (13.4) integral inequalities and Gaussian rescaling | `gaussianSampleMeanZeroErrorProbability_source_bounds` | locally compiled mathlib-candidate | focused Lean | compiled |
 | `CH13-ALTERNATIVE-BUDGET` | alternative sum at most total horizon | full expected-pull identity, nonnegativity | internal/public budget lemma | mathlib-composed project leaf | focused Lean | compiled |
@@ -343,11 +343,11 @@ subgaussian proxy c>0, positive n and epsilon, the event
 prefix, not a union-bound estimate. The natural filtration and partial-sum
 martingale are proved via the existing MartingaleDiff and Mathlib independence
 APIs; all exponential integrability follows from the sum-MGF producer.
-Source variance is c=sigma^2. MOSS's actual centered reward stream still
-must instantiate the explicit coordinate contracts; Lemma 9.3 peeling and
-Theorem 9.1 regret assembly remain unproved.
+Source variance is c=sigma^2. MOSSCanonicalReward now instantiates the
+coordinate contracts; peeling, Theorem 9.1 common-history regret and the
+Chapter 13 broader-class near-minimax consequence all compile.
 
-### Active MOSS leaf (2026-09-05)
+### Historical MOSS policy route (2026-09-05; now compiled)
 
 Source: Algorithm 7 / Theorem 9.1, `TXT-LATTIMORE-SZEPESVARI-2020`.
 Project-local module `Algorithms/MOSS.lean` will define logPlus as
@@ -420,9 +420,8 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH13-TWO-ENV-ALGEBRA` | max of base and changed expressions is at least `Delta*(n-error)/2` under an explicit pull-discrepancy bound | equations (13.2)--(13.3) expressions | real ordered-field algebra, `max`, `nlinarith` | `MLIB-ORDER-ALGEBRA` | show their sum is at least `Delta*(n-error)`, then use max/average | `0 <= Delta`; visible `baseFirstPulls-changedFirstPulls <= error` bridge | project-local | `LowerBounds.baseEnvironmentRegret`, `LowerBounds.changedEnvironmentRegretLowerBound`, `LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error`; zero-error corollary `LowerBounds.max_base_changed_regretLowerBound_ge_half` | focused Lean | compiled |
 | `CH13-HISTORY-TRANSPORT` | same-policy history-law comparison supplies the cross-law event inequality | Chapter 14 information theory and Chapter 15 history KL | compiled Gaussian/history APIs | local declarations; weapon card inspiration only | likelihood ratio, KL chain rule, direction-correct event inequality | measurability, policy consistency, exact KL direction | project-local | `LowerBounds.base_event_probability_lower_bound`, `LowerBounds.changed_complement_probability_lower_bound` | Chapter 15 | compiled |
 
-<!-- 1916 characters omitted from the middle of this snapshot. -->
+<!-- 2356 characters omitted from the middle of this snapshot. -->
 
-| `CH13-EVIDENCE-SITE` | proof export, indexes, readings/highlights/results/implementation map/README and Part IV site agree | local full gate | harness and website scripts | repository | generated evidence plus maintained source data | only gate-passing declarations marked compiled | repository | n/a | lean-verified build/site check/browser review | baseline verified; exact-bound extension pending |
 | `CH13-REVIEW` | structured in-branch source/theorem/Lean/evidence consistency audit | all local artifacts | source, declarations, generated site | all above | check source inventory, quantifiers, probability-law direction, regularity, status labels, and order claims | no unresolved P0--P3; website-status-enum P3 corrected | repository | n/a | review | baseline verified; exact-bound extension pending |
 | `CH13-REMOTE` | current Chapter 15 downstream extension PR, Actions, Pages deployment and live Chapter 13 verification | accepted local chapter; earlier dependency-slice PR is historical evidence only | GitHub/Pages workflow | repository | branch PR; never direct push to main | remote state must be current | repository | n/a | remote deployment | pending current extension |
 
@@ -463,9 +462,10 @@ in the dated integration review. New MOSS additions require a fresh gate.
   expected-count conclusion from independent centered unit-subgaussian coordinates.
   `MOSS.gap_mul_integral_indexExceedanceCount_le` now gives the source
   gap*E[kappa] <= gap+15/sqrt(delta) under gap>=8*sqrt(delta), using the
-  actual variable-radius exceedance count. This is not yet a bound on the
-  selected-arm pull count. Actual arm-stream instantiation, selected-count
-  transport and concrete regret assembly remain open.
+  actual variable-radius exceedance count. The later sharp count estimate,
+  initialization-safe selected-count transport, canonical reward tables and
+  common-history regret assembly now complete this route; see
+  `MOSS.canonicalGapExpectedRegret_le` and `LowerBounds.moss_nearMinimax`.
 
 - `MOSS.logPlus`, `radius`, `index`, `action`: exact source index and
   zero-based initialization; `radius_sq` retains the factor four.
@@ -480,9 +480,9 @@ in the dated integration review. New MOSS additions require a fresh gate.
 - Both policy modules pass focused build (2951 jobs); typed canary passes
   with baseline axioms only. Full integration at `1eb5af0` passed: root 8856
   jobs, Tests 8899 jobs, ProofGraphExport and 400 Python tests (7 skipped).
-  Actual reward-stream instantiation, large-gap occupancy, and regret
-  assembly remain open. Do not promote this policy constructor to the
-  MOSS upper theorem.
+  These historical policy-only checks do not alone establish regret. The
+  subsequent MOSSHistoryRegret and SubgaussianMinimax modules now do so;
+  current whole-chapter integration remains separate.
 
 Use exactly one:
 

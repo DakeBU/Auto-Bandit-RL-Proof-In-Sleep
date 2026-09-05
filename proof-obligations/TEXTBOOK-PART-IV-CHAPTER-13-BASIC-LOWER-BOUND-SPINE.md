@@ -20,7 +20,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH13-TWO-ENV-ALGEBRA` | max of base and changed expressions is at least `Delta*(n-error)/2` under an explicit pull-discrepancy bound | equations (13.2)--(13.3) expressions | real ordered-field algebra, `max`, `nlinarith` | `MLIB-ORDER-ALGEBRA` | show their sum is at least `Delta*(n-error)`, then use max/average | `0 <= Delta`; visible `baseFirstPulls-changedFirstPulls <= error` bridge | project-local | `LowerBounds.baseEnvironmentRegret`, `LowerBounds.changedEnvironmentRegretLowerBound`, `LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error`; zero-error corollary `LowerBounds.max_base_changed_regretLowerBound_ge_half` | focused Lean | compiled |
 | `CH13-HISTORY-TRANSPORT` | same-policy history-law comparison supplies the cross-law event inequality | Chapter 14 information theory and Chapter 15 history KL | compiled Gaussian/history APIs | local declarations; weapon card inspiration only | likelihood ratio, KL chain rule, direction-correct event inequality | measurability, policy consistency, exact KL direction | project-local | `LowerBounds.base_event_probability_lower_bound`, `LowerBounds.changed_complement_probability_lower_bound` | Chapter 15 | compiled |
 | `CH13-THEOREM-13-1` | Gaussian finite-arm minimax lower bound `>= c*sqrt(k*n)` | Chapter 13 deterministic leaves, Chapter 14 information theory, Chapter 15 minimax construction | compiled Gaussian/history APIs | source card plus compiled local declarations | base/changed instances, least arm, testing bound, Delta tuning, inf/sup extraction | unit variance; means in `[0,1]^k`; `k>1`; `n>=k`; explicit `c=1/54` | source-order endpoint | `LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt` | Chapter 15 | compiled |
-| `CH13-BROADER-SUBGAUSSIAN-NEAR-MINIMAX` | Algorithm 7 is constant-factor minimax for finite-arm 1-subgaussian bandits with gaps in `[0,1]` | Theorem 13.1 Gaussian-subclass lower transfer and source Theorem 9.1 MOSS upper bound | compiled lower terminal; no local MOSS upper theorem | textbook source; local MOSS roadmap only | identify the Gaussian subclass, transport the lower bound to the broader class, combine with generated-policy MOSS upper bound | exact broader environment class and regret notion; common horizon/arm indexing | connected blocker | none | Chapter 9 plus Chapter 13 | partial |
+| `CH13-BROADER-SUBGAUSSIAN-NEAR-MINIMAX` | Algorithm 7 is constant-factor minimax for finite-arm 1-subgaussian bandits with gaps in `[0,1]` | Theorem 13.1 Gaussian-subclass lower transfer and source Theorem 9.1 MOSS upper bound | compiled `LowerBounds.moss_nearMinimax` | exact fixed-horizon Algorithm 7 plus Gaussian subclass embedding | identify the Gaussian subclass, transport the lower bound to the broader class, combine with generated-policy MOSS upper bound | exact broader environment class and regret notion; common horizon/arm indexing | compiled connected consequence | none | Chapter 9 plus Chapter 13 | integration pending |
 | `CH13-TYPED-CANARY` | external root-import applications and a three-arm numeric witness | compiled Chapter 13 declarations | root `BanditRLProof` import | local declaration index | exact full-conclusion examples plus `#print axioms` | nonempty policy/environment subsets; nonnegative vector summing to horizon | project-local | `Tests/TextbookPartIVChapter13Canary.lean` | dedicated/root Tests | verified |
 | `CH13-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | Windows long-path workaround must not be mistaken for a Lean proof failure | repository | n/a | `python3 tools/bandit.py check` | baseline verified; exact-bound extension pending |
 | `CH13-EVIDENCE-SITE` | proof export, indexes, readings/highlights/results/implementation map/README and Part IV site agree | local full gate | harness and website scripts | repository | generated evidence plus maintained source data | only gate-passing declarations marked compiled | repository | n/a | lean-verified build/site check/browser review | baseline verified; exact-bound extension pending |
@@ -64,9 +64,10 @@ in the dated integration review. New MOSS additions require a fresh gate.
   expected-count conclusion from independent centered unit-subgaussian coordinates.
   `MOSS.gap_mul_integral_indexExceedanceCount_le` now gives the source
   gap*E[kappa] <= gap+15/sqrt(delta) under gap>=8*sqrt(delta), using the
-  actual variable-radius exceedance count. This is not yet a bound on the
-  selected-arm pull count. Actual arm-stream instantiation, selected-count
-  transport and concrete regret assembly remain open.
+  actual variable-radius exceedance count. The later sharp count estimate,
+  initialization-safe selected-count transport, canonical reward tables and
+  common-history regret assembly now complete this route; see
+  `MOSS.canonicalGapExpectedRegret_le` and `LowerBounds.moss_nearMinimax`.
 
 - `MOSS.logPlus`, `radius`, `index`, `action`: exact source index and
   zero-based initialization; `radius_sq` retains the factor four.
@@ -81,9 +82,9 @@ in the dated integration review. New MOSS additions require a fresh gate.
 - Both policy modules pass focused build (2951 jobs); typed canary passes
   with baseline axioms only. Full integration at `1eb5af0` passed: root 8856
   jobs, Tests 8899 jobs, ProofGraphExport and 400 Python tests (7 skipped).
-  Actual reward-stream instantiation, large-gap occupancy, and regret
-  assembly remain open. Do not promote this policy constructor to the
-  MOSS upper theorem.
+  These historical policy-only checks do not alone establish regret. The
+  subsequent MOSSHistoryRegret and SubgaussianMinimax modules now do so;
+  current whole-chapter integration remains separate.
 
 Use exactly one:
 

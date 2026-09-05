@@ -2,8 +2,9 @@
 
 Task id: `TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE`
 
-Status: `partial` whole-chapter contract; compiled core theorem route and new
-semantic/testing leaves.
+Status: `partial` whole-chapter contract; compiled Gaussian lower/testing
+route and broader-class MOSS near-minimax theorem. Integration, review and
+publication gates remain pending.
 
 ## Model and notation
 
@@ -106,10 +107,8 @@ proxy c>0. The resulting probability is at most exp(-epsilon^2/(2*n*c)),
 for positive n and epsilon, uniformly over all partial sums X1 through Xi
 with i<=n. There is no union-bound factor n.
 
-These four declarations and their full-statement external canary pass focused
-build (3473 jobs) with baseline axioms only. Their fresh full integration is
-pending. Source Lemma 9.3 peeling, actual reward-stream instantiation and
-expected-regret assembly remain open; this is not a MOSS regret theorem.
+These dependencies are now consumed by the compiled peeling and MOSS regret
+route below. Historical focused-build counts do not certify the current tree.
 
 ### MOSS source-policy definitions
 
@@ -132,10 +131,66 @@ implies selectedIndex > selectedMean+gap/2, by linear arithmetic.
 cover basic and initialization branches.
 
 These modules and `Tests/MOSSCanary.lean` compile with baseline axioms only.
-The new root/Tests integration run is separate from the completed exact
-Gaussian gate. No expected-regret theorem follows yet: the probabilistic
-optimism-deficit bound, maximal inequality/peeling and occupancy integration
-remain required.
+The complete expected-regret route now follows.
+
+### Fixed-horizon MOSS and broad-class near-minimax consequence
+
+Let n>=k>0. Each stationary arm law has actual mean mu_a and centered
+unit-subgaussian MGF. No bounded support or bounded absolute mean is assumed.
+For a best arm, Delta_a=mu_best-mu_a. The common-history regret is the
+expected sum of gaps times realized pull counts. Inclusive history t uses
+n=t+1 observations. The MOSS policy depends on raw observed means, not on
+the unknown population means.
+
+The maximal inequality and geometric peeling give source Lemma 9.3's
+15*delta/gap^2 tail. Integrating the optimism deficit contributes at most
+16*sqrt(nk); the small-gap branch contributes 8*sqrt(nk); sharp large-gap
+occupancy contributes 15*sqrt(nk)+sum_a Delta_a. Initialization requires
+T_a<=1+kappa_a, not the source prose's uncorrected T_a<=kappa_a. Removing
+the loose additive one in the fixed-log expectation estimate compensates
+exactly: the final bound still has only one sum of gaps.
+
+Independent raw reward tables generate the concrete adaptive execution.
+Consumed-prefix invariance and unused-coordinate independence prove the
+actual successor reward conditional law. Induction identifies its finite
+history pushforward with the canonical law of the same MOSS policy and arm
+kernel. Pathwise and integral transport then give
+R_n(MOSS,nu)<=39*sqrt(nk)+sum_a Delta_a.
+
+For the broad class with every gap in [0,1], sum gaps<=k<=sqrt(nk).
+The unit-Gaussian [0,1]-mean class embeds with definitionally equal regret.
+For k>1 and n>=k, the compiled sandwich is
+sqrt(nk)/54 <= R_n^*(E) <= R_n(MOSS,E) <= 40*sqrt(nk),
+and hence R_n(MOSS,E)<=2160*R_n^*(E). This is the main-prose constant-factor
+claim, not an optimal constant or an anytime MOSS theorem.
+
+Exact additional declaration names (under `BanditRLProof`):
+
+- `MOSS.integral_optimismDeficit_le_two_sqrt`
+- `MOSS.twice_horizon_mul_integral_optimismDeficit_le`
+- `MOSS.largeGap_scaled_constant_fifteen`
+- `MOSS.integral_indexExceedanceCount_le_sharp`
+- `MOSS.streamTrace_pullCount_le`
+- `MOSS.streamTrace_realMeanRegret_le`
+- `MOSS.integral_streamTrace_regret_le`
+- `MOSS.integral_canonicalReward_regret_le`
+- `MOSS.canonicalReward_action_eq_raw`
+- `MOSS.canonicalHistory_eq_of_eq_consumed`
+- `MOSS.map_condition_reward_eq_compProd`
+- `MOSS.canonicalReward_condDistrib`
+- `MOSS.canonical_historySequence`
+- `MOSS.map_canonicalHistory_eq`
+- `finiteHistoryPullCountENNReal_trace`
+- `MOSS.canonicalHistory_gapRegret_toReal`
+- `MOSS.canonicalGapExpectedRegret_eq_integral`
+- `MOSS.canonicalGapExpectedRegret_le`
+- `LowerBounds.UnitSubgaussianBanditEnvironment`
+- `LowerBounds.UnitGaussianBanditEnvironment.toSubgaussian`
+- `LowerBounds.subgaussianExpectedPseudoRegret_gaussian`
+- `LowerBounds.unitGaussianMinimax_le_subgaussianMinimax`
+- `LowerBounds.moss_subgaussianExpectedPseudoRegret_le`
+- `LowerBounds.subgaussianMinimax_sandwich`
+- `LowerBounds.moss_nearMinimax`
 
 - Compiled: both printed Mills-ratio bounds in Eq. (13.4) and their exact
   Eq. (13.1) rescaling. Public endpoints are
@@ -149,8 +204,8 @@ remain required.
   single-turning-point error comparison for the upper integral; Gaussian
   density standardization and square-root rescaling for the probability.
   These are independent of the weaker Chernoff companion.
-- Required connected claim: compile the MOSS/Algorithm 7 upper theorem on the
-  stated finite-arm 1-subgaussian class before claiming the main-prose
-  constant-factor near-minimax consequence.
+- The broader-class connected claim is compiled. Remaining gates are the
+  current full harness, export/site verification, structured review, PR,
+  authoritative-main Actions, Pages deployment and live-page checks.
 - Optional: Notes 13.2 and Exercises 13.1--13.2 are not formalized and do not
   block the frozen whole-main-text contract.
