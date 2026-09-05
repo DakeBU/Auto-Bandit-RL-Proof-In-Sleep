@@ -41,3 +41,18 @@ paper-notes/problem-exports/<task-id>/latest.md
 5. Concentration or posterior argument.
 6. Final bound.
 7. Lean declaration list.
+
+## Current Chapter 16 export
+
+The synchronized Chapter 16 export is under
+`paper-notes/problem-exports/TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE/`.
+It records the compiled finite-mean source producer and exact Theorems 16.2,
+16.4 and Lemma 16.3. Theorem 16.2 uses exact n-pull horizons, extended-real
+inverse-infimum aggregation, and finite-count Fatou. Its consistency premise
+is not replaced by assumed intermediate liminf conclusions.
+
+Use the paper title exactly as follows when regenerating this export:
+
+```text
+ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory
+```

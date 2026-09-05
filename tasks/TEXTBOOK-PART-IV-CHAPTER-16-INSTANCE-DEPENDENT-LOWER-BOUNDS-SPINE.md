@@ -13,12 +13,18 @@ Harness: `hierarchical`
 Formalize the source-faithful instance-dependent lower-bound route in
 Lattimore--Szepesvári, *Bandit Algorithms* (2020), Chapter 16. The exact
 terminals are Definition 16.1, Theorem 16.2, Lemma 16.3, and Theorem 16.4.
-The compiled first slice freezes the consistency quantifiers, the extended-real
+The compiled spine freezes the consistency quantifiers, the extended-real
 `d_inf` interface, the exact unit-Gaussian Table 16.1 formula, and the
 subpolynomial log-growth step. It also compiles the same-policy one-arm
-history-KL specialization, the measurable majority event, its
-Bretagnolle--Huber information inequality, and the finite-KL scalar
-logarithmic assembly. It must not be reported as any blocked source terminal.
+history-KL specialization, the finite arm-law mean-to-gap producer, exact
+Lemma 16.3, and exact finite-time Gaussian Theorem 16.4. Theorem 16.2 also compiles, including every extended-real information branch
+and finite-count Fatou aggregation.
+
+2026-09-05 verified progress: the near-infimum law selector, complete infinite
+infimum characterization, finite-mean single-arm replacement, product-class
+closure, and `exists_confusingEnvironment_lt` now compile and pass the
+Chapter 16 canary with only the standard axiom set. The exact per-arm and regret terminals now also compile and pass the canary.
+The final gate and delivery audit remains in progress.
 
 ## Source
 
@@ -141,20 +147,29 @@ LowerBounds.oneArmMajority_compl_forces_gapPseudoRegret
 LowerBounds.oneArmMajority_probability_charge_le_expectedPseudoRegret
 LowerBounds.oneArmMajority_compl_probability_charge_le_expectedPseudoRegret
 LowerBounds.expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed
+LowerBounds.FiniteMeanBanditEnvironment
+LowerBounds.FiniteMeanBanditEnvironment.gap
+LowerBounds.FiniteMeanBanditEnvironment.mean_eq_of_armLaw_eq
+LowerBounds.oneArmMeanChange_produces_gap_contract
+LowerBounds.oneArmMeanIncrease_sub_gap_eq_changedMargin
+LowerBounds.UnitVarianceGaussianBanditEnvironment
+LowerBounds.chapter16GaussianChangedEnvironment
+LowerBounds.chapter16GaussianChangedEnvironment_armKL
+LowerBounds.canonicalGapExpectedPseudoRegretReal_eq_sum_expectedPulls
+LowerBounds.expectedPullCount_ge_log_regret_changeOfMeasure
+LowerBounds.gaussianExpectedPullCount_ge_finiteTimeInstanceDependent
+LowerBounds.gaussianExpectedRegret_ge_finiteTimeInstanceDependent
 ```
 
-Reserved source terminals, with no declaration claimed:
+Compiled asymptotic source terminals:
 
 ```lean
 LowerBounds.consistentPolicy_liminf_expectedPull_div_log_ge_inv_dInf
 LowerBounds.consistentPolicy_liminf_expectedRegret_div_log_ge
-LowerBounds.expectedPullCount_ge_log_regret_changeOfMeasure
-LowerBounds.gaussianExpectedRegret_ge_finiteTimeInstanceDependent
 ```
 
-The chapter stays `partial`. The compiled declarations are definitions and
-general dependency leaves; they are not Theorem 16.2, Lemma 16.3, or Theorem
-16.4.
+All four main-text items are compiled, including both Theorem 16.2
+declarations above. Current full repository and delivery gates remain separate.
 
 ## Exact regularity contract
 
@@ -182,22 +197,21 @@ general dependency leaves; they are not Theorem 16.2, Lemma 16.3, or Theorem
 - Theorem 16.4 uses unit-variance Gaussian arms, a nonempty horizon set,
   `C>0`, `p in (0,1)`, `epsilon in (0,1]`, and the positive part in Eq. (16.5).
 
-## Current semantic blocker
+## Current compiled semantic route
 
-The compiled layer now instantiates Lemma 15.1 for a same randomized policy
-and two stationary environments that differ at only one arm. It also freezes
-the exact majority event, applies Bretagnolle--Huber, evaluates the finite KL
-scale, and proves the scalar logarithmic rearrangement used in Eq. (16.4).
+The finite-mean product-environment layer now ties every arm mean to its
+Bochner integral, proves unchanged arm laws have unchanged means, and produces
+the exact original gap, changed optimality margin, and alternative-gap
+comparison. This closes Lemma 16.3, including finite and infinite KL branches.
+The unrestricted unit-variance Gaussian layer then performs the
+`(1+epsilon) Delta_i` shift, proves local-class membership and exact arm KL,
+normalizes the published logarithm, takes positive parts, and sums the per-arm
+bounds to close Theorem 16.4.
 
-The canonical gap-vector layer now supplies both pathwise majority-event
-charges, integrates them under the original and changed history laws, and
-feeds the exact factor-one-quarter logarithmic consumer. The remaining Lemma
-16.3 bridge is source-semantic: a finite-mean stochastic environment must
-identify those explicit gap vectors with arm-law integral means and certified
-optimal arms. Theorem 16.2 additionally needs the zero/finite/infinite `d_inf`
-branches and final `liminf` extraction; Theorem 16.4 inherits the unresolved
-source-environment Lemma 16.3 consumer. These are explicit proof obligations,
-not reasons to weaken the source bandit semantics.
+Theorem 16.2 now constructs class-preserving alternatives, applies consistency
+at exact n-pull horizons, and aggregates costs with `ENNReal.inv_sInf`.
+Empty, zero, finite, and infinite information branches retain their meanings.
+Finite-count Fatou assembles the regret sum in the required direction.
 
 ## Compiled event-to-regret implementation contract
 
@@ -218,10 +232,10 @@ and randomized history policy. The two pathwise and integrated producers are:
 expected-pull interface are the local APIs. The proofs expose gap
 nonnegativity, positive original gap, positive changed margin, the same history
 event, and the exact inclusive horizon. The combined theorem
-`expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed` then discharges
-the finite-positive-KL scalar route with the exact factor `1/4`. A later
-source-environment bridge must still identify these gap vectors with finite
-arm-law means before the reserved Lemma 16.3 terminal can compile.
+`expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed` discharges the
+finite-positive-KL scalar route with the exact factor `1/4`; the compiled
+finite-mean source bridge upgrades it to Lemma 16.3, and the Gaussian consumer
+upgrades that terminal to Theorem 16.4.
 
 ## Proof obligations
 
@@ -244,10 +258,11 @@ arm-law means before the reserved Lemma 16.3 terminal can compile.
 - [x] Canonical gap-times-pull-count expected pseudo-regret, both exact
   majority-event charges, and the finite-positive-KL factor-`1/4` conditional
   logarithmic consumer compile.
-- [ ] Finite arm-law integral means and certified optima are identified with
+- [x] Finite arm-law integral means and certified optima are identified with
   the compiled original/changed gap vectors.
 - [ ] Theorem 16.2's per-arm and regret `liminf` terminals compile.
-- [ ] Lemma 16.3 and Theorem 16.4 compile.
+- [x] Lemma 16.3 and Theorem 16.4 compile with their exact source constants,
+  local-class quantifiers, horizon set, and positive-part placement.
 - [x] The focused Chapter 16 canary compiles the new gap-event/regret slice and
   representative axiom reports use only the baseline logical axioms.
 - [x] The current fifteen-declaration extension passes refreshed root imports,
@@ -261,10 +276,10 @@ arm-law means before the reserved Lemma 16.3 terminal can compile.
   authoritative-main Actions run `32554151109`, Pages deployment, and live
   checks at merge `08c1470`.
 
-## Remote verification evidence
+## Historical remote verification evidence
 
-The current fifteen-declaration extension is remotely verified without
-promoting the blocked source terminals.
+The earlier fifteen-declaration extension was remotely verified with its
+then-blocked source terminals. This history is not evidence for the new PR.
 
 - PR #40 passed `Lean and documentation / build` in run `32553086838` and the
   result-free lifecycle probe in run `32553086905`; it was merged through the
@@ -337,9 +352,9 @@ remains `partial`, and all three source terminals retain their blocked status.
 | Gaussian exact `d_inf` | preceding candidate plus lower bound and limit/infimum approximation | squeeze positive perturbations to the strict boundary | original mean below target; extended-real conversion | compiled project-local |
 | history information constraint | compiled Chapter 15 history law and Chapter 14 BH | specialize Lemma 15.1 to one changed arm and the exact majority event | same stochastic policy; first-law expectation | compiled project-local |
 | event-to-regret producers | canonical finite-history law and gap-times-pull-count pseudo-regret | bound the original and changed majority-event errors by exact charges and apply the factor-`1/4` logarithmic consumer | nonnegative gap vectors, positive original gap and changed margin, source horizon convention | compiled project-local conditional interface |
-| source mean-to-gap bridge | finite arm-law integral means and certified optima | identify the canonical gap vectors with the source environments' actual mean gaps | finite means; original/changed optimal-arm certificates | open source-semantic bridge |
-| asymptotic terminal | finite-time information inequality plus consistency log leaf | divide by log horizon and take liminf | positive gap/information; zero/infinite branches | blocked source terminal |
-| finite-time Gaussian terminal | Lemma 16.3, Gaussian KL, regret decomposition | choose mean shift `Delta_i(1+epsilon)`, sum positive parts | exact local class and horizon quantifiers | blocked source terminal |
+| source mean-to-gap bridge | finite arm-law integral means and certified optima | identify the canonical gap vectors with the source environments' actual mean gaps | finite means; original/changed optimal-arm certificates | compiled project-local |
+| asymptotic terminal | finite-time information inequality plus consistency log leaf | divide by log horizon and take liminf | positive gap/information; zero/infinite branches | compiled source terminal |
+| finite-time Gaussian terminal | Lemma 16.3, Gaussian KL, regret decomposition | choose mean shift `Delta_i(1+epsilon)`, sum positive parts | exact local class and horizon quantifiers | compiled source terminal |
 
 ## Retrieval cards
 
@@ -363,9 +378,8 @@ remains `partial`, and all three source terminals retain their blocked status.
 - A generic `Tendsto` or `sInf` leaf is not a bandit lower-bound terminal.
 - The exact Gaussian `d_inf` row is a parametric distribution-level theorem,
   not Theorem 16.2's full bandit `liminf` conclusion.
-- The one-arm history/event information inequality and scalar rearrangement do
-  not supply the two expected-pseudo-regret event bounds required for Lemma
-  16.3 and therefore do not prove Theorem 16.2.
+- Lemma 16.3 and Theorem 16.4 do not by themselves supply Theorem 16.2's
+  near-infimum alternatives or extended-real `liminf` branches.
 - Theorem cards and source prose remain route evidence only.
 - If the terminals remain blocked, preserve their exact contracts and publish
   only compiled reusable leaves plus the blockers. Do not restrict the policy

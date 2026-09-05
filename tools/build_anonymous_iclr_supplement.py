@@ -619,6 +619,11 @@ SGB_THEOREM_TWO_TERMINAL_DECLARATION = (
 CH16_COMPILED_ID = "TEXTBOOK-PART-IV-CH16-CONSISTENCY-DINF-DEPENDENCY-SLICE"
 CH16_EVENT_REGRET_ID = "TEXTBOOK-PART-IV-CH16-EVENT-REGRET-PRODUCERS"
 CH16_TERMINAL_ID = "TEXTBOOK-PART-IV-CH16-SOURCE-TERMINALS"
+CH16_FINITE_TIME_TERMINALS = {
+    "BanditRLProof.LowerBounds.consistentPolicy_liminf_expectedRegret_div_log_ge",
+    "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_changeOfMeasure",
+    "BanditRLProof.LowerBounds.gaussianExpectedRegret_ge_finiteTimeInstanceDependent",
+}
 CH16_COMPILED_DECLARATIONS = frozenset({
     "BanditRLProof.LowerBounds.IsConsistentRegret",
     "BanditRLProof.LowerBounds.IsConsistentPolicyOver",
@@ -2847,15 +2852,22 @@ def validate_ch16_boundary(records):
             "Chapter 16 event-regret slice must remain compiled with exactly "
             "the frozen 15 unique declarations"
         )
-    if terminal["status"] != "blocked" or terminal["declarations"]:
+    if (
+        terminal["status"] != "compiled"
+        or len(terminal["declarations"]) != len(CH16_FINITE_TIME_TERMINALS)
+        or set(terminal["declarations"]) != CH16_FINITE_TIME_TERMINALS
+        or terminal.get("missing") != []
+        or "BanditRLProof.LowerBounds.oneArmMeanChange_produces_gap_contract"
+        not in terminal.get("depends_on", [])
+    ):
         raise ValueError(
-            "Chapter 16 source terminals must remain blocked and declaration-free"
+            "Chapter 16 must retain exactly three compiled source terminals with no missing obligations"
         )
     return {
         "dependency_declaration_count": len(compiled_names),
         "event_regret_declaration_count": len(event_regret_names),
-        "finite_mean_gap_bridge_verified": False,
-        "source_terminals_verified": False,
+        "finite_mean_gap_bridge_verified": True,
+        "source_terminals_verified": True,
     }
 
 
@@ -3202,7 +3214,7 @@ def build_claim_ledger(proof_report):
         "textbook_chapter_16": {
             "compiled_source_record_id": CH16_COMPILED_ID,
             "compiled_event_regret_record_id": CH16_EVENT_REGRET_ID,
-            "blocked_terminal_record_id": CH16_TERMINAL_ID,
+            "compiled_terminal_record_id": CH16_TERMINAL_ID,
             "dependency_declaration_count":
                 ch16_evidence["dependency_declaration_count"],
             "event_regret_declaration_count":

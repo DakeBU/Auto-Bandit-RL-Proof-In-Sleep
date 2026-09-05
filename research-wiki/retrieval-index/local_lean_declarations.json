@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T15:38:44+00:00",
+  "generated": "2026-09-05T16:26:20+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -31678,7 +31678,7 @@
       "name": "IsConsistentRegret",
       "full_name": "BanditRLProof.LowerBounds.IsConsistentRegret",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 38,
+      "line": 37,
       "statement": "def IsConsistentRegret (regret : Nat -> Real) : Prop"
     },
     {
@@ -31686,15 +31686,295 @@
       "name": "IsConsistentPolicyOver",
       "full_name": "BanditRLProof.LowerBounds.IsConsistentPolicyOver",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 45,
+      "line": 44,
       "statement": "def IsConsistentPolicyOver {Policy Environment : Type*} (environmentClass : Set Environment) (regret : Policy -> Environment -> Nat -> Real) (policy : Policy) : Prop"
+    },
+    {
+      "kind": "structure",
+      "name": "FiniteMeanBanditEnvironment",
+      "full_name": "BanditRLProof.LowerBounds.FiniteMeanBanditEnvironment",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 56,
+      "statement": "structure FiniteMeanBanditEnvironment (K : Nat) where"
+    },
+    {
+      "kind": "def",
+      "name": "FiniteMeanBanditEnvironment.gap",
+      "full_name": "BanditRLProof.LowerBounds.FiniteMeanBanditEnvironment.gap",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 71,
+      "statement": "def FiniteMeanBanditEnvironment.gap {K : Nat} (environment : FiniteMeanBanditEnvironment K) (arm : Fin K) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "FiniteMeanBanditEnvironment.gap_nonneg",
+      "full_name": "BanditRLProof.LowerBounds.FiniteMeanBanditEnvironment.gap_nonneg",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 76,
+      "statement": "theorem FiniteMeanBanditEnvironment.gap_nonneg {K : Nat} (environment : FiniteMeanBanditEnvironment K) (arm : Fin K) : 0 <= environment.gap arm"
+    },
+    {
+      "kind": "theorem",
+      "name": "FiniteMeanBanditEnvironment.gap_bestArm",
+      "full_name": "BanditRLProof.LowerBounds.FiniteMeanBanditEnvironment.gap_bestArm",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 83,
+      "statement": "theorem FiniteMeanBanditEnvironment.gap_bestArm {K : Nat} (environment : FiniteMeanBanditEnvironment K) : environment.gap environment.bestArm = 0"
+    },
+    {
+      "kind": "def",
+      "name": "oneArmMeanIncrease",
+      "full_name": "BanditRLProof.LowerBounds.oneArmMeanIncrease",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 89,
+      "statement": "def oneArmMeanIncrease {K : Nat} (original reference : FiniteMeanBanditEnvironment K) (changedArm : Fin K) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "oneArmChangedMargin",
+      "full_name": "BanditRLProof.LowerBounds.oneArmChangedMargin",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 96,
+      "statement": "def oneArmChangedMargin {K : Nat} (original reference : FiniteMeanBanditEnvironment K) (changedArm : Fin K) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "FiniteMeanBanditEnvironment.mean_eq_of_armLaw_eq",
+      "full_name": "BanditRLProof.LowerBounds.FiniteMeanBanditEnvironment.mean_eq_of_armLaw_eq",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 102,
+      "statement": "theorem FiniteMeanBanditEnvironment.mean_eq_of_armLaw_eq {K : Nat} (first second : FiniteMeanBanditEnvironment K) (arm : Fin K) (hlaw : first.armLaw arm = second.armLaw arm) : first.mean arm = second.mean arm"
+    },
+    {
+      "kind": "def",
+      "name": "FiniteMeanBanditEnvironment.InUnstructuredClass",
+      "full_name": "BanditRLProof.LowerBounds.FiniteMeanBanditEnvironment.InUnstructuredClass",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 110,
+      "statement": "def FiniteMeanBanditEnvironment.InUnstructuredClass {K : Nat} (environment : FiniteMeanBanditEnvironment K) (componentClass : Fin K \u2192 Set (Measure Real)) : Prop"
+    },
+    {
+      "kind": "def",
+      "name": "FiniteMeanBanditEnvironment.withImprovedArm",
+      "full_name": "BanditRLProof.LowerBounds.FiniteMeanBanditEnvironment.withImprovedArm",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 117,
+      "statement": "def FiniteMeanBanditEnvironment.withImprovedArm {K : Nat} (environment : FiniteMeanBanditEnvironment K) (changedArm : Fin K) (alternative : Measure Real) [IsProbabilityMeasure alternative] (hintegrable : Integrable id alternative) (hbetter : environment.mean environment.bestArm < \u222b x, x \u2202alternative) : FiniteMeanBanditEnvironment K where"
+    },
+    {
+      "kind": "theorem",
+      "name": "FiniteMeanBanditEnvironment.withImprovedArm_law",
+      "full_name": "BanditRLProof.LowerBounds.FiniteMeanBanditEnvironment.withImprovedArm_law",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 154,
+      "statement": "theorem FiniteMeanBanditEnvironment.withImprovedArm_law {K : Nat} (environment : FiniteMeanBanditEnvironment K) (changedArm : Fin K) (alternative : Measure Real) [IsProbabilityMeasure alternative] (hi : Integrable id alternative) (hb : environment.mean environment.bestArm < \u222b x, x \u2202alternative) (arm : Fin K) : (environment.withImprovedArm changedArm alternative hi hb).armLaw arm = if arm = changedArm then alternative else environment.armLaw arm"
+    },
+    {
+      "kind": "theorem",
+      "name": "FiniteMeanBanditEnvironment.withImprovedArm_unique",
+      "full_name": "BanditRLProof.LowerBounds.FiniteMeanBanditEnvironment.withImprovedArm_unique",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 164,
+      "statement": "theorem FiniteMeanBanditEnvironment.withImprovedArm_unique {K : Nat} (environment : FiniteMeanBanditEnvironment K) (changedArm : Fin K) (alternative : Measure Real) [IsProbabilityMeasure alternative] (hi : Integrable id alternative) (hb : environment.mean environment.bestArm < \u222b x, x \u2202alternative) (arm : Fin K) (hne : arm \u2260 changedArm) : (environment.withImprovedArm changedArm alternative hi hb).mean arm < (environment.withImprovedArm changedArm alternative hi hb).mean changedArm"
+    },
+    {
+      "kind": "theorem",
+      "name": "FiniteMeanBanditEnvironment.withImprovedArm_mem",
+      "full_name": "BanditRLProof.LowerBounds.FiniteMeanBanditEnvironment.withImprovedArm_mem",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 177,
+      "statement": "theorem FiniteMeanBanditEnvironment.withImprovedArm_mem {K : Nat} (environment : FiniteMeanBanditEnvironment K) (componentClass : Fin K \u2192 Set (Measure Real)) (hclass : environment.InUnstructuredClass componentClass) (changedArm : Fin K) (alternative : Measure Real) [IsProbabilityMeasure alternative] (hi : Integrable id alternative) (hb : environment.mean environment.bestArm < \u222b x, x \u2202alternative) (halt : alternative \u2208 componentClass changedArm) : (environment.withImprovedArm changedArm alternative hi hb).InUnstructuredClass componentClass"
+    },
+    {
+      "kind": "theorem",
+      "name": "oneArmMeanIncrease_sub_gap_eq_changedMargin",
+      "full_name": "BanditRLProof.LowerBounds.oneArmMeanIncrease_sub_gap_eq_changedMargin",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 195,
+      "statement": "theorem oneArmMeanIncrease_sub_gap_eq_changedMargin {K : Nat} (original reference : FiniteMeanBanditEnvironment K) (changedArm : Fin K) : oneArmMeanIncrease original reference changedArm - original.gap changedArm = oneArmChangedMargin original reference changedArm"
+    },
+    {
+      "kind": "theorem",
+      "name": "oneArmMeanChange_produces_gap_contract",
+      "full_name": "BanditRLProof.LowerBounds.oneArmMeanChange_produces_gap_contract",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 209,
+      "statement": "theorem oneArmMeanChange_produces_gap_contract {K : Nat} (original reference : FiniteMeanBanditEnvironment K) (changedArm : Fin K) (hsuboptimal : original.mean changedArm < original.mean original.bestArm) (hunique : forall arm, arm \u2260 changedArm -> reference.mean arm < reference.mean changedArm) (hsame : forall arm, arm \u2260 changedArm -> original.armLaw arm = reference.armLaw arm) : 0 < original.gap changedArm /\\ 0 < oneArmChangedMargin original reference changedArm /\\ (forall arm, arm \u2260 changedArm -> oneArmChangedMargin original reference changedArm <= reference.gap arm)"
+    },
+    {
+      "kind": "structure",
+      "name": "UnitVarianceGaussianBanditEnvironment",
+      "full_name": "BanditRLProof.LowerBounds.UnitVarianceGaussianBanditEnvironment",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 253,
+      "statement": "structure UnitVarianceGaussianBanditEnvironment (K : Nat) where"
+    },
+    {
+      "kind": "def",
+      "name": "UnitVarianceGaussianBanditEnvironment.gap",
+      "full_name": "BanditRLProof.LowerBounds.UnitVarianceGaussianBanditEnvironment.gap",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 258,
+      "statement": "def UnitVarianceGaussianBanditEnvironment.gap {K : Nat} (environment : UnitVarianceGaussianBanditEnvironment K) (arm : Fin K) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "UnitVarianceGaussianBanditEnvironment.gap_nonneg",
+      "full_name": "BanditRLProof.LowerBounds.UnitVarianceGaussianBanditEnvironment.gap_nonneg",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 263,
+      "statement": "theorem UnitVarianceGaussianBanditEnvironment.gap_nonneg {K : Nat} (environment : UnitVarianceGaussianBanditEnvironment K) (arm : Fin K) : 0 <= environment.gap arm"
+    },
+    {
+      "kind": "def",
+      "name": "UnitVarianceGaussianBanditEnvironment.toFiniteMean",
+      "full_name": "BanditRLProof.LowerBounds.UnitVarianceGaussianBanditEnvironment.toFiniteMean",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 271,
+      "statement": "noncomputable def UnitVarianceGaussianBanditEnvironment.toFiniteMean {K : Nat} (environment : UnitVarianceGaussianBanditEnvironment K) : FiniteMeanBanditEnvironment K where"
+    },
+    {
+      "kind": "theorem",
+      "name": "UnitVarianceGaussianBanditEnvironment.toFiniteMean_mean",
+      "full_name": "BanditRLProof.LowerBounds.UnitVarianceGaussianBanditEnvironment.toFiniteMean_mean",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 289,
+      "statement": "theorem UnitVarianceGaussianBanditEnvironment.toFiniteMean_mean {K : Nat} (environment : UnitVarianceGaussianBanditEnvironment K) : environment.toFiniteMean.mean = environment.mean"
+    },
+    {
+      "kind": "theorem",
+      "name": "UnitVarianceGaussianBanditEnvironment.toFiniteMean_gap",
+      "full_name": "BanditRLProof.LowerBounds.UnitVarianceGaussianBanditEnvironment.toFiniteMean_gap",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 294,
+      "statement": "theorem UnitVarianceGaussianBanditEnvironment.toFiniteMean_gap {K : Nat} (environment : UnitVarianceGaussianBanditEnvironment K) : environment.toFiniteMean.gap = environment.gap"
+    },
+    {
+      "kind": "def",
+      "name": "chapter16GaussianChangedMean",
+      "full_name": "BanditRLProof.LowerBounds.chapter16GaussianChangedMean",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 300,
+      "statement": "def chapter16GaussianChangedMean {K : Nat} (environment : UnitVarianceGaussianBanditEnvironment K) (changedArm : Fin K) (epsilon : Real) (arm : Fin K) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "chapter16GaussianChangedMean_changed",
+      "full_name": "BanditRLProof.LowerBounds.chapter16GaussianChangedMean_changed",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 309,
+      "statement": "theorem chapter16GaussianChangedMean_changed {K : Nat} (environment : UnitVarianceGaussianBanditEnvironment K) (changedArm : Fin K) (epsilon : Real) : chapter16GaussianChangedMean environment changedArm epsilon changedArm = environment.mean changedArm + (1 + epsilon) * environment.gap changedArm"
+    },
+    {
+      "kind": "theorem",
+      "name": "chapter16GaussianChangedMean_other",
+      "full_name": "BanditRLProof.LowerBounds.chapter16GaussianChangedMean_other",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 317,
+      "statement": "theorem chapter16GaussianChangedMean_other {K : Nat} (environment : UnitVarianceGaussianBanditEnvironment K) (changedArm : Fin K) (epsilon : Real) (arm : Fin K) (harm : arm \u2260 changedArm) : chapter16GaussianChangedMean environment changedArm epsilon arm = environment.mean arm"
+    },
+    {
+      "kind": "theorem",
+      "name": "chapter16GaussianChangedMean_uniqueBest",
+      "full_name": "BanditRLProof.LowerBounds.chapter16GaussianChangedMean_uniqueBest",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 327,
+      "statement": "theorem chapter16GaussianChangedMean_uniqueBest {K : Nat} (environment : UnitVarianceGaussianBanditEnvironment K) (changedArm : Fin K) (epsilon : Real) (hgap : 0 < environment.gap changedArm) (hepsilon : 0 < epsilon) : forall arm, arm \u2260 changedArm -> chapter16GaussianChangedMean environment changedArm epsilon arm < chapter16GaussianChangedMean environment changedArm epsilon changedArm"
+    },
+    {
+      "kind": "def",
+      "name": "chapter16GaussianChangedEnvironment",
+      "full_name": "BanditRLProof.LowerBounds.chapter16GaussianChangedEnvironment",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 343,
+      "statement": "noncomputable def chapter16GaussianChangedEnvironment {K : Nat} (environment : UnitVarianceGaussianBanditEnvironment K) (changedArm : Fin K) (epsilon : Real) (hgap : 0 < environment.gap changedArm) (hepsilon : 0 < epsilon) : UnitVarianceGaussianBanditEnvironment K where"
+    },
+    {
+      "kind": "theorem",
+      "name": "chapter16GaussianChangedMean_mem_localBox",
+      "full_name": "BanditRLProof.LowerBounds.chapter16GaussianChangedMean_mem_localBox",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 360,
+      "statement": "theorem chapter16GaussianChangedMean_mem_localBox {K : Nat} (environment : UnitVarianceGaussianBanditEnvironment K) (changedArm : Fin K) (epsilon : Real) (hgap : 0 < environment.gap changedArm) (hepsilon : 0 < epsilon) (hepsilon_one : epsilon <= 1) : forall arm, chapter16GaussianChangedMean environment changedArm epsilon arm \u2208 Set.Icc (environment.mean arm) (environment.mean arm + 2 * environment.gap arm)"
+    },
+    {
+      "kind": "theorem",
+      "name": "chapter16GaussianChangedEnvironment_uniqueBest",
+      "full_name": "BanditRLProof.LowerBounds.chapter16GaussianChangedEnvironment_uniqueBest",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 379,
+      "statement": "theorem chapter16GaussianChangedEnvironment_uniqueBest {K : Nat} (environment : UnitVarianceGaussianBanditEnvironment K) (changedArm : Fin K) (epsilon : Real) (hgap : 0 < environment.gap changedArm) (hepsilon : 0 < epsilon) : forall arm, arm \u2260 changedArm -> (chapter16GaussianChangedEnvironment environment changedArm epsilon hgap hepsilon).mean arm < (chapter16GaussianChangedEnvironment environment changedArm epsilon hgap hepsilon).mean changedArm"
+    },
+    {
+      "kind": "theorem",
+      "name": "chapter16GaussianChangedEnvironment_sameArmLaw",
+      "full_name": "BanditRLProof.LowerBounds.chapter16GaussianChangedEnvironment_sameArmLaw",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 392,
+      "statement": "theorem chapter16GaussianChangedEnvironment_sameArmLaw {K : Nat} (environment : UnitVarianceGaussianBanditEnvironment K) (changedArm : Fin K) (epsilon : Real) (hgap : 0 < environment.gap changedArm) (hepsilon : 0 < epsilon) : forall arm, arm \u2260 changedArm -> environment.toFiniteMean.armLaw arm = (chapter16GaussianChangedEnvironment environment changedArm epsilon hgap hepsilon).toFiniteMean.armLaw arm"
+    },
+    {
+      "kind": "theorem",
+      "name": "chapter16GaussianChangedEnvironment_meanIncrease",
+      "full_name": "BanditRLProof.LowerBounds.chapter16GaussianChangedEnvironment_meanIncrease",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 409,
+      "statement": "theorem chapter16GaussianChangedEnvironment_meanIncrease {K : Nat} (environment : UnitVarianceGaussianBanditEnvironment K) (changedArm : Fin K) (epsilon : Real) (hgap : 0 < environment.gap changedArm) (hepsilon : 0 < epsilon) : oneArmMeanIncrease environment.toFiniteMean (chapter16GaussianChangedEnvironment environment changedArm epsilon hgap hepsilon).toFiniteMean changedArm = (1 + epsilon) * environment.gap changedArm"
+    },
+    {
+      "kind": "theorem",
+      "name": "chapter16GaussianChangedEnvironment_changedMargin",
+      "full_name": "BanditRLProof.LowerBounds.chapter16GaussianChangedEnvironment_changedMargin",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 421,
+      "statement": "theorem chapter16GaussianChangedEnvironment_changedMargin {K : Nat} (environment : UnitVarianceGaussianBanditEnvironment K) (changedArm : Fin K) (epsilon : Real) (hgap : 0 < environment.gap changedArm) (hepsilon : 0 < epsilon) : oneArmChangedMargin environment.toFiniteMean (chapter16GaussianChangedEnvironment environment changedArm epsilon hgap hepsilon).toFiniteMean changedArm = epsilon * environment.gap changedArm"
+    },
+    {
+      "kind": "theorem",
+      "name": "chapter16GaussianChangedEnvironment_armKL",
+      "full_name": "BanditRLProof.LowerBounds.chapter16GaussianChangedEnvironment_armKL",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 436,
+      "statement": "theorem chapter16GaussianChangedEnvironment_armKL {K : Nat} (environment : UnitVarianceGaussianBanditEnvironment K) (changedArm : Fin K) (epsilon : Real) (hgap : 0 < environment.gap changedArm) (hepsilon : 0 < epsilon) : InformationTheory.klDiv (environment.toFiniteMean.armLaw changedArm) ((chapter16GaussianChangedEnvironment environment changedArm epsilon hgap hepsilon).toFiniteMean.armLaw changedArm) = ENNReal.ofReal (((1 + epsilon) * environment.gap changedArm) ^ 2 / 2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "chapter16GaussianChangedEnvironment_armKL_toReal",
+      "full_name": "BanditRLProof.LowerBounds.chapter16GaussianChangedEnvironment_armKL_toReal",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 453,
+      "statement": "theorem chapter16GaussianChangedEnvironment_armKL_toReal {K : Nat} (environment : UnitVarianceGaussianBanditEnvironment K) (changedArm : Fin K) (epsilon : Real) (hgap : 0 < environment.gap changedArm) (hepsilon : 0 < epsilon) : (InformationTheory.klDiv (environment.toFiniteMean.armLaw changedArm) ((chapter16GaussianChangedEnvironment environment changedArm epsilon hgap hepsilon).toFiniteMean.armLaw changedArm)).toReal = ((1 + epsilon) * environment.gap changedArm) ^ 2 / 2"
+    },
+    {
+      "kind": "def",
+      "name": "InChapter16GaussianLocalClass",
+      "full_name": "BanditRLProof.LowerBounds.InChapter16GaussianLocalClass",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 468,
+      "statement": "def InChapter16GaussianLocalClass {K : Nat} (base candidate : UnitVarianceGaussianBanditEnvironment K) : Prop"
+    },
+    {
+      "kind": "theorem",
+      "name": "inChapter16GaussianLocalClass_self",
+      "full_name": "BanditRLProof.LowerBounds.inChapter16GaussianLocalClass_self",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 473,
+      "statement": "theorem inChapter16GaussianLocalClass_self {K : Nat} (environment : UnitVarianceGaussianBanditEnvironment K) : InChapter16GaussianLocalClass environment environment"
+    },
+    {
+      "kind": "theorem",
+      "name": "inChapter16GaussianLocalClass_changed",
+      "full_name": "BanditRLProof.LowerBounds.inChapter16GaussianLocalClass_changed",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 481,
+      "statement": "theorem inChapter16GaussianLocalClass_changed {K : Nat} (environment : UnitVarianceGaussianBanditEnvironment K) (changedArm : Fin K) (epsilon : Real) (hgap : 0 < environment.gap changedArm) (hepsilon : 0 < epsilon) (hepsilon_one : epsilon <= 1) : InChapter16GaussianLocalClass environment (chapter16GaussianChangedEnvironment environment changedArm epsilon hgap hepsilon)"
     },
     {
       "kind": "theorem",
       "name": "IsConsistentRegret.add",
       "full_name": "BanditRLProof.LowerBounds.IsConsistentRegret.add",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 56,
+      "line": 495,
       "statement": "theorem IsConsistentRegret.add {first second : Nat -> Real} (hfirst : IsConsistentRegret first) (hsecond : IsConsistentRegret second) : IsConsistentRegret (fun n => first n + second n)"
     },
     {
@@ -31702,7 +31982,7 @@
       "name": "IsConsistentRegret.eventually_add_le_rpow",
       "full_name": "BanditRLProof.LowerBounds.IsConsistentRegret.eventually_add_le_rpow",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 67,
+      "line": 506,
       "statement": "theorem IsConsistentRegret.eventually_add_le_rpow {first second : Nat -> Real} (hfirst : IsConsistentRegret first) (hsecond : IsConsistentRegret second) {p : Real} (hp : 0 < p) : \u2200\u1da0 n : Nat in atTop, first n + second n <= (n : Real) ^ p"
     },
     {
@@ -31710,15 +31990,31 @@
       "name": "IsConsistentRegret.eventually_log_add_div_log_le",
       "full_name": "BanditRLProof.LowerBounds.IsConsistentRegret.eventually_log_add_div_log_le",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 87,
+      "line": 526,
       "statement": "theorem IsConsistentRegret.eventually_log_add_div_log_le {first second : Nat -> Real} (hfirst : IsConsistentRegret first) (hsecond : IsConsistentRegret second) (hpositive : \u2200\u1da0 n : Nat in atTop, 0 < first n + second n) {p : Real} (hp : 0 < p) : \u2200\u1da0 n : Nat in atTop, Real.log (first n + second n) / Real.log n <= p"
+    },
+    {
+      "kind": "theorem",
+      "name": "IsConsistentRegret.eventually_pull_div_log_ge",
+      "full_name": "BanditRLProof.LowerBounds.IsConsistentRegret.eventually_pull_div_log_ge",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 547,
+      "statement": "theorem IsConsistentRegret.eventually_pull_div_log_ge {first second pulls : Nat \u2192 Real} {c d r : Real} (hfirst : IsConsistentRegret first) (hsecond : IsConsistentRegret second) (hpositive : \u2200\u1da0 n in atTop, 0 < first n + second n) (hd : 0 < d) (hr : r < 1 / d) (hsource : \u2200\u1da0 n : Nat in atTop, (c + Real.log n - Real.log (first n + second n)) / d \u2264 pulls n) : \u2200\u1da0 n in atTop, r \u2264 pulls n / Real.log n"
+    },
+    {
+      "kind": "theorem",
+      "name": "IsConsistentRegret.liminf_pull_div_log_ge",
+      "full_name": "BanditRLProof.LowerBounds.IsConsistentRegret.liminf_pull_div_log_ge",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 586,
+      "statement": "theorem IsConsistentRegret.liminf_pull_div_log_ge {first second pulls : Nat \u2192 Real} {c d : Real} (hfirst : IsConsistentRegret first) (hsecond : IsConsistentRegret second) (hpositive : \u2200\u1da0 n in atTop, 0 < first n + second n) (hd : 0 < d) (hsource : \u2200\u1da0 n : Nat in atTop, (c + Real.log n - Real.log (first n + second n)) / d \u2264 pulls n) : ENNReal.ofReal (1 / d) \u2264 liminf (fun n : Nat => ENNReal.ofReal (pulls n / Real.log n)) atTop"
     },
     {
       "kind": "def",
       "name": "divergenceInfimum",
       "full_name": "BanditRLProof.LowerBounds.divergenceInfimum",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 109,
+      "line": 608,
       "statement": "def divergenceInfimum {Reward : Type*} [MeasurableSpace Reward] (P : Measure Reward) (muStar : Real) (distributionClass : Set (Measure Reward)) (mean : Measure Reward -> Real) : ENNReal"
     },
     {
@@ -31726,15 +32022,39 @@
       "name": "divergenceInfimum_le",
       "full_name": "BanditRLProof.LowerBounds.divergenceInfimum_le",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 121,
+      "line": 620,
       "statement": "theorem divergenceInfimum_le {Reward : Type*} [MeasurableSpace Reward] {P P' : Measure Reward} {muStar : Real} {distributionClass : Set (Measure Reward)} {mean : Measure Reward -> Real} (hclass : P' \u2208 distributionClass) (hbetter : muStar < mean P') : divergenceInfimum P muStar distributionClass mean <= relativeEntropy P P'"
+    },
+    {
+      "kind": "theorem",
+      "name": "divergenceInfimum_exists_alternative_lt",
+      "full_name": "BanditRLProof.LowerBounds.divergenceInfimum_exists_alternative_lt",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 634,
+      "statement": "theorem divergenceInfimum_exists_alternative_lt {Reward : Type*} [MeasurableSpace Reward] {P : Measure Reward} {muStar : Real} {distributionClass : Set (Measure Reward)} {mean : Measure Reward -> Real} {bound : ENNReal} (hbound : divergenceInfimum P muStar distributionClass mean < bound) : \u2203 P', P' \u2208 distributionClass \u2227 muStar < mean P' \u2227 relativeEntropy P P' < bound"
+    },
+    {
+      "kind": "theorem",
+      "name": "FiniteMeanBanditEnvironment.exists_confusingEnvironment_lt",
+      "full_name": "BanditRLProof.LowerBounds.FiniteMeanBanditEnvironment.exists_confusingEnvironment_lt",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 653,
+      "statement": "theorem FiniteMeanBanditEnvironment.exists_confusingEnvironment_lt {K : Nat} (environment : FiniteMeanBanditEnvironment K) (componentClass : Fin K \u2192 Set (Measure Real)) (hclass : environment.InUnstructuredClass componentClass) (hfinite : \u2200 arm P, P \u2208 componentClass arm \u2192 IsProbabilityMeasure P \u2227 Integrable id P) (changedArm : Fin K) {bound : ENNReal} (hbound : divergenceInfimum (environment.armLaw changedArm) (environment.mean environment.bestArm) (componentClass changedArm) (fun P => \u222b x, x \u2202P) < bound) : \u2203 reference : FiniteMeanBanditEnvironment K, reference.InUnstructuredClass componentClass \u2227 (\u2200 arm, arm \u2260 changedArm \u2192 environment.armLaw arm = reference.armLaw arm) \u2227 (\u2200 arm, arm \u2260 changedArm \u2192 reference.mean arm < reference.mean changedArm) \u2227 relativeEntropy (environment.armLaw changedArm) (reference.armLaw changedArm) < bound"
+    },
+    {
+      "kind": "theorem",
+      "name": "divergenceInfimum_eq_top_iff",
+      "full_name": "BanditRLProof.LowerBounds.divergenceInfimum_eq_top_iff",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 683,
+      "statement": "theorem divergenceInfimum_eq_top_iff {Reward : Type*} [MeasurableSpace Reward] {P : Measure Reward} {muStar : Real} {distributionClass : Set (Measure Reward)} {mean : Measure Reward -> Real} : divergenceInfimum P muStar distributionClass mean = \u22a4 \u2194 \u2200 P', P' \u2208 distributionClass \u2192 muStar < mean P' \u2192 relativeEntropy P P' = \u22a4"
     },
     {
       "kind": "def",
       "name": "parametricDivergenceInfimum",
       "full_name": "BanditRLProof.LowerBounds.parametricDivergenceInfimum",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 135,
+      "line": 704,
       "statement": "def parametricDivergenceInfimum {Reward Parameter : Type*} [MeasurableSpace Reward] (law : Parameter -> Measure Reward) (mean : Parameter -> Real) (parameter : Parameter) (muStar : Real) : ENNReal"
     },
     {
@@ -31742,7 +32062,7 @@
       "name": "parametricDivergenceInfimum_le",
       "full_name": "BanditRLProof.LowerBounds.parametricDivergenceInfimum_le",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 145,
+      "line": 714,
       "statement": "theorem parametricDivergenceInfimum_le {Reward Parameter : Type*} [MeasurableSpace Reward] {law : Parameter -> Measure Reward} {mean : Parameter -> Real} {parameter alternative : Parameter} {muStar : Real} (hbetter : muStar < mean alternative) : parametricDivergenceInfimum law mean parameter muStar <= relativeEntropy (law parameter) (law alternative)"
     },
     {
@@ -31750,7 +32070,7 @@
       "name": "unitGaussianDivergenceInfimum",
       "full_name": "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 156,
+      "line": 725,
       "statement": "abbrev unitGaussianDivergenceInfimum (mu muStar : Real) : ENNReal"
     },
     {
@@ -31758,7 +32078,7 @@
       "name": "unitGaussianDivergenceInfimum_le_perturbed",
       "full_name": "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_le_perturbed",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 162,
+      "line": 731,
       "statement": "theorem unitGaussianDivergenceInfimum_le_perturbed (mu muStar epsilon : Real) (hepsilon : 0 < epsilon) : unitGaussianDivergenceInfimum mu muStar <= ENNReal.ofReal (((muStar - mu) + epsilon) ^ 2 / 2)"
     },
     {
@@ -31766,7 +32086,7 @@
       "name": "unitGaussianDivergenceInfimum_ge",
       "full_name": "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_ge",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 180,
+      "line": 749,
       "statement": "theorem unitGaussianDivergenceInfimum_ge (mu muStar : Real) (hmu : mu < muStar) : ENNReal.ofReal ((muStar - mu) ^ 2 / 2) <= unitGaussianDivergenceInfimum mu muStar"
     },
     {
@@ -31774,7 +32094,7 @@
       "name": "unitGaussianDivergenceInfimum_eq",
       "full_name": "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_eq",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 204,
+      "line": 773,
       "statement": "theorem unitGaussianDivergenceInfimum_eq (mu muStar : Real) (hmu : mu < muStar) : unitGaussianDivergenceInfimum mu muStar = ENNReal.ofReal ((muStar - mu) ^ 2 / 2)"
     },
     {
@@ -31782,7 +32102,7 @@
       "name": "banditHistoryRelativeEntropy_eq_expectedPulls_mul_of_only_arm_changed",
       "full_name": "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_mul_of_only_arm_changed",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 235,
+      "line": 804,
       "statement": "theorem banditHistoryRelativeEntropy_eq_expectedPulls_mul_of_only_arm_changed {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (changedArm : Fin K) (lastRound : Nat) (hsame : forall arm, arm \u2260 changedArm -> armLaw arm = referenceArmLaw arm) : InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm armLaw lastRound) (canonicalBanditHistoryMeasure algorithm referenceArmLaw lastRound) = canonicalRealizedExpectedPullCountThrough algorithm armLaw lastRound changedArm * InformationTheory.klDiv (armLaw changedArm) (referenceArmLaw changedArm)"
     },
     {
@@ -31790,7 +32110,7 @@
       "name": "oneArmMajorityPullEvent",
       "full_name": "BanditRLProof.LowerBounds.oneArmMajorityPullEvent",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 260,
+      "line": 829,
       "statement": "def oneArmMajorityPullEvent {K : Nat} {Reward : Type*} (changedArm : Fin K) (lastRound : Nat) : Set (History.FinitePairHistory (Fin K) Reward lastRound)"
     },
     {
@@ -31798,7 +32118,7 @@
       "name": "measurableSet_oneArmMajorityPullEvent",
       "full_name": "BanditRLProof.LowerBounds.measurableSet_oneArmMajorityPullEvent",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 268,
+      "line": 837,
       "statement": "theorem measurableSet_oneArmMajorityPullEvent {K : Nat} {Reward : Type*} [MeasurableSpace Reward] (changedArm : Fin K) (lastRound : Nat) : MeasurableSet (oneArmMajorityPullEvent (Reward := Reward) changedArm lastRound)"
     },
     {
@@ -31806,7 +32126,7 @@
       "name": "finiteHistoryGapPseudoRegret",
       "full_name": "BanditRLProof.LowerBounds.finiteHistoryGapPseudoRegret",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 280,
+      "line": 849,
       "statement": "noncomputable def finiteHistoryGapPseudoRegret {K : Nat} {Reward : Type*} (gap : Fin K -> Real) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Reward lastRound) : ENNReal"
     },
     {
@@ -31814,7 +32134,7 @@
       "name": "canonicalGapExpectedPseudoRegret",
       "full_name": "BanditRLProof.LowerBounds.canonicalGapExpectedPseudoRegret",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 290,
+      "line": 859,
       "statement": "noncomputable def canonicalGapExpectedPseudoRegret {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (gap : Fin K -> Real) (lastRound : Nat) : ENNReal"
     },
     {
@@ -31822,7 +32142,7 @@
       "name": "measurable_finiteHistoryGapPseudoRegret",
       "full_name": "BanditRLProof.LowerBounds.measurable_finiteHistoryGapPseudoRegret",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 300,
+      "line": 869,
       "statement": "theorem measurable_finiteHistoryGapPseudoRegret {K : Nat} {Reward : Type*} [MeasurableSpace Reward] (gap : Fin K -> Real) (lastRound : Nat) : Measurable (finiteHistoryGapPseudoRegret (Reward := Reward) gap lastRound)"
     },
     {
@@ -31830,7 +32150,7 @@
       "name": "finiteHistoryGapPseudoRegret_ne_top",
       "full_name": "BanditRLProof.LowerBounds.finiteHistoryGapPseudoRegret_ne_top",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 311,
+      "line": 880,
       "statement": "theorem finiteHistoryGapPseudoRegret_ne_top {K : Nat} {Reward : Type*} (gap : Fin K -> Real) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Reward lastRound) : finiteHistoryGapPseudoRegret gap lastRound history \u2260 \u221e"
     },
     {
@@ -31838,7 +32158,7 @@
       "name": "finiteHistoryGapPseudoRegret_toReal",
       "full_name": "BanditRLProof.LowerBounds.finiteHistoryGapPseudoRegret_toReal",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 322,
+      "line": 891,
       "statement": "theorem finiteHistoryGapPseudoRegret_toReal {K : Nat} {Reward : Type*} (gap : Fin K -> Real) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Reward lastRound) (hgap : forall arm, 0 <= gap arm) : (finiteHistoryGapPseudoRegret gap lastRound history).toReal = \u2211 arm : Fin K, gap arm * finiteHistoryPullCountReal lastRound history arm"
     },
     {
@@ -31846,7 +32166,7 @@
       "name": "sum_canonicalRealizedExpectedPullCountThrough_general",
       "full_name": "BanditRLProof.LowerBounds.sum_canonicalRealizedExpectedPullCountThrough_general",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 343,
+      "line": 912,
       "statement": "theorem sum_canonicalRealizedExpectedPullCountThrough_general {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (lastRound : Nat) : \u2211 arm : Fin K, canonicalRealizedExpectedPullCountThrough algorithm armLaw lastRound arm = lastRound + 1"
     },
     {
@@ -31854,7 +32174,7 @@
       "name": "canonicalRealizedExpectedPullCountThrough_ne_top",
       "full_name": "BanditRLProof.LowerBounds.canonicalRealizedExpectedPullCountThrough_ne_top",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 360,
+      "line": 929,
       "statement": "theorem canonicalRealizedExpectedPullCountThrough_ne_top {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (lastRound : Nat) (arm : Fin K) : canonicalRealizedExpectedPullCountThrough algorithm armLaw lastRound arm \u2260 \u221e"
     },
     {
@@ -31862,7 +32182,7 @@
       "name": "canonicalGapExpectedPseudoRegret_eq_sum_expectedPulls",
       "full_name": "BanditRLProof.LowerBounds.canonicalGapExpectedPseudoRegret_eq_sum_expectedPulls",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 377,
+      "line": 946,
       "statement": "theorem canonicalGapExpectedPseudoRegret_eq_sum_expectedPulls {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (gap : Fin K -> Real) (lastRound : Nat) : canonicalGapExpectedPseudoRegret algorithm armLaw gap lastRound = \u2211 arm : Fin K, ENNReal.ofReal (gap arm) * canonicalRealizedExpectedPullCountThrough algorithm armLaw lastRound arm"
     },
     {
@@ -31870,7 +32190,7 @@
       "name": "canonicalGapExpectedPseudoRegret_ne_top",
       "full_name": "BanditRLProof.LowerBounds.canonicalGapExpectedPseudoRegret_ne_top",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 400,
+      "line": 969,
       "statement": "theorem canonicalGapExpectedPseudoRegret_ne_top {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (gap : Fin K -> Real) (lastRound : Nat) : canonicalGapExpectedPseudoRegret algorithm armLaw gap lastRound \u2260 \u221e"
     },
     {
@@ -31878,15 +32198,31 @@
       "name": "canonicalGapExpectedPseudoRegretReal",
       "full_name": "BanditRLProof.LowerBounds.canonicalGapExpectedPseudoRegretReal",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 415,
+      "line": 984,
       "statement": "noncomputable def canonicalGapExpectedPseudoRegretReal {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (gap : Fin K -> Real) (lastRound : Nat) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalGapExpectedPseudoRegretReal_eq_sum_expectedPulls",
+      "full_name": "BanditRLProof.LowerBounds.canonicalGapExpectedPseudoRegretReal_eq_sum_expectedPulls",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 994,
+      "statement": "theorem canonicalGapExpectedPseudoRegretReal_eq_sum_expectedPulls {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (gap : Fin K -> Real) (hgap : forall arm, 0 <= gap arm) (lastRound : Nat) : canonicalGapExpectedPseudoRegretReal algorithm armLaw gap lastRound = \u2211 arm : Fin K, gap arm * (canonicalRealizedExpectedPullCountThrough algorithm armLaw lastRound arm).toReal"
+    },
+    {
+      "kind": "def",
+      "name": "unitVarianceGaussianExpectedPseudoRegret",
+      "full_name": "BanditRLProof.LowerBounds.unitVarianceGaussianExpectedPseudoRegret",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 1019,
+      "statement": "noncomputable def unitVarianceGaussianExpectedPseudoRegret {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : UnitVarianceGaussianBanditEnvironment K) (lastRound : Nat) : Real"
     },
     {
       "kind": "theorem",
       "name": "oneArmMajority_forces_gapPseudoRegret",
       "full_name": "BanditRLProof.LowerBounds.oneArmMajority_forces_gapPseudoRegret",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 425,
+      "line": 1028,
       "statement": "theorem oneArmMajority_forces_gapPseudoRegret {K : Nat} {Reward : Type*} (gap : Fin K -> Real) (hgap : forall arm, 0 <= gap arm) (changedArm : Fin K) (hchanged : 0 < gap changedArm) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Reward lastRound) (hA : history \u2208 oneArmMajorityPullEvent (Reward := Reward) changedArm lastRound) : ENNReal.ofReal (((lastRound + 1 : Nat) : Real) * gap changedArm / 2) <= finiteHistoryGapPseudoRegret gap lastRound history"
     },
     {
@@ -31894,7 +32230,7 @@
       "name": "oneArmMajority_compl_forces_gapPseudoRegret",
       "full_name": "BanditRLProof.LowerBounds.oneArmMajority_compl_forces_gapPseudoRegret",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 458,
+      "line": 1061,
       "statement": "theorem oneArmMajority_compl_forces_gapPseudoRegret {K : Nat} {Reward : Type*} (gap : Fin K -> Real) (hgap : forall arm, 0 <= gap arm) (changedArm : Fin K) (changedMargin : Real) (hmargin : 0 < changedMargin) (hother : forall arm, arm \u2260 changedArm -> changedMargin <= gap arm) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Reward lastRound) (hAc : history \u2208 (oneArmMajorityPullEvent (Reward := Reward) changedArm lastRound)\u1d9c) : ENNReal.ofReal (((lastRound + 1 : Nat) : Real) * changedMargin / 2) <= finiteHistoryGapPseudoRegret gap lastRound history"
     },
     {
@@ -31902,7 +32238,7 @@
       "name": "oneArmMajority_probability_charge_le_expectedPseudoRegret",
       "full_name": "BanditRLProof.LowerBounds.oneArmMajority_probability_charge_le_expectedPseudoRegret",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 524,
+      "line": 1127,
       "statement": "theorem oneArmMajority_probability_charge_le_expectedPseudoRegret {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (gap : Fin K -> Real) (hgap : forall arm, 0 <= gap arm) (changedArm : Fin K) (hchanged : 0 < gap changedArm) (lastRound : Nat) : ((lastRound + 1 : Nat) : Real) * gap changedArm / 2 * (canonicalBanditHistoryMeasure algorithm armLaw lastRound).real (oneArmMajorityPullEvent (Reward := Reward) changedArm lastRound) <= canonicalGapExpectedPseudoRegretReal algorithm armLaw gap lastRound"
     },
     {
@@ -31910,7 +32246,7 @@
       "name": "oneArmMajority_compl_probability_charge_le_expectedPseudoRegret",
       "full_name": "BanditRLProof.LowerBounds.oneArmMajority_compl_probability_charge_le_expectedPseudoRegret",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 559,
+      "line": 1162,
       "statement": "theorem oneArmMajority_compl_probability_charge_le_expectedPseudoRegret {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] (gap : Fin K -> Real) (hgap : forall arm, 0 <= gap arm) (changedArm : Fin K) (changedMargin : Real) (hmargin : 0 < changedMargin) (hother : forall arm, arm \u2260 changedArm -> changedMargin <= gap arm) (lastRound : Nat) : ((lastRound + 1 : Nat) : Real) * changedMargin / 2 * (canonicalBanditHistoryMeasure algorithm armLaw lastRound).real (oneArmMajorityPullEvent (Reward := Reward) changedArm lastRound)\u1d9c <= canonicalGapExpectedPseudoRegretReal algorithm armLaw gap lastRound"
     },
     {
@@ -31918,7 +32254,7 @@
       "name": "bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors",
       "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 598,
+      "line": 1201,
       "statement": "theorem bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (changedArm : Fin K) (lastRound : Nat) (hsame : forall arm, arm \u2260 changedArm -> armLaw arm = referenceArmLaw arm) : bretagnolleHuberScale (canonicalRealizedExpectedPullCountThrough algorithm armLaw lastRound changedArm * InformationTheory.klDiv (armLaw changedArm) (referenceArmLaw changedArm)) <= (canonicalBanditHistoryMeasure algorithm armLaw lastRound).real (oneArmMajorityPullEvent (Reward := Reward) changedArm lastRound) + (canonicalBanditHistoryMeasure algorithm referenceArmLaw lastRound).real (oneArmMajorityPullEvent (Reward := Reward) changedArm lastRound)\u1d9c"
     },
     {
@@ -31926,7 +32262,7 @@
       "name": "bretagnolleHuberScale_mul_eq_exp",
       "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_mul_eq_exp",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 634,
+      "line": 1237,
       "statement": "theorem bretagnolleHuberScale_mul_eq_exp {expectedPull armInformation : ENNReal} (hpull : expectedPull \u2260 \u221e) (hinformation : armInformation \u2260 \u221e) : bretagnolleHuberScale (expectedPull * armInformation) = (1 / 2 : Real) * Real.exp (-(expectedPull.toReal * armInformation.toReal))"
     },
     {
@@ -31934,7 +32270,7 @@
       "name": "exp_testing_bound_of_majority_regret_bounds",
       "full_name": "BanditRLProof.LowerBounds.exp_testing_bound_of_majority_regret_bounds",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 646,
+      "line": 1249,
       "statement": "theorem exp_testing_bound_of_majority_regret_bounds (expectedPull information gap changedMargin horizon originalError changedError originalRegret changedRegret : Real) (hgap : 0 < gap) (hmargin : 0 < changedMargin) (hhorizon : 0 < horizon) (horiginalError : 0 <= originalError) (hchangedError : 0 <= changedError) (htesting : (1 / 2 : Real) * Real.exp (-(expectedPull * information)) <= originalError + changedError) (horiginalRegret : horizon * gap / 2 * originalError <= originalRegret) (hchangedRegret : horizon * changedMargin / 2 * changedError <= changedRegret) : horizon * min gap changedMargin / 4 * Real.exp (-(expectedPull * information)) <= originalRegret + changedRegret"
     },
     {
@@ -31942,7 +32278,7 @@
       "name": "expectedPullCount_ge_log_regret_of_exp_testing_bound",
       "full_name": "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_of_exp_testing_bound",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 684,
+      "line": 1287,
       "statement": "theorem expectedPullCount_ge_log_regret_of_exp_testing_bound (expectedPull information gap changedMargin horizon regretSum : Real) (hinformation : 0 < information) (hgap : 0 < gap) (hmargin : 0 < changedMargin) (hhorizon : 0 < horizon) (htesting : horizon * min gap changedMargin / 4 * Real.exp (-(expectedPull * information)) <= regretSum) : (Real.log (min gap changedMargin / 4) + Real.log horizon - Real.log regretSum) / information <= expectedPull"
     },
     {
@@ -31950,8 +32286,112 @@
       "name": "expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed",
       "full_name": "BanditRLProof.LowerBounds.expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed",
       "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
-      "line": 721,
+      "line": 1324,
       "statement": "theorem expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (originalGap referenceGap : Fin K -> Real) (horiginalGap : forall arm, 0 <= originalGap arm) (hreferenceGap : forall arm, 0 <= referenceGap arm) (changedArm : Fin K) (changedMargin : Real) (hchangedGap : 0 < originalGap changedArm) (hmargin : 0 < changedMargin) (hother : forall arm, arm \u2260 changedArm -> changedMargin <= referenceGap arm) (lastRound : Nat) (hsame : forall arm, arm \u2260 changedArm -> armLaw arm = referenceArmLaw arm) (hinformation_ne_top : InformationTheory.klDiv (armLaw changedArm) (referenceArmLaw changedArm) \u2260 \u221e) (hinformation_pos : 0 < (InformationTheory.klDiv (armLaw changedArm) (referenceArmLaw changedArm)).toReal) : (Real.log (min (originalGap changedArm) changedMargin / 4) + Real.log ((lastRound + 1 : Nat) : Real) - Real.log (canonicalGapExpectedPseudoRegretReal algorithm armLaw originalGap lastRound + canonicalGapExpectedPseudoRegretReal algorithm referenceArmLaw referenceGap lastRound)) / (InformationTheory.klDiv (armLaw changedArm) (referenceArmLaw changedArm)).toReal <= (canonicalRealizedExpectedPullCountThrough algorithm armLaw lastRound changedArm).toReal"
+    },
+    {
+      "kind": "theorem",
+      "name": "gapPseudoRegret_add_pos_of_only_arm_changed",
+      "full_name": "BanditRLProof.LowerBounds.gapPseudoRegret_add_pos_of_only_arm_changed",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 1413,
+      "statement": "theorem gapPseudoRegret_add_pos_of_only_arm_changed {K : Nat} {Reward : Type*} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (originalGap referenceGap : Fin K -> Real) (horiginalGap : forall arm, 0 <= originalGap arm) (hreferenceGap : forall arm, 0 <= referenceGap arm) (changedArm : Fin K) (changedMargin : Real) (hchangedGap : 0 < originalGap changedArm) (hmargin : 0 < changedMargin) (hother : forall arm, arm \u2260 changedArm -> changedMargin <= referenceGap arm) (lastRound : Nat) (hsame : forall arm, arm \u2260 changedArm -> armLaw arm = referenceArmLaw arm) (hinformation_ne_top : InformationTheory.klDiv (armLaw changedArm) (referenceArmLaw changedArm) \u2260 \u221e) : 0 < canonicalGapExpectedPseudoRegretReal algorithm armLaw originalGap lastRound + canonicalGapExpectedPseudoRegretReal algorithm referenceArmLaw referenceGap lastRound"
+    },
+    {
+      "kind": "theorem",
+      "name": "expectedPullCount_ge_log_regret_changeOfMeasure",
+      "full_name": "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_changeOfMeasure",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 1497,
+      "statement": "theorem expectedPullCount_ge_log_regret_changeOfMeasure {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (original reference : FiniteMeanBanditEnvironment K) (changedArm : Fin K) (hsuboptimal : original.mean changedArm < original.mean original.bestArm) (hunique : forall arm, arm \u2260 changedArm -> reference.mean arm < reference.mean changedArm) (hsame : forall arm, arm \u2260 changedArm -> original.armLaw arm = reference.armLaw arm) (lastRound : Nat) : (Real.log (min (oneArmMeanIncrease original reference changedArm - original.gap changedArm) (original.gap changedArm) / 4) + Real.log ((lastRound + 1 : Nat) : Real) - Real.log (canonicalGapExpectedPseudoRegretReal algorithm original.armLaw original.gap lastRound + canonicalGapExpectedPseudoRegretReal algorithm reference.armLaw reference.gap lastRound)) / (InformationTheory.klDiv (original.armLaw changedArm) (reference.armLaw changedArm)).toReal <= (canonicalRealizedExpectedPullCountThrough algorithm original.armLaw lastRound changedArm).toReal"
+    },
+    {
+      "kind": "def",
+      "name": "finiteMeanExpectedRegret",
+      "full_name": "BanditRLProof.LowerBounds.finiteMeanExpectedRegret",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 1554,
+      "statement": "def finiteMeanExpectedRegret {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : FiniteMeanBanditEnvironment K) : Nat \u2192 Real | 0 => 0 | n + 1 => canonicalGapExpectedPseudoRegretReal algorithm environment.armLaw environment.gap n"
+    },
+    {
+      "kind": "def",
+      "name": "finiteMeanExpectedPullCount",
+      "full_name": "BanditRLProof.LowerBounds.finiteMeanExpectedPullCount",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 1562,
+      "statement": "def finiteMeanExpectedPullCount {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : FiniteMeanBanditEnvironment K) (arm : Fin K) : Nat \u2192 Real | 0 => 0 | n + 1 => (canonicalRealizedExpectedPullCountThrough algorithm environment.armLaw n arm).toReal"
+    },
+    {
+      "kind": "theorem",
+      "name": "finiteMeanExpectedPullCount_nonneg",
+      "full_name": "BanditRLProof.LowerBounds.finiteMeanExpectedPullCount_nonneg",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 1569,
+      "statement": "theorem finiteMeanExpectedPullCount_nonneg {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : FiniteMeanBanditEnvironment K) (arm : Fin K) (n : Nat) : 0 \u2264 finiteMeanExpectedPullCount algorithm environment arm n"
+    },
+    {
+      "kind": "theorem",
+      "name": "finiteMeanExpectedRegret_eq_sum",
+      "full_name": "BanditRLProof.LowerBounds.finiteMeanExpectedRegret_eq_sum",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 1576,
+      "statement": "theorem finiteMeanExpectedRegret_eq_sum {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : FiniteMeanBanditEnvironment K) (n : Nat) : finiteMeanExpectedRegret algorithm environment n = \u2211 arm, environment.gap arm * finiteMeanExpectedPullCount algorithm environment arm n"
+    },
+    {
+      "kind": "theorem",
+      "name": "finiteMeanNormalizedRegret_eq_sum",
+      "full_name": "BanditRLProof.LowerBounds.finiteMeanNormalizedRegret_eq_sum",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 1588,
+      "statement": "theorem finiteMeanNormalizedRegret_eq_sum {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : FiniteMeanBanditEnvironment K) (n : Nat) (hn : 1 < n) : ENNReal.ofReal (finiteMeanExpectedRegret algorithm environment n / Real.log n) = \u2211 arm, ENNReal.ofReal (environment.gap arm) * ENNReal.ofReal (finiteMeanExpectedPullCount algorithm environment arm n / Real.log n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "consistentRegret_liminf_expectedPull_div_log_ge_of_alternative",
+      "full_name": "BanditRLProof.LowerBounds.consistentRegret_liminf_expectedPull_div_log_ge_of_alternative",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 1607,
+      "statement": "theorem consistentRegret_liminf_expectedPull_div_log_ge_of_alternative {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (original reference : FiniteMeanBanditEnvironment K) (changedArm : Fin K) (hsuboptimal : original.mean changedArm < original.mean original.bestArm) (hunique : \u2200 arm, arm \u2260 changedArm \u2192 reference.mean arm < reference.mean changedArm) (hsame : \u2200 arm, arm \u2260 changedArm \u2192 original.armLaw arm = reference.armLaw arm) (hfirst : IsConsistentRegret (finiteMeanExpectedRegret algorithm original)) (hsecond : IsConsistentRegret (finiteMeanExpectedRegret algorithm reference)) (hfinite : InformationTheory.klDiv (original.armLaw changedArm) (reference.armLaw changedArm) \u2260 \u221e) : ENNReal.ofReal (1 / (InformationTheory.klDiv (original.armLaw changedArm) (reference.armLaw changedArm)).toReal) \u2264 liminf (fun n : Nat => ENNReal.ofReal (finiteMeanExpectedPullCount algorithm original changedArm n / Real.log n)) atTop"
+    },
+    {
+      "kind": "theorem",
+      "name": "consistentPolicy_liminf_expectedPull_div_log_ge_inv_dInf",
+      "full_name": "BanditRLProof.LowerBounds.consistentPolicy_liminf_expectedPull_div_log_ge_inv_dInf",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 1653,
+      "statement": "theorem consistentPolicy_liminf_expectedPull_div_log_ge_inv_dInf {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (componentClass : Fin K \u2192 Set (Measure Real)) (hfinite : \u2200 arm P, P \u2208 componentClass arm \u2192 IsProbabilityMeasure P \u2227 Integrable id P) (hconsistent : IsConsistentPolicyOver {environment : FiniteMeanBanditEnvironment K | environment.InUnstructuredClass componentClass} finiteMeanExpectedRegret algorithm) (original : FiniteMeanBanditEnvironment K) (hclass : original.InUnstructuredClass componentClass) (changedArm : Fin K) (hsuboptimal : original.mean changedArm < original.mean original.bestArm) : (divergenceInfimum (original.armLaw changedArm) (original.mean original.bestArm) (componentClass changedArm) (fun P => \u222b x, x \u2202P))\u207b\u00b9 \u2264 liminf (fun n : Nat => ENNReal.ofReal (finiteMeanExpectedPullCount algorithm original changedArm n / Real.log n)) atTop"
+    },
+    {
+      "kind": "theorem",
+      "name": "consistentPolicy_liminf_expectedRegret_div_log_ge",
+      "full_name": "BanditRLProof.LowerBounds.consistentPolicy_liminf_expectedRegret_div_log_ge",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 1705,
+      "statement": "theorem consistentPolicy_liminf_expectedRegret_div_log_ge {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (componentClass : Fin K \u2192 Set (Measure Real)) (hfinite : \u2200 arm P, P \u2208 componentClass arm \u2192 IsProbabilityMeasure P \u2227 Integrable id P) (hconsistent : IsConsistentPolicyOver {environment : FiniteMeanBanditEnvironment K | environment.InUnstructuredClass componentClass} finiteMeanExpectedRegret algorithm) (original : FiniteMeanBanditEnvironment K) (hclass : original.InUnstructuredClass componentClass) : (\u2211 arm : Fin K with 0 < original.gap arm, ENNReal.ofReal (original.gap arm) / divergenceInfimum (original.armLaw arm) (original.mean original.bestArm) (componentClass arm) (fun P => \u222b x, x \u2202P)) \u2264 liminf (fun n : Nat => ENNReal.ofReal (finiteMeanExpectedRegret algorithm original n / Real.log n)) atTop"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianExpectedPullCount_ge_finiteTimeInstanceDependent",
+      "full_name": "BanditRLProof.LowerBounds.gaussianExpectedPullCount_ge_finiteTimeInstanceDependent",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 1767,
+      "statement": "theorem gaussianExpectedPullCount_ge_finiteTimeInstanceDependent {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : UnitVarianceGaussianBanditEnvironment K) (changedArm : Fin K) (epsilon C p : Real) (hgap : 0 < environment.gap changedArm) (hepsilon : 0 < epsilon) (hepsilon_one : epsilon <= 1) (_hC : 0 < C) (lastRound : Nat) (hbase : unitVarianceGaussianExpectedPseudoRegret algorithm environment lastRound <= C * (((lastRound + 1 : Nat) : Real) ^ p)) (hchanged : unitVarianceGaussianExpectedPseudoRegret algorithm (chapter16GaussianChangedEnvironment environment changedArm epsilon hgap hepsilon) lastRound <= C * (((lastRound + 1 : Nat) : Real) ^ p)) : (Real.log (epsilon * environment.gap changedArm / 4) + Real.log ((lastRound + 1 : Nat) : Real) - Real.log (2 * C * (((lastRound + 1 : Nat) : Real) ^ p))) / (((1 + epsilon) * environment.gap changedArm) ^ 2 / 2) <= (canonicalRealizedExpectedPullCountThrough algorithm (unitGaussianKernel environment.mean) lastRound changedArm).toReal"
+    },
+    {
+      "kind": "theorem",
+      "name": "chapter16Gaussian_finiteTime_log_identity",
+      "full_name": "BanditRLProof.LowerBounds.chapter16Gaussian_finiteTime_log_identity",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 1879,
+      "statement": "theorem chapter16Gaussian_finiteTime_log_identity (epsilon gap C p horizon : Real) (hepsilon : 0 < epsilon) (hgap : 0 < gap) (hC : 0 < C) (hhorizon : 0 < horizon) : Real.log (epsilon * gap / 4) + Real.log horizon - Real.log (2 * C * horizon ^ p) = (1 - p) * Real.log horizon + Real.log (epsilon * gap / (8 * C))"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianExpectedRegret_ge_finiteTimeInstanceDependent",
+      "full_name": "BanditRLProof.LowerBounds.gaussianExpectedRegret_ge_finiteTimeInstanceDependent",
+      "file": "BanditRLProof/LowerBounds/InstanceDependent.lean",
+      "line": 1909,
+      "statement": "theorem gaussianExpectedRegret_ge_finiteTimeInstanceDependent {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : UnitVarianceGaussianBanditEnvironment K) (horizons : Set Nat) (hhorizons : horizons.Nonempty) (C p : Real) (hC : 0 < C) (_hp : p \u2208 Set.Ioo (0 : Real) 1) (hregret : forall (lastRound : Nat), lastRound + 1 \u2208 horizons -> forall candidate : UnitVarianceGaussianBanditEnvironment K, InChapter16GaussianLocalClass environment candidate -> unitVarianceGaussianExpectedPseudoRegret algorithm candidate lastRound <= C * (((lastRound + 1 : Nat) : Real) ^ p)) (epsilon : Real) (hepsilon : epsilon \u2208 Set.Ioc (0 : Real) 1) (lastRound : Nat) (hhorizon : lastRound + 1 \u2208 horizons) : unitVarianceGaussianExpectedPseudoRegret algorithm environment lastRound >= 2 / (1 + epsilon) ^ 2 * \u2211 arm \u2208 Finset.univ.filter (fun arm : Fin K => 0 < environment.gap arm), max (((1 - p) * Real.log ((lastRound + 1 : Nat) : Real) + Real.log (epsilon * environment.gap arm / (8 * C))) / environment.gap arm) 0"
     },
     {
       "kind": "abbrev",

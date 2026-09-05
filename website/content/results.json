@@ -979,9 +979,8 @@
         "BanditRLProof.LowerBounds.bretagnolleHuber"
       ],
       "missing": [
-        "The source-environment layer identifying abstract nonnegative gap vectors with finite arm-law means is not part of this dependency record.",
-        "Theorem 16.2 still needs its per-arm information-to-liminf extraction, including the zero, finite, and infinite d_inf branches.",
-        "Lemma 16.3 and Theorem 16.4 remain blocked; the compiled information and scalar layers are not presented as either terminal."
+        "This historical dependency record predates the now-compiled finite-mean producer, Lemma 16.3, and Theorem 16.4.",
+        "Theorem 16.2 still needs its per-arm information-to-liminf extraction, including the zero, finite, and infinite d_inf branches."
       ],
       "evidence": "BanditRLProof/LowerBounds/InstanceDependent.lean; Tests/TextbookPartIVChapter16Canary.lean; tasks/TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE.md"
     },
@@ -991,7 +990,7 @@
       "chapter": "foundations",
       "textbook_spine": "chapter-16-instance-dependent",
       "status": "compiled",
-      "informal": "Fifteen named declarations now define canonical gap-times-pull-count pseudo-regret for an arbitrary finite-arm Markov reward kernel, prove its measurability, finite expected-pull decomposition, and finiteness, charge the majority event and its complement to the original and changed expected pseudo-regrets with the exact half-horizon gap factors, and combine those charges with the existing one-arm KL/Bretagnolle–Huber layer into the exact factor-one-quarter logarithmic gap-vector consumer. The consumer does not yet identify the gap vectors with the integral means of a source finite-mean environment, so it is not presented as Lemma 16.3.",
+      "informal": "Fifteen named declarations define canonical gap-times-pull-count pseudo-regret, charge the majority event and its complement with exact half-horizon factors, and combine those charges with the one-arm KL/Bretagnolle–Huber layer. The later finite-mean producer now consumes this historical layer to prove Lemma 16.3 and Theorem 16.4.",
       "declarations": [
         "BanditRLProof.LowerBounds.finiteHistoryGapPseudoRegret",
         "BanditRLProof.LowerBounds.canonicalGapExpectedPseudoRegret",
@@ -1016,9 +1015,8 @@
         "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_of_exp_testing_bound"
       ],
       "missing": [
-        "A source-environment producer must still tie each explicit gap vector to the integral means of finite-mean arm laws and the certified original/changed optima.",
-        "The finite-positive arm-KL branch is explicit in the conditional consumer; zero and infinite information cases are not silently coerced to Real.",
-        "Lemma 16.3, Theorem 16.2, and Theorem 16.4 remain blocked source terminals with no declaration claimed."
+        "This historical producer record stops below the now-compiled finite-mean environment consumer.",
+        "Theorem 16.2 now compiles with every extended-real d_inf branch and finite-count Fatou."
       ],
       "evidence": "BanditRLProof/LowerBounds/InstanceDependent.lean; Tests/TextbookPartIVChapter16Canary.lean; tasks/TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE.md"
     },
@@ -1027,9 +1025,13 @@
       "title": "Chapter 16 instance-dependent asymptotic and finite-time source terminals",
       "chapter": "foundations",
       "textbook_spine": "chapter-16-instance-dependent",
-      "status": "blocked",
-      "informal": "The source-frozen endpoints are Theorem 16.2's unstructured-class liminf regret constant, Lemma 16.3's one-arm finite-time expected-pull inequality, and Theorem 16.4's unit-Gaussian local-envelope positive-part lower bound. No local declaration is presented as any of these terminals.",
-      "declarations": [],
+      "status": "compiled",
+      "informal": "The source-frozen endpoints are Theorem 16.2's unstructured-class liminf regret constant, Lemma 16.3's one-arm finite-time expected-pull inequality, and Theorem 16.4's unit-Gaussian local-envelope positive-part lower bound. All three source terminals now compile exactly, including Theorem 16.2 with every extended-real information branch.",
+      "declarations": [
+        "BanditRLProof.LowerBounds.consistentPolicy_liminf_expectedRegret_div_log_ge",
+        "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_changeOfMeasure",
+        "BanditRLProof.LowerBounds.gaussianExpectedRegret_ge_finiteTimeInstanceDependent"
+      ],
       "depends_on": [
         "BanditRLProof.LowerBounds.IsConsistentRegret.eventually_log_add_div_log_le",
         "BanditRLProof.LowerBounds.divergenceInfimum",
@@ -1038,14 +1040,12 @@
         "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_eq",
         "BanditRLProof.LowerBounds.bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors",
         "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_of_exp_testing_bound",
-        "BanditRLProof.LowerBounds.expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed"
+        "BanditRLProof.LowerBounds.expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed",
+        "BanditRLProof.LowerBounds.oneArmMeanChange_produces_gap_contract",
+        "BanditRLProof.LowerBounds.chapter16GaussianChangedEnvironment_armKL"
       ],
-      "missing": [
-        "A finite-mean source-environment bridge identifying the compiled nonnegative gap vectors with the original and changed arm-law means and optimal arms.",
-        "The exact per-arm information constraint and liminf extraction, with zero, finite, and infinite d_inf branches.",
-        "Lemma 16.3's environment-level finite-time terminal and Theorem 16.4's exact Gaussian aggregation."
-      ],
-      "evidence": "tasks/TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE.md; proof-attempts/TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE/HistoryInformationBlocker.md"
+      "missing": [],
+      "evidence": "BanditRLProof/LowerBounds/InstanceDependent.lean; Tests/TextbookPartIVChapter16Canary.lean; tasks/TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE.md"
     },
     {
       "id": "TEXTBOOK-PART-IV-CH17-FIRST-MOMENT-AND-TAIL-DEPENDENCY-SLICE",

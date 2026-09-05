@@ -3,8 +3,9 @@ import BanditRLProof
 /-!
 # Typed public canary for Part IV, Chapter 16
 
-The examples below exercise only the compiled dependency slice.  They do not
-claim the source terminals Theorem 16.2, Lemma 16.3, or Theorem 16.4.
+The examples below exercise the compiled dependency slice, source mean-to-gap
+producer, exact Lemma 16.3, and exact Theorem 16.4.  They do not claim the
+still-blocked asymptotic source terminal Theorem 16.2.
 -/
 
 namespace BanditRLProof
@@ -81,11 +82,33 @@ example {K : Nat} {Reward : Type*}
 #check exp_testing_bound_of_majority_regret_bounds
 #check expectedPullCount_ge_log_regret_of_exp_testing_bound
 #check expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed
+#check FiniteMeanBanditEnvironment
+#check oneArmMeanChange_produces_gap_contract
+#check oneArmMeanIncrease_sub_gap_eq_changedMargin
+#check UnitVarianceGaussianBanditEnvironment
+#check chapter16GaussianChangedEnvironment
+#check chapter16GaussianChangedEnvironment_armKL
+#check canonicalGapExpectedPseudoRegretReal_eq_sum_expectedPulls
+#check expectedPullCount_ge_log_regret_changeOfMeasure
+#check gaussianExpectedPullCount_ge_finiteTimeInstanceDependent
+#check gaussianExpectedRegret_ge_finiteTimeInstanceDependent
 
 #print axioms LowerBounds.IsConsistentRegret.add
 #print axioms LowerBounds.IsConsistentRegret.eventually_add_le_rpow
 #print axioms LowerBounds.IsConsistentRegret.eventually_log_add_div_log_le
+#print axioms LowerBounds.IsConsistentRegret.eventually_pull_div_log_ge
+#print axioms LowerBounds.IsConsistentRegret.liminf_pull_div_log_ge
+#print axioms LowerBounds.consistentRegret_liminf_expectedPull_div_log_ge_of_alternative
+#print axioms LowerBounds.consistentPolicy_liminf_expectedPull_div_log_ge_inv_dInf
+#print axioms LowerBounds.finiteMeanNormalizedRegret_eq_sum
+#print axioms LowerBounds.consistentPolicy_liminf_expectedRegret_div_log_ge
 #print axioms LowerBounds.divergenceInfimum_le
+#print axioms LowerBounds.divergenceInfimum_exists_alternative_lt
+#print axioms LowerBounds.divergenceInfimum_eq_top_iff
+#print axioms LowerBounds.FiniteMeanBanditEnvironment.withImprovedArm
+#print axioms LowerBounds.FiniteMeanBanditEnvironment.withImprovedArm_mem
+#print axioms LowerBounds.FiniteMeanBanditEnvironment.withImprovedArm_unique
+#print axioms LowerBounds.FiniteMeanBanditEnvironment.exists_confusingEnvironment_lt
 #print axioms LowerBounds.parametricDivergenceInfimum_le
 #print axioms LowerBounds.unitGaussianDivergenceInfimum_le_perturbed
 #print axioms LowerBounds.unitGaussianDivergenceInfimum_ge
@@ -102,6 +125,10 @@ example {K : Nat} {Reward : Type*}
 #print axioms LowerBounds.exp_testing_bound_of_majority_regret_bounds
 #print axioms LowerBounds.expectedPullCount_ge_log_regret_of_exp_testing_bound
 #print axioms LowerBounds.expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed
+#print axioms LowerBounds.oneArmMeanChange_produces_gap_contract
+#print axioms LowerBounds.chapter16GaussianChangedEnvironment_armKL
+#print axioms LowerBounds.expectedPullCount_ge_log_regret_changeOfMeasure
+#print axioms LowerBounds.gaussianExpectedRegret_ge_finiteTimeInstanceDependent
 
 end LowerBounds
 end BanditRLProof

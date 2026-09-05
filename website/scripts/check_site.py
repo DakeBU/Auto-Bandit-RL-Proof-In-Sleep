@@ -1379,7 +1379,7 @@ def main() -> int:
             'class="textbook-coverage"',
             "10 source-mapped routes",
             "9 canonical cores compiled",
-            "3 of 5 named terminals compile",
+            "4 of 5 named terminals compile",
             f"{sum(chapter.get('status') == 'compiled' for chapter in textbook_spine['chapters'])} of {len(textbook_spine['chapters'])} chapter contracts compiled; see each chapter's exact scope",
             "Not claimed complete",
         )

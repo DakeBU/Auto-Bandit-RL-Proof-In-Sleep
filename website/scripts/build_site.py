@@ -1054,6 +1054,22 @@ def validate_textbook_spine(
         for name in chapter.get("primary_declarations", []):
             if name not in decl_by_name:
                 raise ValueError(f"primary textbook declaration is not indexed: {name}")
+        if chapter["number"] == 16 and chapter.get("status") == "compiled":
+            required = {
+                "BanditRLProof.LowerBounds.IsConsistentPolicyOver",
+                "BanditRLProof.LowerBounds.oneArmMeanChange_produces_gap_contract",
+                "BanditRLProof.LowerBounds.consistentPolicy_liminf_expectedRegret_div_log_ge",
+                "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_changeOfMeasure",
+                "BanditRLProof.LowerBounds.gaussianExpectedRegret_ge_finiteTimeInstanceDependent",
+            }
+            compiled_names = {
+                item["name"] for item in chapter.get("lean_correspondence", [])
+                if item.get("status") == "compiled"
+            }
+            if (not required.issubset(compiled_names)
+                    or chapter.get("source_theorem", {}).get("status") != "compiled"
+                    or chapter.get("gaps") != []):
+                raise ValueError("Chapter 16 requires all exact source terminals and no main-text gaps")
         # Chapters 13 and 14 have independently reviewed main-text acceptance;
         # Chapter 14 evidence: reviews/2026-09-05-chapter-14-live-acceptance.md.
         # Notes/exercises and the explicit source/model qualifications stay separate.
@@ -1067,7 +1083,7 @@ def validate_textbook_spine(
                 raise ValueError("Chapter 15 required body needs both compiled sections")
             if coverage[4].get("status") != "partial":
                 raise ValueError("Chapter 15 optional exercises must retain partial coverage")
-        if chapter["number"] > 15 and chapter.get("status") == "compiled":
+        if chapter["number"] > 16 and chapter.get("status") == "compiled":
             raise ValueError("future Part IV chapters cannot be promoted before their gates")
 
 
