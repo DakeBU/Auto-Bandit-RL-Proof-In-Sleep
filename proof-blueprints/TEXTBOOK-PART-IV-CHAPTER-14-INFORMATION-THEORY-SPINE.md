@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T07:21:41+00:00`
+Generated: `2026-09-05T07:24:37+00:00`
 
 ## Source Task
 
@@ -58,6 +58,7 @@ mapped local adapter before they count as chapter evidence.
 | Source body node | Exact required content | Current evidence | Status |
 | --- | --- | --- | --- |
 | opening motivation | information-theory/KL role in generalising Chapter 13 | maintained source map; no theorem claim | mapped |
+| §14.1 boxed code equivalence | every finite uniquely decodable encoder admits a prefix code with the same symbol lengths | `exists_prefixCode_of_uniquelyDecodable` via non-strict Kraft converse; module and direct-module typed checks pass, root/aggregate pending | partial |
 | §14.1 code model | binary codewords, injectivity, prefix freedom, codeword length, and expected length | `BinaryPrefixCode`, its uniquely-decodable range, finite codebook, Kraft adapter, and `expectedCodeLength` compile; the explicit nonempty-codeword contract is recorded | compiled |
 | Eq. (14.1) | optimal expected-length objective over valid prefix codes | `huffmanOptimalCode`, `huffmanCode_optimal`; exact global minimization, full gate dff13cb | compiled |
 | Eq. (14.2) | Huffman optimum satisfies `H₂(P) ≤ L* ≤ H₂(P)+1` | `huffmanOptimalCode` recursively merges two least weights; global optimality and entropy sandwich for finite alphabets, ties/zeros included; classical real-weight construction, not an executable encoder; full gate passed at dff13cb | compiled |
@@ -83,14 +84,8 @@ rate but do not certify this stronger interface; its canary/full gate is
 tracked in `reviews/2026-09-05-chapter-14-arithmetic-identity-audit.md`.
 
 Optional rows are §14.3 Notes, §14.4 Bibliographic Remarks, and Exercises
-14.1--14.15.  Exercise 14.10 is a high-value optional target: the existing
-event/Bernoulli theorem is its two-cell specialization, while
-`relativeEntropy_trim_le` now compiles the arbitrary-sub-sigma-algebra result
-for finite measures.
 
-## Frozen Lean target
-
-<!-- 2900 characters omitted from the middle of this snapshot. -->
+<!-- 3160 characters omitted from the middle of this snapshot. -->
 
 page are verified before this task becomes accepted.
 
@@ -294,9 +289,9 @@ with `D(Q,P)` is also valid.
 | `Integrable (llr P Q) P` | explicit only on finite integral branch; equivalent to finite KL jointly with AC | Mathlib's real integral convention | no |
 | `D(P,Q)=∞` | explicit branch of `bretagnolleHuberScale` | implements `exp(-∞)=0` | no |
 | mutual AC | absent | not required by source | must remain absent |
-| finite KL premise on Theorem 14.2 | absent | source theorem is unconditional | must remain absent |
-| reversed `D(Q,P)` | absent from main terminal | a separate application, never a silent replacement | no |
-| policy consistency/history adaptation | absent | belongs to Chapter 15 | no |
+
+<!-- 291 characters omitted from the middle of this snapshot. -->
+
 | concentration/stopping time | absent | Chapter 14 uses neither | no |
 
 ## Local API and proof route
@@ -347,6 +342,14 @@ with `D(Q,P)` is also valid.
 - [x] Measure-overlap and source affinity/Jensen; full gate b8325c2.
 - [x] General Gaussian-variance/application; full gate 1e8af14.
 - [ ] Additional mathematical body assertions and evidence closure in the body audit.
+
+The boxed unique-decoding equivalence is now mapped to
+`exists_prefixCode_of_uniquelyDecodable`, preserving every length on a finite
+injective encoder with uniquely decodable range. Its nonempty words are
+derived, not assumed; the non-strict Kraft converse includes equality.
+Module/direct canaries pass at 3d7c9a1; root/full gate and current export/site
+verification remain pending. See the boxed-code and arithmetic-identity audits
+for the two source-fidelity repairs after the a47106a gate.
 
 
 ## Obligation Snapshot

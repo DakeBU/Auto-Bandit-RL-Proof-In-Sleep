@@ -172,3 +172,19 @@ named code. The strengthened interfaces
 for every positive-mass block, removing the support tag leaves a dyadic cell
 inside that block's arithmetic interval. Validation is tracked in the
 arithmetic-identity audit; it is not covered by \texttt{a47106a}.
+
+\paragraph{Unique decoding and equivalent prefix codes.}
+For a finite alphabet and an injective encoder $c$ with uniquely decodable
+range, \texttt{exists\_prefixCode\_of\_uniquelyDecodable} constructs a prefix
+code with the same length for every symbol, hence the same expected length
+for every source distribution. This covers the boxed Section 14.1 assertion,
+including Kraft sum one. The proof uses Mathlib's
+\texttt{UniquelyDecodable.epsilon\_not\_mem} and
+\texttt{kraft\_mcmillan\_inequality}, then the local
+\texttt{exists\_prefix\_encoding\_of\_kraft\_le\_one} and
+\texttt{exists\_binaryPrefixCode\_of\_kraft\_le\_one}.
+Nonempty words follow from unique decodability; no strict Kraft premise is
+imposed. Module and direct-module typed checks pass; root/aggregate validation
+after \texttt{3d7c9a1} is pending.
+\texttt{IsOptimalPrefixCode.length\_antitone} separately formalizes the body
+observation about more likely symbols in an optimal code.

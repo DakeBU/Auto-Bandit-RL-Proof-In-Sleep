@@ -150,3 +150,11 @@ with `D(Q,P)` is also valid.
 - [x] Measure-overlap and source affinity/Jensen; full gate b8325c2.
 - [x] General Gaussian-variance/application; full gate 1e8af14.
 - [ ] Additional mathematical body assertions and evidence closure in the body audit.
+
+The boxed unique-decoding equivalence is now mapped to
+`exists_prefixCode_of_uniquelyDecodable`, preserving every length on a finite
+injective encoder with uniquely decodable range. Its nonempty words are
+derived, not assumed; the non-strict Kraft converse includes equality.
+Module/direct canaries pass at 3d7c9a1; root/full gate and current export/site
+verification remain pending. See the boxed-code and arithmetic-identity audits
+for the two source-fidelity repairs after the a47106a gate.

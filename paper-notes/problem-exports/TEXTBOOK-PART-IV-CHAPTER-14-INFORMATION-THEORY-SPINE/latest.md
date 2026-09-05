@@ -262,3 +262,19 @@ The strengthened interfaces now retain containment through
 for every positive-mass block, removing the support tag leaves a dyadic cell
 inside that block's arithmetic interval. Validation of this strengthening is
 tracked in the arithmetic-identity audit; it is not covered by a47106a.
+
+### Unique decoding and equivalent prefix codes
+
+For a finite alphabet and an injective encoder `c` whose range is uniquely
+decodable, `exists_prefixCode_of_uniquelyDecodable` constructs a
+`BinaryPrefixCode` with `(code.encode i).length = (c i).length` for every
+symbol i. Thus expected length is unchanged for every source distribution.
+This is the boxed §14.1 assertion, including complete codebooks at Kraft sum 1.
+The proof uses Mathlib's `UniquelyDecodable.epsilon_not_mem` and
+`kraft_mcmillan_inequality`, followed by the local
+`exists_prefix_encoding_of_kraft_le_one` and
+`exists_binaryPrefixCode_of_kraft_le_one`. Nonempty words are derived from
+unique decodability; no strict Kraft assumption is imposed on the encoder.
+The module and direct-module typed checks pass; root/aggregate validation
+after 3d7c9a1 is pending. `IsOptimalPrefixCode.length_antitone` separately
+formalizes the body observation about more likely symbols in an optimal code.

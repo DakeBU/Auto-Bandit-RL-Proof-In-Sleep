@@ -36,3 +36,9 @@ LaTeX errors. All three pages were rendered with Poppler at 1300 pixels and
 visually inspected: equations, identifiers and the new arithmetic-identity
 paragraph are readable without clipping or overlap. This replaces the stale
 visual QA for this export snapshot only. Full Lean gate still runs separately.
+
+Full gate b5e21b8 passed: aggregate 8951 jobs, 400 Python tests, 7 skipped,
+212.303s. Log: C:/a14/tmp/ch14-arithmetic-identity-full-check.log.
+This closes the strengthened arithmetic interface gate, including root imports
+and the actual named-code payload canary. It does not cover the later Kraft
+equivalence change at 3d7c9a1 or later export edits.

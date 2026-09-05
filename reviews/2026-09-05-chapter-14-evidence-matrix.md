@@ -11,7 +11,7 @@ accepted/task/site status does not independently certify the expanded body.
 | boxed unique-decoding/prefix equivalence | PrefixCodeConstruction | exists_binaryPrefixCode_of_kraft_le_one; exists_prefixCode_of_uniquelyDecodable | PrefixConstruction | focused module passed; root/aggregate pending |
 | optimum gives no longer words to strictly larger masses | PrefixCodeExchange | IsOptimalPrefixCode.length_antitone | Exchange | included in a47106a |
 | Eq.14.1/14.2 global Huffman optimum | HuffmanConstruction | huffmanCode_optimal; huffmanCode_entropy_sandwich | HuffmanConstruction | dff13cb |
-| arithmetic expected-rate convergence and code identity | ArithmeticBlockCoding | arithmeticBlockCode_rate_tendsto_entropy; arithmeticBlockCode_payload_interval | ArithmeticBlock | earlier rate gate 2a31a01; strengthened interval identity focused-build passed, full gate pending |
+| arithmetic expected-rate convergence and code identity | ArithmeticBlockCoding | arithmeticBlockCode_rate_tendsto_entropy; arithmeticBlockCode_payload_interval | ArithmeticBlock | strengthened identity full gate b5e21b8 passed |
 | universal source-code converse | BlockEntropy | sourceBlock_code_family_limit_ge_entropy | Block | d256f27 and subsequent gates |
 | finite KL / Eq.14.4 | FiniteDiscreteKL | relativeEntropy_finite_sum_log; relativeEntropy_finite_eq_top_iff | (empty) | 40c56ca and subsequent gates |
 | Eq.14.5 / RN equivalence | FinitePartitionKLRecovery | finitePartitionRelativeEntropy_eq_relativeEntropy | Recovery | 40c56ca |
