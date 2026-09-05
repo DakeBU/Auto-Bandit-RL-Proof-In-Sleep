@@ -52,3 +52,6 @@ import Tests.TextbookPartIVChapter14PrefixConstructionCanary
 import Tests.TextbookPartIVChapter14BlockCanary
 import Tests.TextbookPartIVChapter14ExchangeCanary
 import Tests.TextbookPartIVChapter14SiblingCanary
+import Tests.TextbookPartIVChapter14PruningCanary
+import Tests.TextbookPartIVChapter14GreedyCanary
+import Tests.TextbookPartIVChapter14HuffmanStepCanary

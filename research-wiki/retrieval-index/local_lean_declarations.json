@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T06:16:52+00:00",
+  "generated": "2026-09-05T06:19:22+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -29120,6 +29120,22 @@
       "file": "BanditRLProof/LowerBounds/HighProbability.lean",
       "line": 133,
       "statement": "theorem randomRegret_ge_quarter_of_clippingDecomposition (horizon pullCount clippingCount : Nat) (gap randomRegret : Real) (hGap : 0 <= gap) (hPull : (pullCount : Real) <= (horizon : Real) / 2) (hClipping : (clippingCount : Real) <= (horizon : Real) / 4) (hSource : adversarialRegretLowerExpression horizon pullCount clippingCount gap <= randomRegret) : gap * ((horizon : Real) / 4) <= randomRegret"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_oriented_sibling_code",
+      "full_name": "BanditRLProof.LowerBounds.exists_oriented_sibling_code",
+      "file": "BanditRLProof/LowerBounds/HuffmanStep.lean",
+      "line": 6,
+      "statement": "theorem exists_oriented_sibling_code {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2295 Bool \u2192 \u211d) (code : BinaryPrefixCode (\u03b1 \u2295 Bool)) (w : List Bool) (bit : Bool) (hf : code.encode (.inr false) = w ++ [bit]) (ht : code.encode (.inr true) = w ++ [!bit]) : \u2203 other : BinaryPrefixCode (\u03b1 \u2295 Bool), expectedCodeLength p other = expectedCodeLength p code \u2227 \u2200 b, other.encode (.inr b) = w ++ [b]"
+    },
+    {
+      "kind": "theorem",
+      "name": "IsOptimalPrefixCode.expand_least_weights",
+      "full_name": "BanditRLProof.LowerBounds.IsOptimalPrefixCode.expand_least_weights",
+      "file": "BanditRLProof/LowerBounds/HuffmanStep.lean",
+      "line": 30,
+      "statement": "theorem IsOptimalPrefixCode.expand_least_weights {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] [Nonempty \u03b1] (p : \u03b1 \u2192 \u211d) (q r : \u211d) (hp : \u2200 i, 0 \u2264 p i) (hq : 0 \u2264 q) (hqr : q \u2264 r) (hr : \u2200 i, r \u2264 p i) (code : BinaryPrefixCode (Option \u03b1)) (hopt : IsOptimalPrefixCode (fun a => a.elim (q + r) p) code) : IsOptimalPrefixCode (Sum.elim p (fun b => if b then r else q)) code.expandSibling"
     },
     {
       "kind": "structure",

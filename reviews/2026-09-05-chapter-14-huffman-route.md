@@ -124,3 +124,25 @@ optimality or the arithmetic-coding algorithm. The chapter remains partial.
 The typed Greedy canary passed; both axiom reports contain only propext,
 Classical.choice, and Quot.sound. Retrieval, task memory and blueprint were
 refreshed. This leaf is focused-validated only, not yet root-integrated.
+
+Recursive optimality-step route: specialize the greedy choice to an alphabet
+alpha + Bool, with false and true the two least weights. If the returned
+final bits are reversed, exchange those two equal-length leaves at zero cost.
+For nonempty alpha the parent cannot be empty (it would prefix an inl leaf).
+Contract the competitor, invoke optimality of the merged Option alpha code,
+and use both exact cost recurrences to prove optimality of its expansion.
+The nonempty-alpha condition represents the recursive case of at least three
+symbols; singleton and two-symbol roots are separate base cases, not omitted
+exceptions. Local APIs: PrefixCodeGreedy, contractSibling, expandSibling,
+expectedCodeLength_swap, sibling_parent_not_prefix_other.
+
+Induction-step result: `HuffmanStep.lean` builds (2678 jobs), and its typed
+canary passes with only propext/Classical.choice/Quot.sound. The initial
+compiler failure was missing automatic Nontrivial (alpha + Bool) synthesis;
+an explicit false/true witness repairs the instance without strengthening
+the target. The theorem `IsOptimalPrefixCode.expand_least_weights` proves
+global optimality of expansion from global optimality of the smaller merged
+code. It does not assume optimality of the desired expanded code. No mass
+normalization is needed. A complete recursive construction and its terminal
+existence/optimality theorem are still required. Pruning, Greedy, HuffmanStep
+and their canaries are now added to the aggregate imports for the next gate.

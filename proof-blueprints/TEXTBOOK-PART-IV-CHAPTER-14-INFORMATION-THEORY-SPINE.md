@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T06:17:03+00:00`
+Generated: `2026-09-05T06:19:33+00:00`
 
 ## Source Task
 
@@ -60,7 +60,7 @@ mapped local adapter before they count as chapter evidence.
 | opening motivation | information-theory/KL role in generalising Chapter 13 | maintained source map; no theorem claim | mapped |
 | §14.1 code model | binary codewords, injectivity, prefix freedom, codeword length, and expected length | `BinaryPrefixCode`, its uniquely-decodable range, finite codebook, Kraft adapter, and `expectedCodeLength` compile; the explicit nonempty-codeword contract is recorded | partial |
 | Eq. (14.1) | optimal expected-length objective over valid prefix codes | no local optimum/existence theorem | blocked |
-| Eq. (14.2) | Huffman optimum satisfies `H₂(P) ≤ L* ≤ H₂(P)+1` | `exists_binaryPrefixCode_entropy_sandwich` constructs a realizable code in the interval, including zero masses; minimizer existence/Huffman optimality still missing | partial |
+| Eq. (14.2) | Huffman optimum satisfies `H₂(P) ≤ L* ≤ H₂(P)+1` | Actual entropy-sandwich code, no-worse least-weight sibling normalization, and optimality-preserving merge/expand induction step compiled; recursive Huffman construction and terminal optimality still missing | partial |
 | §14.1 asymptotic statement | arithmetic coding approaches entropy and no code improves the asymptotic rate | no block-code/asymptotic coding model | blocked |
 | Eqs. (14.2)--(14.3) definitions | finite discrete base-two entropy, natural entropy, and exact unit conversion | `discreteEntropy`, `discreteEntropyBaseTwo`, their exact conversion, and nonnegativity compile | compiled |
 | Eq. (14.4) | arbitrary finite-alphabet discrete relative entropy with exact zero/support endpoints | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, and `relativeEntropy_finite_eq_top_iff` compile; root-import finite/singular three-symbol canaries pass | compiled |
@@ -103,9 +103,8 @@ LowerBounds.bernoulliRelativeEntropy
 LowerBounds.relativeEntropy_trim_le
 LowerBounds.bernoulliRelativeEntropy_event_le
 LowerBounds.binaryBretagnolleHuber
-LowerBounds.bretagnolleHuberScale
 
-<!-- 2108 characters omitted from the middle of this snapshot. -->
+<!-- 2142 characters omitted from the middle of this snapshot. -->
 
 page are verified before this task becomes accepted.
 
@@ -392,7 +391,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | --- | --- | --- | --- | --- | --- | --- |
 | `CH14-CODE-MODEL` | typed finite binary prefix-code surface and expected length | lists, finite sums, Mathlib Kraft--McMillan | define injective/prefix-free/nonempty codes; prove range uniquely decodable and expose finite Kraft adapter | `BinaryPrefixCode`, `BinaryPrefixCode.uniquelyDecodable_range`, `BinaryPrefixCode.kraft_inequality`, `expectedCodeLength` | focused Lean | compiled |
 | `CH14-ENTROPY-DEFINITIONS` | Eqs. (14.2)--(14.3) entropy definitions, nonnegativity, and nats/bits conversion | finite sums, real log | exact finite support convention; term at zero is zero | `discreteEntropy`, `discreteEntropyBaseTwo`, `discreteEntropyBaseTwo_eq_div_log_two`, `discreteEntropy_nonneg` | focused Lean | compiled |
-| `CH14-HUFFMAN-BOUND` | Eq. (14.2), including existence/optimality of a prefix code | Kraft--McMillan, finite maximum-length induction | strict Kraft converse and zero-mass-aware lengths produce an actual code in the entropy sandwich; minimizer existence/Huffman optimality remain open | `exists_binaryPrefixCode_entropy_sandwich`, `exists_binaryPrefixCode_of_kraft_lt_one` focused-build; full optimum terminal absent | chapter terminal | partial |
+| `CH14-HUFFMAN-BOUND` | Eq. (14.2), including existence/optimality of a prefix code | Kraft--McMillan, least-weight sibling exchange, cardinality induction | actual entropy-sandwich code; competitor normalization and optimality-preserving merge/expand step compiled; recursive construction and terminal Huffman optimality remain open | `exists_no_worse_least_weight_siblings`, `IsOptimalPrefixCode.expand_least_weights` focused-build/canary passed; new aggregate gate pending | chapter terminal | partial |
 | `CH14-SOURCE-CODING` | arithmetic/block-code achievability and converse | product distributions, block prefix codes, asymptotics | exact n-fold entropy, finite-n rate sandwich, code-family convergence and universal limit converse; arithmetic algorithm remains open | `exists_sourceBlock_code_family_tendsto_entropy`, `sourceBlock_code_family_limit_ge_entropy` and finite-n leaves focused-build/canary passed; aggregate pending | chapter terminal | partial |
 | `CH14-FINITE-DISCRETE-KL` | Eq. (14.4) for an arbitrary finite alphabet | finite sums, support endpoints | atomwise AC equivalence, RN density ratio, finite LLR integrability, and finite integral sum; singular atom forces infinity | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, `relativeEntropy_finite_eq_top_iff` | focused Lean and root-import canary passed | compiled |
 | `CH14-DISCRETISATION-SUP` | Eq. (14.5) and equality with RN KL in Theorem 14.1 | finite measurable quotients/partitions, supremum | finite-cell Jensen upper bound; binary singular witness; density filtration recovery by conditional-expectation convergence/Fatou; finite-range coding of each layer | `finitePartitionRelativeEntropy_eq_relativeEntropy` and its finite-partition/filtration/encoding helpers | root, aggregate Tests, and full harness pass at 40c56ca | compiled |
@@ -59134,6 +59133,22 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/HighProbability.lean",
     "line": 133,
     "statement": "theorem randomRegret_ge_quarter_of_clippingDecomposition (horizon pullCount clippingCount : Nat) (gap randomRegret : Real) (hGap : 0 <= gap) (hPull : (pullCount : Real) <= (horizon : Real) / 2) (hClipping : (clippingCount : Real) <= (horizon : Real) / 4) (hSource : adversarialRegretLowerExpression horizon pullCount clippingCount gap <= randomRegret) : gap * ((horizon : Real) / 4) <= randomRegret"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_oriented_sibling_code",
+    "full_name": "BanditRLProof.LowerBounds.exists_oriented_sibling_code",
+    "file": "BanditRLProof/LowerBounds/HuffmanStep.lean",
+    "line": 6,
+    "statement": "theorem exists_oriented_sibling_code {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2295 Bool \u2192 \u211d) (code : BinaryPrefixCode (\u03b1 \u2295 Bool)) (w : List Bool) (bit : Bool) (hf : code.encode (.inr false) = w ++ [bit]) (ht : code.encode (.inr true) = w ++ [!bit]) : \u2203 other : BinaryPrefixCode (\u03b1 \u2295 Bool), expectedCodeLength p other = expectedCodeLength p code \u2227 \u2200 b, other.encode (.inr b) = w ++ [b]"
+  },
+  {
+    "kind": "theorem",
+    "name": "IsOptimalPrefixCode.expand_least_weights",
+    "full_name": "BanditRLProof.LowerBounds.IsOptimalPrefixCode.expand_least_weights",
+    "file": "BanditRLProof/LowerBounds/HuffmanStep.lean",
+    "line": 30,
+    "statement": "theorem IsOptimalPrefixCode.expand_least_weights {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] [Nonempty \u03b1] (p : \u03b1 \u2192 \u211d) (q r : \u211d) (hp : \u2200 i, 0 \u2264 p i) (hq : 0 \u2264 q) (hqr : q \u2264 r) (hr : \u2200 i, r \u2264 p i) (code : BinaryPrefixCode (Option \u03b1)) (hopt : IsOptimalPrefixCode (fun a => a.elim (q + r) p) code) : IsOptimalPrefixCode (Sum.elim p (fun b => if b then r else q)) code.expandSibling"
   },
   {
     "kind": "structure",

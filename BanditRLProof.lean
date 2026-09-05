@@ -50,6 +50,9 @@ import BanditRLProof.LowerBounds.PrefixCodeConstruction
 import BanditRLProof.LowerBounds.BlockEntropy
 import BanditRLProof.LowerBounds.PrefixCodeExchange
 import BanditRLProof.LowerBounds.PrefixCodeSiblings
+import BanditRLProof.LowerBounds.PrefixCodePruning
+import BanditRLProof.LowerBounds.PrefixCodeGreedy
+import BanditRLProof.LowerBounds.HuffmanStep
 import BanditRLProof.LowerBounds.Minimax
 import BanditRLProof.LowerBounds.ConditionalKernelKL
 import BanditRLProof.LowerBounds.BanditHistoryKL
