@@ -32,4 +32,8 @@ retaining main's Chapter13 completion and the Chapter14 evidence boundary.
 No Lean/library/test source changed relative to the CI-passing 1d0e120.
 README/theory-tree conflicts resolved per chapter, MANIFEST by union, indexes
 regenerated. Main's status-derived website banner is retained unchanged.
-Fresh PR validation and main publication must still be checked after this merge.
+Fresh PR validation subsequently passed at 6632b77 (run 33957794025).
+PR #106 merged as c48b98a; main run 33959196451 and Pages deployment passed.
+Live desktop/mobile acceptance is recorded in
+`2026-09-05-chapter-14-live-acceptance.md`. Earlier pending lines in this file
+describe historical integration checkpoints, not the current verdict.

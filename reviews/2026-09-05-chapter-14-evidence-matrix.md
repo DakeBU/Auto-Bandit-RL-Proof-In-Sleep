@@ -47,14 +47,13 @@ main Chapter14 canary; Chapter15 history KL is not a Chapter14 theorem.
 5. Finite KL iff AC is finite-alphabet-only; Gaussian variance is positive;
    main BH is unconditional with exp(-infinity)=0 and KL direction P to Q.
 
-## Non-proof gates still required
+## Non-proof gate closure
 
-Current full-body source declaration/canary audit; final synchronization of
-conversion/obligation/export/site status; browser verification and any required
-remote publication evidence. Markdown/LaTeX compilation and three-page visual
-QA have passed for the export snapshot described below. Expanded-body site
-content/build/static checks passed as recorded in the site-sync review.
-Whole chapter remains partial while these checks are pending.
+Full-body independent source review, both main integrations, PR #106, main
+workflow 33959196451, Pages and live desktop/mobile acceptance passed. The
+frozen required body is accepted with all qualifications above retained; see
+reviews/2026-09-05-chapter-14-live-acceptance.md. Export QA below is historical;
+the acceptance-metadata edit receives its own fresh render check in that record.
 
 Export build check: the synchronized LaTeX fragment compiled with installed
 TeX Live 2025 using tmp/ch14-export-check.tex. Three overfull identifier lines

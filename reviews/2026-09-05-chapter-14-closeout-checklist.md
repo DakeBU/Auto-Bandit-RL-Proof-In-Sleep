@@ -1,4 +1,10 @@
-# Chapter 14 completion audit checkpoint
+# Chapter 14 completion audit checkpoint (historical)
+
+Superseded by `2026-09-05-chapter-14-live-acceptance.md`: independent source
+review and integration passed, PR #106 merged as c48b98a, main workflow
+33959196451 and Pages passed, and live desktop/mobile acceptance passed.
+The frozen required body is accepted as compiled with explicit qualifications.
+Everything below is the earlier pre-integration checkpoint, not current status.
 
 The completion claim is unproven. Required scope remains the full body on
 author pp.186-191, including boxed assertions and source proof steps, before

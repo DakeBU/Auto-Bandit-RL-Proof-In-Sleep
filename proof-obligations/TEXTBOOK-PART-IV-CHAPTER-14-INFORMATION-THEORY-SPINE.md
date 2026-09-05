@@ -46,9 +46,12 @@ tests, 7 skipped, 226.925s (C:/a14/tmp/ch14-final-body-full-check.log).
 This includes NonMetric, CrossEntropy, FixedLengthCoding, UniformCoding and
 CommonDomination, not just the historical spine. The exact source/module/
 terminal/canary matrix is reviews/2026-09-05-chapter-14-evidence-matrix.md.
-Local site checks passed in the site-sync review; historical independent
-review and remote publication do not cover this expanded body. Whole-chapter
-status remains partial until the final source and evidence audit is complete.
+The later cf3ed1f source-route repair and complete gate passed. Expanded-body
+independent review and current-main integrations passed. PR #106 merged as
+c48b98a; main workflow 33959196451, Pages and live desktop/mobile acceptance
+passed. The frozen required body is compiled with explicit qualifications;
+see reviews/2026-09-05-chapter-14-live-acceptance.md. Historical gate rows above
+retain their original scope and are superseded by this current acceptance.
 
 ## Failure classification
 

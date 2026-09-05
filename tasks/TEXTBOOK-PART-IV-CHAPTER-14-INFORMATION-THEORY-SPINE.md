@@ -6,7 +6,12 @@ Kind: `theoremFormalization`
 
 Status: `accepted`
 
-Whole-chapter coverage: `partial`
+Whole-chapter coverage: `compiled` under the frozen required-body contract and explicit source/model qualifications.
+
+Acceptance: `reviews/2026-09-05-chapter-14-live-acceptance.md` records independent
+review, PR #106, main compiler/Pages success and live desktop/mobile acceptance.
+Notes/Exercises are optional; the unrestricted uniform fixed-length reading is
+refuted rather than asserted, and singleton codewords remain nonempty.
 
 Harness: `hierarchical`
 
@@ -56,7 +61,7 @@ mapped local adapter before they count as chapter evidence.
 | §14.1 code model | binary codewords, injectivity, prefix freedom, codeword length, and expected length | `BinaryPrefixCode`, its uniquely-decodable range, finite codebook, Kraft adapter, and `expectedCodeLength` compile; the explicit nonempty-codeword contract is recorded | compiled |
 | Eq. (14.1) | optimal expected-length objective over valid prefix codes | `huffmanOptimalCode`, `huffmanCode_optimal`; exact global minimization, full gate dff13cb | compiled |
 | Eq. (14.2) | Huffman optimum satisfies `H₂(P) ≤ L* ≤ H₂(P)+1` | `huffmanOptimalCode` recursively merges two least weights; global optimality and entropy sandwich for finite alphabets, ties/zeros included; classical real-weight construction, not an executable encoder; full gate passed at dff13cb | compiled |
-| §14.1 asymptotic statement | arithmetic coding approaches entropy and no code improves the asymptotic rate | named interval-address arithmetic block code with zero-mass escape tag; rate tends to entropy on Fin k, matching universal prefix-code converse; full gate passed at 2a31a01; whole-body source/export audit remains open | compiled |
+| §14.1 asymptotic statement | arithmetic coding approaches entropy and no code improves the asymptotic rate | named interval-address arithmetic block code with zero-mass escape tag; rate tends to entropy on Fin k, matching universal prefix-code converse; full gate passed at 2a31a01 and subsequent identity/full-body gates; current acceptance records source/export/publication closure | compiled |
 | Eqs. (14.2)--(14.3) definitions | finite discrete base-two entropy, natural entropy, and exact unit conversion | `discreteEntropy`, `discreteEntropyBaseTwo`, their exact conversion, and nonnegativity compile | compiled |
 | Eq. (14.4) | arbitrary finite-alphabet discrete relative entropy with exact zero/support endpoints | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, and `relativeEntropy_finite_eq_top_iff` compile; root-import finite/singular three-symbol canaries pass | compiled |
 | Eq. (14.5) | relative entropy as the supremum over all finite measurable discretisations | `finitePartitionRelativeEntropy_eq_relativeEntropy` compiles for arbitrary finite measures, using finite encodings of the concrete density filtration; root and aggregate Tests pass | compiled |
