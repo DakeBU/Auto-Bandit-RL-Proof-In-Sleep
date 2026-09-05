@@ -62,12 +62,12 @@ mapped local adapter before they count as chapter evidence.
 | Theorem 14.1 | Eq. (14.5) equals the RN/log-likelihood formula, including the singular and nonintegrable branches | full supremum/RN equality and exact RN branch adapters compile; no finite-KL or AC premise on the equality; root and aggregate Tests pass | compiled |
 | Eq. (14.6) | common-dominating-measure density formula | `relativeEntropy_commonDensity_eq_if` and the nonnegative `klFun` formula; root/aggregate/full harness passed at `78846b8` for arbitrary sigma-finite domination | compiled |
 | §14.2 metric properties | nonnegativity and `D(P,Q)=0 ↔ P=Q`, with asymmetry/non-triangle statements treated as explanatory nonclaims | order nonnegativity is intrinsic to `ENNReal`; `relativeEntropy_eq_zero_iff` compiles | compiled |
-| Gaussian example | common-variance Gaussian KL formula | `klDiv_gaussianReal_same_variance` focused-builds for arbitrary positive variance; root/aggregate verification pending | partial (integration pending) |
+| Gaussian example | common-variance Gaussian KL formula | `klDiv_gaussianReal_same_variance`; root/aggregate/full harness passed at `1e8af14` | compiled |
 | Bernoulli example | endpoint-complete binary KL formula | `bernoulliRelativeEntropy` and endpoint lemmas compile | compiled |
 | Theorem 14.2 / Eq. (14.7) | unconditional Bretagnolle--Huber event inequality in direction `D(P,Q)` | exact local terminal compiles | compiled |
-| Eq. (14.8) | measure-level overlap lower bound used in the source proof | both the attaining-event proof and source integral-Jensen/Cauchy--Schwarz route compile; `bretagnolleHuberScale_le_half_commonDensityAffinity_sq` supplies the source intermediate; root/aggregate verification pending | partial (integration pending) |
-| Eq. (14.9) | measure-level Le Cam affinity/overlap inequality | `half_commonDensityAffinity_sq_le_overlap` via L2 Cauchy--Schwarz, with integrability proved separately; focused build passed; root integration pending | partial (integration pending) |
-| Gaussian testing application | the displayed Gaussian error bound and the `3/10`, `3/20` consequences under `Δ²/σ²≤1` | `gaussian_testing_error_lower_bound`, `gaussian_testing_error_three_tenths`, `gaussian_testing_max_error_three_twentieths` focused-build; root/aggregate verification pending | partial (integration pending) |
+| Eq. (14.8) | measure-level overlap lower bound used in the source proof | attaining-event and integral-Jensen/Cauchy--Schwarz routes; root/aggregate/full harness passed at `b8325c2` | compiled |
+| Eq. (14.9) | measure-level Le Cam affinity/overlap inequality | `half_commonDensityAffinity_sq_le_overlap`; root/aggregate/full harness passed at `b8325c2` | compiled |
+| Gaussian testing application | the displayed Gaussian error bound and the `3/10`, `3/20` consequences under `Δ²/σ²≤1` | exponential and both rational bounds; root/aggregate/full harness passed at `1e8af14` | compiled |
 
 Optional rows are §14.3 Notes, §14.4 Bibliographic Remarks, and Exercises
 14.1--14.15.  Exercise 14.10 is a high-value optional target: the existing

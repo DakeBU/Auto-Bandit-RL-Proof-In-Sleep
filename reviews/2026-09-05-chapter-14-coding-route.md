@@ -67,3 +67,28 @@ strict Kraft inequality, and the H2+1 expectation bound, without removing
 zero masses. This closes numerical zero-mass allocation but not codeword
 realization or Huffman optimality. The current full gate at 1e8af14 predates
 these Shannon declarations, so their root/aggregate integration remains open.
+
+## Constructive Kraft converse route
+
+Build the finite binary level as the image of all Fin n -> Bool functions
+under List.ofFn. Its cardinality is 2^n. Prefixing a word to each element
+of a level preserves cardinality by append cancellation. These cylinder
+counts let a greedy nondecreasing-length construction show that the
+previously occupied words do not fill the next requested level whenever
+the length Kraft sum is at most one. The initial counting leaves are
+Mathlib-candidates (MLIB-FINTYPE-FIN, MLIB-FINSET-SUMS); the final
+BinaryPrefixCode packaging remains source-specific. No existence premise
+carrying the intended code is permitted.
+
+The full gate at 1e8af14 finished successfully: root/Tests (8,911 jobs),
+exporter/placeholder checks, and 400 Python tests (7 skips, 187.291s).
+Log: C:/a14/tmp/ch14-coding-gaussian-full-check.log. This validates the
+Gaussian and entropy-lower-bound integration, not later Shannon leaves.
+
+The binary-level/cylinder module now focused-builds (2,673 jobs). It proves
+exact level and extension cardinalities, membership characterizations,
+disjointness for incomparable prefixes, and existence of a fresh word under
+the exact finite occupancy budget. The latter does not assume prefix freedom
+of the old set: the union-cardinality upper bound is sufficient. It does
+require all old lengths at most the new depth, as needed by the planned
+nondecreasing-length induction. No full Kraft converse is claimed yet.

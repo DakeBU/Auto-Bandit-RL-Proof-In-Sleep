@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T05:39:56+00:00",
+  "generated": "2026-09-05T05:43:12+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -29632,6 +29632,70 @@
       "file": "BanditRLProof/LowerBounds/Minimax.lean",
       "line": 155,
       "statement": "theorem gaussianMinimaxGap_le_half {alternativeCount horizon : Real} (hhorizon : 0 < horizon) (hcount_le : alternativeCount \u2264 horizon) : gaussianMinimaxGap alternativeCount horizon \u2264 1 / 2"
+    },
+    {
+      "kind": "def",
+      "name": "binaryWords",
+      "full_name": "BanditRLProof.LowerBounds.binaryWords",
+      "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+      "line": 7,
+      "statement": "def binaryWords (n : \u2115) : Finset (List Bool)"
+    },
+    {
+      "kind": "theorem",
+      "name": "card_binaryWords",
+      "full_name": "BanditRLProof.LowerBounds.card_binaryWords",
+      "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+      "line": 10,
+      "statement": "theorem card_binaryWords (n : \u2115) : (binaryWords n).card = 2 ^ n"
+    },
+    {
+      "kind": "theorem",
+      "name": "mem_binaryWords_iff",
+      "full_name": "BanditRLProof.LowerBounds.mem_binaryWords_iff",
+      "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+      "line": 14,
+      "statement": "theorem mem_binaryWords_iff (w : List Bool) (n : \u2115) : w \u2208 binaryWords n \u2194 w.length = n"
+    },
+    {
+      "kind": "def",
+      "name": "binaryExtensions",
+      "full_name": "BanditRLProof.LowerBounds.binaryExtensions",
+      "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+      "line": 26,
+      "statement": "def binaryExtensions (w : List Bool) (n : \u2115) : Finset (List Bool)"
+    },
+    {
+      "kind": "theorem",
+      "name": "card_binaryExtensions",
+      "full_name": "BanditRLProof.LowerBounds.card_binaryExtensions",
+      "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+      "line": 29,
+      "statement": "theorem card_binaryExtensions (w : List Bool) (n : \u2115) : (binaryExtensions w n).card = 2 ^ n"
+    },
+    {
+      "kind": "theorem",
+      "name": "mem_binaryExtensions_iff",
+      "full_name": "BanditRLProof.LowerBounds.mem_binaryExtensions_iff",
+      "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+      "line": 36,
+      "statement": "theorem mem_binaryExtensions_iff (w v : List Bool) (n : \u2115) : v \u2208 binaryExtensions w n \u2194 w <+: v \u2227 v.length = w.length + n"
+    },
+    {
+      "kind": "theorem",
+      "name": "binaryExtensions_disjoint_of_incomparable",
+      "full_name": "BanditRLProof.LowerBounds.binaryExtensions_disjoint_of_incomparable",
+      "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+      "line": 48,
+      "statement": "theorem binaryExtensions_disjoint_of_incomparable (u v : List Bool) (m n : \u2115) (huv : \u00ac u <+: v) (hvu : \u00ac v <+: u) : Disjoint (binaryExtensions u m) (binaryExtensions v n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_binaryWord_avoiding_prefixes",
+      "full_name": "BanditRLProof.LowerBounds.exists_binaryWord_avoiding_prefixes",
+      "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+      "line": 58,
+      "statement": "theorem exists_binaryWord_avoiding_prefixes (S : Finset (List Bool)) (n : \u2115) (hlen : \u2200 w \u2208 S, w.length \u2264 n) (hbudget : (\u2211 w \u2208 S, 2 ^ (n - w.length)) < 2 ^ n) : \u2203 v : List Bool, v.length = n \u2227 \u2200 w \u2208 S, \u00ac w <+: v"
     },
     {
       "kind": "theorem",

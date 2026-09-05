@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T05:40:09+00:00`
+Generated: `2026-09-05T05:43:26+00:00`
 
 ## Source Task
 
@@ -68,12 +68,12 @@ mapped local adapter before they count as chapter evidence.
 | Theorem 14.1 | Eq. (14.5) equals the RN/log-likelihood formula, including the singular and nonintegrable branches | full supremum/RN equality and exact RN branch adapters compile; no finite-KL or AC premise on the equality; root and aggregate Tests pass | compiled |
 | Eq. (14.6) | common-dominating-measure density formula | `relativeEntropy_commonDensity_eq_if` and the nonnegative `klFun` formula; root/aggregate/full harness passed at `78846b8` for arbitrary sigma-finite domination | compiled |
 | §14.2 metric properties | nonnegativity and `D(P,Q)=0 ↔ P=Q`, with asymmetry/non-triangle statements treated as explanatory nonclaims | order nonnegativity is intrinsic to `ENNReal`; `relativeEntropy_eq_zero_iff` compiles | compiled |
-| Gaussian example | common-variance Gaussian KL formula | `klDiv_gaussianReal_same_variance` focused-builds for arbitrary positive variance; root/aggregate verification pending | partial (integration pending) |
+| Gaussian example | common-variance Gaussian KL formula | `klDiv_gaussianReal_same_variance`; root/aggregate/full harness passed at `1e8af14` | compiled |
 | Bernoulli example | endpoint-complete binary KL formula | `bernoulliRelativeEntropy` and endpoint lemmas compile | compiled |
 | Theorem 14.2 / Eq. (14.7) | unconditional Bretagnolle--Huber event inequality in direction `D(P,Q)` | exact local terminal compiles | compiled |
-| Eq. (14.8) | measure-level overlap lower bound used in the source proof | both the attaining-event proof and source integral-Jensen/Cauchy--Schwarz route compile; `bretagnolleHuberScale_le_half_commonDensityAffinity_sq` supplies the source intermediate; root/aggregate verification pending | partial (integration pending) |
-| Eq. (14.9) | measure-level Le Cam affinity/overlap inequality | `half_commonDensityAffinity_sq_le_overlap` via L2 Cauchy--Schwarz, with integrability proved separately; focused build passed; root integration pending | partial (integration pending) |
-| Gaussian testing application | the displayed Gaussian error bound and the `3/10`, `3/20` consequences under `Δ²/σ²≤1` | `gaussian_testing_error_lower_bound`, `gaussian_testing_error_three_tenths`, `gaussian_testing_max_error_three_twentieths` focused-build; root/aggregate verification pending | partial (integration pending) |
+| Eq. (14.8) | measure-level overlap lower bound used in the source proof | attaining-event and integral-Jensen/Cauchy--Schwarz routes; root/aggregate/full harness passed at `b8325c2` | compiled |
+| Eq. (14.9) | measure-level Le Cam affinity/overlap inequality | `half_commonDensityAffinity_sq_le_overlap`; root/aggregate/full harness passed at `b8325c2` | compiled |
+| Gaussian testing application | the displayed Gaussian error bound and the `3/10`, `3/20` consequences under `Δ²/σ²≤1` | exponential and both rational bounds; root/aggregate/full harness passed at `1e8af14` | compiled |
 
 Optional rows are §14.3 Notes, §14.4 Bibliographic Remarks, and Exercises
 14.1--14.15.  Exercise 14.10 is a high-value optional target: the existing
@@ -97,8 +97,19 @@ LowerBounds.relativeEntropy_eq_zero_iff
 LowerBounds.BinaryPrefixCode
 LowerBounds.BinaryPrefixCode.kraft_inequality
 LowerBounds.discreteEntropy
+LowerBounds.discreteEntropyBaseTwo
+LowerBounds.expectedCodeLength
+LowerBounds.bernoulliRelativeEntropy
+LowerBounds.relativeEntropy_trim_le
+LowerBounds.bernoulliRelativeEntropy_event_le
+LowerBounds.binaryBretagnolleHuber
+LowerBounds.bretagnolleHuberScale
+LowerBounds.bretagnolleHuber
+```
 
-<!-- 2362 characters omitted from the middle of this snapshot. -->
+The public terminal uses a real-valued scale `0` when `D(P,Q)=∞`, and
+
+<!-- 2004 characters omitted from the middle of this snapshot. -->
 
 page are verified before this task becomes accepted.
 
@@ -59639,6 +59650,70 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/Minimax.lean",
     "line": 155,
     "statement": "theorem gaussianMinimaxGap_le_half {alternativeCount horizon : Real} (hhorizon : 0 < horizon) (hcount_le : alternativeCount \u2264 horizon) : gaussianMinimaxGap alternativeCount horizon \u2264 1 / 2"
+  },
+  {
+    "kind": "def",
+    "name": "binaryWords",
+    "full_name": "BanditRLProof.LowerBounds.binaryWords",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 7,
+    "statement": "def binaryWords (n : \u2115) : Finset (List Bool)"
+  },
+  {
+    "kind": "theorem",
+    "name": "card_binaryWords",
+    "full_name": "BanditRLProof.LowerBounds.card_binaryWords",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 10,
+    "statement": "theorem card_binaryWords (n : \u2115) : (binaryWords n).card = 2 ^ n"
+  },
+  {
+    "kind": "theorem",
+    "name": "mem_binaryWords_iff",
+    "full_name": "BanditRLProof.LowerBounds.mem_binaryWords_iff",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 14,
+    "statement": "theorem mem_binaryWords_iff (w : List Bool) (n : \u2115) : w \u2208 binaryWords n \u2194 w.length = n"
+  },
+  {
+    "kind": "def",
+    "name": "binaryExtensions",
+    "full_name": "BanditRLProof.LowerBounds.binaryExtensions",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 26,
+    "statement": "def binaryExtensions (w : List Bool) (n : \u2115) : Finset (List Bool)"
+  },
+  {
+    "kind": "theorem",
+    "name": "card_binaryExtensions",
+    "full_name": "BanditRLProof.LowerBounds.card_binaryExtensions",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 29,
+    "statement": "theorem card_binaryExtensions (w : List Bool) (n : \u2115) : (binaryExtensions w n).card = 2 ^ n"
+  },
+  {
+    "kind": "theorem",
+    "name": "mem_binaryExtensions_iff",
+    "full_name": "BanditRLProof.LowerBounds.mem_binaryExtensions_iff",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 36,
+    "statement": "theorem mem_binaryExtensions_iff (w v : List Bool) (n : \u2115) : v \u2208 binaryExtensions w n \u2194 w <+: v \u2227 v.length = w.length + n"
+  },
+  {
+    "kind": "theorem",
+    "name": "binaryExtensions_disjoint_of_incomparable",
+    "full_name": "BanditRLProof.LowerBounds.binaryExtensions_disjoint_of_incomparable",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 48,
+    "statement": "theorem binaryExtensions_disjoint_of_incomparable (u v : List Bool) (m n : \u2115) (huv : \u00ac u <+: v) (hvu : \u00ac v <+: u) : Disjoint (binaryExtensions u m) (binaryExtensions v n)"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_binaryWord_avoiding_prefixes",
+    "full_name": "BanditRLProof.LowerBounds.exists_binaryWord_avoiding_prefixes",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 58,
+    "statement": "theorem exists_binaryWord_avoiding_prefixes (S : Finset (List Bool)) (n : \u2115) (hlen : \u2200 w \u2208 S, w.length \u2264 n) (hbudget : (\u2211 w \u2208 S, 2 ^ (n - w.length)) < 2 ^ n) : \u2203 v : List Bool, v.length = n \u2227 \u2200 w \u2208 S, \u00ac w <+: v"
   },
   {
     "kind": "theorem",
