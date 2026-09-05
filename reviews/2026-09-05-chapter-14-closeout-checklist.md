@@ -13,7 +13,7 @@ Notes. No row below substitutes a narrower accepted historical milestone.
 | KL, density, source affinity/overlap and Gaussian claims | exact terminals/canaries in evidence matrix, included in b5e21b8 full check | compiled; preserve all source/model qualifications |
 | Supporting body claims | finite cross entropy, zero limit, non-metric, uniform qualification and domination canaries | included in b5e21b8 full check |
 | Markdown/LaTeX current snapshot | final full-gate status synchronized; fragment rebuilt, unchanged pages 1-2 retain prior QA and changed page 3 re-inspected | current snapshot visual QA passed; future edits invalidate it |
-| Current site content and browser | 24aa742 static check passed; desktop content, mouse and keyboard theorem-anchor navigation verified | targeted desktop verification passed; no remote claim |
+| Current site content and browser | 7b5b5f4 status-only rebuild/static check passed; desktop content, mouse and keyboard theorem-anchor navigation previously verified at 24aa742 | targeted desktop verification passed; no remote claim |
 | Independent whole-body review | historical independent review covers only old Section 14.2 | no current independent-review evidence |
 | Current PR and remote/publication evidence | read-only gh pr list for exact current branch returned [] | no current PR; historical PR #11/Pages does not cover this branch |
 
@@ -35,3 +35,9 @@ The current latest.tex SHA256 is
 The status-only update was rebuilt successfully and its changed page 3 rendered
 and inspected again; pages 1-2 have no content changes.
 The article wrapper and preview PDF are scratch artifacts, not a publication.
+
+Final status-only site snapshot: source commit 7b5b5f4, clean source,
+generated 2026-09-05T07:39:00Z. SITE CHECK PASSED: 687 HTML pages,
+9235 Lean source links, valid internal links/anchors and mathematical fallbacks.
+No Lean changes followed the successful 3d7c9a1 full gate. This is local
+static verification, not a new browser run or remote deployment.
