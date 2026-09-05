@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
-  "generated": "2026-09-05T06:19:29+00:00",
+  "generated": "2026-09-05T06:23:46+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -32459,6 +32459,46 @@
       "file": "BanditRLProof/Algorithms/MOSS.lean",
       "line": 72,
       "statement": "theorem selected_index_gt_mean_add_half_gap {k : ℕ} (hk : 0 < k) (n t : ℕ) (mean empiricalMean : Fin k → ℝ) (pulls : Fin k → ℕ) (best chosen : Fin k) (deficit : ℝ) (ht : k ≤ t) (hselected : action hk n t empiricalMean pulls = chosen) (hoptimism : mean best - deficit ≤ index n empiricalMean pulls best) (hgap : 2 * deficit < mean best - mean chosen) : mean chosen + (mean best - mean chosen) / 2 < index n empiricalMean pulls chosen"
+    },
+    {
+      "kind": "def",
+      "name": "centeredRewardTable",
+      "full_name": "BanditRLProof.MOSS.centeredRewardTable",
+      "file": "BanditRLProof/Algorithms/MOSSCanonicalReward.lean",
+      "line": 9,
+      "statement": "def centeredRewardTable {k : ℕ} (mean : Fin k → ℝ) : Fin k → ℕ → UCB.ArmRewardStream k → ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_canonicalReward_regret_le",
+      "full_name": "BanditRLProof.MOSS.integral_canonicalReward_regret_le",
+      "file": "BanditRLProof/Algorithms/MOSSCanonicalReward.lean",
+      "line": 14,
+      "statement": "theorem integral_canonicalReward_regret_le {k : ℕ} (hk : 0 < k) (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν] (n : ℕ) (hkn : k ≤ n) (mean : Fin k → ℝ) (best : Fin k) (hbest : ∀ a, mean a ≤ mean best) (hmean : ∀ a, ∫ r, r ∂ν a = mean a) (hsubG : ∀ a, HasSubgaussianMGF (fun r => r-mean a) 1 (ν a)) : (∫ table, realMeanRegret mean (streamTrace hk n mean (centeredRewardTable mean) table) n ∂UCB.armStreamMeasure ν) ≤ 39*Real.sqrt ((n : ℝ)*k) + ∑ a, (mean best-mean a)"
+    },
+    {
+      "kind": "theorem",
+      "name": "mean_add_centeredRewardTable_average",
+      "full_name": "BanditRLProof.MOSS.mean_add_centeredRewardTable_average",
+      "file": "BanditRLProof/Algorithms/MOSSCanonicalReward.lean",
+      "line": 43,
+      "statement": "theorem mean_add_centeredRewardTable_average {k : ℕ} (mean : Fin k → ℝ) (table : UCB.ArmRewardStream k) (a : Fin k) (s : ℕ) (hs : 0 < s) : mean a + streamMean (centeredRewardTable mean a) table s = (∑ j ∈ Finset.range s, table (j+1) a)/(s : ℝ)"
+    },
+    {
+      "kind": "theorem",
+      "name": "streamTrace_pullCount_pos",
+      "full_name": "BanditRLProof.MOSS.streamTrace_pullCount_pos",
+      "file": "BanditRLProof/Algorithms/MOSSCanonicalReward.lean",
+      "line": 54,
+      "statement": "theorem streamTrace_pullCount_pos {Ω : Type*} {k : ℕ} (hk : 0 < k) (n t : ℕ) (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) (a : Fin k) (ht : k ≤ t) : 0 < pullCount (streamTrace hk n mean X ω) a t"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalReward_action_eq_raw",
+      "full_name": "BanditRLProof.MOSS.canonicalReward_action_eq_raw",
+      "file": "BanditRLProof/Algorithms/MOSSCanonicalReward.lean",
+      "line": 62,
+      "statement": "theorem canonicalReward_action_eq_raw {k : ℕ} (hk : 0 < k) (n t : ℕ) (mean : Fin k → ℝ) (table : UCB.ArmRewardStream k) : streamTrace hk n mean (centeredRewardTable mean) table t = action hk n t (fun a => (∑ j ∈ Finset.range (pullCount (streamTrace hk n mean (centeredRewardTable mean) table) a t), table (j+1) a)/(pullCount (streamTrace hk n mean (centeredRewardTable mean) table) a t : ℝ)) (fun a => pullCount (streamTrace hk n mean (centeredRewardTable mean) table) a t)"
     },
     {
       "kind": "theorem",
@@ -95893,6 +95933,46 @@
       "target_fingerprint": "",
       "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
       "time": "2026-09-05T06:15:57+00:00",
+      "verifier_evidence": [],
+      "worker_id": ""
+    },
+    {
+      "attempt_id": "",
+      "changed_files": [],
+      "dag_depth": 0,
+      "dag_nodes": 0,
+      "elapsed_seconds": 0.0,
+      "error_signature": "",
+      "experiment_id": "",
+      "harness": "",
+      "input_tokens": 0,
+      "kind": "build",
+      "lean": "BanditRLProof/Algorithms/MOSSExpectedRegret.lean",
+      "lean_check_seconds": 0.0,
+      "new_declarations": [
+        "BanditRLProof.MOSS.integral_streamTrace_regret_le",
+        "BanditRLProof.MOSS.measurable_streamTrace",
+        "BanditRLProof.MOSS.integrable_streamTrace_regret"
+      ],
+      "notes": "Exact39 expected regret bound compiled for concrete centered-table MOSS execution with measurable actions and integrable regret. Canary axioms only standard. Common history-law identification and broader-class consumer remain open; chapter partial.",
+      "obligations_after": 0,
+      "obligations_before": 0,
+      "output_tokens": 0,
+      "parent_id": "",
+      "progress_class": "compiled-leaf",
+      "prompt_chars": 0,
+      "reused_declarations": [],
+      "reviewer_validated": false,
+      "role": "lower",
+      "route_fingerprint": "",
+      "route_packet_hash": "",
+      "run_id": "",
+      "source": "",
+      "statement_hash": "",
+      "status": "compiled",
+      "target_fingerprint": "",
+      "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+      "time": "2026-09-05T06:19:38+00:00",
       "verifier_evidence": [],
       "worker_id": ""
     }

@@ -1,6 +1,7 @@
 import BanditRLProof.Algorithms.MOSSStream
 import BanditRLProof.Algorithms.MOSSRegret
 import BanditRLProof.Algorithms.MOSSExpectedRegret
+import BanditRLProof.Algorithms.MOSSCanonicalReward
 
 open BanditRLProof
 
@@ -48,3 +49,15 @@ example {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasur
 #print axioms MOSS.measurable_streamTrace
 #print axioms MOSS.integrable_streamTrace_regret
 #print axioms MOSS.integral_streamTrace_regret_le
+
+example {k : ℕ} (hk : 0 < k) (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν]
+    (n : ℕ) (hkn : k ≤ n) (mean : Fin k → ℝ) (best : Fin k)
+    (hbest : ∀ a, mean a ≤ mean best) (hmean : ∀ a, ∫ r, r ∂ν a = mean a)
+    (hsubG : ∀ a, HasSubgaussianMGF (fun r => r-mean a) 1 (ν a)) :
+    (∫ table, realMeanRegret mean (MOSS.streamTrace hk n mean (MOSS.centeredRewardTable mean) table) n
+      ∂UCB.armStreamMeasure ν) ≤ 39*Real.sqrt ((n : ℝ)*k) + ∑ a, (mean best-mean a) :=
+  MOSS.integral_canonicalReward_regret_le hk ν n hkn mean best hbest hmean hsubG
+
+#print axioms MOSS.integral_canonicalReward_regret_le
+#print axioms MOSS.mean_add_centeredRewardTable_average
+#print axioms MOSS.canonicalReward_action_eq_raw

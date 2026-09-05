@@ -213,3 +213,27 @@ laws and identify this generated execution with MOSS.historyAlgorithm's
 common history law. Do not infer broad-class/chapter completion from the
 table theorem alone. Source wording, theorem exports and final gates still
 need synchronized evidence once that bridge compiles.
+
+Canonical law route: reuse UCB.armStreamMeasure (stationary product kernel),
+armStreamMeasure_map_coord, iIndepFun_armStreamMeasure_coord_sub and
+hasSubgaussianMGF_armStreamMeasure_coord_sub. Define centered coordinates as
+table i arm - mean arm. MOSS uses i=1,2,...; coordinate zero is unused.
+This harmless explicit one-based convention must match reward consumption
+table(count+1,arm). No HasSubgaussianMGF.integral_eq_zero API was found;
+derive zero means by integral_map and integral_sub with the explicit
+arm-mean equation integral id = mean. Raw integrability follows by adding
+the constant mean to the integrable centered reward.
+The resulting theorem quantifies over arbitrary Markov reward kernels, but
+history-law identification remains required. No Gaussian-only restriction.
+
+Compiled `MOSSCanonicalReward.integral_canonicalReward_regret_le` (MOSS
+namespace) consumes arbitrary Markov arm laws with their actual means and
+unit-subgaussian centered MGFs, deriving all table independence/centering
+contracts from the canonical product measure. `canonicalReward_action_eq_raw`
+proves the action depends on raw empirical rewards and counts; unknown means
+cancel after initialization, and initial choices ignore them.
+Next identify finite histories using reward table(count+1,arm) and prove the
+selected unused reward has the arm's law conditionally on history; then
+transport to MOSS.historyAlgorithm and the main-prose near-minimax consumer.
+Full check 81f500f passed: root, Tests (8915 jobs), ProofGraphExport, 400 Python
+tests in 180.365 seconds, 7 skipped. Newer changes still need full validation.
