@@ -255,3 +255,21 @@ Next reuse the coordinate-without-coordinate independence from
 UCBArmStreamConditionalReward and adapt its countable next-coordinate branch
 argument to this MOSS history. Its UCB-specific history theorem cannot be
 used directly. No conditional-law or history-measure equality is yet claimed.
+
+Single-coordinate route: reuse UCB.armStreamWithoutCoordinate and
+armStreamInsertCoordinate, but define MOSS next coordinate as (count+1,arm)
+for its one-based table convention. From consumed-history invariance derive
+history equality whenever count<target.index and complements agree. Prove
+selection of target is invariant under inserting any replacement value,
+in both directions, so the selection branch factors through the complement.
+Then the history/action condition on that branch is a measurable function
+of the complement, independent of the target reward under armStreamMeasure.
+
+Compiled `MOSSUnusedCoordinate`: complement-history invariance, the two-way
+next-coordinate insertion equivalence, actual/reconstructed condition equality
+on a selected branch, measurable reconstruction, coordinate independence, and
+`map_canonicalConditionWithout_coordinate` product joint law. A simplifier
+timeout was repaired by congrArg on the history equality, without increasing
+heartbeats or changing the proof route. Next restrict the product law to each
+next-coordinate branch and sum the countable disjoint partition; this is still
+needed before claiming the actual selected reward conditional law.

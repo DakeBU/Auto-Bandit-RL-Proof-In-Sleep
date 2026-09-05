@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T06:27:22+00:00`
+Generated: `2026-09-05T06:30:45+00:00`
 
 ## Source Task
 
@@ -34264,6 +34264,94 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/Algorithms/MOSSStreamMeasurable.lean",
     "line": 61,
     "statement": "theorem integrable_streamTrace_regret (\u03bc : Measure \u03a9) [IsFiniteMeasure \u03bc] {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (X : Fin k \u2192 \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 a i, StronglyMeasurable (X a i)) : Integrable (fun \u03c9 => realMeanRegret mean (streamTrace hk n mean X \u03c9) n) \u03bc"
+  },
+  {
+    "kind": "def",
+    "name": "canonicalCondition",
+    "full_name": "BanditRLProof.MOSS.canonicalCondition",
+    "file": "BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean",
+    "line": 8,
+    "statement": "def canonicalCondition {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (t : \u2115) (table : UCB.ArmRewardStream k)"
+  },
+  {
+    "kind": "def",
+    "name": "canonicalNextCoordinate",
+    "full_name": "BanditRLProof.MOSS.canonicalNextCoordinate",
+    "file": "BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean",
+    "line": 12,
+    "statement": "def canonicalNextCoordinate {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (t : \u2115) (table : UCB.ArmRewardStream k) : \u2115 \u00d7 Fin k"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonicalNextCoordinate_count",
+    "full_name": "BanditRLProof.MOSS.canonicalNextCoordinate_count",
+    "file": "BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean",
+    "line": 17,
+    "statement": "theorem canonicalNextCoordinate_count {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (t : \u2115) (table : UCB.ArmRewardStream k) : (canonicalNextCoordinate hk n mean t table).1 = pullCount (canonicalAction hk n mean table) (canonicalNextCoordinate hk n mean t table).2 (t+1)+1"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonicalHistory_eq_of_complement_eq",
+    "full_name": "BanditRLProof.MOSS.canonicalHistory_eq_of_complement_eq",
+    "file": "BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean",
+    "line": 23,
+    "statement": "theorem canonicalHistory_eq_of_complement_eq {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (t : \u2115) (target : \u2115 \u00d7 Fin k) (table table' : UCB.ArmRewardStream k) (hc : UCB.armStreamWithoutCoordinate target table = UCB.armStreamWithoutCoordinate target table') (hf : pullCount (canonicalAction hk n mean table) target.2 (t+1) < target.1) : canonicalHistory hk n mean table t = canonicalHistory hk n mean table' t"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonicalNextCoordinate_eq_iff_insert",
+    "full_name": "BanditRLProof.MOSS.canonicalNextCoordinate_eq_iff_insert",
+    "file": "BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean",
+    "line": 39,
+    "statement": "theorem canonicalNextCoordinate_eq_iff_insert {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (t : \u2115) (target : \u2115 \u00d7 Fin k) (v : \u211d) (table : UCB.ArmRewardStream k) : canonicalNextCoordinate hk n mean t table = target \u2194 canonicalNextCoordinate hk n mean t (UCB.armStreamInsertCoordinate target v (UCB.armStreamWithoutCoordinate target table)) = target"
+  },
+  {
+    "kind": "def",
+    "name": "canonicalConditionWithout",
+    "full_name": "BanditRLProof.MOSS.canonicalConditionWithout",
+    "file": "BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean",
+    "line": 63,
+    "statement": "def canonicalConditionWithout {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (t : \u2115) (target : \u2115 \u00d7 Fin k) (v : \u211d)"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonicalCondition_eq_without",
+    "full_name": "BanditRLProof.MOSS.canonicalCondition_eq_without",
+    "file": "BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean",
+    "line": 67,
+    "statement": "theorem canonicalCondition_eq_without {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (t : \u2115) (target : \u2115 \u00d7 Fin k) (v : \u211d) (table : UCB.ArmRewardStream k) (hnext : canonicalNextCoordinate hk n mean t table = target) : canonicalCondition hk n mean t table = canonicalConditionWithout hk n mean t target v (UCB.armStreamWithoutCoordinate target table)"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_canonicalCondition",
+    "full_name": "BanditRLProof.MOSS.measurable_canonicalCondition",
+    "file": "BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean",
+    "line": 79,
+    "statement": "theorem measurable_canonicalCondition {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (t : \u2115) : Measurable (canonicalCondition hk n mean t)"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_canonicalConditionWithout",
+    "full_name": "BanditRLProof.MOSS.measurable_canonicalConditionWithout",
+    "file": "BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean",
+    "line": 84,
+    "statement": "theorem measurable_canonicalConditionWithout {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (t : \u2115) (target : \u2115 \u00d7 Fin k) (v : \u211d) : Measurable (canonicalConditionWithout hk n mean t target v)"
+  },
+  {
+    "kind": "theorem",
+    "name": "indepFun_coordinate_canonicalConditionWithout",
+    "full_name": "BanditRLProof.MOSS.indepFun_coordinate_canonicalConditionWithout",
+    "file": "BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean",
+    "line": 90,
+    "statement": "theorem indepFun_coordinate_canonicalConditionWithout {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (t : \u2115) (\u03bd : Kernel (Fin k) \u211d) [IsMarkovKernel \u03bd] (target : \u2115 \u00d7 Fin k) (v : \u211d) : IndepFun (UCB.armStreamCoordinate target) (fun table => canonicalConditionWithout hk n mean t target v (UCB.armStreamWithoutCoordinate target table)) (UCB.armStreamMeasure \u03bd)"
+  },
+  {
+    "kind": "theorem",
+    "name": "map_canonicalConditionWithout_coordinate",
+    "full_name": "BanditRLProof.MOSS.map_canonicalConditionWithout_coordinate",
+    "file": "BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean",
+    "line": 100,
+    "statement": "theorem map_canonicalConditionWithout_coordinate {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (t : \u2115) (\u03bd : Kernel (Fin k) \u211d) [IsMarkovKernel \u03bd] (target : \u2115 \u00d7 Fin k) (v : \u211d) : Measure.map (fun table => (canonicalConditionWithout hk n mean t target v (UCB.armStreamWithoutCoordinate target table), UCB.armStreamCoordinate target table)) (UCB.armStreamMeasure \u03bd) = (Measure.map (fun table => canonicalConditionWithout hk n mean t target v (UCB.armStreamWithoutCoordinate target table)) (UCB.armStreamMeasure \u03bd)).prod (\u03bd target.2)"
   },
   {
     "kind": "def",
@@ -97214,6 +97302,45 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "target_fingerprint": "",
     "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
     "time": "2026-09-05T06:23:51+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "build",
+    "lean": "BanditRLProof/Algorithms/MOSSCanonicalHistory.lean",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [
+      "BanditRLProof.MOSS.canonicalHistory_eq_of_eq_consumed",
+      "BanditRLProof.MOSS.canonicalAction_succ_eq_historyAction"
+    ],
+    "notes": "Compiled exact measurable finite-history bridge and invariance under changes to unconsumed rewards. Conditional unused-coordinate law and equality of history measures still open. Chapter partial.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "compiled-leaf",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "lower",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "compiled",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T06:27:33+00:00",
     "verifier_evidence": [],
     "worker_id": ""
   }

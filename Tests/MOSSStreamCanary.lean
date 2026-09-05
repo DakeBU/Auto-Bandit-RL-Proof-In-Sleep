@@ -3,6 +3,7 @@ import BanditRLProof.Algorithms.MOSSRegret
 import BanditRLProof.Algorithms.MOSSExpectedRegret
 import BanditRLProof.Algorithms.MOSSCanonicalReward
 import BanditRLProof.Algorithms.MOSSCanonicalHistory
+import BanditRLProof.Algorithms.MOSSUnusedCoordinate
 
 open BanditRLProof
 
@@ -74,3 +75,8 @@ example {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ)
 #print axioms MOSS.canonicalAction_succ_eq_historyAction
 #print axioms MOSS.measurable_canonicalHistory
 #print axioms MOSS.canonicalHistory_eq_of_eq_consumed
+
+#print axioms MOSS.canonicalNextCoordinate_eq_iff_insert
+#print axioms MOSS.canonicalCondition_eq_without
+#print axioms MOSS.indepFun_coordinate_canonicalConditionWithout
+#print axioms MOSS.map_canonicalConditionWithout_coordinate
