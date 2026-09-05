@@ -47,3 +47,9 @@ failure. The original root import is retained for the short-path full gate.
 Direct-module typed checks pass for both the equality-budget Bool example
 and arbitrary finite uniquely decodable encoder. All three new declarations
 report only propext, Classical.choice and Quot.sound.
+
+Full 3d7c9a1 gate passed: Tests 8951 jobs, 400 Python tests, 7 skipped,
+178.901s; C:/a14/tmp/ch14-kraft-equivalence-full-check.log. This includes the
+original root-import canary, strict-wrapper consumers and the equality-budget
+example. The long-workspace missing-root-artifact issue did not recur in the
+short validation checkout. The boxed assertion's local proof gate is closed.

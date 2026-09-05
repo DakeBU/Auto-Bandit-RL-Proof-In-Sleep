@@ -24,3 +24,13 @@ an observed URL change or new tab. Direct navigation to its observed href worked
 Thus URL/anchor/content verification passed, but click navigation has not been
 certified. No mobile layout, full interaction sweep, independent review or
 public deployment claim is made by this checkpoint.
+
+Follow-up resolved the click observation: keyboard Enter navigated to the exact
+declaration anchor. After an automated click, DOM geometry showed that the
+inline link's bounding-box center hit the table cell between its wrapped text
+lines. Clicking the visible first text line navigated correctly to the same
+anchor, confirmed by URL and active theorem DOM. This is a targeting limitation
+of that automated center click, not evidence of a broken href or intercepted
+site navigation. Both actual mouse activation and keyboard activation pass;
+no site code was changed. Mobile and remote verification remain outside this
+desktop checkpoint.

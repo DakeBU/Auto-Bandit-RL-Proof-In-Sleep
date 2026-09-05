@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T07:24:37+00:00`
+Generated: `2026-09-05T07:33:23+00:00`
 
 ## Source Task
 
@@ -58,7 +58,7 @@ mapped local adapter before they count as chapter evidence.
 | Source body node | Exact required content | Current evidence | Status |
 | --- | --- | --- | --- |
 | opening motivation | information-theory/KL role in generalising Chapter 13 | maintained source map; no theorem claim | mapped |
-| §14.1 boxed code equivalence | every finite uniquely decodable encoder admits a prefix code with the same symbol lengths | `exists_prefixCode_of_uniquelyDecodable` via non-strict Kraft converse; module and direct-module typed checks pass, root/aggregate pending | partial |
+| §14.1 boxed code equivalence | every finite uniquely decodable encoder admits a prefix code with the same symbol lengths | `exists_prefixCode_of_uniquelyDecodable` via non-strict Kraft converse; full 3d7c9a1 gate passed, including root canary | compiled |
 | §14.1 code model | binary codewords, injectivity, prefix freedom, codeword length, and expected length | `BinaryPrefixCode`, its uniquely-decodable range, finite codebook, Kraft adapter, and `expectedCodeLength` compile; the explicit nonempty-codeword contract is recorded | compiled |
 | Eq. (14.1) | optimal expected-length objective over valid prefix codes | `huffmanOptimalCode`, `huffmanCode_optimal`; exact global minimization, full gate dff13cb | compiled |
 | Eq. (14.2) | Huffman optimum satisfies `H₂(P) ≤ L* ≤ H₂(P)+1` | `huffmanOptimalCode` recursively merges two least weights; global optimality and entropy sandwich for finite alphabets, ties/zeros included; classical real-weight construction, not an executable encoder; full gate passed at dff13cb | compiled |

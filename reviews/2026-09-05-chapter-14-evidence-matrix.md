@@ -8,7 +8,7 @@ accepted/task/site status does not independently certify the expanded body.
 | Body content | Source module | Exact terminal or interface | Canary suffix | Full gate |
 | --- | --- | --- | --- | --- |
 | prefix-code model and entropy units | InformationTheory | BinaryPrefixCode; expectedCodeLength; discreteEntropyBaseTwo_eq_div_log_two | (empty) | existing spine + subsequent gates |
-| boxed unique-decoding/prefix equivalence | PrefixCodeConstruction | exists_binaryPrefixCode_of_kraft_le_one; exists_prefixCode_of_uniquelyDecodable | PrefixConstruction | focused module passed; root/aggregate pending |
+| boxed unique-decoding/prefix equivalence | PrefixCodeConstruction | exists_binaryPrefixCode_of_kraft_le_one; exists_prefixCode_of_uniquelyDecodable | PrefixConstruction | 3d7c9a1 full gate passed |
 | optimum gives no longer words to strictly larger masses | PrefixCodeExchange | IsOptimalPrefixCode.length_antitone | Exchange | included in a47106a |
 | Eq.14.1/14.2 global Huffman optimum | HuffmanConstruction | huffmanCode_optimal; huffmanCode_entropy_sandwich | HuffmanConstruction | dff13cb |
 | arithmetic expected-rate convergence and code identity | ArithmeticBlockCoding | arithmeticBlockCode_rate_tendsto_entropy; arithmeticBlockCode_payload_interval | ArithmeticBlock | strengthened identity full gate b5e21b8 passed |

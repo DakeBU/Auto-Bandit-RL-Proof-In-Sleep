@@ -9,11 +9,11 @@ Notes. No row below substitutes a narrower accepted historical milestone.
 | Source body and semantic fidelity | evidence matrix; body, arithmetic-identity and boxed-code audits | two discovered interface gaps repaired locally; final audit remains open |
 | Huffman construction and global optimum | huffmanOptimalCode recursion and full-conclusion canary; prior full gates | proved in nonempty-word model |
 | Actual arithmetic code and rate/converse | payload interval theorem and rate canary; b5e21b8 full check passed | proved; exact-real classical construction, not executable finite precision |
-| Boxed unique-decoding equivalence including Kraft equality | 3d7c9a1 module and direct typed checks | root/aggregate check running in C:/a14 |
+| Boxed unique-decoding equivalence including Kraft equality | 3d7c9a1 full gate passed, including original root canary | proved for finite injective uniquely decodable encoders |
 | KL, density, source affinity/overlap and Gaussian claims | exact terminals/canaries in evidence matrix, included in b5e21b8 full check | compiled; preserve all source/model qualifications |
 | Supporting body claims | finite cross entropy, zero limit, non-metric, uniform qualification and domination canaries | included in b5e21b8 full check |
 | Markdown/LaTeX current snapshot | synchronized new boxed-code paragraph; fbd6997 fragment rebuilt and all three pages inspected | current snapshot visual QA passed; future edits invalidate it |
-| Current site content and browser | 24aa742 static check passed; current desktop content and direct theorem-anchor navigation verified | click navigation unconfirmed; see browser checkpoint; no remote claim |
+| Current site content and browser | 24aa742 static check passed; desktop content, mouse and keyboard theorem-anchor navigation verified | targeted desktop verification passed; no remote claim |
 | Independent whole-body review | historical independent review covers only old Section 14.2 | no current independent-review evidence |
 | Current PR and remote/publication evidence | read-only gh pr list for exact current branch returned [] | no current PR; historical PR #11/Pages does not cover this branch |
 
