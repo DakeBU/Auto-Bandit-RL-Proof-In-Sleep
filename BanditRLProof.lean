@@ -72,6 +72,7 @@ import BanditRLProof.LowerBounds.CommonDomination
 import BanditRLProof.LowerBounds.Minimax
 import BanditRLProof.LowerBounds.ConditionalKernelKL
 import BanditRLProof.LowerBounds.BanditHistoryKL
+import BanditRLProof.LowerBounds.BanditHistoryDataProcessing
 import BanditRLProof.LowerBounds.GaussianMinimax
 import BanditRLProof.LowerBounds.SuccinctGeometryAudit
 import BanditRLProof.Algorithms.StochasticGradientBanditAudit

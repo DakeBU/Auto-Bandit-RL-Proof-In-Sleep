@@ -890,6 +890,26 @@
       "evidence": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean; BanditRLProof/LowerBounds/BanditHistoryKL.lean; Tests/TextbookPartIVChapter15Canary.lean"
     },
     {
+      "id": "TEXTBOOK-PART-IV-CH15-EX15-7-DATA-PROCESSING-LEAF",
+      "title": "Chapter 15 Exercise 15.7 measurable-observation KL leaf",
+      "chapter": "foundations",
+      "textbook_spine": "chapter-15-minimax-lower-bounds",
+      "status": "partial",
+      "informal": "KL divergence between finite measures cannot increase after an arbitrary measurable observation. Combined with the compiled deterministic-horizon Lemma 15.1, any measurable statistic of the complete finite bandit history is bounded by the first-law expected pull-count-weighted arm information. The bounded stopping-time history bound required by Exercise 15.7 remains open.",
+      "declarations": [
+        "BanditRLProof.LowerBounds.klDiv_map_le",
+        "BanditRLProof.LowerBounds.klDiv_observedBanditHistory_le_expectedPulls_sum"
+      ],
+      "depends_on": [
+        "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum"
+      ],
+      "missing": [
+        "Construct a measurable bounded stopped-history law and prove that its KL charges arm information only through the realized stopping time.",
+        "Factor an arbitrary F_tau-measurable random element through the stopped history before applying data processing."
+      ],
+      "evidence": "BanditRLProof/LowerBounds/BanditHistoryDataProcessing.lean; Tests/TextbookPartIVChapter15Canary.lean; research-wiki/open-problems/chapter-15-exercise-15-7-stopped-history.md"
+    },
+    {
       "id": "TEXTBOOK-PART-IV-CH15-GAUSSIAN-MINIMAX-LOWER-BOUND",
       "title": "Chapter 15 finite-armed Gaussian minimax lower bound",
       "chapter": "foundations",
@@ -917,7 +937,8 @@
         "BanditRLProof.LowerBounds.exists_leastExploredAlternative"
       ],
       "missing": [
-        "The Bernoulli refinement in the Chapter 15 notes and the chapter exercise set are outside this compiled main-theorem milestone.",
+        "The Bernoulli refinement in the Chapter 15 notes and Exercises 15.1–15.6 and 15.8 are outside this compiled main-theorem milestone.",
+        "Exercise 15.7 has a separate compiled data-processing dependency, but its stopped-history inequality remains open.",
         "Chapter 16 and Chapter 17 lower-bound terminals remain separate consumers and are not promoted by this result."
       ],
       "evidence": "BanditRLProof/LowerBounds/GaussianMinimax.lean; Tests/TextbookPartIVChapter15Canary.lean; tasks/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE.md"

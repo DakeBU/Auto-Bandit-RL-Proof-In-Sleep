@@ -113,6 +113,38 @@ Use one section per candidate:
   compiled derivative/variance bridge; the conservative exponential constant
   is the frozen route.
 
+## KL-DATA-PROCESSING-MEASURABLE-MAP
+
+- Proposed name: `InformationTheory.klDiv_map_le`.
+- Mathematical area: finite measures, relative entropy, measurable maps, and
+  conditional expectation.
+- Intended Mathlib namespace: `InformationTheory`.
+- Exact statement: for finite measures `mu, nu` and measurable `observe`,
+  `klDiv (mu.map observe) (nu.map observe) <= klDiv mu nu`.
+- Required imports:
+  `Mathlib.MeasureTheory.Function.ConditionalExpectation.CondJensen` and
+  `Mathlib.MeasureTheory.Function.ConditionalExpectation.RadonNikodym`.
+- Local APIs: `MeasureTheory.toReal_rnDeriv_map`,
+  `InformationTheory.convexOn_klFun.map_condExp_le`,
+  `InformationTheory.integrable_klFun_rnDeriv_iff`,
+  `InformationTheory.toReal_klDiv_eq_integral_klFun`, and
+  `integral_condExp`.
+- Current integrated route (2026-09-05): keep infinite source KL as a direct
+  top branch; derive absolute continuity in the finite branch, then reuse
+  Chapter 14's `relativeEntropy_map_eq_trim_of_absolutelyContinuous` and
+  `relativeEntropy_trim_le`. The original standalone conditional-Jensen proof
+  is superseded; the public declaration and regularity contract are unchanged.
+- Regularity contracts: arbitrary measurable source and target spaces, finite
+  source laws, and a measurable map. No injectivity, probability
+  normalization, standard-Borel hypothesis, or finite-KL premise is required.
+- Current ABRL task:
+  `TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE`.
+- Status: locally-compiled as `BanditRLProof.LowerBounds.klDiv_map_le`, with a
+  deterministic bandit-history consumer for the first leaf of Exercise 15.7.
+- Failure signal: this data-processing theorem does not construct a stopped
+  history, truncate the Lemma 15.1 information sum at a random time, or factor
+  an arbitrary `F_tau`-measurable observation.
+
 ## Review Rule
 
 Before adding tactic work, the candidate must name local APIs and an intended
