@@ -6,6 +6,33 @@ Chapter status remains partial pending main/deployment/live acceptance.
 
 ## PR acceptance
 
+### Authoritative-main and deployed-page acceptance
+
+Main run 33953476610 completed successfully on b38630c. Build job
+101272447506 passed library 8880 jobs, Tests 8927 jobs, ProofGraphExport,
+400 Python tests in 70.266 seconds (3 skipped), result-free protocol
+validation, public-snapshot site build/check and Pages artifact upload.
+Deployment job 101275173069 also passed. Live site-manifest.json reports
+source_commit b38630cb18c9724252432647443cfe3c031da4e5, source_dirty false,
+lean_verified true, public_snapshot true, 632 modules, 8453 declarations,
+zero placeholders, and generation time 2026-09-05T08:08:56+00:00.
+
+The deployed Chapter 13 page was inspected at desktop 1280x720 and mobile
+390x844. Desktop text is legible with zero broken images and document width
+1265. Mobile text and the minimax formula are legible after reload resolved
+the transient screenshot/layout scaling discrepancy; document width is 375,
+with zero broken images. The Lean correspondence region has client width
+341, content width 704 and overflow-x:auto. Actual horizontal scrolling
+moved scrollLeft from 0 to 350 and exposed the role/type columns without
+document-level overflow. The three MOSS/common-history/broad-class terminal
+links are present. Temporary viewport overrides were reset.
+
+The live page correctly retains its pre-promotion Partial main-text label
+and explicitly optional Notes/Exercises. This acceptance closes the
+publication gate for the mathematical extension; it does not claim that
+the subsequent status-summary edits or completion labels are deployed.
+Those final synchronized records still require publication and verification.
+
 PR #105 was marked ready after the local source/consumer/export/mobile
 review and merged at b38630cb18c9724252432647443cfe3c031da4e5. Its head
 90b1c0742cbfd3783dbf7cdf99c1f3b9d82f4223 passed all three workflows:
