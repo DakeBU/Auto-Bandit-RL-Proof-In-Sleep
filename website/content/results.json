@@ -689,14 +689,17 @@
     },
     {
       "id": "TEXTBOOK-PART-IV-CH13-BASIC-IDEAS-LEAN-SPINE",
-      "title": "Chapter 13 lower-bound semantic and deterministic spine",
+      "title": "Chapter 13 lower-bound semantic, optimality, and deterministic spine",
       "chapter": "foundations",
       "textbook_spine": "chapter-13-basic-ideas",
       "status": "compiled",
-      "informal": "The Chapter 13 conversion window compiles explicit ENNReal worst-case/minimax semantics, a source-shaped least-explored alternative-arm theorem from the exact expected pull budget, and quantitative deterministic two-environment regret algebra whose cross-law pull discrepancy remains a visible error premise.",
+      "informal": "The Chapter 13 conversion window compiles explicit ENNReal worst-case/minimax semantics, fixed-class minimax-optimality without assuming general attainment, a source-shaped least-explored alternative-arm theorem from the exact expected pull budget, and quantitative deterministic two-environment regret algebra whose cross-law pull discrepancy remains a visible error premise.",
       "declarations": [
         "BanditRLProof.LowerBounds.worstCaseExpectedRegret",
         "BanditRLProof.LowerBounds.minimaxExpectedRegret",
+        "BanditRLProof.LowerBounds.IsMinimaxOptimal",
+        "BanditRLProof.LowerBounds.IsMinimaxOptimal.mem_policyClass",
+        "BanditRLProof.LowerBounds.IsMinimaxOptimal.eq_minimaxExpectedRegret",
         "BanditRLProof.LowerBounds.expectedRegret_le_worstCaseExpectedRegret",
         "BanditRLProof.LowerBounds.minimaxExpectedRegret_le_worstCaseExpectedRegret",
         "BanditRLProof.LowerBounds.le_minimaxExpectedRegret",
@@ -711,9 +714,45 @@
       "depends_on": [],
       "missing": [
         "The Chapter 14 event-testing foundation and Chapter 15 same-policy adaptive-history KL identity compile.",
-        "The separate compiled Chapter 15 consumer now closes the source-stated Gaussian minimax Theorem 13.1 order with explicit universal constant 1/54; optional Chapter 13 notes and exercises remain outside this foundational milestone."
+        "The separate Chapter 15 consumer closes Theorem 13.1 with c=1/54 and GaussianHypothesisTesting closes exact Eq. (13.1); the broader-class fixed-horizon MOSS near-minimax consequence also compiles. Whole-chapter integration, review and deployment gates remain pending."
       ],
       "evidence": "BanditRLProof/LowerBounds/BasicIdeas.lean; Tests/TextbookPartIVChapter13Canary.lean"
+    },
+    {
+      "id": "TEXTBOOK-PART-IV-CH13-GAUSSIAN-TESTING-COMPANION",
+      "title": "Chapter 13 exact Gaussian testing bounds and Chernoff companion",
+      "chapter": "foundations",
+      "textbook_spine": "chapter-13-basic-ideas",
+      "status": "compiled",
+      "informal": "The canonical iid Gaussian empirical mean has law N(mu,1/n). Both midpoint error events and their maximum-risk Chernoff upper bound compile. Separately, the exact lower and upper Mills-ratio integrals of Eq. (13.4) give the printed Eq. (13.1) bounds for the zero-mean error, with denominator constants 16 and 32/pi, for n>0 and Delta>0.",
+      "declarations": [
+        "BanditRLProof.LowerBounds.gaussianSampleMeanVariance",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanVariance_pos",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanLaw",
+        "BanditRLProof.LowerBounds.gaussianIIDObservationLaw",
+        "BanditRLProof.LowerBounds.gaussianCoordinateAverage",
+        "BanditRLProof.LowerBounds.gaussianIIDSumLaw",
+        "BanditRLProof.LowerBounds.gaussianIIDSampleMeanLaw",
+        "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision",
+        "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision_zero_error_event",
+        "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision_gap_error_event",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanGapErrorProbability",
+        "BanditRLProof.LowerBounds.hasSubgaussianMGF_id_gaussianReal_zero",
+        "BanditRLProof.LowerBounds.hasSubgaussianMGF_gap_sub_id_gaussianReal",
+        "BanditRLProof.LowerBounds.gaussianReal_zero_Ici_le_exp_neg_sq_div_two_variance",
+        "BanditRLProof.LowerBounds.gaussianReal_gap_Iio_half_le_exp_neg_sq_div_two_variance",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability_le_exp",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanGapErrorProbability_le_exp",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanThresholdRisk",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanThresholdRisk_le_exp",
+        "BanditRLProof.LowerBounds.gaussianMills_lower_integral",
+        "BanditRLProof.LowerBounds.gaussianMills_upper_integral",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability_source_bounds"
+      ],
+      "depends_on": [],
+      "missing": [],
+      "evidence": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean; BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean; Tests/TextbookPartIVChapter13Canary.lean"
     },
     {
       "id": "TEXTBOOK-PART-IV-CH14-INFORMATION-THEORY-LEAN-SPINE",
@@ -1025,7 +1064,8 @@
         "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum"
       ],
       "missing": [
-        "The Chapter 13 notes and exercises are not implied by this compiled main order theorem."
+        "Exact Eq. (13.1) is separately compiled in GaussianHypothesisTesting; the broader-class fixed-horizon MOSS near-minimax consequence compiles in SubgaussianMinimax, with publication gates pending.",
+        "Notes 13.2 and Exercises 13.1–13.2 are optional and are not implied by the theorem."
       ],
       "evidence": "BanditRLProof/LowerBounds/GaussianMinimax.lean; Tests/TextbookPartIVChapter15Canary.lean; tasks/TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE.md; tasks/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE.md"
     },

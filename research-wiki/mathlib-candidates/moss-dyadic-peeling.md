@@ -1,0 +1,88 @@
+# MOSS dyadic peeling route
+
+Parent: `TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE`.
+Source: Lattimore--Szepesvari Lemma 9.3, author-online pp. 124--125.
+Cards: `TXT-LATTIMORE-SZEPESVARI-2020`, `MLIB-EXP-LOG-INEQUALITIES`,
+`MLIB-REAL-LOG-SQRT`, `MLIB-FINSET-SUMS`, `MLIB-MEASURE-INTEGRAL`.
+
+Target remains the source probability bound 15*delta/gap^2 for positive
+gap and delta in (0,1). The already compiled finite maximal subgaussian
+bound supplies each dyadic level; the union ranges over positive sample
+counts, with centered independent strongly measurable 1-subgaussian rewards.
+
+## Analytic route refinement
+
+The source bounds its dyadic series by a unimodal integral plus a maximum.
+A stronger telescoping bound is available from Mathlib's
+`Real.self_le_sinh_iff` at x/3:
+
+`x*exp(-x) <= (3/2)*(exp(-2*x/3)-exp(-4*x/3))`, x>=0.
+
+At x=a*2^j, the exponential differences telescope. Hence
+`sum_j 2^j*exp(-a*2^j) <= 3/(2*a)` for a>0. With a=gap^2/4 this
+bounds the source series by 12*delta/gap^2, which implies its required
+15*delta/gap^2 bound. This is a stronger intermediate estimate, not a
+change to the target or its assumptions. The reason for the refinement is
+to reuse an existing convex-exponential inequality and avoid a separate
+unimodal integral-comparison theorem.
+
+Imports/APIs: `Trigonometric.DerivHyp`, `Real.sinh_eq`, exponential addition,
+finite sum induction, nonnegative series order APIs. Search-memory dyadic
+found no existing local result. Analytic leaves are mathlib-candidates;
+source event peeling and MOSS radius consumers stay project-local.
+Status: scalar exponential comparison, finite dyadic sums, and the countable
+source-constant series bound compile in `ConcentrationDyadicExponential`.
+Probability peeling and normalization to the actual empirical-mean event
+compile in `Algorithms/MOSSPeeling.lean`. The source constant is 15;
+the intermediate series estimate is 12. The MOSS expected-regret theorem
+is still pending: centered arm-stream instantiation, expected optimism
+deficit, large-gap occupancy, and concrete history regret assembly remain.
+
+## Source event bridge
+
+Use the source-equivalent scaled event
+`S_s + sqrt(4*s*logPlus(1/(s*delta))) + s*gap <= 0`, s>=1.
+For 2^j<=s<=2^(j+1), monotonicity of logPlus and nonnegative products
+lower-bound the barrier by
+`A_j=sqrt(4*2^j*logPlus(1/(2^(j+1)*delta)))+2^j*gap`.
+Apply the compiled independent maximal tail to -X through 2^(j+1),
+then bound exp(-A_j^2/(4*2^j)) by
+`delta*2^(j+1)*exp(-gap^2*2^j/4)`.
+Union over j and consume the compiled countable series bound. Natural-log
+dyadic coverage uses `Nat.pow_log_le_self` and `Nat.lt_pow_succ_log_self`.
+Finally normalize the scaled event to the actual empirical-mean/radius event.
+All mean-zero, independence and subgaussian assumptions stay explicit until
+instantiated by the centered arm-stream model. No tail premise is assumed.
+
+## Finite-horizon optimism deficit consumer
+
+Next project-local leaf defines the nonnegative maximum of the negative
+centered MOSS indices over sample counts 1 through n. Recursive finite maxima
+give exact positive-threshold event equivalence, strong measurability, and
+integrability from the coordinate contracts; no integrability premise is
+assumed for the derived maximum. The event embeds into `meanBadEvent`, hence
+the compiled Lemma 9.3 supplies its tail. APIs: `StronglyMeasurable.finset_sum`,
+`Integrable.finset_sum`, division by constants, addition, negation and max.
+Cards: `MLIB-MEASURE-INTEGRAL`, `MLIB-FINSET-SUMS`; textbook source unchanged.
+Search for optimism found unrelated RL optimism leaves, not this deficit.
+The subsequent tail integration target 2*sqrt(15*delta) is now compiled
+as `integral_optimismDeficit_le_two_sqrt`. Its source substitution gives
+the printed 16*sqrt(n*k) optimism contribution. Full MOSS regret is pending.
+
+Status: `Algorithms/MOSSOptimism.lean` compiles (3496 focused build jobs).
+The finite maximum, positive-threshold event equivalence, strong measurability,
+integrability, source tail bound, and layer-cake identity are proved. The latter
+uses `Mathlib.MeasureTheory.Integral.Layercake`; integrability is derived from
+coordinate MGF contracts, not postulated for the maximum. Initial API repairs
+were `sup` versus `max`, strong-measurable division, and explicit equality of
+finite sums of functions with pointwise finite sums; the route is unchanged.
+Next analytic APIs: `integral_Ioi_rpow_of_lt` and
+`integrableOn_Ioi_rpow_of_lt` at exponent -2, finite interval constant integral,
+and splitting the positive half-line at sqrt(15*delta).
+
+The compiled numerical integration leaf takes a measurable nonnegative tail
+function bounded by 1 and c/t^2 for t>0, c>0. Split at a=sqrt(c).
+Derive integrability separately on (0,a] by domination by 1 and on (a,infinity)
+by c*t^(-2); join the two sets, integrate, and use a+c/a=2*sqrt(c).
+The generic analytic leaf is a mathlib-candidate; the MOSS wrapper supplies
+measurability by antitonicity of event probabilities and the compiled tail.

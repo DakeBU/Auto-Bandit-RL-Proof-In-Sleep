@@ -1,4 +1,6 @@
 import Tests.Basic
+import Tests.ConcentrationMartingaleMaximalCanary
+import Tests.MOSSCanary
 import Tests.CurvatureNoiseGapGeometry
 import Tests.ConditionalRewardPartialTrajectoryGeometricAllTimeCanary
 import Tests.ConditionalRewardPartialTrajectoryTelescopingAllTimeCanary
@@ -39,3 +41,6 @@ import Tests.StochasticGradientBanditTheoremTwoNativeTrajectoryCanary
 import Tests.StochasticGradientBanditTheoremTwoNativePrefixCanary
 import Tests.StochasticGradientBanditTheoremTwoSelectedIIDCanary
 import Tests.StochasticGradientBanditTheoremFourContractAuditCanary
+import Tests.MOSSPeelingCanary
+import Tests.MOSSStreamCanary
+import Tests.SubgaussianMinimaxCanary

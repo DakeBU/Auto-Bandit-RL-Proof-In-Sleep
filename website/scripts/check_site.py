@@ -374,6 +374,23 @@ def check_current_evidence_surfaces(
 ) -> list[str]:
     """Verify that public progress surfaces remain generated from current ledgers."""
     errors: list[str] = []
+    ch13_path = output / "textbook-spine" / "chapter-13-basic-ideas" / "index.html"
+    if ch13_path.exists():
+        ch13_text = ch13_path.read_text(encoding="utf-8")
+        for declaration in (
+            "BanditRLProof.MOSS.canonicalGapExpectedRegret_le",
+            "BanditRLProof.LowerBounds.subgaussianMinimax_sandwich",
+            "BanditRLProof.LowerBounds.moss_nearMinimax",
+        ):
+            if declaration not in ch13_text:
+                errors.append(f"Chapter 13 missing compiled MOSS correspondence: {declaration}")
+        for stale in (
+            "still lacks a compiled MOSS",
+            "no expected-regret upper theorem yet",
+            "MOSS peeling and regret integration remain open",
+        ):
+            if stale in ch13_text:
+                errors.append(f"Chapter 13 contains stale proof boundary: {stale}")
     comparison_path = ROOT / "runs" / "harness-comparison" / "latest.json"
     comparison_diagram_path = ROOT / "runs" / "harness-comparison" / "latest.mmd"
     gpt_review_path = ROOT / "runs" / "harness-comparison" / "latest.gpt-review.json"
