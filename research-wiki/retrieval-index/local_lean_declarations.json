@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T05:00:15+00:00",
+  "generated": "2026-09-05T05:03:49+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -28216,6 +28216,38 @@
       "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
       "line": 162,
       "statement": "theorem finitePartitionRelativeEntropy_eq_relativeEntropy_of_not_absolutelyContinuous {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) (h : \u00ac P \u226a Q) : finitePartitionRelativeEntropy P Q = relativeEntropy P Q"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_fin_encoding_of_finite_range",
+      "full_name": "BanditRLProof.LowerBounds.exists_fin_encoding_of_finite_range",
+      "file": "BanditRLProof/LowerBounds/FinitePartitionKLRecovery.lean",
+      "line": 15,
+      "statement": "theorem exists_fin_encoding_of_finite_range {\u03b1 \u03b2 : Type*} [MeasurableSpace \u03b1] [MeasurableSpace \u03b2] [MeasurableSingletonClass \u03b2] (f : \u03b1 \u2192 \u03b2) (hf : Measurable f) (hfin : (Set.range f).Finite) : \u2203 (n : \u2115) (g : \u03b1 \u2192 Fin n), Measurable g \u2227 \u2203 d : Fin n \u2192 \u03b2, f = d \u2218 g"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_fin_observation_densityApproximation",
+      "full_name": "BanditRLProof.LowerBounds.exists_fin_observation_densityApproximation",
+      "file": "BanditRLProof/LowerBounds/FinitePartitionKLRecovery.lean",
+      "line": 31,
+      "statement": "theorem exists_fin_observation_densityApproximation {\u03b1 : Type*} [m : MeasurableSpace \u03b1] (r : \u03b1 \u2192 ENNReal) (n : \u2115) : \u2203 (k : \u2115) (g : \u03b1 \u2192 Fin k) (_hg : Measurable g), densityApproximationFiltration r n \u2264 (inferInstance : MeasurableSpace (Fin k)).comap g"
+    },
+    {
+      "kind": "theorem",
+      "name": "relativeEntropy_trim_mono",
+      "full_name": "BanditRLProof.LowerBounds.relativeEntropy_trim_mono",
+      "file": "BanditRLProof/LowerBounds/FinitePartitionKLRecovery.lean",
+      "line": 56,
+      "statement": "theorem relativeEntropy_trim_mono {\u03b1 : Type*} {m\u2081 m\u2082 m\u2080 : MeasurableSpace \u03b1} (P Q : @Measure \u03b1 m\u2080) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h\u2081\u2082 : m\u2081 \u2264 m\u2082) (h\u2082 : m\u2082 \u2264 m\u2080) : @relativeEntropy \u03b1 m\u2081 (P.trim (h\u2081\u2082.trans h\u2082)) (Q.trim (h\u2081\u2082.trans h\u2082)) \u2264 @relativeEntropy \u03b1 m\u2082 (P.trim h\u2082) (Q.trim h\u2082)"
+    },
+    {
+      "kind": "theorem",
+      "name": "finitePartitionRelativeEntropy_eq_relativeEntropy",
+      "full_name": "BanditRLProof.LowerBounds.finitePartitionRelativeEntropy_eq_relativeEntropy",
+      "file": "BanditRLProof/LowerBounds/FinitePartitionKLRecovery.lean",
+      "line": 65,
+      "statement": "theorem finitePartitionRelativeEntropy_eq_relativeEntropy {\u03b1 : Type*} [m : MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] : finitePartitionRelativeEntropy P Q = relativeEntropy P Q"
     },
     {
       "kind": "def",

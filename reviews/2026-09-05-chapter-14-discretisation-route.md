@@ -171,3 +171,10 @@ canaries are included in the aggregate Tests target. Full integration gates
 are pending. The recovery canary includes real-line Dirac cases, an arbitrary
 probability-measure equality, and the infinite-KL consequence without AC or
 integrability assumptions.
+
+Short-path `python tools/bandit.py check` is running at `40c56ca` in
+`C:\a14`, logging to `C:\a14\tmp\ch14-partition-recovery-full-check.log`.
+All three newly integrated modules have built successfully; root, Tests,
+exporter, placeholder, and Python-suite final outcomes are still pending at
+this checkpoint. Do not reuse the earlier Eq. (14.4) full-gate result as
+verification of this larger slice.
