@@ -1,5 +1,6 @@
 import BanditRLProof.Algorithms.MOSSStream
 import BanditRLProof.Algorithms.MOSSRegret
+import BanditRLProof.Algorithms.MOSSExpectedRegret
 
 open BanditRLProof
 
@@ -32,3 +33,18 @@ example {Ω : Type*} [MeasurableSpace Ω] {k : ℕ} (hk : 0 < k) (n : ℕ) (hkn 
 #print axioms MOSS.streamTrace_gapSum_le
 #print axioms MOSS.streamTrace_realMeanRegret_le
 #print axioms MOSS.integral_largeGapCountSum_le
+
+open MeasureTheory ProbabilityTheory
+example {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    {k : ℕ} (hk : 0 < k) (n : ℕ) (hkn : k ≤ n)
+    (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (best : Fin k)
+    (hbest : ∀ a, mean a ≤ mean best) (hXm : ∀ a i, StronglyMeasurable (X a i))
+    (hind : ∀ a, iIndepFun (X a) μ) (hmean : ∀ a i, ∫ ω, X a i ω ∂μ = 0)
+    (hsubG : ∀ a i, HasSubgaussianMGF (X a i) 1 μ) :
+    (∫ ω, realMeanRegret mean (MOSS.streamTrace hk n mean X ω) n ∂μ) ≤
+      39*Real.sqrt ((n : ℝ)*k) + ∑ a, (mean best-mean a) :=
+  MOSS.integral_streamTrace_regret_le μ hk n hkn mean X best hbest hXm hind hmean hsubG
+
+#print axioms MOSS.measurable_streamTrace
+#print axioms MOSS.integrable_streamTrace_regret
+#print axioms MOSS.integral_streamTrace_regret_le

@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T06:15:43+00:00`
+Generated: `2026-09-05T06:19:23+00:00`
 
 ## Source Task
 
@@ -33642,6 +33642,14 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "statement": "theorem gap_mul_integral_indexExceedanceCount_le (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) (hlarge : 8*sqrt \u03b4 \u2264 gap) (n : \u2115) : gap*(\u222b \u03c9, indexExceedanceCount (streamMean X \u03c9) \u03b4 gap n \u2202\u03bc) \u2264 gap+15/sqrt \u03b4"
   },
   {
+    "kind": "theorem",
+    "name": "integral_streamTrace_regret_le",
+    "full_name": "BanditRLProof.MOSS.integral_streamTrace_regret_le",
+    "file": "BanditRLProof/Algorithms/MOSSExpectedRegret.lean",
+    "line": 9,
+    "statement": "theorem integral_streamTrace_regret_le {\u03a9 : Type*} [MeasurableSpace \u03a9] (\u03bc : Measure \u03a9) [IsProbabilityMeasure \u03bc] {k : \u2115} (hk : 0 < k) (n : \u2115) (hkn : k \u2264 n) (mean : Fin k \u2192 \u211d) (X : Fin k \u2192 \u2115 \u2192 \u03a9 \u2192 \u211d) (best : Fin k) (hbest : \u2200 a, mean a \u2264 mean best) (hXm : \u2200 a i, StronglyMeasurable (X a i)) (hind : \u2200 a, iIndepFun (X a) \u03bc) (hmean : \u2200 a i, \u222b \u03c9, X a i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 a i, HasSubgaussianMGF (X a i) 1 \u03bc) : (\u222b \u03c9, realMeanRegret mean (streamTrace hk n mean X \u03c9) n \u2202\u03bc) \u2264 39*sqrt ((n : \u211d)*k) + \u2211 a, (mean best-mean a)"
+  },
+  {
     "kind": "def",
     "name": "historyAction",
     "full_name": "BanditRLProof.MOSS.historyAction",
@@ -34080,6 +34088,46 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/Algorithms/MOSSStream.lean",
     "line": 133,
     "statement": "theorem streamTrace_pullCount_le {\u03a9 : Type*} [MeasurableSpace \u03a9] {k : \u2115} (hk : 0 < k) (n : \u2115) (hkn : k \u2264 n) (mean : Fin k \u2192 \u211d) (X : Fin k \u2192 \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03c9 : \u03a9) (best chosen : Fin k) (hgap : 2 * optimismDeficit (X best) ((k : \u211d)/(n : \u211d)) n \u03c9 < mean best - mean chosen) : (pullCount (streamTrace hk n mean X \u03c9) chosen n : \u211d) \u2264 1 + indexExceedanceCount (streamMean (X chosen) \u03c9) ((k : \u211d)/(n : \u211d)) (mean best - mean chosen) n"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_streamMean_at_count",
+    "full_name": "BanditRLProof.MOSS.measurable_streamMean_at_count",
+    "file": "BanditRLProof/Algorithms/MOSSStreamMeasurable.lean",
+    "line": 10,
+    "statement": "theorem measurable_streamMean_at_count (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (c : \u03a9 \u2192 \u2115) (hc : Measurable c) : Measurable (fun \u03c9 => streamMean X \u03c9 (c \u03c9))"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_action_of_state",
+    "full_name": "BanditRLProof.MOSS.measurable_action_of_state",
+    "file": "BanditRLProof/Algorithms/MOSSStreamMeasurable.lean",
+    "line": 21,
+    "statement": "theorem measurable_action_of_state {k : \u2115} (hk : 0 < k) (n t : \u2115) (emp : \u03a9 \u2192 Fin k \u2192 \u211d) (counts : \u03a9 \u2192 Fin k \u2192 \u2115) (he : \u2200 a, Measurable (fun \u03c9 => emp \u03c9 a)) (hc : \u2200 a, Measurable (fun \u03c9 => counts \u03c9 a)) : Measurable (fun \u03c9 => action hk n t (emp \u03c9) (counts \u03c9))"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_streamCounts",
+    "full_name": "BanditRLProof.MOSS.measurable_streamCounts",
+    "file": "BanditRLProof/Algorithms/MOSSStreamMeasurable.lean",
+    "line": 34,
+    "statement": "theorem measurable_streamCounts {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (X : Fin k \u2192 \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 a i, StronglyMeasurable (X a i)) (t : \u2115) (a : Fin k) : Measurable (fun \u03c9 => streamCounts hk n mean X \u03c9 t a)"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_streamTrace",
+    "full_name": "BanditRLProof.MOSS.measurable_streamTrace",
+    "file": "BanditRLProof/Algorithms/MOSSStreamMeasurable.lean",
+    "line": 51,
+    "statement": "theorem measurable_streamTrace {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (X : Fin k \u2192 \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 a i, StronglyMeasurable (X a i)) (t : \u2115) : Measurable (fun \u03c9 => streamTrace hk n mean X \u03c9 t)"
+  },
+  {
+    "kind": "theorem",
+    "name": "integrable_streamTrace_regret",
+    "full_name": "BanditRLProof.MOSS.integrable_streamTrace_regret",
+    "file": "BanditRLProof/Algorithms/MOSSStreamMeasurable.lean",
+    "line": 61,
+    "statement": "theorem integrable_streamTrace_regret (\u03bc : Measure \u03a9) [IsFiniteMeasure \u03bc] {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (X : Fin k \u2192 \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 a i, StronglyMeasurable (X a i)) : Integrable (fun \u03c9 => realMeanRegret mean (streamTrace hk n mean X \u03c9) n) \u03bc"
   },
   {
     "kind": "def",
@@ -96912,6 +96960,45 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "target_fingerprint": "",
     "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
     "time": "2026-09-05T06:12:06+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "build",
+    "lean": "BanditRLProof/Algorithms/MOSSRegret.lean",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [
+      "BanditRLProof.MOSS.streamTrace_realMeanRegret_le",
+      "BanditRLProof.MOSS.integral_largeGapCountSum_le"
+    ],
+    "notes": "Compiled pathwise regret split for actual stream execution and integrated large-gap bound with single initialization gap sum. Next measurable execution and full expected regret constant39, then history-law identification. Chapter partial.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "compiled-leaf",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "lower",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "compiled",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T06:15:57+00:00",
     "verifier_evidence": [],
     "worker_id": ""
   }

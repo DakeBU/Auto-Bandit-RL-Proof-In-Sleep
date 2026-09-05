@@ -192,3 +192,24 @@ sum gaps + k*15/sqrt(delta), using the sharp bound and only one initialization
 gap per arm. Next prove measurable stream execution/integrable regret, then
 combine with the deficit term and normalize delta=k/n to obtain constant 39.
 The centered-table/history-law bridge and broader-class conclusion remain open.
+
+Regularity route: project-local stream execution. Reuse measurable finite
+argmax from ETCRealEmpiricalMean (same UCB.scoreArgmax definition), measurable
+evaluation of a countable family of stream averages at a measurable Nat count,
+and induct on streamCounts. Then reuse integrable_real_pullCount_of_measurable_action
+and integrable_realMeanRegret_of_integrable_pullCount. Only strong measurability
+of the centered coordinates and a finite measure are required, no independence
+for these regularity results. This prevents relying on totalized Bochner
+integrals before measurable execution has been certified.
+
+Compiled: `MOSSStreamMeasurable` proves measurable recursive counts/actions
+and integrable realMeanRegret under a finite measure. `MOSSExpectedRegret`
+then proves `integral_streamTrace_regret_le`, exactly
+E[realMeanRegret]<=39*sqrt(n*k)+sum gaps for the concrete centered-table MOSS
+execution, under explicit per-arm independent, mean-zero, unit-subgaussian
+coordinate contracts and n>=k>0. The bound uses no tail/count/regret oracle.
+Next required bridge: construct centered streams from arbitrary arm reward
+laws and identify this generated execution with MOSS.historyAlgorithm's
+common history law. Do not infer broad-class/chapter completion from the
+table theorem alone. Source wording, theorem exports and final gates still
+need synchronized evidence once that bridge compiles.
