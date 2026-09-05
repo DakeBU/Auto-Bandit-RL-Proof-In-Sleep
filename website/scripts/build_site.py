@@ -1002,6 +1002,7 @@ def render_textbook_spine_map(
     page_path: str,
     spine: dict[str, Any],
     verified: bool,
+    compact: bool = False,
 ) -> str:
     cards = []
     for chapter in spine["chapters"]:
@@ -1013,7 +1014,7 @@ def render_textbook_spine_map(
   <span class="spine-chapter-status">{status_badge(effective_evidence_status(chapter['status'], verified))}</span>
   <strong>{html.escape(chapter['title'])}</strong>
   <span>{html.escape(chapter['print_pages'])} print · {html.escape(chapter['pdf_pages'])} PDF</span>
-  <p>{html.escape(chapter['status_note'])}</p>
+  <p>{'Read the exact scope, proofs, and remaining optional work.' if compact else html.escape(chapter['status_note'])}</p>
   <span class="spine-chapter-arrow" aria-hidden="true">→</span>
 </a>"""
         )
@@ -1757,10 +1758,6 @@ def render_primary_textbook_banner() -> str:
     source = SITE_TEXTBOOK_SPINE["canonical_source"]
     spine_chapters = SITE_TEXTBOOK_SPINE.get("chapters", [])
     spine_contracts = sum(chapter.get("status") == "compiled" for chapter in spine_chapters)
-    spine_terminals = Counter(
-        chapter.get("source_theorem", {}).get("status", "unrecorded")
-        for chapter in spine_chapters
-    )
     return f"""
 <aside class="primary-textbook-banner" id="primary-textbook" aria-labelledby="primary-textbook-title">
   <div class="primary-textbook-identity">
@@ -1772,7 +1769,7 @@ def render_primary_textbook_banner() -> str:
   <a class="button compact" href="{PRIMARY_TEXTBOOK_URL}">Open the free textbook <span aria-hidden="true">↗</span></a>
   <dl class="textbook-coverage" aria-label="Current textbook coverage">
     <div><dt>Book Map</dt><dd><strong>{len(SITE_CHAPTERS)} source-mapped routes</strong><span>{chapter_statuses.get('compiled', 0)} canonical cores compiled · {chapter_statuses.get('planned', 0)} planned</span></dd></div>
-    <div><dt>Part IV spine</dt><dd><strong>{spine_terminals.get('compiled', 0)} of {len(spine_chapters)} named terminals compile</strong><span>{spine_contracts} of {len(spine_chapters)} chapter contracts compiled; see each chapter's exact scope</span></dd></div>
+    <div><dt>Part IV spine</dt><dd><strong>{spine_contracts} of {len(spine_chapters)} chapter contracts compiled</strong><span>Required scope only, not every exercise. Ch.17 uses explicitly corrected source statements.</span></dd></div>
     <div><dt>Whole textbook</dt><dd><strong>Not claimed complete</strong><span>Coverage is theorem- and route-specific, with exact gaps on every page</span></dd></div>
   </dl>
 </aside>
@@ -1984,7 +1981,7 @@ def build_index(
     placeholder_count = sum(1 for decl in declarations if decl["placeholder"])
     book_map = render_book_map(page_path, chapters, compact=True)
     learning_routes = render_learning_routes(page_path)
-    textbook_spine_map = render_textbook_spine_map(page_path, SITE_TEXTBOOK_SPINE, verified)
+    textbook_spine_map = render_textbook_spine_map(page_path, SITE_TEXTBOOK_SPINE, verified, compact=True)
     contributor_cards = render_contributor_cards(page_path, authors, include_invitation=False)
     primary_textbook = render_primary_textbook_banner()
     current_snapshot = render_current_snapshot(
@@ -2027,6 +2024,15 @@ def build_index(
 <div class="homepage-textbook-stage">
   {primary_textbook}
 </div>
+
+<section id="textbook-spine" aria-labelledby="textbook-spine-title">
+  <p class="eyebrow">Chapter-by-chapter source spine · Chapters 13–17</p>
+  <h2 id="textbook-spine-title">Part IV: Lower Bounds</h2>
+  <p class="section-intro">Follow the proof technology from basic lower-bound ideas through information theory, minimax bounds, instance-dependent bounds, and high-probability bounds. Each chapter links its exact source scope to Lean declarations.</p>
+  <div class="callout warning"><strong>What completion means.</strong> The five recorded chapter contracts are compiled, not the entire textbook or every exercise. Chapter 17 formalizes an explicitly corrected version: Claim 17.6 uses the event <code>T_i ≤ n/2</code>, and Theorem 17.4 assumes <code>0 &lt; δ ≤ 1/32</code>, with constants <code>c = 1/160</code> and <code>C = 64</code>. See the chapter pages for assumptions, source differences, and optional work.</div>
+  {textbook_spine_map}
+  <p><a class="button" href="{href_from(page_path, 'textbook-spine/index.html')}">Explore the five chapter routes</a></p>
+</section>
 
 {current_snapshot}
 
@@ -2082,16 +2088,8 @@ def build_index(
 </section>
 
 <details class="homepage-details">
-  <summary><span>More project paths</span><small>Part IV spine · contributors · installation</small></summary>
+  <summary><span>More project paths</span><small>Contributors · installation</small></summary>
   <div class="homepage-details-content">
-<section id="textbook-spine">
-  <p class="eyebrow">Chapter-by-chapter source spine</p>
-  <h2>Part IV: Lower Bounds</h2>
-  <p class="section-intro">This separate layer follows Chapters 13–17 of <em>Bandit Algorithms</em> in order. It does not change the ten-chapter Book Map or imply that the whole textbook is complete.</p>
-  {textbook_spine_map}
-  <p><a class="button" href="{href_from(page_path, 'textbook-spine/index.html')}">Open the Part IV spine</a></p>
-</section>
-
 <section id="contributors">
   <p class="eyebrow">People behind the project</p>
   <h2>Authors</h2>
@@ -2156,13 +2154,13 @@ python3 tools/bandit.py check</code></pre></article>
         ("overview", "Overview"),
         ("three-roles", "Three ways to use BanditRLlib"),
         ("primary-textbook", "Primary textbook"),
+        ("textbook-spine", "Part IV spine"),
         ("current-snapshot", "Current evidence"),
         ("two-systems", "ABRL + BanditRLlib"),
         ("live-inventory", "Live inventory"),
         ("purpose", "Project purpose"),
         ("banditrlwiki", "BanditRLwiki"),
         ("book-map", "Book map"),
-        ("textbook-spine", "Part IV spine"),
         ("contributors", "Contributors"),
         ("installation", "Installation"),
         ("how-to-contribute", "How to contribute"),
