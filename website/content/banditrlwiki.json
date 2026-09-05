@@ -180,7 +180,7 @@
       "comparison": {
         "status": "minimax-matched",
         "gap": "Universal constants and the exact hard-family reward class differ across the displayed source theorems.",
-        "note": "The literature establishes the square-root minimax order. The local Lean theorem currently supplies only the unit-Gaussian lower side, not the bounded-reward MOSS upper side."
+        "note": "The literature establishes the square-root minimax order. Local Lean now supplies the unit-Gaussian lower bound and fixed-horizon Algorithm 7 on unit-subgaussian laws with gaps in [0,1]. The cited anytime theorem remains a distinct formalization target."
       },
       "upper": [
         {
@@ -210,7 +210,7 @@
       ],
       "lean": {
         "status": "partial",
-        "scope": "BanditRLlib compiles a unit-variance Gaussian minimax lower bound with explicit constant 1/54. It does not compile MOSS or a bounded-reward upper theorem.",
+        "scope": "BanditRLlib compiles a unit-variance Gaussian lower bound with constant 1/54 and fixed-horizon MOSS on unit-subgaussian laws with gaps in [0,1]. The cited anytime MOSS theorem is not compiled.",
         "declarations": [
           "BanditRLProof.LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt"
         ],
@@ -227,7 +227,7 @@
         "literature_open": false,
         "formalization_open": true,
         "question": "Can the exact anytime MOSS source theorem be compiled on one generated bounded-reward trajectory?",
-        "closest": "The local Gaussian minimax lower terminal is compiled; the source-compatible MOSS upper algorithm and its pull-count proof are absent.",
+        "closest": "The local Gaussian lower terminal and fixed-horizon MOSS near-minimax theorem compile; the distinct anytime variant remains unformalized.",
         "leaf_ids": ["MOSS-ANYTIME-GENERATED-UPPER"],
         "missing": ["Index measurability", "armwise confidence", "pull-count summation", "expected-regret terminal"]
       }

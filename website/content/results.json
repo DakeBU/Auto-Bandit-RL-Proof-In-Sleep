@@ -689,14 +689,17 @@
     },
     {
       "id": "TEXTBOOK-PART-IV-CH13-BASIC-IDEAS-LEAN-SPINE",
-      "title": "Chapter 13 lower-bound semantic and deterministic spine",
+      "title": "Chapter 13 lower-bound semantic, optimality, and deterministic spine",
       "chapter": "foundations",
       "textbook_spine": "chapter-13-basic-ideas",
       "status": "compiled",
-      "informal": "The Chapter 13 conversion window compiles explicit ENNReal worst-case/minimax semantics, a source-shaped least-explored alternative-arm theorem from the exact expected pull budget, and quantitative deterministic two-environment regret algebra whose cross-law pull discrepancy remains a visible error premise.",
+      "informal": "The Chapter 13 conversion window compiles explicit ENNReal worst-case/minimax semantics, fixed-class minimax-optimality without assuming general attainment, a source-shaped least-explored alternative-arm theorem from the exact expected pull budget, and quantitative deterministic two-environment regret algebra whose cross-law pull discrepancy remains a visible error premise.",
       "declarations": [
         "BanditRLProof.LowerBounds.worstCaseExpectedRegret",
         "BanditRLProof.LowerBounds.minimaxExpectedRegret",
+        "BanditRLProof.LowerBounds.IsMinimaxOptimal",
+        "BanditRLProof.LowerBounds.IsMinimaxOptimal.mem_policyClass",
+        "BanditRLProof.LowerBounds.IsMinimaxOptimal.eq_minimaxExpectedRegret",
         "BanditRLProof.LowerBounds.expectedRegret_le_worstCaseExpectedRegret",
         "BanditRLProof.LowerBounds.minimaxExpectedRegret_le_worstCaseExpectedRegret",
         "BanditRLProof.LowerBounds.le_minimaxExpectedRegret",
@@ -711,9 +714,45 @@
       "depends_on": [],
       "missing": [
         "The Chapter 14 event-testing foundation and Chapter 15 same-policy adaptive-history KL identity compile.",
-        "The separate compiled Chapter 15 consumer now closes the source-stated Gaussian minimax Theorem 13.1 order with explicit universal constant 1/54; optional Chapter 13 notes and exercises remain outside this foundational milestone."
+        "The separate Chapter 15 consumer closes Theorem 13.1 with c=1/54 and GaussianHypothesisTesting closes exact Eq. (13.1); the broader-class fixed-horizon MOSS near-minimax consequence also compiles. Whole-chapter integration, review and deployment gates remain pending."
       ],
       "evidence": "BanditRLProof/LowerBounds/BasicIdeas.lean; Tests/TextbookPartIVChapter13Canary.lean"
+    },
+    {
+      "id": "TEXTBOOK-PART-IV-CH13-GAUSSIAN-TESTING-COMPANION",
+      "title": "Chapter 13 exact Gaussian testing bounds and Chernoff companion",
+      "chapter": "foundations",
+      "textbook_spine": "chapter-13-basic-ideas",
+      "status": "compiled",
+      "informal": "The canonical iid Gaussian empirical mean has law N(mu,1/n). Both midpoint error events and their maximum-risk Chernoff upper bound compile. Separately, the exact lower and upper Mills-ratio integrals of Eq. (13.4) give the printed Eq. (13.1) bounds for the zero-mean error, with denominator constants 16 and 32/pi, for n>0 and Delta>0.",
+      "declarations": [
+        "BanditRLProof.LowerBounds.gaussianSampleMeanVariance",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanVariance_pos",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanLaw",
+        "BanditRLProof.LowerBounds.gaussianIIDObservationLaw",
+        "BanditRLProof.LowerBounds.gaussianCoordinateAverage",
+        "BanditRLProof.LowerBounds.gaussianIIDSumLaw",
+        "BanditRLProof.LowerBounds.gaussianIIDSampleMeanLaw",
+        "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision",
+        "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision_zero_error_event",
+        "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision_gap_error_event",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanGapErrorProbability",
+        "BanditRLProof.LowerBounds.hasSubgaussianMGF_id_gaussianReal_zero",
+        "BanditRLProof.LowerBounds.hasSubgaussianMGF_gap_sub_id_gaussianReal",
+        "BanditRLProof.LowerBounds.gaussianReal_zero_Ici_le_exp_neg_sq_div_two_variance",
+        "BanditRLProof.LowerBounds.gaussianReal_gap_Iio_half_le_exp_neg_sq_div_two_variance",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability_le_exp",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanGapErrorProbability_le_exp",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanThresholdRisk",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanThresholdRisk_le_exp",
+        "BanditRLProof.LowerBounds.gaussianMills_lower_integral",
+        "BanditRLProof.LowerBounds.gaussianMills_upper_integral",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability_source_bounds"
+      ],
+      "depends_on": [],
+      "missing": [],
+      "evidence": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean; BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean; Tests/TextbookPartIVChapter13Canary.lean"
     },
     {
       "id": "TEXTBOOK-PART-IV-CH14-INFORMATION-THEORY-LEAN-SPINE",
@@ -721,7 +760,7 @@
       "chapter": "foundations",
       "textbook_spine": "chapter-14-information-theory",
       "status": "compiled",
-      "informal": "The Chapter 14 extension compiles finite prefix-code/entropy definitions and a Kraft adapter; extended-real relative entropy with explicit branches and separation; full arbitrary-sub-sigma-algebra plus event data processing; binary endpoint analysis; and unconditional Bretagnolle–Huber in the exact D(P,Q) direction. Whole-chapter coverage remains partial.",
+      "informal": "The frozen Chapter 14 required body is compiled: recursive Huffman optimality and its entropy sandwich, exact-real arithmetic block coding and universal converse, finite/partition/common-density KL, the source affinity/overlap route, and positive-variance Gaussian testing. Independent review, PR #106, main run 33959196451, Pages and live acceptance passed; the model qualifications below remain part of the claim boundary.",
       "declarations": [
         "BanditRLProof.LowerBounds.BinaryPrefixCode",
         "BanditRLProof.LowerBounds.BinaryPrefixCode.uniquelyDecodable_range",
@@ -732,6 +771,23 @@
         "BanditRLProof.LowerBounds.discreteEntropy_nonneg",
         "BanditRLProof.LowerBounds.expectedCodeLength",
         "BanditRLProof.LowerBounds.expectedCodeLength_nonneg",
+        "BanditRLProof.LowerBounds.huffmanCode_optimal",
+        "BanditRLProof.LowerBounds.exists_prefixCode_of_uniquelyDecodable",
+        "BanditRLProof.LowerBounds.IsOptimalPrefixCode.length_antitone",
+        "BanditRLProof.LowerBounds.huffmanCode_entropy_sandwich",
+        "BanditRLProof.LowerBounds.arithmeticBlockCode_rate_tendsto_entropy",
+        "BanditRLProof.LowerBounds.arithmeticBlockCode_payload_interval",
+        "BanditRLProof.LowerBounds.sourceBlock_code_family_limit_ge_entropy",
+        "BanditRLProof.LowerBounds.exists_ceilingLogPrefixCode",
+        "BanditRLProof.LowerBounds.relativeEntropy_finite_crossEntropy",
+        "BanditRLProof.LowerBounds.entropyTerm_tendsto_zero_right",
+        "BanditRLProof.LowerBounds.bernoulliRelativeEntropy_asymmetry",
+        "BanditRLProof.LowerBounds.relativeEntropy_triangle_counterexample",
+        "BanditRLProof.LowerBounds.relativeEntropy_commonDensity_eq_if",
+        "BanditRLProof.LowerBounds.bretagnolleHuberScale_le_half_commonDensityAffinity_sq",
+        "BanditRLProof.LowerBounds.half_commonDensityAffinity_sq_le_overlap",
+        "BanditRLProof.LowerBounds.klDiv_gaussianReal_same_variance",
+        "BanditRLProof.LowerBounds.gaussian_testing_max_error_three_twentieths",
         "BanditRLProof.LowerBounds.relativeEntropy",
         "BanditRLProof.LowerBounds.relativeEntropy_of_absolutelyContinuous_of_integrable",
         "BanditRLProof.LowerBounds.relativeEntropy_of_probability_absolutelyContinuous_of_integrable",
@@ -739,6 +795,18 @@
         "BanditRLProof.LowerBounds.relativeEntropy_ne_top_iff",
         "BanditRLProof.LowerBounds.relativeEntropy_eq_zero_iff",
         "BanditRLProof.LowerBounds.relativeEntropy_trim_le",
+        "BanditRLProof.LowerBounds.absolutelyContinuous_iff_atom_support",
+        "BanditRLProof.LowerBounds.rnDeriv_mul_atom",
+        "BanditRLProof.LowerBounds.rnDeriv_atom_eq_div",
+        "BanditRLProof.LowerBounds.relativeEntropy_eq_top_of_atom_support_mismatch",
+        "BanditRLProof.LowerBounds.relativeEntropy_finite_klFun",
+        "BanditRLProof.LowerBounds.relativeEntropy_finite_sum_log",
+        "BanditRLProof.LowerBounds.relativeEntropy_finite_eq_if",
+        "BanditRLProof.LowerBounds.relativeEntropy_finite_eq_top_iff",
+        "BanditRLProof.LowerBounds.finitePartitionRelativeEntropy",
+        "BanditRLProof.LowerBounds.relativeEntropy_eq_iSup_densityApproximation_trim",
+        "BanditRLProof.LowerBounds.exists_fin_observation_densityApproximation",
+        "BanditRLProof.LowerBounds.finitePartitionRelativeEntropy_eq_relativeEntropy",
         "BanditRLProof.LowerBounds.bernoulliRelativeEntropy",
         "BanditRLProof.LowerBounds.rnDeriv_restrict_restrict",
         "BanditRLProof.LowerBounds.relativeEntropy_restrict_add_compl",
@@ -758,12 +826,12 @@
         "BanditRLProof.KLUCB.bernoulliKLCore"
       ],
       "missing": [
-        "Huffman optimality, the one-bit entropy sandwich, and asymptotic source coding from §14.1 remain uncompiled.",
-        "Arbitrary finite-alphabet discrete KL beyond Bernoulli and the finite-discretisation supremum equivalence remain uncompiled.",
-        "The general common-density/measure-overlap route and general-variance Gaussian application remain uncompiled.",
+        "Required-body independent review, full main gate and public desktop/mobile acceptance passed. Optional Notes/Bibliographic Remarks/Exercises are not claimed complete; full Exercise 14.10 is an additional compiled result.",
+        "Nonempty singleton codewords are a local model convention. Uniform fixed-length optimality holds for power-of-two cardinalities; a compiled ternary counterexample refutes the arbitrary-cardinality reading.",
+        "Arithmetic coding is exact-real and classical with constant support/escape overhead, not executable finite-precision code. Cross-entropy differences are unrounded; finite KL iff absolute continuity is finite-alphabet-only.",
         "The adaptive same-policy bandit-history divergence decomposition is a Chapter 15 target, not a Chapter 14 theorem."
       ],
-      "evidence": "BanditRLProof/LowerBounds/InformationTheory.lean; Tests/TextbookPartIVChapter14Canary.lean"
+      "evidence": "reviews/2026-09-05-chapter-14-evidence-matrix.md maps each body claim to its exact Lean terminal, module, canary and full-gate snapshot; whole-chapter status is separate from individual compiled results."
     },
     {
       "id": "TEXTBOOK-PART-IV-CH15-GAUSSIAN-KL-DEPENDENCY-SLICE",
@@ -1025,7 +1093,8 @@
         "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum"
       ],
       "missing": [
-        "The Chapter 13 notes and exercises are not implied by this compiled main order theorem."
+        "Exact Eq. (13.1) is separately compiled in GaussianHypothesisTesting; the broader-class fixed-horizon MOSS near-minimax consequence compiles in SubgaussianMinimax, with publication gates pending.",
+        "Notes 13.2 and Exercises 13.1–13.2 are optional and are not implied by the theorem."
       ],
       "evidence": "BanditRLProof/LowerBounds/GaussianMinimax.lean; Tests/TextbookPartIVChapter15Canary.lean; tasks/TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE.md; tasks/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE.md"
     },
