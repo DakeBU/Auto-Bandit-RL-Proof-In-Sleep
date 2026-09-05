@@ -55,3 +55,5 @@ import Tests.TextbookPartIVChapter14SiblingCanary
 import Tests.TextbookPartIVChapter14PruningCanary
 import Tests.TextbookPartIVChapter14GreedyCanary
 import Tests.TextbookPartIVChapter14HuffmanStepCanary
+import Tests.TextbookPartIVChapter14HuffmanAlphabetCanary
+import Tests.TextbookPartIVChapter14HuffmanConstructionCanary

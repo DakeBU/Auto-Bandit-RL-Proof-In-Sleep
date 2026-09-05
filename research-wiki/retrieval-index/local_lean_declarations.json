@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T06:22:14+00:00",
+  "generated": "2026-09-05T06:25:40+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -29184,6 +29184,54 @@
       "file": "BanditRLProof/LowerBounds/HuffmanAlphabet.lean",
       "line": 65,
       "statement": "theorem exists_two_least_weights {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1] (p : \u03b1 \u2192 \u211d) : \u2203 a b, a \u2260 b \u2227 (\u2200 i, p a \u2264 p i) \u2227 (\u2200 i, i \u2260 a \u2192 p b \u2264 p i)"
+    },
+    {
+      "kind": "theorem",
+      "name": "oneBitCode_optimal",
+      "full_name": "BanditRLProof.LowerBounds.oneBitCode_optimal",
+      "file": "BanditRLProof/LowerBounds/HuffmanConstruction.lean",
+      "line": 5,
+      "statement": "theorem oneBitCode_optimal {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (code : BinaryPrefixCode \u03b1) (hlen : \u2200 i, (code.encode i).length = 1) : IsOptimalPrefixCode p code"
+    },
+    {
+      "kind": "def",
+      "name": "emptyRemainderRoot",
+      "full_name": "BanditRLProof.LowerBounds.emptyRemainderRoot",
+      "file": "BanditRLProof/LowerBounds/HuffmanConstruction.lean",
+      "line": 19,
+      "statement": "def emptyRemainderRoot {\u03b1 : Type*} [IsEmpty \u03b1] : BinaryPrefixCode (\u03b1 \u2295 Bool) where"
+    },
+    {
+      "kind": "def",
+      "name": "huffmanOptimalCode",
+      "full_name": "BanditRLProof.LowerBounds.huffmanOptimalCode",
+      "file": "BanditRLProof/LowerBounds/HuffmanConstruction.lean",
+      "line": 47,
+      "statement": "noncomputable def huffmanOptimalCode {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) : {code : BinaryPrefixCode \u03b1 // IsOptimalPrefixCode p code}"
+    },
+    {
+      "kind": "def",
+      "name": "huffmanCode",
+      "full_name": "BanditRLProof.LowerBounds.huffmanCode",
+      "file": "BanditRLProof/LowerBounds/HuffmanConstruction.lean",
+      "line": 99,
+      "statement": "noncomputable def huffmanCode {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) : BinaryPrefixCode \u03b1"
+    },
+    {
+      "kind": "theorem",
+      "name": "huffmanCode_optimal",
+      "full_name": "BanditRLProof.LowerBounds.huffmanCode_optimal",
+      "file": "BanditRLProof/LowerBounds/HuffmanConstruction.lean",
+      "line": 103,
+      "statement": "theorem huffmanCode_optimal {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) : IsOptimalPrefixCode p (huffmanCode p hp)"
+    },
+    {
+      "kind": "theorem",
+      "name": "huffmanCode_entropy_sandwich",
+      "full_name": "BanditRLProof.LowerBounds.huffmanCode_entropy_sandwich",
+      "file": "BanditRLProof/LowerBounds/HuffmanConstruction.lean",
+      "line": 108,
+      "statement": "theorem huffmanCode_entropy_sandwich {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) : discreteEntropyBaseTwo Finset.univ p \u2264 expectedCodeLength p (huffmanCode p hp) \u2227 expectedCodeLength p (huffmanCode p hp) \u2264 discreteEntropyBaseTwo Finset.univ p + 1"
     },
     {
       "kind": "theorem",

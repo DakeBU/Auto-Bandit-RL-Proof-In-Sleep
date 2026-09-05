@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE",
-  "generated": "2026-09-05T06:22:20+00:00",
+  "generated": "2026-09-05T06:25:46+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -58195,6 +58195,54 @@
       "file": "BanditRLProof/LowerBounds/HuffmanAlphabet.lean",
       "line": 65,
       "statement": "theorem exists_two_least_weights {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α] (p : α → ℝ) : ∃ a b, a ≠ b ∧ (∀ i, p a ≤ p i) ∧ (∀ i, i ≠ a → p b ≤ p i)"
+    },
+    {
+      "kind": "theorem",
+      "name": "oneBitCode_optimal",
+      "full_name": "BanditRLProof.LowerBounds.oneBitCode_optimal",
+      "file": "BanditRLProof/LowerBounds/HuffmanConstruction.lean",
+      "line": 5,
+      "statement": "theorem oneBitCode_optimal {α : Type*} [Fintype α] (p : α → ℝ) (hp : ∀ i, 0 ≤ p i) (code : BinaryPrefixCode α) (hlen : ∀ i, (code.encode i).length = 1) : IsOptimalPrefixCode p code"
+    },
+    {
+      "kind": "def",
+      "name": "emptyRemainderRoot",
+      "full_name": "BanditRLProof.LowerBounds.emptyRemainderRoot",
+      "file": "BanditRLProof/LowerBounds/HuffmanConstruction.lean",
+      "line": 19,
+      "statement": "def emptyRemainderRoot {α : Type*} [IsEmpty α] : BinaryPrefixCode (α ⊕ Bool) where"
+    },
+    {
+      "kind": "def",
+      "name": "huffmanOptimalCode",
+      "full_name": "BanditRLProof.LowerBounds.huffmanOptimalCode",
+      "file": "BanditRLProof/LowerBounds/HuffmanConstruction.lean",
+      "line": 47,
+      "statement": "noncomputable def huffmanOptimalCode {α : Type*} [Fintype α] (p : α → ℝ) (hp : ∀ i, 0 ≤ p i) : {code : BinaryPrefixCode α // IsOptimalPrefixCode p code}"
+    },
+    {
+      "kind": "def",
+      "name": "huffmanCode",
+      "full_name": "BanditRLProof.LowerBounds.huffmanCode",
+      "file": "BanditRLProof/LowerBounds/HuffmanConstruction.lean",
+      "line": 99,
+      "statement": "noncomputable def huffmanCode {α : Type*} [Fintype α] (p : α → ℝ) (hp : ∀ i, 0 ≤ p i) : BinaryPrefixCode α"
+    },
+    {
+      "kind": "theorem",
+      "name": "huffmanCode_optimal",
+      "full_name": "BanditRLProof.LowerBounds.huffmanCode_optimal",
+      "file": "BanditRLProof/LowerBounds/HuffmanConstruction.lean",
+      "line": 103,
+      "statement": "theorem huffmanCode_optimal {α : Type*} [Fintype α] (p : α → ℝ) (hp : ∀ i, 0 ≤ p i) : IsOptimalPrefixCode p (huffmanCode p hp)"
+    },
+    {
+      "kind": "theorem",
+      "name": "huffmanCode_entropy_sandwich",
+      "full_name": "BanditRLProof.LowerBounds.huffmanCode_entropy_sandwich",
+      "file": "BanditRLProof/LowerBounds/HuffmanConstruction.lean",
+      "line": 108,
+      "statement": "theorem huffmanCode_entropy_sandwich {α : Type*} [Fintype α] (p : α → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) : discreteEntropyBaseTwo Finset.univ p ≤ expectedCodeLength p (huffmanCode p hp) ∧ expectedCodeLength p (huffmanCode p hp) ≤ discreteEntropyBaseTwo Finset.univ p + 1"
     },
     {
       "kind": "theorem",

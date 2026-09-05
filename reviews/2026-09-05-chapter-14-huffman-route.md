@@ -163,3 +163,30 @@ simplifier equality branch initially retained b=a; explicit hab.symm closes
 it without new assumptions. All four audited theorem reports use only the
 standard propext/Classical.choice/Quot.sound axioms. This module is not yet
 aggregate-imported and is outside the running 7daa2b9 full gate.
+
+Recursive-construction route: define a noncomputable Huffman constructor on
+arbitrary finite alphabets and nonnegative real weights. Return a code paired
+with its proved optimality, not a chosen unspecified minimizer. The body
+chooses two least labels, uses the explicit split equivalence, recursively
+constructs the merged Option-remainder code, and expands/relabels it. The
+termination measure is alphabet cardinality. Zero/one symbols use the
+one-bit singleton code; exactly two use the one-bit binary root. General
+one-bit optimality follows directly from positive codeword lengths, without
+normalization. Noncomputability is from ordering/choosing real weights, not
+an oracle for optimal codes. APIs are the existing greedy/step/alphabet leaves.
+
+Construction result: `HuffmanConstruction.lean` builds (2680 jobs). The
+constructor recursively calls itself on the merged alphabet, terminates by
+`huffman_merged_card_lt`, and returns expansion/relabeling of that smaller
+code. Its optimality proof follows the established greedy step. The initial
+errors were length-nonzero arithmetic exposure and classical decidability
+in the termination tactic; both were repaired without changing the target.
+`huffmanCode_optimal` compares against every prefix code, and
+`huffmanCode_entropy_sandwich` proves Eq. (14.2) for normalized masses.
+The constructor handles empty/singleton and exactly-two cases separately,
+preserving the local nonempty-codeword convention. Aggregate imports now
+include Alphabet/Construction and their canaries; their full gate is pending.
+
+The Construction typed canary passed. The recursive constructor, global
+optimality theorem and entropy-sandwich theorem all report only propext,
+Classical.choice and Quot.sound. Retrieval/task-memory/blueprint refreshed.
