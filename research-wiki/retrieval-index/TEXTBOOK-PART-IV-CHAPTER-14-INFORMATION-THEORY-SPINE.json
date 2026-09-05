@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE",
-  "generated": "2026-09-05T04:46:32+00:00",
+  "generated": "2026-09-05T04:53:49+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -57139,6 +57139,94 @@
       "file": "BanditRLProof/LowerBounds/FiniteDiscreteKL.lean",
       "line": 99,
       "statement": "theorem relativeEntropy_finite_eq_top_iff {α : Type*} [Fintype α] [MeasurableSpace α] [MeasurableSingletonClass α] (P Q : Measure α) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] : relativeEntropy P Q = ∞ ↔ ∃ x, P {x} ≠ 0 ∧ Q {x} = 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "totalMass_klFun_le_relativeEntropy",
+      "full_name": "BanditRLProof.LowerBounds.totalMass_klFun_le_relativeEntropy",
+      "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+      "line": 20,
+      "statement": "theorem totalMass_klFun_le_relativeEntropy {α : Type*} [MeasurableSpace α] (P Q : Measure α) [IsFiniteMeasure P] [IsFiniteMeasure Q] : ENNReal.ofReal (InformationTheory.klFun ((P univ / Q univ).toReal)) * Q univ ≤ relativeEntropy P Q"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_relativeEntropy_restrict_fibers",
+      "full_name": "BanditRLProof.LowerBounds.sum_relativeEntropy_restrict_fibers",
+      "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+      "line": 38,
+      "statement": "theorem sum_relativeEntropy_restrict_fibers {α : Type*} [MeasurableSpace α] (P Q : Measure α) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h : P ≪ Q) {n : ℕ} (f : α → Fin n) (hf : Measurable f) : (∑ i, relativeEntropy (P.restrict (f ⁻¹' {i})) (Q.restrict (f ⁻¹' {i}))) = relativeEntropy P Q"
+    },
+    {
+      "kind": "theorem",
+      "name": "relativeEntropy_finite_map_le",
+      "full_name": "BanditRLProof.LowerBounds.relativeEntropy_finite_map_le",
+      "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+      "line": 65,
+      "statement": "theorem relativeEntropy_finite_map_le {α : Type*} [MeasurableSpace α] (P Q : Measure α) [IsFiniteMeasure P] [IsFiniteMeasure Q] {n : ℕ} (f : α → Fin n) (hf : Measurable f) : relativeEntropy (P.map f) (Q.map f) ≤ relativeEntropy P Q"
+    },
+    {
+      "kind": "def",
+      "name": "finitePartitionRelativeEntropy",
+      "full_name": "BanditRLProof.LowerBounds.finitePartitionRelativeEntropy",
+      "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+      "line": 84,
+      "statement": "def finitePartitionRelativeEntropy {α : Type*} [MeasurableSpace α] (P Q : Measure α) : ENNReal"
+    },
+    {
+      "kind": "theorem",
+      "name": "finitePartitionRelativeEntropy_le_relativeEntropy",
+      "full_name": "BanditRLProof.LowerBounds.finitePartitionRelativeEntropy_le_relativeEntropy",
+      "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+      "line": 90,
+      "statement": "theorem finitePartitionRelativeEntropy_le_relativeEntropy {α : Type*} [MeasurableSpace α] (P Q : Measure α) [IsFiniteMeasure P] [IsFiniteMeasure Q] : finitePartitionRelativeEntropy P Q ≤ relativeEntropy P Q"
+    },
+    {
+      "kind": "theorem",
+      "name": "relativeEntropy_map_le_finitePartitionRelativeEntropy",
+      "full_name": "BanditRLProof.LowerBounds.relativeEntropy_map_le_finitePartitionRelativeEntropy",
+      "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+      "line": 98,
+      "statement": "theorem relativeEntropy_map_le_finitePartitionRelativeEntropy {α : Type*} [MeasurableSpace α] (P Q : Measure α) {n : ℕ} (f : α → Fin n) (hf : Measurable f) : relativeEntropy (P.map f) (Q.map f) ≤ finitePartitionRelativeEntropy P Q"
+    },
+    {
+      "kind": "theorem",
+      "name": "finitePartitionRelativeEntropy_fin_eq",
+      "full_name": "BanditRLProof.LowerBounds.finitePartitionRelativeEntropy_fin_eq",
+      "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+      "line": 105,
+      "statement": "theorem finitePartitionRelativeEntropy_fin_eq {n : ℕ} (P Q : Measure (Fin n)) [IsFiniteMeasure P] [IsFiniteMeasure Q] : finitePartitionRelativeEntropy P Q = relativeEntropy P Q"
+    },
+    {
+      "kind": "theorem",
+      "name": "relativeEntropy_finite_map_eq_if",
+      "full_name": "BanditRLProof.LowerBounds.relativeEntropy_finite_map_eq_if",
+      "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+      "line": 112,
+      "statement": "theorem relativeEntropy_finite_map_eq_if {α : Type*} [MeasurableSpace α] (P Q : Measure α) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] {n : ℕ} (f : α → Fin n) (hf : Measurable f) : relativeEntropy (P.map f) (Q.map f) = if ∀ i, Q (f ⁻¹' {i}) = 0 → P (f ⁻¹' {i}) = 0 then ENNReal.ofReal (∑ i, (P (f ⁻¹' {i})).toReal * Real.log ((P (f ⁻¹' {i})).toReal / (Q (f ⁻¹' {i})).toReal)) else (⊤ : ENNReal)"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_binary_map_relativeEntropy_eq_top_of_event",
+      "full_name": "BanditRLProof.LowerBounds.exists_binary_map_relativeEntropy_eq_top_of_event",
+      "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+      "line": 128,
+      "statement": "theorem exists_binary_map_relativeEntropy_eq_top_of_event {α : Type*} [MeasurableSpace α] (P Q : Measure α) {A : Set α} (hA : MeasurableSet A) (hp : P A ≠ 0) (hq : Q A = 0) : ∃ f : α → Fin 2, Measurable f ∧ relativeEntropy (P.map f) (Q.map f) = (⊤ : ENNReal)"
+    },
+    {
+      "kind": "theorem",
+      "name": "finitePartitionRelativeEntropy_eq_top_of_not_absolutelyContinuous",
+      "full_name": "BanditRLProof.LowerBounds.finitePartitionRelativeEntropy_eq_top_of_not_absolutelyContinuous",
+      "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+      "line": 144,
+      "statement": "theorem finitePartitionRelativeEntropy_eq_top_of_not_absolutelyContinuous {α : Type*} [MeasurableSpace α] (P Q : Measure α) (h : ¬ P ≪ Q) : finitePartitionRelativeEntropy P Q = (⊤ : ENNReal)"
+    },
+    {
+      "kind": "theorem",
+      "name": "finitePartitionRelativeEntropy_eq_relativeEntropy_of_not_absolutelyContinuous",
+      "full_name": "BanditRLProof.LowerBounds.finitePartitionRelativeEntropy_eq_relativeEntropy_of_not_absolutelyContinuous",
+      "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+      "line": 162,
+      "statement": "theorem finitePartitionRelativeEntropy_eq_relativeEntropy_of_not_absolutelyContinuous {α : Type*} [MeasurableSpace α] (P Q : Measure α) (h : ¬ P ≪ Q) : finitePartitionRelativeEntropy P Q = relativeEntropy P Q"
     },
     {
       "kind": "def",

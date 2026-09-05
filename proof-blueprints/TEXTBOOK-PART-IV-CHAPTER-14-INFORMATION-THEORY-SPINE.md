@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T04:46:37+00:00`
+Generated: `2026-09-05T04:54:01+00:00`
 
 ## Source Task
 
@@ -64,7 +64,7 @@ mapped local adapter before they count as chapter evidence.
 | §14.1 asymptotic statement | arithmetic coding approaches entropy and no code improves the asymptotic rate | no block-code/asymptotic coding model | blocked |
 | Eqs. (14.2)--(14.3) definitions | finite discrete base-two entropy, natural entropy, and exact unit conversion | `discreteEntropy`, `discreteEntropyBaseTwo`, their exact conversion, and nonnegativity compile | compiled |
 | Eq. (14.4) | arbitrary finite-alphabet discrete relative entropy with exact zero/support endpoints | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, and `relativeEntropy_finite_eq_top_iff` compile; root-import finite/singular three-symbol canaries pass | compiled |
-| Eq. (14.5) | relative entropy as the supremum over all finite measurable discretisations | local `relativeEntropy` aliases Mathlib RN KL; equivalence to the source definition is absent | blocked |
+| Eq. (14.5) | relative entropy as the supremum over all finite measurable discretisations | `finitePartitionRelativeEntropy` definition, supremum upper bound, singular-branch equality, and finite-source equality compile in a focused module; general absolutely-continuous reverse inequality and root integration remain open | partial |
 | Theorem 14.1 | Eq. (14.5) equals the RN/log-likelihood formula, including the singular and nonintegrable branches | RN branch adapters compile, but the Eq. (14.5)-to-RN equivalence is absent | partial |
 | Eq. (14.6) | common-dominating-measure density formula | only the `Q`-RN specialization is exposed | partial |
 | §14.2 metric properties | nonnegativity and `D(P,Q)=0 ↔ P=Q`, with asymmetry/non-triangle statements treated as explanatory nonclaims | order nonnegativity is intrinsic to `ENNReal`; `relativeEntropy_eq_zero_iff` compiles | compiled |
@@ -116,11 +116,8 @@ Theorem 14.2.
 
 - `P` and `Q` are probability measures on one measurable space.
 - The event is a `MeasurableSet`.
-- KL direction is `D(P,Q)`, never silently reversed.
-- `P ≪ Q` is derived from finite KL when needed; the infinite branch is
-  discharged by the explicit testing scale.
 
-<!-- 1544 characters omitted from the middle of this snapshot. -->
+<!-- 1713 characters omitted from the middle of this snapshot. -->
 
 page are verified before this task becomes accepted.
 
@@ -408,7 +405,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH14-HUFFMAN-BOUND` | Eq. (14.2), including existence/optimality of a prefix code | Kraft--McMillan, Huffman/tree construction | no conditional optimality premise may masquerade as this terminal | none | chapter terminal | blocked |
 | `CH14-SOURCE-CODING` | arithmetic/block-code achievability and converse | product distributions, uniquely decodable block codes, asymptotics | formal source-coding theorem | none | chapter terminal | blocked |
 | `CH14-FINITE-DISCRETE-KL` | Eq. (14.4) for an arbitrary finite alphabet | finite sums, support endpoints | atomwise AC equivalence, RN density ratio, finite LLR integrability, and finite integral sum; singular atom forces infinity | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, `relativeEntropy_finite_eq_top_iff` | focused Lean and root-import canary passed | compiled |
-| `CH14-DISCRETISATION-SUP` | Eq. (14.5) and equality with RN KL in Theorem 14.1 | finite measurable quotients/partitions, supremum | source definition followed by Dobrushin/RN equivalence | none | chapter terminal | blocked |
+| `CH14-DISCRETISATION-SUP` | Eq. (14.5) and equality with RN KL in Theorem 14.1 | finite measurable quotients/partitions, supremum | finite-cell Jensen gives upper bound; binary null-set witness gives singular equality; RN approximation must still give reverse inequality under AC | `finitePartitionRelativeEntropy`, `finitePartitionRelativeEntropy_le_relativeEntropy`, singular and finite-source adapters | focused module/canary passed; root integration and full equality pending | partial |
 | `CH14-COMMON-DENSITY` | Eq. (14.6) under a common σ-finite dominating measure | RN chain rule, integral transport | expose exact density formula | Q-RN specialization only | focused Lean | partial |
 | `CH14-KL-SEPARATION` | nonnegativity and zero iff equality | Mathlib KL | `ENNReal` order plus thin source-mapped equality adapter | `relativeEntropy_eq_zero_iff` | focused Lean | compiled |
 | `CH14-GAUSSIAN-EXAMPLE` | common positive variance formula | Gaussian RN/KL and scaling | generalize the compiled unit-variance Chapter 15 leaf | unit-variance declaration only | focused Lean | partial |
@@ -58155,6 +58152,94 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/FiniteDiscreteKL.lean",
     "line": 99,
     "statement": "theorem relativeEntropy_finite_eq_top_iff {\u03b1 : Type*} [Fintype \u03b1] [MeasurableSpace \u03b1] [MeasurableSingletonClass \u03b1] (P Q : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] : relativeEntropy P Q = \u221e \u2194 \u2203 x, P {x} \u2260 0 \u2227 Q {x} = 0"
+  },
+  {
+    "kind": "theorem",
+    "name": "totalMass_klFun_le_relativeEntropy",
+    "full_name": "BanditRLProof.LowerBounds.totalMass_klFun_le_relativeEntropy",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+    "line": 20,
+    "statement": "theorem totalMass_klFun_le_relativeEntropy {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] : ENNReal.ofReal (InformationTheory.klFun ((P univ / Q univ).toReal)) * Q univ \u2264 relativeEntropy P Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "sum_relativeEntropy_restrict_fibers",
+    "full_name": "BanditRLProof.LowerBounds.sum_relativeEntropy_restrict_fibers",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+    "line": 38,
+    "statement": "theorem sum_relativeEntropy_restrict_fibers {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h : P \u226a Q) {n : \u2115} (f : \u03b1 \u2192 Fin n) (hf : Measurable f) : (\u2211 i, relativeEntropy (P.restrict (f \u207b\u00b9' {i})) (Q.restrict (f \u207b\u00b9' {i}))) = relativeEntropy P Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_finite_map_le",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_finite_map_le",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+    "line": 65,
+    "statement": "theorem relativeEntropy_finite_map_le {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] {n : \u2115} (f : \u03b1 \u2192 Fin n) (hf : Measurable f) : relativeEntropy (P.map f) (Q.map f) \u2264 relativeEntropy P Q"
+  },
+  {
+    "kind": "def",
+    "name": "finitePartitionRelativeEntropy",
+    "full_name": "BanditRLProof.LowerBounds.finitePartitionRelativeEntropy",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+    "line": 84,
+    "statement": "def finitePartitionRelativeEntropy {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) : ENNReal"
+  },
+  {
+    "kind": "theorem",
+    "name": "finitePartitionRelativeEntropy_le_relativeEntropy",
+    "full_name": "BanditRLProof.LowerBounds.finitePartitionRelativeEntropy_le_relativeEntropy",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+    "line": 90,
+    "statement": "theorem finitePartitionRelativeEntropy_le_relativeEntropy {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] : finitePartitionRelativeEntropy P Q \u2264 relativeEntropy P Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_map_le_finitePartitionRelativeEntropy",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_map_le_finitePartitionRelativeEntropy",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+    "line": 98,
+    "statement": "theorem relativeEntropy_map_le_finitePartitionRelativeEntropy {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) {n : \u2115} (f : \u03b1 \u2192 Fin n) (hf : Measurable f) : relativeEntropy (P.map f) (Q.map f) \u2264 finitePartitionRelativeEntropy P Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "finitePartitionRelativeEntropy_fin_eq",
+    "full_name": "BanditRLProof.LowerBounds.finitePartitionRelativeEntropy_fin_eq",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+    "line": 105,
+    "statement": "theorem finitePartitionRelativeEntropy_fin_eq {n : \u2115} (P Q : Measure (Fin n)) [IsFiniteMeasure P] [IsFiniteMeasure Q] : finitePartitionRelativeEntropy P Q = relativeEntropy P Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_finite_map_eq_if",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_finite_map_eq_if",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+    "line": 112,
+    "statement": "theorem relativeEntropy_finite_map_eq_if {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] {n : \u2115} (f : \u03b1 \u2192 Fin n) (hf : Measurable f) : relativeEntropy (P.map f) (Q.map f) = if \u2200 i, Q (f \u207b\u00b9' {i}) = 0 \u2192 P (f \u207b\u00b9' {i}) = 0 then ENNReal.ofReal (\u2211 i, (P (f \u207b\u00b9' {i})).toReal * Real.log ((P (f \u207b\u00b9' {i})).toReal / (Q (f \u207b\u00b9' {i})).toReal)) else (\u22a4 : ENNReal)"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_binary_map_relativeEntropy_eq_top_of_event",
+    "full_name": "BanditRLProof.LowerBounds.exists_binary_map_relativeEntropy_eq_top_of_event",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+    "line": 128,
+    "statement": "theorem exists_binary_map_relativeEntropy_eq_top_of_event {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) {A : Set \u03b1} (hA : MeasurableSet A) (hp : P A \u2260 0) (hq : Q A = 0) : \u2203 f : \u03b1 \u2192 Fin 2, Measurable f \u2227 relativeEntropy (P.map f) (Q.map f) = (\u22a4 : ENNReal)"
+  },
+  {
+    "kind": "theorem",
+    "name": "finitePartitionRelativeEntropy_eq_top_of_not_absolutelyContinuous",
+    "full_name": "BanditRLProof.LowerBounds.finitePartitionRelativeEntropy_eq_top_of_not_absolutelyContinuous",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+    "line": 144,
+    "statement": "theorem finitePartitionRelativeEntropy_eq_top_of_not_absolutelyContinuous {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) (h : \u00ac P \u226a Q) : finitePartitionRelativeEntropy P Q = (\u22a4 : ENNReal)"
+  },
+  {
+    "kind": "theorem",
+    "name": "finitePartitionRelativeEntropy_eq_relativeEntropy_of_not_absolutelyContinuous",
+    "full_name": "BanditRLProof.LowerBounds.finitePartitionRelativeEntropy_eq_relativeEntropy_of_not_absolutelyContinuous",
+    "file": "BanditRLProof/LowerBounds/FinitePartitionKL.lean",
+    "line": 162,
+    "statement": "theorem finitePartitionRelativeEntropy_eq_relativeEntropy_of_not_absolutelyContinuous {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) (h : \u00ac P \u226a Q) : finitePartitionRelativeEntropy P Q = relativeEntropy P Q"
   },
   {
     "kind": "def",
