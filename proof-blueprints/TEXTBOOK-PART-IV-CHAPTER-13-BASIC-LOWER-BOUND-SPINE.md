@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T06:23:41+00:00`
+Generated: `2026-09-05T06:27:22+00:00`
 
 ## Source Task
 
@@ -33560,6 +33560,102 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/Algorithms/MOSS.lean",
     "line": 72,
     "statement": "theorem selected_index_gt_mean_add_half_gap {k : \u2115} (hk : 0 < k) (n t : \u2115) (mean empiricalMean : Fin k \u2192 \u211d) (pulls : Fin k \u2192 \u2115) (best chosen : Fin k) (deficit : \u211d) (ht : k \u2264 t) (hselected : action hk n t empiricalMean pulls = chosen) (hoptimism : mean best - deficit \u2264 index n empiricalMean pulls best) (hgap : 2 * deficit < mean best - mean chosen) : mean chosen + (mean best - mean chosen) / 2 < index n empiricalMean pulls chosen"
+  },
+  {
+    "kind": "def",
+    "name": "canonicalAction",
+    "full_name": "BanditRLProof.MOSS.canonicalAction",
+    "file": "BanditRLProof/Algorithms/MOSSCanonicalHistory.lean",
+    "line": 7,
+    "statement": "def canonicalAction {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d)"
+  },
+  {
+    "kind": "def",
+    "name": "canonicalReward",
+    "full_name": "BanditRLProof.MOSS.canonicalReward",
+    "file": "BanditRLProof/Algorithms/MOSSCanonicalHistory.lean",
+    "line": 11,
+    "statement": "def canonicalReward {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d)"
+  },
+  {
+    "kind": "def",
+    "name": "canonicalHistory",
+    "full_name": "BanditRLProof.MOSS.canonicalHistory",
+    "file": "BanditRLProof/Algorithms/MOSSCanonicalHistory.lean",
+    "line": 15,
+    "statement": "def canonicalHistory {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (table : UCB.ArmRewardStream k) (t : \u2115)"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonicalHistory_pullCount",
+    "full_name": "BanditRLProof.MOSS.canonicalHistory_pullCount",
+    "file": "BanditRLProof/Algorithms/MOSSCanonicalHistory.lean",
+    "line": 20,
+    "statement": "theorem canonicalHistory_pullCount {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (table : UCB.ArmRewardStream k) (t : \u2115) (a : Fin k) : ETC.realHistoryPullCount t (canonicalHistory hk n mean table t) a = pullCount (canonicalAction hk n mean table) a (t+1)"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonicalHistory_empiricalMean",
+    "full_name": "BanditRLProof.MOSS.canonicalHistory_empiricalMean",
+    "file": "BanditRLProof/Algorithms/MOSSCanonicalHistory.lean",
+    "line": 26,
+    "statement": "theorem canonicalHistory_empiricalMean {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (table : UCB.ArmRewardStream k) (t : \u2115) (a : Fin k) : ETC.realHistoryEmpMean t (canonicalHistory hk n mean table t) a = (\u2211 j \u2208 Finset.range (pullCount (canonicalAction hk n mean table) a (t+1)), table (j+1) a) / (pullCount (canonicalAction hk n mean table) a (t+1) : \u211d)"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonicalAction_succ_eq_historyAction",
+    "full_name": "BanditRLProof.MOSS.canonicalAction_succ_eq_historyAction",
+    "file": "BanditRLProof/Algorithms/MOSSCanonicalHistory.lean",
+    "line": 36,
+    "statement": "theorem canonicalAction_succ_eq_historyAction {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (table : UCB.ArmRewardStream k) (t : \u2115) : canonicalAction hk n mean table (t+1) = historyAction hk n t (canonicalHistory hk n mean table t)"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonicalAction_zero",
+    "full_name": "BanditRLProof.MOSS.canonicalAction_zero",
+    "file": "BanditRLProof/Algorithms/MOSSCanonicalHistory.lean",
+    "line": 51,
+    "statement": "theorem canonicalAction_zero {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (table : UCB.ArmRewardStream k) : canonicalAction hk n mean table 0 = \u27e80, hk\u27e9"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_canonicalAction",
+    "full_name": "BanditRLProof.MOSS.measurable_canonicalAction",
+    "file": "BanditRLProof/Algorithms/MOSSCanonicalHistory.lean",
+    "line": 56,
+    "statement": "theorem measurable_canonicalAction {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (t : \u2115) : Measurable (fun table => canonicalAction hk n mean table t)"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_canonicalReward",
+    "full_name": "BanditRLProof.MOSS.measurable_canonicalReward",
+    "file": "BanditRLProof/Algorithms/MOSSCanonicalHistory.lean",
+    "line": 64,
+    "statement": "theorem measurable_canonicalReward {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (t : \u2115) : Measurable (fun table => canonicalReward hk n mean table t)"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_canonicalHistory",
+    "full_name": "BanditRLProof.MOSS.measurable_canonicalHistory",
+    "file": "BanditRLProof/Algorithms/MOSSCanonicalHistory.lean",
+    "line": 76,
+    "statement": "theorem measurable_canonicalHistory {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (t : \u2115) : Measurable (fun table => canonicalHistory hk n mean table t)"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonicalHistory_succ",
+    "full_name": "BanditRLProof.MOSS.canonicalHistory_succ",
+    "file": "BanditRLProof/Algorithms/MOSSCanonicalHistory.lean",
+    "line": 81,
+    "statement": "theorem canonicalHistory_succ {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (table : UCB.ArmRewardStream k) (t : \u2115) : canonicalHistory hk n mean table (t+1) = History.extendPairHistorySucc (canonicalHistory hk n mean table t) (historyAction hk n t (canonicalHistory hk n mean table t), table (ETC.realHistoryPullCount t (canonicalHistory hk n mean table t) (historyAction hk n t (canonicalHistory hk n mean table t))+1) (historyAction hk n t (canonicalHistory hk n mean table t)))"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonicalHistory_eq_of_eq_consumed",
+    "full_name": "BanditRLProof.MOSS.canonicalHistory_eq_of_eq_consumed",
+    "file": "BanditRLProof/Algorithms/MOSSCanonicalHistory.lean",
+    "line": 98,
+    "statement": "theorem canonicalHistory_eq_of_eq_consumed {k : \u2115} (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (table table' : UCB.ArmRewardStream k) (t : \u2115) (hagrees : \u2200 a j, j < pullCount (canonicalAction hk n mean table) a (t+1) \u2192 table (j+1) a = table' (j+1) a) : canonicalHistory hk n mean table t = canonicalHistory hk n mean table' t"
   },
   {
     "kind": "def",
@@ -97079,6 +97175,45 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "target_fingerprint": "",
     "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
     "time": "2026-09-05T06:19:38+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "build",
+    "lean": "BanditRLProof/Algorithms/MOSSCanonicalReward.lean",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [
+      "BanditRLProof.MOSS.integral_canonicalReward_regret_le",
+      "BanditRLProof.MOSS.canonicalReward_action_eq_raw"
+    ],
+    "notes": "Canonical arbitrary Markov arm kernel product-law regret bound compiled; centered means cancel from actual raw action. Canary standard axioms only. Common history-law correspondence remains open. Full81f500f check passed 400 tests7skips.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "compiled-leaf",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "lower",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "compiled",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T06:23:51+00:00",
     "verifier_evidence": [],
     "worker_id": ""
   }

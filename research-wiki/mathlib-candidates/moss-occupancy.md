@@ -237,3 +237,21 @@ selected unused reward has the arm's law conditionally on history; then
 transport to MOSS.historyAlgorithm and the main-prose near-minimax consumer.
 Full check 81f500f passed: root, Tests (8915 jobs), ProofGraphExport, 400 Python
 tests in 180.365 seconds, 7 skipped. Newer changes still need full validation.
+
+Finite-history bridge route: define observed rewards by the existing
+UCB.rewardFromArmStream applied to table shifted by one coordinate; form
+History.finitePairHistoryOfTrace. Reuse exact sumRewards/pullCount history
+identities from ETCRealHistoryScore and the UCB stream-prefix identity.
+Then canonicalReward_action_eq_raw proves the next action is precisely
+MOSS.historyAction. This is a pathwise identification, not yet equality of
+the induced history measures; conditional unused-coordinate law remains next.
+
+Compiled `MOSSCanonicalHistory`: canonical observed reward, finite history,
+exact pull counts/raw empirical means, initial/next action identity with
+MOSS.historyAction, measurable reward/history, recursive history extension,
+and `canonicalHistory_eq_of_eq_consumed`. The last proves that changing any
+unconsumed coordinates preserves the already observed history.
+Next reuse the coordinate-without-coordinate independence from
+UCBArmStreamConditionalReward and adapt its countable next-coordinate branch
+argument to this MOSS history. Its UCB-specific history theorem cannot be
+used directly. No conditional-law or history-measure equality is yet claimed.

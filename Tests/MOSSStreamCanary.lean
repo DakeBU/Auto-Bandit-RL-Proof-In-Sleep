@@ -2,6 +2,7 @@ import BanditRLProof.Algorithms.MOSSStream
 import BanditRLProof.Algorithms.MOSSRegret
 import BanditRLProof.Algorithms.MOSSExpectedRegret
 import BanditRLProof.Algorithms.MOSSCanonicalReward
+import BanditRLProof.Algorithms.MOSSCanonicalHistory
 
 open BanditRLProof
 
@@ -61,3 +62,15 @@ example {k : ℕ} (hk : 0 < k) (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν]
 #print axioms MOSS.integral_canonicalReward_regret_le
 #print axioms MOSS.mean_add_centeredRewardTable_average
 #print axioms MOSS.canonicalReward_action_eq_raw
+
+example {k : ℕ} (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ)
+    (table table' : UCB.ArmRewardStream k) (t : ℕ)
+    (h : ∀ a j, j < pullCount (MOSS.canonicalAction hk n mean table) a (t+1) →
+      table (j+1) a = table' (j+1) a) :
+    MOSS.canonicalHistory hk n mean table t = MOSS.canonicalHistory hk n mean table' t :=
+  MOSS.canonicalHistory_eq_of_eq_consumed hk n mean table table' t h
+
+#print axioms MOSS.canonicalHistory_empiricalMean
+#print axioms MOSS.canonicalAction_succ_eq_historyAction
+#print axioms MOSS.measurable_canonicalHistory
+#print axioms MOSS.canonicalHistory_eq_of_eq_consumed

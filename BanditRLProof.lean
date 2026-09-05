@@ -579,3 +579,4 @@ import BanditRLProof.Algorithms.MOSSStream
 import BanditRLProof.Algorithms.MOSSRegret
 import BanditRLProof.Algorithms.MOSSExpectedRegret
 import BanditRLProof.Algorithms.MOSSCanonicalReward
+import BanditRLProof.Algorithms.MOSSCanonicalHistory
