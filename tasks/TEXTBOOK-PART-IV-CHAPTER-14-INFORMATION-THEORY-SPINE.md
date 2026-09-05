@@ -6,16 +6,19 @@ Kind: `theoremFormalization`
 
 Status: `accepted`
 
+Whole-chapter coverage: `partial`
+
 Harness: `hierarchical`
 
 ## Goal
 
 Formalize the source-faithful information-theoretic foundation of Chapter 14,
-*Foundations of Information Theory*. The compiled slice must expose the
-extended-real relative entropy with its absolute-continuity/integrability
-branches, the source's Bernoulli endpoint convention, an event-level
-data-processing leaf, and the exact Bretagnolle--Huber testing inequality.
-It must not claim the adaptive-bandit history decomposition from Chapter 15.
+*Foundations of Information Theory*.  The original accepted milestone covered
+the lower-bound-facing Section 14.2 slice.  Whole-chapter completion additionally
+requires the Section 14.1 coding/entropy body and every mathematical claim in the
+Section 14.2 exposition and proof to be either connected to a compiled local
+declaration or recorded as an explicit blocker.  It must not claim the adaptive-
+bandit history decomposition from Chapter 15.
 
 ## Source
 
@@ -23,8 +26,11 @@ It must not claim the adaptive-bandit history decomposition from Chapter 15.
 - Book: *Bandit Algorithms*, Cambridge University Press, 2020.
 - DOI: <https://doi.org/10.1017/9781108571401>.
 - Formal author version: <https://tor-lattimore.com/downloads/book/book.pdf>.
-- Placement: Part IV, Chapter 14, printed pp. 186--197, PDF pp. 195--206.
-- Main target window: §14.2, printed pp. 188--191 / PDF pp. 197--200.
+- Placement: Part IV, Chapter 14, author-version pp. 186--197, physical PDF
+  pp. 195--206 (CUP edition pagination pp. 160--169).
+- Whole-chapter body window: §14.1--§14.2, author-version pp. 186--191 /
+  physical PDF pp. 195--200.  Notes, bibliographic remarks, and exercises are
+  optional coverage and cannot conceal a body gap.
 - Theorem 14.1: relative entropy is the log Radon--Nikodym integral when
   `P ≪ Q`, and is infinite otherwise.
 - Theorem 14.2, Eq. (14.7): for probability measures `P,Q` and measurable
@@ -34,6 +40,40 @@ It must not claim the adaptive-bandit history decomposition from Chapter 15.
   source theorem.
 - Textbook card: `TXT-LATTIMORE-SZEPESVARI-2020`.
 - Scenario card: `SCN-STOCHASTIC-FINITE`.
+
+## Frozen whole-chapter completion contract
+
+The chapter can be promoted from `partial` only when every required row below
+is locally compiled and canaried.  A definition-only row is satisfied by an
+exact typed definition; theorem/proposition rows require proofs.  Imported
+Mathlib results may discharge leaves but must be exposed through a source-
+mapped local adapter before they count as chapter evidence.
+
+| Source body node | Exact required content | Current evidence | Status |
+| --- | --- | --- | --- |
+| opening motivation | information-theory/KL role in generalising Chapter 13 | maintained source map; no theorem claim | mapped |
+| §14.1 code model | binary codewords, injectivity, prefix freedom, codeword length, and expected length | `BinaryPrefixCode`, its uniquely-decodable range, finite codebook, Kraft adapter, and `expectedCodeLength` compile; the explicit nonempty-codeword contract is recorded | partial |
+| Eq. (14.1) | optimal expected-length objective over valid prefix codes | no local optimum/existence theorem | blocked |
+| Eq. (14.2) | Huffman optimum satisfies `H₂(P) ≤ L* ≤ H₂(P)+1` | no Huffman construction or Kraft/source-coding proof | blocked |
+| §14.1 asymptotic statement | arithmetic coding approaches entropy and no code improves the asymptotic rate | no block-code/asymptotic coding model | blocked |
+| Eqs. (14.2)--(14.3) definitions | finite discrete base-two entropy, natural entropy, and exact unit conversion | `discreteEntropy`, `discreteEntropyBaseTwo`, their exact conversion, and nonnegativity compile | compiled |
+| Eq. (14.4) | arbitrary finite-alphabet discrete relative entropy with exact zero/support endpoints | only the Bernoulli specialization compiles | partial |
+| Eq. (14.5) | relative entropy as the supremum over all finite measurable discretisations | local `relativeEntropy` aliases Mathlib RN KL; equivalence to the source definition is absent | blocked |
+| Theorem 14.1 | Eq. (14.5) equals the RN/log-likelihood formula, including the singular and nonintegrable branches | RN branch adapters compile, but the Eq. (14.5)-to-RN equivalence is absent | partial |
+| Eq. (14.6) | common-dominating-measure density formula | only the `Q`-RN specialization is exposed | partial |
+| §14.2 metric properties | nonnegativity and `D(P,Q)=0 ↔ P=Q`, with asymmetry/non-triangle statements treated as explanatory nonclaims | order nonnegativity is intrinsic to `ENNReal`; `relativeEntropy_eq_zero_iff` compiles | compiled |
+| Gaussian example | common-variance Gaussian KL formula | unit-variance specialization compiles in Chapter 15; arbitrary positive variance is absent | partial |
+| Bernoulli example | endpoint-complete binary KL formula | `bernoulliRelativeEntropy` and endpoint lemmas compile | compiled |
+| Theorem 14.2 / Eq. (14.7) | unconditional Bretagnolle--Huber event inequality in direction `D(P,Q)` | exact local terminal compiles | compiled |
+| Eq. (14.8) | measure-level overlap lower bound used in the source proof | only a binary specialization is compiled | partial |
+| Eq. (14.9) | measure-level Le Cam affinity/overlap inequality | only a binary specialization is compiled | partial |
+| Gaussian testing application | the displayed Gaussian error bound and the `3/10`, `3/20` consequences under `Δ²/σ²≤1` | not exposed as Chapter 14 declarations | planned |
+
+Optional rows are §14.3 Notes, §14.4 Bibliographic Remarks, and Exercises
+14.1--14.15.  Exercise 14.10 is a high-value optional target: the existing
+event/Bernoulli theorem is its two-cell specialization, while
+`relativeEntropy_trim_le` now compiles the arbitrary-sub-sigma-algebra result
+for finite measures.
 
 ## Frozen Lean target
 
@@ -47,7 +87,14 @@ LowerBounds.relativeEntropy
 LowerBounds.relativeEntropy_of_absolutelyContinuous_of_integrable
 LowerBounds.relativeEntropy_eq_top_of_not_absolutelyContinuous
 LowerBounds.relativeEntropy_ne_top_iff
+LowerBounds.relativeEntropy_eq_zero_iff
+LowerBounds.BinaryPrefixCode
+LowerBounds.BinaryPrefixCode.kraft_inequality
+LowerBounds.discreteEntropy
+LowerBounds.discreteEntropyBaseTwo
+LowerBounds.expectedCodeLength
 LowerBounds.bernoulliRelativeEntropy
+LowerBounds.relativeEntropy_trim_le
 LowerBounds.bernoulliRelativeEntropy_event_le
 LowerBounds.binaryBretagnolleHuber
 LowerBounds.bretagnolleHuberScale
@@ -72,6 +119,9 @@ Theorem 14.2.
   use `∞`, matching absolute continuity.
 - No policy, horizon, filtration, kernel-composition, stopping-time, or bandit
   model assumption belongs to this chapter terminal.
+- `BinaryPrefixCode` requires every codeword to be nonempty.  This is needed
+  for its range to be uniquely decodable under arbitrary finite message
+  concatenation; a singleton empty codeword would otherwise be prefix-free.
 
 ## Proof obligations
 
@@ -91,7 +141,26 @@ Theorem 14.2.
 - [x] PR, authoritative-main Actions, Pages deployment and live desktop/mobile
   page are verified before this task becomes accepted.
 
-## Local verification evidence
+## 2026-09-04 whole-body extension local evidence
+
+- Detached short-path checkout `C:\a14` at `50dce67` passed the 2,670-job
+  focused information-theory build, the root-import Chapter 14 typed canary,
+  the 8,852-job root-library build, and the 8,894-job `Tests` build.
+- `python tools/bandit.py check` passed: both Lean gates, proof-graph export,
+  and 400 Python tests with seven expected skips completed successfully.
+- The typed canary includes a concrete one-bit Boolean prefix code and checks
+  unique decoding, Kraft, and expected length. Its axiom reports contain only
+  `propext`, `Classical.choice`, and `Quot.sound`.
+- The lean-verified site build/check passed with 604 modules, 8,224
+  declarations, zero placeholders, and 658 checked pages. In-app browser
+  inspection at desktop and 390×844 mobile widths confirmed the compiled vs.
+  partial split, all exact gap families, rendered math, official source links,
+  and no document-level horizontal overflow.
+- Independent read-only review found two P2 evidence-consistency defects; the
+  missing arbitrary finite-alphabet Eq. (14.4) gap and historical/current gate
+  ambiguity were corrected. No P0, P1, P2, or P3 issue remains unresolved.
+
+## Historical §14.2 local verification evidence
 
 - Commit `5a84d26` passed `python3 tools/bandit.py check` in detached
   short-path worktree `C:\abrl-p4-ch14-final-5a84d26`: the root library built
@@ -110,7 +179,7 @@ Theorem 14.2.
   nonclaim. See
   `reviews/2026-08-16-textbook-part-iv-chapter-14-information-theory-spine.md`.
 
-## Remote verification evidence
+## Historical §14.2 remote verification evidence
 
 - PR #11 passed `Lean and documentation / build` in run `31948234489`, job
   `95167560544` (22m25s), and was merged without a direct push to `main`.
@@ -135,6 +204,7 @@ compiled status.
 | --- | --- | --- | --- | --- |
 | KL/RN surface | `InformationTheory.klDiv`, `MeasureTheory.llr`, `klDiv_of_ac_of_integrable`, `klDiv_of_not_ac`, `klDiv_ne_top_iff` | transparent project aliases/adapters | same measurable space; finite measures for the imported API; probability measures at source terminal | imported Mathlib, project wrappers |
 | Bernoulli endpoint surface | `KLUCB.bernoulliKL`, `bernoulliKLCore`, endpoint/self lemmas | reuse exact existing `ENNReal` support convention | parameters in `[0,1]`; second-parameter endpoints explicit | compiled project-local dependency |
+| arbitrary sub-sigma-algebra DPI | `Measure.trim`, `toReal_rnDeriv_trim`, conditional expectation/Jensen, `integral_trim` | split infinite KL; in the finite branch identify the trimmed RN density with a conditional expectation and apply Jensen to `klFun` | finite measures; `m ≤ m₀`; finite KL supplies AC/integrability | Mathlib-candidate project leaf, compiled as `relativeEntropy_trim_le` |
 | event data processing | `klDiv_eq_lintegral_klFun_of_ac`, `mul_klFun_le_toReal_klDiv`, RN derivative under restriction, measure partition | restrict to `A,Aᶜ`, apply convexity, add the two pieces | `MeasurableSet A`; finite-KL branch supplies AC/integrability | Mathlib-candidate project leaf |
 | binary testing | real log/exp/sqrt, two-point Jensen/AM--GM, Cauchy--Schwarz algebra | source's affinity/overlap proof specialized to two atoms | Bernoulli endpoint cases separated | project-local |
 | source terminal | binary testing plus event data processing | split `klDiv=∞` from finite KL; use `toReal` only in finite branch | probability measures; measurable event; direction `P` to `Q` | project-local source theorem |
@@ -158,11 +228,10 @@ compiled status.
 
 ## Nonclaims and failure policy
 
-- Entropy/source coding in §14.1 is mapped pedagogically, but the formal
-  theorem spine targets the lower-bound dependencies in §14.2; no coding
-  theorem is claimed.
-- The full sub-sigma-algebra data-processing Exercise 14.10 is not claimed
-  unless separately compiled; only its event/binary specialization is required.
+- The §14.1 typed code/entropy surface and Kraft adapter compile, but neither
+  Huffman optimality nor the finite/block source-coding theorem is claimed.
+- The full sub-sigma-algebra data-processing Exercise 14.10 compiles as
+  `relativeEntropy_trim_le`; the event theorem remains a distinct specialization.
 - The adaptive-bandit divergence decomposition is Chapter 15, not Chapter 14.
 - Mathlib declarations and theorem cards are imported/route evidence, not new
   local proofs.

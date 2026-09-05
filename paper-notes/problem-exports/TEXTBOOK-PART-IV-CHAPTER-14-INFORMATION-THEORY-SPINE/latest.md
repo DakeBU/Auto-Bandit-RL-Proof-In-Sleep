@@ -2,108 +2,116 @@
 
 Task id: `TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE`
 
-Status: the scoped §14.2 declaration surface is compiled at Lean source commit
-`10dfd88`. The repository, website, review, and remote gates are recorded in
-the task packet rather than inferred from this mathematical export.
-
-This export covers Eqs. (14.4)--(14.6), Theorem 14.1, the event specialization
-of Exercise 14.10, and Theorem 14.2 in Lattimore--Szepesvári, *Bandit
-Algorithms*, Part IV, Chapter 14. It does not claim the entropy/coding results
-of §14.1, full arbitrary-sub-sigma-algebra data processing, or an adaptive
-bandit-history chain rule.
+Status: the declarations listed below compile locally. Whole-chapter coverage
+remains `partial`: this export does not claim Huffman optimality, the one-bit
+entropy sandwich, asymptotic source coding, arbitrary finite-alphabet Eq. (14.4)
+beyond Bernoulli, the finite-discretisation supremum equivalence, the full
+common-density/measure-overlap route, or the general-variance Gaussian testing
+application.
 
 ## Lean Declarations
 
+- `LowerBounds.BinaryPrefixCode`
+- `LowerBounds.BinaryPrefixCode.uniquelyDecodable_range`
+- `LowerBounds.BinaryPrefixCode.kraft_inequality`
+- `LowerBounds.discreteEntropy`
+- `LowerBounds.discreteEntropyBaseTwo`
+- `LowerBounds.discreteEntropyBaseTwo_eq_div_log_two`
+- `LowerBounds.discreteEntropy_nonneg`
+- `LowerBounds.expectedCodeLength`
+- `LowerBounds.expectedCodeLength_nonneg`
 - `LowerBounds.relativeEntropy`
 - `LowerBounds.relativeEntropy_of_absolutelyContinuous_of_integrable`
 - `LowerBounds.relativeEntropy_of_probability_absolutelyContinuous_of_integrable`
 - `LowerBounds.relativeEntropy_eq_top_of_not_absolutelyContinuous`
 - `LowerBounds.relativeEntropy_ne_top_iff`
+- `LowerBounds.relativeEntropy_eq_zero_iff`
+- `LowerBounds.relativeEntropy_trim_le`
 - `LowerBounds.bernoulliRelativeEntropy`
-- `LowerBounds.rnDeriv_restrict_restrict`
-- `LowerBounds.relativeEntropy_restrict_add_compl`
-- `LowerBounds.bernoulliKLCore_event_le`
-- `LowerBounds.exp_neg_half_bernoulliKLCore_le_affinity`
-- `LowerBounds.half_binaryAffinity_sq_le_eventError`
-- `LowerBounds.binaryBretagnolleHuberCore`
-- `LowerBounds.bretagnolleHuberScale`
-- `LowerBounds.bretagnolleHuberScale_nonneg`
-- `LowerBounds.binaryBretagnolleHuber`
 - `LowerBounds.bernoulliRelativeEntropy_event_le`
-- `LowerBounds.bretagnolleHuberScale_antitone`
+- `LowerBounds.binaryBretagnolleHuber`
+- `LowerBounds.bretagnolleHuberScale`
 - `LowerBounds.bretagnolleHuber`
 
 ## Natural-Language Proof
 
-Define `relativeEntropy P Q` to be Mathlib's extended-real `klDiv P Q`.
-Mathlib's representation yields two exact branches. When `P` is absolutely
-continuous with respect to `Q` and the log likelihood ratio is integrable
-under `P`, KL is the nonnegative extended-real embedding of its integral,
-with a finite-measure mass correction that vanishes for probability laws.
-When absolute continuity fails, KL is infinity. Conversely, KL is not infinity
-exactly when absolute continuity and log-likelihood integrability both hold.
+### Coding and entropy
 
-For a measurable event `A`, assume first that the full KL is finite. Restrict
-both laws to `A` and to `Aᶜ`. The Radon--Nikodym derivative of the restricted
-pair agrees almost everywhere, on the restricted law, with the original
-derivative. Splitting the KL integral over the two cells therefore gives
+A `BinaryPrefixCode` assigns each source symbol an injective nonempty bit list,
+with no codeword prefixing a distinct codeword. The nonempty condition matters:
+a singleton empty codeword is prefix-free but concatenations of repeated source
+symbols are not uniquely decodable. Induction on the first message list shows
+that equal concatenations have equal leading codewords, after which prefix
+freedom identifies the symbols and cancellation supplies the induction step.
+Thus the code range is uniquely decodable. Its finite codebook can therefore
+be passed to Mathlib's Kraft--McMillan theorem to obtain
 
 ```text
-D(P || Q) = D(P|A || Q|A) + D(P|Aᶜ || Q|Aᶜ).
+sum (word in codebook) (1/2)^word.length <= 1.
 ```
 
-Mathlib's convex `klFun` lower bound applied to each restricted pair bounds the
-two restricted divergences below by their mass-level contributions. Adding
-them gives the interior Bernoulli inequality
+For finite support, natural entropy and base-two entropy are defined by
 
 ```text
-d(P(A), Q(A)) <= D(P || Q).
+H(P)  = sum_x p(x) log(p(x)^(-1)),
+H2(P) = sum_x p(x) (log(p(x)^(-1)) / log 2).
 ```
 
-If `Q(A)` is zero or one, finite KL supplies the corresponding zero mass under
-`P`; if the full KL is infinite, the desired extended-real inequality is
-immediate. Thus event-level binary data processing is unconditional and keeps
-the direction `P` to `Q`.
+Factoring the constant through the finite sum gives `H2(P)=H(P)/log 2`.
+Each summand is nonnegative when `p(x)` lies in `[0,1]`, including the zero
+term under Lean's total logarithm convention. Expected code length is the
+finite sum `sum_x p(x) * length(code(x))` and is nonnegative for nonnegative
+masses. These are exact definition-level nodes plus the Kraft leaf; they are
+not the missing optimal-coding terminals.
 
-For the binary testing step, first take interior `q`. Concavity of the real
-logarithm applied with weights `p` and `1-p` yields
+### Relative entropy and full data processing
+
+Define `relativeEntropy P Q` as Mathlib's extended-real `klDiv P Q`. Its
+finite branch requires `P << Q` and integrability of the log likelihood ratio;
+the singular branch is infinity, and finite-measure KL is zero exactly when
+the two measures agree.
+
+For measurable spaces `m <= m0`, let `P` and `Q` be finite measures on `m0`.
+If `D(P||Q)=infinity`, monotonicity is immediate. Otherwise finite KL yields
+absolute continuity and integrability. The Radon--Nikodym derivative of the
+trimmed measures is the conditional expectation, with respect to `m`, of the
+original density. Conditional Jensen for the convex KL integrand gives
 
 ```text
-exp(-d(p,q)/2) <= sqrt(p*q) + sqrt((1-p)*(1-q)).
+klFun(E_Q[dP/dQ | m]) <= E_Q[klFun(dP/dQ) | m].
 ```
 
-A two-term square-root inequality bounds half the square of the right-hand
-affinity by `p + (1-q)`. Squaring the exponential inequality therefore gives
+Integrating, using equality of integrals of `m`-measurable functions under
+`Q` and `Q.trim`, proves the full Exercise 14.10 inequality
 
 ```text
-exp(-d(p,q))/2 <= p + (1-q).
+D(P.trim m || Q.trim m) <= D(P || Q).
 ```
 
-The cases `q=0` and `q=1` are proved separately using the exact Bernoulli-KL
-support convention: matching point masses have zero KL, while support mismatch
-has infinite KL. Define the source testing scale to be `exp(-d.toReal)/2` for
-finite `d` and zero for `d=∞`. This scale is nonnegative and antitone.
+No probability normalization or mutual absolute continuity is assumed.
 
-Finally, apply event data processing, then antitonicity of the scale, then the
-endpoint-complete binary theorem. Rewriting `1-Q(A)` as `Q(Aᶜ)` proves
+### Bretagnolle--Huber
+
+The separately compiled event specialization sends a measurable event `A` to
+the Bernoulli pair `P(A),Q(A)` and proves `d(P(A),Q(A)) <= D(P||Q)`. The binary
+proof lower-bounds likelihood affinity by `exp(-d/2)`, compares half its square
+with `p+(1-q)`, and handles every endpoint using the exact extended-real
+Bernoulli convention. With a real testing scale equal to `exp(-D)/2` for
+finite `D` and zero for infinite `D`, antitonicity and event data processing
+give the unconditional source theorem
 
 ```text
-bretagnolleHuberScale (D(P || Q)) <= P(A) + Q(Aᶜ).
+bretagnolleHuberScale (D(P || Q)) <= P(A) + Q(A complement).
 ```
 
-This is the unconditional Theorem 14.2 terminal. No finite-KL premise, mutual
-absolute continuity, policy, horizon, filtration, kernel chain rule, or
-stopping-time assumption is present.
+The KL direction is `P` to `Q`; the complement belongs to `Q`. Adaptive
+same-policy history KL is a Chapter 15 consumer, not a Chapter 14 claim.
 
 ## Verification boundary
 
-- The typed canary applies the public terminal to finite and singular examples
-  through the root `BanditRLProof` import.
-- The canary's axiom print contains only `propext`, `Classical.choice`, and
-  `Quot.sound`.
-- Imported Mathlib KL theorems and the existing project Bernoulli-KL surface
-  are dependencies, not newly claimed proofs.
-- The compiled data-processing theorem observes one event; it is not the full
-  arbitrary-sub-sigma-algebra statement in Exercise 14.10.
-- Chapter 15 must still construct the same-policy adaptive bandit-history laws,
-  prove their KL decomposition, and consume this testing terminal.
+- The root-import canary exercises the coding/entropy, zero-KL, full DPI,
+  event-DPI, endpoint, and measure-level testing declarations.
+- Imported Mathlib coding, conditional-expectation, and KL APIs are dependencies,
+  not new local theorems.
+- Whole-chapter status is deliberately retained as `partial` until every body
+  row in the frozen completion contract compiles and is canaried.

@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T06:52:35+00:00`
+Generated: `2026-09-05T06:57:45+00:00`
 
 ## Source Task
 
@@ -60402,11 +60402,99 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "statement": "theorem randomRegret_ge_quarter_of_clippingDecomposition (horizon pullCount clippingCount : Nat) (gap randomRegret : Real) (hGap : 0 <= gap) (hPull : (pullCount : Real) <= (horizon : Real) / 2) (hClipping : (clippingCount : Real) <= (horizon : Real) / 4) (hSource : adversarialRegretLowerExpression horizon pullCount clippingCount gap <= randomRegret) : gap * ((horizon : Real) / 4) <= randomRegret"
   },
   {
+    "kind": "structure",
+    "name": "BinaryPrefixCode",
+    "full_name": "BanditRLProof.LowerBounds.BinaryPrefixCode",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 34,
+    "statement": "structure BinaryPrefixCode (Symbol : Type*) where"
+  },
+  {
+    "kind": "theorem",
+    "name": "uniquelyDecodable_range",
+    "full_name": "BanditRLProof.LowerBounds.BinaryPrefixCode.uniquelyDecodable_range",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 45,
+    "statement": "theorem uniquelyDecodable_range (code : BinaryPrefixCode Symbol) : InformationTheory.UniquelyDecodable (Set.range code.encode)"
+  },
+  {
+    "kind": "def",
+    "name": "codebook",
+    "full_name": "BanditRLProof.LowerBounds.BinaryPrefixCode.codebook",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 99,
+    "statement": "noncomputable def codebook [Fintype Symbol] [DecidableEq Symbol] (code : BinaryPrefixCode Symbol) : Finset (List Bool)"
+  },
+  {
+    "kind": "theorem",
+    "name": "coe_codebook",
+    "full_name": "BanditRLProof.LowerBounds.BinaryPrefixCode.coe_codebook",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 103,
+    "statement": "theorem coe_codebook [Fintype Symbol] [DecidableEq Symbol] (code : BinaryPrefixCode Symbol) : (code.codebook : Set (List Bool)) = Set.range code.encode"
+  },
+  {
+    "kind": "theorem",
+    "name": "kraft_inequality",
+    "full_name": "BanditRLProof.LowerBounds.BinaryPrefixCode.kraft_inequality",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 111,
+    "statement": "theorem kraft_inequality [Fintype Symbol] [DecidableEq Symbol] (code : BinaryPrefixCode Symbol) : \u2211 word \u2208 code.codebook, (1 / 2 : Real) ^ word.length \u2264 1"
+  },
+  {
+    "kind": "def",
+    "name": "discreteEntropy",
+    "full_name": "BanditRLProof.LowerBounds.discreteEntropy",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 121,
+    "statement": "noncomputable def discreteEntropy (support : Finset Symbol) (probability : Symbol \u2192 Real) : Real"
+  },
+  {
+    "kind": "def",
+    "name": "discreteEntropyBaseTwo",
+    "full_name": "BanditRLProof.LowerBounds.discreteEntropyBaseTwo",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 126,
+    "statement": "noncomputable def discreteEntropyBaseTwo (support : Finset Symbol) (probability : Symbol \u2192 Real) : Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "discreteEntropyBaseTwo_eq_div_log_two",
+    "full_name": "BanditRLProof.LowerBounds.discreteEntropyBaseTwo_eq_div_log_two",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 131,
+    "statement": "theorem discreteEntropyBaseTwo_eq_div_log_two (support : Finset Symbol) (probability : Symbol \u2192 Real) : discreteEntropyBaseTwo support probability = discreteEntropy support probability / Real.log 2"
+  },
+  {
+    "kind": "theorem",
+    "name": "discreteEntropy_nonneg",
+    "full_name": "BanditRLProof.LowerBounds.discreteEntropy_nonneg",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 138,
+    "statement": "theorem discreteEntropy_nonneg (support : Finset Symbol) (probability : Symbol \u2192 Real) (hprobability : \u2200 symbol \u2208 support, 0 \u2264 probability symbol \u2227 probability symbol \u2264 1) : 0 \u2264 discreteEntropy support probability"
+  },
+  {
+    "kind": "def",
+    "name": "expectedCodeLength",
+    "full_name": "BanditRLProof.LowerBounds.expectedCodeLength",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 152,
+    "statement": "noncomputable def expectedCodeLength [Fintype Symbol] (probability : Symbol \u2192 Real) (code : BinaryPrefixCode Symbol) : Real"
+  },
+  {
+    "kind": "theorem",
+    "name": "expectedCodeLength_nonneg",
+    "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_nonneg",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 156,
+    "statement": "theorem expectedCodeLength_nonneg [Fintype Symbol] (probability : Symbol \u2192 Real) (code : BinaryPrefixCode Symbol) (hprobability : \u2200 symbol, 0 \u2264 probability symbol) : 0 \u2264 expectedCodeLength probability code"
+  },
+  {
     "kind": "abbrev",
     "name": "relativeEntropy",
     "full_name": "BanditRLProof.LowerBounds.relativeEntropy",
     "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
-    "line": 26,
+    "line": 168,
     "statement": "abbrev relativeEntropy {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) : ENNReal"
   },
   {
@@ -60414,7 +60502,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "relativeEntropy_of_absolutelyContinuous_of_integrable",
     "full_name": "BanditRLProof.LowerBounds.relativeEntropy_of_absolutelyContinuous_of_integrable",
     "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
-    "line": 32,
+    "line": 174,
     "statement": "theorem relativeEntropy_of_absolutelyContinuous_of_integrable {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) (hPQ : P \u226a Q) (hInt : Integrable (llr P Q) P) : relativeEntropy P Q = ENNReal.ofReal (\u222b x, llr P Q x \u2202P + Q.real univ - P.real univ)"
   },
   {
@@ -60422,7 +60510,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "relativeEntropy_of_probability_absolutelyContinuous_of_integrable",
     "full_name": "BanditRLProof.LowerBounds.relativeEntropy_of_probability_absolutelyContinuous_of_integrable",
     "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
-    "line": 42,
+    "line": 184,
     "statement": "theorem relativeEntropy_of_probability_absolutelyContinuous_of_integrable {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] (hPQ : P \u226a Q) (hInt : Integrable (llr P Q) P) : relativeEntropy P Q = ENNReal.ofReal (\u222b x, llr P Q x \u2202P)"
   },
   {
@@ -60430,7 +60518,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "relativeEntropy_eq_top_of_not_absolutelyContinuous",
     "full_name": "BanditRLProof.LowerBounds.relativeEntropy_eq_top_of_not_absolutelyContinuous",
     "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
-    "line": 52,
+    "line": 194,
     "statement": "theorem relativeEntropy_eq_top_of_not_absolutelyContinuous {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} (hPQ : \u00ac P \u226a Q) : relativeEntropy P Q = \u221e"
   },
   {
@@ -60438,15 +60526,31 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "relativeEntropy_ne_top_iff",
     "full_name": "BanditRLProof.LowerBounds.relativeEntropy_ne_top_iff",
     "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
-    "line": 60,
+    "line": 202,
     "statement": "theorem relativeEntropy_ne_top_iff {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} : relativeEntropy P Q \u2260 \u221e \u2194 P \u226a Q \u2227 Integrable (llr P Q) P"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_eq_zero_iff",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_eq_zero_iff",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 208,
+    "statement": "theorem relativeEntropy_eq_zero_iff {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} [IsFiniteMeasure P] [IsFiniteMeasure Q] : relativeEntropy P Q = 0 \u2194 P = Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_trim_le",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_trim_le",
+    "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
+    "line": 217,
+    "statement": "theorem relativeEntropy_trim_le {\u03b1 : Type*} {m m\u2080 : MeasurableSpace \u03b1} {P Q : @Measure \u03b1 m\u2080} [IsFiniteMeasure P] [IsFiniteMeasure Q] (hm : m \u2264 m\u2080) : @relativeEntropy \u03b1 m (P.trim hm) (Q.trim hm) \u2264 @relativeEntropy \u03b1 m\u2080 P Q"
   },
   {
     "kind": "abbrev",
     "name": "bernoulliRelativeEntropy",
     "full_name": "BanditRLProof.LowerBounds.bernoulliRelativeEntropy",
     "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
-    "line": 67,
+    "line": 293,
     "statement": "abbrev bernoulliRelativeEntropy (p q : Real) : ENNReal"
   },
   {
@@ -60454,7 +60558,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "rnDeriv_restrict_restrict",
     "full_name": "BanditRLProof.LowerBounds.rnDeriv_restrict_restrict",
     "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
-    "line": 72,
+    "line": 298,
     "statement": "theorem rnDeriv_restrict_restrict {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} [SigmaFinite P] [SigmaFinite Q] (hPQ : P \u226a Q) {A : Set \u03b1} (hA : MeasurableSet A) : (P.restrict A).rnDeriv (Q.restrict A) =\u1d50[Q.restrict A] P.rnDeriv Q"
   },
   {
@@ -60462,7 +60566,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "relativeEntropy_restrict_add_compl",
     "full_name": "BanditRLProof.LowerBounds.relativeEntropy_restrict_add_compl",
     "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
-    "line": 88,
+    "line": 314,
     "statement": "theorem relativeEntropy_restrict_add_compl {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} [IsFiniteMeasure P] [IsFiniteMeasure Q] (hPQ : P \u226a Q) {A : Set \u03b1} (hA : MeasurableSet A) : relativeEntropy P Q = relativeEntropy (P.restrict A) (Q.restrict A) + relativeEntropy (P.restrict A\u1d9c) (Q.restrict A\u1d9c)"
   },
   {
@@ -60470,7 +60574,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "bernoulliKLCore_event_le",
     "full_name": "BanditRLProof.LowerBounds.bernoulliKLCore_event_le",
     "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
-    "line": 131,
+    "line": 357,
     "statement": "theorem bernoulliKLCore_event_le {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} [IsProbabilityMeasure P] [IsProbabilityMeasure Q] {A : Set \u03b1} (hA : MeasurableSet A) (hKL : relativeEntropy P Q \u2260 \u221e) (hQ0 : 0 < Q.real A) (hQ1 : Q.real A < 1) : KLUCB.bernoulliKLCore (P.real A) (Q.real A) \u2264 (relativeEntropy P Q).toReal"
   },
   {
@@ -60478,7 +60582,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "exp_neg_half_bernoulliKLCore_le_affinity",
     "full_name": "BanditRLProof.LowerBounds.exp_neg_half_bernoulliKLCore_le_affinity",
     "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
-    "line": 202,
+    "line": 428,
     "statement": "theorem exp_neg_half_bernoulliKLCore_le_affinity {p q : Real} (hp0 : 0 < p) (hp1 : p < 1) (hq0 : 0 < q) (hq1 : q < 1) : Real.exp (-(KLUCB.bernoulliKLCore p q) / 2) \u2264 Real.sqrt (p * q) + Real.sqrt ((1 - p) * (1 - q))"
   },
   {
@@ -60486,7 +60590,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "half_binaryAffinity_sq_le_eventError",
     "full_name": "BanditRLProof.LowerBounds.half_binaryAffinity_sq_le_eventError",
     "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
-    "line": 270,
+    "line": 496,
     "statement": "theorem half_binaryAffinity_sq_le_eventError {p q : Real} (hp : KLUCB.IsBernoulliParameter p) (hq : KLUCB.IsBernoulliParameter q) : (1 / 2 : Real) * (Real.sqrt (p * q) + Real.sqrt ((1 - p) * (1 - q))) ^ 2 \u2264 p + (1 - q)"
   },
   {
@@ -60494,7 +60598,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "binaryBretagnolleHuberCore",
     "full_name": "BanditRLProof.LowerBounds.binaryBretagnolleHuberCore",
     "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
-    "line": 305,
+    "line": 531,
     "statement": "theorem binaryBretagnolleHuberCore {p q : Real} (hp : KLUCB.IsBernoulliParameter p) (hq0 : 0 < q) (hq1 : q < 1) : (1 / 2 : Real) * Real.exp (-KLUCB.bernoulliKLCore p q) \u2264 p + (1 - q)"
   },
   {
@@ -60502,7 +60606,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "bretagnolleHuberScale",
     "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale",
     "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
-    "line": 350,
+    "line": 576,
     "statement": "noncomputable def bretagnolleHuberScale (d : ENNReal) : Real"
   },
   {
@@ -60510,7 +60614,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "bretagnolleHuberScale_nonneg",
     "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_nonneg",
     "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
-    "line": 353,
+    "line": 579,
     "statement": "theorem bretagnolleHuberScale_nonneg (d : ENNReal) : 0 \u2264 bretagnolleHuberScale d"
   },
   {
@@ -60518,7 +60622,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "binaryBretagnolleHuber",
     "full_name": "BanditRLProof.LowerBounds.binaryBretagnolleHuber",
     "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
-    "line": 362,
+    "line": 588,
     "statement": "theorem binaryBretagnolleHuber {p q : Real} (hp : KLUCB.IsBernoulliParameter p) (hq : KLUCB.IsBernoulliParameter q) : bretagnolleHuberScale (bernoulliRelativeEntropy p q) \u2264 p + (1 - q)"
   },
   {
@@ -60526,7 +60630,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "bernoulliRelativeEntropy_event_le",
     "full_name": "BanditRLProof.LowerBounds.bernoulliRelativeEntropy_event_le",
     "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
-    "line": 395,
+    "line": 621,
     "statement": "theorem bernoulliRelativeEntropy_event_le {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} [IsProbabilityMeasure P] [IsProbabilityMeasure Q] {A : Set \u03b1} (hA : MeasurableSet A) : bernoulliRelativeEntropy (P.real A) (Q.real A) \u2264 relativeEntropy P Q"
   },
   {
@@ -60534,7 +60638,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "bretagnolleHuberScale_antitone",
     "full_name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_antitone",
     "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
-    "line": 443,
+    "line": 669,
     "statement": "theorem bretagnolleHuberScale_antitone {d D : ENNReal} (h : d \u2264 D) : bretagnolleHuberScale D \u2264 bretagnolleHuberScale d"
   },
   {
@@ -60542,7 +60646,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "bretagnolleHuber",
     "full_name": "BanditRLProof.LowerBounds.bretagnolleHuber",
     "file": "BanditRLProof/LowerBounds/InformationTheory.lean",
-    "line": 462,
+    "line": 688,
     "statement": "theorem bretagnolleHuber {\u03b1 : Type*} [MeasurableSpace \u03b1] {P Q : Measure \u03b1} [IsProbabilityMeasure P] [IsProbabilityMeasure Q] {A : Set \u03b1} (hA : MeasurableSet A) : bretagnolleHuberScale (relativeEntropy P Q) \u2264 P.real A + Q.real A\u1d9c"
   },
   {
