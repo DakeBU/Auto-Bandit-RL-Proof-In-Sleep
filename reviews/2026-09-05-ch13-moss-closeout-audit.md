@@ -1,7 +1,40 @@
 # Chapter 13 MOSS evidence closeout audit
 
 This is an in-branch self-audit, not an independent review or completion
-certificate. Lean baseline: cdc3a51. Chapter status remains partial.
+certificate. Current validated Lean baseline: e218fc8. Chapter status remains partial.
+
+## Latest merged-tree verdict
+
+Full `python tools/bandit.py check` at e218fc8 completed successfully in
+the clean short validation worktree C:/abrl13-d9682b8 (session 5092,
+exit 0): library 8880 jobs, Tests 8927 jobs, ProofGraphExport and 400 Python
+tests in 214.613 seconds, with 7 skipped. The target-drift template's
+UNSET fields are expected result-free evaluation placeholders, not a
+Chapter 13 proof failure. No evaluation outcome is claimed.
+
+The subsequent commits through 3c0dc07 change only evidence, the export
+preview and the old MOSS packet; `git diff e218fc8 3c0dc07` is empty for
+Lean sources, Tests, tools and website scripts. This establishes the
+unchanged executable proof baseline, not a claim that remote CI tested
+3c0dc07. Local rendered-export and desktop/mobile site QA pass as detailed
+below. PR #105 is open, draft and currently mergeable; its Lean/documentation
+run remains in progress. Main, deployment and live verification remain open.
+
+Structured consumer recheck: MOSSHistoryRegret explicitly transports the
+finite-history law and counts through t+1 before applying constant 39.
+SubgaussianMinimax quantifies over all history algorithms and stationary
+unit-subgaussian arm kernels; its gap restriction does not bound absolute
+means. Gaussian inclusion preserves exactly the policy and regret
+functional. The upper bound uses gap sum <= k <= sqrt(k*(t+1)); multiplying
+the lower constant 1/54 by 2160 recovers 40. The policy depends on k and
+the horizon, not the environment mean. Typed endpoint canaries are part
+of the passing Tests build. A source scan of these two consumer modules
+finds no sorry, admit, added axiom or opaque declaration. No new blocking
+consumer issue was found in this self-review; it is not an independent
+review and does not certify the remaining publication gates.
+
+The following sections retain the chronological audit trail. Later explicit
+passing verdicts supersede earlier running/inconclusive observations.
 
 ## Current evidence
 
