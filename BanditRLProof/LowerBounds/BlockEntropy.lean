@@ -118,4 +118,37 @@ theorem sourceBlock_code_rate_lower_bound
   apply (le_div_iff₀ (by exact_mod_cast hn : (0 : ℝ) < n)).2
   nlinarith
 
+/-- An actual family of block prefix codes has rate tending to entropy. -/
+theorem exists_sourceBlock_code_family_tendsto_entropy
+    {α : Type*} [Fintype α] [DecidableEq α] (p : α → ℝ)
+    (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) :
+    ∃ code : (n : ℕ) → BinaryPrefixCode (SourceBlock α (n + 1)),
+      Filter.Tendsto
+        (fun n => expectedCodeLength (sourceBlockMass p (n + 1)) (code n) / (n + 1))
+        Filter.atTop (nhds (discreteEntropyBaseTwo Finset.univ p)) := by
+  classical
+  choose code hc using fun n : ℕ =>
+    exists_sourceBlock_code_rate_sandwich p hp hs (n + 1) (Nat.succ_pos n)
+  refine ⟨code, ?_⟩
+  have hup : Filter.Tendsto
+      (fun n : ℕ => discreteEntropyBaseTwo Finset.univ p + 1 / (n + 1 : ℝ))
+      Filter.atTop (nhds (discreteEntropyBaseTwo Finset.univ p)) := by
+    simpa using tendsto_const_nhds.add
+      (tendsto_one_div_add_atTop_nhds_zero_nat (𝕜 := ℝ))
+  exact tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds hup
+    (fun n => by simpa using (hc n).1) (fun n => by simpa using (hc n).2)
+
+/-- No convergent family of block prefix codes has limiting rate below entropy. -/
+theorem sourceBlock_code_family_limit_ge_entropy
+    {α : Type*} [Fintype α] [DecidableEq α] (p : α → ℝ)
+    (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1)
+    (code : (n : ℕ) → BinaryPrefixCode (SourceBlock α (n + 1))) (r : ℝ)
+    (hr : Filter.Tendsto
+      (fun n => expectedCodeLength (sourceBlockMass p (n + 1)) (code n) / (n + 1))
+      Filter.atTop (nhds r)) :
+    discreteEntropyBaseTwo Finset.univ p ≤ r := by
+  apply ge_of_tendsto hr
+  exact Filter.Eventually.of_forall fun n => by
+    simpa using sourceBlock_code_rate_lower_bound p hp hs (n + 1) (Nat.succ_pos n) (code n)
+
 end BanditRLProof.LowerBounds

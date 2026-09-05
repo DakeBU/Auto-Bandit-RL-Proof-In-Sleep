@@ -26,3 +26,24 @@ remain separate from these finite-n statements. The ongoing full check at
 Focused build passed (2,674 jobs), as did the full typed finite-n canary and
 the three-symbol entropy instance. All six axiom reports contain only
 propext, Classical.choice, and Quot.sound. No new own-module warnings remain.
+
+Asymptotic continuation: choose an actual code for each positive block size
+n+1 using the finite-n theorem, then apply squeeze_zero/addition using
+tendsto_one_div_add_atTop_nhds_zero_nat. The family is existential proof data,
+not claimed to be an executable arithmetic coder. For any other convergent
+prefix-code rate family, pass the universal entropy lower bound to the limit
+with le_of_tendsto. This closes asymptotic block achievability and converse
+while leaving the specifically named algorithms as separate requirements.
+
+The asymptotic achievability and converse focused-build (2,674 jobs).
+`exists_sourceBlock_code_family_tendsto_entropy` selects actual positive-block
+prefix codes and proves convergence using the 1/(n+1) squeeze.
+`sourceBlock_code_family_limit_ge_entropy` handles every convergent family;
+the earlier pointwise lower bound remains available without convergence.
+Both allow zero source masses. The proof uses `ge_of_tendsto` for the lower
+bound direction. The arithmetic-coding algorithm is still not constructed.
+
+The focused typed canary passed; all eight reported axiom sets are standard
+propext/Classical.choice/Quot.sound only. BlockEntropy and its root-import
+canary are now registered for aggregate verification. The ongoing 2ce1976
+check predates this module and must not be cited as its integration evidence.

@@ -128,3 +128,9 @@ with one zero-mass symbol. All twelve audited construction declarations
 have only standard propext/Classical.choice/Quot.sound dependencies. The
 Shannon and construction modules/canaries are now root/Tests-registered;
 their full integration check is the next gate, not yet a completed result.
+
+Integration update: the full check at 2ce1976 passed, including root/Tests
+(8,915 jobs), exporter/placeholder checks, and 400 Python tests (7 skipped,
+188.554s). Log: C:/a14/tmp/ch14-prefix-code-full-check.log. This closes
+integration of the strict Kraft converse, zero-mass allocation, and realizable
+entropy sandwich. It does not cover the subsequent BlockEntropy module.

@@ -49,3 +49,4 @@ import Tests.TextbookPartIVChapter14GaussianCanary
 import Tests.TextbookPartIVChapter14CodingBoundCanary
 import Tests.TextbookPartIVChapter14ShannonCanary
 import Tests.TextbookPartIVChapter14PrefixConstructionCanary
+import Tests.TextbookPartIVChapter14BlockCanary

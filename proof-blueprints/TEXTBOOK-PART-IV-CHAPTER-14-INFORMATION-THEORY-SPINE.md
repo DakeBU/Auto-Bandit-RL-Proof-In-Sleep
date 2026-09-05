@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T05:55:24+00:00`
+Generated: `2026-09-05T05:57:55+00:00`
 
 ## Source Task
 
@@ -393,7 +393,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH14-CODE-MODEL` | typed finite binary prefix-code surface and expected length | lists, finite sums, Mathlib Kraft--McMillan | define injective/prefix-free/nonempty codes; prove range uniquely decodable and expose finite Kraft adapter | `BinaryPrefixCode`, `BinaryPrefixCode.uniquelyDecodable_range`, `BinaryPrefixCode.kraft_inequality`, `expectedCodeLength` | focused Lean | compiled |
 | `CH14-ENTROPY-DEFINITIONS` | Eqs. (14.2)--(14.3) entropy definitions, nonnegativity, and nats/bits conversion | finite sums, real log | exact finite support convention; term at zero is zero | `discreteEntropy`, `discreteEntropyBaseTwo`, `discreteEntropyBaseTwo_eq_div_log_two`, `discreteEntropy_nonneg` | focused Lean | compiled |
 | `CH14-HUFFMAN-BOUND` | Eq. (14.2), including existence/optimality of a prefix code | Kraft--McMillan, finite maximum-length induction | strict Kraft converse and zero-mass-aware lengths produce an actual code in the entropy sandwich; minimizer existence/Huffman optimality remain open | `exists_binaryPrefixCode_entropy_sandwich`, `exists_binaryPrefixCode_of_kraft_lt_one` focused-build; full optimum terminal absent | chapter terminal | partial |
-| `CH14-SOURCE-CODING` | arithmetic/block-code achievability and converse | product distributions, uniquely decodable block codes, asymptotics | formal source-coding theorem | none | chapter terminal | blocked |
+| `CH14-SOURCE-CODING` | arithmetic/block-code achievability and converse | product distributions, block prefix codes, asymptotics | exact n-fold entropy, finite-n rate sandwich, code-family convergence and universal limit converse; arithmetic algorithm remains open | `exists_sourceBlock_code_family_tendsto_entropy`, `sourceBlock_code_family_limit_ge_entropy` and finite-n leaves focused-build/canary passed; aggregate pending | chapter terminal | partial |
 | `CH14-FINITE-DISCRETE-KL` | Eq. (14.4) for an arbitrary finite alphabet | finite sums, support endpoints | atomwise AC equivalence, RN density ratio, finite LLR integrability, and finite integral sum; singular atom forces infinity | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, `relativeEntropy_finite_eq_top_iff` | focused Lean and root-import canary passed | compiled |
 | `CH14-DISCRETISATION-SUP` | Eq. (14.5) and equality with RN KL in Theorem 14.1 | finite measurable quotients/partitions, supremum | finite-cell Jensen upper bound; binary singular witness; density filtration recovery by conditional-expectation convergence/Fatou; finite-range coding of each layer | `finitePartitionRelativeEntropy_eq_relativeEntropy` and its finite-partition/filtration/encoding helpers | root, aggregate Tests, and full harness pass at 40c56ca | compiled |
 | `CH14-COMMON-DENSITY` | Eq. (14.6) under a common σ-finite dominating measure | RN ratio, integral transport | transfer log-density equality to P-a.e.; transport integrability and integral; retain singular/nonintegrable infinity branches | `relativeEntropy_commonDensity_eq_if`, `relativeEntropy_commonDensity_klFun` and helpers | root/aggregate/full harness passed at `78846b8` | compiled |
@@ -58150,6 +58150,22 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
     "line": 110,
     "statement": "theorem sourceBlock_code_rate_lower_bound {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) (hn : 0 < n) (code : BinaryPrefixCode (SourceBlock \u03b1 n)) : discreteEntropyBaseTwo Finset.univ p \u2264 expectedCodeLength (sourceBlockMass p n) code / n"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_sourceBlock_code_family_tendsto_entropy",
+    "full_name": "BanditRLProof.LowerBounds.exists_sourceBlock_code_family_tendsto_entropy",
+    "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+    "line": 122,
+    "statement": "theorem exists_sourceBlock_code_family_tendsto_entropy {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) : \u2203 code : (n : \u2115) \u2192 BinaryPrefixCode (SourceBlock \u03b1 (n + 1)), Filter.Tendsto (fun n => expectedCodeLength (sourceBlockMass p (n + 1)) (code n) / (n + 1)) Filter.atTop (nhds (discreteEntropyBaseTwo Finset.univ p))"
+  },
+  {
+    "kind": "theorem",
+    "name": "sourceBlock_code_family_limit_ge_entropy",
+    "full_name": "BanditRLProof.LowerBounds.sourceBlock_code_family_limit_ge_entropy",
+    "file": "BanditRLProof/LowerBounds/BlockEntropy.lean",
+    "line": 142,
+    "statement": "theorem sourceBlock_code_family_limit_ge_entropy {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (code : (n : \u2115) \u2192 BinaryPrefixCode (SourceBlock \u03b1 (n + 1))) (r : \u211d) (hr : Filter.Tendsto (fun n => expectedCodeLength (sourceBlockMass p (n + 1)) (code n) / (n + 1)) Filter.atTop (nhds r)) : discreteEntropyBaseTwo Finset.univ p \u2264 r"
   },
   {
     "kind": "theorem",
