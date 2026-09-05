@@ -190,3 +190,10 @@ include Alphabet/Construction and their canaries; their full gate is pending.
 The Construction typed canary passed. The recursive constructor, global
 optimality theorem and entropy-sandwich theorem all report only propext,
 Classical.choice and Quot.sound. Retrieval/task-memory/blueprint refreshed.
+
+Full-gate result at 7daa2b9: complete check passed, Tests 8927 jobs,
+400 Python tests (7 skipped, 199.590s), log
+`C:/a14/tmp/ch14-huffman-step-full-check.log`. This validates the pruning,
+greedy and induction-step aggregate. The next full gate is running at
+dff13cb for Alphabet/Construction, with log
+`C:/a14/tmp/ch14-huffman-construction-full-check.log`.

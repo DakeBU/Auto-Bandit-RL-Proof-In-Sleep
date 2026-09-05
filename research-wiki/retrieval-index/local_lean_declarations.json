@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T06:25:40+00:00",
+  "generated": "2026-09-05T06:28:25+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -27696,6 +27696,62 @@
       "file": "BanditRLProof/LowerBounds/AffinityKL.lean",
       "line": 91,
       "statement": "theorem bretagnolleHuberScale_le_half_commonDensityAffinity_sq {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite \u03bc] (hQ : Q \u226a \u03bc) : bretagnolleHuberScale (relativeEntropy P Q) \u2264 (1 / 2 : \u211d) * commonDensityAffinity P Q \u03bc ^ 2"
+    },
+    {
+      "kind": "def",
+      "name": "arithmeticOffset",
+      "full_name": "BanditRLProof.LowerBounds.arithmeticOffset",
+      "file": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
+      "line": 6,
+      "statement": "def arithmeticOffset {k : \u2115} (p : Fin k \u2192 \u211d) (a : Fin k) : \u211d"
+    },
+    {
+      "kind": "theorem",
+      "name": "arithmeticOffset_nonneg",
+      "full_name": "BanditRLProof.LowerBounds.arithmeticOffset_nonneg",
+      "file": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
+      "line": 9,
+      "statement": "theorem arithmeticOffset_nonneg {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (a : Fin k) : 0 \u2264 arithmeticOffset p a"
+    },
+    {
+      "kind": "theorem",
+      "name": "arithmeticOffset_add_le_one",
+      "full_name": "BanditRLProof.LowerBounds.arithmeticOffset_add_le_one",
+      "file": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
+      "line": 13,
+      "statement": "theorem arithmeticOffset_add_le_one {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (a : Fin k) : arithmeticOffset p a + p a \u2264 1"
+    },
+    {
+      "kind": "def",
+      "name": "arithmeticInterval",
+      "full_name": "BanditRLProof.LowerBounds.arithmeticInterval",
+      "file": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
+      "line": 25,
+      "statement": "def arithmeticInterval {k : \u2115} (p : Fin k \u2192 \u211d) : List (Fin k) \u2192 \u211d \u00d7 \u211d | [] => (0, 1) | a :: w => (arithmeticOffset p a + p a * (arithmeticInterval p w).1, arithmeticOffset p a + p a * (arithmeticInterval p w).2)"
+    },
+    {
+      "kind": "theorem",
+      "name": "arithmeticInterval_width",
+      "full_name": "BanditRLProof.LowerBounds.arithmeticInterval_width",
+      "file": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
+      "line": 30,
+      "statement": "theorem arithmeticInterval_width {k : \u2115} (p : Fin k \u2192 \u211d) (w : List (Fin k)) : (arithmeticInterval p w).2 - (arithmeticInterval p w).1 = (w.map p).prod"
+    },
+    {
+      "kind": "theorem",
+      "name": "arithmeticInterval_bounds",
+      "full_name": "BanditRLProof.LowerBounds.arithmeticInterval_bounds",
+      "file": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
+      "line": 39,
+      "statement": "theorem arithmeticInterval_bounds {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (w : List (Fin k)) : 0 \u2264 (arithmeticInterval p w).1 \u2227 (arithmeticInterval p w).1 \u2264 (arithmeticInterval p w).2 \u2227 (arithmeticInterval p w).2 \u2264 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "arithmeticOffset_separated",
+      "full_name": "BanditRLProof.LowerBounds.arithmeticOffset_separated",
+      "file": "BanditRLProof/LowerBounds/ArithmeticIntervals.lean",
+      "line": 57,
+      "statement": "theorem arithmeticOffset_separated {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (a b : Fin k) (hab : a < b) : arithmeticOffset p a + p a \u2264 arithmeticOffset p b"
     },
     {
       "kind": "def",
