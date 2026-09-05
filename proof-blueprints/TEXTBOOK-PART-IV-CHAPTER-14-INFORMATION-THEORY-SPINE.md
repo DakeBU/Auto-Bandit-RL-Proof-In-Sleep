@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T04:37:24+00:00`
+Generated: `2026-09-05T04:42:17+00:00`
 
 ## Source Task
 
@@ -63,7 +63,7 @@ mapped local adapter before they count as chapter evidence.
 | Eq. (14.2) | Huffman optimum satisfies `H₂(P) ≤ L* ≤ H₂(P)+1` | no Huffman construction or Kraft/source-coding proof | blocked |
 | §14.1 asymptotic statement | arithmetic coding approaches entropy and no code improves the asymptotic rate | no block-code/asymptotic coding model | blocked |
 | Eqs. (14.2)--(14.3) definitions | finite discrete base-two entropy, natural entropy, and exact unit conversion | `discreteEntropy`, `discreteEntropyBaseTwo`, their exact conversion, and nonnegativity compile | compiled |
-| Eq. (14.4) | arbitrary finite-alphabet discrete relative entropy with exact zero/support endpoints | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, and `relativeEntropy_finite_eq_top_iff` compile; root-import canary gate pending | partial (integration pending) |
+| Eq. (14.4) | arbitrary finite-alphabet discrete relative entropy with exact zero/support endpoints | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, and `relativeEntropy_finite_eq_top_iff` compile; root-import finite/singular three-symbol canaries pass | compiled |
 | Eq. (14.5) | relative entropy as the supremum over all finite measurable discretisations | local `relativeEntropy` aliases Mathlib RN KL; equivalence to the source definition is absent | blocked |
 | Theorem 14.1 | Eq. (14.5) equals the RN/log-likelihood formula, including the singular and nonintegrable branches | RN branch adapters compile, but the Eq. (14.5)-to-RN equivalence is absent | partial |
 | Eq. (14.6) | common-dominating-measure density formula | only the `Q`-RN specialization is exposed | partial |
@@ -260,7 +260,7 @@ separate dependency leaf.
   a compiled local declaration and typed canary.  A theorem card, imported API,
   conditional lemma, or prose mapping alone cannot promote the chapter.
 - Current decision: `partial`.  The Section 14.1 Huffman/source-coding
-  terminals, arbitrary finite-alphabet Eq. (14.4) beyond Bernoulli,
+  terminals,
   Eq. (14.5)-to-RN equivalence, common-density formula, full measure-level
   overlap proof nodes, and general-variance Gaussian/application surface are
   not all locally compiled.
@@ -368,7 +368,7 @@ with `D(Q,P)` is also valid.
 - [x] Chapter 15 same-policy history-law construction and divergence decomposition (compiled in its own gate).
 - [ ] Huffman optimality and the one-bit entropy sandwich in Eq. (14.2).
 - [ ] Block/arithmetic source-coding achievability and converse.
-- [ ] Eq. (14.4) for an arbitrary finite alphabet beyond Bernoulli.
+- [x] Eq. (14.4) for an arbitrary finite alphabet, with exact support dichotomy and zero-mass terms.
 - [ ] Eq. (14.5) finite-discretisation supremum equivalence to RN KL.
 - [ ] General common-density, Gaussian-variance/application, and measure-overlap proof nodes.
 
@@ -407,7 +407,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH14-ENTROPY-DEFINITIONS` | Eqs. (14.2)--(14.3) entropy definitions, nonnegativity, and nats/bits conversion | finite sums, real log | exact finite support convention; term at zero is zero | `discreteEntropy`, `discreteEntropyBaseTwo`, `discreteEntropyBaseTwo_eq_div_log_two`, `discreteEntropy_nonneg` | focused Lean | compiled |
 | `CH14-HUFFMAN-BOUND` | Eq. (14.2), including existence/optimality of a prefix code | Kraft--McMillan, Huffman/tree construction | no conditional optimality premise may masquerade as this terminal | none | chapter terminal | blocked |
 | `CH14-SOURCE-CODING` | arithmetic/block-code achievability and converse | product distributions, uniquely decodable block codes, asymptotics | formal source-coding theorem | none | chapter terminal | blocked |
-| `CH14-FINITE-DISCRETE-KL` | Eq. (14.4) for an arbitrary finite alphabet | finite sums, support endpoints | atomwise AC equivalence, RN density ratio, finite LLR integrability, and finite integral sum; singular atom forces infinity | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, `relativeEntropy_finite_eq_top_iff` | focused Lean passed; root canary pending | partial (integration pending) |
+| `CH14-FINITE-DISCRETE-KL` | Eq. (14.4) for an arbitrary finite alphabet | finite sums, support endpoints | atomwise AC equivalence, RN density ratio, finite LLR integrability, and finite integral sum; singular atom forces infinity | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, `relativeEntropy_finite_eq_top_iff` | focused Lean and root-import canary passed | compiled |
 | `CH14-DISCRETISATION-SUP` | Eq. (14.5) and equality with RN KL in Theorem 14.1 | finite measurable quotients/partitions, supremum | source definition followed by Dobrushin/RN equivalence | none | chapter terminal | blocked |
 | `CH14-COMMON-DENSITY` | Eq. (14.6) under a common σ-finite dominating measure | RN chain rule, integral transport | expose exact density formula | Q-RN specialization only | focused Lean | partial |
 | `CH14-KL-SEPARATION` | nonnegativity and zero iff equality | Mathlib KL | `ENNReal` order plus thin source-mapped equality adapter | `relativeEntropy_eq_zero_iff` | focused Lean | compiled |

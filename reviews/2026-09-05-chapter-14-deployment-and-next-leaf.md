@@ -66,3 +66,29 @@ endpoint canaries have been added for validation. The first direct check
 reported only an ambiguous `not_imp` name. The corrected version passed;
 the compiler identified that simp argument as unnecessary, so it was removed.
 The root integration and canaries still require verification.
+
+The short-path validation checkout `C:\a14` built the root library at
+`e218fb6` successfully (root module: 129 seconds). Its first Tests pass found
+two parsing errors for the infinity notation in the new root-import canary;
+the explicit `(⊤ : ENNReal)` spelling fixes those statements without changing
+their meaning. The corrected canary also directly exercises the finite-sum
+formula on a three-symbol Dirac law and prints all eight new declarations'
+axiom dependencies. These final canary changes are at `9d4b44a`.
+
+The primary long-path `python tools/bandit.py check` attempt failed while
+writing the unrelated long-named RL cumulative-average-rate `.olean`, matching
+the existing Windows path limitation. It did successfully build
+`FiniteDiscreteKL`. The full gate must be rerun in the short checkout; the
+failed long-path invocation is not a completed full gate.
+
+Direct root-import canary checking at `9d4b44a` subsequently passed (exit 0),
+including the three-symbol finite-sum calculation and singular example.
+All eight new declarations report only `propext`, `Classical.choice`, and
+`Quot.sound`. Eq. (14.4) is therefore locally compiled and canaried; the
+full-check rerun and website/export synchronization remain distinct gates.
+
+The short-path full check at `9d4b44a` subsequently passed the library build,
+the complete Tests build (8,895 jobs), the proof-graph exporter Lean check,
+and the forbidden-placeholder scan. The Python suite was still running at
+this checkpoint. Its log is `C:\a14\tmp\ch14-finite-kl-full-check.log`.
+No full-check completion or remote deployment is claimed for this slice yet.
