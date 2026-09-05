@@ -3,6 +3,7 @@ import Mathlib.Analysis.Real.Pi.Bounds
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
 import Mathlib.MeasureTheory.Integral.IntegralEqImproper
+import Mathlib.Probability.Distributions.Gaussian.Real
 import Mathlib.Tactic
 
 /-! Analytic comparison functions for Chapter 13 Eq. (13.4).
@@ -279,5 +280,76 @@ theorem gaussianMills_upper_integral {x : ℝ} (hx : 0 ≤ x) :
   have hs := gaussian_integral_split x
   dsimp [gaussianMillsError, gaussianMillsComparison] at hn
   linarith
+
+open ProbabilityTheory
+open scoped NNReal
+
+/-- Exact density-integral representation for a centered Gaussian tail. -/
+theorem gaussianReal_zero_tail_integral (v : ℝ≥0) (hv : 0 < v) (a : ℝ) :
+    (gaussianReal 0 v).real (Ici a) =
+      (Real.sqrt (2 * Real.pi * (v : ℝ)))⁻¹ *
+        ∫ t in Ioi a, Real.exp (-t ^ 2 / (2 * (v : ℝ))) := by
+  change (gaussianReal 0 v (Ici a)).toReal = _
+  rw [gaussianReal_apply_eq_integral 0 hv.ne', ENNReal.toReal_ofReal
+    (integral_nonneg (fun t => gaussianPDFReal_nonneg 0 v t))]
+  simp only [gaussianPDFReal, sub_zero]
+  rw [integral_const_mul, ← restrict_Ioi_eq_restrict_Ici]
+
+/-- The variance-one-half normal law is exactly the normalized source integral. -/
+theorem gaussianReal_half_tail_integral (a : ℝ) :
+    (gaussianReal 0 (1 / 2 : ℝ≥0)).real (Ici a) =
+      (∫ t in Ioi a, Real.exp (-t ^ 2)) / Real.sqrt Real.pi := by
+  rw [gaussianReal_zero_tail_integral _ (by norm_num)]
+  norm_num
+  field_simp
+
+/-- Both exact Mills bounds for the normalized variance-one-half Gaussian. -/
+theorem gaussianReal_half_mills_bounds {a : ℝ} (ha : 0 ≤ a) :
+    Real.exp (-a ^ 2) / (a + Real.sqrt (a ^ 2 + 2)) / Real.sqrt Real.pi ≤
+        (gaussianReal 0 (1 / 2 : ℝ≥0)).real (Ici a) ∧
+      (gaussianReal 0 (1 / 2 : ℝ≥0)).real (Ici a) ≤
+        Real.exp (-a ^ 2) / (a + Real.sqrt (a ^ 2 + 4 / Real.pi)) / Real.sqrt Real.pi := by
+  rw [gaussianReal_half_tail_integral]
+  exact ⟨div_le_div_of_nonneg_right (gaussianMills_lower_integral ha) (Real.sqrt_nonneg _),
+    div_le_div_of_nonneg_right (gaussianMills_upper_integral ha) (Real.sqrt_nonneg _)⟩
+
+theorem gaussianReal_zero_standardized_tail (v : ℝ≥0) (hv : 0 < v) (a : ℝ) :
+    (gaussianReal 0 v).real (Ici a) =
+      (∫ t in Ioi (a / Real.sqrt (2 * (v : ℝ))), Real.exp (-t ^ 2)) /
+        Real.sqrt Real.pi := by
+  have hvR : 0 < (v : ℝ) := hv
+  have hs : 0 < Real.sqrt (2 * (v : ℝ)) := Real.sqrt_pos.mpr (by positivity)
+  have he := Real.sq_sqrt (show 0 ≤ 2 * (v : ℝ) by positivity)
+  have hk : (fun t : ℝ => Real.exp (-t ^ 2 / (2 * (v : ℝ)))) =
+      (fun t : ℝ => Real.exp (-((Real.sqrt (2 * (v : ℝ)))⁻¹ * t) ^ 2)) := by
+    funext t
+    congr 1
+    field_simp
+    nlinarith [he]
+  rw [gaussianReal_zero_tail_integral v hv a, hk,
+    integral_comp_mul_left_Ioi (fun t : ℝ => Real.exp (-t ^ 2)) a (inv_pos.mpr hs)]
+  simp only [inv_inv, smul_eq_mul]
+  have hf : Real.sqrt (2 * Real.pi * (v : ℝ)) =
+      Real.sqrt Real.pi * Real.sqrt (2 * (v : ℝ)) := by
+    rw [← Real.sqrt_mul Real.pi_pos.le]
+    congr 1
+    ring
+  rw [hf]
+  rw [show (Real.sqrt (2 * (v : ℝ)))⁻¹ * a = a / Real.sqrt (2 * (v : ℝ)) by ring]
+  field_simp
+
+/-- Exact standardized Mills bounds for every positive Gaussian variance. -/
+theorem gaussianReal_zero_mills_bounds (v : ℝ≥0) (hv : 0 < v)
+    (a : ℝ) (ha : 0 ≤ a) :
+    let z := a / Real.sqrt (2 * (v : ℝ))
+    Real.exp (-z ^ 2) / (z + Real.sqrt (z ^ 2 + 2)) / Real.sqrt Real.pi ≤
+        (gaussianReal 0 v).real (Ici a) ∧
+      (gaussianReal 0 v).real (Ici a) ≤
+        Real.exp (-z ^ 2) / (z + Real.sqrt (z ^ 2 + 4 / Real.pi)) / Real.sqrt Real.pi := by
+  dsimp only
+  rw [gaussianReal_zero_standardized_tail v hv a]
+  have hz : 0 ≤ a / Real.sqrt (2 * (v : ℝ)) := div_nonneg ha (Real.sqrt_nonneg _)
+  exact ⟨div_le_div_of_nonneg_right (gaussianMills_lower_integral hz) (Real.sqrt_nonneg _),
+    div_le_div_of_nonneg_right (gaussianMills_upper_integral hz) (Real.sqrt_nonneg _)⟩
 
 end BanditRLProof.LowerBounds

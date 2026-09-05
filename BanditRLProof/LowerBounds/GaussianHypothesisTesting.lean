@@ -1,4 +1,5 @@
 import BanditRLProof.LowerBounds.BasicIdeas
+import BanditRLProof.LowerBounds.GaussianMillsRatio
 import Mathlib.Probability.Distributions.Gaussian.Real
 import Mathlib.Probability.Distributions.Gaussian.HasGaussianLaw.Independence
 import Mathlib.Probability.Moments.SubGaussian
@@ -249,6 +250,21 @@ theorem gaussianSampleMeanThresholdRisk_le_exp
   exact max_le
     (gaussianSampleMeanZeroErrorProbability_le_exp sampleSize gap hgap)
     (gaussianSampleMeanGapErrorProbability_le_exp sampleSize gap hgap)
+
+/-- Exact Mills bounds for the source error probability, in standardized coordinates. -/
+theorem gaussianSampleMeanZeroErrorProbability_mills_bounds
+    (sampleSize : Nat) (hsampleSize : 0 < sampleSize)
+    (gap : Real) (hgap : 0 < gap) :
+    let z := (gap / 2) / Real.sqrt (2 * (gaussianSampleMeanVariance sampleSize : Real))
+    Real.exp (-z ^ 2) / (z + Real.sqrt (z ^ 2 + 2)) / Real.sqrt Real.pi ≤
+        gaussianSampleMeanZeroErrorProbability sampleSize gap ∧
+      gaussianSampleMeanZeroErrorProbability sampleSize gap ≤
+        Real.exp (-z ^ 2) / (z + Real.sqrt (z ^ 2 + 4 / Real.pi)) / Real.sqrt Real.pi := by
+  dsimp only
+  rw [gaussianSampleMeanZeroErrorProbability,
+    twoPointGaussianThresholdDecision_zero_error_event hgap]
+  exact gaussianReal_zero_mills_bounds (gaussianSampleMeanVariance sampleSize)
+    (gaussianSampleMeanVariance_pos sampleSize hsampleSize) (gap / 2) (by positivity)
 
 end
 

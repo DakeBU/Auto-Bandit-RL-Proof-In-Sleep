@@ -1,7 +1,8 @@
 # Gaussian Mills-Ratio Tail Bounds
 
 Status: both exact integral bounds pass focused Lean and module build;
-probability rescaling and full integration validation remain open.
+Gaussian probability rescaling now compiles in standardized coordinates;
+printed denominator normalization and full integration validation remain open.
 
 Task: `TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE`
 
@@ -82,8 +83,15 @@ close the endpoint and piecewise monotonicity argument.
 `gaussian_integral_split` identifies the finite plus improper integrals.
 `gaussianMills_upper_integral` proves the exact upper half of Eq. (13.4).
 
-Next Lean leaf: rescale both integral bounds to Eq. (13.1), preserving the
-printed square-root denominators. Full integration gates remain pending.
+`gaussianReal_zero_standardized_tail` now identifies the exact centered
+Gaussian tail as the normalized source integral at `a/sqrt(2*v)` for `v>0`.
+`gaussianReal_zero_mills_bounds` transfers both inequalities through this
+identity. `gaussianSampleMeanZeroErrorProbability_mills_bounds` applies them
+to the existing error-probability definition with `n>0`, `Delta>0` and
+`z=(Delta/2)/sqrt(2/n)`. Both modules build (3559 jobs).
+
+Next Lean leaf: normalize `z^2=n*Delta^2/8` and the two denominators into
+the exact printed Eq. (13.1) expressions. Full integration gates remain pending.
 
 ## Retrieval audit
 

@@ -146,6 +146,8 @@ example (x : ℝ) (hx : 0 ≤ x) :
   gaussianMills_upper_integral hx
 
 #print axioms LowerBounds.gaussianMills_upper_integral
+#print axioms LowerBounds.gaussianReal_zero_standardized_tail
+#print axioms LowerBounds.gaussianSampleMeanZeroErrorProbability_mills_bounds
 
 example (x : ℝ) (hx : 0 ≤ x) :
     0 ≤ gaussianMillsErrorDerivative (4 / Real.pi) x ↔
