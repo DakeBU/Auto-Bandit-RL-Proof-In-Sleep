@@ -6,6 +6,7 @@ import BanditRLProof.Algorithms.MOSSCanonicalHistory
 import BanditRLProof.Algorithms.MOSSUnusedCoordinate
 import BanditRLProof.Algorithms.MOSSConditionalReward
 import BanditRLProof.Algorithms.MOSSHistoryLaw
+import BanditRLProof.Algorithms.MOSSHistoryRegret
 
 open BanditRLProof
 
@@ -96,3 +97,18 @@ example {k : ℕ} [NeZero k] (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ)
 #print axioms MOSS.canonical_initialPair_map
 #print axioms MOSS.canonical_historySequence
 #print axioms MOSS.map_canonicalHistory_eq
+
+example {k : ℕ} [NeZero k] (hk : 0 < k)
+    (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν] (t : ℕ) (hkt : k ≤ t+1)
+    (mean : Fin k → ℝ) (best : Fin k) (hbest : ∀ a, mean a ≤ mean best)
+    (hmean : ∀ a, ∫ r, r ∂ν a = mean a)
+    (hsubG : ∀ a, HasSubgaussianMGF (fun r => r-mean a) 1 (ν a)) :
+    LowerBounds.canonicalGapExpectedPseudoRegretReal (MOSS.historyAlgorithm hk (t+1)) ν
+      (fun a => mean best-mean a) t ≤
+      39*Real.sqrt (((t+1 : ℕ) : ℝ)*k) + ∑ a, (mean best-mean a) :=
+  MOSS.canonicalGapExpectedRegret_le hk ν t hkt mean best hbest hmean hsubG
+
+#print axioms finiteHistoryPullCountENNReal_trace
+#print axioms MOSS.canonicalHistory_gapRegret_toReal
+#print axioms MOSS.canonicalGapExpectedRegret_eq_integral
+#print axioms MOSS.canonicalGapExpectedRegret_le

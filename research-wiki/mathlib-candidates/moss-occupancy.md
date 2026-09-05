@@ -307,3 +307,26 @@ process contract are compiled producers, not premises. Next transport the
 expected regret using this equality with the exact finite-history gap
 functional, then discharge the broader-class near-minimax consequence and
 perform the chapter evidence/review/export/site completion audit.
+
+### Common-history regret transport route
+
+Use InstanceDependent.finiteHistoryGapPseudoRegret_toReal and the recursive
+finiteHistoryPullCountENNReal definition to identify trace histories with
+pullCount at inclusive time t+1. Then integral_toReal and integral_map,
+with MOSSHistoryLaw.map_canonicalHistory_eq, transport the canonical table
+regret bound to canonicalGapExpectedPseudoRegretReal. Search-memory and
+list-lean-decls found no existing trace-count bridge. No extra probabilistic
+premises or change to the Chapter 13 completion contract is intended.
+
+Compiled MOSSHistoryRegret: finiteHistoryPullCountENNReal_trace identifies
+inclusive counts; canonicalHistory_gapRegret_toReal identifies pathwise
+regret; canonicalGapExpectedRegret_eq_integral identifies expected regret;
+canonicalGapExpectedRegret_le gives the exact 39*sqrt((t+1)*k)+sum(gaps)
+bound for MOSS.historyAlgorithm at horizon t+1 under arbitrary stationary
+1-subgaussian arm kernels with the supplied actual means. No Gaussian-only
+restriction or conditional-law oracle remains in this upper bound.
+The initial count proof needed simp_all after case splitting, not a route
+change. Full check of earlier bf27f91 passed: Tests 8923 jobs, ProofGraphExport,
+400 Python tests in 197.014s, 7 skips. This is not a full check of this leaf.
+Next: bounded-mean broader-class near-minimax consumer, then synchronized
+chapter ledger/export/website, current-commit full checks and review/PR/deploy.

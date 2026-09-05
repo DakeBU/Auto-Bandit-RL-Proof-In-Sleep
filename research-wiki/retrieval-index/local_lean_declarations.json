@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T06:38:18+00:00",
+  "generated": "2026-09-05T06:43:32+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -3768,6 +3768,38 @@
       "file": "BanditRLProof/Algorithms/MOSSHistoryLaw.lean",
       "line": 62,
       "statement": "theorem map_canonicalHistory_eq {k : \u2115} [NeZero k] (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (\u03bd : Kernel (Fin k) \u211d) [IsMarkovKernel \u03bd] (t : \u2115) : (UCB.armStreamMeasure \u03bd).map (fun table => canonicalHistory hk n mean table t) = LowerBounds.canonicalBanditHistoryMeasure (historyAlgorithm hk n) \u03bd t"
+    },
+    {
+      "kind": "theorem",
+      "name": "finiteHistoryPullCountENNReal_trace",
+      "full_name": "BanditRLProof.finiteHistoryPullCountENNReal_trace",
+      "file": "BanditRLProof/Algorithms/MOSSHistoryRegret.lean",
+      "line": 10,
+      "statement": "theorem finiteHistoryPullCountENNReal_trace {k : \u2115} {Reward : Type*} (action : ActionTrace (Fin k)) (reward : RewardTrace Reward) (t : \u2115) (a : Fin k) : LowerBounds.finiteHistoryPullCountENNReal t (History.finitePairHistoryOfTrace action reward t) a = (pullCount action a (t+1) : \u211d\u22650\u221e)"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalHistory_gapRegret_toReal",
+      "full_name": "BanditRLProof.MOSS.canonicalHistory_gapRegret_toReal",
+      "file": "BanditRLProof/Algorithms/MOSSHistoryRegret.lean",
+      "line": 28,
+      "statement": "theorem canonicalHistory_gapRegret_toReal {k : \u2115} (hk : 0 < k) (n t : \u2115) (mean : Fin k \u2192 \u211d) (best : Fin k) (hbest : \u2200 a, mean a \u2264 mean best) (table : UCB.ArmRewardStream k) : (LowerBounds.finiteHistoryGapPseudoRegret (fun a => mean best-mean a) t (canonicalHistory hk n mean table t)).toReal = realMeanRegret mean (canonicalAction hk n mean table) (t+1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalGapExpectedRegret_eq_integral",
+      "full_name": "BanditRLProof.MOSS.canonicalGapExpectedRegret_eq_integral",
+      "file": "BanditRLProof/Algorithms/MOSSHistoryRegret.lean",
+      "line": 45,
+      "statement": "theorem canonicalGapExpectedRegret_eq_integral {k : \u2115} [NeZero k] (hk : 0 < k) (n t : \u2115) (\u03bd : Kernel (Fin k) \u211d) [IsMarkovKernel \u03bd] (mean : Fin k \u2192 \u211d) (best : Fin k) (hbest : \u2200 a, mean a \u2264 mean best) : LowerBounds.canonicalGapExpectedPseudoRegretReal (historyAlgorithm hk n) \u03bd (fun a => mean best-mean a) t = \u222b table, realMeanRegret mean (canonicalAction hk n mean table) (t+1) \u2202UCB.armStreamMeasure \u03bd"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalGapExpectedRegret_le",
+      "full_name": "BanditRLProof.MOSS.canonicalGapExpectedRegret_le",
+      "file": "BanditRLProof/Algorithms/MOSSHistoryRegret.lean",
+      "line": 64,
+      "statement": "theorem canonicalGapExpectedRegret_le {k : \u2115} [NeZero k] (hk : 0 < k) (\u03bd : Kernel (Fin k) \u211d) [IsMarkovKernel \u03bd] (t : \u2115) (hkt : k \u2264 t+1) (mean : Fin k \u2192 \u211d) (best : Fin k) (hbest : \u2200 a, mean a \u2264 mean best) (hmean : \u2200 a, \u222b r, r \u2202\u03bd a = mean a) (hsubG : \u2200 a, HasSubgaussianMGF (fun r => r-mean a) 1 (\u03bd a)) : LowerBounds.canonicalGapExpectedPseudoRegretReal (historyAlgorithm hk (t+1)) \u03bd (fun a => mean best-mean a) t \u2264 39*Real.sqrt (((t+1 : \u2115) : \u211d)*k) + \u2211 a, (mean best-mean a)"
     },
     {
       "kind": "def",

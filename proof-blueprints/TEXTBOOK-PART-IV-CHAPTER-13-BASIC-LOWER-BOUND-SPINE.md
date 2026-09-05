@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T06:38:25+00:00`
+Generated: `2026-09-05T06:43:38+00:00`
 
 ## Source Task
 
@@ -33880,6 +33880,38 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/Algorithms/MOSSHistoryLaw.lean",
     "line": 62,
     "statement": "theorem map_canonicalHistory_eq {k : \u2115} [NeZero k] (hk : 0 < k) (n : \u2115) (mean : Fin k \u2192 \u211d) (\u03bd : Kernel (Fin k) \u211d) [IsMarkovKernel \u03bd] (t : \u2115) : (UCB.armStreamMeasure \u03bd).map (fun table => canonicalHistory hk n mean table t) = LowerBounds.canonicalBanditHistoryMeasure (historyAlgorithm hk n) \u03bd t"
+  },
+  {
+    "kind": "theorem",
+    "name": "finiteHistoryPullCountENNReal_trace",
+    "full_name": "BanditRLProof.finiteHistoryPullCountENNReal_trace",
+    "file": "BanditRLProof/Algorithms/MOSSHistoryRegret.lean",
+    "line": 10,
+    "statement": "theorem finiteHistoryPullCountENNReal_trace {k : \u2115} {Reward : Type*} (action : ActionTrace (Fin k)) (reward : RewardTrace Reward) (t : \u2115) (a : Fin k) : LowerBounds.finiteHistoryPullCountENNReal t (History.finitePairHistoryOfTrace action reward t) a = (pullCount action a (t+1) : \u211d\u22650\u221e)"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonicalHistory_gapRegret_toReal",
+    "full_name": "BanditRLProof.MOSS.canonicalHistory_gapRegret_toReal",
+    "file": "BanditRLProof/Algorithms/MOSSHistoryRegret.lean",
+    "line": 28,
+    "statement": "theorem canonicalHistory_gapRegret_toReal {k : \u2115} (hk : 0 < k) (n t : \u2115) (mean : Fin k \u2192 \u211d) (best : Fin k) (hbest : \u2200 a, mean a \u2264 mean best) (table : UCB.ArmRewardStream k) : (LowerBounds.finiteHistoryGapPseudoRegret (fun a => mean best-mean a) t (canonicalHistory hk n mean table t)).toReal = realMeanRegret mean (canonicalAction hk n mean table) (t+1)"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonicalGapExpectedRegret_eq_integral",
+    "full_name": "BanditRLProof.MOSS.canonicalGapExpectedRegret_eq_integral",
+    "file": "BanditRLProof/Algorithms/MOSSHistoryRegret.lean",
+    "line": 45,
+    "statement": "theorem canonicalGapExpectedRegret_eq_integral {k : \u2115} [NeZero k] (hk : 0 < k) (n t : \u2115) (\u03bd : Kernel (Fin k) \u211d) [IsMarkovKernel \u03bd] (mean : Fin k \u2192 \u211d) (best : Fin k) (hbest : \u2200 a, mean a \u2264 mean best) : LowerBounds.canonicalGapExpectedPseudoRegretReal (historyAlgorithm hk n) \u03bd (fun a => mean best-mean a) t = \u222b table, realMeanRegret mean (canonicalAction hk n mean table) (t+1) \u2202UCB.armStreamMeasure \u03bd"
+  },
+  {
+    "kind": "theorem",
+    "name": "canonicalGapExpectedRegret_le",
+    "full_name": "BanditRLProof.MOSS.canonicalGapExpectedRegret_le",
+    "file": "BanditRLProof/Algorithms/MOSSHistoryRegret.lean",
+    "line": 64,
+    "statement": "theorem canonicalGapExpectedRegret_le {k : \u2115} [NeZero k] (hk : 0 < k) (\u03bd : Kernel (Fin k) \u211d) [IsMarkovKernel \u03bd] (t : \u2115) (hkt : k \u2264 t+1) (mean : Fin k \u2192 \u211d) (best : Fin k) (hbest : \u2200 a, mean a \u2264 mean best) (hmean : \u2200 a, \u222b r, r \u2202\u03bd a = mean a) (hsubG : \u2200 a, HasSubgaussianMGF (fun r => r-mean a) 1 (\u03bd a)) : LowerBounds.canonicalGapExpectedPseudoRegretReal (historyAlgorithm hk (t+1)) \u03bd (fun a => mean best-mean a) t \u2264 39*Real.sqrt (((t+1 : \u2115) : \u211d)*k) + \u2211 a, (mean best-mean a)"
   },
   {
     "kind": "def",
@@ -96774,42 +96806,6 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "lean": "",
     "lean_check_seconds": 0.0,
     "new_declarations": [],
-    "notes": "MOSS source index and measurable history policy: focused 2951-job build and typed canary passed with baseline axioms; expected regret remains open.",
-    "obligations_after": 0,
-    "obligations_before": 0,
-    "output_tokens": 0,
-    "parent_id": "",
-    "progress_class": "unreviewed",
-    "prompt_chars": 0,
-    "reused_declarations": [],
-    "reviewer_validated": false,
-    "role": "reviewer",
-    "route_fingerprint": "",
-    "route_packet_hash": "",
-    "run_id": "",
-    "source": "",
-    "statement_hash": "",
-    "status": "compiled",
-    "target_fingerprint": "",
-    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
-    "time": "2026-09-05T05:03:43+00:00",
-    "verifier_evidence": [],
-    "worker_id": ""
-  },
-  {
-    "attempt_id": "",
-    "changed_files": [],
-    "dag_depth": 0,
-    "dag_nodes": 0,
-    "elapsed_seconds": 0.0,
-    "error_signature": "",
-    "experiment_id": "",
-    "harness": "",
-    "input_tokens": 0,
-    "kind": "build",
-    "lean": "",
-    "lean_check_seconds": 0.0,
-    "new_declarations": [],
     "notes": "Independent centered subgaussian maximal partial-sum bound and Jensen/Doob route compiled; external full-statement canary 3473 jobs, baseline axioms. MOSS policy full check 1eb5af0 passed (400 Python tests, 7 skipped). Peeling remains open.",
     "obligations_after": 0,
     "obligations_before": 0,
@@ -97503,6 +97499,45 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "target_fingerprint": "",
     "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
     "time": "2026-09-05T06:34:50+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "build",
+    "lean": "BanditRLProof/Algorithms/MOSSHistoryLaw.lean",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [
+      "BanditRLProof.MOSS.map_canonicalHistory_eq",
+      "BanditRLProof.MOSS.canonical_historySequence"
+    ],
+    "notes": "Compiled exact equality of MOSS canonical table history pushforward and common canonicalBanditHistoryMeasure, including initial law and generated process contract. Need expected regret functional transport and full chapter evidence audit. Chapter partial.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "compiled-leaf",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "lower",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "compiled",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T06:38:37+00:00",
     "verifier_evidence": [],
     "worker_id": ""
   }

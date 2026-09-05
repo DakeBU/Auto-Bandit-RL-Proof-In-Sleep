@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
-  "generated": "2026-09-05T06:38:30+00:00",
+  "generated": "2026-09-05T06:43:44+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -32779,6 +32779,38 @@
       "file": "BanditRLProof/Algorithms/MOSSHistoryLaw.lean",
       "line": 62,
       "statement": "theorem map_canonicalHistory_eq {k : ℕ} [NeZero k] (hk : 0 < k) (n : ℕ) (mean : Fin k → ℝ) (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν] (t : ℕ) : (UCB.armStreamMeasure ν).map (fun table => canonicalHistory hk n mean table t) = LowerBounds.canonicalBanditHistoryMeasure (historyAlgorithm hk n) ν t"
+    },
+    {
+      "kind": "theorem",
+      "name": "finiteHistoryPullCountENNReal_trace",
+      "full_name": "BanditRLProof.finiteHistoryPullCountENNReal_trace",
+      "file": "BanditRLProof/Algorithms/MOSSHistoryRegret.lean",
+      "line": 10,
+      "statement": "theorem finiteHistoryPullCountENNReal_trace {k : ℕ} {Reward : Type*} (action : ActionTrace (Fin k)) (reward : RewardTrace Reward) (t : ℕ) (a : Fin k) : LowerBounds.finiteHistoryPullCountENNReal t (History.finitePairHistoryOfTrace action reward t) a = (pullCount action a (t+1) : ℝ≥0∞)"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalHistory_gapRegret_toReal",
+      "full_name": "BanditRLProof.MOSS.canonicalHistory_gapRegret_toReal",
+      "file": "BanditRLProof/Algorithms/MOSSHistoryRegret.lean",
+      "line": 28,
+      "statement": "theorem canonicalHistory_gapRegret_toReal {k : ℕ} (hk : 0 < k) (n t : ℕ) (mean : Fin k → ℝ) (best : Fin k) (hbest : ∀ a, mean a ≤ mean best) (table : UCB.ArmRewardStream k) : (LowerBounds.finiteHistoryGapPseudoRegret (fun a => mean best-mean a) t (canonicalHistory hk n mean table t)).toReal = realMeanRegret mean (canonicalAction hk n mean table) (t+1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalGapExpectedRegret_eq_integral",
+      "full_name": "BanditRLProof.MOSS.canonicalGapExpectedRegret_eq_integral",
+      "file": "BanditRLProof/Algorithms/MOSSHistoryRegret.lean",
+      "line": 45,
+      "statement": "theorem canonicalGapExpectedRegret_eq_integral {k : ℕ} [NeZero k] (hk : 0 < k) (n t : ℕ) (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν] (mean : Fin k → ℝ) (best : Fin k) (hbest : ∀ a, mean a ≤ mean best) : LowerBounds.canonicalGapExpectedPseudoRegretReal (historyAlgorithm hk n) ν (fun a => mean best-mean a) t = ∫ table, realMeanRegret mean (canonicalAction hk n mean table) (t+1) ∂UCB.armStreamMeasure ν"
+    },
+    {
+      "kind": "theorem",
+      "name": "canonicalGapExpectedRegret_le",
+      "full_name": "BanditRLProof.MOSS.canonicalGapExpectedRegret_le",
+      "file": "BanditRLProof/Algorithms/MOSSHistoryRegret.lean",
+      "line": 64,
+      "statement": "theorem canonicalGapExpectedRegret_le {k : ℕ} [NeZero k] (hk : 0 < k) (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν] (t : ℕ) (hkt : k ≤ t+1) (mean : Fin k → ℝ) (best : Fin k) (hbest : ∀ a, mean a ≤ mean best) (hmean : ∀ a, ∫ r, r ∂ν a = mean a) (hsubG : ∀ a, HasSubgaussianMGF (fun r => r-mean a) 1 (ν a)) : LowerBounds.canonicalGapExpectedPseudoRegretReal (historyAlgorithm hk (t+1)) ν (fun a => mean best-mean a) t ≤ 39*Real.sqrt (((t+1 : ℕ) : ℝ)*k) + ∑ a, (mean best-mean a)"
     },
     {
       "kind": "def",
@@ -96433,6 +96465,45 @@
       "target_fingerprint": "",
       "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
       "time": "2026-09-05T06:34:50+00:00",
+      "verifier_evidence": [],
+      "worker_id": ""
+    },
+    {
+      "attempt_id": "",
+      "changed_files": [],
+      "dag_depth": 0,
+      "dag_nodes": 0,
+      "elapsed_seconds": 0.0,
+      "error_signature": "",
+      "experiment_id": "",
+      "harness": "",
+      "input_tokens": 0,
+      "kind": "build",
+      "lean": "BanditRLProof/Algorithms/MOSSHistoryLaw.lean",
+      "lean_check_seconds": 0.0,
+      "new_declarations": [
+        "BanditRLProof.MOSS.map_canonicalHistory_eq",
+        "BanditRLProof.MOSS.canonical_historySequence"
+      ],
+      "notes": "Compiled exact equality of MOSS canonical table history pushforward and common canonicalBanditHistoryMeasure, including initial law and generated process contract. Need expected regret functional transport and full chapter evidence audit. Chapter partial.",
+      "obligations_after": 0,
+      "obligations_before": 0,
+      "output_tokens": 0,
+      "parent_id": "",
+      "progress_class": "compiled-leaf",
+      "prompt_chars": 0,
+      "reused_declarations": [],
+      "reviewer_validated": false,
+      "role": "lower",
+      "route_fingerprint": "",
+      "route_packet_hash": "",
+      "run_id": "",
+      "source": "",
+      "statement_hash": "",
+      "status": "compiled",
+      "target_fingerprint": "",
+      "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+      "time": "2026-09-05T06:38:37+00:00",
       "verifier_evidence": [],
       "worker_id": ""
     }
