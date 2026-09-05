@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T05:04:01+00:00`
+Generated: `2026-09-05T05:09:34+00:00`
 
 ## Source Task
 
@@ -64,9 +64,9 @@ mapped local adapter before they count as chapter evidence.
 | §14.1 asymptotic statement | arithmetic coding approaches entropy and no code improves the asymptotic rate | no block-code/asymptotic coding model | blocked |
 | Eqs. (14.2)--(14.3) definitions | finite discrete base-two entropy, natural entropy, and exact unit conversion | `discreteEntropy`, `discreteEntropyBaseTwo`, their exact conversion, and nonnegativity compile | compiled |
 | Eq. (14.4) | arbitrary finite-alphabet discrete relative entropy with exact zero/support endpoints | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, and `relativeEntropy_finite_eq_top_iff` compile; root-import finite/singular three-symbol canaries pass | compiled |
-| Eq. (14.5) | relative entropy as the supremum over all finite measurable discretisations | `finitePartitionRelativeEntropy_eq_relativeEntropy` compiles for arbitrary finite measures, using finite encodings of the concrete density filtration; aggregate integration gate pending | partial (integration pending) |
-| Theorem 14.1 | Eq. (14.5) equals the RN/log-likelihood formula, including the singular and nonintegrable branches | full supremum/RN equality and exact RN branch adapters compile; no finite-KL or AC premise on the equality; aggregate integration gate pending | partial (integration pending) |
-| Eq. (14.6) | common-dominating-measure density formula | only the `Q`-RN specialization is exposed | partial |
+| Eq. (14.5) | relative entropy as the supremum over all finite measurable discretisations | `finitePartitionRelativeEntropy_eq_relativeEntropy` compiles for arbitrary finite measures, using finite encodings of the concrete density filtration; root and aggregate Tests pass | compiled |
+| Theorem 14.1 | Eq. (14.5) equals the RN/log-likelihood formula, including the singular and nonintegrable branches | full supremum/RN equality and exact RN branch adapters compile; no finite-KL or AC premise on the equality; root and aggregate Tests pass | compiled |
+| Eq. (14.6) | common-dominating-measure density formula | `relativeEntropy_commonDensity_eq_if` and the nonnegative `klFun` formula compile with focused canaries for arbitrary sigma-finite domination; root/aggregate gate pending | partial (integration pending) |
 | §14.2 metric properties | nonnegativity and `D(P,Q)=0 ↔ P=Q`, with asymmetry/non-triangle statements treated as explanatory nonclaims | order nonnegativity is intrinsic to `ENNReal`; `relativeEntropy_eq_zero_iff` compiles | compiled |
 | Gaussian example | common-variance Gaussian KL formula | unit-variance specialization compiles in Chapter 15; arbitrary positive variance is absent | partial |
 | Bernoulli example | endpoint-complete binary KL formula | `bernoulliRelativeEntropy` and endpoint lemmas compile | compiled |
@@ -112,11 +112,7 @@ The public terminal uses a real-valued scale `0` when `D(P,Q)=∞`, and
 the source convention `exp(-∞)=0`; no finiteness assumption is added to
 Theorem 14.2.
 
-## Exact regularity contract
-
-- `P` and `Q` are probability measures on one measurable space.
-
-<!-- 1747 characters omitted from the middle of this snapshot. -->
+<!-- 1841 characters omitted from the middle of this snapshot. -->
 
 page are verified before this task becomes accepted.
 
@@ -405,7 +401,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH14-SOURCE-CODING` | arithmetic/block-code achievability and converse | product distributions, uniquely decodable block codes, asymptotics | formal source-coding theorem | none | chapter terminal | blocked |
 | `CH14-FINITE-DISCRETE-KL` | Eq. (14.4) for an arbitrary finite alphabet | finite sums, support endpoints | atomwise AC equivalence, RN density ratio, finite LLR integrability, and finite integral sum; singular atom forces infinity | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, `relativeEntropy_finite_eq_top_iff` | focused Lean and root-import canary passed | compiled |
 | `CH14-DISCRETISATION-SUP` | Eq. (14.5) and equality with RN KL in Theorem 14.1 | finite measurable quotients/partitions, supremum | finite-cell Jensen upper bound; binary singular witness; density filtration recovery by conditional-expectation convergence/Fatou; finite-range coding of each layer | `finitePartitionRelativeEntropy_eq_relativeEntropy` and its finite-partition/filtration/encoding helpers | full equality passes focused Lean; aggregate integration gate running | partial (integration pending) |
-| `CH14-COMMON-DENSITY` | Eq. (14.6) under a common σ-finite dominating measure | RN chain rule, integral transport | expose exact density formula | Q-RN specialization only | focused Lean | partial |
+| `CH14-COMMON-DENSITY` | Eq. (14.6) under a common σ-finite dominating measure | RN ratio, integral transport | transfer log-density equality to P-a.e.; transport integrability and integral; retain singular/nonintegrable infinity branches | `relativeEntropy_commonDensity_eq_if`, `relativeEntropy_commonDensity_klFun` and helpers | focused module and canary passed; root/aggregate pending | partial (integration pending) |
 | `CH14-KL-SEPARATION` | nonnegativity and zero iff equality | Mathlib KL | `ENNReal` order plus thin source-mapped equality adapter | `relativeEntropy_eq_zero_iff` | focused Lean | compiled |
 | `CH14-GAUSSIAN-EXAMPLE` | common positive variance formula | Gaussian RN/KL and scaling | generalize the compiled unit-variance Chapter 15 leaf | unit-variance declaration only | focused Lean | partial |
 | `CH14-MEASURE-OVERLAP` | source Eqs. (14.8)--(14.9) | common density, Cauchy--Schwarz, Jensen | measure-level overlap and affinity route | binary specializations only | focused Lean | partial |
@@ -58007,6 +58003,46 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
     "line": 205,
     "statement": "theorem max_base_changed_regretLowerBound_ge_half (horizon : Nat) (gap baseFirstExpectedPulls changedFirstExpectedPulls : Real) (hgap : 0 \u2264 gap) (htransport : baseFirstExpectedPulls \u2264 changedFirstExpectedPulls) : gap * (horizon : Real) / 2 \u2264 max (baseEnvironmentRegret horizon gap baseFirstExpectedPulls) (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls)"
+  },
+  {
+    "kind": "theorem",
+    "name": "llr_ae_eq_log_commonDensity",
+    "full_name": "BanditRLProof.LowerBounds.llr_ae_eq_log_commonDensity",
+    "file": "BanditRLProof/LowerBounds/CommonDensityKL.lean",
+    "line": 13,
+    "statement": "theorem llr_ae_eq_log_commonDensity {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) (hPQ : P \u226a Q) : llr P Q =\u1d50[P] fun x => Real.log ((P.rnDeriv \u03bc x).toReal / (Q.rnDeriv \u03bc x).toReal)"
+  },
+  {
+    "kind": "theorem",
+    "name": "integrable_commonDensity_iff",
+    "full_name": "BanditRLProof.LowerBounds.integrable_commonDensity_iff",
+    "file": "BanditRLProof/LowerBounds/CommonDensityKL.lean",
+    "line": 22,
+    "statement": "theorem integrable_commonDensity_iff {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) (hPQ : P \u226a Q) : Integrable (fun x => (P.rnDeriv \u03bc x).toReal * Real.log ((P.rnDeriv \u03bc x).toReal / (Q.rnDeriv \u03bc x).toReal)) \u03bc \u2194 Integrable (llr P Q) P"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_commonDensity_of_integrable",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_commonDensity_of_integrable",
+    "file": "BanditRLProof/LowerBounds/CommonDensityKL.lean",
+    "line": 33,
+    "statement": "theorem relativeEntropy_commonDensity_of_integrable {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) (hPQ : P \u226a Q) (hi : Integrable (fun x => (P.rnDeriv \u03bc x).toReal * Real.log ((P.rnDeriv \u03bc x).toReal / (Q.rnDeriv \u03bc x).toReal)) \u03bc) : relativeEntropy P Q = ENNReal.ofReal (\u222b x, (P.rnDeriv \u03bc x).toReal * Real.log ((P.rnDeriv \u03bc x).toReal / (Q.rnDeriv \u03bc x).toReal) \u2202\u03bc)"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_commonDensity_eq_if",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_commonDensity_eq_if",
+    "file": "BanditRLProof/LowerBounds/CommonDensityKL.lean",
+    "line": 49,
+    "statement": "theorem relativeEntropy_commonDensity_eq_if {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) : relativeEntropy P Q = if P \u226a Q \u2227 Integrable (fun x => (P.rnDeriv \u03bc x).toReal * Real.log ((P.rnDeriv \u03bc x).toReal / (Q.rnDeriv \u03bc x).toReal)) \u03bc then ENNReal.ofReal (\u222b x, (P.rnDeriv \u03bc x).toReal * Real.log ((P.rnDeriv \u03bc x).toReal / (Q.rnDeriv \u03bc x).toReal) \u2202\u03bc) else (\u22a4 : ENNReal)"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_commonDensity_klFun",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_commonDensity_klFun",
+    "file": "BanditRLProof/LowerBounds/CommonDensityKL.lean",
+    "line": 68,
+    "statement": "theorem relativeEntropy_commonDensity_klFun {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) (hPQ : P \u226a Q) : relativeEntropy P Q = \u222b\u207b x, Q.rnDeriv \u03bc x * ENNReal.ofReal (InformationTheory.klFun ((P.rnDeriv \u03bc x / Q.rnDeriv \u03bc x).toReal)) \u2202\u03bc"
   },
   {
     "kind": "theorem",

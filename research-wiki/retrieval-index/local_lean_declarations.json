@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T05:03:49+00:00",
+  "generated": "2026-09-05T05:08:46+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -27984,6 +27984,46 @@
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
       "line": 205,
       "statement": "theorem max_base_changed_regretLowerBound_ge_half (horizon : Nat) (gap baseFirstExpectedPulls changedFirstExpectedPulls : Real) (hgap : 0 \u2264 gap) (htransport : baseFirstExpectedPulls \u2264 changedFirstExpectedPulls) : gap * (horizon : Real) / 2 \u2264 max (baseEnvironmentRegret horizon gap baseFirstExpectedPulls) (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls)"
+    },
+    {
+      "kind": "theorem",
+      "name": "llr_ae_eq_log_commonDensity",
+      "full_name": "BanditRLProof.LowerBounds.llr_ae_eq_log_commonDensity",
+      "file": "BanditRLProof/LowerBounds/CommonDensityKL.lean",
+      "line": 13,
+      "statement": "theorem llr_ae_eq_log_commonDensity {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) (hPQ : P \u226a Q) : llr P Q =\u1d50[P] fun x => Real.log ((P.rnDeriv \u03bc x).toReal / (Q.rnDeriv \u03bc x).toReal)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integrable_commonDensity_iff",
+      "full_name": "BanditRLProof.LowerBounds.integrable_commonDensity_iff",
+      "file": "BanditRLProof/LowerBounds/CommonDensityKL.lean",
+      "line": 22,
+      "statement": "theorem integrable_commonDensity_iff {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) (hPQ : P \u226a Q) : Integrable (fun x => (P.rnDeriv \u03bc x).toReal * Real.log ((P.rnDeriv \u03bc x).toReal / (Q.rnDeriv \u03bc x).toReal)) \u03bc \u2194 Integrable (llr P Q) P"
+    },
+    {
+      "kind": "theorem",
+      "name": "relativeEntropy_commonDensity_of_integrable",
+      "full_name": "BanditRLProof.LowerBounds.relativeEntropy_commonDensity_of_integrable",
+      "file": "BanditRLProof/LowerBounds/CommonDensityKL.lean",
+      "line": 33,
+      "statement": "theorem relativeEntropy_commonDensity_of_integrable {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) (hPQ : P \u226a Q) (hi : Integrable (fun x => (P.rnDeriv \u03bc x).toReal * Real.log ((P.rnDeriv \u03bc x).toReal / (Q.rnDeriv \u03bc x).toReal)) \u03bc) : relativeEntropy P Q = ENNReal.ofReal (\u222b x, (P.rnDeriv \u03bc x).toReal * Real.log ((P.rnDeriv \u03bc x).toReal / (Q.rnDeriv \u03bc x).toReal) \u2202\u03bc)"
+    },
+    {
+      "kind": "theorem",
+      "name": "relativeEntropy_commonDensity_eq_if",
+      "full_name": "BanditRLProof.LowerBounds.relativeEntropy_commonDensity_eq_if",
+      "file": "BanditRLProof/LowerBounds/CommonDensityKL.lean",
+      "line": 49,
+      "statement": "theorem relativeEntropy_commonDensity_eq_if {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) : relativeEntropy P Q = if P \u226a Q \u2227 Integrable (fun x => (P.rnDeriv \u03bc x).toReal * Real.log ((P.rnDeriv \u03bc x).toReal / (Q.rnDeriv \u03bc x).toReal)) \u03bc then ENNReal.ofReal (\u222b x, (P.rnDeriv \u03bc x).toReal * Real.log ((P.rnDeriv \u03bc x).toReal / (Q.rnDeriv \u03bc x).toReal) \u2202\u03bc) else (\u22a4 : ENNReal)"
+    },
+    {
+      "kind": "theorem",
+      "name": "relativeEntropy_commonDensity_klFun",
+      "full_name": "BanditRLProof.LowerBounds.relativeEntropy_commonDensity_klFun",
+      "file": "BanditRLProof/LowerBounds/CommonDensityKL.lean",
+      "line": 68,
+      "statement": "theorem relativeEntropy_commonDensity_klFun {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q \u03bc : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] [SigmaFinite \u03bc] (hP : P \u226a \u03bc) (hQ : Q \u226a \u03bc) (hPQ : P \u226a Q) : relativeEntropy P Q = \u222b\u207b x, Q.rnDeriv \u03bc x * ENNReal.ofReal (InformationTheory.klFun ((P.rnDeriv \u03bc x / Q.rnDeriv \u03bc x).toReal)) \u2202\u03bc"
     },
     {
       "kind": "theorem",

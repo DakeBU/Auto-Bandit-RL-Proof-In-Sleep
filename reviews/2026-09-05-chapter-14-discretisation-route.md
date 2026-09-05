@@ -178,3 +178,9 @@ All three newly integrated modules have built successfully; root, Tests,
 exporter, placeholder, and Python-suite final outcomes are still pending at
 this checkpoint. Do not reuse the earlier Eq. (14.4) full-gate result as
 verification of this larger slice.
+
+The same `40c56ca` run has now passed the root library (8,856 jobs) and
+the full Tests target (8,901 jobs), including the new root-import recovery
+canary and all four terminal/encoding axiom reports. No nonstandard axioms
+were reported. The remaining exporter/placeholder/Python stages are still
+being observed; full-check completion is not yet claimed at this checkpoint.
