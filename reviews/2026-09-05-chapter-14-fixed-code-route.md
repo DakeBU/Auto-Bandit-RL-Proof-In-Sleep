@@ -21,3 +21,17 @@ Typed canary passed, including a concrete five-symbol three-bit code and
 the arbitrary-alphabet ceiling-log result. Axiom reports are standard-only.
 FixedLengthCoding, CrossEntropy and RelativeEntropyNonMetric plus their
 canaries are now aggregate-imported for the next full gate.
+
+Uniform-law qualification route: for card=2^n, uniform entropy is exactly n
+and an n-bit code attains the entropy lower bound, hence is globally optimal.
+For three symbols, explicitly construct words 0,10,11 with mean 5/3 under
+the uniform law, so no constant-two-bit code is optimal. This formalizes the
+boundary of the source's informal uniform-length statement, rather than
+trying to prove the false arbitrary-cardinality interpretation.
+
+Uniform result: UniformCoding builds (2679 jobs), with a passing typed canary
+and standard-only axiom audits. `fixedLength_uniformPowerTwo_optimal` proves
+the precise power-of-two case; `uniform_three_fixedLength_not_optimal` proves
+the exact counterexample via the concrete 0,10,11 code. The only initial
+compiler issue was a redundant field_simp after simp had already closed the
+entropy identity. These focused-only leaves are outside the d325147 gate.

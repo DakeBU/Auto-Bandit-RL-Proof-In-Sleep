@@ -87,3 +87,13 @@ singleton convention explicit. Item 2's uniform-law qualification still
 needs its exact statement/counterexample disposition. Arithmetic full gate
 2a31a01 has now passed (400 tests, 7 skipped, 203.363s); it does not cover
 the later NonMetric/CrossEntropy/FixedLengthCoding leaves.
+
+## Follow-up: uniform-law statement boundary
+
+Item 2 is now mathematically resolved by focused-compiled UniformCoding:
+equal-length coding is globally optimal for a uniform alphabet of size 2^n,
+whereas the explicit ternary code 0,10,11 has mean 5/3 and disproves general
+constant-two-bit optimality. The final source map must state this qualification
+as a source exposition boundary, not mark the false broad reading as proved.
+No full-alphabet uniform-length theorem is silently assumed. Aggregate and
+export evidence for these two new conclusions remains pending.

@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T06:49:55+00:00`
+Generated: `2026-09-05T06:52:13+00:00`
 
 ## Source Task
 
@@ -61200,6 +61200,54 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
     "line": 649,
     "statement": "theorem strictlySuccinctSize_unique {system : SuccinctUnitSystem V} {x : V} {s z : Nat} (hs : IsStrictlySuccinctAt system x s) (hz : IsStrictlySuccinctAt system x z) : s = z"
+  },
+  {
+    "kind": "theorem",
+    "name": "uniformPowerTwo_entropy",
+    "full_name": "BanditRLProof.LowerBounds.uniformPowerTwo_entropy",
+    "file": "BanditRLProof/LowerBounds/UniformCoding.lean",
+    "line": 6,
+    "statement": "theorem uniformPowerTwo_entropy {\u03b1 : Type*} [Fintype \u03b1] (n : \u2115) (hcard : Fintype.card \u03b1 = 2 ^ n) : discreteEntropyBaseTwo Finset.univ (fun _ : \u03b1 => (1 / (2 : \u211d) ^ n)) = n"
+  },
+  {
+    "kind": "theorem",
+    "name": "fixedLength_uniformPowerTwo_optimal",
+    "full_name": "BanditRLProof.LowerBounds.fixedLength_uniformPowerTwo_optimal",
+    "file": "BanditRLProof/LowerBounds/UniformCoding.lean",
+    "line": 12,
+    "statement": "theorem fixedLength_uniformPowerTwo_optimal {\u03b1 : Type*} [Fintype \u03b1] (n : \u2115) (hcard : Fintype.card \u03b1 = 2 ^ n) (code : BinaryPrefixCode \u03b1) (hlen : \u2200 a, (code.encode a).length = n) : IsOptimalPrefixCode (fun _ : \u03b1 => 1 / (2 : \u211d) ^ n) code"
+  },
+  {
+    "kind": "def",
+    "name": "ternaryPrefixWord",
+    "full_name": "BanditRLProof.LowerBounds.ternaryPrefixWord",
+    "file": "BanditRLProof/LowerBounds/UniformCoding.lean",
+    "line": 24,
+    "statement": "def ternaryPrefixWord (a : Fin 3) : List Bool"
+  },
+  {
+    "kind": "def",
+    "name": "ternaryPrefixCode",
+    "full_name": "BanditRLProof.LowerBounds.ternaryPrefixCode",
+    "file": "BanditRLProof/LowerBounds/UniformCoding.lean",
+    "line": 27,
+    "statement": "def ternaryPrefixCode : BinaryPrefixCode (Fin 3) where"
+  },
+  {
+    "kind": "theorem",
+    "name": "ternaryPrefixCode_uniform_length",
+    "full_name": "BanditRLProof.LowerBounds.ternaryPrefixCode_uniform_length",
+    "file": "BanditRLProof/LowerBounds/UniformCoding.lean",
+    "line": 37,
+    "statement": "theorem ternaryPrefixCode_uniform_length : expectedCodeLength (fun _ : Fin 3 => (1 / 3 : \u211d)) ternaryPrefixCode = 5 / 3"
+  },
+  {
+    "kind": "theorem",
+    "name": "uniform_three_fixedLength_not_optimal",
+    "full_name": "BanditRLProof.LowerBounds.uniform_three_fixedLength_not_optimal",
+    "file": "BanditRLProof/LowerBounds/UniformCoding.lean",
+    "line": 42,
+    "statement": "theorem uniform_three_fixedLength_not_optimal (code : BinaryPrefixCode (Fin 3)) (hlen : \u2200 a, (code.encode a).length = 2) : \u00ac IsOptimalPrefixCode (fun _ : Fin 3 => (1 / 3 : \u211d)) code"
   },
   {
     "kind": "structure",
