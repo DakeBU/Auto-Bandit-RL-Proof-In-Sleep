@@ -102,4 +102,91 @@ theorem expectedCodeLength_pruneDeepest_le
   rw [expectedCodeLength_pruneDeepest]
   linarith
 
+/-- Structural termination measure, independent of source probabilities. -/
+def totalCodeLength {α : Type*} [Fintype α] (code : BinaryPrefixCode α) : ℕ :=
+  ∑ i, (code.encode i).length
+
+theorem totalCodeLength_pruneDeepest
+    {α : Type*} [Fintype α] [DecidableEq α]
+    (code : BinaryPrefixCode α) (a : α) (w : List Bool) (b : Bool)
+    (hw : w ≠ []) (ha : code.encode a = w ++ [b])
+    (hmax : ∀ i, (code.encode i).length ≤ (code.encode a).length)
+    (hmissing : ∀ i, code.encode i ≠ w ++ [!b]) :
+    totalCodeLength (code.pruneDeepest a w b hw ha hmax hmissing) + 1 = totalCodeLength code := by
+  have h := expectedCodeLength_pruneDeepest (fun _ => (1 : ℝ)) code a w b hw ha hmax hmissing
+  simp only [expectedCodeLength, one_mul] at h
+  have he : (∑ i, (((code.pruneDeepest a w b hw ha hmax hmissing).encode i).length : ℝ)) + 1 =
+      ∑ i, ((code.encode i).length : ℝ) := by linarith
+  exact_mod_cast he
+
+/-- Choose a structurally minimal no-worse competitor without assuming cost-minimizer existence. -/
+theorem exists_minimal_totalCodeLength_competitor
+    {α : Type*} [Fintype α] (p : α → ℝ) (original : BinaryPrefixCode α) :
+    ∃ code : BinaryPrefixCode α,
+      expectedCodeLength p code ≤ expectedCodeLength p original ∧
+      ∀ other : BinaryPrefixCode α,
+        expectedCodeLength p other ≤ expectedCodeLength p original →
+          totalCodeLength code ≤ totalCodeLength other := by
+  classical
+  let P : ℕ → Prop := fun n => ∃ code : BinaryPrefixCode α,
+    expectedCodeLength p code ≤ expectedCodeLength p original ∧ totalCodeLength code = n
+  have hex : ∃ n, P n := ⟨totalCodeLength original, original, le_rfl, rfl⟩
+  obtain ⟨code, hc, hn⟩ := Nat.find_spec hex
+  refine ⟨code, hc, ?_⟩
+  intro other ho
+  rw [hn]
+  exact Nat.find_min' hex ⟨other, ho, rfl⟩
+
+/-- Normalize any competitor so that each deepest leaf has its sibling present. -/
+theorem exists_competitor_with_deepest_siblings
+    {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
+    (p : α → ℝ) (hp : ∀ i, 0 ≤ p i) (original : BinaryPrefixCode α) :
+    ∃ code : BinaryPrefixCode α,
+      expectedCodeLength p code ≤ expectedCodeLength p original ∧
+      ∀ a w b, code.encode a = w ++ [b] →
+        (∀ i, (code.encode i).length ≤ (code.encode a).length) →
+          ∃ j, code.encode j = w ++ [!b] := by
+  classical
+  obtain ⟨code, hc, hmin⟩ := exists_minimal_totalCodeLength_competitor p original
+  refine ⟨code, hc, ?_⟩
+  intro a w b ha hmax
+  by_contra h
+  have hmissing : ∀ j, code.encode j ≠ w ++ [!b] := by simpa using h
+  have hw : w ≠ [] := by
+    intro he
+    obtain ⟨i, hi⟩ := exists_ne a
+    have hn := (deepest_parent_incomparable code a w b ha hmax hmissing i hi).2
+    apply hn
+    simp [he]
+  have hcost := expectedCodeLength_pruneDeepest_le p code a w b (hp a) hw ha hmax hmissing
+  have hbound := hmin (code.pruneDeepest a w b hw ha hmax hmissing) (hcost.trans hc)
+  have hdrop := totalCodeLength_pruneDeepest code a w b hw ha hmax hmissing
+  omega
+
+/-- Every competitor has a no-worse code containing a deepest sibling pair. -/
+theorem exists_no_worse_deepest_sibling_pair
+    {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]
+    (p : α → ℝ) (hp : ∀ i, 0 ≤ p i) (original : BinaryPrefixCode α) :
+    ∃ code : BinaryPrefixCode α, expectedCodeLength p code ≤ expectedCodeLength p original ∧
+      ∃ a j w b, a ≠ j ∧ code.encode a = w ++ [b] ∧ code.encode j = w ++ [!b] ∧
+        ∀ i, (code.encode i).length ≤ (code.encode a).length := by
+  obtain ⟨code, hc, hf⟩ := exists_competitor_with_deepest_siblings p hp original
+  obtain ⟨a, _, hmax⟩ := (Finset.univ : Finset α).exists_max_image
+    (fun i => (code.encode i).length) Finset.univ_nonempty
+  have hsplit : ∀ v : List Bool, v ≠ [] → ∃ w b, v = w ++ [b] := by
+    intro v
+    induction v using List.reverseRecOn with
+    | nil => simp
+    | append_singleton w b _ => exact fun _ => ⟨w, b, rfl⟩
+  obtain ⟨w, b, ha⟩ := hsplit (code.encode a) (code.nonempty a)
+  have hm : ∀ i, (code.encode i).length ≤ (code.encode a).length :=
+    fun i => hmax i (Finset.mem_univ i)
+  obtain ⟨j, hj⟩ := hf a w b ha hm
+  have haj : a ≠ j := by
+    intro he
+    have hwords : w ++ [b] = w ++ [!b] := ha.symm.trans (he ▸ hj)
+    have hb := List.append_cancel_left hwords
+    cases b <;> simp at hb
+  exact ⟨code, hc, a, j, w, b, haj, ha, hj, hm⟩
+
 end BanditRLProof.LowerBounds

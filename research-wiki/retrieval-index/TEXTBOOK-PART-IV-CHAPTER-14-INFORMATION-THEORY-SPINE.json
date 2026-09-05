@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE",
-  "generated": "2026-09-05T06:09:58+00:00",
+  "generated": "2026-09-05T06:12:55+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -58979,6 +58979,46 @@
       "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
       "line": 95,
       "statement": "theorem expectedCodeLength_pruneDeepest_le {α : Type*} [Fintype α] [DecidableEq α] (p : α → ℝ) (code : BinaryPrefixCode α) (a : α) (w : List Bool) (b : Bool) (hp : 0 ≤ p a) (hw : w ≠ []) (ha : code.encode a = w ++ [b]) (hmax : ∀ i, (code.encode i).length ≤ (code.encode a).length) (hmissing : ∀ i, code.encode i ≠ w ++ [!b]) : expectedCodeLength p (code.pruneDeepest a w b hw ha hmax hmissing) ≤ expectedCodeLength p code"
+    },
+    {
+      "kind": "def",
+      "name": "totalCodeLength",
+      "full_name": "BanditRLProof.LowerBounds.totalCodeLength",
+      "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+      "line": 106,
+      "statement": "def totalCodeLength {α : Type*} [Fintype α] (code : BinaryPrefixCode α) : ℕ"
+    },
+    {
+      "kind": "theorem",
+      "name": "totalCodeLength_pruneDeepest",
+      "full_name": "BanditRLProof.LowerBounds.totalCodeLength_pruneDeepest",
+      "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+      "line": 109,
+      "statement": "theorem totalCodeLength_pruneDeepest {α : Type*} [Fintype α] [DecidableEq α] (code : BinaryPrefixCode α) (a : α) (w : List Bool) (b : Bool) (hw : w ≠ []) (ha : code.encode a = w ++ [b]) (hmax : ∀ i, (code.encode i).length ≤ (code.encode a).length) (hmissing : ∀ i, code.encode i ≠ w ++ [!b]) : totalCodeLength (code.pruneDeepest a w b hw ha hmax hmissing) + 1 = totalCodeLength code"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_minimal_totalCodeLength_competitor",
+      "full_name": "BanditRLProof.LowerBounds.exists_minimal_totalCodeLength_competitor",
+      "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+      "line": 123,
+      "statement": "theorem exists_minimal_totalCodeLength_competitor {α : Type*} [Fintype α] (p : α → ℝ) (original : BinaryPrefixCode α) : ∃ code : BinaryPrefixCode α, expectedCodeLength p code ≤ expectedCodeLength p original ∧ ∀ other : BinaryPrefixCode α, expectedCodeLength p other ≤ expectedCodeLength p original → totalCodeLength code ≤ totalCodeLength other"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_competitor_with_deepest_siblings",
+      "full_name": "BanditRLProof.LowerBounds.exists_competitor_with_deepest_siblings",
+      "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+      "line": 141,
+      "statement": "theorem exists_competitor_with_deepest_siblings {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α] (p : α → ℝ) (hp : ∀ i, 0 ≤ p i) (original : BinaryPrefixCode α) : ∃ code : BinaryPrefixCode α, expectedCodeLength p code ≤ expectedCodeLength p original ∧ ∀ a w b, code.encode a = w ++ [b] → (∀ i, (code.encode i).length ≤ (code.encode a).length) → ∃ j, code.encode j = w ++ [!b]"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_no_worse_deepest_sibling_pair",
+      "full_name": "BanditRLProof.LowerBounds.exists_no_worse_deepest_sibling_pair",
+      "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+      "line": 167,
+      "statement": "theorem exists_no_worse_deepest_sibling_pair {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α] (p : α → ℝ) (hp : ∀ i, 0 ≤ p i) (original : BinaryPrefixCode α) : ∃ code : BinaryPrefixCode α, expectedCodeLength p code ≤ expectedCodeLength p original ∧ ∃ a j w b, a ≠ j ∧ code.encode a = w ++ [b] ∧ code.encode j = w ++ [!b] ∧ ∀ i, (code.encode i).length ≤ (code.encode a).length"
     },
     {
       "kind": "theorem",

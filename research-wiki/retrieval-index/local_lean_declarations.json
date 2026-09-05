@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T06:09:52+00:00",
+  "generated": "2026-09-05T06:12:47+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -29968,6 +29968,46 @@
       "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
       "line": 95,
       "statement": "theorem expectedCodeLength_pruneDeepest_le {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (code : BinaryPrefixCode \u03b1) (a : \u03b1) (w : List Bool) (b : Bool) (hp : 0 \u2264 p a) (hw : w \u2260 []) (ha : code.encode a = w ++ [b]) (hmax : \u2200 i, (code.encode i).length \u2264 (code.encode a).length) (hmissing : \u2200 i, code.encode i \u2260 w ++ [!b]) : expectedCodeLength p (code.pruneDeepest a w b hw ha hmax hmissing) \u2264 expectedCodeLength p code"
+    },
+    {
+      "kind": "def",
+      "name": "totalCodeLength",
+      "full_name": "BanditRLProof.LowerBounds.totalCodeLength",
+      "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+      "line": 106,
+      "statement": "def totalCodeLength {\u03b1 : Type*} [Fintype \u03b1] (code : BinaryPrefixCode \u03b1) : \u2115"
+    },
+    {
+      "kind": "theorem",
+      "name": "totalCodeLength_pruneDeepest",
+      "full_name": "BanditRLProof.LowerBounds.totalCodeLength_pruneDeepest",
+      "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+      "line": 109,
+      "statement": "theorem totalCodeLength_pruneDeepest {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (code : BinaryPrefixCode \u03b1) (a : \u03b1) (w : List Bool) (b : Bool) (hw : w \u2260 []) (ha : code.encode a = w ++ [b]) (hmax : \u2200 i, (code.encode i).length \u2264 (code.encode a).length) (hmissing : \u2200 i, code.encode i \u2260 w ++ [!b]) : totalCodeLength (code.pruneDeepest a w b hw ha hmax hmissing) + 1 = totalCodeLength code"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_minimal_totalCodeLength_competitor",
+      "full_name": "BanditRLProof.LowerBounds.exists_minimal_totalCodeLength_competitor",
+      "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+      "line": 123,
+      "statement": "theorem exists_minimal_totalCodeLength_competitor {\u03b1 : Type*} [Fintype \u03b1] (p : \u03b1 \u2192 \u211d) (original : BinaryPrefixCode \u03b1) : \u2203 code : BinaryPrefixCode \u03b1, expectedCodeLength p code \u2264 expectedCodeLength p original \u2227 \u2200 other : BinaryPrefixCode \u03b1, expectedCodeLength p other \u2264 expectedCodeLength p original \u2192 totalCodeLength code \u2264 totalCodeLength other"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_competitor_with_deepest_siblings",
+      "full_name": "BanditRLProof.LowerBounds.exists_competitor_with_deepest_siblings",
+      "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+      "line": 141,
+      "statement": "theorem exists_competitor_with_deepest_siblings {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (original : BinaryPrefixCode \u03b1) : \u2203 code : BinaryPrefixCode \u03b1, expectedCodeLength p code \u2264 expectedCodeLength p original \u2227 \u2200 a w b, code.encode a = w ++ [b] \u2192 (\u2200 i, (code.encode i).length \u2264 (code.encode a).length) \u2192 \u2203 j, code.encode j = w ++ [!b]"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_no_worse_deepest_sibling_pair",
+      "full_name": "BanditRLProof.LowerBounds.exists_no_worse_deepest_sibling_pair",
+      "file": "BanditRLProof/LowerBounds/PrefixCodePruning.lean",
+      "line": 167,
+      "statement": "theorem exists_no_worse_deepest_sibling_pair {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (original : BinaryPrefixCode \u03b1) : \u2203 code : BinaryPrefixCode \u03b1, expectedCodeLength p code \u2264 expectedCodeLength p original \u2227 \u2203 a j w b, a \u2260 j \u2227 code.encode a = w ++ [b] \u2227 code.encode j = w ++ [!b] \u2227 \u2200 i, (code.encode i).length \u2264 (code.encode a).length"
     },
     {
       "kind": "theorem",

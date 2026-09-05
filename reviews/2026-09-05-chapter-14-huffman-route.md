@@ -79,3 +79,21 @@ premise is used. Parent nonemptiness and longest-word/absent-sibling
 conditions remain explicit. The next termination measure is total natural
 codeword length, so zero-cost pruning still makes structural progress.
 The current full gate at 7b8e73f does not include this new pruning module.
+
+Normalization termination route: among codes with expected cost at most a
+given competitor, choose one minimizing the natural sum of codeword lengths
+(Nat.find, with the original code as witness). A deepest absent-sibling
+pruning would decrease that sum by one while retaining the cost bound, a
+contradiction. For a nontrivial alphabet an absent sibling cannot occur at
+an empty parent: [] prefixes every other codeword, contradicting the already
+proved incomparability lemma. Thus a normalized no-worse competitor has
+deepest siblings, without assuming existence of a globally optimal code.
+
+Normalization now focused-builds (2,676 jobs) and passes its full typed
+canary. `exists_no_worse_deepest_sibling_pair` exposes distinct labels, the
+common parent and opposite final bits, maximal depth, and cost domination
+of the supplied competitor. The natural-length minimality argument handles
+zero weights. All new axiom reports use only standard propext/Classical.choice/
+Quot.sound. The condition Nontrivial alpha is explicit; the singleton base
+was proved separately. No Huffman algorithm or global cost-minimizer is yet
+claimed, and pruning remains outside the ongoing 7b8e73f full gate.
