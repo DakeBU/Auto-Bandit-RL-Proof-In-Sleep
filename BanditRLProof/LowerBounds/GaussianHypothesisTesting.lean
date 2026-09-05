@@ -14,9 +14,9 @@ We expose that Gaussian mean-observation law, identify the two error events,
 and prove the standard Chernoff upper bound `exp (-n * gap^2 / 8)` for both
 hypotheses and therefore for their maximum error probability.
 
-This is a genuine probability theorem, but it is not the sharper two-sided
-Mills-ratio estimate displayed as Eq. (13.1).  The latter remains a separate
-source obligation and is not inferred from this upper bound.
+The separate Mills-ratio route now proves both exact bounds in Eq. (13.1),
+including the printed square-root denominator constants. The earlier
+Chernoff theorem remains a weaker companion.
 -/
 
 namespace BanditRLProof
@@ -265,6 +265,34 @@ theorem gaussianSampleMeanZeroErrorProbability_mills_bounds
     twoPointGaussianThresholdDecision_zero_error_event hgap]
   exact gaussianReal_zero_mills_bounds (gaussianSampleMeanVariance sampleSize)
     (gaussianSampleMeanVariance_pos sampleSize hsampleSize) (gap / 2) (by positivity)
+
+/-- The exact printed two-sided Gaussian testing inequality, Eq. (13.1). -/
+theorem gaussianSampleMeanZeroErrorProbability_source_bounds
+    (sampleSize : Nat) (hsampleSize : 0 < sampleSize)
+    (gap : Real) (hgap : 0 < gap) :
+    let q := (sampleSize : Real) * gap ^ 2
+    Real.sqrt (8 / Real.pi) * Real.exp (-q / 8) /
+        (Real.sqrt q + Real.sqrt (q + 16)) ≤
+      gaussianSampleMeanZeroErrorProbability sampleSize gap ∧
+    gaussianSampleMeanZeroErrorProbability sampleSize gap ≤
+      Real.sqrt (8 / Real.pi) * Real.exp (-q / 8) /
+        (Real.sqrt q + Real.sqrt (q + 32 / Real.pi)) := by
+  let z := (gap / 2) / Real.sqrt (2 * (gaussianSampleMeanVariance sampleSize : Real))
+  have hz : 0 ≤ z := by dsimp [z]; positivity
+  have hn : (sampleSize : Real) ≠ 0 := Nat.cast_ne_zero.mpr hsampleSize.ne'
+  have hq : (sampleSize : Real) * gap ^ 2 = 8 * z ^ 2 := by
+    dsimp [z, gaussianSampleMeanVariance]
+    rw [div_pow, Real.sq_sqrt (by positivity)]
+    field_simp
+    ring
+  have hl := gaussianMills_expression_rescale hz (show (0 : Real) < 2 by norm_num) hq
+  have hu := gaussianMills_expression_rescale hz (show (0 : Real) < 4 / Real.pi by positivity) hq
+  have hb := gaussianSampleMeanZeroErrorProbability_mills_bounds sampleSize hsampleSize gap hgap
+  change _ ≤ gaussianSampleMeanZeroErrorProbability sampleSize gap ∧
+    gaussianSampleMeanZeroErrorProbability sampleSize gap ≤ _ at hb
+  rw [hl, hu] at hb
+  simpa only [show (8 : Real) * 2 = 16 by norm_num,
+    show (8 : Real) * (4 / Real.pi) = 32 / Real.pi by ring] using hb
 
 end
 

@@ -352,4 +352,25 @@ theorem gaussianReal_zero_mills_bounds (v : ℝ≥0) (hv : 0 < v)
   exact ⟨div_le_div_of_nonneg_right (gaussianMills_lower_integral hz) (Real.sqrt_nonneg _),
     div_le_div_of_nonneg_right (gaussianMills_upper_integral hz) (Real.sqrt_nonneg _)⟩
 
+/-- Rescale a Mills expression to the square-root denominators in Eq. (13.1). -/
+theorem gaussianMills_expression_rescale {z c q : ℝ}
+    (hz : 0 ≤ z) (hc : 0 < c) (hq : q = 8 * z ^ 2) :
+    Real.exp (-z ^ 2) / (z + Real.sqrt (z ^ 2 + c)) / Real.sqrt Real.pi =
+      Real.sqrt (8 / Real.pi) * Real.exp (-q / 8) /
+        (Real.sqrt q + Real.sqrt (q + 8 * c)) := by
+  subst q
+  have h8 : 0 < Real.sqrt (8 : ℝ) := Real.sqrt_pos.mpr (by norm_num)
+  have hp := Real.sqrt_pos.mpr Real.pi_pos
+  have hd := gaussianMillsComparison_denominator_pos (x := z) hc
+  have hfirst : Real.sqrt (8 * z ^ 2) = Real.sqrt 8 * z := by
+    rw [Real.sqrt_mul (by norm_num : (0 : ℝ) ≤ 8), Real.sqrt_sq hz]
+  have hsecond : Real.sqrt (8 * z ^ 2 + 8 * c) = Real.sqrt 8 * Real.sqrt (z ^ 2 + c) := by
+    rw [← Real.sqrt_mul (by norm_num : (0 : ℝ) ≤ 8)]
+    congr 1
+    ring
+  rw [hfirst, hsecond, Real.sqrt_div (by norm_num : (0 : ℝ) ≤ 8)]
+  rw [show -(8 * z ^ 2) / 8 = -z ^ 2 by ring]
+  rw [← mul_add]
+  field_simp
+
 end BanditRLProof.LowerBounds

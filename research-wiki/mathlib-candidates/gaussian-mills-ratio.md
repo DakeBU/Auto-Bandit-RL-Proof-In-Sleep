@@ -2,7 +2,8 @@
 
 Status: both exact integral bounds pass focused Lean and module build;
 Gaussian probability rescaling now compiles in standardized coordinates;
-printed denominator normalization and full integration validation remain open.
+printed denominator normalization now also compiles; full integration validation
+and synchronization of the older chapter-wide evidence remain pending.
 
 Task: `TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE`
 
@@ -90,8 +91,11 @@ identity. `gaussianSampleMeanZeroErrorProbability_mills_bounds` applies them
 to the existing error-probability definition with `n>0`, `Delta>0` and
 `z=(Delta/2)/sqrt(2/n)`. Both modules build (3559 jobs).
 
-Next Lean leaf: normalize `z^2=n*Delta^2/8` and the two denominators into
-the exact printed Eq. (13.1) expressions. Full integration gates remain pending.
+`gaussianMills_expression_rescale` and
+`gaussianSampleMeanZeroErrorProbability_source_bounds` now compile the exact
+printed Eq. (13.1), with `q=n*Delta^2`, exponent `-q/8`, and denominator
+constants `16` and `32/pi`. The only premises are `n>0` and `Delta>0`.
+Full integration gates and chapter-wide evidence synchronization remain pending.
 
 ## Retrieval audit
 

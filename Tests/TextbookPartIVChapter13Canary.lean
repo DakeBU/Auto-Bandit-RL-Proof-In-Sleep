@@ -148,6 +148,16 @@ example (x : ℝ) (hx : 0 ≤ x) :
 #print axioms LowerBounds.gaussianMills_upper_integral
 #print axioms LowerBounds.gaussianReal_zero_standardized_tail
 #print axioms LowerBounds.gaussianSampleMeanZeroErrorProbability_mills_bounds
+#print axioms LowerBounds.gaussianSampleMeanZeroErrorProbability_source_bounds
+
+example (n : Nat) (hn : 0 < n) (gap : ℝ) (hg : 0 < gap) :
+    let q := (n : ℝ) * gap ^ 2
+    Real.sqrt (8 / Real.pi) * Real.exp (-q / 8) /
+      (Real.sqrt q + Real.sqrt (q + 16)) ≤ gaussianSampleMeanZeroErrorProbability n gap ∧
+    gaussianSampleMeanZeroErrorProbability n gap ≤
+      Real.sqrt (8 / Real.pi) * Real.exp (-q / 8) /
+        (Real.sqrt q + Real.sqrt (q + 32 / Real.pi)) :=
+  gaussianSampleMeanZeroErrorProbability_source_bounds n hn gap hg
 
 example (x : ℝ) (hx : 0 ≤ x) :
     0 ≤ gaussianMillsErrorDerivative (4 / Real.pi) x ↔
