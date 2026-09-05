@@ -146,3 +146,20 @@ code. It does not assume optimality of the desired expanded code. No mass
 normalization is needed. A complete recursive construction and its terminal
 existence/optimality theorem are still required. Pruning, Greedy, HuffmanStep
 and their canaries are now added to the aggregate imports for the next gate.
+
+Alphabet-reduction route: transport expected lengths and global optimality
+along an arbitrary finite alphabet equivalence using Equiv.sum_comp. Split
+two distinct selected symbols from their complement subtype, with an explicit
+equivalence from complement + Bool to the original alphabet. This supplies
+the relabeling interface needed by cardinality recursion; it does not replace
+the recursive Huffman construction with mere minimizer existence.
+
+Alphabet-reduction result: HuffmanAlphabet builds (2679 jobs) and its typed
+canary passes. Exact expected-cost transport and global-optimality transport
+hold for any finite alphabet equivalence. The explicit split equivalence
+and `huffman_merged_card_lt` establish recursive size decrease; finite minima
+on univ and univ.erase give `exists_two_least_weights`, allowing ties. A
+simplifier equality branch initially retained b=a; explicit hab.symm closes
+it without new assumptions. All four audited theorem reports use only the
+standard propext/Classical.choice/Quot.sound axioms. This module is not yet
+aggregate-imported and is outside the running 7daa2b9 full gate.

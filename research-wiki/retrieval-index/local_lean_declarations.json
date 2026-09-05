@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T06:19:22+00:00",
+  "generated": "2026-09-05T06:22:14+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -29120,6 +29120,70 @@
       "file": "BanditRLProof/LowerBounds/HighProbability.lean",
       "line": 133,
       "statement": "theorem randomRegret_ge_quarter_of_clippingDecomposition (horizon pullCount clippingCount : Nat) (gap randomRegret : Real) (hGap : 0 <= gap) (hPull : (pullCount : Real) <= (horizon : Real) / 2) (hClipping : (clippingCount : Real) <= (horizon : Real) / 4) (hSource : adversarialRegretLowerExpression horizon pullCount clippingCount gap <= randomRegret) : gap * ((horizon : Real) / 4) <= randomRegret"
+    },
+    {
+      "kind": "theorem",
+      "name": "expectedCodeLength_relabel",
+      "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_relabel",
+      "file": "BanditRLProof/LowerBounds/HuffmanAlphabet.lean",
+      "line": 5,
+      "statement": "theorem expectedCodeLength_relabel {\u03b1 \u03b2 : Type*} [Fintype \u03b1] [Fintype \u03b2] (p : \u03b1 \u2192 \u211d) (code : BinaryPrefixCode \u03b1) (e : \u03b2 \u2243 \u03b1) : expectedCodeLength (p \u2218 e) (code.relabel e) = expectedCodeLength p code"
+    },
+    {
+      "kind": "theorem",
+      "name": "IsOptimalPrefixCode.relabel",
+      "full_name": "BanditRLProof.LowerBounds.IsOptimalPrefixCode.relabel",
+      "file": "BanditRLProof/LowerBounds/HuffmanAlphabet.lean",
+      "line": 12,
+      "statement": "theorem IsOptimalPrefixCode.relabel {\u03b1 \u03b2 : Type*} [Fintype \u03b1] [Fintype \u03b2] (p : \u03b1 \u2192 \u211d) (code : BinaryPrefixCode \u03b1) (e : \u03b2 \u2243 \u03b1) (hopt : IsOptimalPrefixCode p code) : IsOptimalPrefixCode (p \u2218 e) (code.relabel e)"
+    },
+    {
+      "kind": "def",
+      "name": "HuffmanRemainder",
+      "full_name": "BanditRLProof.LowerBounds.HuffmanRemainder",
+      "file": "BanditRLProof/LowerBounds/HuffmanAlphabet.lean",
+      "line": 25,
+      "statement": "def HuffmanRemainder {\u03b1 : Type*} (a b : \u03b1)"
+    },
+    {
+      "kind": "def",
+      "name": "huffmanSplitEquiv",
+      "full_name": "BanditRLProof.LowerBounds.huffmanSplitEquiv",
+      "file": "BanditRLProof/LowerBounds/HuffmanAlphabet.lean",
+      "line": 31,
+      "statement": "def huffmanSplitEquiv {\u03b1 : Type*} [DecidableEq \u03b1] (a b : \u03b1) (hab : a \u2260 b) : HuffmanRemainder a b \u2295 Bool \u2243 \u03b1 where"
+    },
+    {
+      "kind": "theorem",
+      "name": "huffmanSplitEquiv_false",
+      "full_name": "BanditRLProof.LowerBounds.huffmanSplitEquiv_false",
+      "file": "BanditRLProof/LowerBounds/HuffmanAlphabet.lean",
+      "line": 49,
+      "statement": "@[simp] theorem huffmanSplitEquiv_false {\u03b1 : Type*} [DecidableEq \u03b1] (a b : \u03b1) (hab : a \u2260 b) : huffmanSplitEquiv a b hab (.inr false) = a"
+    },
+    {
+      "kind": "theorem",
+      "name": "huffmanSplitEquiv_true",
+      "full_name": "BanditRLProof.LowerBounds.huffmanSplitEquiv_true",
+      "file": "BanditRLProof/LowerBounds/HuffmanAlphabet.lean",
+      "line": 52,
+      "statement": "@[simp] theorem huffmanSplitEquiv_true {\u03b1 : Type*} [DecidableEq \u03b1] (a b : \u03b1) (hab : a \u2260 b) : huffmanSplitEquiv a b hab (.inr true) = b"
+    },
+    {
+      "kind": "theorem",
+      "name": "huffman_merged_card_lt",
+      "full_name": "BanditRLProof.LowerBounds.huffman_merged_card_lt",
+      "file": "BanditRLProof/LowerBounds/HuffmanAlphabet.lean",
+      "line": 56,
+      "statement": "theorem huffman_merged_card_lt {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (a b : \u03b1) (hab : a \u2260 b) : Fintype.card (Option (HuffmanRemainder a b)) < Fintype.card \u03b1"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_two_least_weights",
+      "full_name": "BanditRLProof.LowerBounds.exists_two_least_weights",
+      "file": "BanditRLProof/LowerBounds/HuffmanAlphabet.lean",
+      "line": 65,
+      "statement": "theorem exists_two_least_weights {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1] (p : \u03b1 \u2192 \u211d) : \u2203 a b, a \u2260 b \u2227 (\u2200 i, p a \u2264 p i) \u2227 (\u2200 i, i \u2260 a \u2192 p b \u2264 p i)"
     },
     {
       "kind": "theorem",
