@@ -67,8 +67,22 @@ lower expression and the sole premise `x>=0`. Its proof obtains derivative
 integrability from the nonpositive derivative and limit, evaluates that
 integral, and compares its negative with the integrable Gaussian kernel.
 
-Next Lean leaf: the upper bound with its separate sign-change proof, followed
-by rescaling both halves to Eq. (13.1). Full integration gates remain pending.
+The upper-branch algebra now passes focused Lean:
+`gaussianMills_sign_iff`, `gaussianMills_sign_threshold`,
+`gaussianMillsErrorDerivative_factor`, and
+`gaussianMillsErrorDerivative_nonneg_iff` identify the sole nonnegative
+threshold `(c-1)/sqrt(2-c)` for `1<c<2`, `x>=0`. The error derivative here
+is connected by `hasDerivAt_gaussianMillsError` to the finite-integral error
+`F_c(x) + integral_0^x exp(-t^2) dt - sqrt(pi)/2`.
+`gaussianMillsErrorDerivative_source_nonneg_iff` specializes the threshold
+to `c=4/pi`, using `Analysis.Real.Pi.Bounds`. The complete module build
+passes (3345 jobs). Identification with the improper-tail difference,
+endpoint values, and the resulting upper inequality remain open.
+
+Next Lean leaf: use the zero-at-zero and zero-at-infinity endpoints to prove
+the error's nonnegativity from the derivative sign pattern,
+then rescale both integral bounds to Eq. (13.1). Full integration gates remain
+pending.
 
 ## Retrieval audit
 

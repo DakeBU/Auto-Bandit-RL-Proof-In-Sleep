@@ -140,6 +140,14 @@ example (x : ℝ) (hx : 0 ≤ x) :
 #print axioms LowerBounds.tendsto_gaussianMillsComparison
 #print axioms LowerBounds.gaussianMills_lower_integral
 
+example (x : ℝ) (hx : 0 ≤ x) :
+    0 ≤ gaussianMillsErrorDerivative (4 / Real.pi) x ↔
+      x ≤ (4 / Real.pi - 1) / Real.sqrt (2 - 4 / Real.pi) :=
+  gaussianMillsErrorDerivative_source_nonneg_iff hx
+
+#print axioms LowerBounds.hasDerivAt_gaussianMillsError
+#print axioms LowerBounds.gaussianMillsErrorDerivative_source_nonneg_iff
+
 #print axioms LowerBounds.worstCaseExpectedRegret
 #print axioms LowerBounds.minimaxExpectedRegret
 #print axioms LowerBounds.IsMinimaxOptimal
