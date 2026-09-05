@@ -110,6 +110,19 @@ example {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasur
 example {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
     (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ)
     (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ)
+    (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (hlarge : 8*sqrt δ ≤ gap) (n : ℕ) :
+    gap*(∫ ω, MOSS.indexExceedanceCount (MOSS.streamMean X ω) δ gap n ∂μ) ≤ 15/sqrt δ :=
+  MOSS.gap_mul_integral_indexExceedanceCount_le_sharp X hXm hind hmean hsubG δ gap hδ hg hlarge n
+
+#print axioms MOSS.integral_indexExceedanceCount_le_sharp
+#print axioms MOSS.gap_mul_integral_indexExceedanceCount_le_sharp
+#print axioms sum_selected_pullCount
+#print axioms pullCount_le_one_add_eventCount
+#print axioms MOSS.pullCount_le_one_add_indexExceedanceCount
+
+example {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ)
+    (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ)
     (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) (n : ℕ) :
     (∫ ω, Concentration.fixedRadiusCount X a ε n ω ∂μ) ≤
       (2/ε^2)*(a+sqrt (Real.pi*a)+1) :=

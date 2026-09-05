@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
-  "generated": "2026-09-05T06:00:34+00:00",
+  "generated": "2026-09-05T06:07:53+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -32502,18 +32502,34 @@
     },
     {
       "kind": "theorem",
+      "name": "integral_indexExceedanceCount_le_sharp",
+      "full_name": "BanditRLProof.MOSS.integral_indexExceedanceCount_le_sharp",
+      "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
+      "line": 24,
+      "statement": "theorem integral_indexExceedanceCount_le_sharp (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (hlarge : δ < gap^2) (n : ℕ) : (∫ ω, indexExceedanceCount (streamMean X ω) δ gap n ∂μ) ≤ 1/gap^2 + (8/gap^2)*(2*logPlus (gap^2/δ)+sqrt (Real.pi*(2*logPlus (gap^2/δ)))+1)"
+    },
+    {
+      "kind": "theorem",
       "name": "integral_indexExceedanceCount_le",
       "full_name": "BanditRLProof.MOSS.integral_indexExceedanceCount_le",
       "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
-      "line": 24,
+      "line": 55,
       "statement": "theorem integral_indexExceedanceCount_le (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (hlarge : δ < gap^2) (n : ℕ) : (∫ ω, indexExceedanceCount (streamMean X ω) δ gap n ∂μ) ≤ 1/gap^2 + 1 + (8/gap^2)*(2*logPlus (gap^2/δ)+sqrt (Real.pi*(2*logPlus (gap^2/δ)))+1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gap_mul_integral_indexExceedanceCount_le_sharp",
+      "full_name": "BanditRLProof.MOSS.gap_mul_integral_indexExceedanceCount_le_sharp",
+      "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
+      "line": 64,
+      "statement": "theorem gap_mul_integral_indexExceedanceCount_le_sharp (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (hlarge : 8*sqrt δ ≤ gap) (n : ℕ) : gap*(∫ ω, indexExceedanceCount (streamMean X ω) δ gap n ∂μ) ≤ 15/sqrt δ"
     },
     {
       "kind": "theorem",
       "name": "gap_mul_integral_indexExceedanceCount_le",
       "full_name": "BanditRLProof.MOSS.gap_mul_integral_indexExceedanceCount_le",
       "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
-      "line": 56,
+      "line": 77,
       "statement": "theorem gap_mul_integral_indexExceedanceCount_le (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (hlarge : 8*sqrt δ ≤ gap) (n : ℕ) : gap*(∫ ω, indexExceedanceCount (streamMean X ω) δ gap n ∂μ) ≤ gap+15/sqrt δ"
     },
     {
@@ -32569,7 +32585,7 @@
       "name": "fixedLogRadius",
       "full_name": "BanditRLProof.MOSS.fixedLogRadius",
       "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
-      "line": 7,
+      "line": 8,
       "statement": "def fixedLogRadius (δ gap : ℝ) (s : ℕ) : ℝ"
     },
     {
@@ -32577,7 +32593,7 @@
       "name": "sampleRadius_le_fixedLogRadius",
       "full_name": "BanditRLProof.MOSS.sampleRadius_le_fixedLogRadius",
       "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
-      "line": 10,
+      "line": 11,
       "statement": "theorem sampleRadius_le_fixedLogRadius (δ gap : ℝ) (s : ℕ) (hδ : 0 < δ) (hg : 0 < gap) (hs : 0 < s) (hlarge : 1 ≤ (s : ℝ)*gap^2) : sqrt (4/(s : ℝ)*logPlus (1/((s : ℝ)*δ))) ≤ fixedLogRadius δ gap s"
     },
     {
@@ -32585,15 +32601,23 @@
       "name": "indexExceedanceCount",
       "full_name": "BanditRLProof.MOSS.indexExceedanceCount",
       "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
-      "line": 19,
+      "line": 20,
       "statement": "def indexExceedanceCount (mean : ℕ → ℝ) (δ gap : ℝ) (n : ℕ) : ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "pullCount_le_one_add_indexExceedanceCount",
+      "full_name": "BanditRLProof.MOSS.pullCount_le_one_add_indexExceedanceCount",
+      "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
+      "line": 25,
+      "statement": "theorem pullCount_le_one_add_indexExceedanceCount {Action : Type*} [DecidableEq Action] (action : ActionTrace Action) (a : Action) (mean : ℕ → ℝ) (δ gap : ℝ) (n : ℕ) (hselected : ∀ t < n, action t = a → 0 < pullCount action a t → gap/2 ≤ mean (pullCount action a t) + sqrt (4/(pullCount action a t : ℝ)*logPlus (1/((pullCount action a t : ℝ)*δ)))) : (pullCount action a n : ℝ) ≤ 1 + indexExceedanceCount mean δ gap n"
     },
     {
       "kind": "def",
       "name": "fixedLogExceedanceCount",
       "full_name": "BanditRLProof.MOSS.fixedLogExceedanceCount",
       "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
-      "line": 23,
+      "line": 35,
       "statement": "def fixedLogExceedanceCount (mean : ℕ → ℝ) (δ gap : ℝ) (n : ℕ) : ℝ"
     },
     {
@@ -32601,7 +32625,7 @@
       "name": "smallSampleCount",
       "full_name": "BanditRLProof.MOSS.smallSampleCount",
       "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
-      "line": 26,
+      "line": 38,
       "statement": "def smallSampleCount (gap : ℝ) (n : ℕ) : ℝ"
     },
     {
@@ -32609,7 +32633,7 @@
       "name": "indexExceedanceCount_le_small_add_fixed",
       "full_name": "BanditRLProof.MOSS.indexExceedanceCount_le_small_add_fixed",
       "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
-      "line": 30,
+      "line": 42,
       "statement": "theorem indexExceedanceCount_le_small_add_fixed (mean : ℕ → ℝ) (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (n : ℕ) : indexExceedanceCount mean δ gap n ≤ smallSampleCount gap n + fixedLogExceedanceCount mean δ gap n"
     },
     {
@@ -32617,7 +32641,7 @@
       "name": "smallSampleCount_le_horizon",
       "full_name": "BanditRLProof.MOSS.smallSampleCount_le_horizon",
       "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
-      "line": 46,
+      "line": 58,
       "statement": "theorem smallSampleCount_le_horizon (gap : ℝ) (n : ℕ) : smallSampleCount gap n ≤ (n : ℝ)"
     },
     {
@@ -32625,7 +32649,7 @@
       "name": "smallSampleCount_le_inv_sq",
       "full_name": "BanditRLProof.MOSS.smallSampleCount_le_inv_sq",
       "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
-      "line": 53,
+      "line": 65,
       "statement": "theorem smallSampleCount_le_inv_sq (gap : ℝ) (hg : 0 < gap) (n : ℕ) : smallSampleCount gap n ≤ 1/gap^2"
     },
     {
@@ -32633,7 +32657,7 @@
       "name": "indexExceedanceCount_le_inv_sq_add_fixed",
       "full_name": "BanditRLProof.MOSS.indexExceedanceCount_le_inv_sq_add_fixed",
       "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
-      "line": 67,
+      "line": 79,
       "statement": "theorem indexExceedanceCount_le_inv_sq_add_fixed (mean : ℕ → ℝ) (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (n : ℕ) : indexExceedanceCount mean δ gap n ≤ 1/gap^2 + fixedLogExceedanceCount mean δ gap n"
     },
     {
@@ -65806,6 +65830,22 @@
     },
     {
       "kind": "theorem",
+      "name": "sum_selected_pullCount",
+      "full_name": "BanditRLProof.sum_selected_pullCount",
+      "file": "BanditRLProof/PullCountReindex.lean",
+      "line": 11,
+      "statement": "theorem sum_selected_pullCount {Action : Type*} [DecidableEq Action] (action : ActionTrace Action) (a : Action) (f : ℕ → ℝ) (T : ℕ) : (∑ t ∈ range T, if action t = a then f (pullCount action a t) else 0) = ∑ s ∈ range (pullCount action a T), f s"
+    },
+    {
+      "kind": "theorem",
+      "name": "pullCount_le_one_add_eventCount",
+      "full_name": "BanditRLProof.pullCount_le_one_add_eventCount",
+      "file": "BanditRLProof/PullCountReindex.lean",
+      "line": 25,
+      "statement": "theorem pullCount_le_one_add_eventCount {Action : Type*} [DecidableEq Action] (action : ActionTrace Action) (a : Action) (P : ℕ → Prop) [DecidablePred P] (T : ℕ) (hselected : ∀ t < T, action t = a → 0 < pullCount action a t → P (pullCount action a t)) : (pullCount action a T : ℝ) ≤ 1 + ∑ s ∈ range T, if P (s + 1) then (1 : ℝ) else 0"
+    },
+    {
+      "kind": "theorem",
       "name": "measurable_rat_div_const",
       "full_name": "BanditRLProof.measurable_rat_div_const",
       "file": "BanditRLProof/RatMeasurability.lean",
@@ -95547,6 +95587,42 @@
       "target_fingerprint": "",
       "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
       "time": "2026-09-05T05:56:51+00:00",
+      "verifier_evidence": [],
+      "worker_id": ""
+    },
+    {
+      "attempt_id": "",
+      "changed_files": [],
+      "dag_depth": 0,
+      "dag_nodes": 0,
+      "elapsed_seconds": 0.0,
+      "error_signature": "",
+      "experiment_id": "",
+      "harness": "",
+      "input_tokens": 0,
+      "kind": "build",
+      "lean": "BanditRLProof/ConcentrationCappedOccupancy.lean",
+      "lean_check_seconds": 0.0,
+      "new_declarations": [],
+      "notes": "Initialization audit requires T<=1+kappa, not T<=kappa. Proved sharp expected count without additive one via globally antitone capped tail, preserving final regret target. Canary 3525 jobs baseline axioms. Full 73c0419 passed 400 tests/7 skips/193.963s. Sharp MOSS propagation and actual count transport remain pending.",
+      "obligations_after": 0,
+      "obligations_before": 0,
+      "output_tokens": 0,
+      "parent_id": "",
+      "progress_class": "compiled-leaf",
+      "prompt_chars": 0,
+      "reused_declarations": [],
+      "reviewer_validated": false,
+      "role": "lower",
+      "route_fingerprint": "",
+      "route_packet_hash": "",
+      "run_id": "",
+      "source": "",
+      "statement_hash": "",
+      "status": "compiled",
+      "target_fingerprint": "",
+      "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+      "time": "2026-09-05T06:01:10+00:00",
       "verifier_evidence": [],
       "worker_id": ""
     }

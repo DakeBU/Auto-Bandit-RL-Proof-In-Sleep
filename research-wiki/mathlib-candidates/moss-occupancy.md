@@ -131,3 +131,21 @@ through the MOSS expectation consumer and prove actual selected-count transport
 with its explicit initialization term. Full `73c0419` validation completed:
 root, Tests (8909 jobs), ProofGraphExport, 400 Python tests (7 skipped,
 193.963 seconds), check passed. Subsequent changes need a fresh full check.
+
+Selected-count route (project-local, MLIB-FINSET-SUMS): search-memory and
+list-lean-decls for sum_selected_pullCount found no existing exact identity.
+Use Core.pullCount_succ and Finset.sum_range_succ, induction on the horizon,
+to reindex arbitrary real weights of pre-pull counts over selected rounds.
+No stochastic or regularity assumptions are needed, only decidable arm equality.
+Import LeafLemmas and Mathlib finite real sums. This identity is a transport
+leaf, not yet a proof that the MOSS policy satisfies the exceedance event.
+The sharp MOSS expectation and gap-weighted bound now compile, respectively
+without the additive one and with 15/sqrt(delta); old APIs remain wrappers.
+
+Compiled transport: `PullCountReindex.sum_selected_pullCount` gives the exact
+weighted reindexing identity. `pullCount_le_one_add_eventCount` and the thin
+`MOSS.pullCount_le_one_add_indexExceedanceCount` retain the initial pull.
+The selected-event premise is explicit, not a completed algorithm theorem.
+Next derive this event from actual MOSS choices, count-consistent empirical
+streams, and the optimal-arm optimism deficit; then integrate and assemble
+the small/large-gap regret split. Chapter status remains partial.

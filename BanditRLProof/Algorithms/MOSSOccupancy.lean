@@ -1,4 +1,5 @@
 import BanditRLProof.Algorithms.MOSSOptimism
+import BanditRLProof.PullCountReindex
 
 noncomputable section
 open Real Finset
@@ -19,6 +20,17 @@ theorem sampleRadius_le_fixedLogRadius (δ gap : ℝ) (s : ℕ)
 def indexExceedanceCount (mean : ℕ → ℝ) (δ gap : ℝ) (n : ℕ) : ℝ :=
   ∑ s ∈ range n, if gap/2 ≤ mean (s+1) +
     sqrt (4/((s+1 : ℕ) : ℝ)*logPlus (1/(((s+1 : ℕ) : ℝ)*δ))) then 1 else 0
+
+/-- Deterministic count transport; the MOSS policy event is a separate obligation. -/
+theorem pullCount_le_one_add_indexExceedanceCount {Action : Type*} [DecidableEq Action]
+    (action : ActionTrace Action) (a : Action) (mean : ℕ → ℝ) (δ gap : ℝ) (n : ℕ)
+    (hselected : ∀ t < n, action t = a → 0 < pullCount action a t →
+      gap/2 ≤ mean (pullCount action a t) +
+        sqrt (4/(pullCount action a t : ℝ)*logPlus (1/((pullCount action a t : ℝ)*δ)))) :
+    (pullCount action a n : ℝ) ≤ 1 + indexExceedanceCount mean δ gap n := by
+  classical
+  exact pullCount_le_one_add_eventCount action a
+    (fun s => gap/2 ≤ mean s + sqrt (4/(s : ℝ)*logPlus (1/((s : ℝ)*δ)))) n hselected
 
 def fixedLogExceedanceCount (mean : ℕ → ℝ) (δ gap : ℝ) (n : ℕ) : ℝ :=
   ∑ s ∈ range n, if gap/2 ≤ mean (s+1) + fixedLogRadius δ gap (s+1) then 1 else 0

@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T06:00:28+00:00`
+Generated: `2026-09-05T06:07:47+00:00`
 
 ## Source Task
 
@@ -33603,18 +33603,34 @@ These cards are planning inspiration only.  They do not certify any theorem.
   },
   {
     "kind": "theorem",
+    "name": "integral_indexExceedanceCount_le_sharp",
+    "full_name": "BanditRLProof.MOSS.integral_indexExceedanceCount_le_sharp",
+    "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
+    "line": 24,
+    "statement": "theorem integral_indexExceedanceCount_le_sharp (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) (hlarge : \u03b4 < gap^2) (n : \u2115) : (\u222b \u03c9, indexExceedanceCount (streamMean X \u03c9) \u03b4 gap n \u2202\u03bc) \u2264 1/gap^2 + (8/gap^2)*(2*logPlus (gap^2/\u03b4)+sqrt (Real.pi*(2*logPlus (gap^2/\u03b4)))+1)"
+  },
+  {
+    "kind": "theorem",
     "name": "integral_indexExceedanceCount_le",
     "full_name": "BanditRLProof.MOSS.integral_indexExceedanceCount_le",
     "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
-    "line": 24,
+    "line": 55,
     "statement": "theorem integral_indexExceedanceCount_le (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) (hlarge : \u03b4 < gap^2) (n : \u2115) : (\u222b \u03c9, indexExceedanceCount (streamMean X \u03c9) \u03b4 gap n \u2202\u03bc) \u2264 1/gap^2 + 1 + (8/gap^2)*(2*logPlus (gap^2/\u03b4)+sqrt (Real.pi*(2*logPlus (gap^2/\u03b4)))+1)"
+  },
+  {
+    "kind": "theorem",
+    "name": "gap_mul_integral_indexExceedanceCount_le_sharp",
+    "full_name": "BanditRLProof.MOSS.gap_mul_integral_indexExceedanceCount_le_sharp",
+    "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
+    "line": 64,
+    "statement": "theorem gap_mul_integral_indexExceedanceCount_le_sharp (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) (hlarge : 8*sqrt \u03b4 \u2264 gap) (n : \u2115) : gap*(\u222b \u03c9, indexExceedanceCount (streamMean X \u03c9) \u03b4 gap n \u2202\u03bc) \u2264 15/sqrt \u03b4"
   },
   {
     "kind": "theorem",
     "name": "gap_mul_integral_indexExceedanceCount_le",
     "full_name": "BanditRLProof.MOSS.gap_mul_integral_indexExceedanceCount_le",
     "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
-    "line": 56,
+    "line": 77,
     "statement": "theorem gap_mul_integral_indexExceedanceCount_le (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) (hlarge : 8*sqrt \u03b4 \u2264 gap) (n : \u2115) : gap*(\u222b \u03c9, indexExceedanceCount (streamMean X \u03c9) \u03b4 gap n \u2202\u03bc) \u2264 gap+15/sqrt \u03b4"
   },
   {
@@ -33670,7 +33686,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "fixedLogRadius",
     "full_name": "BanditRLProof.MOSS.fixedLogRadius",
     "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
-    "line": 7,
+    "line": 8,
     "statement": "def fixedLogRadius (\u03b4 gap : \u211d) (s : \u2115) : \u211d"
   },
   {
@@ -33678,7 +33694,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "sampleRadius_le_fixedLogRadius",
     "full_name": "BanditRLProof.MOSS.sampleRadius_le_fixedLogRadius",
     "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
-    "line": 10,
+    "line": 11,
     "statement": "theorem sampleRadius_le_fixedLogRadius (\u03b4 gap : \u211d) (s : \u2115) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) (hs : 0 < s) (hlarge : 1 \u2264 (s : \u211d)*gap^2) : sqrt (4/(s : \u211d)*logPlus (1/((s : \u211d)*\u03b4))) \u2264 fixedLogRadius \u03b4 gap s"
   },
   {
@@ -33686,15 +33702,23 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "indexExceedanceCount",
     "full_name": "BanditRLProof.MOSS.indexExceedanceCount",
     "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
-    "line": 19,
+    "line": 20,
     "statement": "def indexExceedanceCount (mean : \u2115 \u2192 \u211d) (\u03b4 gap : \u211d) (n : \u2115) : \u211d"
+  },
+  {
+    "kind": "theorem",
+    "name": "pullCount_le_one_add_indexExceedanceCount",
+    "full_name": "BanditRLProof.MOSS.pullCount_le_one_add_indexExceedanceCount",
+    "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
+    "line": 25,
+    "statement": "theorem pullCount_le_one_add_indexExceedanceCount {Action : Type*} [DecidableEq Action] (action : ActionTrace Action) (a : Action) (mean : \u2115 \u2192 \u211d) (\u03b4 gap : \u211d) (n : \u2115) (hselected : \u2200 t < n, action t = a \u2192 0 < pullCount action a t \u2192 gap/2 \u2264 mean (pullCount action a t) + sqrt (4/(pullCount action a t : \u211d)*logPlus (1/((pullCount action a t : \u211d)*\u03b4)))) : (pullCount action a n : \u211d) \u2264 1 + indexExceedanceCount mean \u03b4 gap n"
   },
   {
     "kind": "def",
     "name": "fixedLogExceedanceCount",
     "full_name": "BanditRLProof.MOSS.fixedLogExceedanceCount",
     "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
-    "line": 23,
+    "line": 35,
     "statement": "def fixedLogExceedanceCount (mean : \u2115 \u2192 \u211d) (\u03b4 gap : \u211d) (n : \u2115) : \u211d"
   },
   {
@@ -33702,7 +33726,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "smallSampleCount",
     "full_name": "BanditRLProof.MOSS.smallSampleCount",
     "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
-    "line": 26,
+    "line": 38,
     "statement": "def smallSampleCount (gap : \u211d) (n : \u2115) : \u211d"
   },
   {
@@ -33710,7 +33734,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "indexExceedanceCount_le_small_add_fixed",
     "full_name": "BanditRLProof.MOSS.indexExceedanceCount_le_small_add_fixed",
     "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
-    "line": 30,
+    "line": 42,
     "statement": "theorem indexExceedanceCount_le_small_add_fixed (mean : \u2115 \u2192 \u211d) (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) (n : \u2115) : indexExceedanceCount mean \u03b4 gap n \u2264 smallSampleCount gap n + fixedLogExceedanceCount mean \u03b4 gap n"
   },
   {
@@ -33718,7 +33742,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "smallSampleCount_le_horizon",
     "full_name": "BanditRLProof.MOSS.smallSampleCount_le_horizon",
     "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
-    "line": 46,
+    "line": 58,
     "statement": "theorem smallSampleCount_le_horizon (gap : \u211d) (n : \u2115) : smallSampleCount gap n \u2264 (n : \u211d)"
   },
   {
@@ -33726,7 +33750,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "smallSampleCount_le_inv_sq",
     "full_name": "BanditRLProof.MOSS.smallSampleCount_le_inv_sq",
     "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
-    "line": 53,
+    "line": 65,
     "statement": "theorem smallSampleCount_le_inv_sq (gap : \u211d) (hg : 0 < gap) (n : \u2115) : smallSampleCount gap n \u2264 1/gap^2"
   },
   {
@@ -33734,7 +33758,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "indexExceedanceCount_le_inv_sq_add_fixed",
     "full_name": "BanditRLProof.MOSS.indexExceedanceCount_le_inv_sq_add_fixed",
     "file": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
-    "line": 67,
+    "line": 79,
     "statement": "theorem indexExceedanceCount_le_inv_sq_add_fixed (mean : \u2115 \u2192 \u211d) (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) (n : \u2115) : indexExceedanceCount mean \u03b4 gap n \u2264 1/gap^2 + fixedLogExceedanceCount mean \u03b4 gap n"
   },
   {
@@ -66907,6 +66931,22 @@ These cards are planning inspiration only.  They do not certify any theorem.
   },
   {
     "kind": "theorem",
+    "name": "sum_selected_pullCount",
+    "full_name": "BanditRLProof.sum_selected_pullCount",
+    "file": "BanditRLProof/PullCountReindex.lean",
+    "line": 11,
+    "statement": "theorem sum_selected_pullCount {Action : Type*} [DecidableEq Action] (action : ActionTrace Action) (a : Action) (f : \u2115 \u2192 \u211d) (T : \u2115) : (\u2211 t \u2208 range T, if action t = a then f (pullCount action a t) else 0) = \u2211 s \u2208 range (pullCount action a T), f s"
+  },
+  {
+    "kind": "theorem",
+    "name": "pullCount_le_one_add_eventCount",
+    "full_name": "BanditRLProof.pullCount_le_one_add_eventCount",
+    "file": "BanditRLProof/PullCountReindex.lean",
+    "line": 25,
+    "statement": "theorem pullCount_le_one_add_eventCount {Action : Type*} [DecidableEq Action] (action : ActionTrace Action) (a : Action) (P : \u2115 \u2192 Prop) [DecidablePred P] (T : \u2115) (hselected : \u2200 t < T, action t = a \u2192 0 < pullCount action a t \u2192 P (pullCount action a t)) : (pullCount action a T : \u211d) \u2264 1 + \u2211 s \u2208 range T, if P (s + 1) then (1 : \u211d) else 0"
+  },
+  {
+    "kind": "theorem",
     "name": "measurable_rat_div_const",
     "full_name": "BanditRLProof.measurable_rat_div_const",
     "file": "BanditRLProof/RatMeasurability.lean",
@@ -96653,6 +96693,42 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "target_fingerprint": "",
     "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
     "time": "2026-09-05T05:56:51+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "build",
+    "lean": "BanditRLProof/ConcentrationCappedOccupancy.lean",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [],
+    "notes": "Initialization audit requires T<=1+kappa, not T<=kappa. Proved sharp expected count without additive one via globally antitone capped tail, preserving final regret target. Canary 3525 jobs baseline axioms. Full 73c0419 passed 400 tests/7 skips/193.963s. Sharp MOSS propagation and actual count transport remain pending.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "compiled-leaf",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "lower",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "compiled",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T06:01:10+00:00",
     "verifier_evidence": [],
     "worker_id": ""
   }
