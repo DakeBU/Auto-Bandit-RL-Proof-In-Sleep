@@ -952,7 +952,7 @@
       "chapter": "foundations",
       "textbook_spine": "chapter-17-high-probability",
       "status": "compiled",
-      "informal": "The project compiles Theorem 17.1 with its full gap-at-most-one Gaussian source-class premise and a unit-cube witness, Corollary 17.2 with exact constants, Claim 17.5's first-moment witness, the correlated clipped shared-noise path, construction-level Eq. (17.8), event subtraction, and quarter-horizon algebra.",
+      "informal": "The project compiles Theorem 17.1 with its full gap-at-most-one Gaussian source-class premise and a unit-cube witness, Corollaries 17.2–17.3 with exact quantifiers and constants, Claim 17.5's first-moment witness, the correlated clipped shared-noise path, construction-level Eq. (17.8), event subtraction, and quarter-horizon algebra.",
       "declarations": [
         "BanditRLProof.LowerBounds.tailAtLeast",
         "BanditRLProof.LowerBounds.stochasticHighProbabilityThreshold",
@@ -966,6 +966,7 @@
         "BanditRLProof.LowerBounds.randomRegret_ge_quarter_of_clippingDecomposition",
         "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_theorem17_1",
         "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_corollary17_2",
+        "BanditRLProof.LowerBounds.noUniformGaussianRandomPseudoRegretTail_corollary17_3",
         "BanditRLProof.LowerBounds.adversarialClippedGaussianReward",
         "BanditRLProof.LowerBounds.adversarialCenteredNoiseLaw",
         "BanditRLProof.LowerBounds.adversarialRandomRegret_ge_eq17_8"
@@ -973,24 +974,28 @@
       "depends_on": [
         "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum"
       ],
-      "missing": [
-        "Corollary 17.3 still needs the exact layer-cake/Gamma tail integral with one policy across all horizons and confidence levels.",
-        "The path construction is not yet coupled to the adaptive policy law needed by Claim 17.6.",
-        "Claims 17.6–17.7 and Theorem 17.4 remain blocked."
-      ],
+      "missing": [],
       "evidence": "BanditRLProof/LowerBounds/HighProbability.lean; Tests/TextbookPartIVChapter17Canary.lean; tasks/TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE.md"
     },
     {
       "id": "TEXTBOOK-PART-IV-CH17-SOURCE-TERMINALS",
-      "title": "Chapter 17 stochastic and adversarial high-probability source terminals",
+      "title": "Chapter 17 stochastic and corrected adversarial high-probability terminals",
       "chapter": "foundations",
       "textbook_spine": "chapter-17-high-probability",
-      "status": "blocked",
-      "informal": "Theorem 17.1, Corollary 17.2, and construction-level Eq. (17.8) now compile. The remaining source-frozen endpoints are Corollary 17.3, Theorem 17.4, and Claims 17.6–17.7.",
+      "status": "compiled",
+      "informal": "Theorem 17.1, Corollaries 17.2–17.3, Claims 17.5–17.7, Eq. (17.8), same-policy shared-noise coupling, deterministic matrix extraction, and Theorem 17.4 pass the full local Lean/Tests/harness gate. User-approved corrections: Claim 17.6 uses T_i ≤ n/2; Theorem 17.4 uses 0 < δ ≤ 1/32, c=1/160, C=64 and the strict random-regret CDF tail. No proof of the false printed statements or new deployment is claimed.",
       "declarations": [
         "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_theorem17_1",
         "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_corollary17_2",
-        "BanditRLProof.LowerBounds.adversarialRandomRegret_ge_eq17_8"
+        "BanditRLProof.LowerBounds.noUniformGaussianRandomPseudoRegretTail_corollary17_3",
+        "BanditRLProof.LowerBounds.adversarialRandomRegret_ge_eq17_8",
+        "BanditRLProof.LowerBounds.adversarialNoiseHistoryJoint_history_marginal",
+        "BanditRLProof.LowerBounds.adversarialNoiseHistoryJoint_pull_le_half_claim17_6",
+        "BanditRLProof.LowerBounds.adversarialFullBoundaryCount_tail_claim17_7",
+        "BanditRLProof.LowerBounds.adversarialFullRandomRegret_ge_boundary_eq17_8",
+        "BanditRLProof.LowerBounds.integrable_adversarialTableRandomRegret",
+        "BanditRLProof.LowerBounds.adversarialTable_strictTail_eq_one_sub_CDF",
+        "BanditRLProof.LowerBounds.adversarialRandomRegret_ge_theorem17_4"
       ],
       "depends_on": [
         "BanditRLProof.LowerBounds.exists_leastExploredAlternative",
@@ -999,11 +1004,8 @@
         "BanditRLProof.LowerBounds.exists_cdfTail_ge_of_integral_ge",
         "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum"
       ],
-      "missing": [
-        "The exact Corollary 17.3 tail integral with its one-policy/all-horizon/all-confidence quantifiers.",
-        "The policy-coupled clipped-normal reward-matrix law, Claim 17.6 information calculation, Claim 17.7 concentration, and Theorem 17.4 assembly."
-      ],
-      "evidence": "tasks/TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE.md; proof-attempts/TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE/ConnectedBlockers.md"
+      "missing": [],
+      "evidence": "tasks/TEXTBOOK-PART-IV-CHAPTER-17-HIGH-PROBABILITY-LOWER-BOUNDS-SPINE.md; reports/chapter17-corrected-terminal-validation-2026-09-05.md"
     },
     {
       "id": "TEXTBOOK-PART-IV-THEOREM-13-1-GAUSSIAN-MINIMAX",

@@ -1,15 +1,34 @@
 # Chapter 17 high-probability lower-bounds closure review
 
+## Current revision addendum (2026-09-05)
+
+The review below is historical evidence for the earlier stochastic/pathwise
+slice, not a review or deployment certification of the current revision.
+Focused compilation now includes all-round same-policy noise/history
+coupling, literal full-family boundary concentration, deterministic matrix
+extraction, the measurable CDF-complement interface, and integrability of
+fixed-table random regret. Corrected Theorem 17.4 has explicit `c=1/160`,
+`C=64`, and `0<delta<=1/32`; corrected Claim 17.6 uses `T_i<=n/2`.
+Both source corrections were explicitly approved after counterexamples.
+Full current-revision root/Tests/exporter/placeholder/Python gates pass on the
+hash-matched short-path snapshot (8852/8894 jobs; 400 tests, 7 skips). The
+current report records the approved corrected statements and verification
+route. No new independent review, merge, or deployment is claimed.
+
+## Historical review
+
 Date: 2026-09-04
 
 Scope: `BanditRLProof/LowerBounds/HighProbability.lean`, the Chapter 17
 canary, exact-source task/obligation/export artifacts, retrieval and blueprint
 surfaces, and the generated Chapter 17 website.
 
-Verdict: **partial, submit-ready for the compiled slice**. No unresolved
-P0--P2 issue was found in the declarations claimed as compiled. The chapter
-must not be called complete: Corollary 17.3, Claims 17.6--17.7, the
-policy-coupled pushed-forward hard law, and Theorem 17.4 remain open.
+Verdict: **partial**. The original read-only review found no unresolved P0--P2
+issue in its compiled slice. A later continuation compiled Corollary 17.3 and
+updated the typed canary; that delta is locally verified but is not relabeled
+as independently reviewed here. The chapter must not be called complete:
+Claims 17.6--17.7, the policy-coupled pushed-forward hard law, and Theorem 17.4
+remain open.
 
 ## Source and semantic audit
 
@@ -21,6 +40,10 @@ policy-coupled pushed-forward hard law, and Theorem 17.4 remain open.
 - Corollary 17.2 keeps Eq. (17.6), derives the necessary `delta < 1/4`, and
   uses `B = sqrt (2 * log (1 / (4 * delta)))`, with the factor `1/2` inside
   the final square root and `1/4` outside the minimum.
+- Corollary 17.3 keeps one policy across every positive horizon, confidence
+  level, and full-class environment, with real `p in (0,1)` and strict
+  `< delta`. Its layer-cake first-moment conversion and two-confidence
+  calibration are compiled rather than assumed.
 - Stochastic random pseudo-regret, deterministic expected pseudo-regret, and
   adversarial random regret remain different definitions. No expected-regret
   statement is substituted for a random tail event.
@@ -40,15 +63,16 @@ claim boundary:
 - `GapOneGaussianBanditEnvironment` and the full-class expected-regret premise;
 - `gaussianRandomPseudoRegret_ge_theorem17_1`;
 - `gaussianRandomPseudoRegret_ge_corollary17_2`;
-- `integral_exp_neg_rpow_inv_le_one`, an analytic leaf for the still-open
-  Corollary 17.3;
+- `integral_exp_neg_rpow_inv_le_one` and
+  `integral_le_scale_of_all_rpow_log_tail`;
+- `noUniformGaussianRandomPseudoRegretTail_corollary17_3`;
 - `adversarialCenteredNoiseLaw`, `adversarialClaim17_6Gap`, the clipped
   shared-noise path, and its shift/clipping lemmas;
 - `adversarialRandomRegret_ge_eq17_8`.
 
-The exact terminal names for Corollary 17.3, Claims 17.6--17.7, and Theorem
-17.4 are absent and remain explicitly blocked. No `sorry`, `admit`, `axiom`,
-or `postulate` occurs in the scoped Lean module or canary.
+The exact terminal names for Claims 17.6--17.7 and Theorem 17.4 are absent and
+remain explicitly blocked. No `sorry`, `admit`, `axiom`, or `postulate` occurs
+in the scoped Lean module or canary.
 
 ## Verification
 
@@ -77,16 +101,13 @@ or `postulate` occurs in the scoped Lean module or canary.
 
 ## Remaining blockers
 
-1. Corollary 17.3 still needs the one-policy/all-horizon/all-confidence tail
-   rescaling and a calibrated `(n, delta)` contradiction using the compiled
-   Gamma integral leaf.
-2. Claim 17.6 still needs the same-policy interaction law for the pushed-forward
+1. Claim 17.6 still needs the same-policy interaction law for the pushed-forward
    clipped hard distribution and the exact relative-entropy/pull-count bound.
-3. Claim 17.7 still needs the source-constant Gaussian clipping-count
+2. Claim 17.7 still needs the source-constant Gaussian clipping-count
    concentration argument.
-4. Theorem 17.4 still needs those two claims, the random-matrix CDF interface,
+3. Theorem 17.4 still needs those two claims, the random-matrix CDF interface,
    and Claim 17.5's deterministic-witness extraction.
 
 Recommendation: merge only after the PR's Linux Lean/Tests/harness job passes.
-Keep the task and public chapter status `partial` until all four blockers are
+Keep the task and public chapter status `partial` until all three terminals are
 closed with the exact frozen contracts.
