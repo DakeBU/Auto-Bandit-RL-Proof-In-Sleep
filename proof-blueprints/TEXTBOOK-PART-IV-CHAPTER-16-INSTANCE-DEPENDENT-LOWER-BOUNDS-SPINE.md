@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE
 
-Generated: `2026-09-05T15:39:50+00:00`
+Generated: `2026-09-05T16:26:26+00:00`
 
 ## Source Task
 
@@ -59303,6 +59303,22 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/ArithmeticZeroExtension.lean",
     "line": 61,
     "statement": "theorem exists_zeroSafe_arithmeticCode {\u03b1 : Type*} [Fintype \u03b1] {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (message : \u03b1 \u2192 List (Fin k)) (hinj : Function.Injective message) (hlen : \u2200 a b, (message a).length = (message b).length) (q : \u03b1 \u2192 \u211d) (hq : \u2200 a, 0 \u2264 q a) (hqs : \u2211 a, q a = 1) (hmass : \u2200 a, ((message a).map p).prod = q a) : \u2203 positive : BinaryPrefixCode {a // 0 < q a}, (\u2200 a, (positive.encode a).length = arithmeticLength (q a.val)) \u2227 (\u2200 a, (arithmeticInterval p (message a.val)).1 \u2264 dyadicAddressLower (positive.encode a) \u2227 dyadicAddressUpper (positive.encode a) < (arithmeticInterval p (message a.val)).2) \u2227 expectedCodeLength q (positive.extendZeroMass q (huffmanCode q hq)) \u2264 discreteEntropyBaseTwo Finset.univ q + 3"
+  },
+  {
+    "kind": "theorem",
+    "name": "klDiv_map_le",
+    "full_name": "BanditRLProof.LowerBounds.klDiv_map_le",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryDataProcessing.lean",
+    "line": 34,
+    "statement": "theorem klDiv_map_le {Source Target : Type*} [MeasurableSpace Source] [MeasurableSpace Target] (mu nu : Measure Source) [IsFiniteMeasure mu] [IsFiniteMeasure nu] (observe : Source -> Target) (hobserve : Measurable observe) : InformationTheory.klDiv (mu.map observe) (nu.map observe) <= InformationTheory.klDiv mu nu"
+  },
+  {
+    "kind": "theorem",
+    "name": "klDiv_observedBanditHistory_le_expectedPulls_sum",
+    "full_name": "BanditRLProof.LowerBounds.klDiv_observedBanditHistory_le_expectedPulls_sum",
+    "file": "BanditRLProof/LowerBounds/BanditHistoryDataProcessing.lean",
+    "line": 57,
+    "statement": "theorem klDiv_observedBanditHistory_le_expectedPulls_sum {K : Nat} {Reward : Type v} {Observation : Type w} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] [MeasurableSpace Observation] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (lastRound : Nat) (observe : History.FinitePairHistory (Fin K) Reward lastRound -> Observation) (hobserve : Measurable observe) : InformationTheory.klDiv ((canonicalBanditHistoryMeasure algorithm armLaw lastRound).map observe) ((canonicalBanditHistoryMeasure algorithm referenceArmLaw lastRound).map observe) <= \u2211 arm : Fin K, canonicalRealizedExpectedPullCountThrough algorithm armLaw lastRound arm * InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm)"
   },
   {
     "kind": "def",

@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE",
-  "generated": "2026-09-05T15:39:55+00:00",
+  "generated": "2026-09-05T16:26:31+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -58283,6 +58283,22 @@
       "file": "BanditRLProof/LowerBounds/ArithmeticZeroExtension.lean",
       "line": 61,
       "statement": "theorem exists_zeroSafe_arithmeticCode {α : Type*} [Fintype α] {k : ℕ} (p : Fin k → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) (message : α → List (Fin k)) (hinj : Function.Injective message) (hlen : ∀ a b, (message a).length = (message b).length) (q : α → ℝ) (hq : ∀ a, 0 ≤ q a) (hqs : ∑ a, q a = 1) (hmass : ∀ a, ((message a).map p).prod = q a) : ∃ positive : BinaryPrefixCode {a // 0 < q a}, (∀ a, (positive.encode a).length = arithmeticLength (q a.val)) ∧ (∀ a, (arithmeticInterval p (message a.val)).1 ≤ dyadicAddressLower (positive.encode a) ∧ dyadicAddressUpper (positive.encode a) < (arithmeticInterval p (message a.val)).2) ∧ expectedCodeLength q (positive.extendZeroMass q (huffmanCode q hq)) ≤ discreteEntropyBaseTwo Finset.univ q + 3"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_map_le",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_map_le",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryDataProcessing.lean",
+      "line": 34,
+      "statement": "theorem klDiv_map_le {Source Target : Type*} [MeasurableSpace Source] [MeasurableSpace Target] (mu nu : Measure Source) [IsFiniteMeasure mu] [IsFiniteMeasure nu] (observe : Source -> Target) (hobserve : Measurable observe) : InformationTheory.klDiv (mu.map observe) (nu.map observe) <= InformationTheory.klDiv mu nu"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_observedBanditHistory_le_expectedPulls_sum",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_observedBanditHistory_le_expectedPulls_sum",
+      "file": "BanditRLProof/LowerBounds/BanditHistoryDataProcessing.lean",
+      "line": 57,
+      "statement": "theorem klDiv_observedBanditHistory_le_expectedPulls_sum {K : Nat} {Reward : Type v} {Observation : Type w} [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] [MeasurableSpace Observation] (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward) (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] (lastRound : Nat) (observe : History.FinitePairHistory (Fin K) Reward lastRound -> Observation) (hobserve : Measurable observe) : InformationTheory.klDiv ((canonicalBanditHistoryMeasure algorithm armLaw lastRound).map observe) ((canonicalBanditHistoryMeasure algorithm referenceArmLaw lastRound).map observe) <= ∑ arm : Fin K, canonicalRealizedExpectedPullCountThrough algorithm armLaw lastRound arm * InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm)"
     },
     {
       "kind": "def",

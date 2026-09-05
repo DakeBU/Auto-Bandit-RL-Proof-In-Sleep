@@ -1070,9 +1070,20 @@ def validate_textbook_spine(
                     or chapter.get("source_theorem", {}).get("status") != "compiled"
                     or chapter.get("gaps") != []):
                 raise ValueError("Chapter 16 requires all exact source terminals and no main-text gaps")
-        # Chapters 13 and 14 have independently reviewed main-text acceptance.
-        # Notes/exercises and explicit source/model qualifications stay separate.
-        elif chapter["number"] > 14 and chapter.get("status") == "compiled":
+        # Chapters 13 and 14 have independently reviewed main-text acceptance;
+        # Chapter 14 evidence: reviews/2026-09-05-chapter-14-live-acceptance.md.
+        # Notes/exercises and the explicit source/model qualifications stay separate.
+        # Chapter 15 required body is exactly §§15.1–15.2. Optional coverage
+        # remains visible separately; see the 2026-09-05 Ch15 integration review.
+        if chapter["number"] == 15 and chapter.get("status") == "compiled":
+            if chapter.get("chapter_status_label") != "Required body coverage":
+                raise ValueError("Chapter 15 completion must name the required-body scope")
+            coverage = chapter.get("section_coverage", [])
+            if len(coverage) != 5 or any(s.get("status") != "compiled" for s in coverage[:2]):
+                raise ValueError("Chapter 15 required body needs both compiled sections")
+            if coverage[4].get("status") != "partial":
+                raise ValueError("Chapter 15 optional exercises must retain partial coverage")
+        if chapter["number"] > 16 and chapter.get("status") == "compiled":
             raise ValueError("future Part IV chapters cannot be promoted before their gates")
 
 
