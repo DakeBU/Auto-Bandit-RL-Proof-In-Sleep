@@ -60,6 +60,15 @@ PR/deployment closure. cdc3a51 full Tests passed (8927 jobs); Python tests
 continue. This remains distinct from current-main integration.
 
 - Current-commit full harness and verified site build/check.
+- Follow-up: cdc3a51 full check passed (Tests 8927 jobs, ProofGraphExport,
+  400 Python tests in 239.188s, 7 skipped). Merged main 5c0ba47 into
+  e218fc8, preserving its InformationTheory and Chapter 14 canary byte for
+  byte. Shared prose retains both chapters; indexes regenerated. Draft
+  PR #105 is open at e218fc8. Lean/documentation run 33951321752 is in
+  progress; lifecycle 33951321759 and preflight 33951321751 passed.
+  Merged-tree full check now runs in the clean short validation worktree.
+  The primary long-path canary build encountered the known unrelated RL
+  .olean path-length write failure, not a Chapter 13 proof error.
 - Rendered export verification and exact source/declaration coverage audit.
 - Structured final review; this self-audit does not substitute for a
   separately required independent review.
