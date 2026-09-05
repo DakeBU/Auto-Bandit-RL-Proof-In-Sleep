@@ -1,6 +1,7 @@
 import BanditRLProof.Algorithms.MOSSPeeling
 import BanditRLProof.Algorithms.MOSSOptimism
 import BanditRLProof.Algorithms.MOSSOccupancy
+import BanditRLProof.ConcentrationGaussianOccupancy
 
 open BanditRLProof MeasureTheory ProbabilityTheory Real
 open scoped ENNReal NNReal
@@ -50,3 +51,12 @@ example (mean : ℕ → ℝ) (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (n : �
 #print axioms MOSS.sampleRadius_le_fixedLogRadius
 #print axioms MOSS.smallSampleCount_le_inv_sq
 #print axioms MOSS.indexExceedanceCount_le_inv_sq_add_fixed
+
+example (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) :
+    ∫ z : ℝ in Set.Ioi 0, (2/ε^2)*(z+sqrt (2*a))*exp (-(1/2 : ℝ)*z^2) =
+      (2/ε^2)*(1+sqrt (Real.pi*a)) :=
+  Concentration.integral_transformed_occupancy_tail a ε ha hε
+
+#print axioms Concentration.integral_mul_exp_neg_mul_sq_Ioi
+#print axioms Concentration.integral_transformed_occupancy_tail
+#print axioms Concentration.occupancyTail_antitoneOn

@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
-  "generated": "2026-09-05T05:35:56+00:00",
+  "generated": "2026-09-05T05:40:45+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -43395,6 +43395,38 @@
       "file": "BanditRLProof/ConcentrationFixedMGF.lean",
       "line": 333,
       "statement": "theorem measure_sum_ge_inter_sum_le_of_compensated_hasCondMGFUpperBoundAt [IsZeroOrProbabilityMeasure μ] (Y V : ℕ → Ω → ℝ) (n : ℕ) (tilt varianceCoeff threshold varianceBudget : ℝ) (h_adapted : StronglyAdapted ℱ (fun i ω => tilt * Y i ω - varianceCoeff * V i ω)) (h0 : HasMGFUpperBoundAt (fun ω => tilt * Y 0 ω - varianceCoeff * V 0 ω) 1 0 μ) (h_mgf : ∀ i < n - 1, HasCondMGFUpperBoundAt (ℱ i) (ℱ.le i) (fun ω => tilt * Y (i + 1) ω - varianceCoeff * V (i + 1) ω) 1 0 μ) (htilt : 0 ≤ tilt) (hvarianceCoeff : 0 ≤ varianceCoeff) : μ {ω | threshold ≤ ∑ i ∈ Finset.range n, Y i ω ∧ (∑ i ∈ Finset.range n, V i ω) ≤ varianceBudget} ≤ ENNReal.ofReal (Real.exp (-tilt * threshold + varianceCoeff * varianceBudget))"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_mul_exp_neg_mul_sq_Ioi",
+      "full_name": "BanditRLProof.Concentration.integral_mul_exp_neg_mul_sq_Ioi",
+      "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+      "line": 9,
+      "statement": "theorem integral_mul_exp_neg_mul_sq_Ioi (b : ℝ) (hb : 0 < b) : ∫ x : ℝ in Ioi 0, x*exp (-b*x^2) = (2*b)⁻¹"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_transformed_occupancy_tail",
+      "full_name": "BanditRLProof.Concentration.integral_transformed_occupancy_tail",
+      "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+      "line": 25,
+      "statement": "theorem integral_transformed_occupancy_tail (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) : ∫ z : ℝ in Ioi 0, (2/ε^2)*(z+sqrt (2*a))*exp (-(1/2 : ℝ)*z^2) = (2/ε^2)*(1+sqrt (Real.pi*a))"
+    },
+    {
+      "kind": "def",
+      "name": "occupancyTail",
+      "full_name": "BanditRLProof.Concentration.occupancyTail",
+      "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+      "line": 45,
+      "statement": "def occupancyTail (a ε t : ℝ) : ℝ"
+    },
+    {
+      "kind": "theorem",
+      "name": "occupancyTail_antitoneOn",
+      "full_name": "BanditRLProof.Concentration.occupancyTail_antitoneOn",
+      "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+      "line": 47,
+      "statement": "theorem occupancyTail_antitoneOn (a ε : ℝ) (ha : 0 < a) (hε : 0 < ε) : AntitoneOn (occupancyTail a ε) (Ici (2*a/ε^2))"
     },
     {
       "kind": "theorem",
@@ -95075,6 +95107,42 @@
       "target_fingerprint": "",
       "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
       "time": "2026-09-05T05:32:08+00:00",
+      "verifier_evidence": [],
+      "worker_id": ""
+    },
+    {
+      "attempt_id": "",
+      "changed_files": [],
+      "dag_depth": 0,
+      "dag_nodes": 0,
+      "elapsed_seconds": 0.0,
+      "error_signature": "",
+      "experiment_id": "",
+      "harness": "",
+      "input_tokens": 0,
+      "kind": "build",
+      "lean": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
+      "lean_check_seconds": 0.0,
+      "new_declarations": [],
+      "notes": "Source large-gap correction: radius replacement, pointwise count split, exact small-count <=gap^-2, and fixed-log count reduction compiled. External canary 3509 jobs and baseline axioms passed. Lemma 8.2 fixed-log expected count and actual policy occupancy remain pending.",
+      "obligations_after": 0,
+      "obligations_before": 0,
+      "output_tokens": 0,
+      "parent_id": "",
+      "progress_class": "compiled-leaf",
+      "prompt_chars": 0,
+      "reused_declarations": [],
+      "reviewer_validated": false,
+      "role": "lower",
+      "route_fingerprint": "",
+      "route_packet_hash": "",
+      "run_id": "",
+      "source": "",
+      "statement_hash": "",
+      "status": "compiled",
+      "target_fingerprint": "",
+      "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+      "time": "2026-09-05T05:36:33+00:00",
       "verifier_evidence": [],
       "worker_id": ""
     }

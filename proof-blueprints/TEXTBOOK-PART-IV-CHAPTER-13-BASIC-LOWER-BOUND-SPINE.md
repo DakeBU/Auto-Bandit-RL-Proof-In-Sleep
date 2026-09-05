@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T05:35:48+00:00`
+Generated: `2026-09-05T05:40:39+00:00`
 
 ## Source Task
 
@@ -44491,6 +44491,38 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/ConcentrationFixedMGF.lean",
     "line": 333,
     "statement": "theorem measure_sum_ge_inter_sum_le_of_compensated_hasCondMGFUpperBoundAt [IsZeroOrProbabilityMeasure \u03bc] (Y V : \u2115 \u2192 \u03a9 \u2192 \u211d) (n : \u2115) (tilt varianceCoeff threshold varianceBudget : \u211d) (h_adapted : StronglyAdapted \u2131 (fun i \u03c9 => tilt * Y i \u03c9 - varianceCoeff * V i \u03c9)) (h0 : HasMGFUpperBoundAt (fun \u03c9 => tilt * Y 0 \u03c9 - varianceCoeff * V 0 \u03c9) 1 0 \u03bc) (h_mgf : \u2200 i < n - 1, HasCondMGFUpperBoundAt (\u2131 i) (\u2131.le i) (fun \u03c9 => tilt * Y (i + 1) \u03c9 - varianceCoeff * V (i + 1) \u03c9) 1 0 \u03bc) (htilt : 0 \u2264 tilt) (hvarianceCoeff : 0 \u2264 varianceCoeff) : \u03bc {\u03c9 | threshold \u2264 \u2211 i \u2208 Finset.range n, Y i \u03c9 \u2227 (\u2211 i \u2208 Finset.range n, V i \u03c9) \u2264 varianceBudget} \u2264 ENNReal.ofReal (Real.exp (-tilt * threshold + varianceCoeff * varianceBudget))"
+  },
+  {
+    "kind": "theorem",
+    "name": "integral_mul_exp_neg_mul_sq_Ioi",
+    "full_name": "BanditRLProof.Concentration.integral_mul_exp_neg_mul_sq_Ioi",
+    "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+    "line": 9,
+    "statement": "theorem integral_mul_exp_neg_mul_sq_Ioi (b : \u211d) (hb : 0 < b) : \u222b x : \u211d in Ioi 0, x*exp (-b*x^2) = (2*b)\u207b\u00b9"
+  },
+  {
+    "kind": "theorem",
+    "name": "integral_transformed_occupancy_tail",
+    "full_name": "BanditRLProof.Concentration.integral_transformed_occupancy_tail",
+    "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+    "line": 25,
+    "statement": "theorem integral_transformed_occupancy_tail (a \u03b5 : \u211d) (ha : 0 < a) (h\u03b5 : 0 < \u03b5) : \u222b z : \u211d in Ioi 0, (2/\u03b5^2)*(z+sqrt (2*a))*exp (-(1/2 : \u211d)*z^2) = (2/\u03b5^2)*(1+sqrt (Real.pi*a))"
+  },
+  {
+    "kind": "def",
+    "name": "occupancyTail",
+    "full_name": "BanditRLProof.Concentration.occupancyTail",
+    "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+    "line": 45,
+    "statement": "def occupancyTail (a \u03b5 t : \u211d) : \u211d"
+  },
+  {
+    "kind": "theorem",
+    "name": "occupancyTail_antitoneOn",
+    "full_name": "BanditRLProof.Concentration.occupancyTail_antitoneOn",
+    "file": "BanditRLProof/ConcentrationGaussianOccupancy.lean",
+    "line": 47,
+    "statement": "theorem occupancyTail_antitoneOn (a \u03b5 : \u211d) (ha : 0 < a) (h\u03b5 : 0 < \u03b5) : AntitoneOn (occupancyTail a \u03b5) (Ici (2*a/\u03b5^2))"
   },
   {
     "kind": "theorem",
@@ -96176,6 +96208,42 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "target_fingerprint": "",
     "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
     "time": "2026-09-05T05:32:08+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "build",
+    "lean": "BanditRLProof/Algorithms/MOSSOccupancy.lean",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [],
+    "notes": "Source large-gap correction: radius replacement, pointwise count split, exact small-count <=gap^-2, and fixed-log count reduction compiled. External canary 3509 jobs and baseline axioms passed. Lemma 8.2 fixed-log expected count and actual policy occupancy remain pending.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "compiled-leaf",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "lower",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "compiled",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T05:36:33+00:00",
     "verifier_evidence": [],
     "worker_id": ""
   }

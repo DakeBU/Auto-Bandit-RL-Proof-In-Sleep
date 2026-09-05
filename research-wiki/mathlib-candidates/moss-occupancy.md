@@ -29,3 +29,20 @@ The large-gap condition gap>=8*sqrt(delta) ensures the logarithm is positive.
 The source final arithmetic is gap*E[kappa] <= gap+15/sqrt(delta).
 These numerical/count expectation claims are not yet compiled; the current
 proof establishes only the deterministic radius/correction reduction.
+
+Analytic next leaf: source substitution z=epsilon*sqrt(t)-sqrt(2a)
+reduces the tail integral to integral over z>0 of
+(2/epsilon^2)*(z+sqrt(2a))*exp(-z^2/2). Reuse integral_gaussian_Ioi
+and port the real analogue of integral_mul_cexp_neg_mul_sq using FTC on Ioi.
+Integrability comes from integrable_mul_exp_neg_mul_sq and
+integrable_exp_neg_mul_sq, positive variance coefficient. General real
+weighted-Gaussian leaf is a mathlib-candidate. The change of variables and
+discrete sum comparison remain separate pending obligations.
+
+Compiled in `ConcentrationGaussianOccupancy.lean`: real weighted Gaussian
+integral, exact transformed occupancy integral, and antitonicity of
+exp(-(epsilon*sqrt(t)-sqrt(2a))^2/2) on [2a/epsilon^2,infinity).
+Focused module build passed 3344 jobs. Repairs were explicit Ioi integration
+domains and scalar multiplication/division normalization. The original-variable
+integral equality, integer sum comparison and probability consumer are pending;
+the exact transformed integral alone is not Lemma 8.2.
