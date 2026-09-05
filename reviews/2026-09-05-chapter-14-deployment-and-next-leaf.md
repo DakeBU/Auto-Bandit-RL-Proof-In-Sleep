@@ -92,3 +92,29 @@ the complete Tests build (8,895 jobs), the proof-graph exporter Lean check,
 and the forbidden-placeholder scan. The Python suite was still running at
 this checkpoint. Its log is `C:\a14\tmp\ch14-finite-kl-full-check.log`.
 No full-check completion or remote deployment is claimed for this slice yet.
+
+## Completed finite-alphabet local gate
+
+The short-path `python tools/bandit.py check` at `9d4b44a` finished with exit
+0: library, Tests (8,895 jobs), proof-graph exporter Lean check, forbidden
+placeholder scan, and 400 Python tests (7 skipped, 183.530 seconds) all passed.
+The earlier in-progress checkpoint above is superseded by this final result.
+No Lean source has changed since that gate. Markdown/LaTeX exports, source
+cards, README, theory tree, and website content now include the finite-alphabet
+formula and retain the other whole-chapter gaps. Site verification follows
+separately; no remote publication of this slice is claimed.
+
+The updated local site then passed `build_site.py --lean-verified` and
+`check_site.py`: 659 pages, 605 modules, 8,232 declarations, zero placeholders,
+and valid internal links, anchors, and mathematical fallbacks. The generated
+Chapter 14 page includes the three finite-alphabet terminal declarations with
+exact Lean statements and retains the whole-chapter `Partial` label. This is
+local generated-site evidence, not browser layout QA or remote deployment.
+
+Next required mathematical leaf: Eq. (14.5), the supremum over finite
+measurable discretisations and its equality with RN KL. A search for KL
+supremum/partition/map identities in the installed Mathlib information-theory
+directory found no direct adapter. The existing arbitrary-sub-sigma-algebra
+DPI can provide one inequality, but not the supremum-attainment/approximation
+direction. This dependency remains explicitly open rather than being inferred
+from finite Eq. (14.4).

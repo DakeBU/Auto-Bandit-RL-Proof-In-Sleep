@@ -721,7 +721,7 @@
       "chapter": "foundations",
       "textbook_spine": "chapter-14-information-theory",
       "status": "compiled",
-      "informal": "The Chapter 14 extension compiles finite prefix-code/entropy definitions and a Kraft adapter; extended-real relative entropy with explicit branches and separation; full arbitrary-sub-sigma-algebra plus event data processing; binary endpoint analysis; and unconditional Bretagnolle–Huber in the exact D(P,Q) direction. Whole-chapter coverage remains partial.",
+      "informal": "The Chapter 14 extension compiles finite prefix-code/entropy definitions and a Kraft adapter; extended-real relative entropy with explicit branches and separation; arbitrary finite-alphabet KL with exact zero/support endpoints; full arbitrary-sub-sigma-algebra plus event data processing; binary endpoint analysis; and unconditional Bretagnolle–Huber in the exact D(P,Q) direction. Whole-chapter coverage remains partial.",
       "declarations": [
         "BanditRLProof.LowerBounds.BinaryPrefixCode",
         "BanditRLProof.LowerBounds.BinaryPrefixCode.uniquelyDecodable_range",
@@ -739,6 +739,14 @@
         "BanditRLProof.LowerBounds.relativeEntropy_ne_top_iff",
         "BanditRLProof.LowerBounds.relativeEntropy_eq_zero_iff",
         "BanditRLProof.LowerBounds.relativeEntropy_trim_le",
+        "BanditRLProof.LowerBounds.absolutelyContinuous_iff_atom_support",
+        "BanditRLProof.LowerBounds.rnDeriv_mul_atom",
+        "BanditRLProof.LowerBounds.rnDeriv_atom_eq_div",
+        "BanditRLProof.LowerBounds.relativeEntropy_eq_top_of_atom_support_mismatch",
+        "BanditRLProof.LowerBounds.relativeEntropy_finite_klFun",
+        "BanditRLProof.LowerBounds.relativeEntropy_finite_sum_log",
+        "BanditRLProof.LowerBounds.relativeEntropy_finite_eq_if",
+        "BanditRLProof.LowerBounds.relativeEntropy_finite_eq_top_iff",
         "BanditRLProof.LowerBounds.bernoulliRelativeEntropy",
         "BanditRLProof.LowerBounds.rnDeriv_restrict_restrict",
         "BanditRLProof.LowerBounds.relativeEntropy_restrict_add_compl",
@@ -759,11 +767,11 @@
       ],
       "missing": [
         "Huffman optimality, the one-bit entropy sandwich, and asymptotic source coding from §14.1 remain uncompiled.",
-        "Arbitrary finite-alphabet discrete KL beyond Bernoulli and the finite-discretisation supremum equivalence remain uncompiled.",
+        "The finite-discretisation supremum equivalence remains uncompiled; finite-alphabet discrete KL now compiles with exact zero/support endpoints.",
         "The general common-density/measure-overlap route and general-variance Gaussian application remain uncompiled.",
         "The adaptive same-policy bandit-history divergence decomposition is a Chapter 15 target, not a Chapter 14 theorem."
       ],
-      "evidence": "BanditRLProof/LowerBounds/InformationTheory.lean; Tests/TextbookPartIVChapter14Canary.lean"
+      "evidence": "BanditRLProof/LowerBounds/InformationTheory.lean; BanditRLProof/LowerBounds/FiniteDiscreteKL.lean; Tests/TextbookPartIVChapter14Canary.lean"
     },
     {
       "id": "TEXTBOOK-PART-IV-CH15-GAUSSIAN-KL-DEPENDENCY-SLICE",

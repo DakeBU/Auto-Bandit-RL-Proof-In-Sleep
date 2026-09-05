@@ -5,8 +5,7 @@
 The code/entropy definitions, Kraft adapter, finite-measure sub-$\sigma$-
 algebra data-processing inequality, and the existing Bretagnolle--Huber spine
 compile locally. Whole-chapter coverage remains \texttt{partial}: Huffman
-optimality, the one-bit entropy sandwich, asymptotic source coding, arbitrary
-finite-alphabet Eq.~(14.4) beyond Bernoulli, the finite-discretisation supremum
+optimality, the one-bit entropy sandwich, asymptotic source coding, the finite-discretisation supremum
 equivalence, the common-density/measure-overlap route, and the general-variance
 Gaussian application are not claimed.
 
@@ -32,6 +31,32 @@ For finite support, the local natural and base-two entropies satisfy
 \]
 and $H(P)\ge0$ for masses in $[0,1]$. Expected code length is
 $\sum_x p_x|c(x)|$. These facts do not imply Huffman optimality.
+
+For probability measures on a finite alphabet with measurable singletons,
+put $p_x=P(\{x\})$ and $q_x=Q(\{x\})$. Finite atomic additivity gives
+$P\ll Q$ if and only if $q_x=0$ implies $p_x=0$ at every symbol.
+Evaluating the with-density identity on each singleton yields
+$(dP/dQ)(x)q_x=p_x$. Finite-domain integrability and expansion of the
+log-likelihood integral therefore give Eq.~(14.4):
+\[
+D(P\Vert Q)=
+\begin{cases}
+\displaystyle\sum_x p_x\log(p_x/q_x),&\operatorname{supp}P\subseteq\operatorname{supp}Q,\\
++\infty,&\text{otherwise}.
+\end{cases}
+\]
+Zero source terms are zero; a positive source atom absent from $Q$ forces
+the infinite branch. The local declarations are
+\texttt{absolutelyContinuous\_iff\_atom\_support},
+\texttt{rnDeriv\_mul\_atom}, \texttt{rnDeriv\_atom\_eq\_div},
+\texttt{relativeEntropy\_eq\_top\_of\_atom\_support\_mismatch},
+\texttt{relativeEntropy\_finite\_klFun},
+\texttt{relativeEntropy\_finite\_sum\_log},
+\texttt{relativeEntropy\_finite\_eq\_if}, and
+\texttt{relativeEntropy\_finite\_eq\_top\_iff}.
+The convex-integrand identity also applies to finite measures.
+No strict positivity or extra log-integrability premise is assumed in the
+probability formula. The Eq.~(14.5) supremum equivalence remains unproved.
 
 For finite measures on $\mathcal F$ and $\mathcal G\subseteq\mathcal F$,
 the infinite-KL branch is immediate. In the finite branch, the RN derivative

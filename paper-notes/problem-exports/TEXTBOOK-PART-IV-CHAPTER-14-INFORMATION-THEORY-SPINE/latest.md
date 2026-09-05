@@ -4,8 +4,7 @@ Task id: `TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE`
 
 Status: the declarations listed below compile locally. Whole-chapter coverage
 remains `partial`: this export does not claim Huffman optimality, the one-bit
-entropy sandwich, asymptotic source coding, arbitrary finite-alphabet Eq. (14.4)
-beyond Bernoulli, the finite-discretisation supremum equivalence, the full
+entropy sandwich, asymptotic source coding, the finite-discretisation supremum equivalence, the full
 common-density/measure-overlap route, or the general-variance Gaussian testing
 application.
 
@@ -21,6 +20,14 @@ application.
 - `LowerBounds.expectedCodeLength`
 - `LowerBounds.expectedCodeLength_nonneg`
 - `LowerBounds.relativeEntropy`
+- `LowerBounds.absolutelyContinuous_iff_atom_support`
+- `LowerBounds.rnDeriv_mul_atom`
+- `LowerBounds.rnDeriv_atom_eq_div`
+- `LowerBounds.relativeEntropy_eq_top_of_atom_support_mismatch`
+- `LowerBounds.relativeEntropy_finite_klFun`
+- `LowerBounds.relativeEntropy_finite_sum_log`
+- `LowerBounds.relativeEntropy_finite_eq_if`
+- `LowerBounds.relativeEntropy_finite_eq_top_iff`
 - `LowerBounds.relativeEntropy_of_absolutelyContinuous_of_integrable`
 - `LowerBounds.relativeEntropy_of_probability_absolutelyContinuous_of_integrable`
 - `LowerBounds.relativeEntropy_eq_top_of_not_absolutelyContinuous`
@@ -65,6 +72,26 @@ masses. These are exact definition-level nodes plus the Kraft leaf; they are
 not the missing optimal-coding terminals.
 
 ### Relative entropy and full data processing
+
+For a finite alphabet with measurable singletons, write `p(x)=P({x})` and
+`q(x)=Q({x})` for two probability measures. Finite additivity over singletons
+shows that `P << Q` is equivalent to `q(x)=0 -> p(x)=0` for every symbol.
+Evaluating `Q.withDensity (dP/dQ)=P` on a singleton gives
+`(dP/dQ)(x) q(x)=p(x)`. Thus the density is `p(x)/q(x)` on positive reference
+atoms. Every real function on this finite space is integrable, so expansion
+of the log-likelihood integral proves Eq. (14.4):
+
+```text
+D(P || Q) = ofReal (sum_x p(x) log(p(x)/q(x)))  if support(P) <= support(Q),
+D(P || Q) = infinity                          otherwise.
+```
+
+Zero source atoms contribute zero. In the second branch an actual atom of
+positive source mass and zero reference mass witnesses non-absolute-continuity.
+No strict positivity or additional log-integrability premise is imposed.
+The finite-measure `klFun` identity is also exposed, separately from the
+probability-normalized logarithmic formula. This does not prove Eq. (14.5)'s
+finite-discretisation supremum equivalence on arbitrary measurable spaces.
 
 Define `relativeEntropy P Q` as Mathlib's extended-real `klDiv P Q`. Its
 finite branch requires `P << Q` and integrability of the log likelihood ratio;

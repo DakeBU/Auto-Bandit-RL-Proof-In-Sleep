@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T04:42:17+00:00`
+Generated: `2026-09-05T04:46:37+00:00`
 
 ## Source Task
 
@@ -387,7 +387,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `CH14-SOURCE-FENCE` | Theorem 14.1 RN formula and Theorem 14.2/Eq. (14.7), exact pages/direction | official PDF and CUP metadata | task/window | textbook card | conservative paraphrase | edition, printed/PDF pages, `D(P,Q)` direction | source evidence | n/a | source review | mapped |
 | `CH14-KL-SURFACE` | extended-real measure KL plus singular/finite characterization | Mathlib KL/LLR | `klDiv`, `llr`, branch lemmas | Mathlib source audit | transparent adapters | same space; AC and integrability visible | imported plus wrappers | `relativeEntropy` and branch adapters | focused Lean | compiled |
-| `CH14-BERNOULLI-SURFACE` | two-symbol/Bernoulli specialization of Eq. (14.4), with support endpoints | existing KLUCB KL | `bernoulliKL`, core and endpoint lemmas | local declaration index | reuse, do not duplicate semantics | `p,q∈[0,1]`; singular support gives `∞`; arbitrary finite alphabets remain open | compiled local dependency | `bernoulliRelativeEntropy` | focused Lean | compiled |
+| `CH14-BERNOULLI-SURFACE` | two-symbol/Bernoulli specialization of Eq. (14.4), with support endpoints | existing KLUCB KL | `bernoulliKL`, core and endpoint lemmas | local declaration index | reuse, do not duplicate semantics | `p,q∈[0,1]`; singular support gives `∞`; arbitrary finite alphabets are covered by the separate finite-discrete-KL node | compiled local dependency | `bernoulliRelativeEntropy` | focused Lean | compiled |
 | `CH14-RN-RESTRICT` | RN derivative agrees after restricting both laws to a measurable event | AC and density representation | `withDensity_rnDeriv_eq`, `restrict_withDensity`, `rnDeriv_withDensity` | Mathlib source audit | identify both restricted measures through the original density | finite probability measures; `MeasurableSet A`; `P≪Q` | Mathlib-candidate project leaf | `rnDeriv_restrict_restrict` | focused Lean | compiled |
 | `CH14-EVENT-DPI` | `d(P(A),Q(A)) <= D(P,Q)` | RN restrict helper, f-divergence integral, convex mass lower bound | `klDiv_eq_lintegral_klFun_of_ac`, `mul_klFun_le_toReal_klDiv` | Mathlib source audit | split over event/complement and add | probability laws; measurable event; exact KL direction | Mathlib-candidate project leaf | `bernoulliRelativeEntropy_event_le` | focused Lean | compiled |
 | `CH14-BINARY-BH` | `p+(1-q) >= exp(-d(p,q))/2` with exact endpoints | Bernoulli core | real sqrt/log/exp and concavity | source proof | affinity lower bound plus Le Cam overlap algebra | both parameters in unit interval; all endpoints explicit | project-local | `binaryBretagnolleHuber` | focused Lean | compiled |
