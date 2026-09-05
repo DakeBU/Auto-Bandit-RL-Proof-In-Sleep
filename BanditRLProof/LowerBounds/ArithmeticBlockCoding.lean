@@ -34,6 +34,10 @@ theorem exists_arithmeticBlockSupport {k : ℕ} (p : Fin k → ℝ)
     (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) (n : ℕ) :
     ∃ positive : BinaryPrefixCode {x : SourceBlock.{0,0} (Fin k) n // 0 < sourceBlockMass p n x},
       (∀ x, (positive.encode x).length = arithmeticLength (sourceBlockMass p n x.val)) ∧
+      (∀ x, (arithmeticInterval p (sourceBlockList n x.val)).1 ≤
+        dyadicAddressLower (positive.encode x) ∧
+        dyadicAddressUpper (positive.encode x) <
+          (arithmeticInterval p (sourceBlockList n x.val)).2) ∧
       expectedCodeLength (sourceBlockMass p n)
         (positive.extendZeroMass (sourceBlockMass p n)
           (huffmanCode (sourceBlockMass p n) (sourceBlockMass_nonneg p hp n))) ≤
@@ -56,7 +60,20 @@ theorem arithmeticBlockCode_expected_length_le {k : ℕ} (p : Fin k → ℝ)
     (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) (n : ℕ) :
     expectedCodeLength (sourceBlockMass p n) (arithmeticBlockCode p hp hs n) ≤
       n * discreteEntropyBaseTwo Finset.univ p + 3 :=
-  (Classical.choose_spec (exists_arithmeticBlockSupport p hp hs n)).2
+  (Classical.choose_spec (exists_arithmeticBlockSupport p hp hs n)).2.2
+
+/-- Removing the support tag from a positive block yields an address inside
+its actual arithmetic interval. This property belongs to the named code,
+not merely to an unrelated witness with the same length. -/
+theorem arithmeticBlockCode_payload_interval {k : ℕ} (p : Fin k → ℝ)
+    (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) (n : ℕ)
+    (x : SourceBlock.{0,0} (Fin k) n) (hx : 0 < sourceBlockMass p n x) :
+    (arithmeticInterval p (sourceBlockList n x)).1 ≤
+      dyadicAddressLower ((arithmeticBlockCode p hp hs n).encode x).tail ∧
+    dyadicAddressUpper ((arithmeticBlockCode p hp hs n).encode x).tail <
+      (arithmeticInterval p (sourceBlockList n x)).2 := by
+  have h := (Classical.choose_spec (exists_arithmeticBlockSupport p hp hs n)).2.1 ⟨x, hx⟩
+  simpa [arithmeticBlockCode, BinaryPrefixCode.extendZeroMass, supportTaggedWord, hx] using h
 
 theorem arithmeticBlockCode_rate_sandwich {k : ℕ} (p : Fin k → ℝ)
     (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) (n : ℕ) (hn : 0 < n) :

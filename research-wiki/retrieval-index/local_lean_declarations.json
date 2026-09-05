@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T07:09:21+00:00",
+  "generated": "2026-09-05T07:13:49+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -27735,14 +27735,14 @@
       "full_name": "BanditRLProof.LowerBounds.exists_arithmeticBlockSupport",
       "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
       "line": 33,
-      "statement": "theorem exists_arithmeticBlockSupport {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) : \u2203 positive : BinaryPrefixCode {x : SourceBlock.{0,0} (Fin k) n // 0 < sourceBlockMass p n x}, (\u2200 x, (positive.encode x).length = arithmeticLength (sourceBlockMass p n x.val)) \u2227 expectedCodeLength (sourceBlockMass p n) (positive.extendZeroMass (sourceBlockMass p n) (huffmanCode (sourceBlockMass p n) (sourceBlockMass_nonneg p hp n))) \u2264 n * discreteEntropyBaseTwo Finset.univ p + 3"
+      "statement": "theorem exists_arithmeticBlockSupport {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) : \u2203 positive : BinaryPrefixCode {x : SourceBlock.{0,0} (Fin k) n // 0 < sourceBlockMass p n x}, (\u2200 x, (positive.encode x).length = arithmeticLength (sourceBlockMass p n x.val)) \u2227 (\u2200 x, (arithmeticInterval p (sourceBlockList n x.val)).1 \u2264 dyadicAddressLower (positive.encode x) \u2227 dyadicAddressUpper (positive.encode x) < (arithmeticInterval p (sourceBlockList n x.val)).2) \u2227 expectedCodeLength (sourceBlockMass p n) (positive.extendZeroMass (sourceBlockMass p n) (huffmanCode (sourceBlockMass p n) (sourceBlockMass_nonneg p hp n))) \u2264 n * discreteEntropyBaseTwo Finset.univ p + 3"
     },
     {
       "kind": "def",
       "name": "arithmeticBlockCode",
       "full_name": "BanditRLProof.LowerBounds.arithmeticBlockCode",
       "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
-      "line": 49,
+      "line": 53,
       "statement": "noncomputable def arithmeticBlockCode {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) : BinaryPrefixCode (SourceBlock.{0,0} (Fin k) n)"
     },
     {
@@ -27750,15 +27750,23 @@
       "name": "arithmeticBlockCode_expected_length_le",
       "full_name": "BanditRLProof.LowerBounds.arithmeticBlockCode_expected_length_le",
       "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
-      "line": 55,
+      "line": 59,
       "statement": "theorem arithmeticBlockCode_expected_length_le {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) : expectedCodeLength (sourceBlockMass p n) (arithmeticBlockCode p hp hs n) \u2264 n * discreteEntropyBaseTwo Finset.univ p + 3"
+    },
+    {
+      "kind": "theorem",
+      "name": "arithmeticBlockCode_payload_interval",
+      "full_name": "BanditRLProof.LowerBounds.arithmeticBlockCode_payload_interval",
+      "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+      "line": 68,
+      "statement": "theorem arithmeticBlockCode_payload_interval {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) (x : SourceBlock.{0,0} (Fin k) n) (hx : 0 < sourceBlockMass p n x) : (arithmeticInterval p (sourceBlockList n x)).1 \u2264 dyadicAddressLower ((arithmeticBlockCode p hp hs n).encode x).tail \u2227 dyadicAddressUpper ((arithmeticBlockCode p hp hs n).encode x).tail < (arithmeticInterval p (sourceBlockList n x)).2"
     },
     {
       "kind": "theorem",
       "name": "arithmeticBlockCode_rate_sandwich",
       "full_name": "BanditRLProof.LowerBounds.arithmeticBlockCode_rate_sandwich",
       "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
-      "line": 61,
+      "line": 78,
       "statement": "theorem arithmeticBlockCode_rate_sandwich {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) (hn : 0 < n) : discreteEntropyBaseTwo Finset.univ p \u2264 expectedCodeLength (sourceBlockMass p n) (arithmeticBlockCode p hp hs n) / n \u2227 expectedCodeLength (sourceBlockMass p n) (arithmeticBlockCode p hp hs n) / n \u2264 discreteEntropyBaseTwo Finset.univ p + 3 / n"
     },
     {
@@ -27766,7 +27774,7 @@
       "name": "arithmeticBlockCode_rate_tendsto_entropy",
       "full_name": "BanditRLProof.LowerBounds.arithmeticBlockCode_rate_tendsto_entropy",
       "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
-      "line": 77,
+      "line": 94,
       "statement": "theorem arithmeticBlockCode_rate_tendsto_entropy {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) : Filter.Tendsto (fun n : \u2115 => expectedCodeLength (sourceBlockMass p (n + 1)) (arithmeticBlockCode p hp hs (n + 1)) / (n + 1)) Filter.atTop (nhds (discreteEntropyBaseTwo Finset.univ p))"
     },
     {
@@ -27935,7 +27943,7 @@
       "full_name": "BanditRLProof.LowerBounds.exists_zeroSafe_arithmeticCode",
       "file": "BanditRLProof/LowerBounds/ArithmeticZeroExtension.lean",
       "line": 61,
-      "statement": "theorem exists_zeroSafe_arithmeticCode {\u03b1 : Type*} [Fintype \u03b1] {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (message : \u03b1 \u2192 List (Fin k)) (hinj : Function.Injective message) (hlen : \u2200 a b, (message a).length = (message b).length) (q : \u03b1 \u2192 \u211d) (hq : \u2200 a, 0 \u2264 q a) (hqs : \u2211 a, q a = 1) (hmass : \u2200 a, ((message a).map p).prod = q a) : \u2203 positive : BinaryPrefixCode {a // 0 < q a}, (\u2200 a, (positive.encode a).length = arithmeticLength (q a.val)) \u2227 expectedCodeLength q (positive.extendZeroMass q (huffmanCode q hq)) \u2264 discreteEntropyBaseTwo Finset.univ q + 3"
+      "statement": "theorem exists_zeroSafe_arithmeticCode {\u03b1 : Type*} [Fintype \u03b1] {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (message : \u03b1 \u2192 List (Fin k)) (hinj : Function.Injective message) (hlen : \u2200 a b, (message a).length = (message b).length) (q : \u03b1 \u2192 \u211d) (hq : \u2200 a, 0 \u2264 q a) (hqs : \u2211 a, q a = 1) (hmass : \u2200 a, ((message a).map p).prod = q a) : \u2203 positive : BinaryPrefixCode {a // 0 < q a}, (\u2200 a, (positive.encode a).length = arithmeticLength (q a.val)) \u2227 (\u2200 a, (arithmeticInterval p (message a.val)).1 \u2264 dyadicAddressLower (positive.encode a) \u2227 dyadicAddressUpper (positive.encode a) < (arithmeticInterval p (message a.val)).2) \u2227 expectedCodeLength q (positive.extendZeroMass q (huffmanCode q hq)) \u2264 discreteEntropyBaseTwo Finset.univ q + 3"
     },
     {
       "kind": "def",

@@ -9,7 +9,7 @@ accepted/task/site status does not independently certify the expanded body.
 | --- | --- | --- | --- | --- |
 | prefix-code model and entropy units | InformationTheory | BinaryPrefixCode; expectedCodeLength; discreteEntropyBaseTwo_eq_div_log_two | (empty) | existing spine + subsequent gates |
 | Eq.14.1/14.2 global Huffman optimum | HuffmanConstruction | huffmanCode_optimal; huffmanCode_entropy_sandwich | HuffmanConstruction | dff13cb |
-| arithmetic expected-rate convergence | ArithmeticBlockCoding | arithmeticBlockCode_rate_tendsto_entropy | ArithmeticBlock | 2a31a01 |
+| arithmetic expected-rate convergence and code identity | ArithmeticBlockCoding | arithmeticBlockCode_rate_tendsto_entropy; arithmeticBlockCode_payload_interval | ArithmeticBlock | earlier rate gate 2a31a01; strengthened interval identity focused-build passed, full gate pending |
 | universal source-code converse | BlockEntropy | sourceBlock_code_family_limit_ge_entropy | Block | d256f27 and subsequent gates |
 | finite KL / Eq.14.4 | FiniteDiscreteKL | relativeEntropy_finite_sum_log; relativeEntropy_finite_eq_top_iff | (empty) | 40c56ca and subsequent gates |
 | Eq.14.5 / RN equivalence | FinitePartitionKLRecovery | finitePartitionRelativeEntropy_eq_relativeEntropy | Recovery | 40c56ca |

@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T07:09:35+00:00`
+Generated: `2026-09-05T07:14:03+00:00`
 
 ## Source Task
 
@@ -75,6 +75,13 @@ mapped local adapter before they count as chapter evidence.
 | Eq. (14.9) | measure-level Le Cam affinity/overlap inequality | `half_commonDensityAffinity_sq_le_overlap`; root/aggregate/full harness passed at `b8325c2` | compiled |
 | Gaussian testing application | the displayed Gaussian error bound and the `3/10`, `3/20` consequences under `Δ²/σ²≤1` | exponential and both rational bounds; root/aggregate/full harness passed at `1e8af14` | compiled |
 
+Current audit qualification: the arithmetic-identity audit found that the
+earlier rate constructor dropped interval containment at its existence
+interface. The strengthened `arithmeticBlockCode_payload_interval` now
+focused-build compiles for the actual named code. Prior gates certify the
+rate but do not certify this stronger interface; its canary/full gate is
+tracked in `reviews/2026-09-05-chapter-14-arithmetic-identity-audit.md`.
+
 Optional rows are §14.3 Notes, §14.4 Bibliographic Remarks, and Exercises
 14.1--14.15.  Exercise 14.10 is a high-value optional target: the existing
 event/Bernoulli theorem is its two-cell specialization, while
@@ -83,20 +90,7 @@ for finite measures.
 
 ## Frozen Lean target
 
-Target file: `BanditRLProof/LowerBounds/InformationTheory.lean`.
-
-Expected public declarations (names may gain narrowly descriptive helpers but
-the semantic signatures may not be weakened):
-
-```lean
-LowerBounds.relativeEntropy
-LowerBounds.relativeEntropy_of_absolutelyContinuous_of_integrable
-LowerBounds.relativeEntropy_eq_top_of_not_absolutelyContinuous
-LowerBounds.relativeEntropy_ne_top_iff
-LowerBounds.relativeEntropy_eq_zero_iff
-LowerBounds.BinaryPrefixCode
-
-<!-- 2436 characters omitted from the middle of this snapshot. -->
+<!-- 2900 characters omitted from the middle of this snapshot. -->
 
 page are verified before this task becomes accepted.
 
@@ -398,8 +392,6 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH14-GAUSSIAN-TESTING-APPLICATION` | displayed error, `3/10`, and max-error `3/20` consequences | general Gaussian KL, Theorem 14.2, scalar exp bound | direct source application with certified rational constant | `gaussian_testing_error_lower_bound`, `gaussian_testing_error_three_tenths`, `gaussian_testing_max_error_three_twentieths` | full gate 1e8af14 passed | compiled |
 | `CH14-EX14-10-FULL-DPI` | KL monotonicity after restriction to any sub-σ-algebra | `Measure.trim`, `toReal_rnDeriv_trim`, conditional expectation and Jensen | split infinite KL; identify the trimmed RN density as a conditional expectation and integrate Jensen; event DPI remains a specialization | `relativeEntropy_trim_le` | optional focused Lean | compiled |
 
-## Failure classification
-
 ## Current whole-body gate snapshot
 
 The final source-inclusive a47106a gate passed: Tests 8951 jobs, 400 Python
@@ -411,7 +403,7 @@ Local site checks passed in the site-sync review; historical independent
 review and remote publication do not cover this expanded body. Whole-chapter
 status remains partial until the final source and evidence audit is complete.
 
-## Failure classification categories
+## Failure classification
 
 Use exactly one: source translation gap; local Lean lemma gap; theorem-card
 dependency; external cited result; semantic interface gap; missing regularity
@@ -57757,14 +57749,14 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "full_name": "BanditRLProof.LowerBounds.exists_arithmeticBlockSupport",
     "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
     "line": 33,
-    "statement": "theorem exists_arithmeticBlockSupport {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) : \u2203 positive : BinaryPrefixCode {x : SourceBlock.{0,0} (Fin k) n // 0 < sourceBlockMass p n x}, (\u2200 x, (positive.encode x).length = arithmeticLength (sourceBlockMass p n x.val)) \u2227 expectedCodeLength (sourceBlockMass p n) (positive.extendZeroMass (sourceBlockMass p n) (huffmanCode (sourceBlockMass p n) (sourceBlockMass_nonneg p hp n))) \u2264 n * discreteEntropyBaseTwo Finset.univ p + 3"
+    "statement": "theorem exists_arithmeticBlockSupport {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) : \u2203 positive : BinaryPrefixCode {x : SourceBlock.{0,0} (Fin k) n // 0 < sourceBlockMass p n x}, (\u2200 x, (positive.encode x).length = arithmeticLength (sourceBlockMass p n x.val)) \u2227 (\u2200 x, (arithmeticInterval p (sourceBlockList n x.val)).1 \u2264 dyadicAddressLower (positive.encode x) \u2227 dyadicAddressUpper (positive.encode x) < (arithmeticInterval p (sourceBlockList n x.val)).2) \u2227 expectedCodeLength (sourceBlockMass p n) (positive.extendZeroMass (sourceBlockMass p n) (huffmanCode (sourceBlockMass p n) (sourceBlockMass_nonneg p hp n))) \u2264 n * discreteEntropyBaseTwo Finset.univ p + 3"
   },
   {
     "kind": "def",
     "name": "arithmeticBlockCode",
     "full_name": "BanditRLProof.LowerBounds.arithmeticBlockCode",
     "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
-    "line": 49,
+    "line": 53,
     "statement": "noncomputable def arithmeticBlockCode {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) : BinaryPrefixCode (SourceBlock.{0,0} (Fin k) n)"
   },
   {
@@ -57772,15 +57764,23 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "arithmeticBlockCode_expected_length_le",
     "full_name": "BanditRLProof.LowerBounds.arithmeticBlockCode_expected_length_le",
     "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
-    "line": 55,
+    "line": 59,
     "statement": "theorem arithmeticBlockCode_expected_length_le {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) : expectedCodeLength (sourceBlockMass p n) (arithmeticBlockCode p hp hs n) \u2264 n * discreteEntropyBaseTwo Finset.univ p + 3"
+  },
+  {
+    "kind": "theorem",
+    "name": "arithmeticBlockCode_payload_interval",
+    "full_name": "BanditRLProof.LowerBounds.arithmeticBlockCode_payload_interval",
+    "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
+    "line": 68,
+    "statement": "theorem arithmeticBlockCode_payload_interval {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) (x : SourceBlock.{0,0} (Fin k) n) (hx : 0 < sourceBlockMass p n x) : (arithmeticInterval p (sourceBlockList n x)).1 \u2264 dyadicAddressLower ((arithmeticBlockCode p hp hs n).encode x).tail \u2227 dyadicAddressUpper ((arithmeticBlockCode p hp hs n).encode x).tail < (arithmeticInterval p (sourceBlockList n x)).2"
   },
   {
     "kind": "theorem",
     "name": "arithmeticBlockCode_rate_sandwich",
     "full_name": "BanditRLProof.LowerBounds.arithmeticBlockCode_rate_sandwich",
     "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
-    "line": 61,
+    "line": 78,
     "statement": "theorem arithmeticBlockCode_rate_sandwich {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (n : \u2115) (hn : 0 < n) : discreteEntropyBaseTwo Finset.univ p \u2264 expectedCodeLength (sourceBlockMass p n) (arithmeticBlockCode p hp hs n) / n \u2227 expectedCodeLength (sourceBlockMass p n) (arithmeticBlockCode p hp hs n) / n \u2264 discreteEntropyBaseTwo Finset.univ p + 3 / n"
   },
   {
@@ -57788,7 +57788,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "arithmeticBlockCode_rate_tendsto_entropy",
     "full_name": "BanditRLProof.LowerBounds.arithmeticBlockCode_rate_tendsto_entropy",
     "file": "BanditRLProof/LowerBounds/ArithmeticBlockCoding.lean",
-    "line": 77,
+    "line": 94,
     "statement": "theorem arithmeticBlockCode_rate_tendsto_entropy {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) : Filter.Tendsto (fun n : \u2115 => expectedCodeLength (sourceBlockMass p (n + 1)) (arithmeticBlockCode p hp hs (n + 1)) / (n + 1)) Filter.atTop (nhds (discreteEntropyBaseTwo Finset.univ p))"
   },
   {
@@ -57957,7 +57957,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "full_name": "BanditRLProof.LowerBounds.exists_zeroSafe_arithmeticCode",
     "file": "BanditRLProof/LowerBounds/ArithmeticZeroExtension.lean",
     "line": 61,
-    "statement": "theorem exists_zeroSafe_arithmeticCode {\u03b1 : Type*} [Fintype \u03b1] {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (message : \u03b1 \u2192 List (Fin k)) (hinj : Function.Injective message) (hlen : \u2200 a b, (message a).length = (message b).length) (q : \u03b1 \u2192 \u211d) (hq : \u2200 a, 0 \u2264 q a) (hqs : \u2211 a, q a = 1) (hmass : \u2200 a, ((message a).map p).prod = q a) : \u2203 positive : BinaryPrefixCode {a // 0 < q a}, (\u2200 a, (positive.encode a).length = arithmeticLength (q a.val)) \u2227 expectedCodeLength q (positive.extendZeroMass q (huffmanCode q hq)) \u2264 discreteEntropyBaseTwo Finset.univ q + 3"
+    "statement": "theorem exists_zeroSafe_arithmeticCode {\u03b1 : Type*} [Fintype \u03b1] {k : \u2115} (p : Fin k \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) (message : \u03b1 \u2192 List (Fin k)) (hinj : Function.Injective message) (hlen : \u2200 a b, (message a).length = (message b).length) (q : \u03b1 \u2192 \u211d) (hq : \u2200 a, 0 \u2264 q a) (hqs : \u2211 a, q a = 1) (hmass : \u2200 a, ((message a).map p).prod = q a) : \u2203 positive : BinaryPrefixCode {a // 0 < q a}, (\u2200 a, (positive.encode a).length = arithmeticLength (q a.val)) \u2227 (\u2200 a, (arithmeticInterval p (message a.val)).1 \u2264 dyadicAddressLower (positive.encode a) \u2227 dyadicAddressUpper (positive.encode a) < (arithmeticInterval p (message a.val)).2) \u2227 expectedCodeLength q (positive.extendZeroMass q (huffmanCode q hq)) \u2264 discreteEntropyBaseTwo Finset.univ q + 3"
   },
   {
     "kind": "def",

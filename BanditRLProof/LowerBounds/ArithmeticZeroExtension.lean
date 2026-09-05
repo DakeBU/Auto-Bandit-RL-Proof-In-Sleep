@@ -66,6 +66,9 @@ theorem exists_zeroSafe_arithmeticCode {α : Type*} [Fintype α] {k : ℕ}
     (hmass : ∀ a, ((message a).map p).prod = q a) :
     ∃ positive : BinaryPrefixCode {a // 0 < q a},
       (∀ a, (positive.encode a).length = arithmeticLength (q a.val)) ∧
+      (∀ a, (arithmeticInterval p (message a.val)).1 ≤
+        dyadicAddressLower (positive.encode a) ∧
+        dyadicAddressUpper (positive.encode a) < (arithmeticInterval p (message a.val)).2) ∧
       expectedCodeLength q (positive.extendZeroMass q (huffmanCode q hq)) ≤
         discreteEntropyBaseTwo Finset.univ q + 3 := by
   classical
@@ -74,11 +77,12 @@ theorem exists_zeroSafe_arithmeticCode {α : Type*} [Fintype α] {k : ℕ}
         (arithmeticInterval p (message a.val)).2 - (arithmeticInterval p (message a.val)).1 := by
     rw [arithmeticInterval_width, hmass]
     exact (arithmeticLength_width_budget a.property).le
-  obtain ⟨positive, hl, _⟩ := exists_arithmeticPrefixCode p hp hs
+  obtain ⟨positive, hl, hcell⟩ := exists_arithmeticPrefixCode p hp hs
     (fun a : {a // 0 < q a} => message a.val)
     (fun a b h => Subtype.ext (hinj h))
     (fun a b => hlen a.val b.val) (fun a => arithmeticLength (q a.val)) hbudget
-  refine ⟨positive, hl, expectedCodeLength_extendZeroMass_le q hq hqs positive (huffmanCode q hq) ?_⟩
+  refine ⟨positive, hl, hcell,
+    expectedCodeLength_extendZeroMass_le q hq hqs positive (huffmanCode q hq) ?_⟩
   intro a ha
   rw [hl]
   have hq1 : q a ≤ 1 := by

@@ -245,7 +245,20 @@ No new unproved concentration or measurability premise is introduced.
   dominating measure for finite laws. `relativeEntropy_finite_lt_top_iff_ac`
   states the finite-alphabet AC/finite-KL equivalence, not a general-space claim.
 
-These adapters are compiled and canaried locally. The d325147 aggregate gate
-covers NonMetric, CrossEntropy and FixedLengthCoding only; UniformCoding and
-CommonDomination require the subsequent gate. Historical site and deployment
-checks do not certify the present whole-chapter surface.
+These adapters are compiled and canaried locally. The a47106a full gate passed
+with 8951 Lean jobs and 400 Python tests (7 skipped), including UniformCoding
+and CommonDomination. Historical deployment checks do not certify the present
+whole-chapter surface.
+
+### Arithmetic identity audit
+
+The source audit found that the earlier existence interfaces discarded
+interval containment before `arithmeticBlockCode` made its classical choice.
+The previous gate therefore certifies code rates, not the claimed identity
+of the named code as an arithmetic interval-address construction.
+The strengthened interfaces now retain containment through
+`exists_zeroSafe_arithmeticCode` and `exists_arithmeticBlockSupport`.
+`arithmeticBlockCode_payload_interval` states it for the actual named code:
+for every positive-mass block, removing the support tag leaves a dyadic cell
+inside that block's arithmetic interval. Validation of this strengthening is
+tracked in the arithmetic-identity audit; it is not covered by a47106a.
