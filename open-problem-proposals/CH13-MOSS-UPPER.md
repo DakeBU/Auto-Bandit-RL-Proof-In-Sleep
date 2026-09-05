@@ -4,8 +4,10 @@ Problem id: `CH13-MOSS-UPPER`
 
 Parent task: `TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE`
 
-Status: mathematical dependency compiled; whole-chapter integration and
-publication gates pending. Not an open mathematical conjecture.
+Status: mathematical dependency compiled and accepted through PR #105,
+main run 33953476610, Pages job 101275173069 and live b38630c checks.
+Not an open mathematical conjecture. Final status-record publication is
+tracked separately from the accepted mathematical dependency.
 
 ## Source and frozen target
 
@@ -91,9 +93,9 @@ centered partial-sum martingale. The compiled Lemma 9.3 peeling theorem
 consumes this result and preserves its constants; the maximal bound alone
 would not suffice for the MOSS optimism-deficit tail theorem.
 
-Next smallest work item: finish merged-tree full verification, structured
-review and PR/main/Pages/live checks. No additional mathematical leaf is
-currently missing from this packet's frozen target.
+Next smallest work item: publish the final synchronized completion records.
+Merged-tree verification, structured self-review and PR/main/Pages/live
+checks pass. No mathematical leaf is missing from this packet's frozen target.
 
 Typed external canaries for the concrete algorithm, maximal tail, peeling,
 and source-constant regret endpoint; root and Tests build; axiom scan;
