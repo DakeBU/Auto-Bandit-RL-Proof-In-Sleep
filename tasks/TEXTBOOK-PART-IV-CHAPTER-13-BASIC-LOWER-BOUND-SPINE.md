@@ -164,7 +164,8 @@ LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt
   nonclaim being promoted.
 - [x] Root import, focused build, typed canary, Tests, axiom scan, full harness
   check, proof export, evidence indexes, documentation, and website pass.
-- [x] Independent read-only review finds no unresolved P0--P3 issue.
+- [x] Structured in-branch source/Lean/evidence review finds no unresolved
+  P0--P3 issue; its website-status-enum P3 was corrected before the final gate.
 - [x] The earlier dependency-slice PR #9, remote Actions run `31942624241`, merge commit `44c3e153`,
   Pages deployment job `95156292456`, and the live desktop/mobile Chapter 13
   page pass.

@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-04T03:56:58+00:00`
+Generated: `2026-09-05T04:27:07+00:00`
 
 ## Source Task
 
@@ -125,9 +125,8 @@ LowerBounds.changedEnvironmentRegretLowerBound
 LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error
 LowerBounds.max_base_changed_regretLowerBound_ge_half
 
-<!-- 369 characters omitted from the middle of this snapshot. -->
+<!-- 431 characters omitted from the middle of this snapshot. -->
 
-LowerBounds.twoPointGaussianThresholdDecision_gap_error_event
 LowerBounds.gaussianSampleMeanZeroErrorProbability
 LowerBounds.gaussianSampleMeanGapErrorProbability
 LowerBounds.hasSubgaussianMGF_id_gaussianReal_zero
@@ -164,7 +163,8 @@ LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt
   nonclaim being promoted.
 - [x] Root import, focused build, typed canary, Tests, axiom scan, full harness
   check, proof export, evidence indexes, documentation, and website pass.
-- [x] Independent read-only review finds no unresolved P0--P3 issue.
+- [x] Structured in-branch source/Lean/evidence review finds no unresolved
+  P0--P3 issue; its website-status-enum P3 was corrected before the final gate.
 - [x] The earlier dependency-slice PR #9, remote Actions run `31942624241`, merge commit `44c3e153`,
   Pages deployment job `95156292456`, and the live desktop/mobile Chapter 13
   page pass.
@@ -401,7 +401,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH13-TYPED-CANARY` | external root-import applications and a three-arm numeric witness | compiled Chapter 13 declarations | root `BanditRLProof` import | local declaration index | exact full-conclusion examples plus `#print axioms` | nonempty policy/environment subsets; nonnegative vector summing to horizon | project-local | `Tests/TextbookPartIVChapter13Canary.lean` | dedicated/root Tests | verified |
 | `CH13-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | Windows long-path workaround must not be mistaken for a Lean proof failure | repository | n/a | `python3 tools/bandit.py check` | verified |
 | `CH13-EVIDENCE-SITE` | proof export, indexes, readings/highlights/results/implementation map/README and Part IV site agree | local full gate | harness and website scripts | repository | generated evidence plus maintained source data | only gate-passing declarations marked compiled | repository | n/a | lean-verified build/site check/browser review | verified locally |
-| `CH13-REVIEW` | independent read-only theorem/Lean consistency audit | all local artifacts | source, declarations, generated site | all above | check quantifiers, KL direction, AC, policy consistency and order claims | no unresolved P0--P3 | repository | n/a | review | verified |
+| `CH13-REVIEW` | structured in-branch source/theorem/Lean/evidence consistency audit | all local artifacts | source, declarations, generated site | all above | check source inventory, quantifiers, probability-law direction, regularity, status labels, and order claims | no unresolved P0--P3; website-status-enum P3 corrected | repository | n/a | review | verified |
 | `CH13-REMOTE` | current Chapter 15 downstream extension PR, Actions, Pages deployment and live Chapter 13 verification | accepted local chapter; earlier dependency-slice PR is historical evidence only | GitHub/Pages workflow | repository | branch PR; never direct push to main | remote state must be current | repository | n/a | remote deployment | pending current extension |
 
 ## Failure classification
