@@ -29,3 +29,10 @@ payload theorem and unchanged rate conclusions report only propext,
 Classical.choice and Quot.sound. The subsequent full gate remains pending.
 The Markdown/LaTeX export records this audit; its previous visual QA is stale
 after the added audit paragraph and must be rerun.
+
+Export QA rerun: the b5e21b8 LaTeX fragment compiled successfully with the
+existing article wrapper using TeX Live; three pages, no overfull boxes or
+LaTeX errors. All three pages were rendered with Poppler at 1300 pixels and
+visually inspected: equations, identifiers and the new arithmetic-identity
+paragraph are readable without clipping or overlap. This replaces the stale
+visual QA for this export snapshot only. Full Lean gate still runs separately.
