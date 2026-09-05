@@ -8,6 +8,21 @@ open scoped ENNReal BigOperators
 
 noncomputable section
 
+/-- On a finite alphabet, absolute continuity is exactly atomwise support inclusion. -/
+theorem absolutelyContinuous_iff_atom_support {α : Type*} [Fintype α]
+    [MeasurableSpace α] [MeasurableSingletonClass α] (P Q : Measure α) :
+    P ≪ Q ↔ ∀ x, Q {x} = 0 → P {x} = 0 := by
+  classical
+  constructor
+  · intro h x hx
+    exact h hx
+  · intro h s hs
+    rw [← Set.coe_toFinset s, ← sum_measure_singleton]
+    apply Finset.sum_eq_zero
+    intro x hx
+    exact h x (measure_mono_null (Set.singleton_subset_iff.2
+      (Set.mem_toFinset.1 hx)) hs)
+
 /-- Atomwise density identity, retaining zero-mass atoms. -/
 theorem rnDeriv_mul_atom {α : Type*} [MeasurableSpace α]
     [MeasurableSingletonClass α] (P Q : Measure α)
@@ -65,6 +80,33 @@ theorem relativeEntropy_finite_sum_log {α : Type*} [Fintype α]
   · have hq : Q {x} ≠ 0 := fun hz => hp (h hz)
     simp [llr, rnDeriv_atom_eq_div P Q h x hq, ENNReal.toReal_div,
       measureReal_def, smul_eq_mul]
+
+/-- Eq. (14.4), including the infinite branch when atomwise support fails. -/
+theorem relativeEntropy_finite_eq_if {α : Type*} [Fintype α]
+    [MeasurableSpace α] [MeasurableSingletonClass α] (P Q : Measure α)
+    [IsProbabilityMeasure P] [IsProbabilityMeasure Q] :
+    relativeEntropy P Q = if ∀ x, Q {x} = 0 → P {x} = 0 then
+      ENNReal.ofReal (∑ x, (P {x}).toReal *
+        Real.log ((P {x}).toReal / (Q {x}).toReal)) else ∞ := by
+  classical
+  split_ifs with h
+  · exact relativeEntropy_finite_sum_log P Q
+      ((absolutelyContinuous_iff_atom_support P Q).2 h)
+  · exact InformationTheory.klDiv_of_not_ac
+      (fun hac => h ((absolutelyContinuous_iff_atom_support P Q).1 hac))
+
+/-- Finite alphabets have infinite KL exactly at a support mismatch. -/
+theorem relativeEntropy_finite_eq_top_iff {α : Type*} [Fintype α]
+    [MeasurableSpace α] [MeasurableSingletonClass α] (P Q : Measure α)
+    [IsProbabilityMeasure P] [IsProbabilityMeasure Q] :
+    relativeEntropy P Q = ∞ ↔ ∃ x, P {x} ≠ 0 ∧ Q {x} = 0 := by
+  classical
+  rw [relativeEntropy_finite_eq_if]
+  split_ifs with h
+  · simp only [ENNReal.ofReal_ne_top, false_iff, not_exists, not_and]
+    exact fun x hp hq => hp (h x hq)
+  · simp only [not_forall] at h
+    exact iff_of_true rfl (by obtain ⟨x, hq, hp⟩ := h; exact ⟨x, hp, hq⟩)
 
 end
 end BanditRLProof.LowerBounds

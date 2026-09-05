@@ -55,3 +55,14 @@ atoms are simplified separately, without a strict-positivity assumption.
 This is focused evidence only. The atomwise-support/absolute-continuity
 equivalence, regression canary, root integration, full harness and synchronized
 chapter evidence are still pending. Whole-chapter status remains partial.
+
+## Support characterization and integration attempt
+
+The same finite-atomic route uses `sum_measure_singleton` and
+`measure_mono_null` to prove absolute continuity equivalent to atomwise
+support inclusion. This supplies an exhaustive finite-sum/infinity statement
+and an infinity-iff-support-mismatch theorem. Root import and three-symbol
+endpoint canaries have been added for validation. The first direct check
+reported only an ambiguous `not_imp` name. The corrected version passed;
+the compiler identified that simp argument as unnecessary, so it was removed.
+The root integration and canaries still require verification.
