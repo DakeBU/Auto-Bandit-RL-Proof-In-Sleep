@@ -89,3 +89,11 @@ The focused affinity canary passed before switching it to a root import;
 all eight printed axiom sets contain only `propext`, `Classical.choice`, and
 `Quot.sound`. Both new modules and both canaries are now registered with the
 root library and aggregate Tests, ready for the new full integration gate.
+
+## Full integration result
+
+At b8325c2, the full check in C:/a14 passed: root library, aggregate Tests
+(8,907 jobs), proof-graph export, placeholder scan, and 400 Python tests
+(7 skipped, 190.612s). Log: C:/a14/tmp/ch14-affinity-full-check.log.
+This covers overlap and the source Jensen intermediate, not the subsequent
+Gaussian and coding-bound additions. Whole Chapter 14 remains partial.

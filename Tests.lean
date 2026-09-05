@@ -45,3 +45,5 @@ import Tests.TextbookPartIVChapter14RecoveryCanary
 import Tests.TextbookPartIVChapter14CommonDensityCanary
 import Tests.TextbookPartIVChapter14OverlapCanary
 import Tests.TextbookPartIVChapter14AffinityCanary
+import Tests.TextbookPartIVChapter14GaussianCanary
+import Tests.TextbookPartIVChapter14CodingBoundCanary

@@ -31,3 +31,7 @@ Delta=2, v=4 at the exact SNR boundary. All eight axiom audits report only
 `propext`, `Classical.choice`, and `Quot.sound`. Its first attempt lacked
 the NNReal notation scope; opening that scope fixed elaboration without
 changing any mathematical statement.
+
+The Gaussian module and canary are now registered in the root library and
+aggregate Tests; the canary imports the root. The ongoing affinity check
+still validates b8325c2, so a later integration gate must cover this addition.

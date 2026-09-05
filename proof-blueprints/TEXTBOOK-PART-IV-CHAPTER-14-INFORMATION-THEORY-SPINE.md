@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T05:30:27+00:00`
+Generated: `2026-09-05T05:33:22+00:00`
 
 ## Source Task
 
@@ -385,7 +385,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | --- | --- | --- | --- | --- | --- | --- |
 | `CH14-CODE-MODEL` | typed finite binary prefix-code surface and expected length | lists, finite sums, Mathlib Kraft--McMillan | define injective/prefix-free/nonempty codes; prove range uniquely decodable and expose finite Kraft adapter | `BinaryPrefixCode`, `BinaryPrefixCode.uniquelyDecodable_range`, `BinaryPrefixCode.kraft_inequality`, `expectedCodeLength` | focused Lean | compiled |
 | `CH14-ENTROPY-DEFINITIONS` | Eqs. (14.2)--(14.3) entropy definitions, nonnegativity, and nats/bits conversion | finite sums, real log | exact finite support convention; term at zero is zero | `discreteEntropy`, `discreteEntropyBaseTwo`, `discreteEntropyBaseTwo_eq_div_log_two`, `discreteEntropy_nonneg` | focused Lean | compiled |
-| `CH14-HUFFMAN-BOUND` | Eq. (14.2), including existence/optimality of a prefix code | Kraft--McMillan, Huffman/tree construction | no conditional optimality premise may masquerade as this terminal | none | chapter terminal | blocked |
+| `CH14-HUFFMAN-BOUND` | Eq. (14.2), including existence/optimality of a prefix code | Kraft--McMillan, Huffman/tree construction | entropy lower bound for every prefix code; upper bound and optimal construction still missing | `discreteEntropyBaseTwo_le_expectedCodeLength` direct-compiles without strict positivity; full terminal absent | chapter terminal | partial |
 | `CH14-SOURCE-CODING` | arithmetic/block-code achievability and converse | product distributions, uniquely decodable block codes, asymptotics | formal source-coding theorem | none | chapter terminal | blocked |
 | `CH14-FINITE-DISCRETE-KL` | Eq. (14.4) for an arbitrary finite alphabet | finite sums, support endpoints | atomwise AC equivalence, RN density ratio, finite LLR integrability, and finite integral sum; singular atom forces infinity | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, `relativeEntropy_finite_eq_top_iff` | focused Lean and root-import canary passed | compiled |
 | `CH14-DISCRETISATION-SUP` | Eq. (14.5) and equality with RN KL in Theorem 14.1 | finite measurable quotients/partitions, supremum | finite-cell Jensen upper bound; binary singular witness; density filtration recovery by conditional-expectation convergence/Fatou; finite-range coding of each layer | `finitePartitionRelativeEntropy_eq_relativeEntropy` and its finite-partition/filtration/encoding helpers | root, aggregate Tests, and full harness pass at 40c56ca | compiled |
@@ -58055,6 +58055,22 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
     "line": 205,
     "statement": "theorem max_base_changed_regretLowerBound_ge_half (horizon : Nat) (gap baseFirstExpectedPulls changedFirstExpectedPulls : Real) (hgap : 0 \u2264 gap) (htransport : baseFirstExpectedPulls \u2264 changedFirstExpectedPulls) : gap * (horizon : Real) / 2 \u2264 max (baseEnvironmentRegret horizon gap baseFirstExpectedPulls) (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls)"
+  },
+  {
+    "kind": "theorem",
+    "name": "entropy_term_le_codeLength_remainder",
+    "full_name": "BanditRLProof.LowerBounds.entropy_term_le_codeLength_remainder",
+    "file": "BanditRLProof/LowerBounds/CodingEntropyBound.lean",
+    "line": 7,
+    "statement": "theorem entropy_term_le_codeLength_remainder {p : \u211d} (hp : 0 \u2264 p) (l : \u2115) : p * Real.log p\u207b\u00b9 \u2264 p * l * Real.log 2 + (1 / 2 : \u211d) ^ l - p"
+  },
+  {
+    "kind": "theorem",
+    "name": "discreteEntropyBaseTwo_le_expectedCodeLength",
+    "full_name": "BanditRLProof.LowerBounds.discreteEntropyBaseTwo_le_expectedCodeLength",
+    "file": "BanditRLProof/LowerBounds/CodingEntropyBound.lean",
+    "line": 25,
+    "statement": "theorem discreteEntropyBaseTwo_le_expectedCodeLength {Symbol : Type*} [Fintype Symbol] [DecidableEq Symbol] (p : Symbol \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hsum : \u2211 i, p i = 1) (code : BinaryPrefixCode Symbol) : discreteEntropyBaseTwo Finset.univ p \u2264 expectedCodeLength p code"
   },
   {
     "kind": "theorem",

@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE",
-  "generated": "2026-09-05T05:30:21+00:00",
+  "generated": "2026-09-05T05:33:17+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -57059,6 +57059,22 @@
       "file": "BanditRLProof/LowerBounds/BasicIdeas.lean",
       "line": 205,
       "statement": "theorem max_base_changed_regretLowerBound_ge_half (horizon : Nat) (gap baseFirstExpectedPulls changedFirstExpectedPulls : Real) (hgap : 0 ≤ gap) (htransport : baseFirstExpectedPulls ≤ changedFirstExpectedPulls) : gap * (horizon : Real) / 2 ≤ max (baseEnvironmentRegret horizon gap baseFirstExpectedPulls) (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls)"
+    },
+    {
+      "kind": "theorem",
+      "name": "entropy_term_le_codeLength_remainder",
+      "full_name": "BanditRLProof.LowerBounds.entropy_term_le_codeLength_remainder",
+      "file": "BanditRLProof/LowerBounds/CodingEntropyBound.lean",
+      "line": 7,
+      "statement": "theorem entropy_term_le_codeLength_remainder {p : ℝ} (hp : 0 ≤ p) (l : ℕ) : p * Real.log p⁻¹ ≤ p * l * Real.log 2 + (1 / 2 : ℝ) ^ l - p"
+    },
+    {
+      "kind": "theorem",
+      "name": "discreteEntropyBaseTwo_le_expectedCodeLength",
+      "full_name": "BanditRLProof.LowerBounds.discreteEntropyBaseTwo_le_expectedCodeLength",
+      "file": "BanditRLProof/LowerBounds/CodingEntropyBound.lean",
+      "line": 25,
+      "statement": "theorem discreteEntropyBaseTwo_le_expectedCodeLength {Symbol : Type*} [Fintype Symbol] [DecidableEq Symbol] (p : Symbol → ℝ) (hp : ∀ i, 0 ≤ p i) (hsum : ∑ i, p i = 1) (code : BinaryPrefixCode Symbol) : discreteEntropyBaseTwo Finset.univ p ≤ expectedCodeLength p code"
     },
     {
       "kind": "theorem",

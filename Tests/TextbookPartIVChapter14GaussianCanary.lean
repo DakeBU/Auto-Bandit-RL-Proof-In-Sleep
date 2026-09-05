@@ -1,4 +1,4 @@
-import BanditRLProof.LowerBounds.GaussianTesting
+import BanditRLProof
 
 namespace BanditRLProof.TextbookPartIVChapter14GaussianCanary
 
