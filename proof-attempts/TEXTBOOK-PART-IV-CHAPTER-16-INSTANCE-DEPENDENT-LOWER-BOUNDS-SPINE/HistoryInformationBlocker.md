@@ -1,4 +1,4 @@
-# Chapter 16 history-information blocker
+# Chapter 16 history-information blocker (resolved)
 
 Task: `TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE`
 
@@ -10,7 +10,7 @@ history laws by the original-law expected pull count times the changed arm KL.
 Chapter 14 supplies the event-level Bretagnolle--Huber inequality, and Chapter
 15 supplies the exact unit-Gaussian arm KL.
 
-## Blocker
+## Historical blocker
 
 The installed Mathlib theorem `InformationTheory.klDiv_compProd_eq_add`
 leaves its conditional term as the divergence between two composition-product
@@ -19,15 +19,16 @@ pointwise kernel KL. The repository also lacks a canonical finite-history law
 for a possibly randomized nonanticipating policy kernel shared by both
 environments. Its existing policy surfaces do not have the source semantics.
 
-Therefore the one-arm history identity and expected-pull information
-constraint are not available. Theorem 16.2, Lemma 16.3, and Theorem 16.4 remain
-blocked. The compiled Chapter 16 consistency, `d_inf`, Gaussian candidate, and
-log-growth leaves do not discharge this semantic obligation.
+This blocker was resolved by the compiled canonical history-law and
+conditional kernel-KL layers. The one-arm history identity, majority event,
+Bretagnolle--Huber inequality, and gap-event regret charges now compile.
+
+The subsequent finite-mean environment producer now identifies unchanged laws
+with unchanged integral means and supplies the exact gaps needed by Lemma
+16.3. Lemma 16.3 and Theorem 16.4 compile; only Theorem 16.2's asymptotic
+`d_inf`/`liminf` bridge remains blocked.
 
 ## Pivot rule
 
-Continue only by proving the conditional kernel-KL integral and stochastic
-history interface, or by adding transparent general analytic leaves that do
-not assume the blocked bandit conclusion. Do not restrict the source terminal
-to deterministic policies, reverse the KL direction, or pass the history
-information inequality as a premise while labelling the terminal compiled.
+Retained as historical evidence. Future work should use the compiled history
+and finite-mean interfaces and must not reopen this resolved blocker.

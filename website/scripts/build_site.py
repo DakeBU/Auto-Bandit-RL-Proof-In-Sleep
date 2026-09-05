@@ -1054,7 +1054,23 @@ def validate_textbook_spine(
         for name in chapter.get("primary_declarations", []):
             if name not in decl_by_name:
                 raise ValueError(f"primary textbook declaration is not indexed: {name}")
-        if chapter["number"] > 13 and chapter.get("status") == "compiled":
+        if chapter["number"] == 16 and chapter.get("status") == "compiled":
+            required = {
+                "BanditRLProof.LowerBounds.IsConsistentPolicyOver",
+                "BanditRLProof.LowerBounds.oneArmMeanChange_produces_gap_contract",
+                "BanditRLProof.LowerBounds.consistentPolicy_liminf_expectedRegret_div_log_ge",
+                "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_changeOfMeasure",
+                "BanditRLProof.LowerBounds.gaussianExpectedRegret_ge_finiteTimeInstanceDependent",
+            }
+            compiled_names = {
+                item["name"] for item in chapter.get("lean_correspondence", [])
+                if item.get("status") == "compiled"
+            }
+            if (not required.issubset(compiled_names)
+                    or chapter.get("source_theorem", {}).get("status") != "compiled"
+                    or chapter.get("gaps") != []):
+                raise ValueError("Chapter 16 requires all exact source terminals and no main-text gaps")
+        elif chapter["number"] > 13 and chapter.get("status") == "compiled":
             raise ValueError("future Part IV chapters cannot be promoted before their gates")
 
 
@@ -1722,7 +1738,7 @@ def render_primary_textbook_banner() -> str:
   <a class="button compact" href="{PRIMARY_TEXTBOOK_URL}">Open the free textbook <span aria-hidden="true">↗</span></a>
   <dl class="textbook-coverage" aria-label="Current textbook coverage">
     <div><dt>Book Map</dt><dd><strong>{len(SITE_CHAPTERS)} source-mapped routes</strong><span>{chapter_statuses.get('compiled', 0)} canonical cores compiled · {chapter_statuses.get('planned', 0)} planned</span></dd></div>
-    <div><dt>Part IV spine</dt><dd><strong>{spine_terminals.get('compiled', 0)} of {len(spine_chapters)} named terminals compile</strong><span>Chapters 13–17 remain partial as whole chapters</span></dd></div>
+    <div><dt>Part IV spine</dt><dd><strong>{spine_terminals.get('compiled', 0)} of {len(spine_chapters)} named terminals compile</strong><span>Chapter 16 main-text targets compile; other chapter scopes are listed separately</span></dd></div>
     <div><dt>Whole textbook</dt><dd><strong>Not claimed complete</strong><span>Coverage is theorem- and route-specific, with exact gaps on every page</span></dd></div>
   </dl>
 </aside>

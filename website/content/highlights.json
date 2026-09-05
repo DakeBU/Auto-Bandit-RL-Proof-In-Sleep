@@ -1234,7 +1234,7 @@
       "math": "d_{\\inf}(\\mathcal N(\\mu,1),\\mu^*)=\\frac{(\\mu^*-\\mu)^2}{2},\\qquad\\mu<\\mu^*.",
       "intuition": "Every strictly better Gaussian alternative is at least the boundary distance away, while alternatives just above the boundary approach that cost.",
       "why": "This closes the unit-Gaussian row of Table 16.1 instead of recording only one perturbed candidate.",
-      "position": "It is an exact distribution-level dependency; the source's per-arm liminf information constraint and regret terminal remain blocked.",
+      "position": "It is an exact distribution-level dependency of the now-compiled per-arm information constraint and Theorem 16.2 regret terminal.",
       "proof_idea": "Use monotonicity of squared distance for the lower bound, then squeeze positive 1/(n+1) perturbations to zero for the upper bound.",
       "lean_notes": "The strict premise mu<muStar keeps the boundary gap positive. The value stays ENNReal and preserves original-to-alternative KL.",
       "dependencies": [
@@ -1250,7 +1250,7 @@
       "math": "\\tfrac12\\exp(-\\mathbb E_\\nu[T_i(n)]D(P_i\\Vert P_i'))\\le P_\\nu(A)+P_{\\nu'}(A^c),\\quad A=\\{T_i(n)>n/2\\}.",
       "intuition": "If the policy almost never pulls the changed arm, the two history laws remain hard to distinguish, so the majority decision must fail in at least one environment.",
       "why": "This is the exact one-arm event-information layer reused by Lemma 16.3 and the asymptotic route.",
-      "position": "The history KL and event inequality compile and now feed two canonical gap-pseudo-regret event charges; the finite arm-law mean-to-gap identification and source Lemma 16.3 terminal remain separate.",
+      "position": "The history KL and event inequality compile and now feed two canonical gap-pseudo-regret event charges; the finite arm-law mean-to-gap identification and source Lemma 16.3 terminal also compile.",
       "proof_idea": "Specialize Lemma 15.1 to environments equal off arm i, prove the pull-count majority event measurable, and apply Bretagnolle–Huber.",
       "lean_notes": "Both history measures use the same possibly randomized HistoryAlgorithm. Pull expectation and KL direction are under the first environment.",
       "dependencies": [
@@ -1266,7 +1266,7 @@
       "math": "\\mathbb E_{\\nu}[T_i(n)]\\ge\\frac{\\log(\\min\\{\\Delta_i,\\Delta_i'\\}/4)+\\log n-\\log(R_n+R_n')}{D(P_i\\Vert P_i')}.",
       "intuition": "The policy cannot simultaneously avoid the changed arm, keep both expected gap regrets small, and distinguish the two environments. The two event errors are each paid for by an actual gap-times-pull-count expectation.",
       "why": "This closes the common-policy information, exact half-horizon charges, factor-one-quarter assembly, and logarithmic algebra that sit immediately below Lemma 16.3.",
-      "position": "It is a compiled conditional consumer for explicit gap vectors, not the source theorem: Lean still needs an environment contract proving that the vectors are induced by the finite arm-law means and certified optimal arms.",
+      "position": "It is the compiled conditional consumer below the now-compiled finite-mean source Lemma 16.3 terminal.",
       "proof_idea": "Regroup canonical gap pseudo-regret by expected pulls, lower-bound it pathwise on the majority event and its complement, integrate both inequalities, combine with Bretagnolle–Huber, and rearrange the finite positive KL branch.",
       "lean_notes": "The theorem preserves one randomized HistoryAlgorithm, original-to-alternative KL, first-law expected pulls, the inclusive n=lastRound+1 convention, explicit KL finiteness/positivity, and nonnegative gaps.",
       "dependencies": [
@@ -1274,6 +1274,37 @@
         "BanditRLProof.LowerBounds.oneArmMajority_probability_charge_le_expectedPseudoRegret",
         "BanditRLProof.LowerBounds.oneArmMajority_compl_probability_charge_le_expectedPseudoRegret",
         "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_of_exp_testing_bound"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_changeOfMeasure",
+      "chapter": "foundations",
+      "plain": "For finite-mean product bandits that differ at exactly one arm, the original-law expected pull count satisfies the exact Lemma 16.3 logarithmic lower bound.",
+      "math": "\\mathbb E_{\\nu}[T_i(n)]\\ge\\frac{\\log(\\min\\{\\lambda-\\Delta_i(\\nu),\\Delta_i(\\nu)\\}/4)+\\log n-\\log(R_n(\\nu)+R_n(\\nu'))}{D(P_i\\Vert P_i')}.",
+      "intuition": "The finite-mean bridge turns equality of every unchanged law into equality of its mean, so unique optimality after the change supplies exactly the alternative gap needed by the event test.",
+      "why": "This is the first compiled source terminal in Chapter 16's finite-time route and preserves the source minimum, KL direction, original-law pulls, and arbitrary randomized policy.",
+      "position": "Lemma 16.3 and Theorem 16.2 compile, connected by exact horizon indexing and extended-real liminf aggregation.",
+      "proof_idea": "Certify integral means and optimal arms, derive the original gap and changed margin, invoke the canonical majority-event consumer for finite KL, and treat infinite KL by the source x/infinity convention; zero KL contradicts the unequal finite means.",
+      "lean_notes": "The source horizon n is represented by lastRound+1. No deterministic-policy restriction or reversed KL is introduced.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.oneArmMeanChange_produces_gap_contract",
+        "BanditRLProof.LowerBounds.expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed"
+      ]
+    },
+    {
+      "full_name": "BanditRLProof.LowerBounds.gaussianExpectedRegret_ge_finiteTimeInstanceDependent",
+      "chapter": "foundations",
+      "plain": "Under the local C n^p envelope, every unit-variance Gaussian instance satisfies the exact finite-time positive-part lower bound of Theorem 16.4.",
+      "math": "R_n(\\pi,\\nu)\\ge\\frac{2}{(1+\\varepsilon)^2}\\sum_{i:\\Delta_i>0}\\left(\\frac{(1-p)\\log n+\\log(\\varepsilon\\Delta_i/(8C))}{\\Delta_i}\\right)^+.",
+      "intuition": "Raise each suboptimal mean by (1+epsilon) times its gap, use Lemma 16.3 arm by arm, and keep only the nonnegative part before summing.",
+      "why": "The theorem closes the exact local Gaussian finite-time endpoint, including its horizon set, 8C logarithm, factor 2/(1+epsilon)^2, and positive-part placement.",
+      "position": "Theorem 16.4 compiles for unrestricted real Gaussian means. The general unstructured-class Theorem 16.2 also compiles.",
+      "proof_idea": "Prove the shifted mean stays in the coordinatewise local box, compute KL as (1+epsilon)^2 Delta_i^2/2, normalize the two C n^p regrets, multiply by each gap, take a positive part, and sum using the exact regret decomposition.",
+      "lean_notes": "The quantifiers retain a nonempty horizon set N, C>0, p in (0,1), epsilon in (0,1], and n in N.",
+      "dependencies": [
+        "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_changeOfMeasure",
+        "BanditRLProof.LowerBounds.chapter16GaussianChangedEnvironment_armKL",
+        "BanditRLProof.LowerBounds.canonicalGapExpectedPseudoRegretReal_eq_sum_expectedPulls"
       ]
     },
     {

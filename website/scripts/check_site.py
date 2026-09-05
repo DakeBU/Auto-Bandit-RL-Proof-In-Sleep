@@ -1341,7 +1341,7 @@ def main() -> int:
             'class="textbook-coverage"',
             "10 source-mapped routes",
             "9 canonical cores compiled",
-            "3 of 5 named terminals compile",
+            "4 of 5 named terminals compile",
             "Not claimed complete",
         )
         for expectation in coverage_expectations:

@@ -632,10 +632,10 @@ class AnonymousSupplementTests(unittest.TestCase):
             ledger["textbook_chapter_16"]["event_regret_declaration_count"],
             15,
         )
-        self.assertFalse(
+        self.assertTrue(
             ledger["textbook_chapter_16"]["finite_mean_gap_bridge_verified"]
         )
-        self.assertFalse(
+        self.assertTrue(
             ledger["textbook_chapter_16"]["source_terminals_verified"]
         )
         self.assertEqual(
@@ -648,11 +648,11 @@ class AnonymousSupplementTests(unittest.TestCase):
         )
         self.assertEqual(
             ledger["source_records"][BUILDER.CH16_TERMINAL_ID]["status"],
-            "blocked",
+            "compiled",
         )
         self.assertEqual(
-            ledger["source_records"][BUILDER.CH16_TERMINAL_ID]["declarations"],
-            [],
+            set(ledger["source_records"][BUILDER.CH16_TERMINAL_ID]["declarations"]),
+            BUILDER.CH16_FINITE_TIME_TERMINALS,
         )
         succinct_row = next(
             row for row in ledger["table_rows"]
@@ -1371,7 +1371,17 @@ class AnonymousSupplementTests(unittest.TestCase):
         records[BUILDER.CH16_TERMINAL_ID]["declarations"] = [
             "BanditRLProof.LowerBounds.uncompiledChapter16Terminal"
         ]
-        with self.assertRaisesRegex(ValueError, "blocked and declaration-free"):
+        with self.assertRaisesRegex(ValueError, "three compiled source terminals"):
+            BUILDER.validate_ch16_boundary(records)
+
+        records = json.loads(json.dumps(BUILDER.selected_source_records()))
+        records[BUILDER.CH16_TERMINAL_ID]["missing"] = ["Unresolved Theorem 16.2"]
+        with self.assertRaisesRegex(ValueError, "three compiled source terminals"):
+            BUILDER.validate_ch16_boundary(records)
+
+        records = json.loads(json.dumps(BUILDER.selected_source_records()))
+        records[BUILDER.CH16_TERMINAL_ID]["status"] = "partial"
+        with self.assertRaisesRegex(ValueError, "three compiled source terminals"):
             BUILDER.validate_ch16_boundary(records)
 
     def test_public_base_is_replaced_by_anonymous_tree_binding(self):

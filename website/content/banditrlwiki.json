@@ -248,7 +248,7 @@
       "comparison": {
         "status": "asymptotic-matched",
         "gap": "No leading-constant gap in the Bernoulli source model; the local Lean route is a conservative finite-time theorem and does not reach this asymptotic constant.",
-        "note": "The published upper and lower information constants match. Local compilation stops before sharp KL-Chernoff concentration and Chapter 16's source-environment terminals."
+        "note": "The published upper and lower information constants match. Chapter 16's asymptotic and finite-time lower bounds compile; sharp KL-Chernoff concentration for the matching upper constant remains separate."
       },
       "upper": [
         {
@@ -278,7 +278,7 @@
       ],
       "lean": {
         "status": "partial",
-        "scope": "A measurable generated KL-UCB index, all-time confidence event, pull-count bound, and conservative finite-time expected pseudo-regret theorem compile. The sharp source leading constant and Chapter 16 terminals do not.",
+        "scope": "A measurable generated KL-UCB index, all-time confidence event, pull-count bound, and conservative finite-time expected pseudo-regret theorem compile. Chapter 16 Lemma 16.3 and Gaussian Theorem 16.4 compile, as does the asymptotic Theorem 16.2 lower bound; the sharp KL-UCB upper leading constant remains separate.",
         "declarations": [
           "BanditRLProof.KLUCB.bernoulliKL",
           "BanditRLProof.KLUCB.lintegral_ofReal_pseudoRegret_generatedKLUCBBounded_le_trajMeasure",
@@ -290,18 +290,17 @@
           "TEXTBOOK-PART-IV-CH16-SOURCE-TERMINALS"
         ],
         "missing": [
-          "Produce finite arm-law integral means and certified original/changed optima as the explicit gap vectors.",
           "Prove sharp KL-Chernoff confidence inversion and the Garivier–Cappé leading constant.",
-          "Close the zero, finite, and infinite d_inf branches and the liminf extraction for Theorem 16.2."
+          "Use the compiled Theorem 16.2 lower bound when comparing the remaining sharp upper-bound obligations."
         ]
       },
       "frontier": {
         "literature_open": false,
         "formalization_open": true,
-        "question": "Can the compiled gap-vector information consumer be connected to finite-mean source environments and the exact KL-UCB leading constant?",
-        "closest": "The generated conservative KL-UCB route and the exact factor-one-quarter conditional Chapter 16 consumer both compile, but their source-semantic bridge is missing.",
-        "leaf_ids": ["CH16-MEAN-GAP", "CH16-THM-16-2", "CH16-LEMMA-16-3", "CH16-THM-16-4"],
-        "missing": ["Mean-to-gap producer", "d_inf branch analysis", "liminf terminal", "sharp KL-UCB upper constant"]
+        "question": "Can the compiled finite-mean Lemma 16.3 be lifted through d_inf and liminf to the exact KL-UCB leading constant?",
+        "closest": "The generated conservative KL-UCB route and exact Chapter 16 Lemma 16.3 compile; the d_inf-to-liminf bridge and Theorem 16.2 also compile.",
+        "leaf_ids": ["CH16-THM-16-2"],
+        "missing": ["d_inf branch analysis", "liminf terminal", "sharp KL-UCB upper constant"]
       }
     },
     {

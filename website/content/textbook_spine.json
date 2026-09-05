@@ -347,8 +347,8 @@
       "number": 16,
       "slug": "chapter-16-instance-dependent",
       "title": "Instance-Dependent Lower Bounds",
-      "status": "partial",
-      "status_note": "Definition 16.1, Theorem 16.2, Lemma 16.3, and Theorem 16.4 are source-frozen. Twenty analytic/information dependencies and fifteen canonical gap-event/regret declarations compile. The finite-mean arm-law-to-gap identification, liminf extraction, and all three source terminals remain blocked.",
+      "status": "compiled",
+      "status_note": "Definition 16.1, Theorem 16.2, Lemma 16.3, and Theorem 16.4 compile with the source quantifiers, information branches, constants, and positive-part placement.",
       "print_pages": "177–184",
       "pdf_pages": "215–223",
       "pdf_page": 215,
@@ -386,13 +386,13 @@
           "name": "Per-arm asymptotic information constraint",
           "math": "\\liminf_{n\\to\\infty}\\frac{\\mathbb E_{\\nu,\\pi}[T_i(n)]}{\\log n}\\ge\\frac{1}{d_{\\inf}(P_i,\\mu^*,\\mathcal M_i)}.",
           "fallback": "A consistent policy must sample each suboptimal arm at a logarithmic rate set by the cheapest confusing alternative.",
-          "status": "blocked"
+          "status": "compiled"
         },
         {
           "name": "Finite-time Gaussian lower-bound shape",
           "math": "R_n(\\pi,\\nu)\\ge\\frac{2}{(1+\\varepsilon)^2}\\sum_{i:\\Delta_i>0}\\left(\\frac{(1-p)\\log n+\\log(\\varepsilon\\Delta_i/(8C))}{\\Delta_i}\\right)^+.",
           "fallback": "Under the local C times n to the p regret envelope, the Gaussian lower bound sums the positive part of one explicit logarithmic term per suboptimal arm.",
-          "status": "blocked"
+          "status": "compiled"
         }
       ],
       "flow": {
@@ -402,20 +402,20 @@
           {"title": "Freeze consistency", "detail": "Require R_n(pi,nu)/n^p to converge to zero for every environment in the class and every real p>0."},
           {"title": "Choose a confusing alternative", "detail": "Change one suboptimal arm to a law in its component class whose mean is strictly above the original optimal mean and whose original-to-alternative KL approaches d_inf."},
           {"title": "Lift arm KL to history KL", "detail": "Use the compiled one-arm specialization of the one-common-policy Lemma 15.1 identity to obtain the original-law realized expected pull-count cost."},
-          {"title": "Charge both event errors", "detail": "The compiled pathwise and integrated producers charge A to the original changed-arm gap and A-complement to the changed environment's non-changed-arm margin, under the same canonical history laws."},
-          {"title": "Extract the rate", "detail": "Use the compiled consistency power/log leaves, then take the required liminf and sum gap times expected pulls; the bandit terminal remains blocked."},
-          {"title": "Specialize finite time", "detail": "For Theorem 16.4 shift a Gaussian mean by Delta_i(1+epsilon), apply Lemma 16.3, and retain the exact positive part and factor 2/(1+epsilon)^2."}
+          {"title": "Charge both event errors", "detail": "The compiled finite-mean environment producer identifies the original gap and changed optimality margin, closing the exact Lemma 16.3 inequality under the same canonical history laws."},
+          {"title": "Extract the rate", "detail": "Use consistency to bound each alternative cost, aggregate inverse costs with the extended-real inverse-infimum identity, and apply finite-count Fatou to obtain Theorem 16.2."},
+          {"title": "Specialize finite time", "detail": "The compiled Theorem 16.4 shifts a Gaussian mean by Delta_i(1+epsilon), proves local-class membership and exact KL, and retains the positive part and factor 2/(1+epsilon)^2."}
         ]
       },
       "source_theorem": {
         "label": "Definition 16.1, Theorem 16.2, Lemma 16.3, and Theorem 16.4",
-        "status": "blocked",
+        "status": "compiled",
         "math": "\\liminf_{n\\to\\infty}\\frac{R_n(\\pi,\\nu)}{\\log n}\\ge\\sum_{i:\\Delta_i>0}\\frac{\\Delta_i}{d_{\\inf}(P_i,\\mu^*,\\mathcal M_i)},\\qquad R_n(\\pi,\\nu)\\ge\\frac{2}{(1+\\varepsilon)^2}\\sum_{i:\\Delta_i>0}\\left(\\frac{(1-p)\\log n+\\log(\\varepsilon\\Delta_i/(8C))}{\\Delta_i}\\right)^+.",
         "fallback": "A consistent policy pays the source d_inf logarithmic constant on every unstructured instance; under the finite-time local Gaussian envelope, an explicit positive-part lower bound holds at every selected horizon.",
         "plain": "Chapter 16 turns one-arm change of measure into asymptotic and finite-time instance-dependent regret obstructions.",
-        "boundary": "The generic consistency and power/log-growth leaves, exact unit-Gaussian d_inf row, same-policy one-arm history KL, measurable majority event, Bretagnolle–Huber information inequality, canonical gap-times-pull-count expected pseudo-regret, both exact event charges, and the conditional gap-vector logarithmic consumer compile. A source-environment bridge from finite arm-law means to those gap vectors, the exact d_inf-to-liminf bandit bridge, Lemma 16.3, and both regret terminals do not."
+        "boundary": "The finite-mean source-environment bridge, exact Lemma 16.3, and exact unit-variance Gaussian Theorem 16.4 compile on top of the earlier information and event-regret layers. The unstructured-class Theorem 16.2 also compiles, including empty, zero, finite, and infinite information branches."
       },
-      "source_boundary": "The exact Chapter 16 targets are frozen from the official author PDF and CUP metadata. Compiled analytic interfaces are dependencies only and are never promoted to Theorem 16.2, Lemma 16.3, or Theorem 16.4.",
+      "source_boundary": "The exact Chapter 16 targets are frozen from the official author PDF and CUP metadata. All four main-text targets compile; optional exercises and other Table 16.1 families remain outside this completed main-text scope.",
       "lean_correspondence": [
         {"name": "BanditRLProof.LowerBounds.IsConsistentRegret", "status": "compiled", "role": "Exact scalar every-positive-real-power consistency predicate."},
         {"name": "BanditRLProof.LowerBounds.IsConsistentPolicyOver", "status": "compiled", "role": "Generic environment-class wrapper preserving the source quantifier order."},
@@ -436,11 +436,15 @@
         {"name": "BanditRLProof.LowerBounds.canonicalGapExpectedPseudoRegret_eq_sum_expectedPulls", "status": "compiled", "role": "Canonical expected pseudo-regret regrouped as gap times first-law expected pulls for every arm."},
         {"name": "BanditRLProof.LowerBounds.oneArmMajority_probability_charge_le_expectedPseudoRegret", "status": "compiled", "role": "Original-law majority-event probability charged by the positive gap of the changed arm."},
         {"name": "BanditRLProof.LowerBounds.oneArmMajority_compl_probability_charge_le_expectedPseudoRegret", "status": "compiled", "role": "Changed-law complementary event charged by the minimum gap of every non-changed arm."},
-        {"name": "BanditRLProof.LowerBounds.expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed", "status": "compiled", "role": "Exact factor-one-quarter finite-KL logarithmic consumer for explicit nonnegative gap vectors; not the source-environment Lemma 16.3 terminal."},
+        {"name": "BanditRLProof.LowerBounds.expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed", "status": "compiled", "role": "Exact factor-one-quarter finite-KL logarithmic consumer for explicit nonnegative gap vectors."},
         {"name": "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_of_exp_testing_bound", "status": "compiled", "role": "Scalar logarithmic rearrangement used after the source regret/error producers."},
-        {"name": "BanditRLProof.LowerBounds.consistentPolicy_liminf_expectedRegret_div_log_ge", "status": "blocked", "role": "Reserved exact Theorem 16.2 terminal; no declaration is claimed."},
-        {"name": "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_changeOfMeasure", "status": "blocked", "role": "Reserved exact Lemma 16.3 terminal; no declaration is claimed."},
-        {"name": "BanditRLProof.LowerBounds.gaussianExpectedRegret_ge_finiteTimeInstanceDependent", "status": "blocked", "role": "Reserved exact Theorem 16.4 terminal; no declaration is claimed."}
+        {"name": "BanditRLProof.LowerBounds.FiniteMeanBanditEnvironment", "status": "compiled", "role": "Finite arm laws with means certified by Bochner integrals and a certified optimal arm."},
+        {"name": "BanditRLProof.LowerBounds.oneArmMeanChange_produces_gap_contract", "status": "compiled", "role": "Source mean-to-gap producer for one changed arm and a uniquely optimal alternative."},
+        {"name": "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_changeOfMeasure", "status": "compiled", "role": "Exact Lemma 16.3 with original-law pulls, directed KL, and the source minimum."},
+        {"name": "BanditRLProof.LowerBounds.UnitVarianceGaussianBanditEnvironment", "status": "compiled", "role": "Unrestricted real mean vectors for the source unit-variance Gaussian class."},
+        {"name": "BanditRLProof.LowerBounds.gaussianExpectedRegret_ge_finiteTimeInstanceDependent", "status": "compiled", "role": "Exact Theorem 16.4 with local class, horizon set, positive parts, and published constants."},
+        {"name": "BanditRLProof.LowerBounds.consistentPolicy_liminf_expectedRegret_div_log_ge", "status": "compiled", "role": "Exact Theorem 16.2 over finite-mean unstructured classes, with extended-real d_inf and finite-sum liminf."},
+        {"name": "BanditRLProof.LowerBounds.consistentPolicy_liminf_expectedPull_div_log_ge_inv_dInf", "status": "compiled", "role": "Exact per-arm information constraint with all extended-real inverse-infimum branches."}
       ],
       "dependency_nodes": [
         {"id": "ch14", "label": "Chapter 14 event testing", "status": "compiled"},
@@ -451,22 +455,18 @@
         {"id": "history", "label": "one-arm history KL and majority-event information", "status": "compiled"},
         {"id": "scalar", "label": "finite-KL and scalar log assembly", "status": "compiled"},
         {"id": "event-regret", "label": "canonical gap pseudo-regret and both event-error charges", "status": "compiled"},
-        {"id": "mean-gap", "label": "finite arm-law means to source gap vectors", "status": "blocked"},
-        {"id": "asymptotic", "label": "Theorem 16.2 liminf regret terminal", "status": "blocked"},
-        {"id": "finite", "label": "Lemma 16.3 and Theorem 16.4", "status": "blocked"}
+        {"id": "mean-gap", "label": "finite arm-law means to source gap vectors", "status": "compiled"},
+        {"id": "asymptotic", "label": "Theorem 16.2 liminf regret terminal", "status": "compiled"},
+        {"id": "finite", "label": "Lemma 16.3 and Theorem 16.4", "status": "compiled"}
       ],
       "reading_path": [
         "Read Definition 16.1 and verify the order forall environment, forall real p>0.",
         "Read d_inf and Theorem 16.2 with strict alternative mean, original-to-alternative KL, and an unstructured product class.",
         "Trace the source event A={T_i(n)>n/2}, the two regret laws, and the compiled subpolynomial log-growth adapter.",
         "Read Lemma 16.3 before Theorem 16.4 and preserve the unit-Gaussian local class, selected horizon set, constants, and positive part.",
-        "Inspect the compiled gap-times-pull-count event charges and conditional log consumer, then keep the finite-mean environment identification, liminf extraction, and source terminals explicitly blocked."
+        "Inspect the finite-mean producer and all three source terminals; trace exact n-pull horizons, inverse-infimum aggregation, and finite-count Fatou in Theorem 16.2."
       ],
-      "gaps": [
-        "The source-environment bridge from finite arm-law integral means and certified optima to the compiled original/changed gap vectors.",
-        "Theorem 16.2's zero, finite, and infinite d_inf-to-liminf bandit branches.",
-        "Theorem 16.2's per-arm and summed liminf terminal, Lemma 16.3, and Theorem 16.4."
-      ]
+      "gaps": []
     },
     {
       "number": 17,
