@@ -100,3 +100,11 @@ Next scalar route: q=gap^2/delta>=64, use Real.log_div_sqrt_antitoneOn and
 Real.log_div_self_antitoneOn (Log.Monotone), sqrt monotonicity, log_two_lt_d9,
 and pi_lt_d2. Bound log(64)<=17/4 and sqrt(2*pi*log(64))<=21/4;
 the resulting rational bound 119/8 is below 15. No change of source constant.
+Update: `MOSSConstants.largeGap_constant_fifteen` and
+`largeGap_scaled_constant_fifteen` now compile. `MOSSExpectedOccupancy`
+consumes them in `gap_mul_integral_indexExceedanceCount_le`, proving
+gap*E[kappa] <= gap+15/sqrt(delta) under gap>=8*sqrt(delta).
+The proof uses exact rational upper bounds for log(64) and pi, no numerical
+oracle or added axiom. Next required node is actual selected-count transport,
+with complete initialization, count-consistent empirical rewards, optimal-arm
+index controlled by the derived deficit, and the finite-horizon regret split.

@@ -95,3 +95,14 @@ example {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasur
 
 #print axioms MOSS.fixedLogExceedanceCount_eq_fixedRadiusCount
 #print axioms MOSS.integral_indexExceedanceCount_le
+
+example {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) [IsProbabilityMeasure μ]
+    (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ)
+    (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ)
+    (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (hlarge : 8*sqrt δ ≤ gap) (n : ℕ) :
+    gap*(∫ ω, MOSS.indexExceedanceCount (MOSS.streamMean X ω) δ gap n ∂μ) ≤ gap+15/sqrt δ :=
+  MOSS.gap_mul_integral_indexExceedanceCount_le X hXm hind hmean hsubG δ gap hδ hg hlarge n
+
+#print axioms MOSS.largeGap_constant_fifteen
+#print axioms MOSS.largeGap_scaled_constant_fifteen
+#print axioms MOSS.gap_mul_integral_indexExceedanceCount_le

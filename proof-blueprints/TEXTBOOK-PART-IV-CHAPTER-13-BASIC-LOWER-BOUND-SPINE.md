@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE
 
-Generated: `2026-09-05T05:52:51+00:00`
+Generated: `2026-09-05T05:56:29+00:00`
 
 ## Source Task
 
@@ -421,9 +421,8 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH13-TWO-ENV-ALGEBRA` | max of base and changed expressions is at least `Delta*(n-error)/2` under an explicit pull-discrepancy bound | equations (13.2)--(13.3) expressions | real ordered-field algebra, `max`, `nlinarith` | `MLIB-ORDER-ALGEBRA` | show their sum is at least `Delta*(n-error)`, then use max/average | `0 <= Delta`; visible `baseFirstPulls-changedFirstPulls <= error` bridge | project-local | `LowerBounds.baseEnvironmentRegret`, `LowerBounds.changedEnvironmentRegretLowerBound`, `LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error`; zero-error corollary `LowerBounds.max_base_changed_regretLowerBound_ge_half` | focused Lean | compiled |
 | `CH13-HISTORY-TRANSPORT` | same-policy history-law comparison supplies the cross-law event inequality | Chapter 14 information theory and Chapter 15 history KL | compiled Gaussian/history APIs | local declarations; weapon card inspiration only | likelihood ratio, KL chain rule, direction-correct event inequality | measurability, policy consistency, exact KL direction | project-local | `LowerBounds.base_event_probability_lower_bound`, `LowerBounds.changed_complement_probability_lower_bound` | Chapter 15 | compiled |
 
-<!-- 1560 characters omitted from the middle of this snapshot. -->
+<!-- 1916 characters omitted from the middle of this snapshot. -->
 
-| `CH13-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | deterministic gate suite | Windows long-path workaround must not be mistaken for a Lean proof failure | repository | n/a | `python3 tools/bandit.py check` | baseline verified; exact-bound extension pending |
 | `CH13-EVIDENCE-SITE` | proof export, indexes, readings/highlights/results/implementation map/README and Part IV site agree | local full gate | harness and website scripts | repository | generated evidence plus maintained source data | only gate-passing declarations marked compiled | repository | n/a | lean-verified build/site check/browser review | baseline verified; exact-bound extension pending |
 | `CH13-REVIEW` | structured in-branch source/theorem/Lean/evidence consistency audit | all local artifacts | source, declarations, generated site | all above | check source inventory, quantifiers, probability-law direction, regularity, status labels, and order claims | no unresolved P0--P3; website-status-enum P3 corrected | repository | n/a | review | baseline verified; exact-bound extension pending |
 | `CH13-REMOTE` | current Chapter 15 downstream extension PR, Actions, Pages deployment and live Chapter 13 verification | accepted local chapter; earlier dependency-slice PR is historical evidence only | GitHub/Pages workflow | repository | branch PR; never direct push to main | remote state must be current | repository | n/a | remote deployment | pending current extension |
@@ -459,9 +458,15 @@ in the dated integration review. New MOSS additions require a fresh gate.
 - `integral_optimismDeficit_le_two_sqrt` derives the numerical expected
   deficit bound from the tail, with integrability proved from MGF contracts.
   `twice_horizon_mul_integral_optimismDeficit_le` gives the printed
-  16*sqrt(n*k) contribution. These later expectation additions require
-  fresh full integration. Large-gap occupancy (Lemma 8.2 route), actual
-  arm-stream instantiation, and concrete regret assembly remain open.
+  16*sqrt(n*k) contribution. Full integration through `783d436` passed,
+  including 400 Python tests (7 skipped). Subsequent additions require a fresh gate.
+- `Concentration.integral_fixedRadiusCount_le` proves the source Lemma 8.2
+  expected-count conclusion from independent centered unit-subgaussian coordinates.
+  `MOSS.gap_mul_integral_indexExceedanceCount_le` now gives the source
+  gap*E[kappa] <= gap+15/sqrt(delta) under gap>=8*sqrt(delta), using the
+  actual variable-radius exceedance count. This is not yet a bound on the
+  selected-arm pull count. Actual arm-stream instantiation, selected-count
+  transport and concrete regret assembly remain open.
 
 - `MOSS.logPlus`, `radius`, `index`, `action`: exact source index and
   zero-based initialization; `radius_sq` retains the factor four.
@@ -33557,11 +33562,35 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "statement": "theorem selected_index_gt_mean_add_half_gap {k : \u2115} (hk : 0 < k) (n t : \u2115) (mean empiricalMean : Fin k \u2192 \u211d) (pulls : Fin k \u2192 \u2115) (best chosen : Fin k) (deficit : \u211d) (ht : k \u2264 t) (hselected : action hk n t empiricalMean pulls = chosen) (hoptimism : mean best - deficit \u2264 index n empiricalMean pulls best) (hgap : 2 * deficit < mean best - mean chosen) : mean chosen + (mean best - mean chosen) / 2 < index n empiricalMean pulls chosen"
   },
   {
+    "kind": "theorem",
+    "name": "log_sixtyFour_le",
+    "full_name": "BanditRLProof.MOSS.log_sixtyFour_le",
+    "file": "BanditRLProof/Algorithms/MOSSConstants.lean",
+    "line": 11,
+    "statement": "theorem log_sixtyFour_le : log (64 : \u211d) \u2264 17/4"
+  },
+  {
+    "kind": "theorem",
+    "name": "largeGap_constant_fifteen",
+    "full_name": "BanditRLProof.MOSS.largeGap_constant_fifteen",
+    "file": "BanditRLProof/Algorithms/MOSSConstants.lean",
+    "line": 17,
+    "statement": "theorem largeGap_constant_fifteen (q : \u211d) (hq : 64 \u2264 q) : (1+8*(2*log q+sqrt (Real.pi*(2*log q))+1))/sqrt q \u2264 15"
+  },
+  {
+    "kind": "theorem",
+    "name": "largeGap_scaled_constant_fifteen",
+    "full_name": "BanditRLProof.MOSS.largeGap_scaled_constant_fifteen",
+    "file": "BanditRLProof/Algorithms/MOSSConstants.lean",
+    "line": 54,
+    "statement": "theorem largeGap_scaled_constant_fifteen (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) (hlarge : 8*sqrt \u03b4 \u2264 gap) : gap*(1/gap^2+1+(8/gap^2)*(2*logPlus (gap^2/\u03b4)+ sqrt (Real.pi*(2*logPlus (gap^2/\u03b4)))+1)) \u2264 gap+15/sqrt \u03b4"
+  },
+  {
     "kind": "def",
     "name": "streamMean",
     "full_name": "BanditRLProof.MOSS.streamMean",
     "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
-    "line": 9,
+    "line": 10,
     "statement": "def streamMean (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03c9 : \u03a9) (s : \u2115) : \u211d"
   },
   {
@@ -33569,7 +33598,7 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "fixedLogExceedanceCount_eq_fixedRadiusCount",
     "full_name": "BanditRLProof.MOSS.fixedLogExceedanceCount_eq_fixedRadiusCount",
     "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
-    "line": 11,
+    "line": 12,
     "statement": "theorem fixedLogExceedanceCount_eq_fixedRadiusCount (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03b4 gap : \u211d) (n : \u2115) (\u03c9 : \u03a9) : fixedLogExceedanceCount (streamMean X \u03c9) \u03b4 gap n = Concentration.fixedRadiusCount X (2*logPlus (gap^2/\u03b4)) (gap/2) n \u03c9"
   },
   {
@@ -33577,8 +33606,16 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "name": "integral_indexExceedanceCount_le",
     "full_name": "BanditRLProof.MOSS.integral_indexExceedanceCount_le",
     "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
-    "line": 23,
+    "line": 24,
     "statement": "theorem integral_indexExceedanceCount_le (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) (hlarge : \u03b4 < gap^2) (n : \u2115) : (\u222b \u03c9, indexExceedanceCount (streamMean X \u03c9) \u03b4 gap n \u2202\u03bc) \u2264 1/gap^2 + 1 + (8/gap^2)*(2*logPlus (gap^2/\u03b4)+sqrt (Real.pi*(2*logPlus (gap^2/\u03b4)))+1)"
+  },
+  {
+    "kind": "theorem",
+    "name": "gap_mul_integral_indexExceedanceCount_le",
+    "full_name": "BanditRLProof.MOSS.gap_mul_integral_indexExceedanceCount_le",
+    "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
+    "line": 56,
+    "statement": "theorem gap_mul_integral_indexExceedanceCount_le (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) (hlarge : 8*sqrt \u03b4 \u2264 gap) (n : \u2115) : gap*(\u222b \u03c9, indexExceedanceCount (streamMean X \u03c9) \u03b4 gap n \u2202\u03bc) \u2264 gap+15/sqrt \u03b4"
   },
   {
     "kind": "def",
@@ -96496,6 +96533,42 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "target_fingerprint": "",
     "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
     "time": "2026-09-05T05:49:38+00:00",
+    "verifier_evidence": [],
+    "worker_id": ""
+  },
+  {
+    "attempt_id": "",
+    "changed_files": [],
+    "dag_depth": 0,
+    "dag_nodes": 0,
+    "elapsed_seconds": 0.0,
+    "error_signature": "",
+    "experiment_id": "",
+    "harness": "",
+    "input_tokens": 0,
+    "kind": "build",
+    "lean": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
+    "lean_check_seconds": 0.0,
+    "new_declarations": [],
+    "notes": "MOSS fixed-log substitution and variable-radius count expectation with inverse-gap correction compiled; integrable fixed count producer. Canary 3520 jobs baseline axioms. Numerical constant 15 and actual selected-count connection remain pending.",
+    "obligations_after": 0,
+    "obligations_before": 0,
+    "output_tokens": 0,
+    "parent_id": "",
+    "progress_class": "compiled-leaf",
+    "prompt_chars": 0,
+    "reused_declarations": [],
+    "reviewer_validated": false,
+    "role": "lower",
+    "route_fingerprint": "",
+    "route_packet_hash": "",
+    "run_id": "",
+    "source": "",
+    "statement_hash": "",
+    "status": "compiled",
+    "target_fingerprint": "",
+    "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+    "time": "2026-09-05T05:53:45+00:00",
     "verifier_evidence": [],
     "worker_id": ""
   }

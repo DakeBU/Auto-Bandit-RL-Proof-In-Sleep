@@ -1,5 +1,6 @@
 import BanditRLProof.Algorithms.MOSSOccupancy
 import BanditRLProof.ConcentrationIndexOccupancy
+import BanditRLProof.Algorithms.MOSSConstants
 
 noncomputable section
 open MeasureTheory ProbabilityTheory Real Finset
@@ -50,5 +51,19 @@ theorem integral_indexExceedanceCount_le (X : ℕ → Ω → ℝ)
   have he : 2/(gap/2)^2 = 8/gap^2 := by ring
   rw [he] at hb
   linarith
+
+/-- Source large-gap weighted occupancy bound, before selected-count transport. -/
+theorem gap_mul_integral_indexExceedanceCount_le (X : ℕ → Ω → ℝ)
+    (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ)
+    (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ)
+    (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (hlarge : 8*sqrt δ ≤ gap) (n : ℕ) :
+    gap*(∫ ω, indexExceedanceCount (streamMean X ω) δ gap n ∂μ) ≤ gap+15/sqrt δ := by
+  have hlg : δ < gap^2 := by
+    have hs := sq_sqrt hδ.le
+    have hn := sqrt_nonneg δ
+    nlinarith [sq_nonneg (gap-8*sqrt δ)]
+  exact (mul_le_mul_of_nonneg_left
+    (integral_indexExceedanceCount_le X hXm hind hmean hsubG δ gap hδ hg hlg n) hg.le).trans
+      (largeGap_scaled_constant_fifteen δ gap hδ hg hlarge)
 
 end BanditRLProof.MOSS

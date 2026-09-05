@@ -58,9 +58,15 @@ in the dated integration review. New MOSS additions require a fresh gate.
 - `integral_optimismDeficit_le_two_sqrt` derives the numerical expected
   deficit bound from the tail, with integrability proved from MGF contracts.
   `twice_horizon_mul_integral_optimismDeficit_le` gives the printed
-  16*sqrt(n*k) contribution. These later expectation additions require
-  fresh full integration. Large-gap occupancy (Lemma 8.2 route), actual
-  arm-stream instantiation, and concrete regret assembly remain open.
+  16*sqrt(n*k) contribution. Full integration through `783d436` passed,
+  including 400 Python tests (7 skipped). Subsequent additions require a fresh gate.
+- `Concentration.integral_fixedRadiusCount_le` proves the source Lemma 8.2
+  expected-count conclusion from independent centered unit-subgaussian coordinates.
+  `MOSS.gap_mul_integral_indexExceedanceCount_le` now gives the source
+  gap*E[kappa] <= gap+15/sqrt(delta) under gap>=8*sqrt(delta), using the
+  actual variable-radius exceedance count. This is not yet a bound on the
+  selected-arm pull count. Actual arm-stream instantiation, selected-count
+  transport and concrete regret assembly remain open.
 
 - `MOSS.logPlus`, `radius`, `index`, `action`: exact source index and
   zero-based initialization; `radius_sq` retains the factor four.

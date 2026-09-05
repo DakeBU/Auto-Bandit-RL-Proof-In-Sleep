@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
-  "generated": "2026-09-05T05:52:58+00:00",
+  "generated": "2026-09-05T05:56:36+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -32461,11 +32461,35 @@
       "statement": "theorem selected_index_gt_mean_add_half_gap {k : ℕ} (hk : 0 < k) (n t : ℕ) (mean empiricalMean : Fin k → ℝ) (pulls : Fin k → ℕ) (best chosen : Fin k) (deficit : ℝ) (ht : k ≤ t) (hselected : action hk n t empiricalMean pulls = chosen) (hoptimism : mean best - deficit ≤ index n empiricalMean pulls best) (hgap : 2 * deficit < mean best - mean chosen) : mean chosen + (mean best - mean chosen) / 2 < index n empiricalMean pulls chosen"
     },
     {
+      "kind": "theorem",
+      "name": "log_sixtyFour_le",
+      "full_name": "BanditRLProof.MOSS.log_sixtyFour_le",
+      "file": "BanditRLProof/Algorithms/MOSSConstants.lean",
+      "line": 11,
+      "statement": "theorem log_sixtyFour_le : log (64 : ℝ) ≤ 17/4"
+    },
+    {
+      "kind": "theorem",
+      "name": "largeGap_constant_fifteen",
+      "full_name": "BanditRLProof.MOSS.largeGap_constant_fifteen",
+      "file": "BanditRLProof/Algorithms/MOSSConstants.lean",
+      "line": 17,
+      "statement": "theorem largeGap_constant_fifteen (q : ℝ) (hq : 64 ≤ q) : (1+8*(2*log q+sqrt (Real.pi*(2*log q))+1))/sqrt q ≤ 15"
+    },
+    {
+      "kind": "theorem",
+      "name": "largeGap_scaled_constant_fifteen",
+      "full_name": "BanditRLProof.MOSS.largeGap_scaled_constant_fifteen",
+      "file": "BanditRLProof/Algorithms/MOSSConstants.lean",
+      "line": 54,
+      "statement": "theorem largeGap_scaled_constant_fifteen (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (hlarge : 8*sqrt δ ≤ gap) : gap*(1/gap^2+1+(8/gap^2)*(2*logPlus (gap^2/δ)+ sqrt (Real.pi*(2*logPlus (gap^2/δ)))+1)) ≤ gap+15/sqrt δ"
+    },
+    {
       "kind": "def",
       "name": "streamMean",
       "full_name": "BanditRLProof.MOSS.streamMean",
       "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
-      "line": 9,
+      "line": 10,
       "statement": "def streamMean (X : ℕ → Ω → ℝ) (ω : Ω) (s : ℕ) : ℝ"
     },
     {
@@ -32473,7 +32497,7 @@
       "name": "fixedLogExceedanceCount_eq_fixedRadiusCount",
       "full_name": "BanditRLProof.MOSS.fixedLogExceedanceCount_eq_fixedRadiusCount",
       "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
-      "line": 11,
+      "line": 12,
       "statement": "theorem fixedLogExceedanceCount_eq_fixedRadiusCount (X : ℕ → Ω → ℝ) (δ gap : ℝ) (n : ℕ) (ω : Ω) : fixedLogExceedanceCount (streamMean X ω) δ gap n = Concentration.fixedRadiusCount X (2*logPlus (gap^2/δ)) (gap/2) n ω"
     },
     {
@@ -32481,8 +32505,16 @@
       "name": "integral_indexExceedanceCount_le",
       "full_name": "BanditRLProof.MOSS.integral_indexExceedanceCount_le",
       "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
-      "line": 23,
+      "line": 24,
       "statement": "theorem integral_indexExceedanceCount_le (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (hlarge : δ < gap^2) (n : ℕ) : (∫ ω, indexExceedanceCount (streamMean X ω) δ gap n ∂μ) ≤ 1/gap^2 + 1 + (8/gap^2)*(2*logPlus (gap^2/δ)+sqrt (Real.pi*(2*logPlus (gap^2/δ)))+1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gap_mul_integral_indexExceedanceCount_le",
+      "full_name": "BanditRLProof.MOSS.gap_mul_integral_indexExceedanceCount_le",
+      "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
+      "line": 56,
+      "statement": "theorem gap_mul_integral_indexExceedanceCount_le (X : ℕ → Ω → ℝ) (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ) (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ) (δ gap : ℝ) (hδ : 0 < δ) (hg : 0 < gap) (hlarge : 8*sqrt δ ≤ gap) (n : ℕ) : gap*(∫ ω, indexExceedanceCount (streamMean X ω) δ gap n ∂μ) ≤ gap+15/sqrt δ"
     },
     {
       "kind": "def",
@@ -95395,6 +95427,42 @@
       "target_fingerprint": "",
       "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
       "time": "2026-09-05T05:49:38+00:00",
+      "verifier_evidence": [],
+      "worker_id": ""
+    },
+    {
+      "attempt_id": "",
+      "changed_files": [],
+      "dag_depth": 0,
+      "dag_nodes": 0,
+      "elapsed_seconds": 0.0,
+      "error_signature": "",
+      "experiment_id": "",
+      "harness": "",
+      "input_tokens": 0,
+      "kind": "build",
+      "lean": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
+      "lean_check_seconds": 0.0,
+      "new_declarations": [],
+      "notes": "MOSS fixed-log substitution and variable-radius count expectation with inverse-gap correction compiled; integrable fixed count producer. Canary 3520 jobs baseline axioms. Numerical constant 15 and actual selected-count connection remain pending.",
+      "obligations_after": 0,
+      "obligations_before": 0,
+      "output_tokens": 0,
+      "parent_id": "",
+      "progress_class": "compiled-leaf",
+      "prompt_chars": 0,
+      "reused_declarations": [],
+      "reviewer_validated": false,
+      "role": "lower",
+      "route_fingerprint": "",
+      "route_packet_hash": "",
+      "run_id": "",
+      "source": "",
+      "statement_hash": "",
+      "status": "compiled",
+      "target_fingerprint": "",
+      "task": "TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE",
+      "time": "2026-09-05T05:53:45+00:00",
       "verifier_evidence": [],
       "worker_id": ""
     }

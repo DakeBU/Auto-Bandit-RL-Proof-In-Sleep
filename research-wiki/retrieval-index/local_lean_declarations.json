@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T05:52:35+00:00",
+  "generated": "2026-09-05T05:56:23+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -3450,11 +3450,35 @@
       "statement": "theorem selected_index_gt_mean_add_half_gap {k : \u2115} (hk : 0 < k) (n t : \u2115) (mean empiricalMean : Fin k \u2192 \u211d) (pulls : Fin k \u2192 \u2115) (best chosen : Fin k) (deficit : \u211d) (ht : k \u2264 t) (hselected : action hk n t empiricalMean pulls = chosen) (hoptimism : mean best - deficit \u2264 index n empiricalMean pulls best) (hgap : 2 * deficit < mean best - mean chosen) : mean chosen + (mean best - mean chosen) / 2 < index n empiricalMean pulls chosen"
     },
     {
+      "kind": "theorem",
+      "name": "log_sixtyFour_le",
+      "full_name": "BanditRLProof.MOSS.log_sixtyFour_le",
+      "file": "BanditRLProof/Algorithms/MOSSConstants.lean",
+      "line": 11,
+      "statement": "theorem log_sixtyFour_le : log (64 : \u211d) \u2264 17/4"
+    },
+    {
+      "kind": "theorem",
+      "name": "largeGap_constant_fifteen",
+      "full_name": "BanditRLProof.MOSS.largeGap_constant_fifteen",
+      "file": "BanditRLProof/Algorithms/MOSSConstants.lean",
+      "line": 17,
+      "statement": "theorem largeGap_constant_fifteen (q : \u211d) (hq : 64 \u2264 q) : (1+8*(2*log q+sqrt (Real.pi*(2*log q))+1))/sqrt q \u2264 15"
+    },
+    {
+      "kind": "theorem",
+      "name": "largeGap_scaled_constant_fifteen",
+      "full_name": "BanditRLProof.MOSS.largeGap_scaled_constant_fifteen",
+      "file": "BanditRLProof/Algorithms/MOSSConstants.lean",
+      "line": 54,
+      "statement": "theorem largeGap_scaled_constant_fifteen (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) (hlarge : 8*sqrt \u03b4 \u2264 gap) : gap*(1/gap^2+1+(8/gap^2)*(2*logPlus (gap^2/\u03b4)+ sqrt (Real.pi*(2*logPlus (gap^2/\u03b4)))+1)) \u2264 gap+15/sqrt \u03b4"
+    },
+    {
       "kind": "def",
       "name": "streamMean",
       "full_name": "BanditRLProof.MOSS.streamMean",
       "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
-      "line": 9,
+      "line": 10,
       "statement": "def streamMean (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03c9 : \u03a9) (s : \u2115) : \u211d"
     },
     {
@@ -3462,7 +3486,7 @@
       "name": "fixedLogExceedanceCount_eq_fixedRadiusCount",
       "full_name": "BanditRLProof.MOSS.fixedLogExceedanceCount_eq_fixedRadiusCount",
       "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
-      "line": 11,
+      "line": 12,
       "statement": "theorem fixedLogExceedanceCount_eq_fixedRadiusCount (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (\u03b4 gap : \u211d) (n : \u2115) (\u03c9 : \u03a9) : fixedLogExceedanceCount (streamMean X \u03c9) \u03b4 gap n = Concentration.fixedRadiusCount X (2*logPlus (gap^2/\u03b4)) (gap/2) n \u03c9"
     },
     {
@@ -3470,8 +3494,16 @@
       "name": "integral_indexExceedanceCount_le",
       "full_name": "BanditRLProof.MOSS.integral_indexExceedanceCount_le",
       "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
-      "line": 23,
+      "line": 24,
       "statement": "theorem integral_indexExceedanceCount_le (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) (hlarge : \u03b4 < gap^2) (n : \u2115) : (\u222b \u03c9, indexExceedanceCount (streamMean X \u03c9) \u03b4 gap n \u2202\u03bc) \u2264 1/gap^2 + 1 + (8/gap^2)*(2*logPlus (gap^2/\u03b4)+sqrt (Real.pi*(2*logPlus (gap^2/\u03b4)))+1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gap_mul_integral_indexExceedanceCount_le",
+      "full_name": "BanditRLProof.MOSS.gap_mul_integral_indexExceedanceCount_le",
+      "file": "BanditRLProof/Algorithms/MOSSExpectedOccupancy.lean",
+      "line": 56,
+      "statement": "theorem gap_mul_integral_indexExceedanceCount_le (X : \u2115 \u2192 \u03a9 \u2192 \u211d) (hXm : \u2200 i, StronglyMeasurable (X i)) (hind : iIndepFun X \u03bc) (hmean : \u2200 i, \u222b \u03c9, X i \u03c9 \u2202\u03bc = 0) (hsubG : \u2200 i, HasSubgaussianMGF (X i) 1 \u03bc) (\u03b4 gap : \u211d) (h\u03b4 : 0 < \u03b4) (hg : 0 < gap) (hlarge : 8*sqrt \u03b4 \u2264 gap) (n : \u2115) : gap*(\u222b \u03c9, indexExceedanceCount (streamMean X \u03c9) \u03b4 gap n \u2202\u03bc) \u2264 gap+15/sqrt \u03b4"
     },
     {
       "kind": "def",
