@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T07:35:21+00:00`
+Generated: `2026-09-05T07:52:24+00:00`
 
 ## Source Task
 
@@ -85,11 +85,7 @@ Exact evidence is tracked in the arithmetic-identity and boxed-code audits.
 
 Optional rows are §14.3 Notes, §14.4 Bibliographic Remarks, and Exercises
 
-<!-- 3160 characters omitted from the middle of this snapshot. -->
-
-page are verified before this task becomes accepted.
-
-## 2026-09-04 whole-body extension local evidence
+<!-- 3266 characters omitted from the middle of this snapshot. -->
 
 - Detached short-path checkout `C:\a14` at `50dce67` passed the 2,670-job
   focused information-theory build, the root-import Chapter 14 typed canary,
@@ -176,8 +172,10 @@ compiled status.
 
 ## Nonclaims and failure policy
 
-- The §14.1 typed code/entropy surface and Kraft adapter compile, but neither
-  Huffman optimality nor the finite/block source-coding theorem is claimed.
+- Huffman global optimality, its entropy sandwich, and finite/block source
+  coding compile under the explicit nonempty-word convention. Arithmetic
+  coding is an exact-real classical construction, not an executable encoder.
+  These proofs alone do not establish completion of the whole-body review.
 - The full sub-sigma-algebra data-processing Exercise 14.10 compiles as
   `relativeEntropy_trim_le`; the event theorem remains a distinct specialization.
 - The adaptive-bandit divergence decomposition is Chapter 15, not Chapter 14.
@@ -320,7 +318,7 @@ with `D(Q,P)` is also valid.
 | `CH14-HISTORY-KL` | same-policy adaptive history decomposition | kernel chain rule plus policy/history model | `banditHistoryRelativeEntropy_eq_expectedPulls_sum` | compiled Chapter 15 | Chapter 15 | compiled outside Chapter 14 gate |
 | `CH14-TYPED-CANARY` | full conclusions including finite and singular examples | all compiled declarations | `Tests/TextbookPartIVChapter14Canary.lean` | project-local | Tests | verified |
 | `CH14-LOCAL-FULL-GATE` | focused/root/Tests/placeholder/full harness gates | all compiled local nodes | Lake and `tools/bandit.py` | repository | full check | verified locally |
-| `CH14-EVIDENCE-SITE` | task/DAG/export/index/site agreement | compiled chapter surface | repository artifacts | repository | lean-verified/site/browser | historical §14.2 verified; expanded-body local site check passed in 8578e2a, browser/current publication not yet verified |
+| `CH14-EVIDENCE-SITE` | task/DAG/export/index/site agreement | compiled chapter surface | repository artifacts | repository | lean-verified/site/browser | expanded-body static check passed at 7b5b5f4; targeted desktop and mouse/keyboard anchors verified at 24aa742; current remote publication unverified |
 | `CH14-REVIEW` | independent source/Lean/evidence audit | all local artifacts | review record | repository | independent review | historical §14.2 only; expanded-body completion audit remains open |
 | `CH14-REMOTE` | PR, main Actions, Pages and live page | accepted local chapter | PR #11; run `31949303227`; Pages job `95172626370`; live desktop/mobile | repository | deployment | verified for the historical §14.2 milestone; the 2026-09-04 extension awaits its own PR |
 

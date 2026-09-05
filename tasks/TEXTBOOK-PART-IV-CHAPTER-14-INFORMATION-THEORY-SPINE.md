@@ -236,8 +236,10 @@ compiled status.
 
 ## Nonclaims and failure policy
 
-- The §14.1 typed code/entropy surface and Kraft adapter compile, but neither
-  Huffman optimality nor the finite/block source-coding theorem is claimed.
+- Huffman global optimality, its entropy sandwich, and finite/block source
+  coding compile under the explicit nonempty-word convention. Arithmetic
+  coding is an exact-real classical construction, not an executable encoder.
+  These proofs alone do not establish completion of the whole-body review.
 - The full sub-sigma-algebra data-processing Exercise 14.10 compiles as
   `relativeEntropy_trim_le`; the event theorem remains a distinct specialization.
 - The adaptive-bandit divergence decomposition is Chapter 15, not Chapter 14.

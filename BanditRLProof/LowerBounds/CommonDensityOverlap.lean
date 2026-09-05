@@ -151,6 +151,25 @@ theorem commonDensityOverlap_eq_testingError
       rw [Measure.setIntegral_toReal_rnDeriv hP A,
         Measure.setIntegral_toReal_rnDeriv hQ Aᶜ]
 
+/-- The overlap is no larger than the testing error of any measurable event. -/
+theorem commonDensityOverlap_le_testingError
+    {α : Type*} [MeasurableSpace α] (P Q μ : Measure α)
+    [IsFiniteMeasure P] [IsFiniteMeasure Q] [SigmaFinite μ]
+    (hP : P ≪ μ) (hQ : Q ≪ μ) {A : Set α} (hA : MeasurableSet A) :
+    commonDensityOverlap P Q μ ≤ P.real A + Q.real Aᶜ := by
+  rw [commonDensityOverlap, ← integral_add_compl hA (integrable_min_commonDensity P Q μ)]
+  calc
+    _ ≤ (∫ x in A, (P.rnDeriv μ x).toReal ∂μ) +
+        ∫ x in Aᶜ, (Q.rnDeriv μ x).toReal ∂μ := by
+      apply add_le_add
+      · exact integral_mono (integrable_min_commonDensity P Q μ).integrableOn
+          Measure.integrable_toReal_rnDeriv.integrableOn (fun x => min_le_left _ _)
+      · exact integral_mono (integrable_min_commonDensity P Q μ).integrableOn
+          Measure.integrable_toReal_rnDeriv.integrableOn (fun x => min_le_right _ _)
+    _ = _ := by
+      rw [Measure.setIntegral_toReal_rnDeriv hP A,
+        Measure.setIntegral_toReal_rnDeriv hQ Aᶜ]
+
 /-- Eq. (14.8): the measure overlap is bounded below by the BH exponential scale. -/
 theorem bretagnolleHuberScale_le_commonDensityOverlap
     {α : Type*} [MeasurableSpace α] (P Q μ : Measure α)
