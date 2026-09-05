@@ -1707,6 +1707,7 @@ def render_primary_textbook_banner() -> str:
     chapter_statuses = Counter(chapter["status"] for chapter in SITE_CHAPTERS)
     source = SITE_TEXTBOOK_SPINE["canonical_source"]
     spine_chapters = SITE_TEXTBOOK_SPINE.get("chapters", [])
+    spine_contracts = sum(chapter.get("status") == "compiled" for chapter in spine_chapters)
     spine_terminals = Counter(
         chapter.get("source_theorem", {}).get("status", "unrecorded")
         for chapter in spine_chapters
@@ -1722,7 +1723,7 @@ def render_primary_textbook_banner() -> str:
   <a class="button compact" href="{PRIMARY_TEXTBOOK_URL}">Open the free textbook <span aria-hidden="true">↗</span></a>
   <dl class="textbook-coverage" aria-label="Current textbook coverage">
     <div><dt>Book Map</dt><dd><strong>{len(SITE_CHAPTERS)} source-mapped routes</strong><span>{chapter_statuses.get('compiled', 0)} canonical cores compiled · {chapter_statuses.get('planned', 0)} planned</span></dd></div>
-    <div><dt>Part IV spine</dt><dd><strong>{spine_terminals.get('compiled', 0)} of {len(spine_chapters)} named terminals compile</strong><span>Chapters 13–17 remain partial as whole chapters</span></dd></div>
+    <div><dt>Part IV spine</dt><dd><strong>{spine_terminals.get('compiled', 0)} of {len(spine_chapters)} named terminals compile</strong><span>{spine_contracts} of {len(spine_chapters)} chapter contracts compiled; see each chapter's exact scope</span></dd></div>
     <div><dt>Whole textbook</dt><dd><strong>Not claimed complete</strong><span>Coverage is theorem- and route-specific, with exact gaps on every page</span></dd></div>
   </dl>
 </aside>

@@ -28,6 +28,17 @@ verification remain unverified. Do not promote the chapter yet.
 
 ## Latest merged-tree verdict
 
+Publication follow-up: the primary textbook banner now derives the count
+of compiled chapter contracts from chapter status records, rather than
+hard-coding that Chapters 13--17 all remain partial. The site checker
+requires this derived count. An in-memory regression exercise verified
+both zero and one compiled contracts without changing the source JSON;
+all five chapter records remain partial at this stage. Python syntax
+checks passed. This prepares consistent status reporting, not an early
+promotion or proof-status change. The verified local rebuild and full
+site check passed (686 pages, 632 modules, 8453 declarations, 118 highlights,
+valid internal links and formula fallbacks); Lean sources were unchanged.
+
 Full `python tools/bandit.py check` at e218fc8 completed successfully in
 the clean short validation worktree C:/abrl13-d9682b8 (session 5092,
 exit 0): library 8880 jobs, Tests 8927 jobs, ProofGraphExport and 400 Python
