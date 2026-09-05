@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T06:30:55+00:00`
+Generated: `2026-09-05T06:33:23+00:00`
 
 ## Source Task
 
@@ -58484,6 +58484,94 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
     "line": 379,
     "statement": "theorem klDiv_historyStep_samePolicy_eq_iterated_lintegral_armKL_general {History Reward : Type*} {K : Nat} [MeasurableSpace History] [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (historyLaw : Measure History) [IsFiniteMeasure historyLaw] (policy : Kernel History (Fin K)) [IsMarkovKernel policy] (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] : InformationTheory.klDiv (historyLaw \u2297\u2098 (policy \u2297\u2096 armLaw.comap Prod.snd measurable_snd)) (historyLaw \u2297\u2098 (policy \u2297\u2096 referenceArmLaw.comap Prod.snd measurable_snd)) = \u222b\u207b history, \u222b\u207b arm, InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm) \u2202policy history \u2202historyLaw"
+  },
+  {
+    "kind": "def",
+    "name": "binaryAddressValue",
+    "full_name": "BanditRLProof.LowerBounds.binaryAddressValue",
+    "file": "BanditRLProof/LowerBounds/DyadicAddresses.lean",
+    "line": 6,
+    "statement": "def binaryAddressValue : List Bool \u2192 \u2115 | [] => 0 | b :: w => (if b then 2 ^ w.length else 0) + binaryAddressValue w"
+  },
+  {
+    "kind": "theorem",
+    "name": "binaryAddressValue_lt",
+    "full_name": "BanditRLProof.LowerBounds.binaryAddressValue_lt",
+    "file": "BanditRLProof/LowerBounds/DyadicAddresses.lean",
+    "line": 10,
+    "statement": "theorem binaryAddressValue_lt (w : List Bool) : binaryAddressValue w < 2 ^ w.length"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_binaryAddress",
+    "full_name": "BanditRLProof.LowerBounds.exists_binaryAddress",
+    "file": "BanditRLProof/LowerBounds/DyadicAddresses.lean",
+    "line": 18,
+    "statement": "theorem exists_binaryAddress (n m : \u2115) (hm : m < 2 ^ n) : \u2203 w : List Bool, w.length = n \u2227 binaryAddressValue w = m"
+  },
+  {
+    "kind": "theorem",
+    "name": "binaryAddressValue_append",
+    "full_name": "BanditRLProof.LowerBounds.binaryAddressValue_append",
+    "file": "BanditRLProof/LowerBounds/DyadicAddresses.lean",
+    "line": 36,
+    "statement": "theorem binaryAddressValue_append (u v : List Bool) : binaryAddressValue (u ++ v) = binaryAddressValue u * 2 ^ v.length + binaryAddressValue v"
+  },
+  {
+    "kind": "def",
+    "name": "dyadicAddressLower",
+    "full_name": "BanditRLProof.LowerBounds.dyadicAddressLower",
+    "file": "BanditRLProof/LowerBounds/DyadicAddresses.lean",
+    "line": 43,
+    "statement": "noncomputable def dyadicAddressLower (w : List Bool) : \u211d"
+  },
+  {
+    "kind": "def",
+    "name": "dyadicAddressUpper",
+    "full_name": "BanditRLProof.LowerBounds.dyadicAddressUpper",
+    "file": "BanditRLProof/LowerBounds/DyadicAddresses.lean",
+    "line": 44,
+    "statement": "noncomputable def dyadicAddressUpper (w : List Bool) : \u211d"
+  },
+  {
+    "kind": "theorem",
+    "name": "dyadicAddress_width",
+    "full_name": "BanditRLProof.LowerBounds.dyadicAddress_width",
+    "file": "BanditRLProof/LowerBounds/DyadicAddresses.lean",
+    "line": 46,
+    "statement": "theorem dyadicAddress_width (w : List Bool) : dyadicAddressUpper w - dyadicAddressLower w = 1 / (2 : \u211d) ^ w.length"
+  },
+  {
+    "kind": "theorem",
+    "name": "dyadicAddress_nonempty",
+    "full_name": "BanditRLProof.LowerBounds.dyadicAddress_nonempty",
+    "file": "BanditRLProof/LowerBounds/DyadicAddresses.lean",
+    "line": 51,
+    "statement": "theorem dyadicAddress_nonempty (w : List Bool) : dyadicAddressLower w < dyadicAddressUpper w"
+  },
+  {
+    "kind": "theorem",
+    "name": "dyadicAddress_append_contained",
+    "full_name": "BanditRLProof.LowerBounds.dyadicAddress_append_contained",
+    "file": "BanditRLProof/LowerBounds/DyadicAddresses.lean",
+    "line": 56,
+    "statement": "theorem dyadicAddress_append_contained (u v : List Bool) : dyadicAddressLower u \u2264 dyadicAddressLower (u ++ v) \u2227 dyadicAddressUpper (u ++ v) \u2264 dyadicAddressUpper u"
+  },
+  {
+    "kind": "theorem",
+    "name": "dyadicAddress_prefix_contained",
+    "full_name": "BanditRLProof.LowerBounds.dyadicAddress_prefix_contained",
+    "file": "BanditRLProof/LowerBounds/DyadicAddresses.lean",
+    "line": 72,
+    "statement": "theorem dyadicAddress_prefix_contained (u v : List Bool) (h : u <+: v) : dyadicAddressLower u \u2264 dyadicAddressLower v \u2227 dyadicAddressUpper v \u2264 dyadicAddressUpper u"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_dyadicAddress_inside",
+    "full_name": "BanditRLProof.LowerBounds.exists_dyadicAddress_inside",
+    "file": "BanditRLProof/LowerBounds/DyadicAddresses.lean",
+    "line": 78,
+    "statement": "theorem exists_dyadicAddress_inside (L U : \u211d) (n : \u2115) (hL : 0 \u2264 L) (hU : U \u2264 1) (hwidth : 2 * (1 / (2 : \u211d) ^ n) \u2264 U - L) : \u2203 w : List Bool, w.length = n \u2227 L \u2264 dyadicAddressLower w \u2227 dyadicAddressUpper w < U"
   },
   {
     "kind": "theorem",

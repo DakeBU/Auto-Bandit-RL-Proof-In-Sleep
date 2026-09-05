@@ -52,3 +52,20 @@ All new audits use only propext/Classical.choice/Quot.sound. The binary-address
 representation, prefix-freeness and rate theorem remain open; these interval
 lemmas alone are not a completed arithmetic encoder. Aggregate gate remains
 the independent dff13cb Huffman check; arithmetic leaves are focused-only.
+
+Binary-address route: define the natural value of a big-endian Bool list,
+prove value < 2^length, and construct each index m<2^n by splitting at
+2^(n-1). The append value formula expresses a prefix's dyadic cell containing
+its descendants. Define real cell endpoints as value/2^length and
+(value+1)/2^length. This directly represents the grid cells already selected,
+not an unrelated existential prefix-code construction.
+
+Binary-address result: DyadicAddresses builds (2676 jobs), with a typed
+canary and standard-only axiom audits. `exists_binaryAddress` represents
+every bounded grid index at exactly n bits; append arithmetic proves
+`dyadicAddress_prefix_contained`. `exists_dyadicAddress_inside` combines
+the earlier ceil grid selection with this representation to return an actual
+Bool list whose cell is inside [L,U], under the explicit twice-grid-width
+budget. Real endpoint definitions are noncomputable; natural address values
+are computable. No arithmetic prefix-code/rate terminal is claimed yet.
+This focused-only module remains outside the running dff13cb full gate.
