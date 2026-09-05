@@ -1,5 +1,6 @@
 """Keep the corrected Chapter 17 publication fence declaration-complete."""
 
+import json
 import unittest
 
 from website.scripts import build_site
@@ -46,13 +47,24 @@ class Chapter17SiteGateTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "cannot be promoted"):
                     build_site.validate_textbook_spine(self.spine, incomplete)
 
-    def test_other_future_chapters_remain_fenced(self):
-        for chapter in self.spine["chapters"][1:4]:
+    def test_chapter15_and16_keep_their_separate_acceptance_gates(self):
+        for chapter in self.spine["chapters"][2:4]:
             with self.subTest(chapter=chapter["number"]):
                 chapter["status"] = "compiled"
-                with self.assertRaisesRegex(ValueError, "cannot be promoted"):
+                with self.assertRaises(ValueError):
                     build_site.validate_textbook_spine(self.spine, self.index)
                 chapter["status"] = "partial"
+
+    def test_integrated_chapter_metadata_preserves_earlier_acceptance(self):
+        spine = json.loads((build_site.CONTENT_DIR / "textbook_spine.json").read_text(encoding="utf-8"))
+        index = dict(self.index)
+        for chapter in spine["chapters"]:
+            self.assertEqual("compiled", chapter["status"])
+            for item in chapter.get("lean_correspondence", []):
+                index[item["name"]] = {}
+            for name in chapter.get("primary_declarations", []):
+                index[name] = {}
+        build_site.validate_textbook_spine(spine, index)
 
 
 if __name__ == "__main__":

@@ -1,40 +1,69 @@
-% Synchronized partial proof export for
-% TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE
-\section{Chapter 16 consistency and $d_{\inf}$ dependency slice}
+% Compiled main-text proof export for TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE
+\section{ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory}
 
 \paragraph{Status.}
-The declarations named below compile.  They are dependency leaves, not proofs
-of Theorem~16.2, Lemma~16.3, or Theorem~16.4.
+Definition~16.1, the source mean-to-gap producer, Theorem~16.2,
+Lemma~16.3, and unit-variance Gaussian Theorem~16.4 compile.
 
-\paragraph{Compiled Lean declarations.}
-\begin{itemize}
-  \item \texttt{LowerBounds.IsConsistentRegret} and
-    \texttt{LowerBounds.IsConsistentPolicyOver};
-  \item \texttt{LowerBounds.IsConsistentRegret.add},
-    \texttt{eventually\_add\_le\_rpow}, and
-    \texttt{eventually\_log\_add\_div\_log\_le};
-  \item \texttt{LowerBounds.divergenceInfimum} and its candidate inequality;
-  \item the parameterized $d_{\inf}$ interface and
-    \texttt{unitGaussianDivergenceInfimum\_le\_perturbed}.
-\end{itemize}
+\paragraph{Lean declarations.}
+The source bridge is implemented by
+\texttt{FiniteMeanBanditEnvironment},
+\texttt{oneArmMeanChange\_produces\_gap\_contract}, and
+\texttt{oneArmMeanIncrease\_sub\_gap\_eq\_changedMargin}.
+The exact finite-time terminal is
+\texttt{expectedPullCount\_ge\_log\_regret\_changeOfMeasure}.
+The Gaussian specialization uses
+\texttt{UnitVarianceGaussianBanditEnvironment},
+\texttt{chapter16GaussianChangedEnvironment},
+\texttt{chapter16GaussianChangedEnvironment\_armKL},
+\texttt{InChapter16GaussianLocalClass},
+\texttt{gaussianExpectedPullCount\_ge\_finiteTimeInstanceDependent},
+\texttt{chapter16Gaussian\_finiteTime\_log\_identity}, and
+\texttt{gaussianExpectedRegret\_ge\_finiteTimeInstanceDependent}.
 
 \paragraph{Proof map.}
-For every $p>0$, consistency gives $R_n/n^p\to0$.  Addition preserves this
-limit, so the sum of the original- and alternative-environment regrets is
-eventually at most $n^p$.  When the sum is positive, monotonicity of logarithm
-and $\log(n^p)=p\log n$ give
+Tie every arm mean to the integral of its probability law. Unchanged arm laws
+then have unchanged finite means. If arm $i$ is suboptimal in $\nu$, only its
+law changes, and it is uniquely optimal in $\nu'$, the producer proves both
+$\Delta_i(\nu)>0$ and
+$\lambda-\Delta_i(\nu)>0$, together with the comparison to every unchanged-arm
+gap in $\nu'$. The existing history-KL identity and the two exact
+majority-event regret charges feed Bretagnolle--Huber, retaining the factor
+$1/4$. Taking logarithms gives
 \[
-  \frac{\log(R_n+R_n')}{\log n}\le p
+  \mathbb E_\nu[T_i(n)] \ge
+  \frac{\log(\min\{\lambda-\Delta_i(\nu),\Delta_i(\nu)\}/4)
+    +\log n-\log(R_n(\nu)+R_n(\nu'))}
+       {D(P_i,P_i')}.
 \]
-eventually.  Separately, $d_{\inf}$ is an extended-real infimum of
-$D(P\Vert P')$ over strictly better alternatives.  Inserting any admissible
-alternative therefore upper-bounds the infimum.  For unit-variance Gaussians,
-the mean $\mu^\star+\varepsilon$ is admissible when $\varepsilon>0$, and the
-compiled Gaussian KL identity gives cost
-$(\mu^\star-\mu+\varepsilon)^2/2$.
+The KL direction and expected-pull law are the source ones. Zero KL contradicts
+the distinct certified means, while finite-positive and infinite KL are
+handled as separate branches.
 
-\paragraph{Boundary.}
-The exact Gaussian infimum equality and the bandit history information
-constraint remain open.  The latter requires the missing conditional
-kernel-KL integral and a canonical history law for one common possibly
-randomized nonanticipating policy.  No Chapter~16 source terminal is claimed.
+For Theorem~16.4, shift one positive-gap unit-Gaussian mean by
+$(1+\epsilon)\Delta_i$. The changed vector lies in the coordinatewise local
+class and its arm KL is $((1+\epsilon)\Delta_i)^2/2$. Lemma~16.3, the two
+$Cn^p$ bounds, the exact logarithmic normalization, positive parts, and the
+gap-times-pull decomposition yield
+\[
+ R_n(\nu) \ge \frac{2}{(1+\epsilon)^2}
+ \sum_{i:\Delta_i>0}
+ \left(\frac{(1-p)\log n+\log(\epsilon\Delta_i/(8C))}{\Delta_i}\right)^+.
+\]
+All source quantifiers on the horizon set, $C$, $p$, $\epsilon$, and the local
+Gaussian class are retained.
+
+\paragraph{Theorem 16.2.}
+Replace one arm by any admissible strictly better finite-mean probability
+law. Product-class membership is preserved. Consistency and Lemma~16.3
+give the per-alternative reciprocal-KL liminf bound for the exact $n$-pull
+regret and count sequences. In extended nonnegative reals,
+$(\inf S)^{-1}=\sup_{a\in S}a^{-1}$ aggregates the costs, including empty,
+zero-infimum, and infinite-cost branches. Finite-count Fatou and the exact
+gap-times-pull decomposition yield
+\[
+ \liminf_{n\to\infty}\frac{R_n}{\log n}
+ \ge \sum_{i:\Delta_i>0}\frac{\Delta_i}{d_{\inf}(P_i,\mu^*,\mathcal M_i)}.
+\]
+The compiled terminal is
+\texttt{consistentPolicy\_liminf\_expectedRegret\_div\_log\_ge}.

@@ -51,6 +51,8 @@ example : gaussianMinimaxGap 2 8 ≤ (1 / 2 : Real) := by
 #check LowerBounds.klDiv_canonicalBanditHistoryMeasure_succ_general
 #check LowerBounds.klDiv_canonicalBanditHistoryMeasure_eq_sum_realizedExpectedPullCount_mul_armKL
 #check LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum
+#check LowerBounds.klDiv_map_le
+#check LowerBounds.klDiv_observedBanditHistory_le_expectedPulls_sum
 #check LowerBounds.UnitGaussianBanditEnvironment
 #check LowerBounds.gaussianExpectedPseudoRegret
 #check LowerBounds.finiteArmedGaussianMinimaxLowerBound
@@ -75,6 +77,8 @@ example : (16 / 27 : Real) ≤ Real.exp (-(1 / 2 : Real)) :=
 #print axioms LowerBounds.canonicalRealizedExpectedPullCountThrough_eq_expectedPullCountThrough
 #print axioms LowerBounds.klDiv_canonicalBanditHistoryMeasure_eq_sum_realizedExpectedPullCount_mul_armKL
 #print axioms LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum
+#print axioms LowerBounds.klDiv_map_le
+#print axioms LowerBounds.klDiv_observedBanditHistory_le_expectedPulls_sum
 #print axioms LowerBounds.exists_gaussianMinimax_historyKL_le_half
 #print axioms LowerBounds.finiteArmedGaussianMinimaxLowerBound
 #print axioms LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge

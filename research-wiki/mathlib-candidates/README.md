@@ -35,6 +35,60 @@ Use one section per candidate:
 | Concentration infrastructure | union bounds, tail-event monotonicity, sub-Gaussian closure | useful beyond a single regret proof |
 | Asymptotics | logarithmic and square-root regret simplifications | should not be buried inside algorithm proofs |
 
+## KLDIV-TRIM-LE
+
+- Proposed name: `InformationTheory.klDiv_trim_le`.
+- Mathematical area: information theory, Radon--Nikodym derivatives, and
+  conditional expectation.
+- Intended Mathlib namespace: `InformationTheory`.
+- Exact statement: for finite measures `P,Q` on `m₀` and `m ≤ m₀`,
+  `klDiv (P.trim hm) (Q.trim hm) ≤ klDiv P Q`.
+- Required imports: `Mathlib.InformationTheory.KullbackLeibler.Basic`,
+  `ConditionalExpectation.CondJensen`, and
+  `ConditionalExpectation.RadonNikodym`.
+- Local APIs: `klDiv_ne_top_iff`, `integrable_klFun_rnDeriv_iff`,
+  `toReal_rnDeriv_trim`, `convexOn_klFun.map_condExp_le`, `integral_condExp`,
+  and `integral_trim`.
+- Intended proof route: discharge infinite KL directly; in the finite branch,
+  derive absolute continuity/integrability, identify the trimmed RN density
+  with the conditional expectation of the original density, apply conditional
+  Jensen to `klFun`, and transport both integrals through `trim`.
+- Regularity contracts: two finite measures and an explicit measurable-space
+  order `m ≤ m₀`; no probability normalization or mutual absolute continuity.
+- Current ABRL task:
+  `TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE`.
+- Status: locally-compiled as
+  `BanditRLProof.LowerBounds.relativeEntropy_trim_le`.
+- Failure signal: an event-only partition theorem is not the general result;
+  do not erase the finite-measure or measurable-space-order contracts.
+
+## PREFIX-CODE-RANGE-UNIQUELY-DECODABLE
+
+- Proposed name: keep the structure adapter project-local; upstream only a
+  generic prefix-free-to-uniquely-decodable theorem if its abstraction agrees
+  with Mathlib's coding API.
+- Mathematical area: formal languages and information-theory coding.
+- Intended Mathlib namespace: `InformationTheory`.
+- Exact statement: the range of an injective binary code whose codewords are
+  nonempty and prefix-free is `InformationTheory.UniquelyDecodable`.
+- Required imports: `Mathlib.InformationTheory.Coding.KraftMcMillan`.
+- Local APIs: `List.prefix_or_prefix_of_prefix`, `List.flatten`,
+  `List.append_cancel_left`, `InformationTheory.UniquelyDecodable`, and
+  `InformationTheory.kraft_mcmillan_inequality`.
+- Intended proof route: induct on the first word list; compare the two leading
+  words as prefixes of the same concatenation, use prefix freedom to identify
+  their source symbols, cancel, and recurse.
+- Regularity contracts: the empty codeword is forbidden.  Without this field,
+  a singleton empty codebook is prefix-free but repeated messages are not
+  uniquely decodable.
+- Current ABRL task:
+  `TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE`.
+- Status: locally-compiled as
+  `BanditRLProof.LowerBounds.BinaryPrefixCode.uniquelyDecodable_range`, with
+  `kraft_inequality` as its finite-codebook consumer.
+- Failure signal: injectivity and prefix freedom alone do not exclude the
+  singleton empty-codeword counterexample.
+
 ## HAS-SUBGAUSSIAN-MGF-INTEGRAL-SQ
 
 - Proposed name: `HasSubgaussianMGF.integral_sq_le_four_mul_proxy_mul_exp_half`.
@@ -58,6 +112,38 @@ Use one section per candidate:
 - Failure signal: do not substitute the sharper `E[X^2] <= c` without a
   compiled derivative/variance bridge; the conservative exponential constant
   is the frozen route.
+
+## KL-DATA-PROCESSING-MEASURABLE-MAP
+
+- Proposed name: `InformationTheory.klDiv_map_le`.
+- Mathematical area: finite measures, relative entropy, measurable maps, and
+  conditional expectation.
+- Intended Mathlib namespace: `InformationTheory`.
+- Exact statement: for finite measures `mu, nu` and measurable `observe`,
+  `klDiv (mu.map observe) (nu.map observe) <= klDiv mu nu`.
+- Required imports:
+  `Mathlib.MeasureTheory.Function.ConditionalExpectation.CondJensen` and
+  `Mathlib.MeasureTheory.Function.ConditionalExpectation.RadonNikodym`.
+- Local APIs: `MeasureTheory.toReal_rnDeriv_map`,
+  `InformationTheory.convexOn_klFun.map_condExp_le`,
+  `InformationTheory.integrable_klFun_rnDeriv_iff`,
+  `InformationTheory.toReal_klDiv_eq_integral_klFun`, and
+  `integral_condExp`.
+- Current integrated route (2026-09-05): keep infinite source KL as a direct
+  top branch; derive absolute continuity in the finite branch, then reuse
+  Chapter 14's `relativeEntropy_map_eq_trim_of_absolutelyContinuous` and
+  `relativeEntropy_trim_le`. The original standalone conditional-Jensen proof
+  is superseded; the public declaration and regularity contract are unchanged.
+- Regularity contracts: arbitrary measurable source and target spaces, finite
+  source laws, and a measurable map. No injectivity, probability
+  normalization, standard-Borel hypothesis, or finite-KL premise is required.
+- Current ABRL task:
+  `TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE`.
+- Status: locally-compiled as `BanditRLProof.LowerBounds.klDiv_map_le`, with a
+  deterministic bandit-history consumer for the first leaf of Exercise 15.7.
+- Failure signal: this data-processing theorem does not construct a stopped
+  history, truncate the Lemma 15.1 information sum at a random time, or factor
+  an arbitrary `F_tau`-measurable observation.
 
 ## Review Rule
 

@@ -689,14 +689,17 @@
     },
     {
       "id": "TEXTBOOK-PART-IV-CH13-BASIC-IDEAS-LEAN-SPINE",
-      "title": "Chapter 13 lower-bound semantic and deterministic spine",
+      "title": "Chapter 13 lower-bound semantic, optimality, and deterministic spine",
       "chapter": "foundations",
       "textbook_spine": "chapter-13-basic-ideas",
       "status": "compiled",
-      "informal": "The Chapter 13 conversion window compiles explicit ENNReal worst-case/minimax semantics, a source-shaped least-explored alternative-arm theorem from the exact expected pull budget, and quantitative deterministic two-environment regret algebra whose cross-law pull discrepancy remains a visible error premise.",
+      "informal": "The Chapter 13 conversion window compiles explicit ENNReal worst-case/minimax semantics, fixed-class minimax-optimality without assuming general attainment, a source-shaped least-explored alternative-arm theorem from the exact expected pull budget, and quantitative deterministic two-environment regret algebra whose cross-law pull discrepancy remains a visible error premise.",
       "declarations": [
         "BanditRLProof.LowerBounds.worstCaseExpectedRegret",
         "BanditRLProof.LowerBounds.minimaxExpectedRegret",
+        "BanditRLProof.LowerBounds.IsMinimaxOptimal",
+        "BanditRLProof.LowerBounds.IsMinimaxOptimal.mem_policyClass",
+        "BanditRLProof.LowerBounds.IsMinimaxOptimal.eq_minimaxExpectedRegret",
         "BanditRLProof.LowerBounds.expectedRegret_le_worstCaseExpectedRegret",
         "BanditRLProof.LowerBounds.minimaxExpectedRegret_le_worstCaseExpectedRegret",
         "BanditRLProof.LowerBounds.le_minimaxExpectedRegret",
@@ -711,23 +714,99 @@
       "depends_on": [],
       "missing": [
         "The Chapter 14 event-testing foundation and Chapter 15 same-policy adaptive-history KL identity compile.",
-        "The separate compiled Chapter 15 consumer now closes the source-stated Gaussian minimax Theorem 13.1 order with explicit universal constant 1/54; optional Chapter 13 notes and exercises remain outside this foundational milestone."
+        "The separate Chapter 15 consumer closes Theorem 13.1 with c=1/54 and GaussianHypothesisTesting closes exact Eq. (13.1); the broader-class fixed-horizon MOSS near-minimax consequence also compiles. Whole-chapter integration, review and deployment gates remain pending."
       ],
       "evidence": "BanditRLProof/LowerBounds/BasicIdeas.lean; Tests/TextbookPartIVChapter13Canary.lean"
     },
     {
+      "id": "TEXTBOOK-PART-IV-CH13-GAUSSIAN-TESTING-COMPANION",
+      "title": "Chapter 13 exact Gaussian testing bounds and Chernoff companion",
+      "chapter": "foundations",
+      "textbook_spine": "chapter-13-basic-ideas",
+      "status": "compiled",
+      "informal": "The canonical iid Gaussian empirical mean has law N(mu,1/n). Both midpoint error events and their maximum-risk Chernoff upper bound compile. Separately, the exact lower and upper Mills-ratio integrals of Eq. (13.4) give the printed Eq. (13.1) bounds for the zero-mean error, with denominator constants 16 and 32/pi, for n>0 and Delta>0.",
+      "declarations": [
+        "BanditRLProof.LowerBounds.gaussianSampleMeanVariance",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanVariance_pos",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanLaw",
+        "BanditRLProof.LowerBounds.gaussianIIDObservationLaw",
+        "BanditRLProof.LowerBounds.gaussianCoordinateAverage",
+        "BanditRLProof.LowerBounds.gaussianIIDSumLaw",
+        "BanditRLProof.LowerBounds.gaussianIIDSampleMeanLaw",
+        "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision",
+        "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision_zero_error_event",
+        "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision_gap_error_event",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanGapErrorProbability",
+        "BanditRLProof.LowerBounds.hasSubgaussianMGF_id_gaussianReal_zero",
+        "BanditRLProof.LowerBounds.hasSubgaussianMGF_gap_sub_id_gaussianReal",
+        "BanditRLProof.LowerBounds.gaussianReal_zero_Ici_le_exp_neg_sq_div_two_variance",
+        "BanditRLProof.LowerBounds.gaussianReal_gap_Iio_half_le_exp_neg_sq_div_two_variance",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability_le_exp",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanGapErrorProbability_le_exp",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanThresholdRisk",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanThresholdRisk_le_exp",
+        "BanditRLProof.LowerBounds.gaussianMills_lower_integral",
+        "BanditRLProof.LowerBounds.gaussianMills_upper_integral",
+        "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability_source_bounds"
+      ],
+      "depends_on": [],
+      "missing": [],
+      "evidence": "BanditRLProof/LowerBounds/GaussianMillsRatio.lean; BanditRLProof/LowerBounds/GaussianHypothesisTesting.lean; Tests/TextbookPartIVChapter13Canary.lean"
+    },
+    {
       "id": "TEXTBOOK-PART-IV-CH14-INFORMATION-THEORY-LEAN-SPINE",
-      "title": "Chapter 14 relative-entropy and Bretagnolle–Huber spine",
+      "title": "Chapter 14 coding, KL data-processing, and Bretagnolle–Huber spine",
       "chapter": "foundations",
       "textbook_spine": "chapter-14-information-theory",
       "status": "compiled",
-      "informal": "The scoped §14.2 spine compiles extended-real measure relative entropy with explicit absolute-continuity, integrability, and singular branches; event-level Bernoulli data processing; binary endpoint analysis; and the unconditional Bretagnolle–Huber inequality in the exact D(P,Q) direction.",
+      "informal": "The frozen Chapter 14 required body is compiled: recursive Huffman optimality and its entropy sandwich, exact-real arithmetic block coding and universal converse, finite/partition/common-density KL, the source affinity/overlap route, and positive-variance Gaussian testing. Independent review, PR #106, main run 33959196451, Pages and live acceptance passed; the model qualifications below remain part of the claim boundary.",
       "declarations": [
+        "BanditRLProof.LowerBounds.BinaryPrefixCode",
+        "BanditRLProof.LowerBounds.BinaryPrefixCode.uniquelyDecodable_range",
+        "BanditRLProof.LowerBounds.BinaryPrefixCode.kraft_inequality",
+        "BanditRLProof.LowerBounds.discreteEntropy",
+        "BanditRLProof.LowerBounds.discreteEntropyBaseTwo",
+        "BanditRLProof.LowerBounds.discreteEntropyBaseTwo_eq_div_log_two",
+        "BanditRLProof.LowerBounds.discreteEntropy_nonneg",
+        "BanditRLProof.LowerBounds.expectedCodeLength",
+        "BanditRLProof.LowerBounds.expectedCodeLength_nonneg",
+        "BanditRLProof.LowerBounds.huffmanCode_optimal",
+        "BanditRLProof.LowerBounds.exists_prefixCode_of_uniquelyDecodable",
+        "BanditRLProof.LowerBounds.IsOptimalPrefixCode.length_antitone",
+        "BanditRLProof.LowerBounds.huffmanCode_entropy_sandwich",
+        "BanditRLProof.LowerBounds.arithmeticBlockCode_rate_tendsto_entropy",
+        "BanditRLProof.LowerBounds.arithmeticBlockCode_payload_interval",
+        "BanditRLProof.LowerBounds.sourceBlock_code_family_limit_ge_entropy",
+        "BanditRLProof.LowerBounds.exists_ceilingLogPrefixCode",
+        "BanditRLProof.LowerBounds.relativeEntropy_finite_crossEntropy",
+        "BanditRLProof.LowerBounds.entropyTerm_tendsto_zero_right",
+        "BanditRLProof.LowerBounds.bernoulliRelativeEntropy_asymmetry",
+        "BanditRLProof.LowerBounds.relativeEntropy_triangle_counterexample",
+        "BanditRLProof.LowerBounds.relativeEntropy_commonDensity_eq_if",
+        "BanditRLProof.LowerBounds.bretagnolleHuberScale_le_half_commonDensityAffinity_sq",
+        "BanditRLProof.LowerBounds.half_commonDensityAffinity_sq_le_overlap",
+        "BanditRLProof.LowerBounds.klDiv_gaussianReal_same_variance",
+        "BanditRLProof.LowerBounds.gaussian_testing_max_error_three_twentieths",
         "BanditRLProof.LowerBounds.relativeEntropy",
         "BanditRLProof.LowerBounds.relativeEntropy_of_absolutelyContinuous_of_integrable",
         "BanditRLProof.LowerBounds.relativeEntropy_of_probability_absolutelyContinuous_of_integrable",
         "BanditRLProof.LowerBounds.relativeEntropy_eq_top_of_not_absolutelyContinuous",
         "BanditRLProof.LowerBounds.relativeEntropy_ne_top_iff",
+        "BanditRLProof.LowerBounds.relativeEntropy_eq_zero_iff",
+        "BanditRLProof.LowerBounds.relativeEntropy_trim_le",
+        "BanditRLProof.LowerBounds.absolutelyContinuous_iff_atom_support",
+        "BanditRLProof.LowerBounds.rnDeriv_mul_atom",
+        "BanditRLProof.LowerBounds.rnDeriv_atom_eq_div",
+        "BanditRLProof.LowerBounds.relativeEntropy_eq_top_of_atom_support_mismatch",
+        "BanditRLProof.LowerBounds.relativeEntropy_finite_klFun",
+        "BanditRLProof.LowerBounds.relativeEntropy_finite_sum_log",
+        "BanditRLProof.LowerBounds.relativeEntropy_finite_eq_if",
+        "BanditRLProof.LowerBounds.relativeEntropy_finite_eq_top_iff",
+        "BanditRLProof.LowerBounds.finitePartitionRelativeEntropy",
+        "BanditRLProof.LowerBounds.relativeEntropy_eq_iSup_densityApproximation_trim",
+        "BanditRLProof.LowerBounds.exists_fin_observation_densityApproximation",
+        "BanditRLProof.LowerBounds.finitePartitionRelativeEntropy_eq_relativeEntropy",
         "BanditRLProof.LowerBounds.bernoulliRelativeEntropy",
         "BanditRLProof.LowerBounds.rnDeriv_restrict_restrict",
         "BanditRLProof.LowerBounds.relativeEntropy_restrict_add_compl",
@@ -747,11 +826,12 @@
         "BanditRLProof.KLUCB.bernoulliKLCore"
       ],
       "missing": [
-        "Entropy, Huffman coding, and optimal source-coding results from §14.1 are pedagogically mapped but not formalized by this lower-bound gate.",
-        "The full arbitrary-sub-sigma-algebra data-processing result in Exercise 14.10 is not claimed; the event/binary specialization is compiled.",
+        "Required-body independent review, full main gate and public desktop/mobile acceptance passed. Optional Notes/Bibliographic Remarks/Exercises are not claimed complete; full Exercise 14.10 is an additional compiled result.",
+        "Nonempty singleton codewords are a local model convention. Uniform fixed-length optimality holds for power-of-two cardinalities; a compiled ternary counterexample refutes the arbitrary-cardinality reading.",
+        "Arithmetic coding is exact-real and classical with constant support/escape overhead, not executable finite-precision code. Cross-entropy differences are unrounded; finite KL iff absolute continuity is finite-alphabet-only.",
         "The adaptive same-policy bandit-history divergence decomposition is a Chapter 15 target, not a Chapter 14 theorem."
       ],
-      "evidence": "BanditRLProof/LowerBounds/InformationTheory.lean; Tests/TextbookPartIVChapter14Canary.lean"
+      "evidence": "reviews/2026-09-05-chapter-14-evidence-matrix.md maps each body claim to its exact Lean terminal, module, canary and full-gate snapshot; whole-chapter status is separate from individual compiled results."
     },
     {
       "id": "TEXTBOOK-PART-IV-CH15-GAUSSIAN-KL-DEPENDENCY-SLICE",
@@ -810,6 +890,26 @@
       "evidence": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean; BanditRLProof/LowerBounds/BanditHistoryKL.lean; Tests/TextbookPartIVChapter15Canary.lean"
     },
     {
+      "id": "TEXTBOOK-PART-IV-CH15-EX15-7-DATA-PROCESSING-LEAF",
+      "title": "Chapter 15 Exercise 15.7 measurable-observation KL leaf",
+      "chapter": "foundations",
+      "textbook_spine": "chapter-15-minimax-lower-bounds",
+      "status": "partial",
+      "informal": "KL divergence between finite measures cannot increase after an arbitrary measurable observation. Combined with the compiled deterministic-horizon Lemma 15.1, any measurable statistic of the complete finite bandit history is bounded by the first-law expected pull-count-weighted arm information. The bounded stopping-time history bound required by Exercise 15.7 remains open.",
+      "declarations": [
+        "BanditRLProof.LowerBounds.klDiv_map_le",
+        "BanditRLProof.LowerBounds.klDiv_observedBanditHistory_le_expectedPulls_sum"
+      ],
+      "depends_on": [
+        "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum"
+      ],
+      "missing": [
+        "Construct a measurable bounded stopped-history law and prove that its KL charges arm information only through the realized stopping time.",
+        "Factor an arbitrary F_tau-measurable random element through the stopped history before applying data processing."
+      ],
+      "evidence": "BanditRLProof/LowerBounds/BanditHistoryDataProcessing.lean; Tests/TextbookPartIVChapter15Canary.lean; research-wiki/open-problems/chapter-15-exercise-15-7-stopped-history.md"
+    },
+    {
       "id": "TEXTBOOK-PART-IV-CH15-GAUSSIAN-MINIMAX-LOWER-BOUND",
       "title": "Chapter 15 finite-armed Gaussian minimax lower bound",
       "chapter": "foundations",
@@ -837,7 +937,8 @@
         "BanditRLProof.LowerBounds.exists_leastExploredAlternative"
       ],
       "missing": [
-        "The Bernoulli refinement in the Chapter 15 notes and the chapter exercise set are outside this compiled main-theorem milestone.",
+        "The Bernoulli refinement in the Chapter 15 notes and Exercises 15.1–15.6 and 15.8 are outside this compiled main-theorem milestone.",
+        "Exercise 15.7 has a separate compiled data-processing dependency, but its stopped-history inequality remains open.",
         "Chapter 16 and Chapter 17 lower-bound terminals remain separate consumers and are not promoted by this result."
       ],
       "evidence": "BanditRLProof/LowerBounds/GaussianMinimax.lean; Tests/TextbookPartIVChapter15Canary.lean; tasks/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE.md"
@@ -878,9 +979,8 @@
         "BanditRLProof.LowerBounds.bretagnolleHuber"
       ],
       "missing": [
-        "The source-environment layer identifying abstract nonnegative gap vectors with finite arm-law means is not part of this dependency record.",
-        "Theorem 16.2 still needs its per-arm information-to-liminf extraction, including the zero, finite, and infinite d_inf branches.",
-        "Lemma 16.3 and Theorem 16.4 remain blocked; the compiled information and scalar layers are not presented as either terminal."
+        "This historical dependency record predates the now-compiled finite-mean producer, Lemma 16.3, and Theorem 16.4.",
+        "Theorem 16.2 still needs its per-arm information-to-liminf extraction, including the zero, finite, and infinite d_inf branches."
       ],
       "evidence": "BanditRLProof/LowerBounds/InstanceDependent.lean; Tests/TextbookPartIVChapter16Canary.lean; tasks/TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE.md"
     },
@@ -890,7 +990,7 @@
       "chapter": "foundations",
       "textbook_spine": "chapter-16-instance-dependent",
       "status": "compiled",
-      "informal": "Fifteen named declarations now define canonical gap-times-pull-count pseudo-regret for an arbitrary finite-arm Markov reward kernel, prove its measurability, finite expected-pull decomposition, and finiteness, charge the majority event and its complement to the original and changed expected pseudo-regrets with the exact half-horizon gap factors, and combine those charges with the existing one-arm KL/Bretagnolle–Huber layer into the exact factor-one-quarter logarithmic gap-vector consumer. The consumer does not yet identify the gap vectors with the integral means of a source finite-mean environment, so it is not presented as Lemma 16.3.",
+      "informal": "Fifteen named declarations define canonical gap-times-pull-count pseudo-regret, charge the majority event and its complement with exact half-horizon factors, and combine those charges with the one-arm KL/Bretagnolle–Huber layer. The later finite-mean producer now consumes this historical layer to prove Lemma 16.3 and Theorem 16.4.",
       "declarations": [
         "BanditRLProof.LowerBounds.finiteHistoryGapPseudoRegret",
         "BanditRLProof.LowerBounds.canonicalGapExpectedPseudoRegret",
@@ -915,9 +1015,8 @@
         "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_of_exp_testing_bound"
       ],
       "missing": [
-        "A source-environment producer must still tie each explicit gap vector to the integral means of finite-mean arm laws and the certified original/changed optima.",
-        "The finite-positive arm-KL branch is explicit in the conditional consumer; zero and infinite information cases are not silently coerced to Real.",
-        "Lemma 16.3, Theorem 16.2, and Theorem 16.4 remain blocked source terminals with no declaration claimed."
+        "This historical producer record stops below the now-compiled finite-mean environment consumer.",
+        "Theorem 16.2 now compiles with every extended-real d_inf branch and finite-count Fatou."
       ],
       "evidence": "BanditRLProof/LowerBounds/InstanceDependent.lean; Tests/TextbookPartIVChapter16Canary.lean; tasks/TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE.md"
     },
@@ -926,9 +1025,13 @@
       "title": "Chapter 16 instance-dependent asymptotic and finite-time source terminals",
       "chapter": "foundations",
       "textbook_spine": "chapter-16-instance-dependent",
-      "status": "blocked",
-      "informal": "The source-frozen endpoints are Theorem 16.2's unstructured-class liminf regret constant, Lemma 16.3's one-arm finite-time expected-pull inequality, and Theorem 16.4's unit-Gaussian local-envelope positive-part lower bound. No local declaration is presented as any of these terminals.",
-      "declarations": [],
+      "status": "compiled",
+      "informal": "The source-frozen endpoints are Theorem 16.2's unstructured-class liminf regret constant, Lemma 16.3's one-arm finite-time expected-pull inequality, and Theorem 16.4's unit-Gaussian local-envelope positive-part lower bound. All three source terminals now compile exactly, including Theorem 16.2 with every extended-real information branch.",
+      "declarations": [
+        "BanditRLProof.LowerBounds.consistentPolicy_liminf_expectedRegret_div_log_ge",
+        "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_changeOfMeasure",
+        "BanditRLProof.LowerBounds.gaussianExpectedRegret_ge_finiteTimeInstanceDependent"
+      ],
       "depends_on": [
         "BanditRLProof.LowerBounds.IsConsistentRegret.eventually_log_add_div_log_le",
         "BanditRLProof.LowerBounds.divergenceInfimum",
@@ -937,14 +1040,12 @@
         "BanditRLProof.LowerBounds.unitGaussianDivergenceInfimum_eq",
         "BanditRLProof.LowerBounds.bretagnolleHuberScale_expectedPulls_mul_armKL_le_majorityErrors",
         "BanditRLProof.LowerBounds.expectedPullCount_ge_log_regret_of_exp_testing_bound",
-        "BanditRLProof.LowerBounds.expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed"
+        "BanditRLProof.LowerBounds.expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed",
+        "BanditRLProof.LowerBounds.oneArmMeanChange_produces_gap_contract",
+        "BanditRLProof.LowerBounds.chapter16GaussianChangedEnvironment_armKL"
       ],
-      "missing": [
-        "A finite-mean source-environment bridge identifying the compiled nonnegative gap vectors with the original and changed arm-law means and optimal arms.",
-        "The exact per-arm information constraint and liminf extraction, with zero, finite, and infinite d_inf branches.",
-        "Lemma 16.3's environment-level finite-time terminal and Theorem 16.4's exact Gaussian aggregation."
-      ],
-      "evidence": "tasks/TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE.md; proof-attempts/TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE/HistoryInformationBlocker.md"
+      "missing": [],
+      "evidence": "BanditRLProof/LowerBounds/InstanceDependent.lean; Tests/TextbookPartIVChapter16Canary.lean; tasks/TEXTBOOK-PART-IV-CHAPTER-16-INSTANCE-DEPENDENT-LOWER-BOUNDS-SPINE.md"
     },
     {
       "id": "TEXTBOOK-PART-IV-CH17-FIRST-MOMENT-AND-TAIL-DEPENDENCY-SLICE",
@@ -1023,7 +1124,8 @@
         "BanditRLProof.LowerBounds.banditHistoryRelativeEntropy_eq_expectedPulls_sum"
       ],
       "missing": [
-        "The Chapter 13 notes and exercises are not implied by this compiled main order theorem."
+        "Exact Eq. (13.1) is separately compiled in GaussianHypothesisTesting; the broader-class fixed-horizon MOSS near-minimax consequence compiles in SubgaussianMinimax, with publication gates pending.",
+        "Notes 13.2 and Exercises 13.1–13.2 are optional and are not implied by the theorem."
       ],
       "evidence": "BanditRLProof/LowerBounds/GaussianMinimax.lean; Tests/TextbookPartIVChapter15Canary.lean; tasks/TEXTBOOK-PART-IV-CHAPTER-13-BASIC-LOWER-BOUND-SPINE.md; tasks/TEXTBOOK-PART-IV-CHAPTER-15-MINIMAX-LOWER-BOUNDS-SPINE.md"
     },

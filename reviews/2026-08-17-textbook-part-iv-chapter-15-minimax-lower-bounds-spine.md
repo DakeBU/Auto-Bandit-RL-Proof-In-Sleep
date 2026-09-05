@@ -1,5 +1,9 @@
 # Independent review: Textbook Part IV Chapter 15 minimax lower-bounds spine
 
+> Historical review of the 2026-08-17 dependency snapshot. Its statements
+> that Lemma 15.1 and Theorem 15.2 were blocked were superseded by later
+> compiled work. See the 2026-09-04 closure audit for the current boundary.
+
 Date: 2026-08-17
 
 Scope: Chapter 15 production Lean, typed canary, source/task/DAG/export

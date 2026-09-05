@@ -18,9 +18,27 @@ and Theorem 16.4. Edition-specific pagination is not converted by an offset.
 The current compiled window contains Definition 16.1's generic consistency
 interface, the exact unit-Gaussian `d_inf` row, log-growth dependencies, the
 one-arm history/event information layer, and canonical gap-vector
-event-to-regret producers plus their scalar logarithmic consumer.
-Theorem 16.2, Lemma 16.3, and Theorem 16.4 remain uncompiled and blocked; the
-website chapter must remain `partial`.
+event-to-regret producers plus their scalar logarithmic consumer. The
+finite-mean source producer, Lemma 16.3, and Theorem 16.4 also compile.
+Theorem 16.2 also compiles via exact n-pull horizons, inverse-infimum aggregation, and finite-count Fatou. Final repository/site gates are recorded separately.
+
+## Chapter-completion contract
+
+Chapter 16 is complete only when every main-text item below has a local Lean
+declaration that compiles under the Chapter 16 canary and the repository gates.
+Dependency lemmas, theorem cards, source prose, and conditional consumers do
+not satisfy a terminal row by themselves.
+
+| Main-text item | Completion gate | Current status |
+| --- | --- | --- |
+| Definition 16.1 | one policy, every environment in the class, and every real `p > 0` satisfy `R_n / n^p -> 0` | compiled as `IsConsistentPolicyOver` and `IsConsistentRegret` |
+| Theorem 16.2 / Eq. (16.2) | the exact unstructured finite-mean product-class theorem, with original-to-alternative KL, strict confusing means, expected pseudo-regret, every suboptimal arm, extended-real `d_inf`, all zero/finite/infinite information branches, and the stated `liminf` sum | compiled as `consistentPolicy_liminf_expectedRegret_div_log_ge` |
+| Lemma 16.3 / Eq. (16.4) | the exact finite-horizon one-arm source-environment theorem, with `i` suboptimal in `nu`, uniquely optimal in `nu'`, `lambda = mu_i(nu') - mu_i(nu)`, numerator `log(min{lambda-Delta_i(nu), Delta_i(nu)}/4) + log n - log(R_n(nu)+R_n(nu'))`, and denominator `D(P_i,P_i')` | compiled as `expectedPullCount_ge_log_regret_changeOfMeasure` |
+| Theorem 16.4 / Eq. (16.5) | the exact unit-variance Gaussian theorem over nonempty `N`, the coordinatewise class `E(nu)`, `C > 0`, `p in (0,1)`, `epsilon in (0,1]`, every `n in N`, factor `2/(1+epsilon)^2`, and positive part around the full per-gap quotient | compiled as `gaussianExpectedRegret_ge_finiteTimeInstanceDependent` |
+
+Sections 16.3--16.5 (notes, bibliographic remarks, and exercises) are optional
+extensions.  They may be mapped or formalized later, but they neither block
+the four-row main-text contract nor compensate for a missing row above.
 
 ## Precise restatement
 
@@ -57,17 +75,18 @@ envelope and sums the positive parts to obtain Eq. (16.5).
 | scalar Eq. (16.4) layer | finite-KL exponential scale and log rearrangement | `bretagnolleHuberScale_mul_eq_exp`; `exp_testing_bound_of_majority_regret_bounds`; `expectedPullCount_ge_log_regret_of_exp_testing_bound` | deterministic consumer only | compiled |
 | canonical expected pseudo-regret | finite sum of explicit gap times pull count under the canonical history law | `finiteHistoryGapPseudoRegret`; `canonicalGapExpectedPseudoRegret_eq_sum_expectedPulls` | exact finite-history identity | compiled |
 | majority-event regret charges | original event and changed complement | `oneArmMajority_probability_charge_le_expectedPseudoRegret`; `oneArmMajority_compl_probability_charge_le_expectedPseudoRegret` | exact gap-vector producers | compiled |
-| conditional Eq. (16.4) consumer | one-arm KL plus both gap charges | `expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed` | exact factor `1/4`; source mean-to-gap bridge still required | compiled dependency |
-| Eq. (16.2) | instance-dependent asymptotic regret lower bound | reserved terminal | bandit theorem | blocked |
-| Eq. (16.4) | finite-time pull-count lower bound | reserved terminal | bandit theorem | blocked |
-| Eq. (16.5) | Gaussian finite-time regret lower bound | reserved terminal | bandit theorem | blocked |
+| conditional Eq. (16.4) consumer | one-arm KL plus both gap charges | `expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed` | exact factor `1/4` | compiled dependency |
+| finite-mean source environment | arm laws, integral means, gaps, and certified optima | `FiniteMeanBanditEnvironment`; `oneArmMeanChange_produces_gap_contract` | source mean-to-gap producer | compiled |
+| Eq. (16.2) | instance-dependent asymptotic regret lower bound | `consistentPolicy_liminf_expectedRegret_div_log_ge` | bandit theorem | compiled |
+| Eq. (16.4) | finite-time pull-count lower bound | `expectedPullCount_ge_log_regret_changeOfMeasure` | exact source Lemma 16.3 | compiled |
+| Eq. (16.5) | Gaussian finite-time regret lower bound | `gaussianExpectedRegret_ge_finiteTimeInstanceDependent` | exact source Theorem 16.4 | compiled |
 
 ## Assumption ledger
 
 | Assumption | Lean status | Purpose | Blocking? |
 | --- | --- | --- | --- |
-| unstructured product class | frozen source target | isolate one-arm alternatives | yes for terminal |
-| component probability laws with finite means | future environment fields | define gaps and alternative means | yes |
+| unstructured product class | `InUnstructuredClass`; `withImprovedArm_mem` | isolate one-arm alternatives | no |
+| component probability laws with finite means | explicit environment fields | define gaps and alternative means | no for Lemma 16.3 |
 | every environment/every real `p>0` | explicit compiled predicates | exact consistency | no for analytic leaves |
 | nonnegative expected regret | caller obligation | probability meaning and logs | yes for terminal |
 | extended-real `d_inf` | explicit compiled definition | retain empty/zero/infinite branches | no |
@@ -75,11 +94,11 @@ envelope and sums the positive parts to obtain Eq. (16.5).
 | original-to-alternative KL | explicit declarations | source information direction | no |
 | same stochastic nonanticipating policy | explicit compiled history interface | cancel policy KL | no for information layer |
 | event `T_i(n)>n/2` measurable | explicit compiled event | Bretagnolle--Huber | no |
-| event errors bounded by expected pseudo-regrets | compiled canonical gap-vector producers | supply the two exact gap charges and the factor-`1/4` conditional consumer | no at the explicit gap-vector layer; yes for the source-environment terminal |
-| finite arm-law means identified with source gaps | missing source-environment producer | connect integral means and optimal-arm certificates to both gap vectors | yes for Lemma 16.3 |
-| positive finite KL for real division | explicit future branch | Eq. (16.4) manipulation | yes |
+| event errors bounded by expected pseudo-regrets | compiled canonical gap-vector producers | supply the two exact gap charges and the factor-`1/4` conditional consumer | no |
+| finite arm-law means identified with source gaps | compiled source-environment producer | connect integral means and optimal-arm certificates to both gap vectors | no |
+| positive finite KL for real division | compiled finite branch; zero excluded and infinity explicit | Eq. (16.4) manipulation | no for Lemma 16.3 |
 | unit Gaussian variance | inherited compiled arm law | Theorem 16.4 | no at arm level |
-| nonempty `N`, `C>0`, `0<p<1`, `0<epsilon<=1` | frozen target | finite-time calibration | yes for terminal |
+| nonempty `N`, `C>0`, `0<p<1`, `0<epsilon<=1` | explicit compiled premises | finite-time calibration | no |
 
 ## Local API and proof route
 
@@ -91,9 +110,9 @@ envelope and sums the positive parts to obtain Eq. (16.5).
 | Gaussian `d_inf` | Chapter 15 exact Gaussian KL plus order/limit APIs | compiled local theorem | prove the lower bound and squeeze positive perturbations | keep the strict-alternative boundary visible |
 | history information | Chapter 14 BH plus compiled Chapter 15 history KL | compiled local theorem | specialize to one changed arm and the exact majority event | no deterministic-policy substitution |
 | event-to-regret bridge | canonical history law, finite pull-count sum, and gap-times-pull-count expected pseudo-regret | compiled project-local conditional route | both pathwise majority-event charges, their integrated forms, and the exact factor-`1/4` logarithmic consumer | do not replace expected pseudo-regret by an assumed scalar; retain the later finite-mean gap identification |
-| source mean-to-gap bridge | finite arm-law integral means and optimal-arm certificates | active source-semantic route | instantiate original and changed gap vectors from the two stochastic environments | preserve the source's finite-mean and optimality assumptions |
+| source mean-to-gap bridge | finite arm-law integral means and optimal-arm certificates | compiled project-local route | instantiate original and changed gap vectors from the two stochastic environments | preserve the source's finite-mean and optimality assumptions |
 | asymptotic extraction | eventual log leaf plus liminf | Mathlib filters/liminf audit | handle finite positive `d_inf`, then zero/infinity branches | record exact analytic blocker before pivot |
-| finite-time terminal | Lemma 16.3, Gaussian KL, regret decomposition | source proof | preserve local alternative class and positive part | no constant or horizon-class weakening |
+| finite-time terminal | Lemma 16.3, Gaussian KL, regret decomposition | compiled source proof | preserve local alternative class and positive part | no constant or horizon-class weakening |
 
 ## Proof DAG
 
@@ -108,14 +127,14 @@ envelope and sums the positive parts to obtain Eq. (16.5).
 | `CH16-HISTORY-INFORMATION` | one-arm expected-pull KL and majority-event constraint | compiled Chapter 15 Lemma 15.1 and Chapter 14 BH | one-arm KL, event measurability, and BH declarations | project-local | focused Lean | compiled |
 | `CH16-SCALAR-ASSEMBLY` | finite-KL scale, regret-charge algebra, and log rearrangement | previous node plus real exp/log | three scalar declarations | project-local | focused Lean | compiled |
 | `CH16-EVENT-REGRET` | canonical gap-times-pull-count expected pseudo-regret and both majority-error charges | canonical history law and explicit nonnegative gap vectors | `finiteHistoryGapPseudoRegret`; `canonicalGapExpectedPseudoRegret_eq_sum_expectedPulls`; `oneArmMajority_probability_charge_le_expectedPseudoRegret`; `oneArmMajority_compl_probability_charge_le_expectedPseudoRegret`; `expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed` | project-local conditional producer | focused Lean | compiled |
-| `CH16-MEAN-GAP` | finite arm-law means and certified optima induce the source gap vectors | stochastic environments and the compiled conditional producer | none | source-semantic producer | focused Lean | blocked |
-| `CH16-THEOREM-16-2` | exact liminf regret bound | previous two analytic/semantic branches | reserved terminal | source terminal | focused Lean | blocked |
-| `CH16-LEMMA-16-3` | exact finite-time pull lower bound | history KL and BH | reserved terminal | source terminal | focused Lean | blocked |
-| `CH16-THEOREM-16-4` | exact Gaussian Eq. (16.5) | Lemma 16.3 and Gaussian KL | reserved terminal | source terminal | focused Lean | blocked |
+| `CH16-MEAN-GAP` | finite arm-law means and certified optima induce the source gap vectors | stochastic environments and the compiled conditional producer | `FiniteMeanBanditEnvironment`; `oneArmMeanChange_produces_gap_contract` | project-local | focused Lean | compiled |
+| `CH16-THEOREM-16-2` | exact liminf regret bound | previous two analytic/semantic branches | `consistentPolicy_liminf_expectedRegret_div_log_ge` | source terminal | focused Lean | compiled |
+| `CH16-LEMMA-16-3` | exact finite-time pull lower bound | history KL and BH | `expectedPullCount_ge_log_regret_changeOfMeasure` | source terminal | focused Lean | compiled |
+| `CH16-THEOREM-16-4` | exact Gaussian Eq. (16.5) | Lemma 16.3 and Gaussian KL | `gaussianExpectedRegret_ge_finiteTimeInstanceDependent` | source terminal | focused Lean | compiled |
 | `CH16-TYPED-CANARY` | root-import applications and axiom reports | compiled slice | `Tests/TextbookPartIVChapter16Canary.lean` | project-local | Tests | verified locally |
-| `CH16-EVIDENCE-SITE` | all artifacts agree on partial/blocked boundary | scoped artifacts | repository artifacts | repository | full/site/browser | verified locally for the fifteen-declaration extension |
+| `CH16-EVIDENCE-SITE` | all artifacts agree on compiled main-text scope | scoped artifacts | repository artifacts | repository | full/site/browser | verified locally for the fifteen-declaration extension |
 | `CH16-REVIEW` | direction/quantifier/AC/policy/asymptotic audit | all artifacts | `reviews/2026-08-22-textbook-part-iv-chapter-16-event-regret-extension.md` | repository | read-only | verified for current extension; no unresolved Blocking/High/Medium finding |
-| `CH16-REMOTE` | PR, main Actions, Pages, live page | current 20+15 declaration slice | PR #40; merge `08c1470`; authoritative-main run `32554151109`; clean live manifest and Chapter 16 page/source-link checks | repository | deployment | verified for current extension; source terminals remain blocked |
+| `CH16-REMOTE` | PR, main Actions, Pages, live page | current 20+15 declaration slice | PR #40; merge `08c1470`; authoritative-main run `32554151109`; clean live manifest and Chapter 16 page/source-link checks | repository | deployment | historical pre-terminal deployment only; current branch requires fresh verification |
 
 ## Gaps
 
@@ -126,10 +145,10 @@ envelope and sums the positive parts to obtain Eq. (16.5).
   constraint, finite-KL evaluation, and scalar log assembly.
 - [x] Canonical gap-vector expected-pseudo-regret bounds for both event errors
   and their finite-positive-KL factor-`1/4` conditional consumer.
-- [ ] Finite arm-law integral means and certified optima instantiate the source
+- [x] Finite arm-law integral means and certified optima instantiate the source
   original/changed gap vectors.
-- [ ] Theorem 16.2 `liminf` terminal.
-- [ ] Lemma 16.3 and Theorem 16.4.
+- [x] Theorem 16.2 `liminf` terminal.
+- [x] Lemma 16.3 and Theorem 16.4.
 - [x] Current extension: full local Lean, harness, site, browser, and
   independent-review gates.
 - [x] Preceding twenty-declaration slice: PR, authoritative-main Actions,

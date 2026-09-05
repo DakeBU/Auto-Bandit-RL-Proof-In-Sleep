@@ -2,67 +2,201 @@
 \section{Chapter 14 Information-Theory Spine}
 
 \paragraph{Status.}
-This note is a synchronized mathematical export for task
-\texttt{TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE}.  The scoped
-Section~14.2 declaration surface compiles at Lean source commit
-\texttt{10dfd88}.  It covers Eqs.~(14.4)--(14.6), Theorem~14.1, the event
-specialization of Exercise~14.10, and Theorem~14.2.  It does not claim the
-entropy/coding results of Section~14.1, full sub-sigma-algebra data processing,
-or an adaptive bandit-history chain rule.
+The frozen required body is \texttt{compiled} with explicit source/model
+qualifications. Independent source review, PR 106, main workflow 33959196451
+and live desktop/mobile acceptance passed. The terminal updates below
+supplement the original spine. Nonempty singleton words, power-of-two uniform
+optimality and exact-real arithmetic coding remain part of the boundary;
+optional Notes/Exercises are not claimed complete.
 
 \paragraph{Lean declarations.}
-The public surface is
-\texttt{relativeEntropy}, its regular, probability, singular, and finiteness
-adapters; \texttt{bernoulliRelativeEntropy}; the RN-restriction and KL-split
-helpers; \texttt{bernoulliKLCore\_event\_le}; the binary affinity and overlap
-lemmas; \texttt{binaryBretagnolleHuberCore};
-\texttt{bretagnolleHuberScale} and its nonnegativity;
-\texttt{binaryBretagnolleHuber};
-\texttt{bernoulliRelativeEntropy\_event\_le}; scale antitonicity; and the
-terminal \texttt{bretagnolleHuber}.
+The public surface includes \texttt{BinaryPrefixCode.kraft\_inequality},
+\texttt{discreteEntropyBaseTwo\_eq\_div\_log\_two},
+\texttt{relativeEntropy\_eq\_zero\_iff},
+\texttt{relativeEntropy\_trim\_le}, and
+\texttt{bretagnolleHuber}, together with their typed definitions and helpers.
 
-\paragraph{Measure and event reduction.}
-Define $D(P\Vert Q)$ as Mathlib's extended-real KL divergence.  On the regular
-branch $P\ll Q$ with an integrable log likelihood ratio, it is the nonnegative
-extended-real embedding of the RN/log-likelihood integral; the finite-measure
-mass correction vanishes for probability laws.  Failure of absolute
-continuity gives infinity, and finiteness is equivalent to absolute continuity
-plus integrability.
+\paragraph{Proof map.}
+A local binary prefix code assigns distinct nonempty bit strings to source
+symbols and forbids one codeword from prefixing a distinct one. Induction on
+message lists proves that its range is uniquely decodable, so Mathlib's
+Kraft--McMillan theorem gives
+\[
+  \sum_{w\in C}2^{-|w|}\le 1.
+\]
+For finite support, the local natural and base-two entropies satisfy
+\[
+ H(P)=\sum_x p_x\log(p_x^{-1}),\qquad
+ H_2(P)=\frac{H(P)}{\log 2},
+\]
+and $H(P)\ge0$ for masses in $[0,1]$. Expected code length is
+$\sum_x p_x|c(x)|$. These facts do not imply Huffman optimality.
 
-For a measurable event $A$, restrict both laws to $A$ and $A^{\mathrm c}$.
-The restricted RN derivative agrees almost everywhere with the original one,
-so the KL integral splits exactly over the two cells.  Applying the convex
-mass-level \texttt{klFun} bound to both cells gives
+For probability measures on a finite alphabet with measurable singletons,
+put $p_x=P(\{x\})$ and $q_x=Q(\{x\})$. Finite atomic additivity gives
+$P\ll Q$ if and only if $q_x=0$ implies $p_x=0$ at every symbol.
+Evaluating the with-density identity on each singleton yields
+$(dP/dQ)(x)q_x=p_x$. Finite-domain integrability and expansion of the
+log-likelihood integral therefore give Eq.~(14.4):
 \[
-  d(P(A),Q(A))\leq D(P\Vert Q).
+D(P\Vert Q)=
+\begin{cases}
+\displaystyle\sum_x p_x\log(p_x/q_x),&\operatorname{supp}P\subseteq\operatorname{supp}Q,\\
++\infty,&\text{otherwise}.
+\end{cases}
 \]
-The endpoint cases $Q(A)\in\{0,1\}$ use absolute continuity, and the
-infinite-KL case is immediate.  The direction is always $P$ to $Q$.
+Zero source terms are zero; a positive source atom absent from $Q$ forces
+the infinite branch. The local declarations are
+\texttt{absolutelyContinuous\_iff\_atom\_support},
+\texttt{rnDeriv\_mul\_atom}, \texttt{rnDeriv\_atom\_eq\_div},
+\texttt{relativeEntropy\_eq\_top\_of\_atom\_support\_mismatch},
+\texttt{relativeEntropy\_finite\_klFun},
+\texttt{relativeEntropy\_finite\_sum\_log},
+\texttt{relativeEntropy\_finite\_eq\_if}, and
+\texttt{relativeEntropy\_finite\_eq\_top\_iff}.
+The convex-integrand identity also applies to finite measures.
+No strict positivity or extra log-integrability premise is assumed in the
+probability formula.
 
-\paragraph{Binary testing.}
-For interior $q$, concavity of logarithm gives
+For Eq.~(14.5), let $D_{\mathrm{fin}}(P,Q)$ be the supremum of the
+divergences of $P\circ f^{-1}$ and $Q\circ f^{-1}$ over all measurable
+$f:\Omega\to\operatorname{Fin}(n)$ and all $n$. Fiberwise Jensen and integral
+decomposition give $D_{\mathrm{fin}}(P,Q)\le D(P\Vert Q)$. In the singular
+case, a measurable $Q$-null set of positive $P$ mass supplies a binary
+observation with infinite divergence. Under $P\ll Q$, simple approximants
+generate a filtration resolving the RN density. Upward conditional-expectation
+convergence, continuity of the convex KL integrand, and Fatou recover the
+original divergence as the supremum of the trimmed divergences. Each stage's
+joint simple-approximant values have finite range and can be encoded in
+$\operatorname{Fin}(n)$. The observation/comap identity and trim monotonicity
+therefore give the reverse bound, proving
 \[
-  e^{-d(p,q)/2}
-  \leq \sqrt{pq}+\sqrt{(1-p)(1-q)}.
+ D_{\mathrm{fin}}(P,Q)=D(P\Vert Q).
 \]
-A two-term square-root inequality bounds one half of the squared affinity by
-$p+(1-q)$.  After squaring the exponential inequality,
-\[
-  \frac12e^{-d(p,q)}\leq p+(1-q).
-\]
-The cases $q=0,1$ are discharged through the exact Bernoulli support
-convention.  The real scale is defined as $e^{-d}/2$ for finite extended-real
-$d$ and zero at $d=\infty$; it is nonnegative and antitone.
+The terminal is \texttt{finitePartitionRelativeEntropy\_eq\_relativeEntropy}.
+Its principal bridges are \texttt{relativeEntropy\_finite\_map\_le},
+\texttt{relativeEntropy\_eq\_iSup\_densityApproximation\_trim},
+\texttt{exists\_fin\_observation\_densityApproximation},
+\texttt{relativeEntropy\_map\_eq\_trim\_of\_\allowbreak absolutelyContinuous}, and
+\texttt{relativeEntropy\_trim\_mono}; the synchronized Markdown declaration
+list names every helper. The equality holds for finite measures on arbitrary
+measurable spaces, without finite-KL, AC, or countable-generation premises.
+The probability specialization and existing RN branch adapters retain the
+singular and nonintegrable infinity cases in Theorem~14.1.
 
-\paragraph{Source terminal and boundary.}
-Event data processing, scale antitonicity, the endpoint-complete binary
-theorem, and $Q(A^{\mathrm c})=1-Q(A)$ yield
+For finite measures on $\mathcal F$ and $\mathcal G\subseteq\mathcal F$,
+the infinite-KL branch is immediate. In the finite branch, the RN derivative
+after trimming equals the conditional expectation of the original density.
+Conditional Jensen for the convex KL integrand and integral transport yield
 \[
-  \operatorname{BHScale}(D(P\Vert Q))
-  \leq P(A)+Q(A^{\mathrm c}).
+ D(P|_{\mathcal G}\Vert Q|_{\mathcal G})\le D(P\Vert Q).
 \]
-This is the unconditional Theorem~14.2 terminal.  It has no finite-KL premise,
-mutual absolute-continuity premise, policy, horizon, filtration, kernel chain
-rule, or stopping-time assumption.  Chapter~15 must still build the
-same-policy adaptive-history laws and divergence decomposition that consume
-this theorem.
+This is the full sub-$\sigma$-algebra form of Exercise 14.10.
+
+Finally, event data processing, the endpoint-complete binary affinity bound,
+and antitonicity of the testing scale prove
+\[
+ \frac12\exp\{-D(P\Vert Q)\}\le P(A)+Q(A^{\mathrm c}),
+\]
+with the left side defined as zero at infinite KL. The direction is $P$ to
+$Q$, and the complement is evaluated under $Q$.
+
+\paragraph{Current terminal update.}
+For a finite nonnegative normalized law $p$, write $H_2$ for its bit entropy.
+\texttt{huffmanOptimalCode} recursively merges the two least weights;
+\texttt{huffmanCode\_optimal} proves global prefix-code optimality, and
+\texttt{huffmanCode\_entropy\_sandwich} gives $H_2\le E\ell\le H_2+1$.
+Full gate: \texttt{dff13cb}. Codewords are nonempty, including the singleton.
+
+\texttt{arithmeticBlockCode} is a classical exact-real interval-address code
+with a one-bit support/zero-mass escape tag. On $n>0$ independent symbols
+from a law on $\mathrm{Fin}\,k$,
+\texttt{arithmeticBlockCode\_rate\_sandwich} proves
+\[
+ H_2\le E\ell/n\le H_2+3/n.
+\]
+\texttt{arithmeticBlockCode\_rate\_tendsto\_entropy} proves convergence;
+\texttt{sourceBlock\_code\_family\_\allowbreak limit\_ge\_entropy} is the universal
+prefix-code converse. Zero masses are allowed. This is not a finite-precision
+executable encoder. Arithmetic gate \texttt{2a31a01} passed (400 tests, 7 skipped).
+
+\texttt{relativeEntropy\_commonDensity\_eq\_if} gives the common
+$\sigma$-finite density formula with exact infinite branches (gate
+\texttt{78846b8}).
+\texttt{bretagnolleHuberScale\_le\_half\_commonDensityAffinity\_sq} and
+\texttt{half\_commonDensityAffinity\_sq\_le\_overlap} provide the source
+Jensen/Le Cam route (gate \texttt{b8325c2}).
+\texttt{klDiv\_gaussianReal\_same\_variance},
+\texttt{gaussian\_testing\_error\_lower\_bound},
+\texttt{gaussian\_testing\_error\_three\_tenths} and
+\texttt{gaussian\_testing\_max\_error\_three\_twentieths} cover positive
+common variance and the exact SNR constants (gate \texttt{1e8af14}).
+All names are in \texttt{BanditRLProof.LowerBounds}. Supporting adapters below
+passed the subsequent full-body compiler, independent and publication gates.
+No new unproved concentration or measurability premise is introduced.
+
+\paragraph{Supporting body assertions and qualifications.}
+\texttt{relativeEntropy\_triangle\_counterexample} uses Gaussian means
+$0,1,2$, variance one, and KL values $1/2,1/2,2$.
+\texttt{bernoulliRelativeEntropy\_asymmetry} uses parameters $0,1/2$,
+giving finite versus infinite KL.
+\texttt{relativeEntropy\_finite\_crossEntropy} gives the finite-law
+cross-entropy difference under $P\ll Q$;
+\texttt{entropyTerm\_tendsto\_zero\_right} gives $x\log(1/x)\to0$ from
+the right. This is not an identity of rounded code-length differences.
+
+\texttt{exists\_ceilingLogPrefixCode} gives the integer ceiling-log code
+for $N\ge2$; \texttt{expectedCodeLength\_fixedLength} gives its expectation.
+\texttt{fixedLength\_uniformPowerTwo\_optimal} proves optimality when
+$N=2^n$. \texttt{uniform\_three\_fixedLength\_not\_optimal} disproves the
+arbitrary-$N$ reading: $0,10,11$ has mean $5/3<2$. This qualification of the
+informal source sentence is essential. The local singleton code has one bit,
+rather than an allowed empty word.
+
+\texttt{exists\_\allowbreak commonSigmaFiniteDominatingMeasure} exposes $P+Q$;
+\texttt{relativeEntropy\_finite\_\allowbreak lt\_top\_iff\_ac} retains the finite-alphabet
+condition. All these adapters are locally compiled and canaried.
+\par
+The \texttt{a47106a} full gate passed with 8951 Lean jobs and 400 Python tests
+(7 skipped), including UniformCoding and CommonDomination. Historical
+deployment checks do not certify the current whole-chapter surface.
+
+\paragraph{Arithmetic identity audit.}
+The earlier existence interfaces discarded interval containment before
+\texttt{arithmeticBlockCode} made its classical choice. The previous gate
+therefore certifies code rates, not the claimed arithmetic identity of the
+named code. The strengthened interfaces
+\texttt{exists\_zeroSafe\_arithmeticCode} and
+\texttt{exists\_arithmeticBlockSupport} retain containment.
+\texttt{arithmeticBlockCode\_payload\_interval} states it for the actual code:
+for every positive-mass block, removing the support tag leaves a dyadic cell
+inside that block's arithmetic interval. Validation is tracked in the
+arithmetic-identity audit; it is not covered by \texttt{a47106a}.
+
+\paragraph{Unique decoding and equivalent prefix codes.}
+For a finite alphabet and an injective encoder $c$ with uniquely decodable
+range, \texttt{exists\_prefixCode\_of\_uniquelyDecodable} constructs a prefix
+code with the same length for every symbol, hence the same expected length
+for every source distribution. This covers the boxed Section 14.1 assertion,
+including Kraft sum one. The proof uses Mathlib's
+\texttt{UniquelyDecodable.epsilon\_not\_mem} and
+\texttt{kraft\_mcmillan\_inequality}, then the local
+\texttt{exists\_prefix\_encoding\_of\_kraft\_le\_one} and
+\texttt{exists\_binaryPrefixCode\_of\_kraft\_le\_one}.
+Nonempty words follow from unique decodability; no strict Kraft premise is
+imposed. The full \texttt{3d7c9a1} gate passed, including the root-import
+canary (400 Python tests, 7 skipped).
+\texttt{IsOptimalPrefixCode.length\_antitone} separately formalizes the body
+observation about more likely symbols in an optimal code.
+
+\paragraph{Arbitrary-event source proof closure.}
+\texttt{commonDensityOverlap\_\allowbreak le\_\allowbreak testingError}
+proves overlap $\le P(A)+Q(A^c)$ for every measurable event, finite $P,Q$
+and sigma-finite common domination. It splits the minimum-density integral
+over $A$ and its complement, bounds each minimum by the corresponding
+density and applies the RN set-integral identity. The Affinity canary chains
+the source Jensen, squared-affinity and overlap bounds to arbitrary-event
+testing error, and checks reversed KL by swapping $P,Q$ and complementing $A$.
+Independent source review accepted this repair; exact aggregate validation
+is recorded in the independent-source review. This does not certify
+current-main integration or publication.
