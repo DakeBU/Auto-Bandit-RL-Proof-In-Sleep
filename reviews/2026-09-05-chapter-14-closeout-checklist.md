@@ -15,7 +15,7 @@ Notes. No row below substitutes a narrower accepted historical milestone.
 | Markdown/LaTeX current snapshot | arbitrary-event proof paragraph synchronized; fragment rebuilt, unchanged pages 1-2 retain prior QA and changed page 3 re-inspected | current snapshot visual QA passed; future edits invalidate it |
 | Current site content and browser | 372684e static check passed including new theorem link; desktop content, mouse and keyboard navigation previously verified at 24aa742 | no new browser or remote claim |
 | Independent whole-body review | full-body reviewer found one P2 source-route gap; cf3ed1f repair re-reviewed and full gate passed | independent source/statement audit PASS; no remaining mathematical finding |
-| Current PR and remote/publication evidence | read-only gh pr list for exact current branch returned [] | no current PR; historical PR #11/Pages does not cover this branch |
+| Current PR and remote/publication evidence | PR #106 opened at 58dac53; GitHub reports OPEN, CONFLICTING/DIRTY, empty checks | PR created; integration, CI and deployment not established; historical PR #11/Pages does not cover this branch |
 
 The last two proof refinements are not assumptions added to the target:
 arithmetic containment is retained through existential choice, and nonempty
@@ -41,3 +41,9 @@ generated 2026-09-05T07:58:46Z. SITE CHECK PASSED: 687 HTML pages,
 9236 Lean source links, valid internal links/anchors and mathematical fallbacks.
 The final Lean repair is cf3ed1f, tracked in the independent-source review. This is local
 static verification, not a new browser run or remote deployment.
+
+PR: https://github.com/DakeBU/Auto-Bandit-RL-Proof-In-Sleep/pull/106.
+Created only after independent source review and cf3ed1f full gate passed.
+No merge or deployment performed. User authorization explicitly stops at PR
+creation. Whole chapter remains partial pending current-main integration and
+the resulting remote evidence; local proof/review success is not a deployment.
