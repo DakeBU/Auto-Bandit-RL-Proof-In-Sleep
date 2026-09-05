@@ -145,3 +145,29 @@ direct checking. All six printed declarations depend only on `propext`,
 `Classical.choice`, and `Quot.sound`. The new filtration module and canary
 remain focused-only, pending root/aggregate integration and the final full
 gate together with the finite-observation encoding.
+
+Finite encoding implementation route: for a measurable finite-range map,
+use its range subtype and `Fintype.equivFin` to obtain a measurable finite
+code and a decoder. Apply this to the joint values of the first `n+1`
+`SimpleFunc.eapprox` functions; `Set.Finite.pi'` proves joint finite range.
+Each coordinate is a measurable function of the code, so each natural
+filtration generator is contained in its comap. Trim monotonicity and
+`relativeEntropy_map_eq_trim_of_absolutelyContinuous` bound each recovered
+layer by `finitePartitionRelativeEntropy`. Supremum recovery and the already
+proved singular branch then give the full equality. No new assumptions are
+added to the final finite-measure statement.
+
+The finite encoding, layer-domination, trim-monotonicity, and final
+`finitePartitionRelativeEntropy_eq_relativeEntropy` theorem now pass direct
+Lean checking. The final theorem assumes only two finite measures on the
+same arbitrary measurable space: no AC, finite KL, or countable-generation
+premise. It covers the probability-measure textbook target in particular.
+The initial failed check used the wrong namespace `Measure.trim_trim`;
+the installed lemma is `MeasureTheory.trim_trim`, and that correction closed
+the proof without any target change.
+
+The recovery module is now root-imported; partition, filtration, and recovery
+canaries are included in the aggregate Tests target. Full integration gates
+are pending. The recovery canary includes real-line Dirac cases, an arbitrary
+probability-measure equality, and the infinite-KL consequence without AC or
+integrability assumptions.
