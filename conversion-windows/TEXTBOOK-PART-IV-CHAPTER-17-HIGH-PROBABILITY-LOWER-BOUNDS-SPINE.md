@@ -17,10 +17,42 @@ contains Theorem 17.4 and Claims 17.5--17.7. Edition-specific pagination is
 not converted by an offset.
 
 The current compiled window contains the exact threshold surfaces, tail-event
-direction, Claim 17.5's first-moment content, the Claims 17.6--17.7 event
-subtraction, and the deterministic quarter-horizon consequence of Eq. (17.8).
-Theorem 17.1, Corollaries 17.2--17.3, Theorem 17.4, and Claims 17.6--17.7
-remain uncompiled and blocked. The website chapter must remain `partial`.
+direction, Theorem 17.1, Corollaries 17.2--17.3, Claim 17.5's first-moment
+content, the Claims 17.6--17.7 event subtraction, and construction-level Eq.
+(17.8). Claims 17.6--17.7, the full shared-noise policy coupling, fixed-table
+extraction, and corrected Theorem 17.4 now pass focused compilation.
+The current root/Tests/exporter/placeholder/Python gate passes on a
+hash-matched short-path snapshot. The chapter is locally compiled with the
+explicit approved corrections below; no new deployment is claimed.
+
+### User-approved source corrections (2026-09-05)
+
+Claim 17.6 uses `T_i <= n/2`, not the printed strict inequality: a fixed
+two-round, two-arm schedule pulls each arm exactly once, making the printed
+event empty. The non-strict correction suffices for Eq. (17.8).
+
+Theorem 17.4 is proved on `0 < delta <= 1/32`, with explicit universal
+constants `c=1/160` and `C=64`. The printed full `(0,1)` range cannot hold:
+`log(1/(2delta))` becomes negative for `delta>1/2`, and the recorded two-arm,
+one-round counterexample contradicts the resulting tail claim. The corrected
+terminal retains the strict event `Rhat_n > u`, equivalently `1-F_x(u)`, the
+deterministic `[0,1]` reward-matrix witness, and the same policy. These are
+explicit authorized corrections, not proofs of the false printed statements.
+
+## Chapter-completion gate frozen on 2026-09-04
+
+The task file's chapter-completion contract is normative for this conversion
+window.  In addition to the named source terminals, completion requires local
+surfaces for the body definitions they quantify over: stochastic random
+pseudo-regret; the gap-bounded unit-Gaussian class and deterministic expected
+pseudo-regret premise; adversarial bounded reward matrices, same-policy
+interaction, random regret and CDF; the exact clipping map and correlated
+hard-family law; and the construction-level Eq. (17.8).  Conditional algebra,
+theorem cards, and source mappings do not satisfy those rows.
+
+The notes, bibliographic remarks, and Exercise 17.1 are optional exports only.
+They are never used to downgrade a missing body definition, claim, equation,
+or theorem to optional status.
 
 ## Precise restatement
 
@@ -59,11 +91,14 @@ counts into random regret.
 | Eq. (17.8) RHS | gap times unclipped non-arm rounds | `adversarialRegretLowerExpression` | real definition | compiled |
 | quarter consequence | count bounds leave `Delta n/4` | `adversarialRegretLowerExpression_ge_quarter` | deterministic algebra | compiled |
 | Eq. (17.8) transfer | construction lower bound implies regret threshold | `randomRegret_ge_quarter_of_clippingDecomposition` | conditional algebra | compiled |
-| Theorem 17.1 | exact stochastic Gaussian tail | reserved terminal | bandit theorem | blocked |
-| Corollaries 17.2--17.3 | minimax tail and all-confidence impossibility | reserved terminals | bandit theorems | blocked |
-| Claim 17.6 | clipped-Gaussian pull-small event | reserved terminal | adversarial information theorem | blocked |
-| Claim 17.7 | clipping count tail | reserved terminal | concentration theorem | blocked |
-| Theorem 17.4 | deterministic adversarial witness | reserved terminal | bandit theorem | blocked |
+| Theorem 17.1 | exact stochastic Gaussian tail | `gaussianRandomPseudoRegret_ge_theorem17_1` | bandit theorem | compiled |
+| Corollary 17.2 | exact minimax tail under Eq. (17.6) | `gaussianRandomPseudoRegret_ge_corollary17_2` | bandit theorem | compiled |
+| Corollary 17.3 | all-confidence impossibility | `noUniformGaussianRandomPseudoRegretTail_corollary17_3` | bandit theorem | compiled |
+| random / expected regret | fixed-table path variable / Bochner expectation | `adversarialTableRandomRegret`, `adversarialTableExpectedRegret`, `integrable_adversarialTableRandomRegret` | distinct random variable and integrable expectation | compiled; full local gate passed |
+| CDF `F_x` | same-policy fixed-table CDF and strict tail | `adversarialTableCDF`, `adversarialTable_strictTail_eq_one_sub_CDF` | measurable probability interface | compiled; full local gate passed |
+| Claim 17.6, corrected | non-strict pull-small event | `adversarialNoiseHistoryJoint_pull_le_half_claim17_6` | adversarial information theorem, exact gap | compiled; full local gate passed |
+| Claim 17.7 | full-family literal boundary clipping count tail | `adversarialFullBoundaryCount_tail_claim17_7` | concentration theorem | compiled; full local gate passed |
+| Theorem 17.4, corrected | deterministic adversarial witness, CDF complement | `adversarialRandomRegret_ge_theorem17_4` | bandit theorem with explicit constants/domain above | compiled; full local gate passed |
 
 ## Semantic signature
 
@@ -92,21 +127,22 @@ hard-family averaging:
 
 | Assumption | Lean status | Purpose | Blocking? |
 | --- | --- | --- | --- |
-| `n>=1`, `k>=2`, `B>0`, `delta in (0,1)` | frozen source target | Theorem 17.1 calibration | yes for terminal |
-| `E^k` unit-Gaussian, gaps at most one | future environment structure | stochastic hard family | yes |
-| uniform expected-regret premise over all `E^k` | frozen target | least-pulled-arm bound | yes |
-| one common possibly randomized nonanticipating policy | missing history interface | cancel policy KL | yes |
-| original-to-alternative history KL | frozen direction | Bretagnolle--Huber step | yes |
+| `n>=1`, `k>=2`, `B>0`, `delta in (0,1)` | compiled theorem premises | Theorem 17.1 calibration | no |
+| `E^k` unit-Gaussian, gaps at most one | full source class compiled; witness is unit-cube | stochastic hard family | no |
+| uniform expected-regret premise over all `E^k` | compiled source wrapper; internal core restricts to unit cube | least-pulled-arm bound | no |
+| one common possibly randomized nonanticipating policy | compiled canonical history algorithm | cancel policy KL | no |
+| original-to-alternative history KL | compiled direction | Bretagnolle--Huber step | no |
 | `alternativeArms=k-1` | consumer-side mapping | exact threshold | no |
-| real `p in (0,1)` and strict `<delta` | frozen Corollary 17.3 target | all-confidence impossibility | yes |
+| real `p in (0,1)` and strict `<delta` | compiled Corollary 17.3 target | all-confidence impossibility | no |
 | probability law `Q` | explicit compiled typeclass | Claim 17.5 first moment | no |
 | integrability of `1-F_x(u)` | explicit compiled premise | define the real expectation | no |
-| reward matrix in `[0,1]^(n x k)` with Borel law | missing hard-family type | Theorem 17.4 | yes |
-| arms correlated within a round, IID down each arm | frozen construction | avoid false independence | yes |
-| exact clipping map | missing construction | Claims 17.6--17.7 and Eq. (17.8) | yes |
-| `sigma=1/10`, `Delta<1/8`, horizon log condition | frozen target | Claim 17.7 | yes |
+| reward matrix in `[0,1]^(n x k)` with Borel law | measurable shared-noise reward table and policy joint law compiled | Theorem 17.4 | no |
+| arms correlated within a round, IID down each arm | same-noise full hard shifts and product noise law compiled | avoid false independence | no |
+| exact clipping map | compiled path construction | Claims 17.6--17.7 and Eq. (17.8) | no for Eq. (17.8) |
+| `sigma=1/10`, `Delta<1/8`, horizon log condition | compiled exact concentration and calibration | Claim 17.7 | no |
+| `0<delta<=1/32`, `c=1/160`, `C=64` | explicit user-approved corrected terminal | Theorem 17.4 | no |
 | nonnegative gap | explicit compiled premise | quarter-horizon multiplication | no |
-| Eq. (17.8) pathwise comparison | explicit premise in transfer leaf | connect counts to random regret | yes for terminal |
+| Eq. (17.8) pathwise comparison | compiled for actual finite-arm supremum regret | connect counts to random regret | no |
 
 ## Local API and proof route
 
@@ -115,12 +151,12 @@ hard-family averaging:
 | threshold transcription | `Real.sqrt`, `Real.log`, `min` | `MLIB-REAL-LOG-SQRT` | preserve grouping and constants literally | never normalize away source factors without a proved equality |
 | Claim 17.5 | `MeasureTheory.exists_integral_le` | installed Mathlib source | apply first moment to `1-F_x(u)` | retain explicit integrability |
 | good-event subtraction | `le_measureReal_diff` | installed Mathlib source | subtract clipping-bad from pull-small | do not add unnecessary measurability |
-| Eq. (17.8) algebra | ordered-field multiplication | `MLIB-ORDER-ALGEBRA` | leave a quarter horizon after the two count bounds | construction inequality remains explicit premise |
-| stochastic history information | Chapter 14 BH plus compiled Chapter 15 Lemma 15.1 | local declarations | instantiate the one-arm history identity, then prove the tail-event comparison | no deterministic-policy substitution |
+| Eq. (17.8) algebra | clipping monotonicity, finite sums, ordered-field multiplication | `MLIB-ORDER-ALGEBRA` | prove the pathwise comparator bound and lift through the finite-arm supremum | preserve shared noise across arms |
+| stochastic history information | Chapter 14 BH plus compiled Chapter 15 Lemma 15.1 | local declarations | instantiate the one-arm history identity, then prove the tail-event comparison | compiled; no deterministic-policy substitution |
 | Corollary 17.3 integration | layer-cake/tail APIs | `MLIB-MEASURE-INTEGRAL` | integrate the all-confidence tail and contradict Theorem 17.1 | keep real exponent and all quantifiers |
 | clipped-normal construction | Gaussian distribution, maps, kernels | Mathlib distribution/kernel cards | construct Borel reward-matrix law and interaction history | preserve across-arm dependence |
 | clipping concentration | Gaussian tails and finite union/count | concentration cards | prove Claim 17.7 with exact constants | no asymptotic-only replacement |
-| adversarial terminal | compiled Claim 17.5 plus blocked Claims 17.6--17.7 | textbook/paper route cards | combine good event, Eq. (17.8), tuning, first moment | external paper is route evidence only |
+| adversarial terminal | compiled Claims 17.5--17.7, with approved Claim 17.6 correction | textbook/paper route cards | combine good event, Eq. (17.8), tuning, first moment | external paper is route evidence only |
 
 ## Proof DAG
 
@@ -131,15 +167,15 @@ hard-family averaging:
 | `CH17-CLAIM-17-5` | average CDF tail gives deterministic witness | probability first moment | `exists_cdfTail_ge_of_integral_ge` | Mathlib-composed | focused Lean | compiled |
 | `CH17-EVENT-SUBTRACTION` | `2delta-delta>=delta` good event | measure difference | `measureReal_diff_ge_delta` | Mathlib-composed | focused Lean | compiled |
 | `CH17-EQ-17-8-ALGEBRA` | count bounds plus source comparison imply `Delta n/4` | ordered-field algebra | two adversarial-regret declarations | project-local | focused Lean | compiled |
-| `CH17-HISTORY-INFORMATION` | stochastic one-arm tail comparison | compiled Chapter 15 Lemma 15.1 | none | downstream consumer | focused Lean | blocked |
-| `CH17-THEOREM-17-1` | exact stochastic tail | history information and tuning | reserved terminal | source terminal | focused Lean | blocked |
-| `CH17-COROLLARY-17-2` | exact minimax stochastic tail | Theorem 17.1 and expectation contradiction | reserved terminal | source terminal | focused Lean | blocked |
-| `CH17-COROLLARY-17-3` | exact all-confidence impossibility | Theorem 17.1 and tail integration | reserved terminal | source terminal | focused Lean | blocked |
-| `CH17-CLIPPED-NORMAL-LAW` | correlated hard reward-matrix law | Gaussian map/kernel APIs | none | project semantic gap | focused Lean | blocked |
-| `CH17-CLAIM-17-6` | pull-small probability at least `2delta` | hard law and history KL | reserved terminal | source terminal | focused Lean | blocked |
-| `CH17-EQ-17-8` | pathwise random-regret comparison | clipping construction | reserved terminal | source terminal | focused Lean | blocked |
-| `CH17-CLAIM-17-7` | clipping count tail at most `delta` | clipped Gaussian concentration | reserved terminal | source terminal | focused Lean | blocked |
-| `CH17-THEOREM-17-4` | deterministic adversarial witness | Claims 17.5--17.7 and Eq. (17.8) | reserved terminal | source terminal | focused Lean | blocked |
+| `CH17-HISTORY-INFORMATION` | stochastic one-arm tail comparison | compiled Chapter 15 Lemma 15.1 | theorem 17.1 proof route | project-local | focused Lean | compiled |
+| `CH17-THEOREM-17-1` | exact stochastic tail | history information and tuning | `gaussianRandomPseudoRegret_ge_theorem17_1` | source terminal | focused Lean | compiled |
+| `CH17-COROLLARY-17-2` | exact minimax stochastic tail | Theorem 17.1 and expectation contradiction | `gaussianRandomPseudoRegret_ge_corollary17_2` | source terminal | focused Lean | compiled |
+| `CH17-COROLLARY-17-3` | exact all-confidence impossibility | Theorem 17.1 and tail integration | `noUniformGaussianRandomPseudoRegretTail_corollary17_3` | source terminal | focused Lean | compiled |
+| `CH17-CLIPPED-NORMAL-LAW` | shared-noise matrix and same-policy all-round history coupling | Gaussian product measure and clipping kernels | `adversarialNoiseHistoryJoint_history_marginal` | project-local | focused Lean | compiled; full local gate passed |
+| `CH17-CLAIM-17-6` | non-strict pull-small probability at least `2delta` | hard law and history KL | `adversarialNoiseHistoryJoint_pull_le_half_claim17_6` | approved corrected terminal | focused Lean | compiled; full local gate passed |
+| `CH17-EQ-17-8` | pathwise random-regret comparison | clipping construction | `adversarialRandomRegret_ge_eq17_8` | source terminal | focused Lean | compiled |
+| `CH17-CLAIM-17-7` | literal boundary clipping count tail at most `delta` | clipped Gaussian concentration | `adversarialFullBoundaryCount_tail_claim17_7` | source terminal | focused Lean | compiled; full local gate passed |
+| `CH17-THEOREM-17-4` | deterministic adversarial witness, strict CDF tail | Claims 17.5--17.7 and Eq. (17.8) | `adversarialRandomRegret_ge_theorem17_4` | approved corrected terminal | focused Lean | compiled; full local gate passed |
 | `CH17-TYPED-CANARY` | root-import applications and axiom reports | compiled slice | `Tests/TextbookPartIVChapter17Canary.lean` | project-local | Tests | verified on Linux PR/main |
 | `CH17-EVIDENCE-SITE` | all artifacts agree on partial/blocked boundary | scoped artifacts | repository artifacts | repository | full/site/browser | site, desktop/mobile, Linux, and review passed |
 | `CH17-REVIEW` | regret notion/direction/quantifier/constants audit | all artifacts | review record | repository | read-only | passed after two P3 fixes |
@@ -150,10 +186,17 @@ hard-family averaging:
 - [x] Exact source/page/semantic mapping.
 - [x] Threshold, Claim 17.5, event subtraction, and Eq. (17.8) algebra leaves.
 - [x] Same-policy stochastic history KL identity (Chapter 15 Lemma 15.1).
-- [ ] Chapter 17 tail-event consumer and Theorem 17.1.
-- [ ] Corollary 17.2 expectation contradiction and Corollary 17.3 tail integral.
-- [ ] Clipped-normal reward-matrix/history law.
-- [ ] Claim 17.6, construction-level Eq. (17.8), Claim 17.7, and Theorem 17.4.
+- [x] Chapter 17 tail-event consumer and Theorem 17.1.
+- [x] Corollary 17.2 expectation contradiction.
+- [x] Corollary 17.3 tail integral.
+- [x] Clipped shared-noise reward path and IID centered-Gaussian path law.
+- [x] Policy-coupled shared-noise reward-matrix/history law (focused build).
+- [x] Correlated clipped shared-noise path and construction-level Eq. (17.8).
+- [x] Corrected Claim 17.6, exact Claim 17.7, and corrected Theorem 17.4 (focused build).
+- [x] Current revision full repository and root-import canary gates; corrected status synchronized locally.
+
+The checked deployment/review items below describe the earlier accepted slice,
+not verification or deployment of the new corrected adversarial terminal.
 - [x] Focused Lean, root/canary short-path compile, site, desktop browser, and
   independent-review gates.
 - [x] Full Linux Lean/Tests/harness and actual mobile browser gates.

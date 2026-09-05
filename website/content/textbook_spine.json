@@ -563,8 +563,9 @@
       "number": 17,
       "slug": "chapter-17-high-probability",
       "title": "High-Probability Lower Bounds",
-      "status": "partial",
-      "status_note": "Claim 17.5's first-moment witness and reusable threshold, event-subtraction, and deterministic Eq. (17.8) algebra compile. The stochastic tail terminals and clipped-normal adversarial construction remain blocked.",
+      "status": "compiled",
+      "chapter_status_label": "Required body with approved corrections",
+      "status_note": "All Chapter 17 body endpoints pass the full local Lean/Tests/harness gate, including same-policy hard-law coupling and deterministic matrix extraction. Approved corrections: Claim 17.6 uses T_i ≤ n/2; Theorem 17.4 uses 0 < δ ≤ 1/32 with c=1/160, C=64 and a strict CDF tail. This is local corrected-chapter closure, not a new deployment.",
       "print_pages": "185–190",
       "pdf_pages": "224–230",
       "pdf_page": 224,
@@ -589,7 +590,7 @@
           "name": "Stochastic random pseudo-regret",
           "math": "\\bar R_n=\\sum_{i=1}^k T_i(n)\\Delta_i.",
           "fallback": "Random pseudo-regret is the sum of each gap times its random pull count.",
-          "status": "partial"
+          "status": "compiled"
         },
         {
           "name": "Theorem 17.1 threshold",
@@ -619,7 +620,7 @@
           "name": "Equation (17.8) regret bridge",
           "math": "\\widehat R_n\\ge\\Delta\\left(n-T_i(n)-\\sum_{t=1}^n\\mathbf 1\\{\\exists j:\\,X_{tj}\\in\\{0,1\\}\\}\\right).",
           "fallback": "Random regret is at least the gap times the rounds that neither pull the hard arm nor hit a clipping boundary.",
-          "status": "blocked"
+          "status": "compiled"
         }
       ],
       "flow": {
@@ -627,7 +628,7 @@
         "kind": "proof pseudocode",
         "steps": [
           {"title": "Stochastic: select the least-pulled alternative arm", "detail": "Use the uniform expected-regret envelope to control one arm among i>1, then raise only its Gaussian mean by 2Δ."},
-          {"title": "Stochastic: compare the two history laws", "detail": "Apply Bretagnolle–Huber with the compiled original-to-alternative history KL identity under the same randomized policy; the Chapter 17 tail-event consumer remains open."},
+          {"title": "Stochastic: compare the two history laws", "detail": "Apply Bretagnolle–Huber with the compiled original-to-alternative history KL identity under the same randomized policy; this tail-event consumer now compiles in Theorem 17.1."},
           {"title": "Stochastic: calibrate Δ and preserve the tail event", "detail": "Choose the exact minimum in the source and keep the outer quarter, log(1/(4δ)), and probability at least δ."},
           {"title": "Adversarial: sample a correlated clipped-normal reward matrix", "detail": "Share one Gaussian noise variable across arms at each round, while keeping each arm IID across time; do not assume within-round independence."},
           {"title": "Adversarial: combine pull and clipping events", "detail": "Claim 17.6 supplies probability 2δ, Claim 17.7 removes at most δ, and Eq. (17.8) leaves regret at least nΔ/4."},
@@ -636,13 +637,13 @@
       },
       "source_theorem": {
         "label": "Theorem 17.1 (stochastic high-probability lower bound)",
-        "status": "blocked",
+        "status": "compiled",
         "plain": "A policy whose expected regret is uniformly at most B times the square root of (k−1)n over the Gaussian class must have, on some instance, random pseudo-regret above the exact confidence threshold with probability at least delta.",
         "math": "\\sup_{\\nu\\in\\mathcal E^k}R_n(\\pi,\\nu)\\le B\\sqrt{(k-1)n}\\;\\Longrightarrow\\;\\exists\\nu\\in\\mathcal E^k:\\;\\mathbb P_\\nu^\\pi\\!\\left(\\bar R_n\\ge\\frac14\\min\\left\\{n,\\frac1B\\sqrt{(k-1)n}\\log\\frac1{4\\delta}\\right\\}\\right)\\ge\\delta.",
         "fallback": "The uniform expected-regret premise forces an exact random-pseudo-regret tail obstruction on some unit-Gaussian instance.",
-        "boundary": "The threshold definition and Lemma 15.1 same-policy history KL identity compile, but the theorem does not: its stochastic tail-event consumer and constant assembly remain absent. Corollaries 17.2–17.3 and Theorem 17.4 are also blocked and are not implied by the compiled leaves."
+        "boundary": "The theorem's premise is quantified over the full gap-at-most-one Gaussian source class; its witness comes from the embedded unit-cube subfamily. The proof preserves the same randomized policy, original-to-alternative history KL, and original-law expected pulls. The corrected adversarial terminal separately passes focused compilation; full local gates pass."
       },
-      "source_boundary": "Claim 17.5 is compiled with its suppressed integrability premise explicit. All other source terminals remain blocked; threshold definitions and conditional algebra are not tail theorems.",
+      "source_boundary": "The stochastic endpoints retain the source statements. Claim 17.6 is corrected to a non-strict half-pull event, and Theorem 17.4 to 0 < δ ≤ 1/32, c=1/160, C=64. These approved corrected endpoints, exact Claim 17.7, and Eq. (17.8) pass focused compilation; no proof of the false printed statements is claimed.",
       "lean_correspondence": [
         {"name": "BanditRLProof.LowerBounds.tailAtLeast", "status": "compiled", "role": "Exact greater-than-or-equal tail-event direction."},
         {"name": "BanditRLProof.LowerBounds.stochasticHighProbabilityThreshold", "status": "compiled", "role": "Theorem 17.1 threshold with the quarter outside the whole minimum."},
@@ -650,12 +651,16 @@
         {"name": "BanditRLProof.LowerBounds.adversarialHighProbabilityThreshold", "status": "compiled", "role": "Theorem 17.4 threshold with log(1/(2δ))."},
         {"name": "BanditRLProof.LowerBounds.exists_cdfTail_ge_of_integral_ge", "status": "compiled", "role": "Exact first-moment content of Claim 17.5, with integrability explicit."},
         {"name": "BanditRLProof.LowerBounds.measureReal_diff_ge_delta", "status": "compiled", "role": "Probability subtraction combining the 2δ pull event and δ clipping event."},
-        {"name": "BanditRLProof.LowerBounds.adversarialRegretLowerExpression_ge_quarter", "status": "compiled", "role": "Deterministic quarter-horizon consequence after Eq. (17.8); it does not prove Eq. (17.8)."},
+        {"name": "BanditRLProof.LowerBounds.adversarialRegretLowerExpression_ge_quarter", "status": "compiled", "role": "Deterministic quarter-horizon consequence after Eq. (17.8)."},
         {"name": "BanditRLProof.LowerBounds.randomRegret_ge_quarter_of_clippingDecomposition", "status": "compiled", "role": "Conditional transfer that keeps the construction-specific Eq. (17.8) comparison as a premise."},
-        {"name": "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_theorem17_1", "status": "blocked", "role": "Reserved exact Theorem 17.1 terminal; no declaration is claimed."},
-        {"name": "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_corollary17_2", "status": "blocked", "role": "Reserved exact Corollary 17.2 terminal; no declaration is claimed."},
-        {"name": "BanditRLProof.LowerBounds.noUniformGaussianRandomPseudoRegretTail_corollary17_3", "status": "blocked", "role": "Reserved Corollary 17.3 terminal; no declaration is claimed."},
-        {"name": "BanditRLProof.LowerBounds.adversarialRandomRegret_ge_theorem17_4", "status": "blocked", "role": "Reserved exact Theorem 17.4 terminal; no declaration is claimed."}
+        {"name": "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_theorem17_1", "status": "compiled", "role": "Exact Theorem 17.1 premise over the full gap-at-most-one Gaussian source class; unit-cube witness."},
+        {"name": "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_corollary17_2", "status": "compiled", "role": "Exact Corollary 17.2 minimax tail under Eq. (17.6)."},
+        {"name": "BanditRLProof.LowerBounds.noUniformGaussianRandomPseudoRegretTail_corollary17_3", "status": "compiled", "role": "Exact one-policy/all-horizon/all-confidence Corollary 17.3 impossibility over the full gap-at-most-one Gaussian class."},
+        {"name": "BanditRLProof.LowerBounds.adversarialRandomRegret_ge_eq17_8", "status": "compiled", "role": "Construction-level Eq. (17.8) for shared-noise clipped rewards and max-over-fixed-arms random regret."},
+        {"name": "BanditRLProof.LowerBounds.adversarialNoiseHistoryJoint_pull_le_half_claim17_6", "status": "compiled", "role": "Compiled; full local gate passed: approved non-strict half-pull event under the same-policy joint law."},
+        {"name": "BanditRLProof.LowerBounds.adversarialFullBoundaryCount_tail_claim17_7", "status": "compiled", "role": "Compiled; full local gate passed: literal full-family boundary clipping count."},
+        {"name": "BanditRLProof.LowerBounds.integrable_adversarialTableRandomRegret", "status": "compiled", "role": "Compiled; full local gate passed: random regret has a well-defined separate expectation."},
+        {"name": "BanditRLProof.LowerBounds.adversarialRandomRegret_ge_theorem17_4", "status": "compiled", "role": "Compiled; full local gate passed: corrected strict CDF tail, δ ≤ 1/32, c=1/160, C=64."}
       ],
       "dependency_nodes": [
         {"id": "ch13", "label": "least-pulled alternative arm", "status": "compiled"},
@@ -664,12 +669,13 @@
         {"id": "thresholds", "label": "exact Chapter 17 thresholds", "status": "compiled"},
         {"id": "claim17-5", "label": "Claim 17.5 first-moment witness", "status": "compiled"},
         {"id": "history", "label": "same-policy adaptive-history KL", "status": "compiled"},
-        {"id": "stochastic", "label": "Theorem 17.1 and Corollaries 17.2–17.3", "status": "blocked"},
-        {"id": "clipped-law", "label": "correlated clipped-normal reward-matrix law", "status": "blocked"},
-        {"id": "claim17-6", "label": "Claim 17.6 pull-small event", "status": "blocked"},
-        {"id": "eq17-8", "label": "construction-level Eq. (17.8)", "status": "blocked"},
-        {"id": "claim17-7", "label": "Claim 17.7 clipping concentration", "status": "blocked"},
-        {"id": "adversarial", "label": "Theorem 17.4 deterministic adversarial witness", "status": "blocked"}
+        {"id": "stochastic", "label": "Theorem 17.1 and Corollaries 17.2–17.3", "status": "compiled"},
+        {"id": "cor17-3", "label": "Corollary 17.3 all-confidence impossibility", "status": "compiled"},
+        {"id": "clipped-law", "label": "same-policy shared-noise joint law", "status": "compiled"},
+        {"id": "claim17-6", "label": "corrected Claim 17.6", "status": "compiled"},
+        {"id": "eq17-8", "label": "construction-level Eq. (17.8)", "status": "compiled"},
+        {"id": "claim17-7", "label": "Claim 17.7 exact clipping concentration", "status": "compiled"},
+        {"id": "adversarial", "label": "corrected Theorem 17.4 deterministic witness", "status": "compiled"}
       ],
       "reading_path": [
         "Start with the chapter opening and keep random regret separate from expected regret.",
@@ -678,12 +684,7 @@
         "In §17.2, trace the random reward-matrix law, conditional policy interaction, Claim 17.5, and the shared-noise clipped-normal construction.",
         "Finish with Claims 17.6–17.7 and Eq. (17.8), treating the compiled probability and algebra leaves as dependencies rather than terminal proofs."
       ],
-      "gaps": [
-        "The Chapter 17 stochastic tail-event consumer built from the compiled Chapter 15 identity.",
-        "Theorem 17.1, Corollary 17.2's expectation contradiction, and Corollary 17.3's exact tail integration.",
-        "The Borel clipped-normal reward-matrix law with within-round arm dependence and across-time IID.",
-        "Claim 17.6's information calculation, construction-level Eq. (17.8), Claim 17.7's exact clipping concentration, and Theorem 17.4."
-      ]
+      "gaps": []
     }
   ]
 }

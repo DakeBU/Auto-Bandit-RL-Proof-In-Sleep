@@ -355,7 +355,7 @@
         ],
         "milestones": ["EXP3-EXPECTED-REGRET", "TEXTBOOK-PART-IV-CH17-SOURCE-TERMINALS"],
         "missing": [
-          "Compile the adversarial hard-family lower terminal rather than only its Chapter 17 threshold and algebra leaves.",
+          "Pair the corrected high-probability lower terminal with the upper route under one exact regret contract.",
           "Keep fixed-horizon, all-positive-prefix, and horizon-free tuning contracts distinct.",
           "Use a minimax-optimal algorithm route if the log A factor is to be removed."
         ]
@@ -364,9 +364,9 @@
         "literature_open": false,
         "formalization_open": true,
         "question": "Can the local adversarial upper route be paired with a compiled minimax lower terminal under one exact regret contract?",
-        "closest": "The EXP3 upper compiles; Chapter 17 supplies only dependency leaves for the adversarial lower construction.",
+        "closest": "The EXP3 upper compiles; corrected Chapter 17 Theorem 17.4 now passes focused compilation with δ ≤ 1/32, c=1/160 and C=64; full local gates pass.",
         "leaf_ids": ["CH17-CLIPPED-NORMAL-LAW", "CH17-CLAIM-17-6", "CH17-CLAIM-17-7", "CH17-THM-17-4"],
-        "missing": ["Clipped-normal hard law", "history information consumer", "clipping concentration", "deterministic witness terminal"]
+        "missing": ["matched upper/lower regret contract; corrected Chapter 17 high-probability construction is compiled"]
       }
     },
     {
@@ -977,7 +977,7 @@
       "id": "distributional-high-probability-regret",
       "family": "distributional-lower-bounds",
       "title": "Distributional high-probability regret under an expected-regret constraint",
-      "summary": "A 2026 upper theorem matches the Chapter 17 logarithmic confidence tradeoff in order, closing the literature question while the Lean source terminals remain blocked.",
+      "summary": "A 2026 upper theorem matches the Chapter 17 logarithmic confidence tradeoff in order. Theorem 17.1, Corollaries 17.2–17.3, and the explicitly corrected adversarial terminal pass the full local repository gate. EQO+ remains a separate unformalized upper route.",
       "tags": ["high probability lower bound", "distributional regret", "EQO+", "Chapter 17", "tail tradeoff"],
       "signature": {
         "Reward model": "Finite stochastic sub-Gaussian or unit-Gaussian arms",
@@ -989,7 +989,7 @@
       "comparison": {
         "status": "minimax-matched",
         "gap": "The upper and lower tradeoff match in confidence and square-root order, with constants, exact reward class, and the lower theorem's expected-regret premise remaining visible.",
-        "note": "This literature frontier is closed by the 2026 EQO+ result. The corresponding Chapter 17 Lean tail theorems are still blocked."
+        "note": "This literature frontier is closed by the 2026 EQO+ result. Chapter 17's stochastic endpoints compile, and corrected Theorem 17.4 passes focused compilation on 0 < δ ≤ 1/32 with c=1/160, C=64. Full local gates pass; this does not formalize EQO+."
       },
       "upper": [
         {
@@ -1018,30 +1018,32 @@
         }
       ],
       "lean": {
-        "status": "blocked",
-        "scope": "BanditRLlib compiles the exact Chapter 17 threshold surfaces, Claim 17.5 first-moment witness, event subtraction, and quarter-horizon algebra. Theorem 17.1, its corollaries, and the adversarial source terminal do not compile.",
+        "status": "partial",
+        "scope": "BanditRLlib compiles the stochastic Chapter 17 endpoints, Claims 17.5–17.7, Eq. (17.8), same-policy shared-noise coupling, and deterministic matrix extraction. Approved corrections: Claim 17.6 uses T_i ≤ n/2; Theorem 17.4 uses 0 < δ ≤ 1/32, c=1/160, C=64 and a strict CDF tail. The full local repository gate passes; EQO+ is not formalized.",
         "declarations": [
           "BanditRLProof.LowerBounds.stochasticHighProbabilityThreshold",
+          "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_theorem17_1",
+          "BanditRLProof.LowerBounds.noUniformGaussianRandomPseudoRegretTail_corollary17_3",
+          "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_corollary17_2",
           "BanditRLProof.LowerBounds.exists_cdfTail_ge_of_integral_ge",
-          "BanditRLProof.LowerBounds.randomRegret_ge_quarter_of_clippingDecomposition"
+          "BanditRLProof.LowerBounds.randomRegret_ge_quarter_of_clippingDecomposition",
+          "BanditRLProof.LowerBounds.adversarialRandomRegret_ge_eq17_8"
         ],
         "milestones": [
           "TEXTBOOK-PART-IV-CH17-FIRST-MOMENT-AND-TAIL-DEPENDENCY-SLICE",
           "TEXTBOOK-PART-IV-CH17-SOURCE-TERMINALS"
         ],
         "missing": [
-          "Compile the Chapter 17 stochastic tail-event consumer and Theorem 17.1.",
-          "Prove the expectation contradiction and tail integral for Corollaries 17.2–17.3.",
           "Map and formalize the EQO+ algorithm and Theorem 4 as a separate upper route."
         ]
       },
       "frontier": {
         "literature_open": false,
         "formalization_open": true,
-        "question": "Can the compiled Chapter 15 history information layer be converted into the exact Chapter 17 stochastic tail theorem and paired with EQO+?",
-        "closest": "The threshold definitions and deterministic probability leaves compile, but no source tail terminal or EQO+ algorithm theorem is claimed.",
+        "question": "Can the compiled corrected lower terminal be paired with a formalized EQO+ upper route?",
+        "closest": "Theorem 17.1, Corollaries 17.2–17.3, Eq. (17.8), corrected Claim 17.6, exact Claim 17.7, and corrected Theorem 17.4 pass the full local repository gate. Theorem 17.4 uses 0 < δ ≤ 1/32, c=1/160, C=64. No EQO+ algorithm theorem is claimed.",
         "leaf_ids": ["CH17-HISTORY-INFORMATION", "CH17-THEOREM-17-1", "CH17-COROLLARY-17-2", "CH17-COROLLARY-17-3", "EQOPLUS-UPPER"],
-        "missing": ["Tail-event consumer", "hard-instance tuning", "tail integration", "EQO+ source map"]
+        "missing": ["EQO+ source map and formalized upper terminal"]
       }
     }
   ]

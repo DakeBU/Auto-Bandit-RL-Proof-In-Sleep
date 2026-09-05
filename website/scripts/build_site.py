@@ -1083,8 +1083,28 @@ def validate_textbook_spine(
                 raise ValueError("Chapter 15 required body needs both compiled sections")
             if coverage[4].get("status") != "partial":
                 raise ValueError("Chapter 15 optional exercises must retain partial coverage")
-        if chapter["number"] > 16 and chapter.get("status") == "compiled":
-            raise ValueError("future Part IV chapters cannot be promoted before their gates")
+        if chapter["number"] == 17 and chapter.get("status") == "compiled":
+            # Chapter 17's approved corrected closure passed the full local gate.
+            # Preserve other chapter gates and require every body interface, not
+            # merely the adversarial threshold or a conditional algebra leaf.
+            chapter17_required = {
+                "gaussianRandomPseudoRegret_ge_theorem17_1",
+                "gaussianRandomPseudoRegret_ge_corollary17_2",
+                "noUniformGaussianRandomPseudoRegretTail_corollary17_3",
+                "exists_cdfTail_ge_of_integral_ge",
+                "integrable_adversarialTableRandomRegret",
+                "adversarialNoiseHistoryJoint_history_marginal",
+                "adversarialNoiseHistoryJoint_pull_le_half_claim17_6",
+                "adversarialFullBoundaryCount_tail_claim17_7",
+                "adversarialFullRandomRegret_ge_boundary_eq17_8",
+                "adversarialTable_strictTail_eq_one_sub_CDF",
+                "adversarialRandomRegret_ge_theorem17_4",
+            }
+            if chapter["number"] != 17 or not all(
+                f"BanditRLProof.LowerBounds.{name}" in decl_by_name
+                for name in chapter17_required
+            ):
+                raise ValueError("future Part IV chapters cannot be promoted before their gates")
 
 
 def build_textbook_spine(

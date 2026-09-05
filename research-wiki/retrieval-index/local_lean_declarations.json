@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T16:26:20+00:00",
+  "generated": "2026-09-05T17:26:10+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -31222,7 +31222,7 @@
       "name": "tailAtLeast",
       "full_name": "BanditRLProof.LowerBounds.tailAtLeast",
       "file": "BanditRLProof/LowerBounds/HighProbability.lean",
-      "line": 31,
+      "line": 39,
       "statement": "def tailAtLeast {Omega : Type*} (quantity : Omega -> Real) (threshold : Real) : Set Omega"
     },
     {
@@ -31230,7 +31230,7 @@
       "name": "stochasticHighProbabilityThreshold",
       "full_name": "BanditRLProof.LowerBounds.stochasticHighProbabilityThreshold",
       "file": "BanditRLProof/LowerBounds/HighProbability.lean",
-      "line": 37,
+      "line": 45,
       "statement": "def stochasticHighProbabilityThreshold (horizon alternativeArms : Nat) (B delta : Real) : Real"
     },
     {
@@ -31238,7 +31238,7 @@
       "name": "stochasticMinimaxHighProbabilityThreshold",
       "full_name": "BanditRLProof.LowerBounds.stochasticMinimaxHighProbabilityThreshold",
       "file": "BanditRLProof/LowerBounds/HighProbability.lean",
-      "line": 46,
+      "line": 54,
       "statement": "def stochasticMinimaxHighProbabilityThreshold (horizon alternativeArms : Nat) (delta : Real) : Real"
     },
     {
@@ -31246,15 +31246,271 @@
       "name": "adversarialHighProbabilityThreshold",
       "full_name": "BanditRLProof.LowerBounds.adversarialHighProbabilityThreshold",
       "file": "BanditRLProof/LowerBounds/HighProbability.lean",
-      "line": 56,
+      "line": 64,
       "statement": "def adversarialHighProbabilityThreshold (horizon arms : Nat) (c delta : Real) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianRandomPseudoRegret",
+      "full_name": "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 72,
+      "statement": "noncomputable def gaussianRandomPseudoRegret {K : Nat} (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Real lastRound) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "gaussianExpectedPseudoRegretReal",
+      "full_name": "BanditRLProof.LowerBounds.gaussianExpectedPseudoRegretReal",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 81,
+      "statement": "noncomputable def gaussianExpectedPseudoRegretReal {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) : Real"
+    },
+    {
+      "kind": "structure",
+      "name": "GapOneGaussianBanditEnvironment",
+      "full_name": "BanditRLProof.LowerBounds.GapOneGaussianBanditEnvironment",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 91,
+      "statement": "structure GapOneGaussianBanditEnvironment (K : Nat) where"
+    },
+    {
+      "kind": "def",
+      "name": "gapOneGaussianExpectedPseudoRegretReal",
+      "full_name": "BanditRLProof.LowerBounds.gapOneGaussianExpectedPseudoRegretReal",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 98,
+      "statement": "noncomputable def gapOneGaussianExpectedPseudoRegretReal {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : GapOneGaussianBanditEnvironment K) (lastRound : Nat) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "gapOneGaussianRandomPseudoRegret",
+      "full_name": "BanditRLProof.LowerBounds.gapOneGaussianRandomPseudoRegret",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 109,
+      "statement": "noncomputable def gapOneGaussianRandomPseudoRegret {K : Nat} (environment : GapOneGaussianBanditEnvironment K) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Real lastRound) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "UnitGaussianBanditEnvironment.toGapOne",
+      "full_name": "BanditRLProof.LowerBounds.UnitGaussianBanditEnvironment.toGapOne",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 117,
+      "statement": "def UnitGaussianBanditEnvironment.toGapOne {K : Nat} (environment : UnitGaussianBanditEnvironment K) : GapOneGaussianBanditEnvironment K where"
+    },
+    {
+      "kind": "theorem",
+      "name": "gapOneGaussianExpectedPseudoRegretReal_toGapOne",
+      "full_name": "BanditRLProof.LowerBounds.gapOneGaussianExpectedPseudoRegretReal_toGapOne",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 130,
+      "statement": "theorem gapOneGaussianExpectedPseudoRegretReal_toGapOne {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) : gapOneGaussianExpectedPseudoRegretReal algorithm environment.toGapOne lastRound = gaussianExpectedPseudoRegretReal algorithm environment lastRound"
+    },
+    {
+      "kind": "theorem",
+      "name": "gapOneGaussianRandomPseudoRegret_toGapOne",
+      "full_name": "BanditRLProof.LowerBounds.gapOneGaussianRandomPseudoRegret_toGapOne",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 137,
+      "statement": "theorem gapOneGaussianRandomPseudoRegret_toGapOne {K : Nat} (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Real lastRound) : gapOneGaussianRandomPseudoRegret environment.toGapOne lastRound history = gaussianRandomPseudoRegret environment lastRound history"
+    },
+    {
+      "kind": "def",
+      "name": "stochasticHighProbabilityGap",
+      "full_name": "BanditRLProof.LowerBounds.stochasticHighProbabilityGap",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 148,
+      "statement": "noncomputable def stochasticHighProbabilityGap (horizon alternativeArms : Nat) (B delta : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianRandomPseudoRegret_nonneg",
+      "full_name": "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_nonneg",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 155,
+      "statement": "theorem gaussianRandomPseudoRegret_nonneg {K : Nat} (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Real lastRound) : 0 <= gaussianRandomPseudoRegret environment lastRound history"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_gaussianRandomPseudoRegret",
+      "full_name": "BanditRLProof.LowerBounds.measurable_gaussianRandomPseudoRegret",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 162,
+      "statement": "theorem measurable_gaussianRandomPseudoRegret {K : Nat} (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) : Measurable (gaussianRandomPseudoRegret environment lastRound)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianRandomPseudoRegret_le_horizon",
+      "full_name": "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_le_horizon",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 171,
+      "statement": "theorem gaussianRandomPseudoRegret_le_horizon {K : Nat} (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Real lastRound) : gaussianRandomPseudoRegret environment lastRound history <= (lastRound + 1 : Nat)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integrable_gaussianRandomPseudoRegret",
+      "full_name": "BanditRLProof.LowerBounds.integrable_gaussianRandomPseudoRegret",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 197,
+      "statement": "theorem integrable_gaussianRandomPseudoRegret {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) : Integrable (gaussianRandomPseudoRegret environment lastRound) (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel environment.mean) lastRound)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianExpectedPseudoRegret_toReal_eq",
+      "full_name": "BanditRLProof.LowerBounds.gaussianExpectedPseudoRegret_toReal_eq",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 213,
+      "statement": "theorem gaussianExpectedPseudoRegret_toReal_eq {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) : (gaussianExpectedPseudoRegret algorithm environment lastRound).toReal = gaussianExpectedPseudoRegretReal algorithm environment lastRound"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_gaussianRandomPseudoRegret_eq_expected",
+      "full_name": "BanditRLProof.LowerBounds.integral_gaussianRandomPseudoRegret_eq_expected",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 235,
+      "statement": "theorem integral_gaussianRandomPseudoRegret_eq_expected {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) : \u222b history, gaussianRandomPseudoRegret environment lastRound history \u2202canonicalBanditHistoryMeasure algorithm (unitGaussianKernel environment.mean) lastRound = gaussianExpectedPseudoRegretReal algorithm environment lastRound"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_le_threshold_add_bound_mul_tailMass",
+      "full_name": "BanditRLProof.LowerBounds.integral_le_threshold_add_bound_mul_tailMass",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 273,
+      "statement": "theorem integral_le_threshold_add_bound_mul_tailMass {Omega : Type*} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (quantity : Omega -> Real) (threshold bound : Real) (hmeas : Measurable quantity) (hintegrable : Integrable quantity mu) (hthreshold : 0 <= threshold) (hbound : forall omega, quantity omega <= bound) : \u222b omega, quantity omega \u2202mu <= threshold + bound * mu.real (tailAtLeast quantity threshold)"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianExpectedPseudoRegretReal_base_eq",
+      "full_name": "BanditRLProof.LowerBounds.gaussianExpectedPseudoRegretReal_base_eq",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 307,
+      "statement": "theorem gaussianExpectedPseudoRegretReal_base_eq {m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (gap : Real) (hgap : 0 <= gap) (hgap_le : gap <= 1 / 2) (lastRound : Nat) : gaussianExpectedPseudoRegretReal algorithm (gaussianMinimaxBaseEnvironment gap hgap hgap_le) lastRound = gap * \u2211 i : Fin m, gaussianExpectedPullCountReal algorithm (gaussianMinimaxBaseMean gap) lastRound i.succ"
+    },
+    {
+      "kind": "theorem",
+      "name": "horizon_mul_sqrt_div_eq_sqrt_mul",
+      "full_name": "BanditRLProof.LowerBounds.horizon_mul_sqrt_div_eq_sqrt_mul",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 325,
+      "statement": "theorem horizon_mul_sqrt_div_eq_sqrt_mul {horizon alternatives : Real} (hhorizon : 0 < horizon) (halternatives : 0 <= alternatives) : horizon * Real.sqrt (alternatives / horizon) = Real.sqrt (horizon * alternatives)"
+    },
+    {
+      "kind": "theorem",
+      "name": "sqrt_mul_mul_sqrt_div_eq_alternatives",
+      "full_name": "BanditRLProof.LowerBounds.sqrt_mul_mul_sqrt_div_eq_alternatives",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 346,
+      "statement": "theorem sqrt_mul_mul_sqrt_div_eq_alternatives {horizon alternatives : Real} (hhorizon : 0 < horizon) (halternatives : 0 <= alternatives) : Real.sqrt (alternatives * horizon) * Real.sqrt (alternatives / horizon) = alternatives"
+    },
+    {
+      "kind": "theorem",
+      "name": "horizon_mul_stochasticHighProbabilityGap_div_two",
+      "full_name": "BanditRLProof.LowerBounds.horizon_mul_stochasticHighProbabilityGap_div_two",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 370,
+      "statement": "theorem horizon_mul_stochasticHighProbabilityGap_div_two (horizon alternatives : Nat) (B delta : Real) (hhorizon : 0 < horizon) (hB : 0 < B) : (horizon : Real) * stochasticHighProbabilityGap horizon alternatives B delta / 2 = stochasticHighProbabilityThreshold horizon alternatives B delta"
+    },
+    {
+      "kind": "theorem",
+      "name": "stochasticHighProbability_informationExponent_le_log",
+      "full_name": "BanditRLProof.LowerBounds.stochasticHighProbability_informationExponent_le_log",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 413,
+      "statement": "theorem stochasticHighProbability_informationExponent_le_log (horizon alternatives : Nat) (B delta : Real) (hhorizon : 0 < horizon) (halternatives : 0 < alternatives) (hB : 0 < B) (hlog : 0 < Real.log (1 / (4 * delta))) : let gap := stochasticHighProbabilityGap horizon alternatives B delta (B * Real.sqrt ((alternatives : Real) * (horizon : Real)) / (gap * (alternatives : Real))) * (2 * gap ^ 2) <= Real.log (1 / (4 * delta))"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianRandomPseudoRegret_ge_theorem17_1_of_four_mul_delta_lt_one",
+      "full_name": "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_theorem17_1_of_four_mul_delta_lt_one",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 466,
+      "statement": "theorem gaussianRandomPseudoRegret_ge_theorem17_1_of_four_mul_delta_lt_one {alternatives horizon : Nat} (halternatives : 0 < alternatives) (hhorizon : 0 < horizon) (B delta : Real) (hB : 0 < B) (hdelta : 0 < delta) (hfourDelta : 4 * delta < 1) (algorithm : Thompson.HistoryAlgorithm (Fin (alternatives + 1)) Real) (hExpected : forall environment : UnitGaussianBanditEnvironment (alternatives + 1), gaussianExpectedPseudoRegretReal algorithm environment (horizon - 1) <= B * Real.sqrt ((alternatives : Real) * (horizon : Real))) : exists environment : UnitGaussianBanditEnvironment (alternatives + 1), delta <= (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel environment.mean) (horizon - 1)).real (tailAtLeast (gaussianRandomPseudoRegret environment (horizon - 1)) (stochasticHighProbabilityThreshold horizon alternatives B delta))"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianRandomPseudoRegret_ge_theorem17_1_unitCube",
+      "full_name": "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_theorem17_1_unitCube",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 683,
+      "statement": "theorem gaussianRandomPseudoRegret_ge_theorem17_1_unitCube {alternatives horizon : Nat} (halternatives : 0 < alternatives) (hhorizon : 0 < horizon) (B delta : Real) (hB : 0 < B) (hdelta : 0 < delta) (hdelta_one : delta < 1) (algorithm : Thompson.HistoryAlgorithm (Fin (alternatives + 1)) Real) (hExpected : forall environment : UnitGaussianBanditEnvironment (alternatives + 1), gaussianExpectedPseudoRegretReal algorithm environment (horizon - 1) <= B * Real.sqrt ((alternatives : Real) * (horizon : Real))) : exists environment : UnitGaussianBanditEnvironment (alternatives + 1), delta <= (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel environment.mean) (horizon - 1)).real (tailAtLeast (gaussianRandomPseudoRegret environment (horizon - 1)) (stochasticHighProbabilityThreshold horizon alternatives B delta))"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianRandomPseudoRegret_ge_theorem17_1",
+      "full_name": "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_theorem17_1",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 743,
+      "statement": "theorem gaussianRandomPseudoRegret_ge_theorem17_1 {alternatives horizon : Nat} (halternatives : 0 < alternatives) (hhorizon : 0 < horizon) (B delta : Real) (hB : 0 < B) (hdelta : 0 < delta) (hdelta_one : delta < 1) (algorithm : Thompson.HistoryAlgorithm (Fin (alternatives + 1)) Real) (hExpected : forall environment : GapOneGaussianBanditEnvironment (alternatives + 1), gapOneGaussianExpectedPseudoRegretReal algorithm environment (horizon - 1) <= B * Real.sqrt ((alternatives : Real) * (horizon : Real))) : exists environment : UnitGaussianBanditEnvironment (alternatives + 1), delta <= (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel environment.mean) (horizon - 1)).real (tailAtLeast (gaussianRandomPseudoRegret environment (horizon - 1)) (stochasticHighProbabilityThreshold horizon alternatives B delta))"
+    },
+    {
+      "kind": "theorem",
+      "name": "stochasticMinimax_sourceTerm_eq",
+      "full_name": "BanditRLProof.LowerBounds.stochasticMinimax_sourceTerm_eq",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 770,
+      "statement": "theorem stochasticMinimax_sourceTerm_eq {horizon alternatives : Nat} (delta : Real) (hlog : 0 < Real.log (1 / (4 * delta))) : (1 / Real.sqrt (2 * Real.log (1 / (4 * delta)))) * Real.sqrt ((alternatives : Real) * (horizon : Real)) * Real.log (1 / (4 * delta)) = Real.sqrt (((horizon : Real) * (alternatives : Real) / 2) * Real.log (1 / (4 * delta)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "stochasticHighProbabilityThreshold_at_minimax_scale",
+      "full_name": "BanditRLProof.LowerBounds.stochasticHighProbabilityThreshold_at_minimax_scale",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 796,
+      "statement": "theorem stochasticHighProbabilityThreshold_at_minimax_scale {horizon alternatives : Nat} (delta : Real) (hlog : 0 < Real.log (1 / (4 * delta))) : stochasticHighProbabilityThreshold horizon alternatives (Real.sqrt (2 * Real.log (1 / (4 * delta)))) delta = stochasticMinimaxHighProbabilityThreshold horizon alternatives delta"
+    },
+    {
+      "kind": "theorem",
+      "name": "stochasticMinimaxHighProbabilityThreshold_le_quarter_root",
+      "full_name": "BanditRLProof.LowerBounds.stochasticMinimaxHighProbabilityThreshold_le_quarter_root",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 806,
+      "statement": "theorem stochasticMinimaxHighProbabilityThreshold_le_quarter_root {horizon alternatives : Nat} (delta : Real) (hlog : 0 <= Real.log (1 / (4 * delta))) : stochasticMinimaxHighProbabilityThreshold horizon alternatives delta <= (1 / 4 : Real) * Real.sqrt ((horizon : Real) * (alternatives : Real) * Real.log (1 / (4 * delta)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "minimax_expected_scale_identity",
+      "full_name": "BanditRLProof.LowerBounds.minimax_expected_scale_identity",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 824,
+      "statement": "theorem minimax_expected_scale_identity {horizon alternatives : Nat} (delta : Real) (hlog : 0 <= Real.log (1 / (4 * delta))) : Real.sqrt (2 * Real.log (1 / (4 * delta))) * Real.sqrt ((alternatives : Real) * (horizon : Real)) = Real.sqrt 2 * Real.sqrt ((horizon : Real) * (alternatives : Real) * Real.log (1 / (4 * delta)))"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_exp_neg_rpow_inv_le_one",
+      "full_name": "BanditRLProof.LowerBounds.integral_exp_neg_rpow_inv_le_one",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 842,
+      "statement": "theorem integral_exp_neg_rpow_inv_le_one {p : Real} (hp : 0 < p) (hp_one : p < 1) : (\u222b x : Real in Set.Ioi 0, Real.exp (-(x ^ (1 / p)))) <= 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_le_scale_of_all_rpow_log_tail",
+      "full_name": "BanditRLProof.LowerBounds.integral_le_scale_of_all_rpow_log_tail",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 873,
+      "statement": "theorem integral_le_scale_of_all_rpow_log_tail {Omega : Type*} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (quantity : Omega -> Real) (scale p : Real) (hscale : 0 < scale) (hp : 0 < p) (hp_one : p < 1) (hintegrable : Integrable quantity mu) (hnonneg : forall omega, 0 <= quantity omega) (htail : forall delta : Real, 0 < delta -> delta < 1 -> mu.real (tailAtLeast quantity (scale * (Real.log (1 / delta)) ^ p)) < delta) : (\u222b omega, quantity omega \u2202mu) <= scale"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianRandomPseudoRegret_ge_corollary17_2",
+      "full_name": "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_corollary17_2",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 953,
+      "statement": "theorem gaussianRandomPseudoRegret_ge_corollary17_2 {alternatives horizon : Nat} (halternatives : 0 < alternatives) (hhorizon : 0 < horizon) (delta : Real) (hdelta : 0 < delta) (hdelta_one : delta < 1) (hside : (horizon : Real) * delta <= Real.sqrt ((horizon : Real) * (alternatives : Real) * Real.log (1 / (4 * delta)))) (algorithm : Thompson.HistoryAlgorithm (Fin (alternatives + 1)) Real) : exists environment : UnitGaussianBanditEnvironment (alternatives + 1), delta <= (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel environment.mean) (horizon - 1)).real (tailAtLeast (gaussianRandomPseudoRegret environment (horizon - 1)) (stochasticMinimaxHighProbabilityThreshold horizon alternatives delta))"
+    },
+    {
+      "kind": "theorem",
+      "name": "noUniformGaussianRandomPseudoRegretTail_corollary17_3",
+      "full_name": "BanditRLProof.LowerBounds.noUniformGaussianRandomPseudoRegretTail_corollary17_3",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1072,
+      "statement": "theorem noUniformGaussianRandomPseudoRegretTail_corollary17_3 {alternatives : Nat} (halternatives : 0 < alternatives) (p B : Real) (hp : 0 < p) (hp_one : p < 1) (hB : 0 < B) : \u00ac exists algorithm : Thompson.HistoryAlgorithm (Fin (alternatives + 1)) Real, forall horizon : Nat, 0 < horizon -> forall delta : Real, 0 < delta -> delta < 1 -> forall environment : GapOneGaussianBanditEnvironment (alternatives + 1), (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel environment.mean) (horizon - 1)).real (tailAtLeast (gapOneGaussianRandomPseudoRegret environment (horizon - 1)) (B * Real.sqrt ((alternatives : Real) * (horizon : Real)) * (Real.log (1 / delta)) ^ p)) < delta"
     },
     {
       "kind": "theorem",
       "name": "exists_tailMass_ge_of_integral_ge",
       "full_name": "BanditRLProof.LowerBounds.exists_tailMass_ge_of_integral_ge",
       "file": "BanditRLProof/LowerBounds/HighProbability.lean",
-      "line": 67,
+      "line": 1247,
       "statement": "theorem exists_tailMass_ge_of_integral_ge {Instance : Type*} [MeasurableSpace Instance] (Q : Measure Instance) [IsProbabilityMeasure Q] (tailMass : Instance -> Real) (delta : Real) (hIntegrable : Integrable tailMass Q) (hAverage : delta <= \u222b x, tailMass x \u2202Q) : exists x, delta <= tailMass x"
     },
     {
@@ -31262,7 +31518,7 @@
       "name": "exists_cdfTail_ge_of_integral_ge",
       "full_name": "BanditRLProof.LowerBounds.exists_cdfTail_ge_of_integral_ge",
       "file": "BanditRLProof/LowerBounds/HighProbability.lean",
-      "line": 78,
+      "line": 1258,
       "statement": "theorem exists_cdfTail_ge_of_integral_ge {Instance : Type*} [MeasurableSpace Instance] (Q : Measure Instance) [IsProbabilityMeasure Q] (cdf : Instance -> Real -> Real) (threshold delta : Real) (hIntegrable : Integrable (fun x => 1 - cdf x threshold) Q) (hAverage : delta <= \u222b x, 1 - cdf x threshold \u2202Q) : exists x, delta <= 1 - cdf x threshold"
     },
     {
@@ -31270,7 +31526,7 @@
       "name": "measureReal_diff_ge_delta",
       "full_name": "BanditRLProof.LowerBounds.measureReal_diff_ge_delta",
       "file": "BanditRLProof/LowerBounds/HighProbability.lean",
-      "line": 96,
+      "line": 1276,
       "statement": "theorem measureReal_diff_ge_delta {Omega : Type*} [MeasurableSpace Omega] (P : Measure Omega) [IsFiniteMeasure P] (pullSmall clippingBad : Set Omega) (delta : Real) (hPullSmall : 2 * delta <= P.real pullSmall) (hClippingBad : P.real clippingBad <= delta) : delta <= P.real (pullSmall \\ clippingBad)"
     },
     {
@@ -31278,7 +31534,7 @@
       "name": "adversarialRegretLowerExpression",
       "full_name": "BanditRLProof.LowerBounds.adversarialRegretLowerExpression",
       "file": "BanditRLProof/LowerBounds/HighProbability.lean",
-      "line": 111,
+      "line": 1291,
       "statement": "def adversarialRegretLowerExpression (horizon pullCount clippingCount : Nat) (gap : Real) : Real"
     },
     {
@@ -31286,7 +31542,7 @@
       "name": "adversarialRegretLowerExpression_ge_quarter",
       "full_name": "BanditRLProof.LowerBounds.adversarialRegretLowerExpression_ge_quarter",
       "file": "BanditRLProof/LowerBounds/HighProbability.lean",
-      "line": 119,
+      "line": 1299,
       "statement": "theorem adversarialRegretLowerExpression_ge_quarter (horizon pullCount clippingCount : Nat) (gap : Real) (hGap : 0 <= gap) (hPull : (pullCount : Real) <= (horizon : Real) / 2) (hClipping : (clippingCount : Real) <= (horizon : Real) / 4) : gap * ((horizon : Real) / 4) <= adversarialRegretLowerExpression horizon pullCount clippingCount gap"
     },
     {
@@ -31294,8 +31550,976 @@
       "name": "randomRegret_ge_quarter_of_clippingDecomposition",
       "full_name": "BanditRLProof.LowerBounds.randomRegret_ge_quarter_of_clippingDecomposition",
       "file": "BanditRLProof/LowerBounds/HighProbability.lean",
-      "line": 133,
+      "line": 1313,
       "statement": "theorem randomRegret_ge_quarter_of_clippingDecomposition (horizon pullCount clippingCount : Nat) (gap randomRegret : Real) (hGap : 0 <= gap) (hPull : (pullCount : Real) <= (horizon : Real) / 2) (hClipping : (clippingCount : Real) <= (horizon : Real) / 4) (hSource : adversarialRegretLowerExpression horizon pullCount clippingCount gap <= randomRegret) : gap * ((horizon : Real) / 4) <= randomRegret"
+    },
+    {
+      "kind": "def",
+      "name": "clipUnitReward",
+      "full_name": "BanditRLProof.LowerBounds.clipUnitReward",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1328,
+      "statement": "def clipUnitReward (x : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "clipUnitReward_mono",
+      "full_name": "BanditRLProof.LowerBounds.clipUnitReward_mono",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1330,
+      "statement": "theorem clipUnitReward_mono {x y : Real} (hxy : x <= y) : clipUnitReward x <= clipUnitReward y"
+    },
+    {
+      "kind": "theorem",
+      "name": "clipUnitReward_eq_self",
+      "full_name": "BanditRLProof.LowerBounds.clipUnitReward_eq_self",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1335,
+      "statement": "theorem clipUnitReward_eq_self {x : Real} (hx0 : 0 <= x) (hx1 : x <= 1) : clipUnitReward x = x"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialHardShift",
+      "full_name": "BanditRLProof.LowerBounds.adversarialHardShift",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1341,
+      "statement": "def adversarialHardShift {alternatives : Nat} (gap : Real) (distinguished : Fin alternatives) (arm : Fin (alternatives + 1)) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialClippedGaussianReward",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClippedGaussianReward",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1350,
+      "statement": "def adversarialClippedGaussianReward {horizon alternatives : Nat} (eta : Fin horizon -> Real) (gap : Real) (distinguished : Fin alternatives) (t : Fin horizon) (arm : Fin (alternatives + 1)) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialCenteredNoiseLaw",
+      "full_name": "BanditRLProof.LowerBounds.adversarialCenteredNoiseLaw",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1361,
+      "statement": "noncomputable def adversarialCenteredNoiseLaw (horizon : Nat) (sigma : Real) : Measure (Fin horizon -> Real)"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialClippedArmLaw",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClippedArmLaw",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1368,
+      "statement": "noncomputable def adversarialClippedArmLaw (sigma shift : Real) : Measure Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_adversarialClippedArmMap",
+      "full_name": "BanditRLProof.LowerBounds.measurable_adversarialClippedArmMap",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1372,
+      "statement": "theorem measurable_adversarialClippedArmMap (shift : Real) : Measurable (fun x : Real => clipUnitReward (1 / 2 + x + shift))"
+    },
+    {
+      "kind": "abbrev",
+      "name": "adversarialClippedKernel",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClippedKernel",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1385,
+      "statement": "noncomputable abbrev adversarialClippedKernel {K : Nat} (sigma : Real) (shift : Fin K -> Real) : Kernel (Fin K) Real"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialClippedHistoryLaw",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClippedHistoryLaw",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1396,
+      "statement": "noncomputable def adversarialClippedHistoryLaw {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (sigma : Real) (shift : Fin K -> Real) (lastRound : Nat) : Measure (History.FinitePairHistory (Fin K) Real lastRound)"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialCenteredNoiseLaw_reward_marginal",
+      "full_name": "BanditRLProof.LowerBounds.adversarialCenteredNoiseLaw_reward_marginal",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1411,
+      "statement": "theorem adversarialCenteredNoiseLaw_reward_marginal {horizon alternatives : Nat} (sigma gap : Real) (distinguished : Fin alternatives) (t : Fin horizon) (arm : Fin (alternatives + 1)) : (adversarialCenteredNoiseLaw horizon sigma).map (fun eta => adversarialClippedGaussianReward eta gap distinguished t arm) = adversarialClippedArmLaw sigma (adversarialHardShift gap distinguished arm)"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialClipHistory",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClipHistory",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1428,
+      "statement": "def adversarialClipHistory {K : Nat} (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) : History.FinitePairHistory (Fin K) Real n"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_adversarialClipHistory",
+      "full_name": "BanditRLProof.LowerBounds.measurable_adversarialClipHistory",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1433,
+      "statement": "theorem measurable_adversarialClipHistory {K : Nat} (n : Nat) : Measurable (adversarialClipHistory (K := K) n)"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialClipHistoryAlgorithm",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClipHistoryAlgorithm",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1440,
+      "statement": "noncomputable def adversarialClipHistoryAlgorithm {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) : Thompson.HistoryAlgorithm (Fin K) Real where"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialClipHistoryAlgorithm_policy_apply",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClipHistoryAlgorithm_policy_apply",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1447,
+      "statement": "theorem adversarialClipHistoryAlgorithm_policy_apply {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) : (adversarialClipHistoryAlgorithm algorithm).policy n history = algorithm.policy n (adversarialClipHistory n history)"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialClipHistory_pullCount",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClipHistory_pullCount",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1454,
+      "statement": "theorem adversarialClipHistory_pullCount {K : Nat} (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) (arm : Fin K) : finiteHistoryPullCountENNReal n (adversarialClipHistory n history) arm = finiteHistoryPullCountENNReal n history arm"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialClipHistory_pullCountReal",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClipHistory_pullCountReal",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1466,
+      "statement": "theorem adversarialClipHistory_pullCountReal {K : Nat} (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) (arm : Fin K) : finiteHistoryPullCountReal n (adversarialClipHistory n history) arm = finiteHistoryPullCountReal n history arm"
+    },
+    {
+      "kind": "abbrev",
+      "name": "adversarialUnclippedKernel",
+      "full_name": "BanditRLProof.LowerBounds.adversarialUnclippedKernel",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1474,
+      "statement": "noncomputable abbrev adversarialUnclippedKernel {K : Nat} (sigma : Real) (shift : Fin K -> Real) : Kernel (Fin K) Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialClippedKernel_eq_map",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClippedKernel_eq_map",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1485,
+      "statement": "theorem adversarialClippedKernel_eq_map {K : Nat} (sigma : Real) (shift : Fin K -> Real) : adversarialClippedKernel sigma shift = (adversarialUnclippedKernel sigma shift).map clipUnitReward"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialClipped_initialPairLaw",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClipped_initialPairLaw",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1500,
+      "statement": "theorem adversarialClipped_initialPairLaw {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (sigma : Real) (shift : Fin K -> Real) : algorithm.initialAction \u2297\u2098 adversarialClippedKernel sigma shift = ((adversarialClipHistoryAlgorithm algorithm).initialAction \u2297\u2098 adversarialUnclippedKernel sigma shift).map (Prod.map id clipUnitReward)"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialClippedHistoryLaw_zero",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClippedHistoryLaw_zero",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1510,
+      "statement": "theorem adversarialClippedHistoryLaw_zero {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (sigma : Real) (shift : Fin K -> Real) : adversarialClippedHistoryLaw algorithm sigma shift 0 = (canonicalBanditHistoryMeasure (adversarialClipHistoryAlgorithm algorithm) (adversarialUnclippedKernel sigma shift) 0).map (adversarialClipHistory 0)"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialClipped_historyStepLaw",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClipped_historyStepLaw",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1528,
+      "statement": "theorem adversarialClipped_historyStepLaw {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (sigma : Real) (shift : Fin K -> Real) (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) : Thompson.historyStepKernel algorithm (stationaryBanditHistoryEnvironment (adversarialClippedKernel sigma shift)) n (adversarialClipHistory n history) = (Thompson.historyStepKernel (adversarialClipHistoryAlgorithm algorithm) (stationaryBanditHistoryEnvironment (adversarialUnclippedKernel sigma shift)) n history).map (Prod.map id clipUnitReward)"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialClipped_prefixStepLaw",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClipped_prefixStepLaw",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1550,
+      "statement": "theorem adversarialClipped_prefixStepLaw {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (sigma : Real) (shift : Fin K -> Real) (n : Nat) (P : Measure (History.FinitePairHistory (Fin K) Real n)) [IsProbabilityMeasure P] : P.map (adversarialClipHistory n) \u2297\u2098 Thompson.historyStepKernel algorithm (stationaryBanditHistoryEnvironment (adversarialClippedKernel sigma shift)) n = (P \u2297\u2098 Thompson.historyStepKernel (adversarialClipHistoryAlgorithm algorithm) (stationaryBanditHistoryEnvironment (adversarialUnclippedKernel sigma shift)) n).map (Prod.map (adversarialClipHistory n) (Prod.map id clipUnitReward))"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialClippedHistoryLaw_eq_map",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClippedHistoryLaw_eq_map",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1583,
+      "statement": "theorem adversarialClippedHistoryLaw_eq_map {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (sigma : Real) (shift : Fin K -> Real) (n : Nat) : adversarialClippedHistoryLaw algorithm sigma shift n = (canonicalBanditHistoryMeasure (adversarialClipHistoryAlgorithm algorithm) (adversarialUnclippedKernel sigma shift) n).map (adversarialClipHistory n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialClippedHistoryLaw_pullSmall",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClippedHistoryLaw_pullSmall",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1614,
+      "statement": "theorem adversarialClippedHistoryLaw_pullSmall {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (sigma : Real) (shift : Fin K -> Real) (n : Nat) (arm : Fin K) (threshold : Real) : (adversarialClippedHistoryLaw algorithm sigma shift n) {h | finiteHistoryPullCountReal n h arm < threshold} = (canonicalBanditHistoryMeasure (adversarialClipHistoryAlgorithm algorithm) (adversarialUnclippedKernel sigma shift) n) {h | finiteHistoryPullCountReal n h arm < threshold}"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialUnclippedKernel_apply",
+      "full_name": "BanditRLProof.LowerBounds.adversarialUnclippedKernel_apply",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1631,
+      "statement": "theorem adversarialUnclippedKernel_apply {K : Nat} (sigma : Real) (shift : Fin K -> Real) (arm : Fin K) : adversarialUnclippedKernel sigma shift arm = gaussianReal (1 / 2 + shift arm) \u27e8sigma ^ 2, sq_nonneg sigma\u27e9"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_gaussianReal_common_scale",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_gaussianReal_common_scale",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1644,
+      "statement": "theorem klDiv_gaussianReal_common_scale (sigma mu nu : Real) (hs : sigma \u2260 0) : InformationTheory.klDiv (gaussianReal mu \u27e8sigma ^ 2, sq_nonneg sigma\u27e9) (gaussianReal nu \u27e8sigma ^ 2, sq_nonneg sigma\u27e9) = ENNReal.ofReal ((mu - nu) ^ 2 / (2 * sigma ^ 2))"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_adversarialUnclippedKernel",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_adversarialUnclippedKernel",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1661,
+      "statement": "theorem klDiv_adversarialUnclippedKernel {K : Nat} (sigma : Real) (hs : sigma \u2260 0) (shift referenceShift : Fin K -> Real) (arm : Fin K) : InformationTheory.klDiv (adversarialUnclippedKernel sigma shift arm) (adversarialUnclippedKernel sigma referenceShift arm) = ENNReal.ofReal ((shift arm - referenceShift arm) ^ 2 / (2 * sigma ^ 2))"
+    },
+    {
+      "kind": "theorem",
+      "name": "klDiv_adversarialUnclipped_base_changed_history",
+      "full_name": "BanditRLProof.LowerBounds.klDiv_adversarialUnclipped_base_changed_history",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1674,
+      "statement": "theorem klDiv_adversarialUnclipped_base_changed_history {m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (sigma gap : Real) (hs : sigma \u2260 0) (i : Fin m) (n : Nat) : InformationTheory.klDiv (canonicalBanditHistoryMeasure (adversarialClipHistoryAlgorithm algorithm) (adversarialUnclippedKernel sigma (gaussianMinimaxBaseMean gap)) n) (canonicalBanditHistoryMeasure (adversarialClipHistoryAlgorithm algorithm) (adversarialUnclippedKernel sigma (adversarialHardShift gap i)) n) = canonicalRealizedExpectedPullCountThrough (adversarialClipHistoryAlgorithm algorithm) (adversarialUnclippedKernel sigma (gaussianMinimaxBaseMean gap)) n i.succ * ENNReal.ofReal (2 * gap ^ 2 / sigma ^ 2)"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialClaim17_6Gap",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClaim17_6Gap",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1707,
+      "statement": "noncomputable def adversarialClaim17_6Gap (horizon alternatives : Nat) (sigma delta : Real) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialFullHardShift",
+      "full_name": "BanditRLProof.LowerBounds.adversarialFullHardShift",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1714,
+      "statement": "def adversarialFullHardShift {m : Nat} (gap : Real) (distinguished arm : Fin (m + 1)) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialFullHardShift_zero",
+      "full_name": "BanditRLProof.LowerBounds.adversarialFullHardShift_zero",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1718,
+      "statement": "theorem adversarialFullHardShift_zero {m : Nat} (gap : Real) : adversarialFullHardShift (m := m) gap 0 = gaussianMinimaxBaseMean gap"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialFullHardShift_succ",
+      "full_name": "BanditRLProof.LowerBounds.adversarialFullHardShift_succ",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1723,
+      "statement": "theorem adversarialFullHardShift_succ {m : Nat} (gap : Real) (i : Fin m) : adversarialFullHardShift gap i.succ = adversarialHardShift gap i"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialClaim17_6Gap_information_calibration",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClaim17_6Gap_information_calibration",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1727,
+      "statement": "theorem adversarialClaim17_6Gap_information_calibration {horizon m : Nat} (hn : 0 < horizon) (hm : 0 < m) (sigma delta : Real) (hs : sigma \u2260 0) (hd : 0 < delta) (hd8 : delta < 1 / 8) : ((horizon : Real) / m) * (2 * (adversarialClaim17_6Gap horizon m sigma delta) ^ 2 / sigma ^ 2) = Real.log (1 / (8 * delta))"
+    },
+    {
+      "kind": "theorem",
+      "name": "sum_adversarialUnclipped_expectedPulls",
+      "full_name": "BanditRLProof.LowerBounds.sum_adversarialUnclipped_expectedPulls",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1744,
+      "statement": "theorem sum_adversarialUnclipped_expectedPulls {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (sigma : Real) (shift : Fin K -> Real) (n : Nat) : (\u2211 arm : Fin K, canonicalRealizedExpectedPullCountThrough (adversarialClipHistoryAlgorithm algorithm) (adversarialUnclippedKernel sigma shift) n arm) = n + 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialClippedHistory_pull_le_half_claim17_6",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClippedHistory_pull_le_half_claim17_6",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1760,
+      "statement": "theorem adversarialClippedHistory_pull_le_half_claim17_6 {m : Nat} (hm : 0 < m) (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (n : Nat) (sigma delta : Real) (hs : sigma \u2260 0) (hd : 0 < delta) (hd8 : delta < 1 / 8) : \u2203 arm : Fin (m + 1), 2 * delta <= (adversarialClippedHistoryLaw algorithm sigma (adversarialFullHardShift (adversarialClaim17_6Gap (n + 1) m sigma delta) arm) n).real {h | finiteHistoryPullCountReal n h arm <= ((n + 1 : Nat) : Real) / 2}"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialHardShift_distinguished",
+      "full_name": "BanditRLProof.LowerBounds.adversarialHardShift_distinguished",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1854,
+      "statement": "theorem adversarialHardShift_distinguished {alternatives : Nat} (gap : Real) (distinguished : Fin alternatives) : adversarialHardShift gap distinguished distinguished.succ = 2 * gap"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialHardShift_nonneg",
+      "full_name": "BanditRLProof.LowerBounds.adversarialHardShift_nonneg",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1859,
+      "statement": "theorem adversarialHardShift_nonneg {alternatives : Nat} (gap : Real) (hgap : 0 <= gap) (distinguished : Fin alternatives) (arm : Fin (alternatives + 1)) : 0 <= adversarialHardShift gap distinguished arm"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialHardShift_le_two_mul",
+      "full_name": "BanditRLProof.LowerBounds.adversarialHardShift_le_two_mul",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1869,
+      "statement": "theorem adversarialHardShift_le_two_mul {alternatives : Nat} (gap : Real) (hgap : 0 <= gap) (distinguished : Fin alternatives) (arm : Fin (alternatives + 1)) : adversarialHardShift gap distinguished arm <= 2 * gap"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialHardShift_le_gap_of_ne",
+      "full_name": "BanditRLProof.LowerBounds.adversarialHardShift_le_gap_of_ne",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1881,
+      "statement": "theorem adversarialHardShift_le_gap_of_ne {alternatives : Nat} (gap : Real) (hgap : 0 <= gap) (distinguished : Fin alternatives) (arm : Fin (alternatives + 1)) (hne : arm \u2260 distinguished.succ) : adversarialHardShift gap distinguished arm <= gap"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialClippedGaussianReward_distinguished_mono",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClippedGaussianReward_distinguished_mono",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1889,
+      "statement": "theorem adversarialClippedGaussianReward_distinguished_mono {horizon alternatives : Nat} (eta : Fin horizon -> Real) (gap : Real) (hgap : 0 <= gap) (distinguished : Fin alternatives) (t : Fin horizon) (arm : Fin (alternatives + 1)) : adversarialClippedGaussianReward eta gap distinguished t arm <= adversarialClippedGaussianReward eta gap distinguished t distinguished.succ"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialClippedGaussianReward_gap_of_not_clipped",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClippedGaussianReward_gap_of_not_clipped",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1904,
+      "statement": "theorem adversarialClippedGaussianReward_gap_of_not_clipped {horizon alternatives : Nat} (eta : Fin horizon -> Real) (gap : Real) (hgap : 0 <= gap) (distinguished : Fin alternatives) (t : Fin horizon) (arm : Fin (alternatives + 1)) (hne : arm \u2260 distinguished.succ) (hgood : |eta t| < 1 / 2 - 2 * gap) : gap <= adversarialClippedGaussianReward eta gap distinguished t distinguished.succ - adversarialClippedGaussianReward eta gap distinguished t arm"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialPullCountReal",
+      "full_name": "BanditRLProof.LowerBounds.adversarialPullCountReal",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1938,
+      "statement": "def adversarialPullCountReal {horizon alternatives : Nat} (actions : Fin horizon -> Fin (alternatives + 1)) (distinguished : Fin alternatives) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialClippingCountReal",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClippingCountReal",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1944,
+      "statement": "def adversarialClippingCountReal {horizon : Nat} (eta : Fin horizon -> Real) (gap : Real) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialClipIndicator",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClipIndicator",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1950,
+      "statement": "def adversarialClipIndicator (gap x : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_adversarialClipIndicator",
+      "full_name": "BanditRLProof.LowerBounds.measurable_adversarialClipIndicator",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1953,
+      "statement": "theorem measurable_adversarialClipIndicator (gap : Real) : Measurable (adversarialClipIndicator gap)"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialClipIndicator_mem_Icc",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClipIndicator_mem_Icc",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1959,
+      "statement": "theorem adversarialClipIndicator_mem_Icc (gap x : Real) : adversarialClipIndicator gap x \u2208 Set.Icc 0 1"
+    },
+    {
+      "kind": "theorem",
+      "name": "gaussianReal_tenth_abs_quarter_le_eighth",
+      "full_name": "BanditRLProof.LowerBounds.gaussianReal_tenth_abs_quarter_le_eighth",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 1967,
+      "statement": "theorem gaussianReal_tenth_abs_quarter_le_eighth : (gaussianReal 0 \u27e8(1 / 10 : Real) ^ 2, sq_nonneg _\u27e9).real {x : Real | (1 / 4 : Real) <= |x|} <= 1 / 8"
+    },
+    {
+      "kind": "theorem",
+      "name": "integral_adversarialClipIndicator_eq",
+      "full_name": "BanditRLProof.LowerBounds.integral_adversarialClipIndicator_eq",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2018,
+      "statement": "theorem integral_adversarialClipIndicator_eq {horizon : Nat} (gap : Real) (t : Fin horizon) : \u222b eta, adversarialClipIndicator gap (eta t) \u2202(adversarialCenteredNoiseLaw horizon (1 / 10)) = (gaussianReal 0 \u27e8(1 / 10 : Real) ^ 2, sq_nonneg _\u27e9).real {x : Real | 1 / 2 - 2 * gap <= |x|}"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialClippingCount_tail_claim17_7",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClippingCount_tail_claim17_7",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2050,
+      "statement": "theorem adversarialClippingCount_tail_claim17_7 {horizon : Nat} (hhorizon : 0 < horizon) (delta gap : Real) (hdelta : 0 < delta) (hdelta1 : delta < 1) (hgap_lt : gap < 1 / 8) (horizon_condition : 32 * Real.log (1 / delta) <= horizon) : (adversarialCenteredNoiseLaw horizon (1 / 10)).real {eta | (horizon : Real) / 4 <= adversarialClippingCountReal eta gap} <= delta"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialBoundaryClippingCountReal",
+      "full_name": "BanditRLProof.LowerBounds.adversarialBoundaryClippingCountReal",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2160,
+      "statement": "noncomputable def adversarialBoundaryClippingCountReal {horizon alternatives : Nat} (eta : Fin horizon -> Real) (gap : Real) (distinguished : Fin alternatives) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialBoundaryClippingCountReal_le",
+      "full_name": "BanditRLProof.LowerBounds.adversarialBoundaryClippingCountReal_le",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2168,
+      "statement": "theorem adversarialBoundaryClippingCountReal_le {horizon alternatives : Nat} (eta : Fin horizon -> Real) (gap : Real) (hgap : 0 <= gap) (distinguished : Fin alternatives) : adversarialBoundaryClippingCountReal eta gap distinguished <= adversarialClippingCountReal eta gap"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialBoundaryClippingCount_tail_claim17_7",
+      "full_name": "BanditRLProof.LowerBounds.adversarialBoundaryClippingCount_tail_claim17_7",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2198,
+      "statement": "theorem adversarialBoundaryClippingCount_tail_claim17_7 {horizon alternatives : Nat} (hhorizon : 0 < horizon) (delta gap : Real) (hdelta : 0 < delta) (hdelta1 : delta < 1) (hgap : 0 <= gap) (hgap_lt : gap < 1 / 8) (distinguished : Fin alternatives) (horizon_condition : 32 * Real.log (1 / delta) <= horizon) : (adversarialCenteredNoiseLaw horizon (1 / 10)).real {eta | (horizon : Real) / 4 <= adversarialBoundaryClippingCountReal eta gap distinguished} <= delta"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialComparatorRegret",
+      "full_name": "BanditRLProof.LowerBounds.adversarialComparatorRegret",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2217,
+      "statement": "def adversarialComparatorRegret {horizon alternatives : Nat} (reward : Fin horizon -> Fin (alternatives + 1) -> Real) (actions : Fin horizon -> Fin (alternatives + 1)) (comparator : Fin (alternatives + 1)) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialRandomRegret",
+      "full_name": "BanditRLProof.LowerBounds.adversarialRandomRegret",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2226,
+      "statement": "noncomputable def adversarialRandomRegret {horizon alternatives : Nat} (reward : Fin horizon -> Fin (alternatives + 1) -> Real) (actions : Fin horizon -> Fin (alternatives + 1)) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialComparatorRegret_le_randomRegret",
+      "full_name": "BanditRLProof.LowerBounds.adversarialComparatorRegret_le_randomRegret",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2234,
+      "statement": "theorem adversarialComparatorRegret_le_randomRegret {horizon alternatives : Nat} (reward : Fin horizon -> Fin (alternatives + 1) -> Real) (actions : Fin horizon -> Fin (alternatives + 1)) (comparator : Fin (alternatives + 1)) : adversarialComparatorRegret reward actions comparator <= adversarialRandomRegret reward actions"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialComparatorRegret_ge_eq17_8",
+      "full_name": "BanditRLProof.LowerBounds.adversarialComparatorRegret_ge_eq17_8",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2247,
+      "statement": "theorem adversarialComparatorRegret_ge_eq17_8 {horizon alternatives : Nat} (eta : Fin horizon -> Real) (gap : Real) (hgap : 0 <= gap) (distinguished : Fin alternatives) (actions : Fin horizon -> Fin (alternatives + 1)) : gap * ((horizon : Real) - adversarialPullCountReal actions distinguished - adversarialClippingCountReal eta gap) <= adversarialComparatorRegret (adversarialClippedGaussianReward eta gap distinguished) actions distinguished.succ"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialRandomRegret_ge_eq17_8",
+      "full_name": "BanditRLProof.LowerBounds.adversarialRandomRegret_ge_eq17_8",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2296,
+      "statement": "theorem adversarialRandomRegret_ge_eq17_8 {horizon alternatives : Nat} (eta : Fin horizon -> Real) (gap : Real) (hgap : 0 <= gap) (distinguished : Fin alternatives) (actions : Fin horizon -> Fin (alternatives + 1)) : gap * ((horizon : Real) - adversarialPullCountReal actions distinguished - adversarialClippingCountReal eta gap) <= adversarialRandomRegret (adversarialClippedGaussianReward eta gap distinguished) actions"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialRandomRegret_ge_boundary_eq17_8",
+      "full_name": "BanditRLProof.LowerBounds.adversarialRandomRegret_ge_boundary_eq17_8",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2330,
+      "statement": "theorem adversarialRandomRegret_ge_boundary_eq17_8 {horizon alternatives : Nat} (eta : Fin horizon -> Real) (gap : Real) (hgap : 0 <= gap) (distinguished : Fin alternatives) (actions : Fin horizon -> Fin (alternatives + 1)) : gap * ((horizon : Real) - adversarialPullCountReal actions distinguished - adversarialBoundaryClippingCountReal eta gap distinguished) <= adversarialRandomRegret (adversarialClippedGaussianReward eta gap distinguished) actions"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialFullClippedReward",
+      "full_name": "BanditRLProof.LowerBounds.adversarialFullClippedReward",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2379,
+      "statement": "def adversarialFullClippedReward {horizon m : Nat} (eta : Fin horizon -> Real) (gap : Real) (i : Fin (m + 1)) (t : Fin horizon) (arm : Fin (m + 1)) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialFullHardShift_bounds",
+      "full_name": "BanditRLProof.LowerBounds.adversarialFullHardShift_bounds",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2384,
+      "statement": "theorem adversarialFullHardShift_bounds {m : Nat} (gap : Real) (hg : 0 <= gap) (i arm : Fin (m + 1)) : 0 <= adversarialFullHardShift gap i arm \u2227 adversarialFullHardShift gap i arm <= 2 * gap"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialFullHardShift_separation",
+      "full_name": "BanditRLProof.LowerBounds.adversarialFullHardShift_separation",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2391,
+      "statement": "theorem adversarialFullHardShift_separation {m : Nat} (gap : Real) (hg : 0 <= gap) (i arm : Fin (m + 1)) (hi : arm \u2260 i) : gap <= adversarialFullHardShift gap i i - adversarialFullHardShift gap i arm"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialFullClippedReward_best",
+      "full_name": "BanditRLProof.LowerBounds.adversarialFullClippedReward_best",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2403,
+      "statement": "theorem adversarialFullClippedReward_best {horizon m : Nat} (eta : Fin horizon -> Real) (gap : Real) (hg : 0 <= gap) (i : Fin (m + 1)) (t : Fin horizon) (arm : Fin (m + 1)) : adversarialFullClippedReward eta gap i t arm <= adversarialFullClippedReward eta gap i t i"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialFullBoundaryCount",
+      "full_name": "BanditRLProof.LowerBounds.adversarialFullBoundaryCount",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2414,
+      "statement": "noncomputable def adversarialFullBoundaryCount {horizon m : Nat} (eta : Fin horizon -> Real) (gap : Real) (i : Fin (m + 1)) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialFullRandomRegret_ge_boundary_eq17_8",
+      "full_name": "BanditRLProof.LowerBounds.adversarialFullRandomRegret_ge_boundary_eq17_8",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2420,
+      "statement": "theorem adversarialFullRandomRegret_ge_boundary_eq17_8 {horizon m : Nat} (eta : Fin horizon -> Real) (gap : Real) (hg : 0 <= gap) (i : Fin (m + 1)) (actions : Fin horizon -> Fin (m + 1)) : gap * ((horizon : Real) - (\u2211 t, if actions t = i then 1 else 0) - adversarialFullBoundaryCount eta gap i) <= adversarialRandomRegret (adversarialFullClippedReward eta gap i) actions"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialFullBoundaryCount_le",
+      "full_name": "BanditRLProof.LowerBounds.adversarialFullBoundaryCount_le",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2459,
+      "statement": "theorem adversarialFullBoundaryCount_le {horizon m : Nat} (eta : Fin horizon -> Real) (gap : Real) (hg : 0 <= gap) (i : Fin (m + 1)) : adversarialFullBoundaryCount eta gap i <= adversarialClippingCountReal eta gap"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialFullBoundaryCount_tail_claim17_7",
+      "full_name": "BanditRLProof.LowerBounds.adversarialFullBoundaryCount_tail_claim17_7",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2483,
+      "statement": "theorem adversarialFullBoundaryCount_tail_claim17_7 {horizon m : Nat} (hn : 0 < horizon) (delta gap : Real) (hd : 0 < delta) (hd1 : delta < 1) (hg : 0 <= gap) (hg8 : gap < 1 / 8) (i : Fin (m + 1)) (horizon_condition : 32 * Real.log (1 / delta) <= horizon) : (adversarialCenteredNoiseLaw horizon (1 / 10)).real {eta | (horizon : Real) / 4 <= adversarialFullBoundaryCount eta gap i} <= delta"
+    },
+    {
+      "kind": "abbrev",
+      "name": "AdversarialRewardTable",
+      "full_name": "BanditRLProof.LowerBounds.AdversarialRewardTable",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2499,
+      "statement": "abbrev AdversarialRewardTable (K : Nat)"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialTableInitialFeedback",
+      "full_name": "BanditRLProof.LowerBounds.adversarialTableInitialFeedback",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2502,
+      "statement": "noncomputable def adversarialTableInitialFeedback {K : Nat} : Kernel (AdversarialRewardTable K \u00d7 Fin K) Real"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialTableNextFeedback",
+      "full_name": "BanditRLProof.LowerBounds.adversarialTableNextFeedback",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2513,
+      "statement": "noncomputable def adversarialTableNextFeedback {K : Nat} (n : Nat) : Kernel ((AdversarialRewardTable K \u00d7 History.FinitePairHistory (Fin K) Real n) \u00d7 Fin K) Real"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialTableStepKernel",
+      "full_name": "BanditRLProof.LowerBounds.adversarialTableStepKernel",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2525,
+      "statement": "noncomputable def adversarialTableStepKernel {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (n : Nat) : Kernel (AdversarialRewardTable K \u00d7 History.FinitePairHistory (Fin K) Real n) (Fin K \u00d7 Real)"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialTableHistoryKernel",
+      "full_name": "BanditRLProof.LowerBounds.adversarialTableHistoryKernel",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2538,
+      "statement": "noncomputable def adversarialTableHistoryKernel {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) : (n : Nat) -> Kernel (AdversarialRewardTable K) (History.FinitePairHistory (Fin K) Real n) | 0 => ((Kernel.const (AdversarialRewardTable K) algorithm.initialAction) \u2297\u2096 adversarialTableInitialFeedback).map (pairHistoryZeroMeasurableEquiv (Fin K) Real) | n + 1 => ((adversarialTableHistoryKernel algorithm n) \u2297\u2096 adversarialTableStepKernel algorithm n).map (pairHistorySuccMeasurableEquiv (Fin K) Real n) instance adversarialTableHistoryKernel_isMarkov {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (n : Nat) : IsMarkovKernel (adversarialTableHistoryKernel algorithm n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialTableStepKernel_apply",
+      "full_name": "BanditRLProof.LowerBounds.adversarialTableStepKernel_apply",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2559,
+      "statement": "theorem adversarialTableStepKernel_apply {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (n : Nat) (table : AdversarialRewardTable K) (history : History.FinitePairHistory (Fin K) Real n) : adversarialTableStepKernel algorithm n (table, history) = algorithm.policy n history \u2297\u2098 Kernel.deterministic (table (n + 1)) (measurable_of_countable _)"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialTableHistoryKernel_zero",
+      "full_name": "BanditRLProof.LowerBounds.adversarialTableHistoryKernel_zero",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2569,
+      "statement": "theorem adversarialTableHistoryKernel_zero {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (table : AdversarialRewardTable K) : adversarialTableHistoryKernel algorithm 0 table = (algorithm.initialAction \u2297\u2098 Kernel.deterministic (table 0) (measurable_of_countable _)).map (pairHistoryZeroMeasurableEquiv (Fin K) Real)"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialTableHistoryKernel_succ",
+      "full_name": "BanditRLProof.LowerBounds.adversarialTableHistoryKernel_succ",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2580,
+      "statement": "theorem adversarialTableHistoryKernel_succ {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (n : Nat) (table : AdversarialRewardTable K) : adversarialTableHistoryKernel algorithm (n + 1) table = ((adversarialTableHistoryKernel algorithm n table) \u2297\u2098 Kernel.sectR (adversarialTableStepKernel algorithm n) table).map (pairHistorySuccMeasurableEquiv (Fin K) Real n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialTableHistoryKernel_prefix_congr",
+      "full_name": "BanditRLProof.LowerBounds.adversarialTableHistoryKernel_prefix_congr",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2592,
+      "statement": "theorem adversarialTableHistoryKernel_prefix_congr {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (n : Nat) (table other : AdversarialRewardTable K) (heq : \u2200 t, t <= n -> table t = other t) : adversarialTableHistoryKernel algorithm n table = adversarialTableHistoryKernel algorithm n other"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialFullRewardTable",
+      "full_name": "BanditRLProof.LowerBounds.adversarialFullRewardTable",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2613,
+      "statement": "def adversarialFullRewardTable {horizon m : Nat} (eta : Fin horizon -> Real) (gap : Real) (i : Fin (m + 1)) : AdversarialRewardTable (m + 1)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_adversarialFullRewardTable",
+      "full_name": "BanditRLProof.LowerBounds.measurable_adversarialFullRewardTable",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2618,
+      "statement": "theorem measurable_adversarialFullRewardTable {horizon m : Nat} (gap : Real) (i : Fin (m + 1)) : Measurable (fun eta : Fin horizon -> Real => adversarialFullRewardTable eta gap i)"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialFullRewardTable_at",
+      "full_name": "BanditRLProof.LowerBounds.adversarialFullRewardTable_at",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2631,
+      "statement": "theorem adversarialFullRewardTable_at {horizon m : Nat} (eta : Fin horizon -> Real) (gap : Real) (i : Fin (m + 1)) (t : Fin horizon) : adversarialFullRewardTable eta gap i t = adversarialFullClippedReward eta gap i t"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialNoiseHistoryKernel",
+      "full_name": "BanditRLProof.LowerBounds.adversarialNoiseHistoryKernel",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2638,
+      "statement": "noncomputable def adversarialNoiseHistoryKernel {horizon m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (gap : Real) (i : Fin (m + 1)) (n : Nat) : Kernel (Fin horizon -> Real) (History.FinitePairHistory (Fin (m + 1)) Real n)"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialNoiseHistoryJoint",
+      "full_name": "BanditRLProof.LowerBounds.adversarialNoiseHistoryJoint",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2653,
+      "statement": "noncomputable def adversarialNoiseHistoryJoint {horizon m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (sigma gap : Real) (i : Fin (m + 1)) (n : Nat) : Measure ((Fin horizon -> Real) \u00d7 History.FinitePairHistory (Fin (m + 1)) Real n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialNoiseHistoryJoint_noise_marginal",
+      "full_name": "BanditRLProof.LowerBounds.adversarialNoiseHistoryJoint_noise_marginal",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2666,
+      "statement": "theorem adversarialNoiseHistoryJoint_noise_marginal {horizon m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (sigma gap : Real) (i : Fin (m + 1)) (n : Nat) : (adversarialNoiseHistoryJoint (horizon := horizon) algorithm sigma gap i n).fst = adversarialCenteredNoiseLaw horizon sigma"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialNoiseHistoryKernel_update_future",
+      "full_name": "BanditRLProof.LowerBounds.adversarialNoiseHistoryKernel_update_future",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2678,
+      "statement": "theorem adversarialNoiseHistoryKernel_update_future {horizon m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (gap : Real) (i : Fin (m + 1)) (n : Nat) (eta : Fin horizon -> Real) (j : Fin horizon) (hj : n < j.val) (x : Real) : adversarialNoiseHistoryKernel algorithm gap i n (Function.update eta j x) = adversarialNoiseHistoryKernel algorithm gap i n eta"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialCenteredNoiseLaw_split",
+      "full_name": "BanditRLProof.LowerBounds.adversarialCenteredNoiseLaw_split",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2701,
+      "statement": "theorem adversarialCenteredNoiseLaw_split {N : Nat} (sigma : Real) (j : Fin (N + 1)) : MeasurePreserving (MeasurableEquiv.piFinSuccAbove (fun _ : Fin (N + 1) => Real) j) (adversarialCenteredNoiseLaw (N + 1) sigma) ((gaussianReal 0 \u27e8sigma ^ 2, sq_nonneg sigma\u27e9).prod (adversarialCenteredNoiseLaw N sigma))"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialNoiseHistoryKernel_split_future",
+      "full_name": "BanditRLProof.LowerBounds.adversarialNoiseHistoryKernel_split_future",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2710,
+      "statement": "theorem adversarialNoiseHistoryKernel_split_future {N m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (gap : Real) (i : Fin (m + 1)) (n : Nat) (j : Fin (N + 1)) (hj : n < j.val) (rest : Fin N -> Real) (x y : Real) : adversarialNoiseHistoryKernel algorithm gap i n (j.insertNth x rest) = adversarialNoiseHistoryKernel algorithm gap i n (j.insertNth y rest)"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_adversarialCenteredNoiseLaw_split",
+      "full_name": "BanditRLProof.LowerBounds.lintegral_adversarialCenteredNoiseLaw_split",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2731,
+      "statement": "theorem lintegral_adversarialCenteredNoiseLaw_split {N : Nat} (sigma : Real) (j : Fin (N + 1)) (f : (Fin (N + 1) -> Real) -> ENNReal) (hf : Measurable f) : (\u222b\u207b eta, f eta \u2202adversarialCenteredNoiseLaw (N + 1) sigma) = \u222b\u207b x, \u222b\u207b rest, f (j.insertNth x rest) \u2202adversarialCenteredNoiseLaw N sigma \u2202gaussianReal 0 \u27e8sigma ^ 2, sq_nonneg sigma\u27e9"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialCenteredNoiseLaw_full_reward_marginal",
+      "full_name": "BanditRLProof.LowerBounds.adversarialCenteredNoiseLaw_full_reward_marginal",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2745,
+      "statement": "theorem adversarialCenteredNoiseLaw_full_reward_marginal {horizon m : Nat} (sigma gap : Real) (i : Fin (m + 1)) (t : Fin horizon) (arm : Fin (m + 1)) : (adversarialCenteredNoiseLaw horizon sigma).map (fun eta => adversarialFullClippedReward eta gap i t arm) = adversarialClippedArmLaw sigma (adversarialFullHardShift gap i arm)"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_adversarialTableHistoryKernel_zero",
+      "full_name": "BanditRLProof.LowerBounds.lintegral_adversarialTableHistoryKernel_zero",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2758,
+      "statement": "theorem lintegral_adversarialTableHistoryKernel_zero {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (table : AdversarialRewardTable K) (f : History.FinitePairHistory (Fin K) Real 0 -> ENNReal) (hf : Measurable f) : (\u222b\u207b h, f h \u2202adversarialTableHistoryKernel algorithm 0 table) = \u222b\u207b arm, f (pairHistoryZeroMeasurableEquiv (Fin K) Real (arm, table 0 arm)) \u2202algorithm.initialAction"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_adversarialNoiseHistoryKernel_zero",
+      "full_name": "BanditRLProof.LowerBounds.lintegral_adversarialNoiseHistoryKernel_zero",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2772,
+      "statement": "theorem lintegral_adversarialNoiseHistoryKernel_zero {N m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (sigma gap : Real) (i : Fin (m + 1)) (f : History.FinitePairHistory (Fin (m + 1)) Real 0 -> ENNReal) (hf : Measurable f) : (\u222b\u207b eta, \u222b\u207b h, f h \u2202adversarialNoiseHistoryKernel (horizon := N + 1) algorithm gap i 0 eta \u2202adversarialCenteredNoiseLaw (N + 1) sigma) = \u222b\u207b h, f h \u2202adversarialClippedHistoryLaw algorithm sigma (adversarialFullHardShift gap i) 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialNoiseHistoryJoint_history_marginal_zero",
+      "full_name": "BanditRLProof.LowerBounds.adversarialNoiseHistoryJoint_history_marginal_zero",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2816,
+      "statement": "theorem adversarialNoiseHistoryJoint_history_marginal_zero {N m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (sigma gap : Real) (i : Fin (m + 1)) : (adversarialNoiseHistoryJoint (horizon := N + 1) algorithm sigma gap i 0).snd = adversarialClippedHistoryLaw algorithm sigma (adversarialFullHardShift gap i) 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_adversarialTableHistoryKernel_succ",
+      "full_name": "BanditRLProof.LowerBounds.lintegral_adversarialTableHistoryKernel_succ",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2834,
+      "statement": "theorem lintegral_adversarialTableHistoryKernel_succ {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (table : AdversarialRewardTable K) (n : Nat) (f : History.FinitePairHistory (Fin K) Real (n + 1) -> ENNReal) (hf : Measurable f) : (\u222b\u207b h, f h \u2202adversarialTableHistoryKernel algorithm (n + 1) table) = \u222b\u207b h, \u222b\u207b arm, f (pairHistorySuccMeasurableEquiv (Fin K) Real n (h, (arm, table (n + 1) arm))) \u2202algorithm.policy n h \u2202adversarialTableHistoryKernel algorithm n table"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_adversarialFreshNoise_step",
+      "full_name": "BanditRLProof.LowerBounds.lintegral_adversarialFreshNoise_step",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2854,
+      "statement": "theorem lintegral_adversarialFreshNoise_step {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (n : Nat) (P : Measure (History.FinitePairHistory (Fin K) Real n)) [IsProbabilityMeasure P] (sigma : Real) (shift : Fin K -> Real) (f : History.FinitePairHistory (Fin K) Real n \u00d7 (Fin K \u00d7 Real) -> ENNReal) (hf : Measurable f) : (\u222b\u207b x, \u222b\u207b h, \u222b\u207b arm, f (h, (arm, clipUnitReward (1 / 2 + x + shift arm))) \u2202algorithm.policy n h \u2202P \u2202gaussianReal 0 \u27e8sigma ^ 2, sq_nonneg sigma\u27e9) = \u222b\u207b h, \u222b\u207b pair, f (h, pair) \u2202Thompson.historyStepKernel algorithm (stationaryBanditHistoryEnvironment (adversarialClippedKernel sigma shift)) n h \u2202P"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_adversarialNoiseHistoryKernel_succ_slice",
+      "full_name": "BanditRLProof.LowerBounds.lintegral_adversarialNoiseHistoryKernel_succ_slice",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2901,
+      "statement": "theorem lintegral_adversarialNoiseHistoryKernel_succ_slice {N m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (sigma gap : Real) (i : Fin (m + 1)) (n : Nat) (hn : n + 1 < N + 1) (rest : Fin N -> Real) (f : History.FinitePairHistory (Fin (m + 1)) Real (n + 1) -> ENNReal) (hf : Measurable f) : (\u222b\u207b x, \u222b\u207b h, f h \u2202adversarialNoiseHistoryKernel algorithm gap i (n + 1) ((\u27e8n + 1, hn\u27e9 : Fin (N + 1)).insertNth x rest) \u2202gaussianReal 0 \u27e8sigma ^ 2, sq_nonneg sigma\u27e9) = \u222b\u207b h, \u222b\u207b pair, f (pairHistorySuccMeasurableEquiv (Fin (m + 1)) Real n (h, pair)) \u2202Thompson.historyStepKernel algorithm (stationaryBanditHistoryEnvironment (adversarialClippedKernel sigma (adversarialFullHardShift gap i))) n h \u2202adversarialNoiseHistoryKernel algorithm gap i n ((\u27e8n + 1, hn\u27e9 : Fin (N + 1)).insertNth 0 rest)"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_adversarialNoiseHistoryKernel_succ",
+      "full_name": "BanditRLProof.LowerBounds.lintegral_adversarialNoiseHistoryKernel_succ",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2945,
+      "statement": "theorem lintegral_adversarialNoiseHistoryKernel_succ {N m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (sigma gap : Real) (i : Fin (m + 1)) (n : Nat) (hn : n + 1 < N + 1) (f : History.FinitePairHistory (Fin (m + 1)) Real (n + 1) -> ENNReal) (hf : Measurable f) : (\u222b\u207b eta, \u222b\u207b h, f h \u2202adversarialNoiseHistoryKernel (horizon := N + 1) algorithm gap i (n + 1) eta \u2202adversarialCenteredNoiseLaw (N + 1) sigma) = \u222b\u207b eta, \u222b\u207b h, \u222b\u207b pair, f (pairHistorySuccMeasurableEquiv (Fin (m + 1)) Real n (h, pair)) \u2202Thompson.historyStepKernel algorithm (stationaryBanditHistoryEnvironment (adversarialClippedKernel sigma (adversarialFullHardShift gap i))) n h \u2202adversarialNoiseHistoryKernel algorithm gap i n eta \u2202adversarialCenteredNoiseLaw (N + 1) sigma"
+    },
+    {
+      "kind": "theorem",
+      "name": "lintegral_adversarialNoiseHistoryKernel_eq_clipped",
+      "full_name": "BanditRLProof.LowerBounds.lintegral_adversarialNoiseHistoryKernel_eq_clipped",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 2994,
+      "statement": "theorem lintegral_adversarialNoiseHistoryKernel_eq_clipped {N m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (sigma gap : Real) (i : Fin (m + 1)) (n : Nat) (hn : n < N + 1) (f : History.FinitePairHistory (Fin (m + 1)) Real n -> ENNReal) (hf : Measurable f) : (\u222b\u207b eta, \u222b\u207b h, f h \u2202adversarialNoiseHistoryKernel (horizon := N + 1) algorithm gap i n eta \u2202adversarialCenteredNoiseLaw (N + 1) sigma) = \u222b\u207b h, f h \u2202adversarialClippedHistoryLaw algorithm sigma (adversarialFullHardShift gap i) n"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialNoiseHistoryJoint_history_marginal",
+      "full_name": "BanditRLProof.LowerBounds.adversarialNoiseHistoryJoint_history_marginal",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3020,
+      "statement": "theorem adversarialNoiseHistoryJoint_history_marginal {N m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (sigma gap : Real) (i : Fin (m + 1)) (n : Nat) (hn : n < N + 1) : (adversarialNoiseHistoryJoint (horizon := N + 1) algorithm sigma gap i n).snd = adversarialClippedHistoryLaw algorithm sigma (adversarialFullHardShift gap i) n"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialNoiseHistoryJoint_pull_le_half_claim17_6",
+      "full_name": "BanditRLProof.LowerBounds.adversarialNoiseHistoryJoint_pull_le_half_claim17_6",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3038,
+      "statement": "theorem adversarialNoiseHistoryJoint_pull_le_half_claim17_6 {m : Nat} (hm : 0 < m) (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (n : Nat) (sigma delta : Real) (hs : sigma \u2260 0) (hd : 0 < delta) (hd8 : delta < 1 / 8) : \u2203 i : Fin (m + 1), 2 * delta <= (adversarialNoiseHistoryJoint (horizon := n + 1) algorithm sigma (adversarialClaim17_6Gap (n + 1) m sigma delta) i n).real {p | finiteHistoryPullCountReal n p.2 i <= ((n + 1 : Nat) : Real) / 2}"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_adversarialClippingCountReal",
+      "full_name": "BanditRLProof.LowerBounds.measurable_adversarialClippingCountReal",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3062,
+      "statement": "theorem measurable_adversarialClippingCountReal {horizon : Nat} (gap : Real) : Measurable (fun eta : Fin horizon -> Real => adversarialClippingCountReal eta gap)"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialNoiseHistoryJoint_clipping_tail",
+      "full_name": "BanditRLProof.LowerBounds.adversarialNoiseHistoryJoint_clipping_tail",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3068,
+      "statement": "theorem adversarialNoiseHistoryJoint_clipping_tail {horizon m : Nat} (hn : 0 < horizon) (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (delta gap : Real) (hd : 0 < delta) (hd1 : delta < 1) (hg8 : gap < 1 / 8) (i : Fin (m + 1)) (n : Nat) (horizon_condition : 32 * Real.log (1 / delta) <= horizon) : (adversarialNoiseHistoryJoint (horizon := horizon) algorithm (1 / 10) gap i n).real {p | (horizon : Real) / 4 <= adversarialClippingCountReal p.1 gap} <= delta"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialNoiseHistoryJoint_good_event",
+      "full_name": "BanditRLProof.LowerBounds.adversarialNoiseHistoryJoint_good_event",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3087,
+      "statement": "theorem adversarialNoiseHistoryJoint_good_event {m : Nat} (hm : 0 < m) (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (n : Nat) (delta : Real) (hd : 0 < delta) (hd8 : delta < 1 / 8) (hg8 : adversarialClaim17_6Gap (n + 1) m (1 / 10) delta < 1 / 8) (horizon_condition : 32 * Real.log (1 / delta) <= ((n + 1 : Nat) : Real)) : \u2203 i : Fin (m + 1), delta <= (adversarialNoiseHistoryJoint (horizon := n + 1) algorithm (1 / 10) (adversarialClaim17_6Gap (n + 1) m (1 / 10) delta) i n).real {p | finiteHistoryPullCountReal n p.2 i <= ((n + 1 : Nat) : Real) / 2 \u2227 adversarialFullBoundaryCount p.1 (adversarialClaim17_6Gap (n + 1) m (1 / 10) delta) i < ((n + 1 : Nat) : Real) / 4}"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialHistoryActions",
+      "full_name": "BanditRLProof.LowerBounds.adversarialHistoryActions",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3118,
+      "statement": "def adversarialHistoryActions {K : Nat} (n : Nat) (h : History.FinitePairHistory (Fin K) Real n) : Fin (n + 1) -> Fin K"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialHistoryActions_pullCountENNReal",
+      "full_name": "BanditRLProof.LowerBounds.adversarialHistoryActions_pullCountENNReal",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3122,
+      "statement": "theorem adversarialHistoryActions_pullCountENNReal {K : Nat} (n : Nat) (h : History.FinitePairHistory (Fin K) Real n) (arm : Fin K) : finiteHistoryPullCountENNReal n h arm = \u2211 t, if adversarialHistoryActions n h t = arm then (1 : ENNReal) else 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialHistoryActions_pullCountReal",
+      "full_name": "BanditRLProof.LowerBounds.adversarialHistoryActions_pullCountReal",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3138,
+      "statement": "theorem adversarialHistoryActions_pullCountReal {K : Nat} (n : Nat) (h : History.FinitePairHistory (Fin K) Real n) (arm : Fin K) : finiteHistoryPullCountReal n h arm = \u2211 t, if adversarialHistoryActions n h t = arm then (1 : Real) else 0"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialHistory_randomRegret_ge_quarter",
+      "full_name": "BanditRLProof.LowerBounds.adversarialHistory_randomRegret_ge_quarter",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3151,
+      "statement": "theorem adversarialHistory_randomRegret_ge_quarter {m : Nat} (n : Nat) (eta : Fin (n + 1) -> Real) (gap : Real) (hg : 0 <= gap) (i : Fin (m + 1)) (h : History.FinitePairHistory (Fin (m + 1)) Real n) (hp : finiteHistoryPullCountReal n h i <= ((n + 1 : Nat) : Real) / 2) (hc : adversarialFullBoundaryCount eta gap i <= ((n + 1 : Nat) : Real) / 4) : gap * (((n + 1 : Nat) : Real) / 4) <= adversarialRandomRegret (adversarialFullClippedReward eta gap i) (adversarialHistoryActions n h)"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialNoiseHistoryJoint_randomRegret_tail",
+      "full_name": "BanditRLProof.LowerBounds.adversarialNoiseHistoryJoint_randomRegret_tail",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3166,
+      "statement": "theorem adversarialNoiseHistoryJoint_randomRegret_tail {m : Nat} (hm : 0 < m) (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (n : Nat) (delta : Real) (hd : 0 < delta) (hd8 : delta < 1 / 8) (hg8 : adversarialClaim17_6Gap (n + 1) m (1 / 10) delta < 1 / 8) (horizon_condition : 32 * Real.log (1 / delta) <= ((n + 1 : Nat) : Real)) : \u2203 i : Fin (m + 1), delta <= (adversarialNoiseHistoryJoint (horizon := n + 1) algorithm (1 / 10) (adversarialClaim17_6Gap (n + 1) m (1 / 10) delta) i n).real {p | adversarialClaim17_6Gap (n + 1) m (1 / 10) delta * (((n + 1 : Nat) : Real) / 4) <= adversarialRandomRegret (adversarialFullClippedReward p.1 (adversarialClaim17_6Gap (n + 1) m (1 / 10) delta) i) (adversarialHistoryActions n p.2)}"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_kernel_section_mass_ge",
+      "full_name": "BanditRLProof.LowerBounds.exists_kernel_section_mass_ge",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3186,
+      "statement": "theorem exists_kernel_section_mass_ge {X Y : Type*} [MeasurableSpace X] [MeasurableSpace Y] (\u03bc : Measure X) [IsProbabilityMeasure \u03bc] (\u03ba : Kernel X Y) [IsMarkovKernel \u03ba] (E : Set (X \u00d7 Y)) (hE : MeasurableSet E) (delta : Real) (hd : delta <= (\u03bc \u2297\u2098 \u03ba).real E) : \u2203 x, delta <= (\u03ba x).real (Prod.mk x \u207b\u00b9' E)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_adversarialRandomRegret",
+      "full_name": "BanditRLProof.LowerBounds.measurable_adversarialRandomRegret",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3205,
+      "statement": "theorem measurable_adversarialRandomRegret {horizon m : Nat} (actions : Fin horizon -> Fin (m + 1)) : Measurable (fun reward : Fin horizon -> Fin (m + 1) -> Real => adversarialRandomRegret reward actions)"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_adversarialJointRandomRegret",
+      "full_name": "BanditRLProof.LowerBounds.measurable_adversarialJointRandomRegret",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3223,
+      "statement": "theorem measurable_adversarialJointRandomRegret {m : Nat} (n : Nat) (gap : Real) (i : Fin (m + 1)) : Measurable (fun p : (Fin (n + 1) -> Real) \u00d7 History.FinitePairHistory (Fin (m + 1)) Real n => adversarialRandomRegret (adversarialFullClippedReward p.1 gap i) (adversarialHistoryActions n p.2))"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_adversarialTable_randomRegret_tail",
+      "full_name": "BanditRLProof.LowerBounds.exists_adversarialTable_randomRegret_tail",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3254,
+      "statement": "theorem exists_adversarialTable_randomRegret_tail {m : Nat} (hm : 0 < m) (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (n : Nat) (delta : Real) (hd : 0 < delta) (hd8 : delta < 1 / 8) (hg8 : adversarialClaim17_6Gap (n + 1) m (1 / 10) delta < 1 / 8) (horizon_condition : 32 * Real.log (1 / delta) <= ((n + 1 : Nat) : Real)) : \u2203 table : AdversarialRewardTable (m + 1), (\u2200 t arm, table t arm \u2208 Set.Icc (0 : Real) 1) \u2227 delta <= (adversarialTableHistoryKernel algorithm n table).real {h | adversarialClaim17_6Gap (n + 1) m (1 / 10) delta * (((n + 1 : Nat) : Real) / 4) <= adversarialRandomRegret (fun t : Fin (n + 1) => table t.val) (adversarialHistoryActions n h)}"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialConfidence_log_calibration",
+      "full_name": "BanditRLProof.LowerBounds.adversarialConfidence_log_calibration",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3290,
+      "statement": "theorem adversarialConfidence_log_calibration (delta : Real) (hd : 0 < delta) (hd32 : delta <= 1 / 32) : 0 < Real.log (1 / (2 * delta)) \u2227 Real.log (1 / (2 * delta)) / 2 <= Real.log (1 / (8 * delta)) \u2227 Real.log (1 / delta) <= 2 * Real.log (1 / (2 * delta)) \u2227 Real.log (1 / (8 * delta)) <= Real.log (1 / (2 * delta))"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialClaim17_6Gap_tenth_sq",
+      "full_name": "BanditRLProof.LowerBounds.adversarialClaim17_6Gap_tenth_sq",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3318,
+      "statement": "theorem adversarialClaim17_6Gap_tenth_sq {N m : Nat} (hN : 0 < N) (hm : 0 < m) (delta : Real) (hd : 0 < delta) (hd8 : delta < 1 / 8) : (adversarialClaim17_6Gap N m (1 / 10) delta) ^ 2 = (m : Real) * Real.log (1 / (8 * delta)) / (200 * N)"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialHorizon_calibration",
+      "full_name": "BanditRLProof.LowerBounds.adversarialHorizon_calibration",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3332,
+      "statement": "theorem adversarialHorizon_calibration {N m : Nat} (hN : 0 < N) (hm : 0 < m) (delta : Real) (hd : 0 < delta) (hd32 : delta <= 1 / 32) (horizon : 64 * ((m + 1 : Nat) : Real) * Real.log (1 / (2 * delta)) <= N) : adversarialClaim17_6Gap N m (1 / 10) delta < 1 / 8 \u2227 32 * Real.log (1 / delta) <= N"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialThreshold_calibration",
+      "full_name": "BanditRLProof.LowerBounds.adversarialThreshold_calibration",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3356,
+      "statement": "theorem adversarialThreshold_calibration {N m : Nat} (hN : 0 < N) (hm : 0 < m) (delta : Real) (hd : 0 < delta) (hd32 : delta <= 1 / 32) : adversarialHighProbabilityThreshold N (m + 1) (1 / 160) delta < adversarialClaim17_6Gap N m (1 / 10) delta * ((N : Real) / 4)"
+    },
+    {
+      "kind": "theorem",
+      "name": "exists_adversarialTable_randomRegret_gt_theorem17_4",
+      "full_name": "BanditRLProof.LowerBounds.exists_adversarialTable_randomRegret_gt_theorem17_4",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3394,
+      "statement": "theorem exists_adversarialTable_randomRegret_gt_theorem17_4 {m : Nat} (hm : 0 < m) (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (n : Nat) (delta : Real) (hd : 0 < delta) (hd32 : delta <= 1 / 32) (horizon : 64 * ((m + 1 : Nat) : Real) * Real.log (1 / (2 * delta)) <= ((n + 1 : Nat) : Real)) : \u2203 table : AdversarialRewardTable (m + 1), (\u2200 t arm, table t arm \u2208 Set.Icc (0 : Real) 1) \u2227 delta <= (adversarialTableHistoryKernel algorithm n table).real {h | adversarialHighProbabilityThreshold (n + 1) (m + 1) (1 / 160) delta < adversarialRandomRegret (fun t : Fin (n + 1) => table t.val) (adversarialHistoryActions n h)}"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialTableRandomRegret",
+      "full_name": "BanditRLProof.LowerBounds.adversarialTableRandomRegret",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3410,
+      "statement": "def adversarialTableRandomRegret {m : Nat} (table : AdversarialRewardTable (m + 1)) (n : Nat) (h : History.FinitePairHistory (Fin (m + 1)) Real n) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialTableExpectedRegret",
+      "full_name": "BanditRLProof.LowerBounds.adversarialTableExpectedRegret",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3415,
+      "statement": "noncomputable def adversarialTableExpectedRegret {m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (table : AdversarialRewardTable (m + 1)) (n : Nat) : Real"
+    },
+    {
+      "kind": "def",
+      "name": "adversarialTableCDF",
+      "full_name": "BanditRLProof.LowerBounds.adversarialTableCDF",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3420,
+      "statement": "noncomputable def adversarialTableCDF {m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (table : AdversarialRewardTable (m + 1)) (n : Nat) (u : Real) : Real"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_adversarialTableRandomRegret",
+      "full_name": "BanditRLProof.LowerBounds.measurable_adversarialTableRandomRegret",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3425,
+      "statement": "theorem measurable_adversarialTableRandomRegret {m : Nat} (table : AdversarialRewardTable (m + 1)) (n : Nat) : Measurable (adversarialTableRandomRegret table n)"
+    },
+    {
+      "kind": "theorem",
+      "name": "integrable_adversarialTableRandomRegret",
+      "full_name": "BanditRLProof.LowerBounds.integrable_adversarialTableRandomRegret",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3449,
+      "statement": "theorem integrable_adversarialTableRandomRegret {m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (table : AdversarialRewardTable (m + 1)) (n : Nat) : Integrable (adversarialTableRandomRegret table n) (adversarialTableHistoryKernel algorithm n table)"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialTable_strictTail_eq_one_sub_CDF",
+      "full_name": "BanditRLProof.LowerBounds.adversarialTable_strictTail_eq_one_sub_CDF",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3462,
+      "statement": "theorem adversarialTable_strictTail_eq_one_sub_CDF {m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (table : AdversarialRewardTable (m + 1)) (n : Nat) (u : Real) : (adversarialTableHistoryKernel algorithm n table).real {h | u < adversarialTableRandomRegret table n h} = 1 - adversarialTableCDF algorithm table n u"
+    },
+    {
+      "kind": "theorem",
+      "name": "adversarialRandomRegret_ge_theorem17_4",
+      "full_name": "BanditRLProof.LowerBounds.adversarialRandomRegret_ge_theorem17_4",
+      "file": "BanditRLProof/LowerBounds/HighProbability.lean",
+      "line": 3473,
+      "statement": "theorem adversarialRandomRegret_ge_theorem17_4 {m : Nat} (hm : 0 < m) (algorithm : Thompson.HistoryAlgorithm (Fin (m + 1)) Real) (n : Nat) (delta : Real) (hd : 0 < delta) (hd32 : delta <= 1 / 32) (horizon : 64 * ((m + 1 : Nat) : Real) * Real.log (1 / (2 * delta)) <= ((n + 1 : Nat) : Real)) : \u2203 table : AdversarialRewardTable (m + 1), (\u2200 t arm, table t arm \u2208 Set.Icc (0 : Real) 1) \u2227 delta <= 1 - adversarialTableCDF algorithm table n (adversarialHighProbabilityThreshold (n + 1) (m + 1) (1 / 160) delta)"
     },
     {
       "kind": "theorem",
