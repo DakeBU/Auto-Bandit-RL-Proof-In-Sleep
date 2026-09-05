@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-04T05:44:42+00:00`
+Generated: `2026-09-05T04:37:24+00:00`
 
 ## Source Task
 
@@ -63,7 +63,7 @@ mapped local adapter before they count as chapter evidence.
 | Eq. (14.2) | Huffman optimum satisfies `H₂(P) ≤ L* ≤ H₂(P)+1` | no Huffman construction or Kraft/source-coding proof | blocked |
 | §14.1 asymptotic statement | arithmetic coding approaches entropy and no code improves the asymptotic rate | no block-code/asymptotic coding model | blocked |
 | Eqs. (14.2)--(14.3) definitions | finite discrete base-two entropy, natural entropy, and exact unit conversion | `discreteEntropy`, `discreteEntropyBaseTwo`, their exact conversion, and nonnegativity compile | compiled |
-| Eq. (14.4) | arbitrary finite-alphabet discrete relative entropy with exact zero/support endpoints | only the Bernoulli specialization compiles | partial |
+| Eq. (14.4) | arbitrary finite-alphabet discrete relative entropy with exact zero/support endpoints | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, and `relativeEntropy_finite_eq_top_iff` compile; root-import canary gate pending | partial (integration pending) |
 | Eq. (14.5) | relative entropy as the supremum over all finite measurable discretisations | local `relativeEntropy` aliases Mathlib RN KL; equivalence to the source definition is absent | blocked |
 | Theorem 14.1 | Eq. (14.5) equals the RN/log-likelihood formula, including the singular and nonintegrable branches | RN branch adapters compile, but the Eq. (14.5)-to-RN equivalence is absent | partial |
 | Eq. (14.6) | common-dominating-measure density formula | only the `Q`-RN specialization is exposed | partial |
@@ -119,10 +119,8 @@ Theorem 14.2.
 - KL direction is `D(P,Q)`, never silently reversed.
 - `P ≪ Q` is derived from finite KL when needed; the infinite branch is
   discharged by the explicit testing scale.
-- Integrability of `llr P Q` is explicit in the finite integral formula and is
-  characterized by `relativeEntropy_ne_top_iff`.
 
-<!-- 1416 characters omitted from the middle of this snapshot. -->
+<!-- 1544 characters omitted from the middle of this snapshot. -->
 
 page are verified before this task becomes accepted.
 
@@ -409,7 +407,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH14-ENTROPY-DEFINITIONS` | Eqs. (14.2)--(14.3) entropy definitions, nonnegativity, and nats/bits conversion | finite sums, real log | exact finite support convention; term at zero is zero | `discreteEntropy`, `discreteEntropyBaseTwo`, `discreteEntropyBaseTwo_eq_div_log_two`, `discreteEntropy_nonneg` | focused Lean | compiled |
 | `CH14-HUFFMAN-BOUND` | Eq. (14.2), including existence/optimality of a prefix code | Kraft--McMillan, Huffman/tree construction | no conditional optimality premise may masquerade as this terminal | none | chapter terminal | blocked |
 | `CH14-SOURCE-CODING` | arithmetic/block-code achievability and converse | product distributions, uniquely decodable block codes, asymptotics | formal source-coding theorem | none | chapter terminal | blocked |
-| `CH14-FINITE-DISCRETE-KL` | Eq. (14.4) for an arbitrary finite alphabet | finite sums, support endpoints | bridge finite atomic measures to Mathlib `klDiv` | Bernoulli-only surface exists | focused Lean | partial |
+| `CH14-FINITE-DISCRETE-KL` | Eq. (14.4) for an arbitrary finite alphabet | finite sums, support endpoints | atomwise AC equivalence, RN density ratio, finite LLR integrability, and finite integral sum; singular atom forces infinity | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, `relativeEntropy_finite_eq_top_iff` | focused Lean passed; root canary pending | partial (integration pending) |
 | `CH14-DISCRETISATION-SUP` | Eq. (14.5) and equality with RN KL in Theorem 14.1 | finite measurable quotients/partitions, supremum | source definition followed by Dobrushin/RN equivalence | none | chapter terminal | blocked |
 | `CH14-COMMON-DENSITY` | Eq. (14.6) under a common σ-finite dominating measure | RN chain rule, integral transport | expose exact density formula | Q-RN specialization only | focused Lean | partial |
 | `CH14-KL-SEPARATION` | nonnegativity and zero iff equality | Mathlib KL | `ENNReal` order plus thin source-mapped equality adapter | `relativeEntropy_eq_zero_iff` | focused Lean | compiled |
@@ -58093,6 +58091,70 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/ConditionalKernelKL.lean",
     "line": 379,
     "statement": "theorem klDiv_historyStep_samePolicy_eq_iterated_lintegral_armKL_general {History Reward : Type*} {K : Nat} [MeasurableSpace History] [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward] (historyLaw : Measure History) [IsFiniteMeasure historyLaw] (policy : Kernel History (Fin K)) [IsMarkovKernel policy] (armLaw referenceArmLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] : InformationTheory.klDiv (historyLaw \u2297\u2098 (policy \u2297\u2096 armLaw.comap Prod.snd measurable_snd)) (historyLaw \u2297\u2098 (policy \u2297\u2096 referenceArmLaw.comap Prod.snd measurable_snd)) = \u222b\u207b history, \u222b\u207b arm, InformationTheory.klDiv (armLaw arm) (referenceArmLaw arm) \u2202policy history \u2202historyLaw"
+  },
+  {
+    "kind": "theorem",
+    "name": "absolutelyContinuous_iff_atom_support",
+    "full_name": "BanditRLProof.LowerBounds.absolutelyContinuous_iff_atom_support",
+    "file": "BanditRLProof/LowerBounds/FiniteDiscreteKL.lean",
+    "line": 12,
+    "statement": "theorem absolutelyContinuous_iff_atom_support {\u03b1 : Type*} [Fintype \u03b1] [MeasurableSpace \u03b1] [MeasurableSingletonClass \u03b1] (P Q : Measure \u03b1) : P \u226a Q \u2194 \u2200 x, Q {x} = 0 \u2192 P {x} = 0"
+  },
+  {
+    "kind": "theorem",
+    "name": "rnDeriv_mul_atom",
+    "full_name": "BanditRLProof.LowerBounds.rnDeriv_mul_atom",
+    "file": "BanditRLProof/LowerBounds/FiniteDiscreteKL.lean",
+    "line": 27,
+    "statement": "theorem rnDeriv_mul_atom {\u03b1 : Type*} [MeasurableSpace \u03b1] [MeasurableSingletonClass \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h : P \u226a Q) (x : \u03b1) : P.rnDeriv Q x * Q {x} = P {x}"
+  },
+  {
+    "kind": "theorem",
+    "name": "rnDeriv_atom_eq_div",
+    "full_name": "BanditRLProof.LowerBounds.rnDeriv_atom_eq_div",
+    "file": "BanditRLProof/LowerBounds/FiniteDiscreteKL.lean",
+    "line": 36,
+    "statement": "theorem rnDeriv_atom_eq_div {\u03b1 : Type*} [MeasurableSpace \u03b1] [MeasurableSingletonClass \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h : P \u226a Q) (x : \u03b1) (hq : Q {x} \u2260 0) : P.rnDeriv Q x = P {x} / Q {x}"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_eq_top_of_atom_support_mismatch",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_eq_top_of_atom_support_mismatch",
+    "file": "BanditRLProof/LowerBounds/FiniteDiscreteKL.lean",
+    "line": 44,
+    "statement": "theorem relativeEntropy_eq_top_of_atom_support_mismatch {\u03b1 : Type*} [MeasurableSpace \u03b1] (P Q : Measure \u03b1) (x : \u03b1) (hp : P {x} \u2260 0) (hq : Q {x} = 0) : relativeEntropy P Q = \u221e"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_finite_klFun",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_finite_klFun",
+    "file": "BanditRLProof/LowerBounds/FiniteDiscreteKL.lean",
+    "line": 52,
+    "statement": "theorem relativeEntropy_finite_klFun {\u03b1 : Type*} [Fintype \u03b1] [MeasurableSpace \u03b1] [MeasurableSingletonClass \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h : P \u226a Q) : relativeEntropy P Q = \u2211 x, ENNReal.ofReal (InformationTheory.klFun ((P {x} / Q {x}).toReal)) * Q {x}"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_finite_sum_log",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_finite_sum_log",
+    "file": "BanditRLProof/LowerBounds/FiniteDiscreteKL.lean",
+    "line": 66,
+    "statement": "theorem relativeEntropy_finite_sum_log {\u03b1 : Type*} [Fintype \u03b1] [MeasurableSpace \u03b1] [MeasurableSingletonClass \u03b1] (P Q : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] (h : P \u226a Q) : relativeEntropy P Q = ENNReal.ofReal (\u2211 x, (P {x}).toReal * Real.log ((P {x}).toReal / (Q {x}).toReal))"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_finite_eq_if",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_finite_eq_if",
+    "file": "BanditRLProof/LowerBounds/FiniteDiscreteKL.lean",
+    "line": 85,
+    "statement": "theorem relativeEntropy_finite_eq_if {\u03b1 : Type*} [Fintype \u03b1] [MeasurableSpace \u03b1] [MeasurableSingletonClass \u03b1] (P Q : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] : relativeEntropy P Q = if \u2200 x, Q {x} = 0 \u2192 P {x} = 0 then ENNReal.ofReal (\u2211 x, (P {x}).toReal * Real.log ((P {x}).toReal / (Q {x}).toReal)) else \u221e"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_finite_eq_top_iff",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_finite_eq_top_iff",
+    "file": "BanditRLProof/LowerBounds/FiniteDiscreteKL.lean",
+    "line": 99,
+    "statement": "theorem relativeEntropy_finite_eq_top_iff {\u03b1 : Type*} [Fintype \u03b1] [MeasurableSpace \u03b1] [MeasurableSingletonClass \u03b1] (P Q : Measure \u03b1) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] : relativeEntropy P Q = \u221e \u2194 \u2203 x, P {x} \u2260 0 \u2227 Q {x} = 0"
   },
   {
     "kind": "def",

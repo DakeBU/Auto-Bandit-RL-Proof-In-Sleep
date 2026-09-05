@@ -110,7 +110,8 @@ example : relativeEntropy P Q = ∞ ↔ ∃ x, P {x} ≠ 0 ∧ Q {x} = 0 :=
 -- Three-symbol endpoint examples retain the unused zero-mass atoms.
 example : relativeEntropy (Measure.dirac (0 : Fin 3))
     (Measure.dirac (0 : Fin 3)) = 0 := by
-  exact relativeEntropy_eq_zero_iff.2 rfl
+  rw [relativeEntropy_finite_sum_log _ _ Measure.AbsolutelyContinuous.rfl]
+  simp
 
 example : relativeEntropy (Measure.dirac (0 : Fin 3))
     (Measure.dirac (1 : Fin 3)) = ∞ := by
@@ -170,6 +171,14 @@ end EventTesting
 #print axioms LowerBounds.relativeEntropy_eq_top_of_not_absolutelyContinuous
 #print axioms LowerBounds.relativeEntropy_ne_top_iff
 #print axioms LowerBounds.relativeEntropy_eq_zero_iff
+#print axioms LowerBounds.absolutelyContinuous_iff_atom_support
+#print axioms LowerBounds.rnDeriv_mul_atom
+#print axioms LowerBounds.rnDeriv_atom_eq_div
+#print axioms LowerBounds.relativeEntropy_finite_klFun
+#print axioms LowerBounds.relativeEntropy_finite_sum_log
+#print axioms LowerBounds.relativeEntropy_finite_eq_if
+#print axioms LowerBounds.relativeEntropy_finite_eq_top_iff
+#print axioms LowerBounds.relativeEntropy_eq_top_of_atom_support_mismatch
 #print axioms LowerBounds.relativeEntropy_trim_le
 #print axioms LowerBounds.bernoulliRelativeEntropy
 #print axioms LowerBounds.rnDeriv_restrict_restrict
