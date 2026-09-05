@@ -6,8 +6,8 @@ The code/entropy definitions, Kraft adapter, finite-measure sub-$\sigma$-
 algebra data-processing inequality, and the existing Bretagnolle--Huber spine
 compile locally. Whole-chapter coverage remains \texttt{partial}. The terminal
 update below records gated Huffman, common-density, overlap and Gaussian
-results, and the focused-validated arithmetic construction whose full gate
-is pending. Additional body assertions and export/site closure remain open.
+results, and the arithmetic construction whose full gate passed at
+\texttt{2a31a01}. Final adapter integration and export/site closure remain open.
 
 \paragraph{Lean declarations.}
 The public surface includes \texttt{BinaryPrefixCode.kraft\_inequality},
@@ -77,7 +77,7 @@ The terminal is \texttt{finitePartitionRelativeEntropy\_eq\_relativeEntropy}.
 Its principal bridges are \texttt{relativeEntropy\_finite\_map\_le},
 \texttt{relativeEntropy\_eq\_iSup\_densityApproximation\_trim},
 \texttt{exists\_fin\_observation\_densityApproximation},
-\texttt{relativeEntropy\_map\_eq\_trim\_of\_absolutelyContinuous}, and
+\texttt{relativeEntropy\_map\_eq\_trim\_of\_\allowbreak absolutelyContinuous}, and
 \texttt{relativeEntropy\_trim\_mono}; the synchronized Markdown declaration
 list names every helper. The equality holds for finite measures on arbitrary
 measurable spaces, without finite-KL, AC, or countable-generation premises.
@@ -116,9 +116,9 @@ from a law on $\mathrm{Fin}\,k$,
  H_2\le E\ell/n\le H_2+3/n.
 \]
 \texttt{arithmeticBlockCode\_rate\_tendsto\_entropy} proves convergence;
-\texttt{sourceBlock\_code\_family\_limit\_ge\_entropy} is the universal
+\texttt{sourceBlock\_code\_family\_\allowbreak limit\_ge\_entropy} is the universal
 prefix-code converse. Zero masses are allowed. This is not a finite-precision
-executable encoder. Arithmetic gate \texttt{2a31a01} remains pending.
+executable encoder. Arithmetic gate \texttt{2a31a01} passed (400 tests, 7 skipped).
 
 \texttt{relativeEntropy\_commonDensity\_eq\_if} gives the common
 $\sigma$-finite density formula with exact infinite branches (gate
@@ -131,6 +131,32 @@ Jensen/Le Cam route (gate \texttt{b8325c2}).
 \texttt{gaussian\_testing\_error\_three\_tenths} and
 \texttt{gaussian\_testing\_max\_error\_three\_twentieths} cover positive
 common variance and the exact SNR constants (gate \texttt{1e8af14}).
-All names are in \texttt{BanditRLProof.LowerBounds}. Explicit metric
-counterexamples and supporting exposition claims remain under body audit.
+All names are in \texttt{BanditRLProof.LowerBounds}. Supporting adapters below
+remain subject to final aggregate/export/site audit.
 No new unproved concentration or measurability premise is introduced.
+
+\paragraph{Supporting body assertions and qualifications.}
+\texttt{relativeEntropy\_triangle\_counterexample} uses Gaussian means
+$0,1,2$, variance one, and KL values $1/2,1/2,2$.
+\texttt{bernoulliRelativeEntropy\_asymmetry} uses parameters $0,1/2$,
+giving finite versus infinite KL.
+\texttt{relativeEntropy\_finite\_crossEntropy} gives the finite-law
+cross-entropy difference under $P\ll Q$;
+\texttt{entropyTerm\_tendsto\_zero\_right} gives $x\log(1/x)\to0$ from
+the right. This is not an identity of rounded code-length differences.
+
+\texttt{exists\_ceilingLogPrefixCode} gives the integer ceiling-log code
+for $N\ge2$; \texttt{expectedCodeLength\_fixedLength} gives its expectation.
+\texttt{fixedLength\_uniformPowerTwo\_optimal} proves optimality when
+$N=2^n$. \texttt{uniform\_three\_fixedLength\_not\_optimal} disproves the
+arbitrary-$N$ reading: $0,10,11$ has mean $5/3<2$. This qualification of the
+informal source sentence is essential. The local singleton code has one bit,
+rather than an allowed empty word.
+
+\texttt{exists\_\allowbreak commonSigmaFiniteDominatingMeasure} exposes $P+Q$;
+\texttt{relativeEntropy\_finite\_\allowbreak lt\_top\_iff\_ac} retains the finite-alphabet
+condition. All these adapters are locally compiled and canaried.
+\par
+The \texttt{d325147} gate covers NonMetric, CrossEntropy and FixedLengthCoding;
+UniformCoding and CommonDomination require a subsequent gate. Historical
+site/deployment checks do not certify the current whole-chapter surface.

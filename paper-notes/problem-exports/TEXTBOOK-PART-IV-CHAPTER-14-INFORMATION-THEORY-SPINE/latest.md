@@ -5,7 +5,7 @@ Task id: `TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE`
 Status: whole-chapter coverage remains `partial`. The original spine below
 is supplemented by the current terminal update at the end. Huffman,
 common-density, overlap and Gaussian terminals have full local gates;
-arithmetic coding is focused-validated with its full gate running. Additional
+arithmetic coding has passed its full gate at 2a31a01. Additional
 body assertions and export/site closure remain open in the body-closure audit.
 
 ## Lean Declarations
@@ -210,7 +210,7 @@ on Fin k, `arithmeticBlockCode_rate_sandwich` proves H2 <= E length/n <=
 H2+3/n. `arithmeticBlockCode_rate_tendsto_entropy` proves convergence to H2;
 `sourceBlock_code_family_limit_ge_entropy` gives the universal prefix-code
 converse. Zero masses are allowed. This is not an executable finite-precision
-implementation. Arithmetic full gate at 2a31a01 is still pending.
+implementation. Arithmetic full gate at 2a31a01 passed (400 tests, 7 skipped).
 
 `relativeEntropy_commonDensity_eq_if` gives the common sigma-finite density
 formula with exact infinite branches (gate 78846b8).
@@ -221,7 +221,31 @@ route (gate b8325c2). `klDiv_gaussianReal_same_variance`,
 and `gaussian_testing_max_error_three_twentieths` cover common positive
 variance and the exact SNR constants (gate 1e8af14).
 
-All names above are in BanditRLProof.LowerBounds. Unresolved source-mapping
-items include explicit metric counterexamples and the supporting exposition
-claims enumerated in `reviews/2026-09-05-chapter-14-body-closure-audit.md`.
+All names above are in BanditRLProof.LowerBounds. Supporting exposition
+adapters are recorded below; their final aggregate/export/site audit is open.
 No new unproved concentration or measurability premise is introduced.
+
+## Supporting body assertions and source qualifications
+
+- `relativeEntropy_triangle_counterexample` uses Gaussian means 0,1,2,
+  variance 1, with KL values 1/2,1/2,2. `bernoulliRelativeEntropy_asymmetry`
+  uses Bernoulli parameters 0 and 1/2, giving finite versus infinite KL.
+- `relativeEntropy_finite_crossEntropy` proves Eq. (14.4)'s cross-entropy
+  minus entropy form for finite probability laws with P absolutely continuous
+  with respect to Q. `entropyTerm_tendsto_zero_right` proves x log(1/x) -> 0
+  from the right. Neither claims an exact difference of rounded code lengths.
+- `exists_ceilingLogPrefixCode` constructs constant Nat.clog(2,N)-bit codes
+  for N>=2; `expectedCodeLength_fixedLength` gives their exact expectation.
+- `fixedLength_uniformPowerTwo_optimal` proves uniform equal-length optimality
+  when N=2^n. `uniform_three_fixedLength_not_optimal` disproves the arbitrary-N
+  interpretation: the code 0,10,11 has uniform expected length 5/3<2.
+  The source's informal sentence must retain this qualification. N=1 has
+  one-bit words in the local model rather than an allowed empty word.
+- `exists_commonSigmaFiniteDominatingMeasure` exposes P+Q as a common
+  dominating measure for finite laws. `relativeEntropy_finite_lt_top_iff_ac`
+  states the finite-alphabet AC/finite-KL equivalence, not a general-space claim.
+
+These adapters are compiled and canaried locally. The d325147 aggregate gate
+covers NonMetric, CrossEntropy and FixedLengthCoding only; UniformCoding and
+CommonDomination require the subsequent gate. Historical site and deployment
+checks do not certify the present whole-chapter surface.
