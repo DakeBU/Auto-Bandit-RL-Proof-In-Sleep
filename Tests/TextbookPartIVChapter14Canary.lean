@@ -104,7 +104,7 @@ example (h : ∀ x, Q {x} = 0 → P {x} = 0) :
   relativeEntropy_finite_sum_log P Q
     ((absolutelyContinuous_iff_atom_support P Q).2 h)
 
-example : relativeEntropy P Q = ∞ ↔ ∃ x, P {x} ≠ 0 ∧ Q {x} = 0 :=
+example : relativeEntropy P Q = (⊤ : ENNReal) ↔ ∃ x, P {x} ≠ 0 ∧ Q {x} = 0 :=
   relativeEntropy_finite_eq_top_iff P Q
 
 -- Three-symbol endpoint examples retain the unused zero-mass atoms.
@@ -114,7 +114,7 @@ example : relativeEntropy (Measure.dirac (0 : Fin 3))
   simp
 
 example : relativeEntropy (Measure.dirac (0 : Fin 3))
-    (Measure.dirac (1 : Fin 3)) = ∞ := by
+    (Measure.dirac (1 : Fin 3)) = (⊤ : ENNReal) := by
   apply relativeEntropy_eq_top_of_atom_support_mismatch _ _ (0 : Fin 3)
   · simp
   · simp
