@@ -18,8 +18,11 @@
       "number": 13,
       "slug": "chapter-13-basic-ideas",
       "title": "Lower Bounds: Basic Ideas",
-      "status": "partial",
-      "status_note": "The Chapter 13 semantic and deterministic slice now feeds a compiled Chapter 15 Gaussian minimax theorem. The source's Theorem 13.1 order statement follows locally with the explicit universal constant 1/54; the chapter remains partial only because its notes and exercise set are not a completion target.",
+      "status": "compiled",
+      "core_status": "compiled",
+      "core_status_label": "Compiled theorem route",
+      "chapter_status_label": "Whole main-text contract",
+      "status_note": "Theorem 13.1 compiles through Chapter 15 with c=1/54. Chapter 13 also compiles fixed-class minimax-optimality, the canonical iid Gaussian empirical-mean law, midpoint error events, the Chernoff companion, and both exact Mills-ratio bounds of Eq. (13.4) rescaled to the printed Eq. (13.1). The broader 1-subgaussian class with gaps in [0,1] now has a compiled fixed-horizon MOSS upper bound and constant-factor near-minimax theorem. The frozen main-text contract is complete: PR #105, authoritative-main checks, Pages deployment and live desktop/mobile acceptance pass for b38630c. Notes and Exercises remain optional and unformalized.",
       "print_pages": "155–159",
       "pdf_pages": "189–194",
       "pdf_page": 189,
@@ -29,8 +32,20 @@
         "§13.3 Bibliographic Remarks (CUP p. 158 / author-online p. 184 / PDF p. 193)",
         "§13.4 Exercises (CUP p. 159 / author-online pp. 184–185 / PDF pp. 193–194)"
       ],
+      "section_coverage": [
+        {"section": "Chapter opening and Theorem 13.1", "status": "compiled", "scope": "Worst-case/minimax semantics, fixed-class minimax-optimality, and the unit-Gaussian c=1/54 theorem endpoint compile."},
+        {"section": "§13.1 Main Ideas Underlying Minimax Lower Bounds", "status": "compiled", "scope": "The canonical iid Gaussian empirical-mean law, midpoint error events, exact two-sided Eq. (13.1), least-explored-arm selection, one-coordinate construction, regret identities, history transport, tuning, and the final lower terminal compile. The Chernoff maximum-risk companion remains separately labeled."},
+        {"section": "§13.2 Notes", "status": "source", "scope": "Game interpretation, flat-risk discussion, Pareto optimality, and rate terminology are indexed as optional enrichment and are not formalized."},
+        {"section": "§13.3 Bibliographic Remarks", "status": "source", "scope": "The Abramowitz–Stegun source is mapped; both exact integral bounds of Eq. (13.4) compile in GaussianMillsRatio.lean."},
+        {"section": "§13.4 Exercises", "status": "source", "scope": "Exercises 13.1 and 13.2 are indexed as explicitly optional and unformalized."}
+      ],
+      "completion_definition": "Complete means every precise mathematical item in the chapter opening and §13.1 has a source-faithful compiled endpoint, including the explicit iid empirical-mean Gaussian law and exact Eq. (13.1), and the stated broader-class Algorithm 7/Theorem 9.1 consequence has both its lower and MOSS upper sides. Notes and Exercises are optional but cannot be used to hide a main-text gap.",
+      "completion_blockers": [],
       "learning_goals": [
         "Read worst-case and minimax expected regret as explicit supremum and infimum operations.",
+        "Read minimax optimality as attainment relative to a policy class, environment class, and horizon-indexed regret functional.",
+        "Trace the canonical finite iid Gaussian product through summation and scaling to the exact N(mu,1/n) empirical-mean law.",
+        "Trace both compiled Mills-ratio integral bounds through Gaussian density standardization to the exact two-sided Eq. (13.1); distinguish the weaker Chernoff companion.",
         "Derive a least-explored alternative arm from the exact expected pull-count budget.",
         "Separate the deterministic two-environment regret algebra from the statistical change-of-measure bridge supplied in Chapters 14–15.",
         "Trace how the exact Chapter 15 factor 1/27 yields Theorem 13.1 with the explicit universal constant 1/54."
@@ -40,6 +55,18 @@
           "name": "Worst-case and minimax expected regret",
           "math": "R_n^*(\\mathcal E)=\\inf_{\\pi}\\sup_{\\nu\\in\\mathcal E}R_n(\\pi,\\nu).",
           "fallback": "The minimax value is the infimum over policies of their worst expected regret over the environment class.",
+          "status": "compiled"
+        },
+        {
+          "name": "Minimax-optimal policy",
+          "math": "\u005cpi\u005cin\u005cmathcal P,\u005cqquad R_n(\u005cpi,\u005cmathcal E)=R_n^*(\u005cmathcal P,\u005cmathcal E).",
+          "fallback": "A policy is minimax optimal only for fixed admissible classes and a fixed-horizon regret functional, and only if it attains the infimum.",
+          "status": "compiled"
+        },
+        {
+          "name": "Gaussian iid mean and midpoint test companion",
+          "math": "\u005coverline X_n\u005csim\u005cmathcal N(\u005cmu,1/n),\u005cqquad \u005cmax_{\u005cmu\u005cin\u005c{0,\u005cDelta\u005c}}\u005cmathbb P_{\u005cmathcal N(\u005cmu,1/n)}(\u005chat\u005cmu\u005cneq\u005cmu)\u005cle\u005cexp(-n\u005cDelta^2/8).",
+          "fallback": "The arithmetic mean under the canonical product of n independent unit-variance Gaussians has variance one over n, and the midpoint rule has the standard Chernoff maximum-error upper bound. The latter remains weaker than Eq. (13.1).",
           "status": "compiled"
         },
         {
@@ -75,8 +102,26 @@
         "boundary": "BanditRLProof.LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt compiles the source order statement for the same unit-cube, unit-variance Gaussian environment class with the explicit positive constant c=1/54. The local expected regret is an ENNReal lower integral on the canonical n-observation history law."
       },
       "lean_correspondence": [
+        {"name": "BanditRLProof.MOSS.canonicalGapExpectedRegret_le", "status": "compiled", "role": "Fixed-horizon Algorithm 7 bound 39 sqrt(nk) plus the gap sum on the actual canonical history law."},
+        {"name": "BanditRLProof.LowerBounds.subgaussianMinimax_sandwich", "status": "compiled", "role": "For unit-subgaussian arms with gaps in [0,1], lower constant 1/54 and MOSS upper constant 40, using identical policy and regret semantics."},
+        {"name": "BanditRLProof.LowerBounds.moss_nearMinimax", "status": "compiled", "role": "Main-prose constant-factor near-minimax consequence: MOSS worst-case regret is at most 2160 times minimax regret; k>1 and n>=k."},
+        {"name": "BanditRLProof.Concentration.measure_exists_le_independent_partialSum_ge_le_subgaussian", "status": "compiled", "role": "Finite maximal independent centered subgaussian bound with no cardinality loss, consumed by compiled MOSS peeling and regret integration."},
+        {"name": "BanditRLProof.MOSS.historyAlgorithm", "status": "compiled", "role": "Concrete measurable fixed-horizon Algorithm 7 history policy, used by the compiled common-history expected-regret theorem."},
+        {"name": "BanditRLProof.MOSS.selected_index_gt_mean_add_half_gap", "status": "compiled", "role": "Deterministic large-gap selection step under an explicit optimism-deficit premise, not a concentration bound."},
+        {"name": "BanditRLProof.LowerBounds.gaussianMills_lower_integral", "status": "compiled", "role": "Exact lower integral bound of Eq. (13.4)."},
+        {"name": "BanditRLProof.LowerBounds.gaussianMills_upper_integral", "status": "compiled", "role": "Exact upper integral bound of Eq. (13.4), with denominator constant 4/pi."},
+        {"name": "BanditRLProof.LowerBounds.gaussianSampleMeanZeroErrorProbability_source_bounds", "status": "compiled", "role": "Exact printed Eq. (13.1) for n>0 and Delta>0, with denominator constants 16 and 32/pi."},
         {"name": "BanditRLProof.LowerBounds.worstCaseExpectedRegret", "status": "compiled", "role": "Worst-case ENNReal supremum over an explicit environment class."},
         {"name": "BanditRLProof.LowerBounds.minimaxExpectedRegret", "status": "compiled", "role": "Minimax ENNReal infimum over an explicit policy class."},
+        {"name": "BanditRLProof.LowerBounds.IsMinimaxOptimal", "status": "compiled", "role": "Admissibility plus attainment for fixed policy/environment classes and a horizon-indexed regret functional."},
+        {"name": "BanditRLProof.LowerBounds.gaussianSampleMeanVariance_pos", "status": "compiled", "role": "Nondegenerate variance 1/n for a positive sample size."},
+        {"name": "BanditRLProof.LowerBounds.gaussianIIDObservationLaw", "status": "compiled", "role": "Canonical finite product law of independent N(mu,1) coordinates."},
+        {"name": "BanditRLProof.LowerBounds.gaussianIIDSumLaw", "status": "compiled", "role": "Exact N(n mu,n) law of the coordinate sum by characteristic-function factorization."},
+        {"name": "BanditRLProof.LowerBounds.gaussianIIDSampleMeanLaw", "status": "compiled", "role": "Exact N(mu,1/n) pushforward law of the arithmetic mean for n>0."},
+        {"name": "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision_zero_error_event", "status": "compiled", "role": "The zero-mean midpoint decision error is exactly the source event [Delta/2,infinity)."},
+        {"name": "BanditRLProof.LowerBounds.twoPointGaussianThresholdDecision_gap_error_event", "status": "compiled", "role": "The positive-mean midpoint decision error is exactly the symmetric lower-half event."},
+        {"name": "BanditRLProof.LowerBounds.hasSubgaussianMGF_id_gaussianReal_zero", "status": "compiled", "role": "Exact Gaussian MGF supplies the centered sub-Gaussian proxy."},
+        {"name": "BanditRLProof.LowerBounds.gaussianSampleMeanThresholdRisk_le_exp", "status": "compiled", "role": "Source-shaped two-hypothesis maximum-risk Chernoff companion exp(-n Delta^2/8), explicitly not Eq. (13.1)."},
         {"name": "BanditRLProof.LowerBounds.expectedRegret_le_worstCaseExpectedRegret", "status": "compiled", "role": "One member is below the class supremum."},
         {"name": "BanditRLProof.LowerBounds.minimaxExpectedRegret_le_worstCaseExpectedRegret", "status": "compiled", "role": "The infimum is below every admissible policy value."},
         {"name": "BanditRLProof.LowerBounds.le_minimaxExpectedRegret", "status": "compiled", "role": "A uniform policywise lower bound passes through the minimax infimum."},
@@ -91,52 +136,64 @@
       ],
       "dependency_nodes": [
         {"id": "minimax", "label": "minimax / worst-case semantics", "status": "compiled"},
+        {"id": "minimax-optimal", "label": "fixed-class minimax optimality", "status": "compiled"},
+        {"id": "gaussian-iid-mean", "label": "finite iid Gaussian empirical-mean law", "status": "compiled"},
+        {"id": "gaussian-test", "label": "midpoint Gaussian error events and Chernoff upper", "status": "compiled"},
+        {"id": "eq-13-1", "label": "exact two-sided Mills-ratio Eq. (13.1)", "status": "compiled"},
         {"id": "budget", "label": "expected pull budget", "status": "compiled"},
         {"id": "least", "label": "least-explored alternative", "status": "compiled"},
         {"id": "algebra", "label": "two-environment algebra", "status": "compiled"},
         {"id": "transport", "label": "same-policy history KL transport", "status": "compiled"},
-        {"id": "theorem-13-1", "label": "Gaussian minimax terminal", "status": "compiled"}
+        {"id": "theorem-13-1", "label": "Gaussian minimax terminal", "status": "compiled"},
+        {"id": "moss-upper", "label": "fixed-horizon MOSS common-history upper bound", "status": "compiled"},
+        {"id": "broad-near-minimax", "label": "broad-class near-minimax factor 2160", "status": "compiled"}
       ],
       "reading_path": [
         "Read the source statement and its explicit Chapter 15 proof deferral.",
-        "Inspect the minimax definitions before the averaging lemma.",
+        "Inspect the minimax definitions and minimax-optimality predicate before the averaging lemma.",
+        "Inspect the finite iid Gaussian mean-law bridge and midpoint error events, then trace the exact Mills-ratio Eq. (13.1) and the separate maximum-risk Chernoff companion.",
         "Check the Fin.succ indexing: source arms 2,…,k become Lean alternatives 0,…,m−1.",
         "Read the quantitative algebra theorem and locate its visible cross-environment error premise.",
         "Continue through the compiled Chapter 14 event-testing foundation and Chapter 15 Gaussian theorem, then inspect the c=1/54 order corollary."
       ],
       "gaps": [
-        "The optional notes and Chapter 13 exercise set are not formalized by this main-theorem gate."
+        "The frozen main-text contract is complete, including the broader finite-arm 1-subgaussian near-minimax consequence. Integrated proof, rendered export, structured review, PR, main, Pages and live acceptance are recorded for b38630c.",
+        "Optional: Notes 13.2 and Exercises 13.1–13.2 are not formalized and do not block the chapter contract."
       ]
     },
     {
       "number": 14,
       "slug": "chapter-14-information-theory",
       "title": "Foundations of Information Theory",
-      "status": "partial",
-      "status_note": "The source-faithful §14.2 relative-entropy and Bretagnolle–Huber spine is compiled. Entropy/source coding in §14.1 and full sub-sigma-algebra data processing remain outside this scoped gate.",
+      "status": "compiled",
+      "core_status": "compiled",
+      "core_status_label": "Compiled Chapter 14 leaves",
+      "chapter_status_label": "Whole chapter coverage",
+      "status_note": "The frozen required body is compiled: Huffman optimality, exact-real arithmetic block coding and converse, finite/partition/common-density KL, the source affinity/overlap route, and Gaussian testing. Independent review, PR #106, main run 33959196451, Pages and live desktop/mobile acceptance passed. The singleton and uniform-code qualifications below are part of the accepted boundary; optional Notes/Exercises are not claimed complete.",
       "print_pages": "160–169",
       "pdf_pages": "195–206",
       "pdf_page": 195,
       "sections": [
-        "§14.1 Entropy and Optimal Coding (CUP starts p. 160 / author-online pp. 186–188 / PDF pp. 195–197; pedagogical mapping only)",
-        "§14.2 Relative Entropy (CUP starts p. 162 / author-online pp. 188–191 / PDF pp. 197–200; formal target window)",
+        "§14.1 Entropy and Optimal Coding (CUP starts p. 160 / author-online pp. 186–188 / PDF pp. 195–197; Huffman and arithmetic source-coding terminals compiled with the model qualifications below)",
+        "§14.2 Relative Entropy (CUP starts p. 162 / author-online pp. 188–191 / PDF pp. 197–200; finite, partition and common-density formulas, source testing route and Gaussian example compiled)",
         "§14.3 Notes (CUP p. 165 / author-online pp. 191–194 / PDF pp. 200–203)",
         "§14.4 Bibliographic Remarks (CUP p. 167 / author-online p. 194 / PDF p. 203)",
         "§14.5 Exercises (CUP pp. 167–169 / author-online pp. 194–197 / PDF pp. 203–206)"
       ],
       "learning_goals": [
+        "Follow Kraft and the entropy lower bound into recursive Huffman optimality and the one-bit entropy sandwich, then read the exact-real arithmetic block-code construction and rate converse.",
         "Read relative entropy as an extended-real, direction-sensitive comparison of probability measures.",
         "Distinguish the absolutely-continuous log-likelihood branch from singular support mismatch.",
-        "Map a measurable event to Bernoulli probabilities without increasing KL.",
+        "Use conditional Jensen to see why restriction to any sub-sigma-algebra cannot increase KL, then specialize to an event.",
         "Derive the unconditional Bretagnolle–Huber testing bound, including the exp(-infinity)=0 branch.",
-        "Keep general coding theory and adaptive bandit-history decomposition outside the compiled §14.2 window."
+        "Distinguish compiled mathematical coding constructions from executable finite-precision encoders; keep adaptive bandit-history decomposition in Chapter 15."
       ],
       "definitions": [
         {
           "name": "Entropy and optimal coding",
           "math": "H(P)=-\\sum_x P(x)\\log P(x).",
-          "fallback": "Entropy is the expected information content of a discrete outcome and motivates the chapter's coding discussion.",
-          "status": "planned"
+          "fallback": "Finite binary prefix codes satisfy H ≤ expected length; the recursive Huffman code is globally optimal with expected length ≤ H+1. A named exact-real arithmetic block-code family has expected rate tending to H, with a universal converse. Local codewords are nonempty, including for a singleton alphabet.",
+          "status": "compiled"
         },
         {
           "name": "Extended-real relative entropy",
@@ -162,7 +219,7 @@
         "kind": "proof pseudocode",
         "steps": [
           {"title": "Split the KL branches", "detail": "Use Mathlib's exact absolute-continuity and log-likelihood integrability characterization; retain infinity on support mismatch."},
-          {"title": "Coarsen to one event", "detail": "Restrict both measures to A and its complement and prove d(P(A),Q(A)) is at most D(P,Q)."},
+          {"title": "Coarsen observations", "detail": "Apply conditional Jensen to the Radon–Nikodym density after restriction to any sub-sigma-algebra; separately specialize to A and its complement."},
           {"title": "Prove the binary bound", "detail": "Lower-bound binary likelihood affinity by exp(-d/2), then compare squared affinity with the two testing errors."},
           {"title": "Restore all endpoints", "detail": "Handle Bernoulli zero/one support cases through the extended-real endpoint convention."},
           {"title": "Lift to measures", "detail": "Use antitonicity of the testing scale and Q(A complement)=1-Q(A) to obtain the source theorem in the P-to-Q KL direction."}
@@ -174,15 +231,48 @@
         "math": "P(A)+Q(A^{\\mathrm c})\\ge\\tfrac12\\exp\\{-D(P\\Vert Q)\\}",
         "fallback": "For two probability measures and any measurable event, the sum of the P error on A and the Q error on its complement is at least one half times exponential negative relative entropy.",
         "plain": "Observing an event cannot make two laws easier to distinguish than their full relative entropy permits.",
-        "boundary": "BanditRLProof.LowerBounds.bretagnolleHuber compiles this unconditional measure/event theorem with D(P,Q), Q(A complement), and an explicit zero scale at infinite KL. It does not claim §14.1 source coding, full Exercise 14.10, or the Chapter 15 adaptive-history chain rule."
+        "boundary": "BanditRLProof.LowerBounds.bretagnolleHuber compiles this unconditional measure/event theorem with D(P,Q), Q(A complement), and an explicit zero scale at infinite KL. The common-density Jensen/affinity and overlap steps of Eqs. (14.8–14.9) also compile. Exercise 14.10 compiles separately as relativeEntropy_trim_le; the adaptive-history chain rule belongs to Chapter 15."
       },
       "lean_correspondence": [
+        {"name": "BanditRLProof.LowerBounds.BinaryPrefixCode", "status": "compiled", "role": "Finite binary prefix-code model with injectivity, nonempty codewords, and prefix freedom."},
+        {"name": "BanditRLProof.LowerBounds.BinaryPrefixCode.kraft_inequality", "status": "compiled", "role": "Prefix-code range is uniquely decodable and satisfies the binary Kraft inequality."},
+        {"name": "BanditRLProof.LowerBounds.discreteEntropyBaseTwo_eq_div_log_two", "status": "compiled", "role": "Exact conversion between finite base-two and natural entropy."},
+        {"name": "BanditRLProof.LowerBounds.expectedCodeLength", "status": "compiled", "role": "Finite expected codeword-length objective from Eq. (14.1)."},
+        {"name": "BanditRLProof.LowerBounds.huffmanCode_optimal", "status": "compiled", "role": "Recursive Huffman construction minimizes expected length over all local binary prefix codes."},
+        {"name": "BanditRLProof.LowerBounds.exists_prefixCode_of_uniquelyDecodable", "status": "compiled", "role": "Every finite injective uniquely decodable encoder has a prefix code preserving each symbol length, including Kraft equality; full aggregate verification passed."},
+        {"name": "BanditRLProof.LowerBounds.IsOptimalPrefixCode.length_antitone", "status": "compiled", "role": "An optimal code assigns no longer words to strictly more probable symbols."},
+        {"name": "BanditRLProof.LowerBounds.huffmanCode_entropy_sandwich", "status": "compiled", "role": "Eq. (14.2): H ≤ expected Huffman length ≤ H+1."},
+        {"name": "BanditRLProof.LowerBounds.arithmeticBlockCode_rate_tendsto_entropy", "status": "compiled", "role": "Named exact-real arithmetic interval/address code has expected IID block rate tending to entropy, including zero masses and constant support-tag overhead."},
+        {"name": "BanditRLProof.LowerBounds.arithmeticBlockCode_payload_interval", "status": "compiled", "role": "The actual named code's positive-mass payload lies inside its message arithmetic interval after removing the support tag; the strengthened interface passed the full b5e21b8 gate."},
+        {"name": "BanditRLProof.LowerBounds.sourceBlock_code_family_limit_ge_entropy", "status": "compiled", "role": "Universal converse for a convergent expected block-code rate."},
+        {"name": "BanditRLProof.LowerBounds.exists_ceilingLogPrefixCode", "status": "compiled", "role": "Fixed-length ceiling-log construction for alphabet cardinality greater than one."},
+        {"name": "BanditRLProof.LowerBounds.fixedLength_uniformPowerTwo_optimal", "status": "compiled", "role": "Uniform fixed-length optimality at power-of-two cardinalities; full aggregate verified."},
+        {"name": "BanditRLProof.LowerBounds.uniform_three_fixedLength_not_optimal", "status": "compiled", "role": "Ternary mean length 5/3 refutes the broad arbitrary-cardinality uniform fixed-length claim; full aggregate verified."},
+        {"name": "BanditRLProof.LowerBounds.relativeEntropy_finite_crossEntropy", "status": "compiled", "role": "Unrounded cross-entropy minus entropy equals finite-alphabet KL under absolute continuity."},
+        {"name": "BanditRLProof.LowerBounds.entropyTerm_tendsto_zero_right", "status": "compiled", "role": "The zero-mass entropy convention agrees with its right-hand limit."},
         {"name": "BanditRLProof.LowerBounds.relativeEntropy", "status": "compiled", "role": "Extended-real alias of Mathlib measure KL in the source direction P to Q."},
         {"name": "BanditRLProof.LowerBounds.relativeEntropy_of_absolutelyContinuous_of_integrable", "status": "compiled", "role": "Theorem 14.1 regular branch with Mathlib's finite-measure mass correction visible."},
         {"name": "BanditRLProof.LowerBounds.relativeEntropy_of_probability_absolutelyContinuous_of_integrable", "status": "compiled", "role": "Probability-measure log-likelihood integral specialization."},
         {"name": "BanditRLProof.LowerBounds.relativeEntropy_eq_top_of_not_absolutelyContinuous", "status": "compiled", "role": "Theorem 14.1 singular branch: support mismatch gives infinity."},
         {"name": "BanditRLProof.LowerBounds.relativeEntropy_ne_top_iff", "status": "compiled", "role": "Exact absolute-continuity and log-likelihood-integrability finiteness contract."},
+        {"name": "BanditRLProof.LowerBounds.relativeEntropy_eq_zero_iff", "status": "compiled", "role": "KL separation for finite measures."},
+        {"name": "BanditRLProof.LowerBounds.relativeEntropy_trim_le", "status": "compiled", "role": "Full finite-measure arbitrary-sub-sigma-algebra data processing from Exercise 14.10."},
         {"name": "BanditRLProof.LowerBounds.bernoulliRelativeEntropy", "status": "compiled", "role": "Equation (14.4) two-point KL with exact support endpoints."},
+        {"name": "BanditRLProof.LowerBounds.relativeEntropy_finite_sum_log", "status": "compiled", "role": "Equation (14.4) on any finite alphabet under support inclusion, including zero source masses."},
+        {"name": "BanditRLProof.LowerBounds.relativeEntropy_finite_eq_if", "status": "compiled", "role": "Exhaustive finite-sum or infinity formula from atomwise support inclusion."},
+        {"name": "BanditRLProof.LowerBounds.relativeEntropy_finite_eq_top_iff", "status": "compiled", "role": "Infinite finite-alphabet KL exactly when a positive source atom has zero reference mass."},
+        {"name": "BanditRLProof.LowerBounds.finitePartitionRelativeEntropy", "status": "compiled", "role": "Eq. (14.5): supremum over all finite measurable observations."},
+        {"name": "BanditRLProof.LowerBounds.finitePartitionRelativeEntropy_eq_relativeEntropy", "status": "compiled", "role": "Full finite-discretisation/RN equality for finite measures on arbitrary measurable spaces, including infinite KL."},
+        {"name": "BanditRLProof.LowerBounds.relativeEntropy_commonDensity_eq_if", "status": "compiled", "role": "Eq. (14.6) with explicit common-density finite and infinite branches."},
+        {"name": "BanditRLProof.LowerBounds.exists_commonSigmaFiniteDominatingMeasure", "status": "compiled", "role": "P+Q supplies common domination; full aggregate verified."},
+        {"name": "BanditRLProof.LowerBounds.relativeEntropy_finite_lt_top_iff_ac", "status": "compiled", "role": "Finite-alphabet-only equivalence of finite KL and absolute continuity; full aggregate verified."},
+        {"name": "BanditRLProof.LowerBounds.bernoulliRelativeEntropy_asymmetry", "status": "compiled", "role": "Explicit directional counterexample to symmetry."},
+        {"name": "BanditRLProof.LowerBounds.relativeEntropy_triangle_counterexample", "status": "compiled", "role": "Finite Gaussian KL counterexample to the triangle inequality."},
+        {"name": "BanditRLProof.LowerBounds.bretagnolleHuberScale_le_half_commonDensityAffinity_sq", "status": "compiled", "role": "Source Eq. (14.8) common-density Jensen/affinity step."},
+        {"name": "BanditRLProof.LowerBounds.half_commonDensityAffinity_sq_le_overlap", "status": "compiled", "role": "Source Eq. (14.9) affinity-to-overlap step."},
+        {"name": "BanditRLProof.LowerBounds.commonDensityOverlap_le_testingError", "status": "compiled", "role": "Source p.191 overlap bound for every measurable testing event; closes the Jensen/affinity/overlap proof chain."},
+        {"name": "BanditRLProof.LowerBounds.klDiv_gaussianReal_same_variance", "status": "compiled", "role": "Exact Gaussian KL for a common positive variance."},
+        {"name": "BanditRLProof.LowerBounds.gaussian_testing_max_error_three_twentieths", "status": "compiled", "role": "Gaussian testing application with the source 3/20 maximum-error constant."},
         {"name": "BanditRLProof.LowerBounds.rnDeriv_restrict_restrict", "status": "compiled", "role": "Radon–Nikodym derivative identity after restricting both laws to a measurable cell."},
         {"name": "BanditRLProof.LowerBounds.relativeEntropy_restrict_add_compl", "status": "compiled", "role": "Exact KL decomposition across an event and its complement."},
         {"name": "BanditRLProof.LowerBounds.bernoulliRelativeEntropy_event_le", "status": "compiled", "role": "Event-level binary data processing with P(A), Q(A) and D(P,Q)."},
@@ -192,23 +282,31 @@
         {"name": "BanditRLProof.LowerBounds.bretagnolleHuber", "status": "compiled", "role": "Exact unconditional Theorem 14.2 measure/event terminal."}
       ],
       "dependency_nodes": [
+        {"id": "coding-defs", "label": "prefix-code and entropy definitions", "status": "compiled"},
+        {"id": "kraft", "label": "prefix-to-unique-decoding Kraft adapter", "status": "compiled"},
         {"id": "kl", "label": "measure KL and RN branches", "status": "compiled"},
+        {"id": "finite-kl", "label": "finite-alphabet KL with complete support endpoints", "status": "compiled"},
+        {"id": "partition-kl", "label": "finite-discretisation supremum equals RN KL", "status": "compiled"},
+        {"id": "full-dpi", "label": "arbitrary sub-sigma-algebra data processing", "status": "compiled"},
         {"id": "event", "label": "event-level binary data processing", "status": "compiled"},
         {"id": "binary", "label": "binary testing and endpoint analysis", "status": "compiled"},
         {"id": "bh", "label": "measure Bretagnolle–Huber terminal", "status": "compiled"},
-        {"id": "coding", "label": "entropy and optimal coding", "status": "planned"},
+        {"id": "coding", "label": "Huffman and exact-real arithmetic source-coding terminals", "status": "compiled"},
         {"id": "history", "label": "same-policy adaptive history KL (compiled in Chapter 15)", "status": "compiled"}
       ],
       "reading_path": [
+        "Start with BinaryPrefixCode and entropy; follow Kraft into huffmanCode_optimal and the named arithmeticBlockCode rate theorem, preserving the nonempty-word and exact-real model boundaries.",
         "Read Eq. (14.4), Eq. (14.5), Theorem 14.1, and Eq. (14.6) before the testing theorem.",
+        "Inspect relativeEntropy_trim_le for the full Exercise 14.10 conditional-expectation/Jensen proof.",
         "Inspect relativeEntropy_ne_top_iff to see exactly where absolute continuity and integrability enter.",
         "Follow the event restriction identity into bernoulliRelativeEntropy_event_le and verify the P-to-Q direction.",
         "Read the binary endpoint theorem before the measure-level bretagnolleHuber terminal.",
         "Continue to Chapter 15 for adaptive same-policy history divergence and finite-arm minimax construction."
       ],
       "gaps": [
-        "Entropy, Huffman coding, and optimal source-coding results from §14.1 are not formalized by this lower-bound gate.",
-        "Full data processing for an arbitrary sub-sigma-algebra from Exercise 14.10 is not claimed; the compiled leaf is the event/binary specialization.",
+        "The frozen required-body contract passed independent review, main compilation and live publication acceptance; optional Notes/Bibliographic Remarks/Exercises are outside that contract. Full Exercise 14.10 is an additional compiled result.",
+        "Model qualification: singleton codewords are nonempty. Uniform fixed-length optimality is proved for power-of-two cardinalities, not arbitrary cardinalities: the ternary prefix code 0, 10, 11 has mean length 5/3 rather than 2.",
+        "Arithmetic coding is a classical exact-real construction with constant support/escape overhead, not an executable finite-precision encoder. Cross-entropy differences are unrounded; finite KL iff absolute continuity is finite-alphabet-only.",
         "Adaptive-bandit history likelihood ratios and KL decomposition belong to Chapter 15; the scoped finite-arm same-policy identity now compiles there."
       ]
     },
@@ -216,11 +314,11 @@
       "number": 15,
       "slug": "chapter-15-minimax-lower-bounds",
       "title": "Minimax Lower Bounds",
-      "status": "partial",
+      "status": "compiled",
       "core_status": "compiled",
-      "core_status_label": "Core theorem spine",
-      "chapter_status_label": "Whole chapter coverage",
-      "status_note": "Lemma 15.1 and Theorem 15.2 compile on the canonical finite-history law for one arbitrary randomized HistoryAlgorithm. The exact unit-Gaussian construction, event bridge, 1/27 constant, worst-case supremum, and minimax infimum are checked. Exercise 15.7 is now partial: generic measurable-map KL data processing and a deterministic-history observation corollary compile, while the stopped-history information bound remains open.",
+      "core_status_label": "Required body proofs",
+      "chapter_status_label": "Required body coverage",
+      "status_note": "The frozen required body (§15.1–15.2) is compiled: Lemma 15.1 and Theorem 15.2 use one arbitrary randomized HistoryAlgorithm, the canonical finite-history law, exact unit-Gaussian construction and 1/27 constant, with worst-case and minimax consequences. Optional Exercise 15.7 remains partial: measurable-map KL contraction reuses Chapter 14's trim API, and the fixed-horizon observation corollary compiles; stopped-history information and F_tau factorization remain open. Notes and other exercises are outside the required-body completion contract.",
       "print_pages": "170–176",
       "pdf_pages": "207–214",
       "pdf_page": 207,

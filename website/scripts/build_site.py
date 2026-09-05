@@ -1054,7 +1054,20 @@ def validate_textbook_spine(
         for name in chapter.get("primary_declarations", []):
             if name not in decl_by_name:
                 raise ValueError(f"primary textbook declaration is not indexed: {name}")
-        if chapter["number"] > 13 and chapter.get("status") == "compiled":
+        # Chapters 13 and 14 have independently reviewed main-text acceptance;
+        # Chapter 14 evidence: reviews/2026-09-05-chapter-14-live-acceptance.md.
+        # Notes/exercises and the explicit source/model qualifications stay separate.
+        # Chapter 15 required body is exactly §§15.1–15.2. Optional coverage
+        # remains visible separately; see the 2026-09-05 Ch15 integration review.
+        if chapter["number"] == 15 and chapter.get("status") == "compiled":
+            if chapter.get("chapter_status_label") != "Required body coverage":
+                raise ValueError("Chapter 15 completion must name the required-body scope")
+            coverage = chapter.get("section_coverage", [])
+            if len(coverage) != 5 or any(s.get("status") != "compiled" for s in coverage[:2]):
+                raise ValueError("Chapter 15 required body needs both compiled sections")
+            if coverage[4].get("status") != "partial":
+                raise ValueError("Chapter 15 optional exercises must retain partial coverage")
+        if chapter["number"] > 15 and chapter.get("status") == "compiled":
             raise ValueError("future Part IV chapters cannot be promoted before their gates")
 
 
@@ -1707,6 +1720,7 @@ def render_primary_textbook_banner() -> str:
     chapter_statuses = Counter(chapter["status"] for chapter in SITE_CHAPTERS)
     source = SITE_TEXTBOOK_SPINE["canonical_source"]
     spine_chapters = SITE_TEXTBOOK_SPINE.get("chapters", [])
+    spine_contracts = sum(chapter.get("status") == "compiled" for chapter in spine_chapters)
     spine_terminals = Counter(
         chapter.get("source_theorem", {}).get("status", "unrecorded")
         for chapter in spine_chapters
@@ -1722,7 +1736,7 @@ def render_primary_textbook_banner() -> str:
   <a class="button compact" href="{PRIMARY_TEXTBOOK_URL}">Open the free textbook <span aria-hidden="true">↗</span></a>
   <dl class="textbook-coverage" aria-label="Current textbook coverage">
     <div><dt>Book Map</dt><dd><strong>{len(SITE_CHAPTERS)} source-mapped routes</strong><span>{chapter_statuses.get('compiled', 0)} canonical cores compiled · {chapter_statuses.get('planned', 0)} planned</span></dd></div>
-    <div><dt>Part IV spine</dt><dd><strong>{spine_terminals.get('compiled', 0)} of {len(spine_chapters)} named terminals compile</strong><span>Chapters 13–17 remain partial as whole chapters</span></dd></div>
+    <div><dt>Part IV spine</dt><dd><strong>{spine_terminals.get('compiled', 0)} of {len(spine_chapters)} named terminals compile</strong><span>{spine_contracts} of {len(spine_chapters)} chapter contracts compiled; see each chapter's exact scope</span></dd></div>
     <div><dt>Whole textbook</dt><dd><strong>Not claimed complete</strong><span>Coverage is theorem- and route-specific, with exact gaps on every page</span></dd></div>
   </dl>
 </aside>

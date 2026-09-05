@@ -1,6 +1,5 @@
 import BanditRLProof.LowerBounds.BanditHistoryKL
-import Mathlib.MeasureTheory.Function.ConditionalExpectation.CondJensen
-import Mathlib.MeasureTheory.Function.ConditionalExpectation.RadonNikodym
+import BanditRLProof.LowerBounds.RelativeEntropyFiltration
 
 /-!
 # Data processing for Chapter 15 bandit histories
@@ -25,15 +24,12 @@ noncomputable section
 
 universe u v w
 
-set_option maxHeartbeats 800000 in
 /--
 Kullback--Leibler divergence cannot increase under a measurable observation.
 
-The proof uses Mathlib's identification of the pushed-forward Radon--Nikodym
-derivative with a conditional expectation, followed by conditional Jensen for
-the convex `klFun`.  The infinite-KL branch is kept explicit; in the finite
-branch, data processing also proves finiteness of the observed KL rather than
-assuming it.
+The proof reuses Chapter 14's map/trim identity and sub-sigma-algebra
+KL contraction. The infinite-KL branch is explicit, so absolute continuity
+is derived only in the finite branch and is not a caller assumption.
 -/
 theorem klDiv_map_le
     {Source Target : Type*}
@@ -45,94 +41,10 @@ theorem klDiv_map_le
   by_cases hsource : InformationTheory.klDiv mu nu = ∞
   · rw [hsource]
     exact le_top
-  rcases InformationTheory.klDiv_ne_top_iff.mp hsource with ⟨h_ac, hllr⟩
-  have hmap_ac : mu.map observe ≪ nu.map observe := h_ac.map hobserve
-  let density : Source -> Real := fun x => (mu.rnDeriv nu x).toReal
-  let observedDensity : Target -> Real := fun y =>
-    ((mu.map observe).rnDeriv (nu.map observe) y).toReal
-  have hdensity_integrable : Integrable density nu := by
-    exact Measure.integrable_toReal_rnDeriv
-  have hkl_integrable :
-      Integrable (fun x => InformationTheory.klFun (density x)) nu := by
-    exact (InformationTheory.integrable_klFun_rnDeriv_iff h_ac).2 hllr
-  have hrn :
-      (fun x => observedDensity (observe x)) =ᵐ[nu]
-        nu[density | MeasurableSpace.comap observe ‹MeasurableSpace Target›] := by
-    exact MeasureTheory.toReal_rnDeriv_map h_ac hobserve
-  have hdensity_nonneg : ∀ᵐ x ∂nu, density x ∈ Set.Ici (0 : Real) := by
-    exact Filter.Eventually.of_forall (fun _ => ENNReal.toReal_nonneg)
-  have hdensity_nonneg_ae : (0 : Source -> Real) ≤ᵐ[nu] density := by
-    exact Filter.Eventually.of_forall (fun _ => ENNReal.toReal_nonneg)
-  have hjensen :
-      (fun x => InformationTheory.klFun
-        (nu[density | MeasurableSpace.comap observe ‹MeasurableSpace Target›] x))
-        ≤ᵐ[nu]
-      nu[(fun x => InformationTheory.klFun (density x)) |
-        MeasurableSpace.comap observe ‹MeasurableSpace Target›] := by
-    simpa [Function.comp_def] using
-      (InformationTheory.convexOn_klFun.map_condExp_le
-        (μ := nu) (m := MeasurableSpace.comap observe ‹MeasurableSpace Target›)
-        hobserve.comap_le
-        (InformationTheory.continuous_klFun.lowerSemicontinuous.lowerSemicontinuousOn
-          (Set.Ici (0 : Real)))
-        hdensity_nonneg isClosed_Ici hdensity_integrable
-        (by simpa [Function.comp_def] using hkl_integrable))
-  have hleft_integrable :
-      Integrable
-        (fun x => InformationTheory.klFun
-          (nu[density | MeasurableSpace.comap observe ‹MeasurableSpace Target›] x)) nu := by
-    refine (integrable_condExp
-      (μ := nu) (m := MeasurableSpace.comap observe ‹MeasurableSpace Target›)
-      (f := fun x => InformationTheory.klFun (density x))).mono' ?_ ?_
-    · exact
-        (InformationTheory.continuous_klFun.measurable.comp
-          (stronglyMeasurable_condExp.mono hobserve.comap_le).measurable).aestronglyMeasurable
-    · filter_upwards [condExp_nonneg hdensity_nonneg_ae, hjensen] with x hx hle
-      rw [Real.norm_eq_abs,
-        abs_of_nonneg (InformationTheory.klFun_nonneg hx)]
-      exact hle
-  have hobserved_comp_integrable :
-      Integrable
-        (fun x => InformationTheory.klFun (observedDensity (observe x))) nu := by
-    refine hleft_integrable.congr ?_
-    filter_upwards [hrn] with x hx
-    rw [hx]
-  have hobserved_integrable :
-      Integrable (fun y => InformationTheory.klFun (observedDensity y))
-        (nu.map observe) := by
-    have hobservedDensity_measurable : Measurable observedDensity :=
-      ENNReal.measurable_toReal.comp (Measure.measurable_rnDeriv _ _)
-    exact (integrable_map_measure
-      (μ := nu) (f := observe)
-      (g := fun y => InformationTheory.klFun (observedDensity y))
-      (InformationTheory.continuous_klFun.measurable.comp
-        hobservedDensity_measurable).aestronglyMeasurable
-      hobserve.aemeasurable).2
-        (by simpa [Function.comp_def] using hobserved_comp_integrable)
-  have hmap_llr :
-      Integrable (llr (mu.map observe) (nu.map observe)) (mu.map observe) := by
-    exact (InformationTheory.integrable_klFun_rnDeriv_iff hmap_ac).1
-      (by simpa [observedDensity] using hobserved_integrable)
-  have htarget :
-      InformationTheory.klDiv (mu.map observe) (nu.map observe) ≠ ∞ :=
-    InformationTheory.klDiv_ne_top_iff.mpr ⟨hmap_ac, hmap_llr⟩
-  apply (ENNReal.toReal_le_toReal htarget hsource).mp
-  rw [InformationTheory.toReal_klDiv_eq_integral_klFun hmap_ac,
-    InformationTheory.toReal_klDiv_eq_integral_klFun h_ac]
-  rw [integral_map hobserve.aemeasurable
-    (by simpa [observedDensity] using hobserved_integrable.aestronglyMeasurable)]
-  calc
-    ∫ x, InformationTheory.klFun (observedDensity (observe x)) ∂nu =
-        ∫ x, InformationTheory.klFun
-          (nu[density | MeasurableSpace.comap observe
-            ‹MeasurableSpace Target›] x) ∂nu := by
-      exact integral_congr_ae (hrn.fun_comp InformationTheory.klFun)
-    _ <= ∫ x,
-        nu[(fun x => InformationTheory.klFun (density x)) |
-          MeasurableSpace.comap observe ‹MeasurableSpace Target›] x ∂nu :=
-      integral_mono_ae hleft_integrable integrable_condExp hjensen
-    _ = ∫ x, InformationTheory.klFun (density x) ∂nu := by
-      exact integral_condExp hobserve.comap_le
+  have h_ac := (InformationTheory.klDiv_ne_top_iff.mp hsource).1
+  change relativeEntropy (mu.map observe) (nu.map observe) ≤ relativeEntropy mu nu
+  rw [relativeEntropy_map_eq_trim_of_absolutelyContinuous mu nu h_ac observe hobserve]
+  exact relativeEntropy_trim_le hobserve.comap_le
 
 /--
 Any measurable statistic of a deterministic finite bandit history has KL at

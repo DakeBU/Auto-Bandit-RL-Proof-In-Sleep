@@ -8,6 +8,20 @@ Status: `accepted`
 
 Harness: `hierarchical`
 
+## Current integration scope (2026-09-05)
+
+The frozen required body (§15.1–15.2) is complete at the compiled-proof level.
+Website chapter status now reports this required-body scope explicitly.
+Optional Exercise 15.7 remains partial; Notes and other exercises remain
+outside required-body completion. Historical whole-chapter `partial` labels
+below refer to exhaustive coverage including those optional sections.
+
+After main `102c5cd`, `klDiv_map_le` reuses Chapter 14's
+`relativeEntropy_map_eq_trim_of_absolutelyContinuous` and
+`relativeEntropy_trim_le`. Its public statement is unchanged; the duplicate
+conditional-Jensen proof and 800000-heartbeat override are removed.
+See `reviews/2026-09-05-ch15-main-integration.md` for the integration review.
+
 ## Goal
 
 Formalize the source-faithful finite-armed minimax lower-bound route in

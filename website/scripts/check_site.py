@@ -374,6 +374,44 @@ def check_current_evidence_surfaces(
 ) -> list[str]:
     """Verify that public progress surfaces remain generated from current ledgers."""
     errors: list[str] = []
+    ch13_path = output / "textbook-spine" / "chapter-13-basic-ideas" / "index.html"
+    if ch13_path.exists():
+        ch13_text = ch13_path.read_text(encoding="utf-8")
+        for declaration in (
+            "BanditRLProof.MOSS.canonicalGapExpectedRegret_le",
+            "BanditRLProof.LowerBounds.subgaussianMinimax_sandwich",
+            "BanditRLProof.LowerBounds.moss_nearMinimax",
+        ):
+            if declaration not in ch13_text:
+                errors.append(f"Chapter 13 missing compiled MOSS correspondence: {declaration}")
+        for stale in (
+            "still lacks a compiled MOSS",
+            "no expected-regret upper theorem yet",
+            "MOSS peeling and regret integration remain open",
+        ):
+            if stale in ch13_text:
+                errors.append(f"Chapter 13 contains stale proof boundary: {stale}")
+    ch14_path = output / "textbook-spine" / "chapter-14-information-theory" / "index.html"
+    if ch14_path.exists():
+        ch14_text = ch14_path.read_text(encoding="utf-8")
+        for required in (
+            "BanditRLProof.LowerBounds.exists_prefixCode_of_uniquelyDecodable",
+            "BanditRLProof.LowerBounds.arithmeticBlockCode_payload_interval",
+            "BanditRLProof.LowerBounds.commonDensityOverlap_le_testingError",
+            "power-of-two",
+            "nonempty",
+            "exact-real",
+            "finite-alphabet-only",
+            "unrounded",
+        ):
+            if required not in ch14_text:
+                errors.append(f"Chapter 14 missing acceptance declaration/qualification: {required}")
+        for stale in (
+            "Whole-chapter status remains partial pending",
+            "Whole-chapter promotion still requires final aggregate",
+        ):
+            if stale in ch14_text:
+                errors.append(f"Chapter 14 contains stale acceptance boundary: {stale}")
     comparison_path = ROOT / "runs" / "harness-comparison" / "latest.json"
     comparison_diagram_path = ROOT / "runs" / "harness-comparison" / "latest.mmd"
     gpt_review_path = ROOT / "runs" / "harness-comparison" / "latest.gpt-review.json"
@@ -1342,6 +1380,7 @@ def main() -> int:
             "10 source-mapped routes",
             "9 canonical cores compiled",
             "3 of 5 named terminals compile",
+            f"{sum(chapter.get('status') == 'compiled' for chapter in textbook_spine['chapters'])} of {len(textbook_spine['chapters'])} chapter contracts compiled; see each chapter's exact scope",
             "Not claimed complete",
         )
         for expectation in coverage_expectations:

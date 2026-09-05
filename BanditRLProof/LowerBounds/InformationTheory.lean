@@ -1,25 +1,167 @@
 import BanditRLProof.Algorithms.KLUCBBernoulli
 import Mathlib.Analysis.Convex.SpecificFunctions.Basic
 import Mathlib.Analysis.MeanInequalities
+import Mathlib.InformationTheory.Coding.KraftMcMillan
 import Mathlib.InformationTheory.KullbackLeibler.Basic
+import Mathlib.MeasureTheory.Function.ConditionalExpectation.CondJensen
+import Mathlib.MeasureTheory.Function.ConditionalExpectation.RadonNikodym
 
 /-!
 # Information-theoretic lower-bound foundations
 
-This file formalizes the measure-KL and event-testing surface used in Part IV,
-Chapter 14 of Lattimore--Szepesvári, *Bandit Algorithms*.  Measure-level
-relative entropy is Mathlib's extended-real `InformationTheory.klDiv`.
-The project-local work below keeps absolute continuity, integrability, KL
-direction, Bernoulli endpoints, and the infinite-divergence branch explicit.
+This file formalizes the finite prefix-code/entropy definitions, a Kraft
+adapter, the measure-KL and data-processing surfaces, and event testing used in
+Part IV, Chapter 14 of Lattimore--Szepesvári, *Bandit Algorithms*. Measure-level
+relative entropy is Mathlib's extended-real `InformationTheory.klDiv`. The
+project-local work keeps codeword regularity, absolute continuity,
+integrability, KL direction, Bernoulli endpoints, and the infinite-divergence
+branch explicit. It does not claim Huffman optimality or source coding.
 -/
 
 namespace BanditRLProof
 namespace LowerBounds
 
 open MeasureTheory Set
-open scoped ENNReal NNReal
+open scoped BigOperators ENNReal NNReal
 
 noncomputable section
+
+/-! ## §14.1: finite binary source codes and entropy -/
+
+/-- A finite-alphabet binary prefix code.  Excluding the empty codeword is
+the regularity condition needed for concatenations of repeated messages to be
+uniquely decodable. -/
+structure BinaryPrefixCode (Symbol : Type*) where
+  encode : Symbol → List Bool
+  injective : Function.Injective encode
+  nonempty : ∀ symbol, encode symbol ≠ []
+  prefixFree : ∀ {left right}, encode left <+: encode right → left = right
+
+namespace BinaryPrefixCode
+
+variable {Symbol : Type*}
+
+/-- A prefix-free codebook with no empty codeword is uniquely decodable. -/
+theorem uniquelyDecodable_range (code : BinaryPrefixCode Symbol) :
+    InformationTheory.UniquelyDecodable (Set.range code.encode) := by
+  intro words₁
+  induction words₁ with
+  | nil =>
+      intro words₂ hwords₁ hwords₂ hflat
+      cases words₂ with
+      | nil => rfl
+      | cons word₂ tail₂ =>
+          have hmem₂ : word₂ ∈ Set.range code.encode := hwords₂ word₂ (by simp)
+          rcases hmem₂ with ⟨symbol₂, rfl⟩
+          simp only [List.flatten_nil, List.flatten_cons] at hflat
+          have hempty_and : code.encode symbol₂ = [] ∧
+              (tail₂.map List.length).sum = 0 := by
+            simpa using congrArg List.length hflat.symm
+          exact False.elim (code.nonempty symbol₂ hempty_and.1)
+  | cons word₁ tail₁ ih =>
+      intro words₂ hwords₁ hwords₂ hflat
+      cases words₂ with
+      | nil =>
+          have hmem₁ : word₁ ∈ Set.range code.encode := hwords₁ word₁ (by simp)
+          rcases hmem₁ with ⟨symbol₁, rfl⟩
+          simp only [List.flatten_cons, List.flatten_nil] at hflat
+          have hempty_and : code.encode symbol₁ = [] ∧
+              (tail₁.map List.length).sum = 0 := by
+            simpa using congrArg List.length hflat
+          exact False.elim (code.nonempty symbol₁ hempty_and.1)
+      | cons word₂ tail₂ =>
+          have hmem₁ : word₁ ∈ Set.range code.encode := hwords₁ word₁ (by simp)
+          have hmem₂ : word₂ ∈ Set.range code.encode := hwords₂ word₂ (by simp)
+          rcases hmem₁ with ⟨symbol₁, rfl⟩
+          rcases hmem₂ with ⟨symbol₂, rfl⟩
+          simp only [List.flatten_cons] at hflat
+          have hprefix₁ : code.encode symbol₁ <+:
+              code.encode symbol₂ ++ tail₂.flatten := by
+            rw [← hflat]
+            exact List.prefix_append _ _
+          have hprefix₂ : code.encode symbol₂ <+:
+              code.encode symbol₂ ++ tail₂.flatten :=
+            List.prefix_append _ _
+          have hsymbol : symbol₁ = symbol₂ := by
+            rcases List.prefix_or_prefix_of_prefix hprefix₁ hprefix₂ with h | h
+            · exact code.prefixFree h
+            · exact (code.prefixFree h).symm
+          subst symbol₂
+          congr 1
+          apply ih
+          · intro word hword
+            exact hwords₁ word (by simp [hword])
+          · intro word hword
+            exact hwords₂ word (by simp [hword])
+          · exact List.append_cancel_left hflat
+
+/-- The finite set of codewords induced by a finite source alphabet. -/
+noncomputable def codebook [Fintype Symbol] [DecidableEq Symbol]
+    (code : BinaryPrefixCode Symbol) : Finset (List Bool) :=
+  Finset.univ.image code.encode
+
+theorem coe_codebook [Fintype Symbol] [DecidableEq Symbol]
+    (code : BinaryPrefixCode Symbol) :
+    (code.codebook : Set (List Bool)) = Set.range code.encode := by
+  ext word
+  simp [codebook]
+
+/-- Kraft--McMillan for a finite binary prefix code, obtained by adapting the
+codebook to Mathlib's uniquely-decodable-code theorem. -/
+theorem kraft_inequality [Fintype Symbol] [DecidableEq Symbol]
+    (code : BinaryPrefixCode Symbol) :
+    ∑ word ∈ code.codebook, (1 / 2 : Real) ^ word.length ≤ 1 := by
+  apply InformationTheory.kraft_mcmillan_inequality
+  rw [coe_codebook code]
+  exact code.uniquelyDecodable_range
+
+end BinaryPrefixCode
+
+/-- Natural-log entropy (nats) of a finite supported mass function, Eq. (14.3). -/
+noncomputable def discreteEntropy (support : Finset Symbol)
+    (probability : Symbol → Real) : Real :=
+  ∑ symbol ∈ support, probability symbol * Real.log (probability symbol)⁻¹
+
+/-- Base-two entropy (bits) of a finite supported mass function. -/
+noncomputable def discreteEntropyBaseTwo (support : Finset Symbol)
+    (probability : Symbol → Real) : Real :=
+  ∑ symbol ∈ support,
+    probability symbol * (Real.log (probability symbol)⁻¹ / Real.log 2)
+
+theorem discreteEntropyBaseTwo_eq_div_log_two
+    (support : Finset Symbol) (probability : Symbol → Real) :
+    discreteEntropyBaseTwo support probability =
+      discreteEntropy support probability / Real.log 2 := by
+  simp only [discreteEntropyBaseTwo, discreteEntropy, div_eq_mul_inv,
+    mul_assoc, Finset.sum_mul]
+
+theorem discreteEntropy_nonneg (support : Finset Symbol)
+    (probability : Symbol → Real)
+    (hprobability : ∀ symbol ∈ support,
+      0 ≤ probability symbol ∧ probability symbol ≤ 1) :
+    0 ≤ discreteEntropy support probability := by
+  apply Finset.sum_nonneg
+  intro symbol hsymbol
+  rcases hprobability symbol hsymbol with ⟨hzero, hone⟩
+  by_cases hp : probability symbol = 0
+  · simp [hp]
+  · exact mul_nonneg hzero
+      (Real.log_nonneg ((one_le_inv₀ (lt_of_le_of_ne hzero (Ne.symm hp))).2 hone))
+
+/-- Expected binary codeword length, the objective in Eq. (14.1). -/
+noncomputable def expectedCodeLength [Fintype Symbol]
+    (probability : Symbol → Real) (code : BinaryPrefixCode Symbol) : Real :=
+  ∑ symbol, probability symbol * (code.encode symbol).length
+
+theorem expectedCodeLength_nonneg [Fintype Symbol]
+    (probability : Symbol → Real) (code : BinaryPrefixCode Symbol)
+    (hprobability : ∀ symbol, 0 ≤ probability symbol) :
+    0 ≤ expectedCodeLength probability code := by
+  apply Finset.sum_nonneg
+  intro symbol _
+  exact mul_nonneg (hprobability symbol) (Nat.cast_nonneg _)
+
+/-! ## §14.2: relative entropy and testing -/
 
 /-- Chapter 14 relative entropy, with value `∞` on support mismatch or a
 non-integrable log-likelihood ratio. -/
@@ -61,6 +203,90 @@ theorem relativeEntropy_ne_top_iff
     {α : Type*} [MeasurableSpace α] {P Q : Measure α} :
     relativeEntropy P Q ≠ ∞ ↔ P ≪ Q ∧ Integrable (llr P Q) P :=
   InformationTheory.klDiv_ne_top_iff
+
+/-- Relative entropy vanishes exactly when the finite measures agree. -/
+theorem relativeEntropy_eq_zero_iff
+    {α : Type*} [MeasurableSpace α] {P Q : Measure α}
+    [IsFiniteMeasure P] [IsFiniteMeasure Q] :
+    relativeEntropy P Q = 0 ↔ P = Q :=
+  InformationTheory.klDiv_eq_zero_iff
+
+/-- Exercise 14.10 in its full sub-sigma-algebra form: forgetting measurable
+sets cannot increase relative entropy.  The proof uses the Radon--Nikodym
+conditional-expectation identity and conditional Jensen for `klFun`. -/
+theorem relativeEntropy_trim_le
+    {α : Type*} {m m₀ : MeasurableSpace α}
+    {P Q : @Measure α m₀} [IsFiniteMeasure P] [IsFiniteMeasure Q]
+    (hm : m ≤ m₀) :
+    @relativeEntropy α m (P.trim hm) (Q.trim hm) ≤
+      @relativeEntropy α m₀ P Q := by
+  by_cases hKL : @relativeEntropy α m₀ P Q = ∞
+  · simp [hKL]
+  have hReg : P ≪ Q ∧ Integrable (llr P Q) P :=
+    relativeEntropy_ne_top_iff.mp hKL
+  have hACTrim : P.trim hm ≪ Q.trim hm := hReg.1.trim hm
+  let density : α → Real := fun x => (P.rnDeriv Q x).toReal
+  let divergence : Real → Real := InformationTheory.klFun
+  have hDensityInt : Integrable density Q := by
+    exact Measure.integrable_toReal_rnDeriv
+  have hDivergenceInt : Integrable (divergence ∘ density) Q := by
+    exact (InformationTheory.integrable_klFun_rnDeriv_iff hReg.1).2 hReg.2
+  have hDensityNonneg : ∀ᵐ x ∂Q, density x ∈ Ici (0 : Real) := by
+    exact ae_of_all Q (fun x => ENNReal.toReal_nonneg)
+  have hJensen :
+      divergence ∘ Q[density | m] ≤ᵐ[Q]
+        Q[divergence ∘ density | m] := by
+    exact InformationTheory.convexOn_klFun.map_condExp_le hm
+      (InformationTheory.continuous_klFun.lowerSemicontinuous.lowerSemicontinuousOn _)
+      hDensityNonneg isClosed_Ici hDensityInt hDivergenceInt
+  have hCondDensityNonneg : 0 ≤ᵐ[Q] Q[density | m] :=
+    condExp_nonneg (hDensityNonneg.mono fun x hx => hx)
+  have hCondDivergenceNonneg :
+      0 ≤ᵐ[Q] divergence ∘ Q[density | m] := by
+    filter_upwards [hCondDensityNonneg] with x hx
+    exact InformationTheory.klFun_nonneg hx
+  have hCondDivergenceInt :
+      Integrable (divergence ∘ Q[density | m]) Q := by
+    exact integrable_of_le_of_le (by fun_prop) hCondDivergenceNonneg hJensen
+      (integrable_zero α Real Q) integrable_condExp
+  have hRNTrim := toReal_rnDeriv_trim hm hReg.1
+  have hTrimDivergenceInt :
+      Integrable (fun x => InformationTheory.klFun
+        ((P.trim hm).rnDeriv (Q.trim hm) x).toReal) (Q.trim hm) := by
+    have hCondTrim :
+        Integrable (divergence ∘ Q[density | m]) (Q.trim hm) :=
+      hCondDivergenceInt.trim hm (by fun_prop)
+    refine hCondTrim.congr ?_
+    filter_upwards [hRNTrim] with x hx
+    simp only [Function.comp_apply, divergence]
+    rw [hx]
+  have hTrimLLRInt :
+      Integrable (@llr α m (P.trim hm) (Q.trim hm)) (P.trim hm) :=
+    (InformationTheory.integrable_klFun_rnDeriv_iff hACTrim).mp
+      hTrimDivergenceInt
+  have hTrimKL :
+      @relativeEntropy α m (P.trim hm) (Q.trim hm) ≠ ∞ :=
+    InformationTheory.klDiv_ne_top_iff.mpr ⟨hACTrim, hTrimLLRInt⟩
+  rw [← ENNReal.ofReal_toReal hTrimKL, ← ENNReal.ofReal_toReal hKL]
+  apply ENNReal.ofReal_le_ofReal
+  rw [InformationTheory.toReal_klDiv_eq_integral_klFun hACTrim,
+    InformationTheory.toReal_klDiv_eq_integral_klFun hReg.1]
+  calc
+    ∫ x, InformationTheory.klFun
+          ((P.trim hm).rnDeriv (Q.trim hm) x).toReal ∂Q.trim hm =
+        ∫ x, (divergence ∘ Q[density | m]) x ∂Q.trim hm := by
+      apply integral_congr_ae
+      filter_upwards [hRNTrim] with x hx
+      simp only [Function.comp_apply, divergence]
+      rw [hx]
+    _ = ∫ x, (divergence ∘ Q[density | m]) x ∂Q := by
+      symm
+      exact integral_trim hm (by fun_prop)
+    _ ≤ ∫ x, Q[divergence ∘ density | m] x ∂Q :=
+      integral_mono_ae hCondDivergenceInt integrable_condExp hJensen
+    _ = ∫ x, (divergence ∘ density) x ∂Q := integral_condExp hm
+    _ = ∫ x, InformationTheory.klFun (P.rnDeriv Q x).toReal ∂Q := by
+      rfl
 
 /-- The Bernoulli relative entropy from Eq. (14.4), reusing the project's exact
 support and endpoint convention. -/
