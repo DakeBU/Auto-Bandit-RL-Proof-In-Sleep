@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T06:13:03+00:00`
+Generated: `2026-09-05T06:17:03+00:00`
 
 ## Source Task
 
@@ -59934,6 +59934,22 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/PrefixCodeExchange.lean",
     "line": 97,
     "statement": "theorem singletonPrefixCode_optimal {\u03b1 : Type*} [Fintype \u03b1] [Subsingleton \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) : IsOptimalPrefixCode p (singletonPrefixCode \u03b1)"
+  },
+  {
+    "kind": "theorem",
+    "name": "expectedCodeLength_swap_le_allow_eq",
+    "full_name": "BanditRLProof.LowerBounds.expectedCodeLength_swap_le_allow_eq",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeGreedy.lean",
+    "line": 6,
+    "statement": "theorem expectedCodeLength_swap_le_allow_eq {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (code : BinaryPrefixCode \u03b1) (a b : \u03b1) (hp : p a \u2264 p b) (hl : (code.encode a).length \u2264 (code.encode b).length) : expectedCodeLength p (code.relabel (Equiv.swap a b)) \u2264 expectedCodeLength p code"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_no_worse_least_weight_siblings",
+    "full_name": "BanditRLProof.LowerBounds.exists_no_worse_least_weight_siblings",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeGreedy.lean",
+    "line": 19,
+    "statement": "theorem exists_no_worse_least_weight_siblings {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] [Nontrivial \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (original : BinaryPrefixCode \u03b1) (a b : \u03b1) (hab : a \u2260 b) (ha : \u2200 i, p a \u2264 p i) (hb : \u2200 i, i \u2260 a \u2192 p b \u2264 p i) : \u2203 code : BinaryPrefixCode \u03b1, expectedCodeLength p code \u2264 expectedCodeLength p original \u2227 \u2203 w bit, code.encode a = w ++ [bit] \u2227 code.encode b = w ++ [!bit] \u2227 \u2200 i, (code.encode i).length \u2264 (code.encode a).length"
   },
   {
     "kind": "theorem",

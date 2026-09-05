@@ -97,3 +97,30 @@ zero weights. All new axiom reports use only standard propext/Classical.choice/
 Quot.sound. The condition Nontrivial alpha is explicit; the singleton base
 was proved separately. No Huffman algorithm or global cost-minimizer is yet
 claimed, and pruning remains outside the ongoing 7b8e73f full gate.
+
+Least-weight exchange route: first normalize a competitor to deepest siblings
+x,y. Swap the least-weight label a into x. The other sibling's new label is
+swap(a,x)(y), which cannot equal a. Swap the second-least label b into that
+position; the second swap fixes a. Both exchanges are cost-nonincreasing
+because their target words have maximum length and the target labels obey
+the relevant weight inequalities. Return exact sibling words for a,b without
+assuming any optimum. Equiv.swap involution handles coincident original and
+desired labels; ties and zero weights stay allowed.
+
+Full-gate result for 7b8e73f: the short-path checkout passed the complete
+`tools/bandit.py check`, including 400 Python tests (7 skipped, 196.237s).
+Log: `C:/a14/tmp/ch14-sibling-full-check.log`. This covers Exchange/Siblings
+integration, not the later Pruning/Greedy leaves.
+
+Greedy-choice result: `PrefixCodeGreedy.lean` compiled (2677 jobs).
+`exists_no_worse_least_weight_siblings` returns a real prefix code placing
+the specified two least-weight labels at deepest sibling leaves, with cost
+no greater than any supplied competitor. Weak weight inequalities admit
+ties and zero weights; normalization is not required. Two involutive label
+swaps preserve prefix-freeness and the second fixes the first chosen label.
+This proves the greedy-choice transformation, not recursive Huffman
+optimality or the arithmetic-coding algorithm. The chapter remains partial.
+
+The typed Greedy canary passed; both axiom reports contain only propext,
+Classical.choice, and Quot.sound. Retrieval, task memory and blueprint were
+refreshed. This leaf is focused-validated only, not yet root-integrated.
