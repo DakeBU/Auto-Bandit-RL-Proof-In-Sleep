@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-05T04:54:17+00:00",
+  "generated": "2026-09-05T05:00:15+00:00",
   "declarations": [
     {
       "kind": "structure",
@@ -29320,6 +29320,54 @@
       "file": "BanditRLProof/LowerBounds/Minimax.lean",
       "line": 155,
       "statement": "theorem gaussianMinimaxGap_le_half {alternativeCount horizon : Real} (hhorizon : 0 < horizon) (hcount_le : alternativeCount \u2264 horizon) : gaussianMinimaxGap alternativeCount horizon \u2264 1 / 2"
+    },
+    {
+      "kind": "theorem",
+      "name": "relativeEntropy_trim_eq_lintegral_condExp",
+      "full_name": "BanditRLProof.LowerBounds.relativeEntropy_trim_eq_lintegral_condExp",
+      "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
+      "line": 14,
+      "statement": "theorem relativeEntropy_trim_eq_lintegral_condExp {\u03b1 : Type*} {m m\u2080 : MeasurableSpace \u03b1} (P Q : @Measure \u03b1 m\u2080) [IsFiniteMeasure P] [IsFiniteMeasure Q] (hm : m \u2264 m\u2080) (h : P \u226a Q) : @relativeEntropy \u03b1 m (P.trim hm) (Q.trim hm) = \u222b\u207b x, ENNReal.ofReal (InformationTheory.klFun (Q[fun y => (P.rnDeriv Q y).toReal | m] x)) \u2202Q"
+    },
+    {
+      "kind": "theorem",
+      "name": "relativeEntropy_map_eq_trim_of_absolutelyContinuous",
+      "full_name": "BanditRLProof.LowerBounds.relativeEntropy_map_eq_trim_of_absolutelyContinuous",
+      "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
+      "line": 32,
+      "statement": "theorem relativeEntropy_map_eq_trim_of_absolutelyContinuous {\u03b1 \u03b2 : Type*} [m\u03b1 : MeasurableSpace \u03b1] [m\u03b2 : MeasurableSpace \u03b2] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h : P \u226a Q) (f : \u03b1 \u2192 \u03b2) (hf : Measurable f) : relativeEntropy (P.map f) (Q.map f) = @relativeEntropy \u03b1 (m\u03b2.comap f) (P.trim hf.comap_le) (Q.trim hf.comap_le)"
+    },
+    {
+      "kind": "theorem",
+      "name": "relativeEntropy_eq_iSup_trim_of_density_measurable",
+      "full_name": "BanditRLProof.LowerBounds.relativeEntropy_eq_iSup_trim_of_density_measurable",
+      "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
+      "line": 53,
+      "statement": "theorem relativeEntropy_eq_iSup_trim_of_density_measurable {\u03b1 : Type*} [m\u2080 : MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h : P \u226a Q) (F : Filtration \u2115 m\u2080) (hDensity : StronglyMeasurable[\u2a06 n, F n] (fun x => (P.rnDeriv Q x).toReal)) : relativeEntropy P Q = \u2a06 n, @relativeEntropy \u03b1 (F n) (P.trim (F.le n)) (Q.trim (F.le n))"
+    },
+    {
+      "kind": "def",
+      "name": "densityApproximationFiltration",
+      "full_name": "BanditRLProof.LowerBounds.densityApproximationFiltration",
+      "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
+      "line": 93,
+      "statement": "def densityApproximationFiltration {\u03b1 : Type*} [m : MeasurableSpace \u03b1] (r : \u03b1 \u2192 ENNReal) : Filtration \u2115 m"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_density_iSup_approximationFiltration",
+      "full_name": "BanditRLProof.LowerBounds.measurable_density_iSup_approximationFiltration",
+      "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
+      "line": 99,
+      "statement": "theorem measurable_density_iSup_approximationFiltration {\u03b1 : Type*} [m : MeasurableSpace \u03b1] (r : \u03b1 \u2192 ENNReal) (hr : Measurable r) : Measurable[\u2a06 n, densityApproximationFiltration r n] r"
+    },
+    {
+      "kind": "theorem",
+      "name": "relativeEntropy_eq_iSup_densityApproximation_trim",
+      "full_name": "BanditRLProof.LowerBounds.relativeEntropy_eq_iSup_densityApproximation_trim",
+      "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
+      "line": 115,
+      "statement": "theorem relativeEntropy_eq_iSup_densityApproximation_trim {\u03b1 : Type*} [m : MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h : P \u226a Q) : relativeEntropy P Q = \u2a06 n, @relativeEntropy \u03b1 (densityApproximationFiltration (P.rnDeriv Q) n) (P.trim ((densityApproximationFiltration (P.rnDeriv Q)).le n)) (Q.trim ((densityApproximationFiltration (P.rnDeriv Q)).le n))"
     },
     {
       "kind": "structure",

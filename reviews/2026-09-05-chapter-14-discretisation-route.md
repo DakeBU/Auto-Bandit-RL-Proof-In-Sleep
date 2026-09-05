@@ -79,3 +79,69 @@ the RN density measurable; these are obligations, not caller hypotheses.
 The density is integrable even when its KL integrand is not, so this route
 could cover the absolutely-continuous infinite-KL case without a finite-KL
 assumption. No reverse-direction theorem is proved yet.
+
+## Filtration recovery leaf: route before tactics
+
+Target a reusable intermediate theorem for finite `P,Q`, `P ≪ Q`, and a
+filtration whose limiting sigma-algebra makes the real RN density strongly
+measurable: original KL equals the supremum of the trimmed KL values.
+The measurability premise is explicit in this intermediate leaf and must be
+discharged by the future finite-partition construction, not assumed in the
+final source theorem.
+
+APIs: `Measure.integrable_toReal_rnDeriv`,
+`Integrable.tendsto_ae_condExp` (requires only a finite reference measure),
+`toReal_rnDeriv_trim`, `lintegral_trim`, continuous `klFun` and `ENNReal.ofReal`,
+`lintegral_liminf_le`, and `Filter.liminf_le_of_frequently_le'`.
+First expose trimmed KL as the lower integral of `klFun` of the conditional
+density, with no KL-integrability assumption. Almost-everywhere convergence,
+continuity, and Fatou then give the reverse bound. The already-compiled full
+trim DPI gives the other bound. This includes infinite KL under absolute
+continuity. Search-memory and declaration lookup for `klFiltration` found no
+local result. Classification: Mathlib-candidate, same measure/conditional-Jensen
+retrieval cards, plus the martingale-convergence API.
+
+The filtration recovery and conditional-density lower-integral lemmas now
+pass direct Lean checking. Next construct the natural filtration of
+`SimpleFunc.eapprox` of the density. `Filtration.stronglyAdapted_natural`
+makes each approximant measurable in its own layer; monotonicity into the
+supremum and `SimpleFunc.iSup_eapprox_apply` make the density measurable in
+the limiting sigma-algebra. This discharges the intermediate measurability
+premise without assuming a countably generated ambient space. Finite encoding
+of each layer remains a separate required bridge to Eq. (14.5).
+
+The concrete density-approximation filtration and its limiting measurability
+now also pass direct checking. To connect a finite observation to a trimmed
+layer, use `toReal_rnDeriv_map` and `lintegral_map` to identify mapped KL with
+the KL of the observation's comap sigma-algebra, under the existing AC branch.
+This measure-transport identity is independent of finite-valued encoding;
+the eventual observation construction must supply that finiteness separately.
+
+All six declarations in `RelativeEntropyFiltration.lean` now pass direct
+Lean checking and its focused Lake build succeeds (2,703 jobs). They prove
+the conditional-integral identity, observation/comap KL equality, filtration
+recovery by Fatou, construct the natural density-approximation filtration,
+prove limiting density measurability, and recover KL along this concrete
+filtration with no additional density-measurability premise. No finite-KL
+assumption was introduced.
+
+Initial errors were elaboration-only: implicit measurable-space selection
+inside `rw`, lifting conditional-expectation measurability to the ambient
+space, and a dependent `iSup` argument. Explicit integral expressions,
+`stronglyMeasurable_condExp.mono (F.le n)`, and a fully typed `le_iSup`
+resolved them. The source target and Fatou route are unchanged.
+
+Next exact construction: the first `n+1` simple approximants have jointly
+finite range, using `Set.Finite.pi` from `Data.Fintype.Pi`; encode that range
+with `Fintype.equivFin`. Show each approximant factors through the encoded
+observation, hence the natural filtration's nth layer is contained in its
+comap sigma-algebra. `Measure.trim_trim`, trim DPI, and the new observation/
+comap equality then bound that layer's KL by the finite-partition supremum.
+Taking suprema should finish the AC branch; combine with the existing
+singular branch. This finite encoding has not yet been implemented.
+
+`Tests/TextbookPartIVChapter14FiltrationCanary.lean` subsequently passed
+direct checking. All six printed declarations depend only on `propext`,
+`Classical.choice`, and `Quot.sound`. The new filtration module and canary
+remain focused-only, pending root/aggregate integration and the final full
+gate together with the finite-observation encoding.

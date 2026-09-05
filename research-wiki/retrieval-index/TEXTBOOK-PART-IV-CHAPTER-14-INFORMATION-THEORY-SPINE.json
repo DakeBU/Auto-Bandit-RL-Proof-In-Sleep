@@ -1,6 +1,6 @@
 {
   "task": "TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE",
-  "generated": "2026-09-05T04:53:49+00:00",
+  "generated": "2026-09-05T05:00:20+00:00",
   "harness": "hierarchical",
   "lml_seed_commit": "19dc3ab132c2a7539f5944503d1114eac4c5bb74",
   "lml_seed_date": "2026-06-24",
@@ -58331,6 +58331,54 @@
       "file": "BanditRLProof/LowerBounds/Minimax.lean",
       "line": 155,
       "statement": "theorem gaussianMinimaxGap_le_half {alternativeCount horizon : Real} (hhorizon : 0 < horizon) (hcount_le : alternativeCount ≤ horizon) : gaussianMinimaxGap alternativeCount horizon ≤ 1 / 2"
+    },
+    {
+      "kind": "theorem",
+      "name": "relativeEntropy_trim_eq_lintegral_condExp",
+      "full_name": "BanditRLProof.LowerBounds.relativeEntropy_trim_eq_lintegral_condExp",
+      "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
+      "line": 14,
+      "statement": "theorem relativeEntropy_trim_eq_lintegral_condExp {α : Type*} {m m₀ : MeasurableSpace α} (P Q : @Measure α m₀) [IsFiniteMeasure P] [IsFiniteMeasure Q] (hm : m ≤ m₀) (h : P ≪ Q) : @relativeEntropy α m (P.trim hm) (Q.trim hm) = ∫⁻ x, ENNReal.ofReal (InformationTheory.klFun (Q[fun y => (P.rnDeriv Q y).toReal | m] x)) ∂Q"
+    },
+    {
+      "kind": "theorem",
+      "name": "relativeEntropy_map_eq_trim_of_absolutelyContinuous",
+      "full_name": "BanditRLProof.LowerBounds.relativeEntropy_map_eq_trim_of_absolutelyContinuous",
+      "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
+      "line": 32,
+      "statement": "theorem relativeEntropy_map_eq_trim_of_absolutelyContinuous {α β : Type*} [mα : MeasurableSpace α] [mβ : MeasurableSpace β] (P Q : Measure α) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h : P ≪ Q) (f : α → β) (hf : Measurable f) : relativeEntropy (P.map f) (Q.map f) = @relativeEntropy α (mβ.comap f) (P.trim hf.comap_le) (Q.trim hf.comap_le)"
+    },
+    {
+      "kind": "theorem",
+      "name": "relativeEntropy_eq_iSup_trim_of_density_measurable",
+      "full_name": "BanditRLProof.LowerBounds.relativeEntropy_eq_iSup_trim_of_density_measurable",
+      "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
+      "line": 53,
+      "statement": "theorem relativeEntropy_eq_iSup_trim_of_density_measurable {α : Type*} [m₀ : MeasurableSpace α] (P Q : Measure α) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h : P ≪ Q) (F : Filtration ℕ m₀) (hDensity : StronglyMeasurable[⨆ n, F n] (fun x => (P.rnDeriv Q x).toReal)) : relativeEntropy P Q = ⨆ n, @relativeEntropy α (F n) (P.trim (F.le n)) (Q.trim (F.le n))"
+    },
+    {
+      "kind": "def",
+      "name": "densityApproximationFiltration",
+      "full_name": "BanditRLProof.LowerBounds.densityApproximationFiltration",
+      "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
+      "line": 93,
+      "statement": "def densityApproximationFiltration {α : Type*} [m : MeasurableSpace α] (r : α → ENNReal) : Filtration ℕ m"
+    },
+    {
+      "kind": "theorem",
+      "name": "measurable_density_iSup_approximationFiltration",
+      "full_name": "BanditRLProof.LowerBounds.measurable_density_iSup_approximationFiltration",
+      "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
+      "line": 99,
+      "statement": "theorem measurable_density_iSup_approximationFiltration {α : Type*} [m : MeasurableSpace α] (r : α → ENNReal) (hr : Measurable r) : Measurable[⨆ n, densityApproximationFiltration r n] r"
+    },
+    {
+      "kind": "theorem",
+      "name": "relativeEntropy_eq_iSup_densityApproximation_trim",
+      "full_name": "BanditRLProof.LowerBounds.relativeEntropy_eq_iSup_densityApproximation_trim",
+      "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
+      "line": 115,
+      "statement": "theorem relativeEntropy_eq_iSup_densityApproximation_trim {α : Type*} [m : MeasurableSpace α] (P Q : Measure α) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h : P ≪ Q) : relativeEntropy P Q = ⨆ n, @relativeEntropy α (densityApproximationFiltration (P.rnDeriv Q) n) (P.trim ((densityApproximationFiltration (P.rnDeriv Q)).le n)) (Q.trim ((densityApproximationFiltration (P.rnDeriv Q)).le n))"
     },
     {
       "kind": "structure",

@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T04:54:01+00:00`
+Generated: `2026-09-05T05:00:26+00:00`
 
 ## Source Task
 
@@ -64,7 +64,7 @@ mapped local adapter before they count as chapter evidence.
 | §14.1 asymptotic statement | arithmetic coding approaches entropy and no code improves the asymptotic rate | no block-code/asymptotic coding model | blocked |
 | Eqs. (14.2)--(14.3) definitions | finite discrete base-two entropy, natural entropy, and exact unit conversion | `discreteEntropy`, `discreteEntropyBaseTwo`, their exact conversion, and nonnegativity compile | compiled |
 | Eq. (14.4) | arbitrary finite-alphabet discrete relative entropy with exact zero/support endpoints | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, and `relativeEntropy_finite_eq_top_iff` compile; root-import finite/singular three-symbol canaries pass | compiled |
-| Eq. (14.5) | relative entropy as the supremum over all finite measurable discretisations | `finitePartitionRelativeEntropy` definition, supremum upper bound, singular-branch equality, and finite-source equality compile in a focused module; general absolutely-continuous reverse inequality and root integration remain open | partial |
+| Eq. (14.5) | relative entropy as the supremum over all finite measurable discretisations | supremum upper bound, singular/finite-source equality, and recovery along a concrete density-approximation filtration compile in focused modules; encoding each layer as a finite observation and root integration remain open | partial |
 | Theorem 14.1 | Eq. (14.5) equals the RN/log-likelihood formula, including the singular and nonintegrable branches | RN branch adapters compile, but the Eq. (14.5)-to-RN equivalence is absent | partial |
 | Eq. (14.6) | common-dominating-measure density formula | only the `Q`-RN specialization is exposed | partial |
 | §14.2 metric properties | nonnegativity and `D(P,Q)=0 ↔ P=Q`, with asymmetry/non-triangle statements treated as explanatory nonclaims | order nonnegativity is intrinsic to `ENNReal`; `relativeEntropy_eq_zero_iff` compiles | compiled |
@@ -405,7 +405,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | `CH14-HUFFMAN-BOUND` | Eq. (14.2), including existence/optimality of a prefix code | Kraft--McMillan, Huffman/tree construction | no conditional optimality premise may masquerade as this terminal | none | chapter terminal | blocked |
 | `CH14-SOURCE-CODING` | arithmetic/block-code achievability and converse | product distributions, uniquely decodable block codes, asymptotics | formal source-coding theorem | none | chapter terminal | blocked |
 | `CH14-FINITE-DISCRETE-KL` | Eq. (14.4) for an arbitrary finite alphabet | finite sums, support endpoints | atomwise AC equivalence, RN density ratio, finite LLR integrability, and finite integral sum; singular atom forces infinity | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, `relativeEntropy_finite_eq_top_iff` | focused Lean and root-import canary passed | compiled |
-| `CH14-DISCRETISATION-SUP` | Eq. (14.5) and equality with RN KL in Theorem 14.1 | finite measurable quotients/partitions, supremum | finite-cell Jensen gives upper bound; binary null-set witness gives singular equality; RN approximation must still give reverse inequality under AC | `finitePartitionRelativeEntropy`, `finitePartitionRelativeEntropy_le_relativeEntropy`, singular and finite-source adapters | focused module/canary passed; root integration and full equality pending | partial |
+| `CH14-DISCRETISATION-SUP` | Eq. (14.5) and equality with RN KL in Theorem 14.1 | finite measurable quotients/partitions, supremum | finite-cell Jensen gives upper bound; binary null-set witness gives singular equality; concrete density filtration recovers KL by conditional-expectation convergence/Fatou; finite encoding of each layer remains | `finitePartitionRelativeEntropy`, `finitePartitionRelativeEntropy_le_relativeEntropy`, singular and finite-source adapters, `relativeEntropy_eq_iSup_densityApproximation_trim` | focused modules/canaries passed; finite encoding, root integration, and full equality pending | partial |
 | `CH14-COMMON-DENSITY` | Eq. (14.6) under a common σ-finite dominating measure | RN chain rule, integral transport | expose exact density formula | Q-RN specialization only | focused Lean | partial |
 | `CH14-KL-SEPARATION` | nonnegativity and zero iff equality | Mathlib KL | `ENNReal` order plus thin source-mapped equality adapter | `relativeEntropy_eq_zero_iff` | focused Lean | compiled |
 | `CH14-GAUSSIAN-EXAMPLE` | common positive variance formula | Gaussian RN/KL and scaling | generalize the compiled unit-variance Chapter 15 leaf | unit-variance declaration only | focused Lean | partial |
@@ -59344,6 +59344,54 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/Minimax.lean",
     "line": 155,
     "statement": "theorem gaussianMinimaxGap_le_half {alternativeCount horizon : Real} (hhorizon : 0 < horizon) (hcount_le : alternativeCount \u2264 horizon) : gaussianMinimaxGap alternativeCount horizon \u2264 1 / 2"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_trim_eq_lintegral_condExp",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_trim_eq_lintegral_condExp",
+    "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
+    "line": 14,
+    "statement": "theorem relativeEntropy_trim_eq_lintegral_condExp {\u03b1 : Type*} {m m\u2080 : MeasurableSpace \u03b1} (P Q : @Measure \u03b1 m\u2080) [IsFiniteMeasure P] [IsFiniteMeasure Q] (hm : m \u2264 m\u2080) (h : P \u226a Q) : @relativeEntropy \u03b1 m (P.trim hm) (Q.trim hm) = \u222b\u207b x, ENNReal.ofReal (InformationTheory.klFun (Q[fun y => (P.rnDeriv Q y).toReal | m] x)) \u2202Q"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_map_eq_trim_of_absolutelyContinuous",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_map_eq_trim_of_absolutelyContinuous",
+    "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
+    "line": 32,
+    "statement": "theorem relativeEntropy_map_eq_trim_of_absolutelyContinuous {\u03b1 \u03b2 : Type*} [m\u03b1 : MeasurableSpace \u03b1] [m\u03b2 : MeasurableSpace \u03b2] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h : P \u226a Q) (f : \u03b1 \u2192 \u03b2) (hf : Measurable f) : relativeEntropy (P.map f) (Q.map f) = @relativeEntropy \u03b1 (m\u03b2.comap f) (P.trim hf.comap_le) (Q.trim hf.comap_le)"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_eq_iSup_trim_of_density_measurable",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_eq_iSup_trim_of_density_measurable",
+    "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
+    "line": 53,
+    "statement": "theorem relativeEntropy_eq_iSup_trim_of_density_measurable {\u03b1 : Type*} [m\u2080 : MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h : P \u226a Q) (F : Filtration \u2115 m\u2080) (hDensity : StronglyMeasurable[\u2a06 n, F n] (fun x => (P.rnDeriv Q x).toReal)) : relativeEntropy P Q = \u2a06 n, @relativeEntropy \u03b1 (F n) (P.trim (F.le n)) (Q.trim (F.le n))"
+  },
+  {
+    "kind": "def",
+    "name": "densityApproximationFiltration",
+    "full_name": "BanditRLProof.LowerBounds.densityApproximationFiltration",
+    "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
+    "line": 93,
+    "statement": "def densityApproximationFiltration {\u03b1 : Type*} [m : MeasurableSpace \u03b1] (r : \u03b1 \u2192 ENNReal) : Filtration \u2115 m"
+  },
+  {
+    "kind": "theorem",
+    "name": "measurable_density_iSup_approximationFiltration",
+    "full_name": "BanditRLProof.LowerBounds.measurable_density_iSup_approximationFiltration",
+    "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
+    "line": 99,
+    "statement": "theorem measurable_density_iSup_approximationFiltration {\u03b1 : Type*} [m : MeasurableSpace \u03b1] (r : \u03b1 \u2192 ENNReal) (hr : Measurable r) : Measurable[\u2a06 n, densityApproximationFiltration r n] r"
+  },
+  {
+    "kind": "theorem",
+    "name": "relativeEntropy_eq_iSup_densityApproximation_trim",
+    "full_name": "BanditRLProof.LowerBounds.relativeEntropy_eq_iSup_densityApproximation_trim",
+    "file": "BanditRLProof/LowerBounds/RelativeEntropyFiltration.lean",
+    "line": 115,
+    "statement": "theorem relativeEntropy_eq_iSup_densityApproximation_trim {\u03b1 : Type*} [m : MeasurableSpace \u03b1] (P Q : Measure \u03b1) [IsFiniteMeasure P] [IsFiniteMeasure Q] (h : P \u226a Q) : relativeEntropy P Q = \u2a06 n, @relativeEntropy \u03b1 (densityApproximationFiltration (P.rnDeriv Q) n) (P.trim ((densityApproximationFiltration (P.rnDeriv Q)).le n)) (Q.trim ((densityApproximationFiltration (P.rnDeriv Q)).le n))"
   },
   {
     "kind": "structure",
