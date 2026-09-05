@@ -28,6 +28,37 @@ certificate. Lean baseline: cdc3a51. Chapter status remains partial.
 
 ## Remaining completion evidence
 
+### Website verification follow-up
+
+At clean commit 9fc6054, verified site build/check passed: 686 HTML pages,
+632 modules, 8440 declarations, zero placeholders, valid internal links and
+formula fallbacks. Lean sources are identical to cdc3a51, whose library
+build passed and full Tests/Python run continues. The browser rendered the
+new MOSS declarations and separate compiled-route / partial-chapter labels.
+
+Visual review nevertheless caught a stale MOSS-open sentence in the page's
+bottom gaps list, missed by the static checker. The sentence is corrected,
+the dependency nodes now include MOSS and broad-class near-minimax, and the
+checker has regression guards for the three terminal correspondences and
+three obsolete boundary phrases. Negative test on the old generated page
+failed specifically with `Chapter 13 contains stale proof boundary`.
+The corrected verified rebuild/check passed with the same 686 pages,
+632 modules and 8440 declarations. The regression guard's negative and
+positive cases both behaved as intended; py_compile also passed.
+
+Desktop 1280x720 screenshot is readable. Mobile 390x844 remains inconclusive:
+document scroll width 375, main bounds x=16..358.667 and paragraph width
+342.667 show no horizontal overflow, but the screenshot clips right-edge
+text even after reload. No CSS change is justified by the present evidence;
+do not mark mobile visual QA passed. Temporary viewport override was reset.
+
+Remote refresh finds main at 5c0ba47 (merged Chapter 14 PR #103), five
+commits ahead of this branch's base. Shared changes include InformationTheory,
+Chapter 14 canary, generated indexes and website records. Integrate these
+without overwriting Chapter 14 progress, then validate the merged tree before
+PR/deployment closure. cdc3a51 full Tests passed (8927 jobs); Python tests
+continue. This remains distinct from current-main integration.
+
 - Current-commit full harness and verified site build/check.
 - Rendered export verification and exact source/declaration coverage audit.
 - Structured final review; this self-audit does not substitute for a
