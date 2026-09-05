@@ -1,4 +1,4 @@
-import BanditRLProof.LowerBounds.PrefixCodeConstruction
+import BanditRLProof
 
 namespace BanditRLProof.TextbookPartIVChapter14PrefixConstructionCanary
 
@@ -29,5 +29,25 @@ example (S : Finset (List Bool)) (n : ℕ)
 #print axioms LowerBounds.binary_level_mul_kraft_weight
 #print axioms LowerBounds.exists_binaryWord_of_kraft_lt_one
 #print axioms LowerBounds.exists_prefixFree_insert_of_kraft_lt_one
+
+example {α : Type*} [Fintype α] [DecidableEq α] (p : α → ℝ)
+    (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) :
+    ∃ code : BinaryPrefixCode α,
+      discreteEntropyBaseTwo Finset.univ p ≤ expectedCodeLength p code ∧
+      expectedCodeLength p code ≤ discreteEntropyBaseTwo Finset.univ p + 1 :=
+  exists_binaryPrefixCode_entropy_sandwich p hp hs
+
+-- Zero-probability symbols are retained in the code's domain.
+example : ∃ code : BinaryPrefixCode Bool,
+    expectedCodeLength (fun b : Bool => if b then 1 else 0) code ≤
+      discreteEntropyBaseTwo Finset.univ (fun b : Bool => if b then 1 else 0) + 1 := by
+  obtain ⟨c, _, hc⟩ := exists_binaryPrefixCode_entropy_sandwich
+    (fun b : Bool => if b then (1 : ℝ) else 0)
+    (by intro b; cases b <;> norm_num) (by simp)
+  exact ⟨c, hc⟩
+
+#print axioms LowerBounds.exists_prefix_encoding_of_kraft_lt_one
+#print axioms LowerBounds.exists_binaryPrefixCode_of_kraft_lt_one
+#print axioms LowerBounds.exists_binaryPrefixCode_entropy_sandwich
 
 end BanditRLProof.TextbookPartIVChapter14PrefixConstructionCanary

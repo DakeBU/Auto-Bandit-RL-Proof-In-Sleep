@@ -47,3 +47,5 @@ import Tests.TextbookPartIVChapter14OverlapCanary
 import Tests.TextbookPartIVChapter14AffinityCanary
 import Tests.TextbookPartIVChapter14GaussianCanary
 import Tests.TextbookPartIVChapter14CodingBoundCanary
+import Tests.TextbookPartIVChapter14ShannonCanary
+import Tests.TextbookPartIVChapter14PrefixConstructionCanary

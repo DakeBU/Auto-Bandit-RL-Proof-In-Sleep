@@ -1,4 +1,4 @@
-import BanditRLProof.LowerBounds.ShannonLengths
+import BanditRLProof
 
 namespace BanditRLProof.TextbookPartIVChapter14ShannonCanary
 

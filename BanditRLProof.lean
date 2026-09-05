@@ -45,6 +45,8 @@ import BanditRLProof.LowerBounds.CommonDensityOverlap
 import BanditRLProof.LowerBounds.AffinityKL
 import BanditRLProof.LowerBounds.GaussianTesting
 import BanditRLProof.LowerBounds.CodingEntropyBound
+import BanditRLProof.LowerBounds.ShannonLengths
+import BanditRLProof.LowerBounds.PrefixCodeConstruction
 import BanditRLProof.LowerBounds.Minimax
 import BanditRLProof.LowerBounds.ConditionalKernelKL
 import BanditRLProof.LowerBounds.BanditHistoryKL

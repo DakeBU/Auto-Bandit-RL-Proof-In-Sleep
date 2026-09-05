@@ -135,4 +135,116 @@ theorem exists_prefixFree_insert_of_kraft_lt_one
       exact (hv a haS hab).elim
     · exact hfree a haS b ((Finset.mem_insert.mp hb).resolve_left hbv) hab
 
+/-- Finite strict Kraft converse, retaining each prescribed length. -/
+theorem exists_prefix_encoding_of_kraft_lt_one
+    {α : Type*} [DecidableEq α] (s : Finset α) (l : α → ℕ)
+    (hk : (∑ i ∈ s, (1 / 2 : ℝ) ^ l i) < 1) :
+    ∃ c : α → List Bool, (∀ i ∈ s, (c i).length = l i) ∧
+      (∀ i ∈ s, ∀ j ∈ s, c i <+: c j → i = j) := by
+  classical
+  induction s using Finset.strongInductionOn with
+  | _ s ih =>
+    by_cases hs : s.Nonempty
+    · obtain ⟨a, ha, hmax⟩ := s.exists_max_image l hs
+      let t := s.erase a
+      have ht : t ⊂ s := Finset.erase_ssubset ha
+      have hkt : (∑ i ∈ t, (1 / 2 : ℝ) ^ l i) < 1 := by
+        apply lt_of_le_of_lt ?_ hk
+        exact Finset.sum_le_sum_of_subset_of_nonneg (Finset.erase_subset _ _)
+          (fun i _ _ => by positivity)
+      obtain ⟨c, hcl, hcf⟩ := ih t ht hkt
+      let S := t.image c
+      have hci : Set.InjOn c t := by
+        intro i hi j hj hij
+        exact hcf i hi j hj (by rw [hij])
+      have hSl : ∀ w ∈ S, w.length ≤ l a := by
+        intro w hw
+        obtain ⟨i, hi, rfl⟩ := Finset.mem_image.mp hw
+        rw [hcl i hi]
+        exact hmax i (Finset.mem_of_mem_erase hi)
+      have hSk : (∑ w ∈ S, (1 / 2 : ℝ) ^ w.length) < 1 := by
+        dsimp [S]
+        rw [Finset.sum_image hci]
+        have he : (∑ i ∈ t, (1 / 2 : ℝ) ^ (c i).length) =
+            ∑ i ∈ t, (1 / 2 : ℝ) ^ l i :=
+          Finset.sum_congr rfl fun i hi => by rw [hcl i hi]
+        rw [he]
+        exact hkt
+      have hSf : ∀ u ∈ S, ∀ v ∈ S, u <+: v → u = v := by
+        intro u hu v hv huv
+        obtain ⟨i, hi, rfl⟩ := Finset.mem_image.mp hu
+        obtain ⟨j, hj, rfl⟩ := Finset.mem_image.mp hv
+        rw [hcf i hi j hj huv]
+      obtain ⟨v, hvl, hvnot, hvfree⟩ :=
+        exists_prefixFree_insert_of_kraft_lt_one S (l a) hSf hSl hSk
+      let d : α → List Bool := fun i => if i = a then v else c i
+      have hdmem : ∀ i ∈ s, d i ∈ insert v S := by
+        intro i hi
+        by_cases hia : i = a
+        · simp [d, hia]
+        · simp only [d, if_neg hia]
+          exact Finset.mem_insert_of_mem (Finset.mem_image.mpr
+            ⟨i, Finset.mem_erase.mpr ⟨hia, hi⟩, rfl⟩)
+      have hdi : Set.InjOn d s := by
+        intro i hi j hj hd
+        by_cases hia : i = a
+        · by_cases hja : j = a
+          · exact hia.trans hja.symm
+          · have hcj : c j ∈ S := Finset.mem_image.mpr
+              ⟨j, Finset.mem_erase.mpr ⟨hja, hj⟩, rfl⟩
+            have he : v = c j := by simpa [d, hia, hja] using hd
+            exact (hvnot (he ▸ hcj)).elim
+        · by_cases hja : j = a
+          · have hci' : c i ∈ S := Finset.mem_image.mpr
+              ⟨i, Finset.mem_erase.mpr ⟨hia, hi⟩, rfl⟩
+            have he : c i = v := by simpa [d, hia, hja] using hd
+            exact (hvnot (he ▸ hci')).elim
+          · apply hci (Finset.mem_erase.mpr ⟨hia, hi⟩) (Finset.mem_erase.mpr ⟨hja, hj⟩)
+            simpa [d, hia, hja] using hd
+      refine ⟨d, ?_, ?_⟩
+      · intro i hi
+        by_cases hia : i = a
+        · simpa [d, hia] using hvl
+        · simpa [d, hia] using hcl i (Finset.mem_erase.mpr ⟨hia, hi⟩)
+      · intro i hi j hj hpre
+        exact hdi hi hj (hvfree _ (hdmem i hi) _ (hdmem j hj) hpre)
+    · have he : s = ∅ := Finset.not_nonempty_iff_eq_empty.mp hs
+      subst s
+      exact ⟨fun _ => [], by simp⟩
+
+/-- Strict Kraft converse packaged as an actual binary prefix code. -/
+theorem exists_binaryPrefixCode_of_kraft_lt_one
+    {α : Type*} [Fintype α] [DecidableEq α] (l : α → ℕ)
+    (hl : ∀ i, 0 < l i) (hk : (∑ i, (1 / 2 : ℝ) ^ l i) < 1) :
+    ∃ code : BinaryPrefixCode α, ∀ i, (code.encode i).length = l i := by
+  obtain ⟨c, hlen, hfree⟩ := exists_prefix_encoding_of_kraft_lt_one Finset.univ l hk
+  have hci : Function.Injective c := by
+    intro i j hij
+    exact hfree i (Finset.mem_univ _) j (Finset.mem_univ _) (by rw [hij])
+  have hcne : ∀ i, c i ≠ [] := by
+    intro i he
+    have h := hlen i (Finset.mem_univ _)
+    rw [he] at h
+    have := hl i
+    simp only [List.length_nil] at h
+    omega
+  refine ⟨⟨c, hci, hcne, ?_⟩, ?_⟩
+  · intro i j hp
+    exact hfree i (Finset.mem_univ _) j (Finset.mem_univ _) hp
+  · intro i
+    exact hlen i (Finset.mem_univ _)
+
+/-- A realizable finite prefix code attains the one-bit entropy sandwich.
+This proves existence, not Huffman's algorithm or optimality. -/
+theorem exists_binaryPrefixCode_entropy_sandwich
+    {α : Type*} [Fintype α] [DecidableEq α] (p : α → ℝ)
+    (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) :
+    ∃ code : BinaryPrefixCode α,
+      discreteEntropyBaseTwo Finset.univ p ≤ expectedCodeLength p code ∧
+      expectedCodeLength p code ≤ discreteEntropyBaseTwo Finset.univ p + 1 := by
+  obtain ⟨l, hl, hk, he⟩ := exists_lengths_kraft_lt_one_entropy_bound p hp hs
+  obtain ⟨code, hc⟩ := exists_binaryPrefixCode_of_kraft_lt_one l hl hk
+  refine ⟨code, discreteEntropyBaseTwo_le_expectedCodeLength p hp hs code, ?_⟩
+  simpa only [expectedCodeLength, hc] using he
+
 end BanditRLProof.LowerBounds

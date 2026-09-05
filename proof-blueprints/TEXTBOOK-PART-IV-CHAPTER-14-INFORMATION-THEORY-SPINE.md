@@ -1,6 +1,6 @@
 # Proof Blueprint: TEXTBOOK-PART-IV-CHAPTER-14-INFORMATION-THEORY-SPINE
 
-Generated: `2026-09-05T05:46:18+00:00`
+Generated: `2026-09-05T05:50:29+00:00`
 
 ## Source Task
 
@@ -60,7 +60,7 @@ mapped local adapter before they count as chapter evidence.
 | opening motivation | information-theory/KL role in generalising Chapter 13 | maintained source map; no theorem claim | mapped |
 | §14.1 code model | binary codewords, injectivity, prefix freedom, codeword length, and expected length | `BinaryPrefixCode`, its uniquely-decodable range, finite codebook, Kraft adapter, and `expectedCodeLength` compile; the explicit nonempty-codeword contract is recorded | partial |
 | Eq. (14.1) | optimal expected-length objective over valid prefix codes | no local optimum/existence theorem | blocked |
-| Eq. (14.2) | Huffman optimum satisfies `H₂(P) ≤ L* ≤ H₂(P)+1` | no Huffman construction or Kraft/source-coding proof | blocked |
+| Eq. (14.2) | Huffman optimum satisfies `H₂(P) ≤ L* ≤ H₂(P)+1` | `exists_binaryPrefixCode_entropy_sandwich` constructs a realizable code in the interval, including zero masses; minimizer existence/Huffman optimality still missing | partial |
 | §14.1 asymptotic statement | arithmetic coding approaches entropy and no code improves the asymptotic rate | no block-code/asymptotic coding model | blocked |
 | Eqs. (14.2)--(14.3) definitions | finite discrete base-two entropy, natural entropy, and exact unit conversion | `discreteEntropy`, `discreteEntropyBaseTwo`, their exact conversion, and nonnegativity compile | compiled |
 | Eq. (14.4) | arbitrary finite-alphabet discrete relative entropy with exact zero/support endpoints | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, and `relativeEntropy_finite_eq_top_iff` compile; root-import finite/singular three-symbol canaries pass | compiled |
@@ -104,12 +104,8 @@ LowerBounds.relativeEntropy_trim_le
 LowerBounds.bernoulliRelativeEntropy_event_le
 LowerBounds.binaryBretagnolleHuber
 LowerBounds.bretagnolleHuberScale
-LowerBounds.bretagnolleHuber
-```
 
-The public terminal uses a real-valued scale `0` when `D(P,Q)=∞`, and
-
-<!-- 2004 characters omitted from the middle of this snapshot. -->
+<!-- 2108 characters omitted from the middle of this snapshot. -->
 
 page are verified before this task becomes accepted.
 
@@ -396,7 +392,7 @@ Scenario card: `SCN-STOCHASTIC-FINITE`
 | --- | --- | --- | --- | --- | --- | --- |
 | `CH14-CODE-MODEL` | typed finite binary prefix-code surface and expected length | lists, finite sums, Mathlib Kraft--McMillan | define injective/prefix-free/nonempty codes; prove range uniquely decodable and expose finite Kraft adapter | `BinaryPrefixCode`, `BinaryPrefixCode.uniquelyDecodable_range`, `BinaryPrefixCode.kraft_inequality`, `expectedCodeLength` | focused Lean | compiled |
 | `CH14-ENTROPY-DEFINITIONS` | Eqs. (14.2)--(14.3) entropy definitions, nonnegativity, and nats/bits conversion | finite sums, real log | exact finite support convention; term at zero is zero | `discreteEntropy`, `discreteEntropyBaseTwo`, `discreteEntropyBaseTwo_eq_div_log_two`, `discreteEntropy_nonneg` | focused Lean | compiled |
-| `CH14-HUFFMAN-BOUND` | Eq. (14.2), including existence/optimality of a prefix code | Kraft--McMillan, Huffman/tree construction | entropy lower bound for every prefix code; numerical strict Shannon length bound and positive-mass Kraft slack; actual upper-bound code and optimal construction still missing | `discreteEntropyBaseTwo_le_expectedCodeLength`, `sum_weighted_shannonLength_le_entropy_add_one`, `shannonLength_kraft_weight_lt` focused-compile; full terminal absent | chapter terminal | partial |
+| `CH14-HUFFMAN-BOUND` | Eq. (14.2), including existence/optimality of a prefix code | Kraft--McMillan, finite maximum-length induction | strict Kraft converse and zero-mass-aware lengths produce an actual code in the entropy sandwich; minimizer existence/Huffman optimality remain open | `exists_binaryPrefixCode_entropy_sandwich`, `exists_binaryPrefixCode_of_kraft_lt_one` focused-build; full optimum terminal absent | chapter terminal | partial |
 | `CH14-SOURCE-CODING` | arithmetic/block-code achievability and converse | product distributions, uniquely decodable block codes, asymptotics | formal source-coding theorem | none | chapter terminal | blocked |
 | `CH14-FINITE-DISCRETE-KL` | Eq. (14.4) for an arbitrary finite alphabet | finite sums, support endpoints | atomwise AC equivalence, RN density ratio, finite LLR integrability, and finite integral sum; singular atom forces infinity | `relativeEntropy_finite_sum_log`, `relativeEntropy_finite_eq_if`, `relativeEntropy_finite_eq_top_iff` | focused Lean and root-import canary passed | compiled |
 | `CH14-DISCRETISATION-SUP` | Eq. (14.5) and equality with RN KL in Theorem 14.1 | finite measurable quotients/partitions, supremum | finite-cell Jensen upper bound; binary singular witness; density filtration recovery by conditional-expectation convergence/Fatou; finite-range coding of each layer | `finitePartitionRelativeEntropy_eq_relativeEntropy` and its finite-partition/filtration/encoding helpers | root, aggregate Tests, and full harness pass at 40c56ca | compiled |
@@ -59738,6 +59734,30 @@ These cards are planning inspiration only.  They do not certify any theorem.
     "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
     "line": 104,
     "statement": "theorem exists_prefixFree_insert_of_kraft_lt_one (S : Finset (List Bool)) (n : \u2115) (hfree : \u2200 a \u2208 S, \u2200 b \u2208 S, a <+: b \u2192 a = b) (hlen : \u2200 w \u2208 S, w.length \u2264 n) (hk : (\u2211 w \u2208 S, (1 / 2 : \u211d) ^ w.length) < 1) : \u2203 v : List Bool, v.length = n \u2227 v \u2209 S \u2227 \u2200 a \u2208 insert v S, \u2200 b \u2208 insert v S, a <+: b \u2192 a = b"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_prefix_encoding_of_kraft_lt_one",
+    "full_name": "BanditRLProof.LowerBounds.exists_prefix_encoding_of_kraft_lt_one",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 139,
+    "statement": "theorem exists_prefix_encoding_of_kraft_lt_one {\u03b1 : Type*} [DecidableEq \u03b1] (s : Finset \u03b1) (l : \u03b1 \u2192 \u2115) (hk : (\u2211 i \u2208 s, (1 / 2 : \u211d) ^ l i) < 1) : \u2203 c : \u03b1 \u2192 List Bool, (\u2200 i \u2208 s, (c i).length = l i) \u2227 (\u2200 i \u2208 s, \u2200 j \u2208 s, c i <+: c j \u2192 i = j)"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_binaryPrefixCode_of_kraft_lt_one",
+    "full_name": "BanditRLProof.LowerBounds.exists_binaryPrefixCode_of_kraft_lt_one",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 216,
+    "statement": "theorem exists_binaryPrefixCode_of_kraft_lt_one {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (l : \u03b1 \u2192 \u2115) (hl : \u2200 i, 0 < l i) (hk : (\u2211 i, (1 / 2 : \u211d) ^ l i) < 1) : \u2203 code : BinaryPrefixCode \u03b1, \u2200 i, (code.encode i).length = l i"
+  },
+  {
+    "kind": "theorem",
+    "name": "exists_binaryPrefixCode_entropy_sandwich",
+    "full_name": "BanditRLProof.LowerBounds.exists_binaryPrefixCode_entropy_sandwich",
+    "file": "BanditRLProof/LowerBounds/PrefixCodeConstruction.lean",
+    "line": 239,
+    "statement": "theorem exists_binaryPrefixCode_entropy_sandwich {\u03b1 : Type*} [Fintype \u03b1] [DecidableEq \u03b1] (p : \u03b1 \u2192 \u211d) (hp : \u2200 i, 0 \u2264 p i) (hs : \u2211 i, p i = 1) : \u2203 code : BinaryPrefixCode \u03b1, discreteEntropyBaseTwo Finset.univ p \u2264 expectedCodeLength p code \u2227 expectedCodeLength p code \u2264 discreteEntropyBaseTwo Finset.univ p + 1"
   },
   {
     "kind": "theorem",

@@ -109,3 +109,22 @@ returns exact length, nonmembership in the old codebook, and prefix freedom
 of the enlarged set. Both old-to-new and new-to-old prefix directions are
 checked; the latter uses the maximum-depth condition. The full finite-set
 induction and BinaryPrefixCode packaging remain unfinished.
+
+## Full finite code construction
+
+The maximum-length finite-set induction now passes direct Lean checking.
+`exists_prefix_encoding_of_kraft_lt_one` returns exact requested lengths
+and the label-level prefix-free invariant. The actual BinaryPrefixCode
+wrapper proves injectivity, nonempty codewords, and prefix freedom.
+Combining it with the zero-mass-aware length allocation yields
+`exists_binaryPrefixCode_entropy_sandwich`: for every nonnegative normalized
+finite distribution, a real prefix code satisfies H2<=expected length<=H2+1.
+No symbol is removed. This closes realizability of the sandwich, not
+existence of a minimizer or the source claim that Huffman coding solves the
+optimization problem; those and block/arithmetic coding remain required.
+
+Focused build and typed canary passed (2,673 jobs), including a Bool law
+with one zero-mass symbol. All twelve audited construction declarations
+have only standard propext/Classical.choice/Quot.sound dependencies. The
+Shannon and construction modules/canaries are now root/Tests-registered;
+their full integration check is the next gate, not yet a completed result.
