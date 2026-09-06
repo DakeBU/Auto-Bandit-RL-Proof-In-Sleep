@@ -27,8 +27,9 @@ The build:
   interrupting its beginner reading sequence, and labels horizontally
   scrollable diagrams on narrow screens;
 - keeps a prominent textbook-coverage ledger: ten source-mapped teaching routes,
-  nine compiled canonical cores, three compiled Part-IV source terminals, and no
-  claim that the whole textbook is complete;
+  nine compiled canonical cores, five compiled Part-IV chapter contracts, and no
+  claim that the whole textbook or every exercise is complete; the five chapter
+  routes are visible on the homepage, with the corrected Ch.17 scope explicit;
 - keeps each chapter's default teaching route to two to four named declarations
   with human-readable mathematical headings while retaining exact searchable
   Lean names and the full compiled inventory in a collapsed extension section;
@@ -73,10 +74,13 @@ The build:
 - supplies a provider-independent local formalization adapter and a versioned
   lemma-packet handoff contract.
 
-Within the separate Part IV spine, Chapters 13–17 expose compiled semantic,
-information-theoretic, Gaussian-KL, consistency, and tail-event dependency
-slices while keeping their source terminal theorems blocked where the adaptive
-history-law or construction bridge is absent. The website also exposes a
+Within the separate Part IV spine, Chapters 13–17 now have compiled required
+chapter contracts, covering basic ideas, information theory, minimax bounds,
+instance-dependent bounds, and high-probability bounds. This does not include
+every optional note or exercise. Chapter 17 uses explicitly corrected source
+statements: Claim 17.6 has the event `T_i ≤ n/2`; Theorem 17.4 has
+`0 < δ ≤ 1/32`, `c = 1/160`, and `C = 64`. Exact assumptions and source
+differences remain on each chapter page. The website also exposes a
 source-frozen NeurIPS 2025 delayed best-of-both-worlds audit: 197 named
 source-audit declarations compile across accounting, causal processing,
 allocation, elimination, event assembly, one-round action-law, trace, D.11,

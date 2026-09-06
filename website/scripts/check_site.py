@@ -1379,8 +1379,8 @@ def main() -> int:
             'class="textbook-coverage"',
             "10 source-mapped routes",
             "9 canonical cores compiled",
-            f"{sum(chapter.get('source_theorem', {}).get('status') == 'compiled' for chapter in textbook_spine['chapters'])} of {len(textbook_spine['chapters'])} named terminals compile",
-            f"{sum(chapter.get('status') == 'compiled' for chapter in textbook_spine['chapters'])} of {len(textbook_spine['chapters'])} chapter contracts compiled; see each chapter's exact scope",
+            f"{sum(chapter.get('status') == 'compiled' for chapter in textbook_spine['chapters'])} of {len(textbook_spine['chapters'])} chapter contracts compiled",
+            "Required scope only, not every exercise. Ch.17 uses explicitly corrected source statements.",
             "Not claimed complete",
         )
         for expectation in coverage_expectations:
